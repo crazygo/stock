@@ -7,15 +7,11 @@
 </div>
 <script>
 function getStampTax(trade, type){
-  if( type == 'buy' ){
-    return 0;
-  }
-  
   return Math.ceil(trade/1000);
 }
 
 function getTransferFee(stockCount, addr){
-  if( add == 'sz' ){
+  if( addr == 'sz' ){
     return 0;
   }
   
@@ -31,8 +27,8 @@ function getFee(trade){
 function sel(stockValue, stockCount){
   var trade = stockValue * stockCount;
   return {
-    'sh': trade - getFee(trade) - getStampTax(trade, 'sh') - getTransferFee(trade, 'sh'),
-    'sz': trade - getFee(trade) - getStampTax(trade, 'sz') - getTransferFee(trade, 'sz')
+    'sh': trade - getFee(trade) - getStampTax(trade) - getTransferFee(trade, 'sh'),
+    'sz': trade - getFee(trade) - getStampTax(trade) - getTransferFee(trade, 'sz')
   }
 }
 
