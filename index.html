@@ -2,3 +2,56 @@
 <html>
 <head>
 <body>
+<input id="stock-value" type="text" onchange="calc()")"/>
+<div id="log">
+</div>
+<script>
+function getStampTax(trade, type){
+  if( type == 'buy' ){
+    return 0;
+  }
+  
+  return Math.ceil(trade/1000);
+}
+
+function getTransferFee(stockCount, addr){
+  if( add == 'sz' ){
+    return 0;
+  }
+  
+  var val = stockCount * 6 / 10000;
+  return val < 1? 1 : val;
+}
+
+function getFee(trade){
+  var val = trade * 2.5 / 10000;
+  return val<5? 5 : val;
+}
+
+function sel(stockValue, stockCount){
+  var trade = stockValue * stockCount;
+  return {
+    'sh': trade - getFee(trade) - getStampTax(trade, 'sh') - getTransferFee(trade, 'sh'),
+    'sz': trade - getFee(trade) - getStampTax(trade, 'sz') - getTransferFee(trade, 'sz')
+  }
+}
+
+function buy(stockValue, stockCount){
+  var trade = stockValue * stockCount;
+  return {
+    'sh': trade + getFee(trade) + getTransferFee(trade, 'sh'),
+    'sz': trade + getFee(trade) + getTransferFee(trade, 'sz')
+  }
+}
+function calc(){
+  var input = document.getElementById('stock-value').value;
+  var out = [];
+  for(var i = 2;i < 10;i += 2){
+    var s = sel(input, 200);
+    out.push("+" + i + "%,sell for 200n at sh,CNY" + s.sh);
+    out.push("+" + i + "%,sell for 200n at sz,CNY" + s.sz);
+  }
+  
+  document.getElementById('log').innerHTML = out.join('br');
+}
+</script>
