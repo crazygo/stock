@@ -26,6 +26,7 @@ from typing import Any, Iterable, Mapping, Sequence
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 API_BASE = "https://api.massive.com"
@@ -34,6 +35,10 @@ USER_AGENT = "drop-flat-screener/0.1"
 
 class ScreenerError(RuntimeError):
     """Raised when market data cannot be loaded or validated."""
+
+
+class MarketDataNotReadyError(ScreenerError):
+    """Raised when the free EOD plan has not released the requested session."""
 
 
 @dataclass(frozen=True)
@@ -361,7 +366,21 @@ class MassiveClient:
                 self._last_request_at = time.monotonic()
                 retryable = exc.code == 429 or 500 <= exc.code < 600
                 if not retryable or attempt >= self.max_retries:
-                    raise ScreenerError(f"Massive HTTP error {exc.code}") from exc
+                    detail = ""
+                    try:
+                        error_payload = json.loads(exc.read().decode("utf-8", errors="replace"))
+                        detail = str(
+                            error_payload.get("error")
+                            or error_payload.get("message")
+                            or error_payload.get("status")
+                            or ""
+                        )
+                    except (json.JSONDecodeError, AttributeError):
+                        detail = ""
+                    if exc.code == 403 and "before end of day" in detail.lower():
+                        raise MarketDataNotReadyError(detail) from exc
+                    suffix = f": {detail}" if detail else ""
+                    raise ScreenerError(f"Massive HTTP error {exc.code}{suffix}") from exc
                 time.sleep(min(2**attempt, 20))
             except (URLError, TimeoutError, json.JSONDecodeError) as exc:
                 self._last_request_at = time.monotonic()
@@ -376,10 +395,13 @@ class MassiveClient:
             with cache_path.open("r", encoding="utf-8") as handle:
                 payload = json.load(handle)
         else:
-            payload = self._request_json(
-                f"/v2/aggs/grouped/locale/us/market/stocks/{session.isoformat()}",
-                {"adjusted": "true"},
-            )
+            try:
+                payload = self._request_json(
+                    f"/v2/aggs/grouped/locale/us/market/stocks/{session.isoformat()}",
+                    {"adjusted": "true"},
+                )
+            except MarketDataNotReadyError:
+                return {}
             cache_path.parent.mkdir(parents=True, exist_ok=True)
             cache_path.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
 
@@ -494,18 +516,105 @@ def _candidate_rows(candidates: Iterable[Candidate]) -> list[dict[str, Any]]:
     return [asdict(candidate) for candidate in candidates]
 
 
+def _format_ratio(value: float | None) -> str:
+    return "—" if value is None else f"{value:.2f}"
+
+
+def render_markdown_report(payload: Mapping[str, Any]) -> str:
+    """Render a stable, human-readable contract for second-stage research."""
+    config = payload["config"]
+    counts = payload["counts"]
+    candidates = payload["candidates"]
+    lines = [
+        f"# 跌后平台候选 — {payload['as_of']}",
+        "",
+        "> 本报告由价格与成交量规则自动生成，仅用于产生研究候选；shape_score 不是上涨概率。",
+        "",
+        "## 数据验收",
+        "",
+        f"- 市场数据日期：`{payload['as_of']}`",
+        f"- 生成时间（UTC）：`{payload['generated_at_utc']}`",
+        f"- 股票池：{counts['universe']:,}",
+        f"- 具备完整 {config['drop_sessions']}+{config['flat_sessions']} 区间数据：{counts['complete_bar_history']:,}",
+        f"- 规则匹配总数：{counts['matched']:,}",
+        f"- 本报告保留：{len(candidates):,}",
+        "",
+        "## 筛选规则",
+        "",
+        "| 条件 | 数值 |",
+        "|---|---:|",
+        f"| 最新价 | ${config['min_price']:.0f}–${config['max_price']:.0f} |",
+        f"| 前段累计跌幅 | {config['min_drop_pct'] * 100:.1f}%–{config['max_drop_pct'] * 100:.1f}% |",
+        f"| 平台总振幅上限 | {config['max_flat_range_pct'] * 100:.1f}% |",
+        f"| 平台趋势绝对值上限 | {config['max_flat_slope_pct'] * 100:.1f}% |",
+        f"| 平台日收益波动率上限 | {config['max_flat_realized_vol_pct'] * 100:.1f}% |",
+        f"| 平台单日绝对涨跌上限 | {config['max_abs_flat_daily_return_pct'] * 100:.1f}% |",
+        f"| 平台平均成交额下限 | ${config['min_avg_dollar_volume'] / 1_000_000:.0f}M |",
+        "",
+        "## 候选排名",
+        "",
+    ]
+    if not candidates:
+        lines.extend(["**今日无形态候选。**", ""])
+    else:
+        lines.extend(
+            [
+                "| # | 股票 | 名称 | 价格 | 前段跌幅 | 平台振幅 | 平台趋势 | 波动收缩 | 量能收缩 | 成交额 | 形态分 | 下降旗形风险 |",
+                "|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|",
+            ]
+        )
+        for rank, row in enumerate(candidates, 1):
+            safe_name = str(row["name"]).replace("|", "\\|")
+            lines.append(
+                f"| {rank} | **{row['ticker']}** | {safe_name} | ${row['latest_price']:.2f} | "
+                f"{row['drop_pct']:.2f}% | {row['flat_range_pct']:.2f}% | "
+                f"{row['flat_slope_pct']:.2f}% | {_format_ratio(row['volatility_contraction_ratio'])} | "
+                f"{_format_ratio(row['volume_contraction_ratio'])} | "
+                f"${row['avg_dollar_volume'] / 1_000_000:.1f}M | {row['shape_score']:.2f} | "
+                f"{row['bear_flag_risk']} |"
+            )
+        lines.append("")
+
+    lines.extend(
+        [
+            "## 二次研究任务",
+            "",
+            "对排名靠前且下降旗形风险为 low/medium 的候选逐一补充：",
+            "",
+            "1. **暴跌归因**：定位下跌发生日，并核查前后 48 小时的一手信息。",
+            "2. **长期逻辑损伤**：区分一次性重估、周期压力和核心逻辑破坏。",
+            "3. **量化业务权重**：凡用业务占比支撑结论，必须给出收入、利润、订单或增长贡献数据；缺失时明确标注。",
+            "4. **30/60 日催化**：记录确定日期、事件与市场预期；没有就写“未发现确定催化”。",
+            "5. **交易触发与失效**：说明需要看到什么才买入，以及跌破何处或发生何事后失效。",
+            "6. **反证优先**：财务异常、流动性风险、持续稀释、监管/FDA 二元事件和核心产品失败拥有否决权。",
+            "",
+            "## 自动指标释义",
+            "",
+            "- `shape_score`：平台紧致度、水平度、波动/量能收缩和跌幅质量的确定性排序分；不能解释为反弹概率。",
+            "- `波动收缩`：平台日收益波动率 ÷ 下跌段日收益波动率，越低表示收缩越明显。",
+            "- `量能收缩`：平台成交量中位数 ÷ 下跌段成交量中位数，低于 1 表示量能收缩。",
+            "- 完整机器可读字段见同目录 `screen.json`。",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def write_outputs(
     output_dir: Path,
     as_of: str,
     candidates: Sequence[Candidate],
     config: ScreenConfig,
     counts: Mapping[str, int],
-) -> tuple[Path, Path, Path]:
-    output_dir.mkdir(parents=True, exist_ok=True)
+) -> tuple[Path, Path, Path, Path, Path]:
+    daily_dir = output_dir / as_of
+    daily_dir.mkdir(parents=True, exist_ok=True)
     rows = _candidate_rows(candidates)
-    csv_path = output_dir / f"candidates_{as_of}.csv"
-    json_path = output_dir / f"candidates_{as_of}.json"
-    latest_path = output_dir / "latest_candidates.json"
+    csv_path = daily_dir / "candidates.csv"
+    json_path = daily_dir / "screen.json"
+    markdown_path = daily_dir / "screen.md"
+    latest_json_path = output_dir / "latest.json"
+    latest_markdown_path = output_dir / "latest.md"
 
     fieldnames = [field.name for field in fields(Candidate)]
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
@@ -516,22 +625,56 @@ def write_outputs(
     payload = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "as_of": as_of,
+        "execution": {
+            "github_repository": os.environ.get("GITHUB_REPOSITORY"),
+            "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+            "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
+        },
         "purpose": "candidate_generation_not_investment_advice",
         "score_note": "shape_score is a deterministic ranking, not a rebound probability",
+        "research_contract": {
+            "required_checks": [
+                "data_freshness_and_coverage",
+                "selloff_primary_source_cause",
+                "long_term_thesis_damage",
+                "quantified_business_exposure",
+                "30_and_60_day_catalysts",
+                "entry_trigger_invalidation_and_counterevidence",
+            ],
+            "max_recommendations": 5,
+            "allow_no_qualified_candidate": True,
+        },
         "config": asdict(config),
         "counts": dict(counts),
         "candidates": rows,
     }
     serialized = json.dumps(payload, ensure_ascii=False, indent=2)
     json_path.write_text(serialized, encoding="utf-8")
-    latest_path.write_text(serialized, encoding="utf-8")
-    return csv_path, json_path, latest_path
+    latest_json_path.write_text(serialized, encoding="utf-8")
+    markdown = render_markdown_report(payload)
+    markdown_path.write_text(markdown, encoding="utf-8")
+    latest_markdown_path.write_text(markdown, encoding="utf-8")
+    return csv_path, json_path, markdown_path, latest_json_path, latest_markdown_path
 
 
 def _parse_date(raw: str | None) -> date:
     if raw:
         return date.fromisoformat(raw)
-    return datetime.now(timezone.utc).date()
+    return _default_as_of()
+
+
+def _default_as_of(now_utc: datetime | None = None) -> date:
+    """Choose a completed U.S. market date instead of the UTC calendar date."""
+    current = now_utc or datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=timezone.utc)
+    now_et = current.astimezone(ZoneInfo("America/New_York"))
+    candidate = now_et.date()
+    # The workflow runs after this buffer. Manual daytime runs fall back so
+    # free EOD plans are never asked for an incomplete current session.
+    if now_et.hour < 18:
+        candidate -= timedelta(days=1)
+    return candidate
 
 
 def load_env_file(path: Path | None) -> None:
@@ -574,7 +717,7 @@ def run_command(args: argparse.Namespace) -> int:
     candidates, counts = screen_market(sessions, universe, config)
     if args.max_results is not None:
         candidates = candidates[: args.max_results]
-    csv_path, json_path, latest_path = write_outputs(
+    csv_path, json_path, markdown_path, latest_json_path, latest_markdown_path = write_outputs(
         args.output_dir,
         effective_as_of.isoformat(),
         candidates,
@@ -588,7 +731,9 @@ def run_command(args: argparse.Namespace) -> int:
                 "counts": counts,
                 "csv": str(csv_path),
                 "json": str(json_path),
-                "latest": str(latest_path),
+                "markdown": str(markdown_path),
+                "latest_json": str(latest_json_path),
+                "latest_markdown": str(latest_markdown_path),
             },
             ensure_ascii=False,
             indent=2,
@@ -603,7 +748,7 @@ def build_parser() -> argparse.ArgumentParser:
     run = subparsers.add_parser("run", help="Fetch EOD data and screen the market")
     run.add_argument("--as-of", help="Latest calendar date to try (YYYY-MM-DD)")
     run.add_argument("--config", type=Path, help="JSON file overriding screen thresholds")
-    run.add_argument("--output-dir", type=Path, default=Path("reports"))
+    run.add_argument("--output-dir", type=Path, default=Path("results"))
     run.add_argument("--cache-dir", type=Path, default=Path(".cache/massive"))
     run.add_argument(
         "--env-file",

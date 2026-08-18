@@ -1,12 +1,21 @@
 name: Daily drop-flat screen
 
 on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - "results/**"
   schedule:
-    - cron: "15 23 * * 1-5"
+    # 00:30 EST / 01:30 EDT, after Massive Basic releases EOD data.
+    - cron: "30 5 * * 2-6"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: daily-drop-flat-screen
+  cancel-in-progress: false
 
 jobs:
   screen:
@@ -14,6 +23,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A rerun belongs to the original run SHA. Always start from the
+          # latest branch so the report commit remains fast-forwardable.
+          ref: master
 
       - uses: actions/setup-python@v5
         with:
@@ -33,12 +46,25 @@ jobs:
       - name: Screen market
         env:
           MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
-        run: python3 screener.py run --config config.example.json --output-dir reports
+        run: python3 screener.py run --config config.example.json --output-dir results --max-results 50
 
-      - name: Upload report
+      - name: Commit dated report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/
+          if git diff --cached --quiet; then
+            echo "No report change to commit"
+          else
+            AS_OF=$(python3 -c 'import json; print(json.load(open("results/latest.json"))["as_of"])')
+            git commit -m "report: ${AS_OF} drop-flat screen"
+            git push
+          fi
+
+      - name: Upload report artifact
         uses: actions/upload-artifact@v4
         with:
           name: drop-flat-candidates-${{ github.run_number }}
-          path: reports/
+          path: results/
           if-no-files-found: error
           retention-days: 30

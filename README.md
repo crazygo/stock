@@ -37,11 +37,13 @@ python3 screener.py run --config config.example.json
 
 第一次运行需要下载至少 15 个交易日的全市场日线和股票目录。默认将未缓存 API 请求间隔设为 12.2 秒，以兼容免费档 5 次/分钟的额度：首次初始化通常需要约 4–6 分钟。股票目录缓存复用 7 天；稳定运行后，绝大多数交易日只需 1 次全市场行情调用，目录刷新日再增加若干分页调用。
 
-输出位于 `reports/`：
+输出位于 `results/`，其中固定入口用于自动读取，日期目录用于历史追踪：
 
-- `candidates_YYYY-MM-DD.csv`
-- `candidates_YYYY-MM-DD.json`
-- `latest_candidates.json`
+- `results/latest.md`：最近一次人类可读报告；
+- `results/latest.json`：最近一次机器可读报告；
+- `results/YYYY-MM-DD/screen.md`：当天归档 Markdown；
+- `results/YYYY-MM-DD/screen.json`：当天完整结构化数据；
+- `results/YYYY-MM-DD/candidates.csv`：候选明细。
 
 运行测试：
 
@@ -60,8 +62,8 @@ python3 -m unittest -v test_screener.py
 
 ## GitHub Actions
 
-仓库 Secret 中添加 `MASSIVE_API_KEY`，复制 `.github/workflows/daily-screen.yml`。任务每天 23:15 UTC 执行；全年都晚于美股常规交易收盘，并自动跳过没有新交易日数据的周末/假日。报告保存在 workflow artifact 中。不要把真实 key 写入 `.env.example`、workflow YAML、源码或 Git 历史。
+仓库 Secret 中添加 `MASSIVE_API_KEY`。任务在周二至周六 05:30 UTC 执行（美东午夜后），等待 Basic 免费版释放前一交易日 EOD 数据。若某个日期尚未释放，脚本会跳过并寻找最近可用交易日。报告会作为 artifact 保存，并由 `github-actions[bot]` 提交回仓库，形成每日目录。不要把真实 key 写入 `.env.example`、workflow YAML、源码或 Git 历史。
 
-如果希望 ChatGPT 的定时任务继续做第二层研究，可以让 GitHub Actions 把 `latest_candidates.json` 保存到固定分支/对象存储，再让任务读取该文件。不要把 API key 写入仓库或聊天。
+后续 ChatGPT 可以触发该工作流并固定读取 `results/latest.md` 或 `results/latest.json`，先验收数据日期和覆盖数量，再完成暴跌归因、业务权重量化、催化剂与失效条件研究。
 
 `daily_research_prompt.md` 已包含第二层研究的固定提示词，重点防止把漂亮形态误当成上涨概率，并保留“业务权重必须量化”的要求。
