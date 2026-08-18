@@ -26,6 +26,7 @@ from typing import Any, Iterable, Mapping, Sequence
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 API_BASE = "https://api.massive.com"
@@ -361,7 +362,19 @@ class MassiveClient:
                 self._last_request_at = time.monotonic()
                 retryable = exc.code == 429 or 500 <= exc.code < 600
                 if not retryable or attempt >= self.max_retries:
-                    raise ScreenerError(f"Massive HTTP error {exc.code}") from exc
+                    detail = ""
+                    try:
+                        error_payload = json.loads(exc.read().decode("utf-8", errors="replace"))
+                        detail = str(
+                            error_payload.get("error")
+                            or error_payload.get("message")
+                            or error_payload.get("status")
+                            or ""
+                        )
+                    except (json.JSONDecodeError, AttributeError):
+                        detail = ""
+                    suffix = f": {detail}" if detail else ""
+                    raise ScreenerError(f"Massive HTTP error {exc.code}{suffix}") from exc
                 time.sleep(min(2**attempt, 20))
             except (URLError, TimeoutError, json.JSONDecodeError) as exc:
                 self._last_request_at = time.monotonic()
@@ -638,7 +651,21 @@ def write_outputs(
 def _parse_date(raw: str | None) -> date:
     if raw:
         return date.fromisoformat(raw)
-    return datetime.now(timezone.utc).date()
+    return _default_as_of()
+
+
+def _default_as_of(now_utc: datetime | None = None) -> date:
+    """Choose a completed U.S. market date instead of the UTC calendar date."""
+    current = now_utc or datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=timezone.utc)
+    now_et = current.astimezone(ZoneInfo("America/New_York"))
+    candidate = now_et.date()
+    # The workflow runs after this buffer. Manual daytime runs fall back so
+    # free EOD plans are never asked for an incomplete current session.
+    if now_et.hour < 18:
+        candidate -= timedelta(days=1)
+    return candidate
 
 
 def load_env_file(path: Path | None) -> None:

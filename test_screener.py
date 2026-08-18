@@ -1,9 +1,10 @@
 import os
 import tempfile
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 
-from screener import Bar, ScreenConfig, evaluate_symbol, load_env_file, write_outputs
+from screener import Bar, ScreenConfig, _default_as_of, evaluate_symbol, load_env_file, write_outputs
 
 
 def make_bar(day: int, close: float, intraday_half_range: float = 0.006) -> Bar:
@@ -85,6 +86,11 @@ class OutputTests(unittest.TestCase):
             self.assertIn("**TEST**", markdown)
             self.assertIn("## 二次研究任务", markdown)
             self.assertEqual(markdown, (Path(directory) / "latest.md").read_text(encoding="utf-8"))
+
+    def test_default_date_uses_completed_new_york_session(self) -> None:
+        # 02:57 UTC on Aug 18 is still the evening of Aug 17 in New York.
+        instant = datetime(2026, 8, 18, 2, 57, tzinfo=timezone.utc)
+        self.assertEqual(_default_as_of(instant).isoformat(), "2026-08-17")
 
 
 if __name__ == "__main__":
