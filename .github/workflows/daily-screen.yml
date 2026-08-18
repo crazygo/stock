@@ -1,6 +1,10 @@
 name: Daily drop-flat screen
 
 on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - "results/**"
   schedule:
     - cron: "15 23 * * 1-5"
   workflow_dispatch:
