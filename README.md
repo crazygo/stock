@@ -62,7 +62,7 @@ python3 -m unittest -v test_screener.py
 
 ## GitHub Actions
 
-仓库 Secret 中添加 `MASSIVE_API_KEY`。任务每天 23:15 UTC 执行；全年都晚于美股常规交易收盘。报告会作为 artifact 保存，并由 `github-actions[bot]` 提交回仓库，形成每日目录。不要把真实 key 写入 `.env.example`、workflow YAML、源码或 Git 历史。
+仓库 Secret 中添加 `MASSIVE_API_KEY`。任务在周二至周六 05:30 UTC 执行（美东午夜后），等待 Basic 免费版释放前一交易日 EOD 数据。若某个日期尚未释放，脚本会跳过并寻找最近可用交易日。报告会作为 artifact 保存，并由 `github-actions[bot]` 提交回仓库，形成每日目录。不要把真实 key 写入 `.env.example`、workflow YAML、源码或 Git 历史。
 
 后续 ChatGPT 可以触发该工作流并固定读取 `results/latest.md` 或 `results/latest.json`，先验收数据日期和覆盖数量，再完成暴跌归因、业务权重量化、催化剂与失效条件研究。
 

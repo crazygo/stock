@@ -37,6 +37,10 @@ class ScreenerError(RuntimeError):
     """Raised when market data cannot be loaded or validated."""
 
 
+class MarketDataNotReadyError(ScreenerError):
+    """Raised when the free EOD plan has not released the requested session."""
+
+
 @dataclass(frozen=True)
 class ScreenConfig:
     min_price: float = 50.0
@@ -373,6 +377,8 @@ class MassiveClient:
                         )
                     except (json.JSONDecodeError, AttributeError):
                         detail = ""
+                    if exc.code == 403 and "before end of day" in detail.lower():
+                        raise MarketDataNotReadyError(detail) from exc
                     suffix = f": {detail}" if detail else ""
                     raise ScreenerError(f"Massive HTTP error {exc.code}{suffix}") from exc
                 time.sleep(min(2**attempt, 20))
@@ -389,10 +395,13 @@ class MassiveClient:
             with cache_path.open("r", encoding="utf-8") as handle:
                 payload = json.load(handle)
         else:
-            payload = self._request_json(
-                f"/v2/aggs/grouped/locale/us/market/stocks/{session.isoformat()}",
-                {"adjusted": "true"},
-            )
+            try:
+                payload = self._request_json(
+                    f"/v2/aggs/grouped/locale/us/market/stocks/{session.isoformat()}",
+                    {"adjusted": "true"},
+                )
+            except MarketDataNotReadyError:
+                return {}
             cache_path.parent.mkdir(parents=True, exist_ok=True)
             cache_path.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
 
