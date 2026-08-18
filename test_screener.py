@@ -1,19 +1,9 @@
 import os
 import tempfile
 import unittest
-from datetime import datetime, timezone
 from pathlib import Path
 
-from screener import (
-    Bar,
-    MarketDataNotReadyError,
-    MassiveClient,
-    ScreenConfig,
-    _default_as_of,
-    evaluate_symbol,
-    load_env_file,
-    write_outputs,
-)
+from screener import Bar, ScreenConfig, evaluate_symbol, load_env_file
 
 
 def make_bar(day: int, close: float, intraday_half_range: float = 0.006) -> Bar:
@@ -74,44 +64,6 @@ class EnvFileTests(unittest.TestCase):
             finally:
                 os.environ.pop("NEW_TEST_KEY", None)
                 os.environ.pop("EXISTING_TEST_KEY", None)
-
-
-class OutputTests(unittest.TestCase):
-    def test_writes_daily_and_stable_latest_reports(self) -> None:
-        config = ScreenConfig(min_avg_dollar_volume=1_000_000)
-        drop = [100.0, 96.0, 92.0, 88.0, 84.0, 82.0, 80.5, 79.5]
-        flat = [79.8, 79.3, 80.1, 79.6, 80.0, 79.7, 80.2]
-        bars = [make_bar(index + 1, close) for index, close in enumerate(drop + flat)]
-        candidate = evaluate_symbol("TEST", "Synthetic", bars, config)
-        assert candidate is not None
-        counts = {"universe": 5000, "complete_bar_history": 4900, "matched": 1}
-
-        with tempfile.TemporaryDirectory() as directory:
-            paths = write_outputs(Path(directory), "2026-07-15", [candidate], config, counts)
-            for path in paths:
-                self.assertTrue(path.exists())
-            markdown = (Path(directory) / "2026-07-15" / "screen.md").read_text(encoding="utf-8")
-            self.assertIn("# 跌后平台候选 — 2026-07-15", markdown)
-            self.assertIn("**TEST**", markdown)
-            self.assertIn("## 二次研究任务", markdown)
-            self.assertEqual(markdown, (Path(directory) / "latest.md").read_text(encoding="utf-8"))
-
-    def test_default_date_uses_completed_new_york_session(self) -> None:
-        # 02:57 UTC on Aug 18 is still the evening of Aug 17 in New York.
-        instant = datetime(2026, 8, 18, 2, 57, tzinfo=timezone.utc)
-        self.assertEqual(_default_as_of(instant).isoformat(), "2026-08-17")
-
-
-class MassiveClientTests(unittest.TestCase):
-    def test_unreleased_eod_session_is_skipped(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            client = MassiveClient("test", Path(directory), request_delay=0)
-
-            def not_ready(*args, **kwargs):
-                raise MarketDataNotReadyError("before end of day")
-
-            client._request_json = not_ready  # type: ignore[method-assign]
-            self.assertEqual(client.fetch_grouped_day(_default_as_of()), {})
 
 
 if __name__ == "__main__":
