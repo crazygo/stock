@@ -670,6 +670,34 @@ def build_diagnostics(
         ),
         "liquidity": sum(item.avg_dollar_volume >= config.min_avg_dollar_volume for item in drop_pool),
     }
+    drop_pool_details = []
+    for item in sorted(drop_pool, key=lambda candidate: candidate.drop_pct):
+        failed_conditions = []
+        if item.flat_range_pct > config.max_flat_range_pct * 100:
+            failed_conditions.append("flat_range")
+        if abs(item.flat_slope_pct) > config.max_flat_slope_pct * 100:
+            failed_conditions.append("flat_slope")
+        if item.flat_realized_vol_pct > config.max_flat_realized_vol_pct * 100:
+            failed_conditions.append("flat_vol")
+        if (
+            item.max_abs_flat_daily_return_pct
+            > config.max_abs_flat_daily_return_pct * 100
+        ):
+            failed_conditions.append("max_daily_move")
+        if item.avg_dollar_volume < config.min_avg_dollar_volume:
+            failed_conditions.append("liquidity")
+        drop_pool_details.append(
+            {
+                "ticker": item.ticker,
+                "drop_pct": item.drop_pct,
+                "flat_range_pct": item.flat_range_pct,
+                "abs_flat_slope_pct": abs(item.flat_slope_pct),
+                "flat_realized_vol_pct": item.flat_realized_vol_pct,
+                "max_abs_flat_daily_return_pct": item.max_abs_flat_daily_return_pct,
+                "avg_dollar_volume_m": round(item.avg_dollar_volume / 1_000_000.0, 2),
+                "failed_conditions": failed_conditions,
+            }
+        )
 
     scenario_configs = [
         ("current", config),
@@ -731,6 +759,7 @@ def build_diagnostics(
         "funnel": funnel,
         "distributions": distributions,
         "independent_passes_after_price_and_drop": independent_passes,
+        "drop_pool_details": drop_pool_details,
         "sensitivity": sensitivity,
     }
 
@@ -860,6 +889,35 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             count = independent[key]
             rate = count / denominator * 100.0 if denominator else 0.0
             lines.append(f"| {label} | {count:,} / {denominator:,} | {rate:.1f}% |")
+
+        failure_labels = {
+            "flat_range": "振幅",
+            "flat_slope": "趋势",
+            "flat_vol": "波动率",
+            "max_daily_move": "单日涨跌",
+            "liquidity": "成交额",
+        }
+        lines.extend(
+            [
+                "",
+                "## 跌幅池逐只淘汰原因",
+                "",
+                "| 股票 | 7 日跌幅 | 平台振幅 | 趋势绝对值 | 日波动率 | 单日最大涨跌 | 成交额 | 未通过条件 |",
+                "|---|---:|---:|---:|---:|---:|---:|---|",
+            ]
+        )
+        for detail in diagnostics["drop_pool_details"]:
+            failed = detail["failed_conditions"]
+            failure_text = "通过全部条件" if not failed else "、".join(
+                failure_labels.get(key, key) for key in failed
+            )
+            lines.append(
+                f"| **{detail['ticker']}** | {detail['drop_pct']:.2f}% | "
+                f"{detail['flat_range_pct']:.2f}% | {detail['abs_flat_slope_pct']:.2f}% | "
+                f"{detail['flat_realized_vol_pct']:.2f}% | "
+                f"{detail['max_abs_flat_daily_return_pct']:.2f}% | "
+                f"${detail['avg_dollar_volume_m']:.2f}M | {failure_text} |"
+            )
 
         scenario_labels = {
             "current": "当前严格参数",

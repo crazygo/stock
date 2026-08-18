@@ -106,8 +106,10 @@ class OutputTests(unittest.TestCase):
             self.assertIn("## 二次研究任务", markdown)
             self.assertIn("## 筛选漏斗", markdown)
             self.assertIn("## 参数敏感性", markdown)
+            self.assertIn("## 跌幅池逐只淘汰原因", markdown)
             self.assertEqual(diagnostics["funnel"][-1]["passed"], 1)
             self.assertEqual(diagnostics["sensitivity"][0]["matched"], 1)
+            self.assertEqual(diagnostics["drop_pool_details"][0]["failed_conditions"], [])
             self.assertEqual(markdown, (Path(directory) / "latest.md").read_text(encoding="utf-8"))
 
     def test_default_date_uses_completed_new_york_session(self) -> None:
