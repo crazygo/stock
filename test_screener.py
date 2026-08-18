@@ -10,6 +10,7 @@ from screener import (
     MassiveClient,
     ScreenConfig,
     _default_as_of,
+    build_diagnostics,
     evaluate_symbol,
     load_env_file,
     write_outputs,
@@ -85,15 +86,28 @@ class OutputTests(unittest.TestCase):
         candidate = evaluate_symbol("TEST", "Synthetic", bars, config)
         assert candidate is not None
         counts = {"universe": 5000, "complete_bar_history": 4900, "matched": 1}
+        sessions = [(bar.session, {"TEST": bar}) for bar in bars]
+        diagnostics = build_diagnostics(sessions, {"TEST": "Synthetic"}, config)
 
         with tempfile.TemporaryDirectory() as directory:
-            paths = write_outputs(Path(directory), "2026-07-15", [candidate], config, counts)
+            paths = write_outputs(
+                Path(directory),
+                "2026-07-15",
+                [candidate],
+                config,
+                counts,
+                diagnostics,
+            )
             for path in paths:
                 self.assertTrue(path.exists())
             markdown = (Path(directory) / "2026-07-15" / "screen.md").read_text(encoding="utf-8")
             self.assertIn("# 跌后平台候选 — 2026-07-15", markdown)
             self.assertIn("**TEST**", markdown)
             self.assertIn("## 二次研究任务", markdown)
+            self.assertIn("## 筛选漏斗", markdown)
+            self.assertIn("## 参数敏感性", markdown)
+            self.assertEqual(diagnostics["funnel"][-1]["passed"], 1)
+            self.assertEqual(diagnostics["sensitivity"][0]["matched"], 1)
             self.assertEqual(markdown, (Path(directory) / "latest.md").read_text(encoding="utf-8"))
 
     def test_default_date_uses_completed_new_york_session(self) -> None:

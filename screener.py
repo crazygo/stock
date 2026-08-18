@@ -19,7 +19,7 @@ import os
 import statistics
 import sys
 import time
-from dataclasses import asdict, dataclass, fields
+from dataclasses import asdict, dataclass, fields, replace
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
@@ -512,6 +512,229 @@ def screen_market(
     return candidates, counts
 
 
+def _quantile_summary(values: Sequence[float]) -> dict[str, float | int | None]:
+    ordered = sorted(values)
+
+    def percentile(fraction: float) -> float | None:
+        if not ordered:
+            return None
+        position = (len(ordered) - 1) * fraction
+        lower = math.floor(position)
+        upper = math.ceil(position)
+        if lower == upper:
+            return round(ordered[lower], 2)
+        weight = position - lower
+        return round(ordered[lower] * (1.0 - weight) + ordered[upper] * weight, 2)
+
+    return {
+        "count": len(ordered),
+        "p10": percentile(0.10),
+        "p25": percentile(0.25),
+        "p50": percentile(0.50),
+        "p75": percentile(0.75),
+        "p90": percentile(0.90),
+    }
+
+
+def _match_histories(
+    histories: Sequence[tuple[str, str, Sequence[Bar]]],
+    config: ScreenConfig,
+) -> list[Candidate]:
+    matches = [
+        candidate
+        for ticker, name, bars in histories
+        if (candidate := evaluate_symbol(ticker, name, bars, config)) is not None
+    ]
+    matches.sort(key=lambda item: (-item.shape_score, item.bear_flag_risk, item.ticker))
+    return matches
+
+
+def build_diagnostics(
+    sessions: Sequence[tuple[str, Mapping[str, Bar]]],
+    universe: Mapping[str, str],
+    config: ScreenConfig,
+) -> dict[str, Any]:
+    """Measure the filter funnel and parameter sensitivity on the same data."""
+    histories: list[tuple[str, str, Sequence[Bar]]] = []
+    for ticker, name in universe.items():
+        bars = [daily[ticker] for _, daily in sessions if ticker in daily]
+        if len(bars) == config.required_bars:
+            histories.append((ticker, name, bars))
+
+    relaxed = replace(
+        config,
+        min_drop_pct=-10.0,
+        max_drop_pct=10.0,
+        max_flat_range_pct=10.0,
+        max_flat_slope_pct=10.0,
+        max_flat_realized_vol_pct=10.0,
+        max_abs_flat_daily_return_pct=10.0,
+        min_avg_dollar_volume=0.0,
+    )
+    funnel_configs = [
+        ("price_50_200", relaxed),
+        (
+            "drop_18_45_pct",
+            replace(relaxed, min_drop_pct=config.min_drop_pct, max_drop_pct=config.max_drop_pct),
+        ),
+        (
+            "flat_range_le_7_pct",
+            replace(
+                relaxed,
+                min_drop_pct=config.min_drop_pct,
+                max_drop_pct=config.max_drop_pct,
+                max_flat_range_pct=config.max_flat_range_pct,
+            ),
+        ),
+        (
+            "abs_flat_slope_le_3_5_pct",
+            replace(
+                relaxed,
+                min_drop_pct=config.min_drop_pct,
+                max_drop_pct=config.max_drop_pct,
+                max_flat_range_pct=config.max_flat_range_pct,
+                max_flat_slope_pct=config.max_flat_slope_pct,
+            ),
+        ),
+        (
+            "flat_vol_le_2_2_pct",
+            replace(
+                relaxed,
+                min_drop_pct=config.min_drop_pct,
+                max_drop_pct=config.max_drop_pct,
+                max_flat_range_pct=config.max_flat_range_pct,
+                max_flat_slope_pct=config.max_flat_slope_pct,
+                max_flat_realized_vol_pct=config.max_flat_realized_vol_pct,
+            ),
+        ),
+        (
+            "max_daily_move_le_3_5_pct",
+            replace(
+                relaxed,
+                min_drop_pct=config.min_drop_pct,
+                max_drop_pct=config.max_drop_pct,
+                max_flat_range_pct=config.max_flat_range_pct,
+                max_flat_slope_pct=config.max_flat_slope_pct,
+                max_flat_realized_vol_pct=config.max_flat_realized_vol_pct,
+                max_abs_flat_daily_return_pct=config.max_abs_flat_daily_return_pct,
+            ),
+        ),
+        ("avg_dollar_volume_ge_20m", config),
+    ]
+    funnel: list[dict[str, Any]] = []
+    previous = len(histories)
+    for step, step_config in funnel_configs:
+        count = len(_match_histories(histories, step_config))
+        funnel.append(
+            {
+                "step": step,
+                "passed": count,
+                "rejected_at_step": previous - count,
+                "survival_from_previous_pct": round(count / previous * 100.0, 1)
+                if previous
+                else None,
+            }
+        )
+        previous = count
+
+    price_pool = _match_histories(histories, relaxed)
+    drop_only_config = funnel_configs[1][1]
+    drop_pool = _match_histories(histories, drop_only_config)
+    distributions = {
+        "price_pool_drop_pct": _quantile_summary([item.drop_pct for item in price_pool]),
+        "drop_pool_flat_range_pct": _quantile_summary(
+            [item.flat_range_pct for item in drop_pool]
+        ),
+        "drop_pool_abs_flat_slope_pct": _quantile_summary(
+            [abs(item.flat_slope_pct) for item in drop_pool]
+        ),
+        "drop_pool_flat_realized_vol_pct": _quantile_summary(
+            [item.flat_realized_vol_pct for item in drop_pool]
+        ),
+        "drop_pool_max_abs_daily_return_pct": _quantile_summary(
+            [item.max_abs_flat_daily_return_pct for item in drop_pool]
+        ),
+        "drop_pool_avg_dollar_volume_m": _quantile_summary(
+            [item.avg_dollar_volume / 1_000_000.0 for item in drop_pool]
+        ),
+    }
+    independent_passes = {
+        "drop_pool": len(drop_pool),
+        "flat_range": sum(item.flat_range_pct <= config.max_flat_range_pct * 100 for item in drop_pool),
+        "flat_slope": sum(abs(item.flat_slope_pct) <= config.max_flat_slope_pct * 100 for item in drop_pool),
+        "flat_vol": sum(item.flat_realized_vol_pct <= config.max_flat_realized_vol_pct * 100 for item in drop_pool),
+        "max_daily_move": sum(
+            item.max_abs_flat_daily_return_pct
+            <= config.max_abs_flat_daily_return_pct * 100
+            for item in drop_pool
+        ),
+        "liquidity": sum(item.avg_dollar_volume >= config.min_avg_dollar_volume for item in drop_pool),
+    }
+
+    scenario_configs = [
+        ("current", config),
+        ("drop_min_15_pct", replace(config, min_drop_pct=0.15)),
+        ("flat_range_9_pct", replace(config, max_flat_range_pct=0.09)),
+        ("flat_slope_5_pct", replace(config, max_flat_slope_pct=0.05)),
+        ("flat_vol_3_pct", replace(config, max_flat_realized_vol_pct=0.03)),
+        ("max_daily_move_5_pct", replace(config, max_abs_flat_daily_return_pct=0.05)),
+        ("liquidity_10m", replace(config, min_avg_dollar_volume=10_000_000.0)),
+        (
+            "balanced",
+            replace(
+                config,
+                min_drop_pct=0.15,
+                max_flat_range_pct=0.09,
+                max_flat_slope_pct=0.05,
+                max_flat_realized_vol_pct=0.03,
+                max_abs_flat_daily_return_pct=0.05,
+                min_avg_dollar_volume=10_000_000.0,
+            ),
+        ),
+        (
+            "broad_recall",
+            replace(
+                config,
+                min_drop_pct=0.12,
+                max_flat_range_pct=0.12,
+                max_flat_slope_pct=0.07,
+                max_flat_realized_vol_pct=0.04,
+                max_abs_flat_daily_return_pct=0.07,
+                min_avg_dollar_volume=5_000_000.0,
+            ),
+        ),
+    ]
+    current_count = len(_match_histories(histories, config))
+    sensitivity = []
+    for scenario, scenario_config in scenario_configs:
+        matches = _match_histories(histories, scenario_config)
+        sensitivity.append(
+            {
+                "scenario": scenario,
+                "matched": len(matches),
+                "delta_vs_current": len(matches) - current_count,
+                "top_tickers": [item.ticker for item in matches[:12]],
+                "overrides": {
+                    key: value
+                    for key, value in asdict(scenario_config).items()
+                    if value != asdict(config)[key]
+                },
+            }
+        )
+    return {
+        "window_validation": {
+            "required_bars": config.required_bars,
+            "drop_close_to_close_intervals": config.drop_sessions,
+            "flat_close_to_close_intervals": config.flat_sessions,
+            "shared_anchor_close": True,
+        },
+        "funnel": funnel,
+        "distributions": distributions,
+        "independent_passes_after_price_and_drop": independent_passes,
+        "sensitivity": sensitivity,
+    }
+
+
 def _candidate_rows(candidates: Iterable[Candidate]) -> list[dict[str, Any]]:
     return [asdict(candidate) for candidate in candidates]
 
@@ -525,6 +748,7 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     config = payload["config"]
     counts = payload["counts"]
     candidates = payload["candidates"]
+    diagnostics = payload.get("diagnostics")
     lines = [
         f"# 跌后平台候选 — {payload['as_of']}",
         "",
@@ -551,9 +775,122 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         f"| 平台单日绝对涨跌上限 | {config['max_abs_flat_daily_return_pct'] * 100:.1f}% |",
         f"| 平台平均成交额下限 | ${config['min_avg_dollar_volume'] / 1_000_000:.0f}M |",
         "",
-        "## 候选排名",
-        "",
     ]
+    if diagnostics:
+        validation = diagnostics["window_validation"]
+        lines.extend(
+            [
+                "## 代码窗口校验",
+                "",
+                f"- 实际需要 `{validation['required_bars']}` 根日 K：前段 "
+                f"`{validation['drop_close_to_close_intervals']}` 个收盘到收盘区间 + 后段 "
+                f"`{validation['flat_close_to_close_intervals']}` 个区间。",
+                "- 下跌终点收盘价同时作为平台锚点："
+                + ("是" if validation["shared_anchor_close"] else "否"),
+                "",
+                "## 筛选漏斗",
+                "",
+                "| 顺序 | 条件 | 通过 | 本步淘汰 | 相对上一步留存 |",
+                "|---:|---|---:|---:|---:|",
+            ]
+        )
+        funnel_labels = {
+            "price_50_200": "最新价在 $50–$200",
+            "drop_18_45_pct": "7 日累计跌幅 18%–45%",
+            "flat_range_le_7_pct": "平台总振幅 ≤ 7%",
+            "abs_flat_slope_le_3_5_pct": "平台趋势绝对值 ≤ 3.5%",
+            "flat_vol_le_2_2_pct": "平台日收益波动率 ≤ 2.2%",
+            "max_daily_move_le_3_5_pct": "平台单日绝对涨跌 ≤ 3.5%",
+            "avg_dollar_volume_ge_20m": "平台平均成交额 ≥ $20M",
+        }
+        for index, step in enumerate(diagnostics["funnel"], 1):
+            survival = step["survival_from_previous_pct"]
+            survival_text = "—" if survival is None else f"{survival:.1f}%"
+            lines.append(
+                f"| {index} | {funnel_labels.get(step['step'], step['step'])} | "
+                f"{step['passed']:,} | {step['rejected_at_step']:,} | {survival_text} |"
+            )
+
+        distribution_labels = {
+            "price_pool_drop_pct": ("价格池的 7 日涨跌幅", "-45% 至 -18%"),
+            "drop_pool_flat_range_pct": ("跌幅池的平台振幅", "≤ 7%"),
+            "drop_pool_abs_flat_slope_pct": ("跌幅池的平台趋势绝对值", "≤ 3.5%"),
+            "drop_pool_flat_realized_vol_pct": ("跌幅池的平台日收益波动率", "≤ 2.2%"),
+            "drop_pool_max_abs_daily_return_pct": ("跌幅池的平台单日最大涨跌", "≤ 3.5%"),
+            "drop_pool_avg_dollar_volume_m": ("跌幅池的平台平均成交额（$M）", "≥ 20"),
+        }
+        lines.extend(
+            [
+                "",
+                "## 参数分布",
+                "",
+                "> P10–P90 是实际截面分位数；价格池指标以完整历史且价格合格的股票为样本，其余以价格+跌幅合格池为样本。",
+                "",
+                "| 指标 | 样本数 | P10 | P25 | P50 | P75 | P90 | 当前门槛 |",
+                "|---|---:|---:|---:|---:|---:|---:|---:|",
+            ]
+        )
+        for key, summary in diagnostics["distributions"].items():
+            label, threshold = distribution_labels.get(key, (key, "—"))
+            values = [summary[name] for name in ("p10", "p25", "p50", "p75", "p90")]
+            rendered = ["—" if value is None else f"{value:.2f}" for value in values]
+            lines.append(
+                f"| {label} | {summary['count']:,} | {' | '.join(rendered)} | {threshold} |"
+            )
+
+        independent = diagnostics["independent_passes_after_price_and_drop"]
+        denominator = independent["drop_pool"]
+        independent_labels = {
+            "flat_range": "平台振幅",
+            "flat_slope": "平台趋势",
+            "flat_vol": "平台波动率",
+            "max_daily_move": "平台单日最大涨跌",
+            "liquidity": "成交额",
+        }
+        lines.extend(
+            [
+                "",
+                "## 单条件通过率（价格+跌幅池）",
+                "",
+                "| 条件 | 独立通过数 | 通过率 |",
+                "|---|---:|---:|",
+            ]
+        )
+        for key, label in independent_labels.items():
+            count = independent[key]
+            rate = count / denominator * 100.0 if denominator else 0.0
+            lines.append(f"| {label} | {count:,} / {denominator:,} | {rate:.1f}% |")
+
+        scenario_labels = {
+            "current": "当前严格参数",
+            "drop_min_15_pct": "仅把最低跌幅放宽至 15%",
+            "flat_range_9_pct": "仅把平台振幅放宽至 9%",
+            "flat_slope_5_pct": "仅把平台趋势放宽至 5%",
+            "flat_vol_3_pct": "仅把平台波动率放宽至 3%",
+            "max_daily_move_5_pct": "仅把单日涨跌放宽至 5%",
+            "liquidity_10m": "仅把成交额降至 $10M",
+            "balanced": "平衡召回（15/9/5/3/5/$10M）",
+            "broad_recall": "宽松研究池（12/12/7/4/7/$5M）",
+        }
+        lines.extend(
+            [
+                "",
+                "## 参数敏感性",
+                "",
+                "| 场景 | 匹配数 | 相对当前 | 前 12 个股票代码 |",
+                "|---|---:|---:|---|",
+            ]
+        )
+        for scenario in diagnostics["sensitivity"]:
+            delta = scenario["delta_vs_current"]
+            tickers = ", ".join(scenario["top_tickers"]) or "—"
+            lines.append(
+                f"| {scenario_labels.get(scenario['scenario'], scenario['scenario'])} | "
+                f"{scenario['matched']:,} | {delta:+,} | {tickers} |"
+            )
+        lines.append("")
+
+    lines.extend(["## 候选排名", ""])
     if not candidates:
         lines.extend(["**今日无形态候选。**", ""])
     else:
@@ -606,6 +943,7 @@ def write_outputs(
     candidates: Sequence[Candidate],
     config: ScreenConfig,
     counts: Mapping[str, int],
+    diagnostics: Mapping[str, Any] | None = None,
 ) -> tuple[Path, Path, Path, Path, Path]:
     daily_dir = output_dir / as_of
     daily_dir.mkdir(parents=True, exist_ok=True)
@@ -646,6 +984,7 @@ def write_outputs(
         },
         "config": asdict(config),
         "counts": dict(counts),
+        "diagnostics": dict(diagnostics) if diagnostics is not None else None,
         "candidates": rows,
     }
     serialized = json.dumps(payload, ensure_ascii=False, indent=2)
@@ -715,6 +1054,7 @@ def run_command(args: argparse.Namespace) -> int:
     effective_as_of = date.fromisoformat(sessions[-1][0])
     universe = client.fetch_universe(effective_as_of, config.accepted_ticker_types)
     candidates, counts = screen_market(sessions, universe, config)
+    diagnostics = build_diagnostics(sessions, universe, config)
     if args.max_results is not None:
         candidates = candidates[: args.max_results]
     csv_path, json_path, markdown_path, latest_json_path, latest_markdown_path = write_outputs(
@@ -723,6 +1063,7 @@ def run_command(args: argparse.Namespace) -> int:
         candidates,
         config,
         counts,
+        diagnostics,
     )
     print(
         json.dumps(
