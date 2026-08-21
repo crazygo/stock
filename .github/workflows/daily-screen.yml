@@ -2,9 +2,11 @@ name: Daily drop-flat screen
 
 on:
   push:
-    branches: [master]
+    # Feature branch is included temporarily so archive changes can be CI-validated.
+    branches: [master, feat/daily-market-archive]
     paths-ignore:
       - "results/**"
+      - "market_data/**"
   schedule:
     # 00:30 EST / 01:30 EDT, after Massive Basic releases EOD data.
     - cron: "30 5 * * 2-6"
@@ -25,8 +27,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           # A rerun belongs to the original run SHA. Always start from the
-          # latest branch so the report commit remains fast-forwardable.
-          ref: master
+          # latest triggering branch so the report commit remains fast-forwardable.
+          ref: ${{ github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -41,23 +43,31 @@ jobs:
             massive-eod-${{ runner.os }}-
 
       - name: Run tests
-        run: python3 -m unittest -v test_screener.py
+        run: python3 -m unittest -v test_screener.py test_archive_market_data.py
 
       - name: Screen market
         env:
           MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
         run: python3 screener.py run --config config.example.json --output-dir results --max-results 50
 
-      - name: Commit dated report
+      - name: Archive full-market grouped EOD data
+        run: >-
+          python3 archive_market_data.py
+          --results-json results/latest.json
+          --cache-dir .cache/massive
+          --archive-dir market_data/us
+          --min-results 1000
+
+      - name: Commit dated report and market archive
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/
+          git add results/ market_data/us/
           if git diff --cached --quiet; then
-            echo "No report change to commit"
+            echo "No report or market archive change to commit"
           else
             AS_OF=$(python3 -c 'import json; print(json.load(open("results/latest.json"))["as_of"])')
-            git commit -m "report: ${AS_OF} drop-flat screen"
+            git commit -m "report: ${AS_OF} screen + full-market archive"
             git push
           fi
 
