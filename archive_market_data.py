@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Persist the cached Massive grouped daily U.S. stock response into Git history.
+"""Persist cached Massive grouped daily U.S. stock responses into Git history.
 
-The screener already caches the raw `/v2/aggs/grouped/...` response under
+The screener already caches raw `/v2/aggs/grouped/...` responses under
 `.cache/massive/bars/YYYY-MM-DD.json`. GitHub Actions cache is only an execution
 optimization, so this script creates a durable, compressed archive that can be
-used for future backtests without re-downloading the same market day.
+used for future backtests without re-downloading the same market days.
 """
 
 from __future__ import annotations
@@ -128,12 +128,63 @@ def archive_grouped_day(
     return {"session": session, "archive": str(target_path), "manifest": str(manifest_path), **entry}
 
 
+def archive_all_cached_days(
+    *,
+    cache_dir: Path,
+    archive_dir: Path,
+    min_results: int = 1000,
+    required_session: str | None = None,
+) -> dict[str, Any]:
+    bars_dir = cache_dir / "bars"
+    source_paths = sorted(bars_dir.glob("????-??-??.json")) if bars_dir.exists() else []
+    if not source_paths:
+        raise ArchiveError(f"No cached grouped-day files found in {bars_dir}")
+
+    archived: list[dict[str, Any]] = []
+    skipped: list[dict[str, str]] = []
+    for source_path in source_paths:
+        session = source_path.stem
+        try:
+            archived.append(
+                archive_grouped_day(
+                    session=session,
+                    cache_dir=cache_dir,
+                    archive_dir=archive_dir,
+                    min_results=min_results,
+                )
+            )
+        except ArchiveError as exc:
+            skipped.append({"session": session, "reason": str(exc)})
+
+    archived_sessions = {item["session"] for item in archived}
+    if required_session and required_session not in archived_sessions:
+        skipped_reason = next(
+            (item["reason"] for item in skipped if item["session"] == required_session),
+            "required session was not present in cache",
+        )
+        raise ArchiveError(f"Required session {required_session} was not archived: {skipped_reason}")
+    if not archived:
+        raise ArchiveError("No valid full-market sessions were archived")
+
+    return {
+        "archived_count": len(archived),
+        "sessions": sorted(archived_sessions),
+        "skipped": skipped,
+        "manifest": str(archive_dir / "manifest.json"),
+    }
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--session", help="Market session YYYY-MM-DD; defaults to results as_of")
+    parser.add_argument("--session", help="Required/latest market session YYYY-MM-DD")
     parser.add_argument("--results-json", type=Path, default=Path("results/latest.json"))
     parser.add_argument("--cache-dir", type=Path, default=Path(".cache/massive"))
     parser.add_argument("--archive-dir", type=Path, default=Path("market_data/us"))
+    parser.add_argument(
+        "--all-cached",
+        action="store_true",
+        help="Archive every valid grouped-day response already present in the Actions cache",
+    )
     parser.add_argument(
         "--min-results",
         type=int,
@@ -146,13 +197,21 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        session = args.session or infer_session(args.results_json)
-        result = archive_grouped_day(
-            session=session,
-            cache_dir=args.cache_dir,
-            archive_dir=args.archive_dir,
-            min_results=args.min_results,
-        )
+        required_session = args.session or infer_session(args.results_json)
+        if args.all_cached:
+            result = archive_all_cached_days(
+                cache_dir=args.cache_dir,
+                archive_dir=args.archive_dir,
+                min_results=args.min_results,
+                required_session=required_session,
+            )
+        else:
+            result = archive_grouped_day(
+                session=required_session,
+                cache_dir=args.cache_dir,
+                archive_dir=args.archive_dir,
+                min_results=args.min_results,
+            )
     except (ArchiveError, OSError, ValueError) as exc:
         print(f"error: {exc}")
         return 2
