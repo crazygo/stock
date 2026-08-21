@@ -45,25 +45,48 @@ python3 screener.py run --config config.example.json
 - `results/YYYY-MM-DD/screen.json`：当天完整结构化数据；
 - `results/YYYY-MM-DD/candidates.csv`：候选明细。
 
+## 全市场每日归档
+
+筛选结果和源行情数据分开保存：
+
+- `.cache/massive/bars/YYYY-MM-DD.json`：运行缓存，只用于减少 API 请求，不属于长期数据资产；
+- `market_data/us/YYYY-MM-DD/grouped.json.gz`：Massive grouped daily 接口的完整原始 JSON 响应，经确定性 gzip 压缩后提交进 Git；
+- `market_data/us/manifest.json`：归档索引，记录交易日、ticker 数量、未压缩/压缩大小与原始数据 SHA-256。
+
+每日 workflow 在筛选完成后执行：
+
+```bash
+python3 archive_market_data.py \
+  --all-cached \
+  --results-json results/latest.json \
+  --cache-dir .cache/massive \
+  --archive-dir market_data/us \
+  --min-results 1000
+```
+
+`--all-cached` 会把 Actions cache 中已有且通过完整性校验的历史交易日一并回填。当天 `results/latest.json` 对应的交易日必须成功归档，否则 workflow 失败。默认要求至少 1,000 个 ticker，防止接口异常或部分响应被误写成完整市场历史。
+
+归档保存的是 Massive `/v2/aggs/grouped/locale/us/market/stocks/{date}` 的完整响应，而不是当前筛选器抽取后的字段。因此以后新增 VWAP、交易笔数、ETF/普通股重新分类或重新计算筛选参数时，可以直接读取历史源数据，无需重新请求行情接口。
+
 运行测试：
 
 ```bash
-python3 -m unittest -v test_screener.py
+python3 -m unittest -v test_screener.py test_archive_market_data.py
 ```
 
 ## 每日工作流
 
 推荐分两层：
 
-1. 本代码在美股收盘且 EOD 数据就绪后运行，生成候选列表；
+1. 本代码在美股收盘且 EOD 数据就绪后运行，生成候选列表，并把完整当日全市场源数据归档；
 2. ChatGPT 只研究候选股的暴跌原因、消息是否破坏长期逻辑、估值、量化业务权重、未来 30/60 日催化与下降旗形风险。
 
 先手动检查前 3–5 次输出，再开启无人值守任务。正式用资金前，应增加两年回测，至少比较：20 日内先涨 8% 的概率、20 日收益中位数、最大不利波动，以及相对“所有同期跌 18% 的股票”的增量优势。
 
 ## GitHub Actions
 
-仓库 Secret 中添加 `MASSIVE_API_KEY`。任务在周二至周六 05:30 UTC 执行（美东午夜后），等待 Basic 免费版释放前一交易日 EOD 数据。若某个日期尚未释放，脚本会跳过并寻找最近可用交易日。报告会作为 artifact 保存，并由 `github-actions[bot]` 提交回仓库，形成每日目录。不要把真实 key 写入 `.env.example`、workflow YAML、源码或 Git 历史。
+仓库 Secret 中添加 `MASSIVE_API_KEY`。任务在周二至周六 05:30 UTC 执行（美东午夜后），等待 Basic 免费版释放前一交易日 EOD 数据。若某个日期尚未释放，脚本会跳过并寻找最近可用交易日。报告和 `market_data/us/` 归档由 `github-actions[bot]` 一起提交回仓库。`results/**` 与 `market_data/**` 被 workflow 的 push trigger 忽略，避免机器人提交再次触发自身。
 
-后续 ChatGPT 可以触发该工作流并固定读取 `results/latest.md` 或 `results/latest.json`，先验收数据日期和覆盖数量，再完成暴跌归因、业务权重量化、催化剂与失效条件研究。
+后续 ChatGPT 可以固定读取 `results/latest.md` / `results/latest.json` 做每日候选研究，也可以读取 `market_data/us/manifest.json` 和对应日期的 `grouped.json.gz` 做历史窗口、参数敏感性和回测分析。
 
 `daily_research_prompt.md` 已包含第二层研究的固定提示词，重点防止把漂亮形态误当成上涨概率，并保留“业务权重必须量化”的要求。
