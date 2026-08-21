@@ -6,7 +6,7 @@
 - Weekly point: last available adjusted close in each ISO week.
 - Peak window: `2026-04-01` → `2026-05-31`.
 - Universe: currently active U.S. common stocks (Massive type CS); first history must exist on or before 2025-08-31 and weekly coverage ≥ 80%.
-- Pullback grouping: 1D k-means; k=3..5 chosen by silhouette minus small complexity penalty; p95 winsorization for fit only.
+- Pullback grouping: 1D k-means fit on all matched stocks; k=3..5 chosen by silhouette minus small complexity penalty; p95 winsorization for fit only.
 - January reference: median weekly adjusted close during January 2026.
 
 ## Funnel
@@ -21,15 +21,15 @@
 
 ## Data-driven pullback breaks
 
-Selected k = **3**, silhouette = **0.596**.
-Cluster centers: **9.5%, 26.7%, 48.2%**.
-Boundaries: **18.1%, 37.5%**.
+Selected k = **3**, silhouette = **0.587**.
+Cluster centers: **9.0%, 28.4%, 52.7%**.
+Boundaries: **18.7%, 40.6%**.
 
 | Group | Drawdown range | Stocks | Liquid | Median drawdown | Median vs Jan-26 | Median Jan→peak rally retraced |
 |---|---:|---:|---:|---:|---:|---:|
-| G1 | ≤ 18.1% | 190 | 83 | 9.2% | 12.2% | 40.8% |
-| G2 | > 18.1% – ≤ 37.5% | 159 | 77 | 26.6% | 5.5% | 86.2% |
-| G3 | > 37.5% | 114 | 37 | 50.0% | -11.8% | 118.4% |
+| G1 | ≤ 18.7% | 197 | 86 | 9.5% | 12.0% | 41.3% |
+| G2 | > 18.7% – ≤ 40.6% | 169 | 80 | 28.4% | 4.0% | 90.6% |
+| G3 | > 40.6% | 97 | 31 | 53.0% | -11.9% | 116.6% |
 
 ## Group members — liquid view
 
@@ -39,6 +39,7 @@ Boundaries: **18.1%, 37.5%**.
 |---|---|---|---:|---:|---:|---:|
 | **NVDA** | Nvidia Corp | 2026-05-15 | -3.8% | +15.6% | 22.5% | $24805.3M |
 | **GOOGL** | Alphabet Inc. Class A Common Stock | 2026-05-08 | -15.0% | +3.7% | 83.2% | $9505.4M |
+| **AVGO** | Broadcom Inc. Common Stock | 2026-05-29 | -18.5% | +5.5% | 81.3% | $7768.9M |
 | **GOOG** | Alphabet Inc. Class C Capital Stock | 2026-05-08 | -14.8% | +2.8% | 86.7% | $6361.4M |
 | **LITE** | Lumentum Holdings Inc. Common Stock | 2026-05-15 | -9.4% | +150.2% | 14.8% | $4365.5M |
 | **GEV** | GE Vernova Inc. | 2026-04-24 | -15.9% | +42.1% | 39.0% | $2329.2M |
@@ -76,15 +77,13 @@ Boundaries: **18.1%, 37.5%**.
 | **ATO** | Atmos Energy Corporation | 2026-04-10 | -10.4% | +2.2% | 84.1% | $182.4M |
 | **QSR** | Restaurant Brands International Inc. | 2026-04-24 | -1.7% | +16.4% | 10.7% | $179.7M |
 | **BG** | Bunge Global SA | 2026-04-02 | -9.9% | +8.1% | 59.5% | $150.3M |
-| **TRP** | TC Energy Corporation | 2026-05-22 | -11.1% | +12.7% | 52.6% | $145.9M |
 
-_+ 43 more liquid members in `stocks.csv`._
+_+ 46 more liquid members in `stocks.csv`._
 
 ### G2
 
 | Ticker | Name | Peak week | Peak→now | Now vs Jan | Jan→peak rally retraced | 20d $ volume |
 |---|---|---|---:|---:|---:|---:|
-| **AVGO** | Broadcom Inc. Common Stock | 2026-05-29 | -18.5% | +5.5% | 81.3% | $7768.9M |
 | **IREN** | IREN Limited Ordinary Shares | 2026-05-29 | -33.0% | -20.7% | 213.7% | $1852.2M |
 | **QCOM** | Qualcomm Inc | 2026-05-29 | -36.0% | +0.8% | 98.6% | $1813.5M |
 | **VRT** | Vertiv Holdings Co Class A Common Stock | 2026-05-15 | -28.7% | +49.6% | 54.8% | $1692.2M |
@@ -95,6 +94,8 @@ _+ 43 more liquid members in `stocks.csv`._
 | **CIEN** | Ciena Corporation | 2026-05-22 | -32.8% | +61.2% | 56.2% | $881.3M |
 | **F** | Ford Motor Company | 2026-05-29 | -19.8% | +2.9% | 89.8% | $718.4M |
 | **FSLR** | First Solar, Inc. | 2026-05-29 | -30.2% | -11.6% | 143.5% | $607.9M |
+| **APLD** | Applied Digital Corporation Common Stock | 2026-05-29 | -39.4% | -23.4% | 188.6% | $554.3M |
+| **FN** | Fabrinet | 2026-05-15 | -38.4% | -7.2% | 114.2% | $498.8M |
 | **FDX** | FedEx Corporation | 2026-05-29 | -20.8% | +5.8% | 82.8% | $484.0M |
 | **MTZ** | MasTec, Inc. | 2026-05-01 | -34.9% | +13.1% | 82.3% | $470.9M |
 | **HUT** | Hut 8 Corp. Common Stock | 2026-05-29 | -29.0% | +52.3% | 54.3% | $456.5M |
@@ -108,6 +109,7 @@ _+ 43 more liquid members in `stocks.csv`._
 | **MXL** | MaxLinear, Inc. Common Stock | 2026-05-08 | -34.6% | +252.7% | 42.5% | $229.2M |
 | **AEIS** | Advanced Energy Industries Inc | 2026-05-01 | -24.8% | +15.3% | 71.3% | $217.5M |
 | **VIAV** | Viavi Solutions Inc. Common Stock | 2026-05-01 | -30.3% | +107.3% | 45.7% | $213.8M |
+| **VICR** | Vicor Corp | 2026-05-29 | -38.0% | +38.5% | 68.8% | $190.8M |
 | **AUR** | Aurora Innovation, Inc. Class A Common Stock | 2026-05-15 | -20.6% | +33.6% | 50.8% | $189.7M |
 | **WSO** | Watsco, Inc. | 2026-04-24 | -28.6% | -17.6% | 213.6% | $180.6M |
 | **DY** | Dycom Industries, Inc. | 2026-05-29 | -21.5% | +9.8% | 75.4% | $171.7M |
@@ -122,10 +124,8 @@ _+ 43 more liquid members in `stocks.csv`._
 | **CENX** | Century Aluminum Co | 2026-04-10 | -35.2% | -5.0% | 110.8% | $104.8M |
 | **ALM** | Almonty Industries Inc. Common Shares | 2026-04-17 | -24.5% | +101.0% | 39.2% | $103.6M |
 | **CRUS** | Cirrus Logic Inc | 2026-04-24 | -32.9% | -5.1% | 112.4% | $103.2M |
-| **ENS** | EnerSys, Inc. | 2026-05-15 | -19.8% | +13.0% | 68.3% | $101.2M |
-| **WLK** | Westlake Corporation | 2026-04-02 | -34.0% | -5.2% | 112.0% | $92.6M |
 
-_+ 37 more liquid members in `stocks.csv`._
+_+ 40 more liquid members in `stocks.csv`._
 
 ### G3
 
@@ -133,12 +133,9 @@ _+ 37 more liquid members in `stocks.csv`._
 |---|---|---|---:|---:|---:|---:|
 | **RKLB** | Rocket Lab Corporation Common Stock | 2026-05-29 | -49.2% | -14.0% | 120.3% | $1409.1M |
 | **AXTI** | AXT Inc | 2026-05-22 | -48.1% | +294.4% | 55.4% | $937.8M |
-| **APLD** | Applied Digital Corporation Common Stock | 2026-05-29 | -39.4% | -23.4% | 188.6% | $554.3M |
-| **FN** | Fabrinet | 2026-05-15 | -38.4% | -7.2% | 114.2% | $498.8M |
 | **NXT** | Nextpower Inc. Class A Common Stock | 2026-05-29 | -43.8% | -8.8% | 114.2% | $271.8M |
 | **RMBS** | Rambus Inc | 2026-04-24 | -41.8% | -14.7% | 131.4% | $241.2M |
 | **RDW** | Redwire Corporation | 2026-05-29 | -52.1% | +0.5% | 99.5% | $205.0M |
-| **VICR** | Vicor Corp | 2026-05-29 | -38.0% | +38.5% | 68.8% | $190.8M |
 | **NVTS** | Navitas Semiconductor Corporation Common Stock | 2026-05-22 | -55.7% | +28.8% | 84.9% | $185.0M |
 | **ENPH** | Enphase Energy, Inc. | 2026-05-29 | -43.9% | +8.9% | 90.5% | $178.8M |
 | **LUNR** | Intuitive Machines, Inc. Class A Common Stock | 2026-05-29 | -59.1% | -5.6% | 104.3% | $178.8M |
@@ -149,9 +146,7 @@ _+ 37 more liquid members in `stocks.csv`._
 | **PRIM** | Primoris Services Corporation | 2026-05-01 | -56.1% | -46.5% | 313.2% | $104.4M |
 | **POET** | POET Technologies Inc. Common Shares | 2026-05-15 | -48.2% | +15.5% | 87.4% | $104.2M |
 | **LBRT** | Liberty Energy Inc. | 2026-05-08 | -41.9% | -4.7% | 107.3% | $103.1M |
-| **INOD** | Innodata Inc. | 2026-05-29 | -40.2% | +5.5% | 92.8% | $99.4M |
 | **LUMN** | Lumen Technologies, Inc. | 2026-05-29 | -45.3% | -28.9% | 196.1% | $88.2M |
-| **LASR** | nLIGHT, Inc. Common Stock | 2026-05-22 | -39.9% | +7.4% | 90.6% | $81.1M |
 | **CAPR** | Capricor Therapeutics Inc | 2026-04-24 | -80.6% | -71.3% | 248.8% | $75.7M |
 | **AMPX** | Amprius Technologies, Inc. | 2026-05-01 | -51.1% | -7.3% | 108.1% | $68.9M |
 | **CAR** | Avis Budget Group, Inc. | 2026-04-17 | -70.8% | +14.6% | 95.0% | $64.7M |
@@ -164,7 +159,6 @@ _+ 37 more liquid members in `stocks.csv`._
 | **BKSY** | BlackSky Technology Inc. | 2026-05-29 | -44.9% | +4.7% | 94.7% | $28.0M |
 | **AHCO** | AdaptHealth Corp. Common Stock | 2026-05-01 | -59.1% | -46.6% | 252.6% | $27.5M |
 | **PLAB** | Photronics Inc | 2026-05-08 | -43.1% | -11.6% | 121.0% | $27.1M |
-| **ARI** | APOLLO COMMERCIAL REAL ESTATE FINANCE, INC. | 2026-04-17 | -37.8% | -30.4% | 354.6% | $24.0M |
 | **MRAM** | Everspin Technologies, Inc | 2026-05-15 | -54.8% | +30.6% | 83.8% | $22.7M |
 | **LWLG** | Lightwave Logic, Inc. Common Stock | 2026-05-08 | -62.9% | +56.0% | 82.5% | $22.3M |
 | **ADTN** | ADTRAN Holdings, Inc. Common Stock | 2026-05-01 | -57.4% | -14.8% | 114.7% | $21.8M |

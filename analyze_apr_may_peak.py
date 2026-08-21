@@ -276,9 +276,10 @@ def analyze(
             }
         )
 
-    fit_records = [row for row in records if row["liquid"]]
-    if len(fit_records) < 30:
-        fit_records = records
+    # The user-defined class is the full matched population. Liquidity is a
+    # presentation/tradability lens only, so it must not determine the natural
+    # drawdown boundaries.
+    fit_records = records
     clustering = learn_drawdown_groups(
         [float(row["drawdown_from_peak_pct"]) / 100.0 for row in fit_records]
     )
@@ -329,7 +330,7 @@ def analyze(
             "min_weekly_coverage_pct": min_weekly_coverage * 100.0,
             "universe": "currently active U.S. common stocks (Massive type CS)",
             "group_metric": "current drawdown from Apr-May global weekly-close peak",
-            "group_learning": "1D k-means; k=3..5 chosen by silhouette minus small complexity penalty; p95 winsorization for fit only",
+            "group_learning": "1D k-means fit on all matched stocks; k=3..5 chosen by silhouette minus small complexity penalty; p95 winsorization for fit only",
             "january_reference": "median weekly adjusted close during January 2026",
             "liquid_definition": f"latest close >= $5 and 20-session average dollar volume >= ${liquid_dollar_volume:,.0f}",
         },
@@ -337,7 +338,7 @@ def analyze(
         "expected_weeks": expected_weeks,
         "match_count": len(records),
         "liquid_match_count": sum(bool(row["liquid"]) for row in records),
-        "clustering_fit_population": "liquid_matches" if len([r for r in records if r["liquid"]]) >= 30 else "all_matches",
+        "clustering_fit_population": "all_matches",
         "clustering": {
             **clustering,
             "centers_pct": [round(x * 100.0, 2) for x in clustering["centers"]],
