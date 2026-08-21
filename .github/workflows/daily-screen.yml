@@ -50,9 +50,10 @@ jobs:
           MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
         run: python3 screener.py run --config config.example.json --output-dir results --max-results 50
 
-      - name: Archive full-market grouped EOD data
+      - name: Archive and backfill full-market grouped EOD data
         run: >-
           python3 archive_market_data.py
+          --all-cached
           --results-json results/latest.json
           --cache-dir .cache/massive
           --archive-dir market_data/us
