@@ -9,6 +9,14 @@ on:
       - "optical_universe.json"
       - "test_optical_universe.py"
       - ".github/workflows/optical-universe.yml"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "optical_universe.py"
+      - "optical_universe.json"
+      - "test_optical_universe.py"
+      - ".github/workflows/optical-universe.yml"
   workflow_dispatch:
 
 permissions:
