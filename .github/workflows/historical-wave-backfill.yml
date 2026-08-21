@@ -1,0 +1,126 @@
+name: Historical market backfill and wave analysis
+
+on:
+  push:
+    branches: [feat/historical-wave-analysis]
+    paths-ignore:
+      - "market_data/**"
+      - "analysis/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: historical-wave-backfill
+  cancel-in-progress: false
+
+jobs:
+  backfill-and-analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Restore existing Massive cache without saving the historical expansion
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/massive
+          key: historical-backfill-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            massive-eod-${{ runner.os }}-
+
+      - name: Run tests
+        run: python3 -m unittest -v test_screener.py test_archive_market_data.py test_historical_wave.py
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Backfill August 2025 through July 26 2026, committing month by month
+        env:
+          MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ranges=(
+            "2025-08-01 2025-08-31"
+            "2025-09-01 2025-09-30"
+            "2025-10-01 2025-10-31"
+            "2025-11-01 2025-11-30"
+            "2025-12-01 2025-12-31"
+            "2026-01-01 2026-01-31"
+            "2026-02-01 2026-02-28"
+            "2026-03-01 2026-03-31"
+            "2026-04-01 2026-04-30"
+            "2026-05-01 2026-05-31"
+            "2026-06-01 2026-06-30"
+            "2026-07-01 2026-07-26"
+          )
+
+          first=1
+          for item in "${ranges[@]}"; do
+            read -r start end <<< "$item"
+            month="${start:0:7}"
+            if [[ "$first" -eq 0 ]]; then
+              sleep 13
+            fi
+            first=0
+            echo "=== Backfilling ${start} to ${end} ==="
+            python3 backfill_market_data.py \
+              --start "$start" \
+              --end "$end" \
+              --cache-dir .cache/massive \
+              --archive-dir market_data/us \
+              --request-delay 12.2 \
+              --min-results 1000
+
+            git add -- market_data/us/
+            if git diff --cached --quiet; then
+              echo "No new archive data for ${month}"
+            else
+              git commit -m "data: backfill ${month} full-market EOD"
+              git push origin "HEAD:${GITHUB_REF_NAME}"
+            fi
+          done
+
+      - name: Analyze Apr-May weekly-peak class
+        env:
+          MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
+        run: |
+          python3 analyze_apr_may_peak.py \
+            --archive-dir market_data/us \
+            --cache-dir .cache/massive \
+            --output-dir analysis/apr_may_peak \
+            --start 2025-08-01 \
+            --peak-start 2026-04-01 \
+            --peak-end 2026-05-31 \
+            --min-weekly-coverage 0.80 \
+            --liquid-dollar-volume 20000000 \
+            --request-delay 12.2
+
+      - name: Commit analysis outputs
+        run: |
+          git add -- analysis/apr_may_peak/
+          if git diff --cached --quiet; then
+            echo "No analysis changes"
+          else
+            git commit -m "analysis: classify Apr-May weekly-peak stocks"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: Upload wave-analysis artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: apr-may-weekly-peak-analysis
+          path: analysis/apr_may_peak/
+          if-no-files-found: error
+          retention-days: 30
