@@ -2,7 +2,7 @@ name: Industry and profitability clusters
 
 on:
   push:
-    branches: [feat/industry-profit-clusters]
+    branches: [master, feat/industry-profit-clusters]
     paths:
       - "enrich_industry_profit.py"
       - "test_industry_profit.py"
@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: industry-profit-clusters
+  group: industry-profit-clusters-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feat/industry-profit-clusters
+          ref: ${{ github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -73,5 +73,5 @@ jobs:
             echo "No enrichment changes to commit"
           else
             git commit -m "analysis: add industry and profitability clusters"
-            git push origin HEAD:feat/industry-profit-clusters
+            git push origin HEAD:${{ github.ref_name }}
           fi
