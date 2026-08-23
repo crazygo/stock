@@ -1,0 +1,25 @@
+name: Probe Massive financials
+
+on:
+  push:
+    branches: [feat/industry-profit-clusters]
+    paths:
+      - "probe_massive_financials.py"
+      - ".github/workflows/probe-massive-financials.yml"
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/industry-profit-clusters
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe entitlement
+        env:
+          MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
+        run: python3 probe_massive_financials.py
