@@ -37,7 +37,7 @@ jobs:
           --archive-dir market_data/us
           --output-dir analysis/recent_half_price
           --start 2026-03-01
-          --request-delay 0
+          --request-delay 12.2
 
       - name: Commit screen output
         if: github.event_name != 'pull_request'
