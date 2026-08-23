@@ -6,6 +6,11 @@ on:
     paths:
       - "screen_recent_half_price.py"
       - ".github/workflows/recent-half-price-screen.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "screen_recent_half_price.py"
+      - ".github/workflows/recent-half-price-screen.yml"
   workflow_dispatch:
 
 permissions:
@@ -18,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -35,6 +40,7 @@ jobs:
           --request-delay 0
 
       - name: Commit screen output
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
