@@ -1,11 +1,6 @@
 name: Recent half-price screen
 
 on:
-  push:
-    branches: [feat/recent-half-price-screen]
-    paths:
-      - "screen_recent_half_price.py"
-      - ".github/workflows/recent-half-price-screen.yml"
   pull_request:
     branches: [master]
     paths:
@@ -14,7 +9,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: recent-half-price-screen
+  cancel-in-progress: true
 
 jobs:
   screen:
@@ -38,19 +37,6 @@ jobs:
           --output-dir analysis/recent_half_price
           --start 2026-03-01
           --request-delay 12.2
-
-      - name: Commit screen output
-        if: github.event_name != 'pull_request'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add analysis/recent_half_price/
-          if git diff --cached --quiet; then
-            echo "No screen output change"
-          else
-            git commit -m "analysis: screen recent half-price stocks"
-            git push
-          fi
 
       - name: Upload screen artifact
         uses: actions/upload-artifact@v4
