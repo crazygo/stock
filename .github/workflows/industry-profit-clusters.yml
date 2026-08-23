@@ -7,13 +7,19 @@ on:
       - "enrich_industry_profit.py"
       - "test_industry_profit.py"
       - ".github/workflows/industry-profit-clusters.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "enrich_industry_profit.py"
+      - "test_industry_profit.py"
+      - ".github/workflows/industry-profit-clusters.yml"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: industry-profit-clusters
+  group: industry-profit-clusters-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -22,8 +28,6 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -51,7 +55,20 @@ jobs:
           --cache-dir .cache/sec
           --request-delay 0.20
 
+      - name: Upload enrichment outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: industry-profit-clusters-${{ github.run_number }}
+          path: |
+            analysis/apr_may_peak/industry_profit_analysis.json
+            analysis/apr_may_peak/industry_profit_report.md
+            analysis/apr_may_peak/enriched_stocks.csv
+            fundamentals/sec/apr_may_peak_2026-08-20.json
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Commit enrichment outputs
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
