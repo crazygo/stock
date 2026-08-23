@@ -1,0 +1,47 @@
+name: Recent half-price screen
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "screen_recent_half_price.py"
+      - ".github/workflows/recent-half-price-screen.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: recent-half-price-screen
+  cancel-in-progress: true
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Screen archived market data
+        env:
+          MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
+        run: >-
+          python3 screen_recent_half_price.py
+          --archive-dir market_data/us
+          --output-dir analysis/recent_half_price
+          --start 2026-03-01
+          --request-delay 12.2
+
+      - name: Upload screen artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: recent-half-price-screen
+          path: analysis/recent_half_price/
+          if-no-files-found: error
+          retention-days: 30
