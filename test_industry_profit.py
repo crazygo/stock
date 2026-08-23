@@ -13,7 +13,7 @@ def annual_fact(tag_values):
     for end, value, filed in tag_values:
         year = int(end[:4])
         rows.append({
-            "start": f"{year-1}-01-01",
+            "start": f"{year}-01-01",
             "end": end,
             "val": value,
             "form": "10-K",
