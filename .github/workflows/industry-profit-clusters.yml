@@ -5,12 +5,14 @@ on:
     branches: [feat/industry-profit-clusters]
     paths:
       - "enrich_industry_profit.py"
+      - "prepare_sec_ticker_map.py"
       - "test_industry_profit.py"
       - ".github/workflows/industry-profit-clusters.yml"
   pull_request:
     branches: [master]
     paths:
       - "enrich_industry_profit.py"
+      - "prepare_sec_ticker_map.py"
       - "test_industry_profit.py"
       - ".github/workflows/industry-profit-clusters.yml"
   workflow_dispatch:
@@ -19,7 +21,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: industry-profit-clusters-${{ github.ref }}
+  group: industry-profit-clusters
   cancel-in-progress: false
 
 jobs:
@@ -28,6 +30,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -44,6 +48,19 @@ jobs:
       - name: Run tests
         run: python3 -m unittest -v test_industry_profit.py
 
+      - name: Seed ticker to CIK map
+        env:
+          MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
+        run: |
+          if [ -s .cache/sec/company_tickers.json ]; then
+            echo "Using cached ticker/CIK map"
+          else
+            python3 prepare_sec_ticker_map.py \
+              --output .cache/sec/company_tickers.json \
+              --massive-cache .cache/massive \
+              --request-delay 12.2
+          fi
+
       - name: Enrich industry and profitability structure
         env:
           SEC_USER_AGENT: "crazygo-stock-research/1.0 crazygo@users.noreply.github.com"
@@ -53,7 +70,7 @@ jobs:
           --output-dir analysis/apr_may_peak
           --fundamentals-out fundamentals/sec/apr_may_peak_2026-08-20.json
           --cache-dir .cache/sec
-          --request-delay 0.20
+          --request-delay 0.30
 
       - name: Upload enrichment outputs
         uses: actions/upload-artifact@v4
@@ -77,5 +94,5 @@ jobs:
             echo "No enrichment changes to commit"
           else
             git commit -m "analysis: add industry and profitability clusters"
-            git push
+            git push origin HEAD:feat/industry-profit-clusters
           fi
