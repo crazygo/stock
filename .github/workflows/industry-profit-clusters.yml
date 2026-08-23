@@ -7,12 +7,6 @@ on:
       - "enrich_industry_profit.py"
       - "test_industry_profit.py"
       - ".github/workflows/industry-profit-clusters.yml"
-  pull_request:
-    branches: [master]
-    paths:
-      - "enrich_industry_profit.py"
-      - "test_industry_profit.py"
-      - ".github/workflows/industry-profit-clusters.yml"
   workflow_dispatch:
 
 permissions:
@@ -29,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.ref_name }}
+          ref: feat/industry-profit-clusters
 
       - uses: actions/setup-python@v5
         with:
@@ -71,7 +65,6 @@ jobs:
           retention-days: 30
 
       - name: Commit enrichment outputs
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
