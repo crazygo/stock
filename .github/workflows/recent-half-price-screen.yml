@@ -1,0 +1,55 @@
+name: Recent half-price screen
+
+on:
+  push:
+    branches: [feat/recent-half-price-screen]
+    paths:
+      - "screen_recent_half_price.py"
+      - ".github/workflows/recent-half-price-screen.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Screen archived market data
+        env:
+          MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
+        run: >-
+          python3 screen_recent_half_price.py
+          --archive-dir market_data/us
+          --output-dir analysis/recent_half_price
+          --start 2026-03-01
+          --request-delay 0
+
+      - name: Commit screen output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis/recent_half_price/
+          if git diff --cached --quiet; then
+            echo "No screen output change"
+          else
+            git commit -m "analysis: screen recent half-price stocks"
+            git push
+          fi
+
+      - name: Upload screen artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: recent-half-price-screen
+          path: analysis/recent_half_price/
+          if-no-files-found: error
+          retention-days: 30
