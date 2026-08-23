@@ -8,6 +8,9 @@ on:
       - ".github/workflows/probe-massive-financials.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -22,4 +25,11 @@ jobs:
       - name: Probe entitlement
         env:
           MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
-        run: python3 probe_massive_financials.py
+        run: python3 probe_massive_financials.py | tee .massive-financials-probe.json
+      - name: Persist probe result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- .massive-financials-probe.json
+          git commit -m "ci: record Massive financials entitlement" || exit 0
+          git push origin HEAD:feat/industry-profit-clusters
