@@ -5,14 +5,12 @@ on:
     branches: [feat/industry-profit-clusters]
     paths:
       - "enrich_industry_profit.py"
-      - "prepare_sec_ticker_map.py"
       - "test_industry_profit.py"
       - ".github/workflows/industry-profit-clusters.yml"
   pull_request:
     branches: [master]
     paths:
       - "enrich_industry_profit.py"
-      - "prepare_sec_ticker_map.py"
       - "test_industry_profit.py"
       - ".github/workflows/industry-profit-clusters.yml"
   workflow_dispatch:
@@ -27,7 +25,7 @@ concurrency:
 jobs:
   enrich:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,40 +35,28 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Restore SEC fundamentals cache
+      - name: Install enrichment dependency
+        run: python3 -m pip install --disable-pip-version-check "yfinance>=0.2,<1"
+
+      - name: Restore Yahoo snapshot cache
         uses: actions/cache@v4
         with:
-          path: .cache/sec
-          key: sec-fundamentals-${{ runner.os }}-${{ github.run_id }}
+          path: .cache/yfinance_info
+          key: yfinance-info-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
-            sec-fundamentals-${{ runner.os }}-
+            yfinance-info-${{ runner.os }}-
 
       - name: Run tests
         run: python3 -m unittest -v test_industry_profit.py
 
-      - name: Seed ticker to CIK map
-        env:
-          MASSIVE_API_KEY: ${{ secrets.MASSIVE_API_KEY }}
-        run: |
-          if [ -s .cache/sec/company_tickers.json ]; then
-            echo "Using cached ticker/CIK map"
-          else
-            python3 prepare_sec_ticker_map.py \
-              --output .cache/sec/company_tickers.json \
-              --massive-cache .cache/massive \
-              --request-delay 12.2
-          fi
-
       - name: Enrich industry and profitability structure
-        env:
-          SEC_USER_AGENT: "crazygo-stock-research/1.0 crazygo@users.noreply.github.com"
         run: >-
           python3 enrich_industry_profit.py
           --input analysis/apr_may_peak/analysis.json
           --output-dir analysis/apr_may_peak
-          --fundamentals-out fundamentals/sec/apr_may_peak_2026-08-20.json
-          --cache-dir .cache/sec
-          --request-delay 0.30
+          --fundamentals-out fundamentals/yahoo/apr_may_peak_2026-08-20.json
+          --cache-dir .cache/yfinance_info
+          --workers 4
 
       - name: Upload enrichment outputs
         uses: actions/upload-artifact@v4
@@ -80,7 +66,7 @@ jobs:
             analysis/apr_may_peak/industry_profit_analysis.json
             analysis/apr_may_peak/industry_profit_report.md
             analysis/apr_may_peak/enriched_stocks.csv
-            fundamentals/sec/apr_may_peak_2026-08-20.json
+            fundamentals/yahoo/apr_may_peak_2026-08-20.json
           if-no-files-found: error
           retention-days: 30
 
@@ -89,7 +75,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- analysis/apr_may_peak/industry_profit_analysis.json analysis/apr_may_peak/industry_profit_report.md analysis/apr_may_peak/enriched_stocks.csv fundamentals/sec/apr_may_peak_2026-08-20.json
+          git add -- analysis/apr_may_peak/industry_profit_analysis.json analysis/apr_may_peak/industry_profit_report.md analysis/apr_may_peak/enriched_stocks.csv fundamentals/yahoo/apr_may_peak_2026-08-20.json
           if git diff --cached --quiet; then
             echo "No enrichment changes to commit"
           else
