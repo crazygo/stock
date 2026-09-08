@@ -1,0 +1,32 @@
+name: Export market history
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/export-market-history.yml'
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate archived market history
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('market_data/us/manifest.json')
+          m = json.loads(p.read_text())
+          dates = sorted(m['archives'])
+          print('Market history:', len(dates), 'dates;', dates[0], 'through', dates[-1])
+          assert dates
+          for d in dates:
+              assert (p.parent / m['archives'][d]['path']).is_file(), d
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archived-us-market-history
+          path: market_data/us/
+          compression-level: 0
+          retention-days: 7
