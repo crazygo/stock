@@ -1,5 +1,9 @@
 # U.S. Stock Drop → Flat Screener
 
+## 新工程：开盘后 3 日 +5% 概率模型
+
+入口：[`research/after_open_3d5pct/README.md`](research/after_open_3d5pct/README.md)。面向手动交易，在 11:30 ET 及后续可决策时点，研究从延迟后入场价起算的剩余上涨空间。已建立 coder 必读契约、时间/标签/切分骨架、边界测试与离线合成 smoke；真实数据适配和模型训练尚待后续里程碑完成。
+
 ## AI 股票七策略基础回测
 
 ### 开盘前、三周 +20% 单策略审计
