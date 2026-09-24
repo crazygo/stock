@@ -1,5 +1,30 @@
 # U.S. Stock Drop → Flat Screener
 
+## AI 股票七策略基础回测
+
+### 开盘前、三周 +20% 单策略审计
+
+在四只 AI/机器人/云/数据中心 ETF 的日期化成分中形成可回溯股票池；用已披露 SEC 年报筛选后，对下一交易日开盘入场、15 个交易日 +20% 目标与 -10% 风险线做训练、验证、独立测试：
+
+```bash
+python3 preopen_three_week.py
+python3 render_preopen_dashboard.py
+```
+
+[交互式逐股 K 线和历史买点](analysis/preopen_three_week/dashboard.html)以及[方法与结果](analysis/preopen_three_week/report.md)。这版独立测试期平均交易净收益和组合收益为负，未通过质量门槛，当前不输出可执行的买卖建议。`results.json` 保留原始研究分数与模拟明细，便于检查失败原因。历史基金快照由 `fetch_ai_fund_holdings.py` 获取，最新富途收盘快照由 `fetch_futu_snapshot.py` 获取；提交的数据文件支持本地复算。
+
+模型脚本需要 NumPy；只有刷新富途快照时才需要 `futu-api` 客户端和运行中的本机 OpenD。默认复算使用已保存的快照，不需要连接富途。
+
+回测代码是 [`backtest_ai_strategies.py`](backtest_ai_strategies.py)，可直接用仓库内的行情归档与 [`data/ai_sec_annual_facts.json`](data/ai_sec_annual_facts.json) 重算：
+
+```bash
+python3 backtest_ai_strategies.py
+```
+
+中文结果位于 [`analysis/ai_strategies_baseline/report.md`](analysis/ai_strategies_baseline/report.md)，结构化指标与审计明细位于同目录。99 只 AI 相关候选股的业务组写在 [`ai_universe_candidates.json`](ai_universe_candidates.json)；每天再用当时已提交的 SEC 年报营收、经营现金流、净利润和历史成交额筛选。2026-05-01 通过门槛的名单在 `qualified_universe_2026-05-01.csv`。策略 4 需要完整且带首次发布时间的事件快照，输入契约见 [`event_feed.schema.md`](analysis/ai_strategies_baseline/event_feed.schema.md)。
+
+如需刷新 SEC 年报原始快照，先按 SEC fair access 要求设置包含机构名称与有效联系地址的 `SEC_USER_AGENT`，再运行 `python3 build_ai_sec_facts.py`。刷新会改变可复算的数据版本；保留旧快照后再比较结果。
+
 这是一个“候选生成器”，用于每天扫描美国普通股：先在 7 个完整交易日内显著下跌，再在随后 7 个完整交易日内进入低波动平台。它输出形态候选，不直接输出买入建议或收益概率。
 
 ## 为什么使用 15 根 K 线

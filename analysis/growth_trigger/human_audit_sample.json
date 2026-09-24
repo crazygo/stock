@@ -1,0 +1,486 @@
+{
+ "generated_at": "2026-09-23T18:35:53+08:00",
+ "how_to_review": [
+  "正例：确认区间起点/终点、涨幅、以及起点当时是否真的满足财报与流动性门槛。",
+  "负例：确认该预测点当时合格、且之后 3–14 个自然日确实没有出现 +8% 触达。",
+  "边界例：确认 3/14 自然日端点、3 个交易日间隔、单日 12% 上限、保留 4% 这几条判定没有放水。",
+  "被拒例：确认拒绝理由成立（不是把本该收录的区间漏掉）。"
+ ],
+ "positives": [
+  {
+   "ticker": "TSLA",
+   "start_index": 200,
+   "end_index": 205,
+   "sessions": 5,
+   "calendar_days": 8,
+   "start_date": "2026-05-19",
+   "end_date": "2026-05-27",
+   "start_close": 404.11,
+   "end_close": 440.36,
+   "return": 0.08970329860681492,
+   "parity": 1
+  },
+  {
+   "ticker": "META",
+   "start_index": 172,
+   "end_index": 178,
+   "sessions": 6,
+   "calendar_days": 8,
+   "start_date": "2026-04-09",
+   "end_date": "2026-04-17",
+   "start_close": 628.39,
+   "end_close": 688.55,
+   "return": 0.09573672400897526,
+   "parity": 1
+  },
+  {
+   "ticker": "AMZN",
+   "start_index": 225,
+   "end_index": 232,
+   "sessions": 7,
+   "calendar_days": 12,
+   "start_date": "2026-06-25",
+   "end_date": "2026-07-07",
+   "start_close": 227.01,
+   "end_close": 245.98,
+   "return": 0.08356460067838412,
+   "parity": 1
+  },
+  {
+   "ticker": "TSLA",
+   "start_index": 248,
+   "end_index": 252,
+   "sessions": 4,
+   "calendar_days": 6,
+   "start_date": "2026-07-29",
+   "end_date": "2026-08-04",
+   "start_close": 298.32,
+   "end_close": 327.35,
+   "return": 0.09731161169214286,
+   "parity": 1
+  },
+  {
+   "ticker": "STX",
+   "start_index": 198,
+   "end_index": 205,
+   "sessions": 7,
+   "calendar_days": 12,
+   "start_date": "2026-05-15",
+   "end_date": "2026-05-27",
+   "start_close": 795.47,
+   "end_close": 870.66,
+   "return": 0.09452273498686314,
+   "parity": 1
+  }
+ ],
+ "negatives": [
+  {
+   "ticker": "PLTR",
+   "ts": "2026-06-11 11:30:00",
+   "sess": "reg",
+   "entry": 129.2,
+   "max_return": 0.0542,
+   "closest_window": null
+  },
+  {
+   "ticker": "AMZN",
+   "ts": "2026-08-27 16:00:00",
+   "sess": "reg",
+   "entry": 256.26,
+   "max_return": 0.0412,
+   "closest_window": null
+  },
+  {
+   "ticker": "TSLA",
+   "ts": "2026-03-05 09:30:00",
+   "sess": "pre",
+   "entry": 401.44,
+   "max_return": 0.0372,
+   "closest_window": null
+  },
+  {
+   "ticker": "AAPL",
+   "ts": "2026-08-25 16:00:00",
+   "sess": "reg",
+   "entry": 309.9,
+   "max_return": 0.0675,
+   "closest_window": null
+  },
+  {
+   "ticker": "MSFT",
+   "ts": "2026-02-13 09:00:00",
+   "sess": "pre",
+   "entry": 401.502787585,
+   "max_return": 0.0108,
+   "closest_window": null
+  }
+ ],
+ "boundary_accepted": [
+  {
+   "ticker": "META",
+   "start_date": "2026-01-26",
+   "end_date": "2026-01-29",
+   "sessions": 3,
+   "calendar_days": 3,
+   "start_close": 672.36,
+   "end_close": 738.31,
+   "return_": 0.09808733416622029,
+   "worst_single_day_jump": 0.1040479715281204,
+   "retained_gains": [
+    0.0656,
+    0.0506
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  },
+  {
+   "ticker": "SMCI",
+   "start_date": "2026-07-30",
+   "end_date": "2026-08-04",
+   "sessions": 3,
+   "calendar_days": 5,
+   "start_close": 27.73,
+   "end_close": 31.69,
+   "return_": 0.14280562567616295,
+   "worst_single_day_jump": 0.10649441340782118,
+   "retained_gains": [
+    0.0934,
+    0.0595
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  },
+  {
+   "ticker": "NVDA",
+   "start_date": "2026-08-24",
+   "end_date": "2026-08-27",
+   "sessions": 3,
+   "calendar_days": 3,
+   "start_close": 208.48,
+   "end_close": 227.98,
+   "return_": 0.0935341519570223,
+   "worst_single_day_jump": 0.08737956691786697,
+   "retained_gains": [
+    0.0435,
+    0.059
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  },
+  {
+   "ticker": "AMD",
+   "start_date": "2025-11-07",
+   "end_date": "2025-11-12",
+   "sessions": 3,
+   "calendar_days": 5,
+   "start_close": 233.54,
+   "end_close": 258.89,
+   "return_": 0.1085467157660358,
+   "worst_single_day_jump": 0.08997137083192985,
+   "retained_gains": [
+    0.0617,
+    0.0568
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  },
+  {
+   "ticker": "META",
+   "start_date": "2026-06-26",
+   "end_date": "2026-07-01",
+   "sessions": 3,
+   "calendar_days": 5,
+   "start_close": 550.25,
+   "end_close": 612.91,
+   "return_": 0.1138755111313039,
+   "worst_single_day_jump": 0.08808961636102186,
+   "retained_gains": [
+    0.0593,
+    0.0909
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  },
+  {
+   "ticker": "TSLA",
+   "start_date": "2026-04-14",
+   "end_date": "2026-04-17",
+   "sessions": 3,
+   "calendar_days": 3,
+   "start_close": 364.2,
+   "end_close": 400.62,
+   "return_": 0.10000000000000009,
+   "worst_single_day_jump": 0.07619439868204281,
+   "retained_gains": [
+    0.0777,
+    0.061
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  },
+  {
+   "ticker": "CDNS",
+   "start_date": "2026-05-27",
+   "end_date": "2026-06-01",
+   "sessions": 3,
+   "calendar_days": 5,
+   "start_close": 374.05,
+   "end_close": 414.16,
+   "return_": 0.10723165352225639,
+   "worst_single_day_jump": 0.10463286480142964,
+   "retained_gains": [
+    0.1132,
+    0.0908
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  },
+  {
+   "ticker": "AMZN",
+   "start_date": "2025-10-29",
+   "end_date": "2025-11-03",
+   "sessions": 3,
+   "calendar_days": 5,
+   "start_close": 230.3,
+   "end_close": 254.0,
+   "return_": 0.10290924880590535,
+   "worst_single_day_jump": 0.09584492506506326,
+   "retained_gains": [
+    0.0826,
+    0.0864
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": true
+  }
+ ],
+ "rejected_candidates": [
+  {
+   "ticker": "STX",
+   "start_date": "2026-05-13",
+   "end_date": "2026-06-01",
+   "sessions": 12,
+   "calendar_days": 19,
+   "start_close": 817.35,
+   "end_close": 921.26,
+   "return_": 0.1271303603107603,
+   "worst_single_day_jump": 0.07907385463405547,
+   "retained_gains": [
+    0.1337,
+    0.1509
+   ],
+   "checks": {
+    "calendar": false,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": false
+  },
+  {
+   "ticker": "NOW",
+   "start_date": "2026-08-10",
+   "end_date": "2026-08-27",
+   "sessions": 13,
+   "calendar_days": 17,
+   "start_close": 127.44,
+   "end_close": 138.43,
+   "return_": 0.08623666038920286,
+   "worst_single_day_jump": 0.10039745627980934,
+   "retained_gains": [
+    0.1355,
+    0.1613
+   ],
+   "checks": {
+    "calendar": false,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": false
+  },
+  {
+   "ticker": "AMD",
+   "start_date": "2026-09-15",
+   "end_date": "2026-09-17",
+   "sessions": 2,
+   "calendar_days": 2,
+   "start_close": 504.2,
+   "end_close": 545.09,
+   "return_": 0.08109877032923452,
+   "worst_single_day_jump": 0.06359024390243917,
+   "retained_gains": [
+    0.1103,
+    0.2208
+   ],
+   "checks": {
+    "calendar": false,
+    "sessions": false,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": false
+  },
+  {
+   "ticker": "META",
+   "start_date": "2025-12-29",
+   "end_date": "2026-01-29",
+   "sessions": 21,
+   "calendar_days": 31,
+   "start_close": 658.69,
+   "end_close": 738.31,
+   "return_": 0.12087628474699774,
+   "worst_single_day_jump": 0.1040479715281204,
+   "retained_gains": [
+    0.0878,
+    0.0724
+   ],
+   "checks": {
+    "calendar": false,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": false
+  },
+  {
+   "ticker": "AMD",
+   "start_date": "2026-08-20",
+   "end_date": "2026-09-09",
+   "sessions": 13,
+   "calendar_days": 20,
+   "start_close": 469.455,
+   "end_close": 521.095,
+   "return_": 0.10999989349351913,
+   "worst_single_day_jump": 0.05898611721841829,
+   "retained_gains": [
+    0.0727,
+    0.0994
+   ],
+   "checks": {
+    "calendar": false,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": true
+   },
+   "accepted": false
+  },
+  {
+   "ticker": "MRVL",
+   "start_date": "2026-04-22",
+   "end_date": "2026-05-06",
+   "sessions": 10,
+   "calendar_days": 14,
+   "start_close": 157.32,
+   "end_close": 172.15,
+   "return_": 0.09426646325959842,
+   "worst_single_day_jump": 0.05479977007089487,
+   "retained_gains": [
+    0.0171,
+    0.0814
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": false
+   },
+   "accepted": false
+  },
+  {
+   "ticker": "MSFT",
+   "start_date": "2026-05-18",
+   "end_date": "2026-06-01",
+   "sessions": 9,
+   "calendar_days": 14,
+   "start_close": 423.54,
+   "end_close": 460.52,
+   "return_": 0.08731170609623629,
+   "worst_single_day_jump": 0.05445092390922501,
+   "retained_gains": [
+    0.042,
+    0.009
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": false
+   },
+   "accepted": false
+  },
+  {
+   "ticker": "AMD",
+   "start_date": "2026-03-18",
+   "end_date": "2026-03-25",
+   "sessions": 5,
+   "calendar_days": 7,
+   "start_close": 199.46,
+   "end_close": 220.27,
+   "return_": 0.10433169557806088,
+   "worst_single_day_jump": 0.0725519793543361,
+   "retained_gains": [
+    0.0216,
+    0.0127
+   ],
+   "checks": {
+    "calendar": true,
+    "sessions": true,
+    "no_big_jump": true,
+    "follow_through": false
+   },
+   "accepted": false
+  }
+ ],
+ "counts": {
+  "accepted_total": 721,
+  "rejected_total": 1514,
+  "sampled": 26
+ },
+ "rejection_reason_counts": {
+  "calendar": 1244,
+  "follow_through": 262,
+  "sessions": 270,
+  "no_big_jump": 275
+ },
+ "note": "accepted_total 是满足全部条件的候选区间数；最终标签在剔除相互重叠的候选后保留涨幅最大的一段，得到 157 段。rejected_total 是找到了 +8% 收盘穿越但不满足至少一条条件的候选。"
+}

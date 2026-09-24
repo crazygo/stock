@@ -1,0 +1,345 @@
+{
+ "generated_at": "2026-09-24T17:07:27+08:00",
+ "spec": "spec_v1.md",
+ "primary_label": "Y_high(q) = 1[max High_u / Entry - 1 >= q], u in (t, t+3 trading days]",
+ "sensitivity_label": "Y_close(q) = 1[max Close_u / Entry - 1 >= q]",
+ "entry_rule": "open of the next tradable regular-session bar (baseline simulated entry, not a fill guarantee)",
+ "sample": {
+  "observations_total": 22788,
+  "observations_judged": 22428,
+  "observations_unjudged": 360,
+  "unjudged_reasons": {
+   "horizon_beyond_data": 360
+  },
+  "sample_is_fully_observed": true,
+  "sample_note": "every judged observation has its full 3-trading-day horizon inside the archive; observations whose horizon would run past the last session are dropped, not kept as negatives",
+  "stocks": [
+   "AAPL",
+   "AMD",
+   "AMZN",
+   "AVGO",
+   "CDNS",
+   "DT",
+   "GOOGL",
+   "META",
+   "MRVL",
+   "MSFT",
+   "MU",
+   "NOW",
+   "NVDA",
+   "PLTR",
+   "QCOM",
+   "SMCI",
+   "STX",
+   "TSLA"
+  ],
+  "sessions": 181,
+  "first_session": "2026-01-02",
+  "last_session": "2026-09-22"
+ },
+ "baselines_high": {
+  "4%": {
+   "n": 22428,
+   "hits": 9203,
+   "rate": 0.410335,
+   "binom_ci_independent_reference": [
+    0.403913,
+    0.416788
+   ],
+   "calendar_block_ci": [
+    0.381443,
+    0.439852
+   ],
+   "five_day_block_ci": [
+    0.368602,
+    0.454189
+   ],
+   "bars_to_target_median": 8
+  },
+  "5%": {
+   "n": 22428,
+   "hits": 7425,
+   "rate": 0.331059,
+   "binom_ci_independent_reference": [
+    0.32493,
+    0.337247
+   ],
+   "calendar_block_ci": [
+    0.304307,
+    0.358347
+   ],
+   "five_day_block_ci": [
+    0.291711,
+    0.372249
+   ],
+   "bars_to_target_median": 10
+  },
+  "6%": {
+   "n": 22428,
+   "hits": 5960,
+   "rate": 0.265739,
+   "binom_ci_independent_reference": [
+    0.259999,
+    0.27156
+   ],
+   "calendar_block_ci": [
+    0.24028,
+    0.291421
+   ],
+   "five_day_block_ci": [
+    0.228999,
+    0.30388
+   ],
+   "bars_to_target_median": 11.0
+  },
+  "7%": {
+   "n": 22428,
+   "hits": 4869,
+   "rate": 0.217095,
+   "binom_ci_independent_reference": [
+    0.211748,
+    0.222539
+   ],
+   "calendar_block_ci": [
+    0.195024,
+    0.239611
+   ],
+   "five_day_block_ci": [
+    0.184814,
+    0.251427
+   ],
+   "bars_to_target_median": 11
+  },
+  "8%": {
+   "n": 22428,
+   "hits": 4012,
+   "rate": 0.178884,
+   "binom_ci_independent_reference": [
+    0.173923,
+    0.183954
+   ],
+   "calendar_block_ci": [
+    0.158819,
+    0.199349
+   ],
+   "five_day_block_ci": [
+    0.149912,
+    0.210139
+   ],
+   "bars_to_target_median": 12.0
+  }
+ },
+ "baselines_close": {
+  "4%": {
+   "n": 22428,
+   "hits": 7747,
+   "rate": 0.345416,
+   "binom_ci_independent_reference": [
+    0.33922,
+    0.351666
+   ],
+   "calendar_block_ci": null
+  },
+  "5%": {
+   "n": 22428,
+   "hits": 6151,
+   "rate": 0.274255,
+   "binom_ci_independent_reference": [
+    0.268456,
+    0.280133
+   ],
+   "calendar_block_ci": null
+  },
+  "6%": {
+   "n": 22428,
+   "hits": 4932,
+   "rate": 0.219904,
+   "binom_ci_independent_reference": [
+    0.214531,
+    0.225372
+   ],
+   "calendar_block_ci": null
+  },
+  "7%": {
+   "n": 22428,
+   "hits": 4017,
+   "rate": 0.179106,
+   "binom_ci_independent_reference": [
+    0.174143,
+    0.18418
+   ],
+   "calendar_block_ci": null
+  },
+  "8%": {
+   "n": 22428,
+   "hits": 3312,
+   "rate": 0.147673,
+   "binom_ci_independent_reference": [
+    0.14309,
+    0.152376
+   ],
+   "calendar_block_ci": null
+  }
+ },
+ "episode_reconciliation": {
+  "judged_observations": 22428,
+  "attributed_to_an_episode": 22131,
+  "unattributed": 297,
+  "episodes": 1349,
+  "observations_per_episode_mean": 16.41,
+  "observations_per_episode_median": 10,
+  "observations_per_episode_max": 154,
+  "episode_id_includes_ticker": true,
+  "by_target": {
+   "4%": {
+    "episodes": 1349,
+    "episodes_with_a_hit": 915,
+    "share_of_episodes_with_a_successful_entry": 0.67828
+   },
+   "5%": {
+    "episodes": 1349,
+    "episodes_with_a_hit": 784,
+    "share_of_episodes_with_a_successful_entry": 0.581171
+   },
+   "6%": {
+    "episodes": 1349,
+    "episodes_with_a_hit": 653,
+    "share_of_episodes_with_a_successful_entry": 0.484062
+   },
+   "7%": {
+    "episodes": 1349,
+    "episodes_with_a_hit": 557,
+    "share_of_episodes_with_a_successful_entry": 0.412898
+   },
+   "8%": {
+    "episodes": 1349,
+    "episodes_with_a_hit": 467,
+    "share_of_episodes_with_a_successful_entry": 0.346182
+   }
+  },
+  "warning": "share_of_episodes_with_a_successful_entry gives every episode many chances, so it is NOT a precision and must not replace the observation-level rate or feed a live confidence number"
+ },
+ "barrier_order": {
+  "up_4%_vs_down_3%": {
+   "up_barrier_first": 0.339219,
+   "down_barrier_first": 0.447209,
+   "same_bar_ambiguous": 0.00214,
+   "neither_within_3d": 0.211432
+  },
+  "up_4%_vs_down_5%": {
+   "up_barrier_first": 0.383628,
+   "down_barrier_first": 0.257937,
+   "same_bar_ambiguous": 0.000134,
+   "neither_within_3d": 0.358302
+  },
+  "up_4%_vs_down_8%": {
+   "up_barrier_first": 0.404717,
+   "down_barrier_first": 0.1145,
+   "same_bar_ambiguous": 0.0,
+   "neither_within_3d": 0.480783
+  },
+  "up_5%_vs_down_3%": {
+   "up_barrier_first": 0.273096,
+   "down_barrier_first": 0.463216,
+   "same_bar_ambiguous": 0.000892,
+   "neither_within_3d": 0.262797
+  },
+  "up_5%_vs_down_5%": {
+   "up_barrier_first": 0.308677,
+   "down_barrier_first": 0.268325,
+   "same_bar_ambiguous": 4.5e-05,
+   "neither_within_3d": 0.422953
+  },
+  "up_5%_vs_down_8%": {
+   "up_barrier_first": 0.326467,
+   "down_barrier_first": 0.119092,
+   "same_bar_ambiguous": 0.0,
+   "neither_within_3d": 0.554441
+  },
+  "up_6%_vs_down_3%": {
+   "up_barrier_first": 0.217362,
+   "down_barrier_first": 0.475076,
+   "same_bar_ambiguous": 0.000268,
+   "neither_within_3d": 0.307294
+  },
+  "up_6%_vs_down_5%": {
+   "up_barrier_first": 0.246834,
+   "down_barrier_first": 0.276217,
+   "same_bar_ambiguous": 4.5e-05,
+   "neither_within_3d": 0.476904
+  },
+  "up_6%_vs_down_8%": {
+   "up_barrier_first": 0.261816,
+   "down_barrier_first": 0.12257,
+   "same_bar_ambiguous": 0.0,
+   "neither_within_3d": 0.615614
+  },
+  "up_7%_vs_down_3%": {
+   "up_barrier_first": 0.176788,
+   "down_barrier_first": 0.480471,
+   "same_bar_ambiguous": 8.9e-05,
+   "neither_within_3d": 0.342652
+  },
+  "up_7%_vs_down_5%": {
+   "up_barrier_first": 0.20189,
+   "down_barrier_first": 0.279561,
+   "same_bar_ambiguous": 0.0,
+   "neither_within_3d": 0.518548
+  },
+  "up_7%_vs_down_8%": {
+   "up_barrier_first": 0.214018,
+   "down_barrier_first": 0.124309,
+   "same_bar_ambiguous": 0.0,
+   "neither_within_3d": 0.661673
+  },
+  "up_8%_vs_down_3%": {
+   "up_barrier_first": 0.145354,
+   "down_barrier_first": 0.484662,
+   "same_bar_ambiguous": 4.5e-05,
+   "neither_within_3d": 0.369939
+  },
+  "up_8%_vs_down_5%": {
+   "up_barrier_first": 0.166221,
+   "down_barrier_first": 0.28237,
+   "same_bar_ambiguous": 0.0,
+   "neither_within_3d": 0.551409
+  },
+  "up_8%_vs_down_8%": {
+   "up_barrier_first": 0.176565,
+   "down_barrier_first": 0.125602,
+   "same_bar_ambiguous": 0.0,
+   "neither_within_3d": 0.697833
+  }
+ },
+ "down_barrier_ever_touched": {
+  "3%": 0.491038,
+  "5%": 0.286383,
+  "8%": 0.127162
+ },
+ "monotonic_high": true,
+ "mfe_distribution": {
+  "min": 0.0,
+  "p25": 0.013,
+  "p50": 0.0314,
+  "p75": 0.063,
+  "p90": 0.1106,
+  "p99": 0.252,
+  "max": 0.6299
+ },
+ "mae_distribution": {
+  "min": -0.3718,
+  "p25": -0.0547,
+  "p50": -0.0294,
+  "p75": -0.0125,
+  "p90": -0.0045,
+  "p99": -0.0004,
+  "max": 0.0
+ },
+ "high_vs_close_gap_pp": {
+  "4%": 6.492,
+  "5%": 5.68,
+  "6%": 4.584,
+  "7%": 3.799,
+  "8%": 3.121
+ }
+}

@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>美股盘中实时异动与 3日5% 达成率监控看板（持仓 + 特别关注）</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --line: #cbd5e1;
+  --shade: #f1f5f9;
+  --up: #15803d;
+  --up-bg: #dcfce7;
+  --up-border: #86efac;
+  --down: #b91c1c;
+  --down-bg: #fee2e2;
+  --down-border: #fca5a5;
+  --accent: #2563eb;
+  --accent-bg: #eff6ff;
+  --hold-tag: #0f172a;
+  --hold-bg: #e2e8f0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  padding: 16px 20px 60px;
+}
+
+header.wf-header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 14px 20px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header-titles h1 {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+.header-titles p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.sync-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--shade);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 3px;
+  font-size: 11.5px;
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 2px rgba(16,185,129,0.2);
+}
+
+/* Summary Metric Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 3px;
+}
+.card span { font-size: 11px; color: var(--muted); display: block; }
+.card b { font-size: 19px; font-weight: 800; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+/* Filter Controls Bar */
+.controls-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.tab-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+.tab-btn:hover { background: var(--shade); }
+.tab-btn.active {
+  background: #0f172a;
+  color: #fff;
+  border-color: #0f172a;
+}
+.search-input {
+  border: 1px solid var(--border);
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 3px;
+  width: 180px;
+  outline: none;
+}
+.search-input:focus { border-color: var(--accent); }
+
+/* Strategy Notes Accordion */
+details.notes-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  font-size: 12px;
+}
+details.notes-panel summary {
+  font-weight: 700;
+  cursor: pointer;
+  color: #1e293b;
+}
+.notes-content {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  line-height: 1.6;
+  color: #334155;
+}
+
+/* Main Table */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow-x: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+table.monitor-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  white-space: nowrap;
+}
+th, td {
+  padding: 8px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  font-size: 11.5px;
+  border-bottom: 2px solid var(--line);
+  user-select: none;
+  cursor: pointer;
+}
+th:hover { background: #f1f5f9; }
+th.text-left, td.text-left { text-align: left; }
+th.text-center, td.text-center { text-align: center; }
+
+tr:hover td { background: #f8fafc; }
+tr.row-holding {
+  background: #fcfcfc;
+}
+tr.row-holding td:first-child {
+  border-left: 3px solid #0f172a;
+}
+
+/* Badges & Tags */
+.tag-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.tag-holding { background: #e2e8f0; color: #0f172a; border: 1px solid #cbd5e1; }
+.tag-fav { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.tag-bad { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+.cell-rate {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 3px;
+  display: inline-block;
+  min-width: 60px;
+  text-align: right;
+}
+.rate-high { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.rate-mid { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+.rate-low { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+.sub-pill {
+  font-size: 10.5px;
+  color: var(--muted);
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  margin-top: 1px;
+}
+
+.chg-up { color: #15803d; font-weight: 700; font-family: monospace; }
+.chg-down { color: #b91c1c; font-weight: 700; font-family: monospace; }
+.chg-flat { color: #64748b; font-family: monospace; }
+
+.runup-badge {
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  margin-left: 4px;
+  font-weight: 600;
+}
+.runup-badge.hit {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #15803d;
+}
+
+/* Sticky first column */
+.col-sticky {
+  position: sticky;
+  left: 0;
+  background: var(--surface);
+  z-index: 2;
+  box-shadow: 2px 0 3px rgba(0,0,0,0.03);
+}
+th.col-sticky { background: #f8fafc; z-index: 3; }
+
+footer.wf-footer {
+  margin-top: 20px;
+  font-size: 11.5px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
+</head>
+<body>
+
+<header class="wf-header">
+  <div class="header-titles">
+    <h1>美股持仓与特别关注标的 · 盘中实时异动 & 3日5% 达成率监控</h1>
+    <p>实时读取富途 OpenD 真实账户持仓与自选分组 | 覆盖开盘至 -1 小时（10:30、11:30）走势与过去 3 日达成率闭环</p>
+  </div>
+  <div class="sync-badge">
+    <div class="pulse-dot"></div>
+    <span>行情更新：<b>2026-09-24 23:53:06 ET</b>（美东时间）</span>
+  </div>
+</header>
+
+<!-- Summary Metric Cards -->
+<section class="summary-cards" id="summary-cards">
+  <div class="card">
+    <span>监控目标总数</span>
+    <b>31 只</b>
+  </div>
+  <div class="card">
+    <span>当前账户持仓</span>
+    <b>4 只</b>
+  </div>
+  <div class="card">
+    <span>今日上涨标的数</span>
+    <b style="color:var(--up);" id="stat-up-count">-</b>
+  </div>
+  <div class="card">
+    <span>D-3 (09-21) 均值达成率</span>
+    <b id="stat-d3-avg">-</b>
+  </div>
+  <div class="card">
+    <span>开盘首小时 (10:30) 均值达成率</span>
+    <b id="stat-h1030-avg">-</b>
+  </div>
+</section>
+
+<!-- Strategy Notes -->
+<details class="notes-panel">
+  <summary>💡 本页面策略思路与字段说明（点击展开查看）</summary>
+  <div class="notes-content">
+    <p><b>1. 为什么重点监控“开盘到现在的 -1 小时”？</b><br>
+    根据我们在聚类方法 1 与方法 2 中的重大实证发现：美股单日开盘首小时（10:30）与次小时（11:30）的群体达成率，对全天后续时段的胜率具有高达 <b>r = 0.788 ~ 0.886</b> 的决定性预测力。开盘两小时放量抗跌且达成率高（&ge;50%）的标的，往往全天动能强劲；反之首小时砸盘的标的，全天绝不轻易追入。</p>
+    <p style="margin-top:6px;"><b>2. 四大核心达成率列定义（以 3 日内最高价涨 &ge; 5% 为目标）：</b><br>
+    • <b>今天-3（09-21 周一）</b>：分母为当天 7 个交易小时（10:30~16:00），分子为后续 3 天内触达 +5% 的小时数。历经 3 天交易后，该列已近乎 100% 闭环，体现该股初期的突破兑现能力；<br>
+    • <b>今天-2（09-22 周二）</b>与 <b>今天-1（09-23 周三）</b>：尚在 3 日窗口内（打 ⏳ 标识）。若当前已有小时触及 +5% 则提前确认为达成，并展示最大浮盈；<br>
+    • <b>今天（09-24 周四）</b>：分母为今天已完成的时段数（10:30 与 11:30 共 2 个时段），分子为截至目前已触达 +5% 的时段数，并展示入场至今的盘中最高冲幅（Max Run-up %）。</p>
+  </div>
+</details>
+
+<!-- Controls Bar -->
+<section class="controls-bar">
+  <div class="filter-tabs">
+    <button class="tab-btn active" id="tab-all" onclick="filterCategory('all')">全部标的 (31)</button>
+    <button class="tab-btn" id="tab-holding" onclick="filterCategory('holding')">我的持仓 (4)</button>
+    <button class="tab-btn" id="tab-fav" onclick="filterCategory('fav')">特别关注 (25)</button>
+    <button class="tab-btn" id="tab-up" onclick="filterCategory('up')">今日上涨</button>
+    <button class="tab-btn" id="tab-hit" onclick="filterCategory('hit')">近期高胜率 (&ge;50%)</button>
+  </div>
+  <div>
+    <input type="text" id="search-box" class="search-input" placeholder="输入代码或名称筛选..." oninput="onSearch(this.value)">
+  </div>
+</section>
+
+<!-- Table -->
+<main class="table-wrap">
+  <table class="monitor-table" id="monitor-table">
+    <thead>
+      <tr>
+        <th class="col-sticky text-left" onclick="sortTable('ticker')">标的代码 / 名称</th>
+        <th class="text-center" onclick="sortTable('category')">分组类别</th>
+        <th onclick="sortTable('last_price')">最新价</th>
+        <th onclick="sortTable('chg_pct')">今日涨跌幅</th>
+        <th onclick="sortTable('amplitude')">日内振幅</th>
+        <th onclick="sortTable('completed_vol')">开盘-1h成交量 (10:30+11:30)</th>
+        <th onclick="sortTable('gain_1030')">首小时 (10:30) 冲幅</th>
+        <th onclick="sortTable('gain_1130')">次小时 (11:30) 冲幅</th>
+        <th class="text-center" onclick="sortTable('rate_d3')" style="background:#e2e8f0; color:#0f172a;">今天-3 (09-21)<br>3日5% 达成率</th>
+        <th class="text-center" onclick="sortTable('rate_d2')" style="background:#e2e8f0; color:#0f172a;">今天-2 (09-22)<br>3日5% 达成率</th>
+        <th class="text-center" onclick="sortTable('rate_d1')" style="background:#e2e8f0; color:#0f172a;">今天-1 (09-23)<br>3日5% 达成率</th>
+        <th class="text-center" onclick="sortTable('rate_today')" style="background:#cbd5e1; color:#0f172a; font-weight:800;">今天 (09-24)<br>3日5% 达成率</th>
+        <th class="text-left">持仓详情 (若有)</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <!-- Injected via JavaScript -->
+    </tbody>
+  </table>
+</main>
+
+<footer class="wf-footer">
+  <span>数据来源：本地富途牛牛 OpenD (端口 11111) | 生成时间：2026-09-24 23:53:06</span>
+  <span>归档目录：analysis/today_intraday_watch/</span>
+</footer>
+
+<script>
+const RAW_DATA = [{"code": "US.IHE", "ticker": "IHE", "name": "iShares安硕美国医药ETF", "category": "我的持仓", "is_holding": true, "pos_info": {"name": "iShares安硕美国医药ETF", "qty": 4.0, "cost": 101.25, "nominal_price": 101.91, "pnl_ratio": 0.65, "pnl_val": 2.64}, "last_price": 101.91, "chg_pct": 0.58, "open_price": 101.32, "high_price": 102.92, "low_price": 101.741, "amplitude": 1.164, "volume": 76971.0, "turnover": 7876368.701, "bar_1030": {"close": 102.6801, "vol": 19387.0, "max_gain": 0.23, "is_hit": false}, "bar_1130": {"close": 102.0, "vol": 21051.0, "max_gain": 0.9, "is_hit": false}, "completed_vol": 40438.0, "vol_share_pct": 52.5, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.37, "is_inflight": false, "hours": [{"time": "10:30", "entry": 102.2851, "max_h": 103.64, "gain": 1.32, "is_hit": false}, {"time": "11:30", "entry": 102.32, "max_h": 103.64, "gain": 1.29, "is_hit": false}, {"time": "12:30", "entry": 102.335, "max_h": 103.64, "gain": 1.28, "is_hit": false}, {"time": "13:30", "entry": 102.47, "max_h": 103.64, "gain": 1.14, "is_hit": false}, {"time": "14:30", "entry": 102.57, "max_h": 103.64, "gain": 1.04, "is_hit": false}, {"time": "15:30", "entry": 102.31, "max_h": 103.64, "gain": 1.3, "is_hit": false}, {"time": "16:00", "entry": 102.24, "max_h": 103.64, "gain": 1.37, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.61, "is_inflight": true, "hours": [{"time": "10:30", "entry": 102.0, "max_h": 103.64, "gain": 1.61, "is_hit": false}, {"time": "11:30", "entry": 103.2, "max_h": 103.64, "gain": 0.43, "is_hit": false}, {"time": "12:30", "entry": 102.64, "max_h": 103.64, "gain": 0.97, "is_hit": false}, {"time": "13:30", "entry": 102.58, "max_h": 103.64, "gain": 1.03, "is_hit": false}, {"time": "14:30", "entry": 103.0312, "max_h": 103.64, "gain": 0.59, "is_hit": false}, {"time": "15:30", "entry": 102.9, "max_h": 103.64, "gain": 0.72, "is_hit": false}, {"time": "16:00", "entry": 102.92, "max_h": 103.64, "gain": 0.7, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.99, "is_inflight": true, "hours": [{"time": "10:30", "entry": 102.89, "max_h": 102.92, "gain": 0.03, "is_hit": false}, {"time": "11:30", "entry": 101.88, "max_h": 102.92, "gain": 1.02, "is_hit": false}, {"time": "12:30", "entry": 101.45, "max_h": 102.92, "gain": 1.45, "is_hit": false}, {"time": "13:30", "entry": 100.91, "max_h": 102.92, "gain": 1.99, "is_hit": false}, {"time": "14:30", "entry": 100.99, "max_h": 102.92, "gain": 1.91, "is_hit": false}, {"time": "15:30", "entry": 101.36, "max_h": 102.92, "gain": 1.54, "is_hit": false}, {"time": "16:00", "entry": 101.32, "max_h": 102.92, "gain": 1.58, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 0.9, "is_inflight": true, "hours": [{"time": "10:30", "entry": 102.6801, "max_h": 102.92, "gain": 0.23, "is_hit": false}, {"time": "11:30", "entry": 102.0, "max_h": 102.92, "gain": 0.9, "is_hit": false}]}}}, {"code": "US.VOO", "ticker": "VOO", "name": "标普500ETF-Vanguard", "category": "我的持仓", "is_holding": true, "pos_info": {"name": "标普500ETF-Vanguard", "qty": 1.0, "cost": 697.14, "nominal_price": 704.26, "pnl_ratio": 1.02, "pnl_val": 7.12}, "last_price": 704.26, "chg_pct": -0.47, "open_price": 704.16, "high_price": 706.2512, "low_price": 703.35, "amplitude": 0.41, "volume": 1738490.0, "turnover": 1225160126.725, "bar_1030": {"close": 705.91, "vol": 549305.0, "max_gain": 0.05, "is_hit": false}, "bar_1130": {"close": 703.735, "vol": 239431.0, "max_gain": 0.36, "is_hit": false}, "completed_vol": 788736.0, "vol_share_pct": 45.4, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.8, "is_inflight": false, "hours": [{"time": "10:30", "entry": 708.665, "max_h": 714.3, "gain": 0.8, "is_hit": false}, {"time": "11:30", "entry": 709.4681, "max_h": 714.3, "gain": 0.68, "is_hit": false}, {"time": "12:30", "entry": 711.26, "max_h": 714.3, "gain": 0.43, "is_hit": false}, {"time": "13:30", "entry": 712.15, "max_h": 714.3, "gain": 0.3, "is_hit": false}, {"time": "14:30", "entry": 713.125, "max_h": 714.3, "gain": 0.16, "is_hit": false}, {"time": "15:30", "entry": 713.34, "max_h": 714.3, "gain": 0.13, "is_hit": false}, {"time": "16:00", "entry": 712.78, "max_h": 714.3, "gain": 0.21, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.26, "is_inflight": true, "hours": [{"time": "10:30", "entry": 712.86, "max_h": 714.13, "gain": 0.18, "is_hit": false}, {"time": "11:30", "entry": 712.6999, "max_h": 714.13, "gain": 0.2, "is_hit": false}, {"time": "12:30", "entry": 712.28, "max_h": 714.13, "gain": 0.26, "is_hit": false}, {"time": "13:30", "entry": 712.87, "max_h": 714.13, "gain": 0.18, "is_hit": false}, {"time": "14:30", "entry": 713.415, "max_h": 714.13, "gain": 0.1, "is_hit": false}, {"time": "15:30", "entry": 713.65, "max_h": 714.13, "gain": 0.07, "is_hit": false}, {"time": "16:00", "entry": 712.78, "max_h": 712.38, "gain": -0.06, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.23, "is_inflight": true, "hours": [{"time": "10:30", "entry": 708.525, "max_h": 710.095, "gain": 0.22, "is_hit": false}, {"time": "11:30", "entry": 708.6704, "max_h": 708.8999, "gain": 0.03, "is_hit": false}, {"time": "12:30", "entry": 708.1204, "max_h": 708.7, "gain": 0.08, "is_hit": false}, {"time": "13:30", "entry": 707.1, "max_h": 708.7, "gain": 0.23, "is_hit": false}, {"time": "14:30", "entry": 708.02, "max_h": 708.06, "gain": 0.01, "is_hit": false}, {"time": "15:30", "entry": 707.41, "max_h": 707.845, "gain": 0.06, "is_hit": false}, {"time": "16:00", "entry": 707.6, "max_h": 706.2512, "gain": -0.19, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 0.36, "is_inflight": true, "hours": [{"time": "10:30", "entry": 705.91, "max_h": 706.2512, "gain": 0.05, "is_hit": false}, {"time": "11:30", "entry": 703.735, "max_h": 706.2512, "gain": 0.36, "is_hit": false}]}}}, {"code": "US.SMH", "ticker": "SMH", "name": "半导体指数ETF-VanEck", "category": "我的持仓", "is_holding": true, "pos_info": {"name": "半导体指数ETF-VanEck", "qty": 2.0, "cost": 563.795, "nominal_price": 593.655, "pnl_ratio": 5.3, "pnl_val": 59.72}, "last_price": 593.645, "chg_pct": -1.29, "open_price": 591.1, "high_price": 596.34, "low_price": 588.92, "amplitude": 1.234, "volume": 2487927.0, "turnover": 1473532583.543, "bar_1030": {"close": 594.52, "vol": 728202.0, "max_gain": 0.31, "is_hit": false}, "bar_1130": {"close": 591.75, "vol": 354281.0, "max_gain": 0.78, "is_hit": false}, "completed_vol": 1082483.0, "vol_share_pct": 43.5, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.78, "is_inflight": false, "hours": [{"time": "10:30", "entry": 586.51, "max_h": 608.665, "gain": 3.78, "is_hit": false}, {"time": "11:30", "entry": 591.17, "max_h": 608.665, "gain": 2.96, "is_hit": false}, {"time": "12:30", "entry": 592.16, "max_h": 608.665, "gain": 2.79, "is_hit": false}, {"time": "13:30", "entry": 592.7, "max_h": 608.665, "gain": 2.69, "is_hit": false}, {"time": "14:30", "entry": 594.705, "max_h": 608.665, "gain": 2.35, "is_hit": false}, {"time": "15:30", "entry": 596.241, "max_h": 608.665, "gain": 2.08, "is_hit": false}, {"time": "16:00", "entry": 596.03, "max_h": 608.665, "gain": 2.12, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.22, "is_inflight": true, "hours": [{"time": "10:30", "entry": 601.98, "max_h": 608.665, "gain": 1.11, "is_hit": false}, {"time": "11:30", "entry": 601.3, "max_h": 608.665, "gain": 1.22, "is_hit": false}, {"time": "12:30", "entry": 601.4707, "max_h": 608.665, "gain": 1.2, "is_hit": false}, {"time": "13:30", "entry": 603.7, "max_h": 608.665, "gain": 0.82, "is_hit": false}, {"time": "14:30", "entry": 605.52, "max_h": 608.665, "gain": 0.52, "is_hit": false}, {"time": "15:30", "entry": 606.0, "max_h": 608.665, "gain": 0.44, "is_hit": false}, {"time": "16:00", "entry": 607.46, "max_h": 606.285, "gain": -0.19, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.99, "is_inflight": true, "hours": [{"time": "10:30", "entry": 595.51, "max_h": 601.42, "gain": 0.99, "is_hit": false}, {"time": "11:30", "entry": 600.13, "max_h": 601.41, "gain": 0.21, "is_hit": false}, {"time": "12:30", "entry": 597.38, "max_h": 601.41, "gain": 0.67, "is_hit": false}, {"time": "13:30", "entry": 596.76, "max_h": 601.41, "gain": 0.78, "is_hit": false}, {"time": "14:30", "entry": 600.1723, "max_h": 601.41, "gain": 0.21, "is_hit": false}, {"time": "15:30", "entry": 599.68, "max_h": 601.41, "gain": 0.29, "is_hit": false}, {"time": "16:00", "entry": 601.41, "max_h": 596.34, "gain": -0.84, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 0.78, "is_inflight": true, "hours": [{"time": "10:30", "entry": 594.52, "max_h": 596.34, "gain": 0.31, "is_hit": false}, {"time": "11:30", "entry": 591.75, "max_h": 596.34, "gain": 0.78, "is_hit": false}]}}}, {"code": "US.SOXX", "ticker": "SOXX", "name": "半导体ETF-iShares", "category": "我的持仓", "is_holding": true, "pos_info": {"name": "半导体ETF-iShares", "qty": 1.0, "cost": 515.67, "nominal_price": 557.445, "pnl_ratio": 8.1, "pnl_val": 41.775}, "last_price": 557.445, "chg_pct": -1.46, "open_price": 555.27, "high_price": 561.91, "low_price": 553.24, "amplitude": 1.533, "volume": 2134797.0, "turnover": 1188484604.588, "bar_1030": {"close": 558.94, "vol": 656203.0, "max_gain": 0.53, "is_hit": false}, "bar_1130": {"close": 555.905, "vol": 251111.0, "max_gain": 1.08, "is_hit": false}, "completed_vol": 907314.0, "vol_share_pct": 42.5, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 4.02, "is_inflight": false, "hours": [{"time": "10:30", "entry": 551.33, "max_h": 573.52, "gain": 4.02, "is_hit": false}, {"time": "11:30", "entry": 555.82, "max_h": 573.52, "gain": 3.18, "is_hit": false}, {"time": "12:30", "entry": 556.15, "max_h": 573.52, "gain": 3.12, "is_hit": false}, {"time": "13:30", "entry": 555.32, "max_h": 573.52, "gain": 3.28, "is_hit": false}, {"time": "14:30", "entry": 557.67, "max_h": 573.52, "gain": 2.84, "is_hit": false}, {"time": "15:30", "entry": 559.17, "max_h": 573.52, "gain": 2.57, "is_hit": false}, {"time": "16:00", "entry": 559.34, "max_h": 573.52, "gain": 2.54, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.47, "is_inflight": true, "hours": [{"time": "10:30", "entry": 566.54, "max_h": 573.52, "gain": 1.23, "is_hit": false}, {"time": "11:30", "entry": 565.21, "max_h": 573.52, "gain": 1.47, "is_hit": false}, {"time": "12:30", "entry": 565.56, "max_h": 573.52, "gain": 1.41, "is_hit": false}, {"time": "13:30", "entry": 567.75, "max_h": 573.52, "gain": 1.02, "is_hit": false}, {"time": "14:30", "entry": 569.8, "max_h": 573.52, "gain": 0.65, "is_hit": false}, {"time": "15:30", "entry": 570.235, "max_h": 573.52, "gain": 0.58, "is_hit": false}, {"time": "16:00", "entry": 572.78, "max_h": 571.55, "gain": -0.21, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.24, "is_inflight": true, "hours": [{"time": "10:30", "entry": 558.765, "max_h": 565.72, "gain": 1.24, "is_hit": false}, {"time": "11:30", "entry": 564.21, "max_h": 565.72, "gain": 0.27, "is_hit": false}, {"time": "12:30", "entry": 561.48, "max_h": 565.72, "gain": 0.76, "is_hit": false}, {"time": "13:30", "entry": 560.465, "max_h": 565.72, "gain": 0.94, "is_hit": false}, {"time": "14:30", "entry": 564.27, "max_h": 565.72, "gain": 0.26, "is_hit": false}, {"time": "15:30", "entry": 563.925, "max_h": 565.72, "gain": 0.32, "is_hit": false}, {"time": "16:00", "entry": 565.72, "max_h": 561.91, "gain": -0.67, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 1.08, "is_inflight": true, "hours": [{"time": "10:30", "entry": 558.94, "max_h": 561.91, "gain": 0.53, "is_hit": false}, {"time": "11:30", "entry": 555.905, "max_h": 561.91, "gain": 1.08, "is_hit": false}]}}}, {"code": "US.TWST", "ticker": "TWST", "name": "Twist Bioscience", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 171.065, "chg_pct": 7.93, "open_price": 157.67, "high_price": 179.83, "low_price": 156.83, "amplitude": 14.511, "volume": 1564837.0, "turnover": 270147075.08, "bar_1030": {"close": 177.7, "vol": 553493.0, "max_gain": 1.2, "is_hit": false}, "bar_1130": {"close": 172.66, "vol": 385436.0, "max_gain": 4.15, "is_hit": false}, "completed_vol": 938929.0, "vol_share_pct": 60.0, "metrics": {"d_minus_3": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 11.47, "is_inflight": false, "hours": [{"time": "10:30", "entry": 165.56, "max_h": 179.83, "gain": 8.62, "is_hit": true}, {"time": "11:30", "entry": 165.0, "max_h": 179.83, "gain": 8.99, "is_hit": true}, {"time": "12:30", "entry": 162.56, "max_h": 179.83, "gain": 10.62, "is_hit": true}, {"time": "13:30", "entry": 161.33, "max_h": 179.83, "gain": 11.47, "is_hit": true}, {"time": "14:30", "entry": 163.61, "max_h": 179.83, "gain": 9.91, "is_hit": true}, {"time": "15:30", "entry": 162.55, "max_h": 179.83, "gain": 10.63, "is_hit": true}, {"time": "16:00", "entry": 165.83, "max_h": 179.83, "gain": 8.44, "is_hit": true}]}, "d_minus_2": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 9.25, "is_inflight": true, "hours": [{"time": "10:30", "entry": 170.15, "max_h": 179.83, "gain": 5.69, "is_hit": true}, {"time": "11:30", "entry": 167.895, "max_h": 179.83, "gain": 7.11, "is_hit": true}, {"time": "12:30", "entry": 167.35, "max_h": 179.83, "gain": 7.46, "is_hit": true}, {"time": "13:30", "entry": 167.375, "max_h": 179.83, "gain": 7.44, "is_hit": true}, {"time": "14:30", "entry": 168.77, "max_h": 179.83, "gain": 6.55, "is_hit": true}, {"time": "15:30", "entry": 167.77, "max_h": 179.83, "gain": 7.19, "is_hit": true}, {"time": "16:00", "entry": 164.6, "max_h": 179.83, "gain": 9.25, "is_hit": true}]}, "d_minus_1": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 13.46, "is_inflight": true, "hours": [{"time": "10:30", "entry": 161.425, "max_h": 179.83, "gain": 11.4, "is_hit": true}, {"time": "11:30", "entry": 158.76, "max_h": 179.83, "gain": 13.27, "is_hit": true}, {"time": "12:30", "entry": 160.11, "max_h": 179.83, "gain": 12.32, "is_hit": true}, {"time": "13:30", "entry": 159.405, "max_h": 179.83, "gain": 12.81, "is_hit": true}, {"time": "14:30", "entry": 158.6, "max_h": 179.83, "gain": 13.39, "is_hit": true}, {"time": "15:30", "entry": 158.635, "max_h": 179.83, "gain": 13.36, "is_hit": true}, {"time": "16:00", "entry": 158.5, "max_h": 179.83, "gain": 13.46, "is_hit": true}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 4.15, "is_inflight": true, "hours": [{"time": "10:30", "entry": 177.7, "max_h": 179.83, "gain": 1.2, "is_hit": false}, {"time": "11:30", "entry": 172.66, "max_h": 179.83, "gain": 4.15, "is_hit": false}]}}}, {"code": "US.TXG", "ticker": "TXG", "name": "10x Genomics", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 81.09, "chg_pct": 7.23, "open_price": 75.5, "high_price": 81.67, "low_price": 74.6, "amplitude": 9.349, "volume": 1207970.0, "turnover": 96436478.662, "bar_1030": {"close": 81.115, "vol": 524305.0, "max_gain": 0.68, "is_hit": false}, "bar_1130": {"close": 80.17, "vol": 327203.0, "max_gain": 1.87, "is_hit": false}, "completed_vol": 851508.0, "vol_share_pct": 70.5, "metrics": {"d_minus_3": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 5.76, "is_inflight": false, "hours": [{"time": "10:30", "entry": 78.92, "max_h": 82.68, "gain": 4.76, "is_hit": false}, {"time": "11:30", "entry": 79.05, "max_h": 82.68, "gain": 4.59, "is_hit": false}, {"time": "12:30", "entry": 78.945, "max_h": 82.68, "gain": 4.73, "is_hit": false}, {"time": "13:30", "entry": 78.18, "max_h": 82.68, "gain": 5.76, "is_hit": true}, {"time": "14:30", "entry": 79.28, "max_h": 82.68, "gain": 4.29, "is_hit": false}, {"time": "15:30", "entry": 79.01, "max_h": 82.68, "gain": 4.64, "is_hit": false}, {"time": "16:00", "entry": 79.1, "max_h": 82.68, "gain": 4.53, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.83, "is_inflight": true, "hours": [{"time": "10:30", "entry": 81.195, "max_h": 82.68, "gain": 1.83, "is_hit": false}, {"time": "11:30", "entry": 81.95, "max_h": 82.68, "gain": 0.89, "is_hit": false}, {"time": "12:30", "entry": 82.04, "max_h": 82.68, "gain": 0.78, "is_hit": false}, {"time": "13:30", "entry": 82.32, "max_h": 82.68, "gain": 0.44, "is_hit": false}, {"time": "14:30", "entry": 82.055, "max_h": 82.13, "gain": 0.09, "is_hit": false}, {"time": "15:30", "entry": 81.07, "max_h": 81.93, "gain": 1.06, "is_hit": false}, {"time": "16:00", "entry": 80.7, "max_h": 81.93, "gain": 1.52, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 6, "rate": 85.7, "max_gain": 8.76, "is_inflight": true, "hours": [{"time": "10:30", "entry": 78.54, "max_h": 81.67, "gain": 3.99, "is_hit": false}, {"time": "11:30", "entry": 77.0, "max_h": 81.67, "gain": 6.06, "is_hit": true}, {"time": "12:30", "entry": 77.19, "max_h": 81.67, "gain": 5.8, "is_hit": true}, {"time": "13:30", "entry": 75.47, "max_h": 81.67, "gain": 8.22, "is_hit": true}, {"time": "14:30", "entry": 75.09, "max_h": 81.67, "gain": 8.76, "is_hit": true}, {"time": "15:30", "entry": 75.275, "max_h": 81.67, "gain": 8.5, "is_hit": true}, {"time": "16:00", "entry": 75.62, "max_h": 81.67, "gain": 8.0, "is_hit": true}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 1.87, "is_inflight": true, "hours": [{"time": "10:30", "entry": 81.115, "max_h": 81.67, "gain": 0.68, "is_hit": false}, {"time": "11:30", "entry": 80.17, "max_h": 81.67, "gain": 1.87, "is_hit": false}]}}}, {"code": "US.SOXS", "ticker": "SOXS", "name": "三倍做空半导体ETF-Direxion", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 35.0826, "chg_pct": 4.23, "open_price": 35.54, "high_price": 35.83, "low_price": 34.3, "amplitude": 4.545, "volume": 50626053.0, "turnover": 1782086268.167, "bar_1030": {"close": 34.82, "vol": 10781990.0, "max_gain": 2.9, "is_hit": false}, "bar_1130": {"close": 35.3599, "vol": 4824580.0, "max_gain": 1.33, "is_hit": false}, "completed_vol": 15606570.0, "vol_share_pct": 30.8, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.2, "is_inflight": false, "hours": [{"time": "10:30", "entry": 36.781478393, "max_h": 37.015987416, "gain": 0.64, "is_hit": false}, {"time": "11:30", "entry": 35.733189222, "max_h": 36.09743366, "gain": 1.02, "is_hit": false}, {"time": "12:30", "entry": 35.668893362, "max_h": 36.019508263, "gain": 0.98, "is_hit": false}, {"time": "13:30", "entry": 35.841830459, "max_h": 36.01, "gain": 0.47, "is_hit": false}, {"time": "14:30", "entry": 35.313340224, "max_h": 36.01, "gain": 1.97, "is_hit": false}, {"time": "15:30", "entry": 34.945737784, "max_h": 36.01, "gain": 3.05, "is_hit": false}, {"time": "16:00", "entry": 34.89358999, "max_h": 36.01, "gain": 3.2, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 10.52, "is_inflight": true, "hours": [{"time": "10:30", "entry": 33.585, "max_h": 35.83, "gain": 6.68, "is_hit": true}, {"time": "11:30", "entry": 33.81, "max_h": 35.83, "gain": 5.97, "is_hit": true}, {"time": "12:30", "entry": 33.7785, "max_h": 35.83, "gain": 6.07, "is_hit": true}, {"time": "13:30", "entry": 33.3464, "max_h": 35.83, "gain": 7.45, "is_hit": true}, {"time": "14:30", "entry": 32.95, "max_h": 35.83, "gain": 8.74, "is_hit": true}, {"time": "15:30", "entry": 32.87, "max_h": 35.83, "gain": 9.01, "is_hit": true}, {"time": "16:00", "entry": 32.42, "max_h": 35.83, "gain": 10.52, "is_hit": true}]}, "d_minus_1": {"c": 7, "h": 4, "rate": 57.1, "max_gain": 6.45, "is_inflight": true, "hours": [{"time": "10:30", "entry": 34.77, "max_h": 35.83, "gain": 3.05, "is_hit": false}, {"time": "11:30", "entry": 33.8499, "max_h": 35.83, "gain": 5.85, "is_hit": true}, {"time": "12:30", "entry": 34.3302, "max_h": 35.83, "gain": 4.37, "is_hit": false}, {"time": "13:30", "entry": 34.4801, "max_h": 35.83, "gain": 3.92, "is_hit": false}, {"time": "14:30", "entry": 33.8587, "max_h": 35.83, "gain": 5.82, "is_hit": true}, {"time": "15:30", "entry": 33.905, "max_h": 35.83, "gain": 5.68, "is_hit": true}, {"time": "16:00", "entry": 33.66, "max_h": 35.83, "gain": 6.45, "is_hit": true}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.9, "is_inflight": true, "hours": [{"time": "10:30", "entry": 34.82, "max_h": 35.83, "gain": 2.9, "is_hit": false}, {"time": "11:30", "entry": 35.3599, "max_h": 35.83, "gain": 1.33, "is_hit": false}]}}}, {"code": "US.LIFE", "ticker": "LIFE", "name": "Ethos Technologies", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 35.1, "chg_pct": 3.51, "open_price": 34.0, "high_price": 35.3, "low_price": 33.75, "amplitude": 4.571, "volume": 717525.0, "turnover": 24944207.381, "bar_1030": {"close": 34.89, "vol": 168760.0, "max_gain": 1.18, "is_hit": false}, "bar_1130": {"close": 34.58, "vol": 105152.0, "max_gain": 2.08, "is_hit": false}, "completed_vol": 273912.0, "vol_share_pct": 38.2, "metrics": {"d_minus_3": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 5.1, "is_inflight": false, "hours": [{"time": "10:30", "entry": 36.44, "max_h": 38.0, "gain": 4.28, "is_hit": false}, {"time": "11:30", "entry": 36.25, "max_h": 38.0, "gain": 4.83, "is_hit": false}, {"time": "12:30", "entry": 36.59, "max_h": 38.0, "gain": 3.85, "is_hit": false}, {"time": "13:30", "entry": 36.155, "max_h": 38.0, "gain": 5.1, "is_hit": true}, {"time": "14:30", "entry": 36.25, "max_h": 38.0, "gain": 4.83, "is_hit": false}, {"time": "15:30", "entry": 36.55, "max_h": 38.0, "gain": 3.97, "is_hit": false}, {"time": "16:00", "entry": 36.49, "max_h": 38.0, "gain": 4.14, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 5.44, "is_inflight": true, "hours": [{"time": "10:30", "entry": 37.36, "max_h": 37.67, "gain": 0.83, "is_hit": false}, {"time": "11:30", "entry": 36.975, "max_h": 37.4897, "gain": 1.39, "is_hit": false}, {"time": "12:30", "entry": 36.75, "max_h": 37.4897, "gain": 2.01, "is_hit": false}, {"time": "13:30", "entry": 35.8, "max_h": 37.4897, "gain": 4.72, "is_hit": false}, {"time": "14:30", "entry": 35.555, "max_h": 37.4897, "gain": 5.44, "is_hit": true}, {"time": "15:30", "entry": 36.285, "max_h": 37.4897, "gain": 3.32, "is_hit": false}, {"time": "16:00", "entry": 36.19, "max_h": 37.4897, "gain": 3.59, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 2, "rate": 28.6, "max_gain": 6.2, "is_inflight": true, "hours": [{"time": "10:30", "entry": 35.63, "max_h": 35.64, "gain": 0.03, "is_hit": false}, {"time": "11:30", "entry": 34.26, "max_h": 35.3, "gain": 3.04, "is_hit": false}, {"time": "12:30", "entry": 33.615, "max_h": 35.3, "gain": 5.01, "is_hit": true}, {"time": "13:30", "entry": 33.24, "max_h": 35.3, "gain": 6.2, "is_hit": true}, {"time": "14:30", "entry": 33.785, "max_h": 35.3, "gain": 4.48, "is_hit": false}, {"time": "15:30", "entry": 33.62, "max_h": 35.3, "gain": 5.0, "is_hit": false}, {"time": "16:00", "entry": 33.91, "max_h": 35.3, "gain": 4.1, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.08, "is_inflight": true, "hours": [{"time": "10:30", "entry": 34.89, "max_h": 35.3, "gain": 1.18, "is_hit": false}, {"time": "11:30", "entry": 34.58, "max_h": 35.3, "gain": 2.08, "is_hit": false}]}}}, {"code": "US.IONL", "ticker": "IONL", "name": "2倍做多IONQ ETF-GraniteShares", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 14.54, "chg_pct": 1.04, "open_price": 13.65, "high_price": 14.92, "low_price": 13.5, "amplitude": 9.868, "volume": 589183.0, "turnover": 8414484.997, "bar_1030": {"close": 14.625, "vol": 208887.0, "max_gain": 2.02, "is_hit": false}, "bar_1130": {"close": 14.38, "vol": 76185.0, "max_gain": 3.76, "is_hit": false}, "completed_vol": 285072.0, "vol_share_pct": 48.4, "metrics": {"d_minus_3": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 27.81, "is_inflight": false, "hours": [{"time": "10:30", "entry": 12.9801, "max_h": 16.59, "gain": 27.81, "is_hit": true}, {"time": "11:30", "entry": 13.0, "max_h": 16.59, "gain": 27.62, "is_hit": true}, {"time": "12:30", "entry": 13.03, "max_h": 16.59, "gain": 27.32, "is_hit": true}, {"time": "13:30", "entry": 13.08, "max_h": 16.59, "gain": 26.83, "is_hit": true}, {"time": "14:30", "entry": 13.1443, "max_h": 16.59, "gain": 26.21, "is_hit": true}, {"time": "15:30", "entry": 13.11, "max_h": 16.59, "gain": 26.54, "is_hit": true}, {"time": "16:00", "entry": 13.05, "max_h": 16.59, "gain": 27.13, "is_hit": true}]}, "d_minus_2": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 29.71, "is_inflight": true, "hours": [{"time": "10:30", "entry": 12.79, "max_h": 16.59, "gain": 29.71, "is_hit": true}, {"time": "11:30", "entry": 12.88, "max_h": 16.59, "gain": 28.8, "is_hit": true}, {"time": "12:30", "entry": 12.9, "max_h": 16.59, "gain": 28.6, "is_hit": true}, {"time": "13:30", "entry": 12.91, "max_h": 16.59, "gain": 28.51, "is_hit": true}, {"time": "14:30", "entry": 12.96, "max_h": 16.59, "gain": 28.01, "is_hit": true}, {"time": "15:30", "entry": 13.0, "max_h": 16.59, "gain": 27.62, "is_hit": true}, {"time": "16:00", "entry": 13.17, "max_h": 16.59, "gain": 25.97, "is_hit": true}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 4.94, "is_inflight": true, "hours": [{"time": "10:30", "entry": 14.57, "max_h": 15.29, "gain": 4.94, "is_hit": false}, {"time": "11:30", "entry": 14.6, "max_h": 14.92, "gain": 2.19, "is_hit": false}, {"time": "12:30", "entry": 14.37, "max_h": 14.92, "gain": 3.83, "is_hit": false}, {"time": "13:30", "entry": 14.48, "max_h": 14.92, "gain": 3.04, "is_hit": false}, {"time": "14:30", "entry": 14.47, "max_h": 14.92, "gain": 3.11, "is_hit": false}, {"time": "15:30", "entry": 14.57, "max_h": 14.92, "gain": 2.4, "is_hit": false}, {"time": "16:00", "entry": 14.39, "max_h": 14.92, "gain": 3.68, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 3.76, "is_inflight": true, "hours": [{"time": "10:30", "entry": 14.625, "max_h": 14.92, "gain": 2.02, "is_hit": false}, {"time": "11:30", "entry": 14.38, "max_h": 14.92, "gain": 3.76, "is_hit": false}]}}}, {"code": "US.CIEN", "ticker": "CIEN", "name": "Ciena", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 356.53, "chg_pct": 0.17, "open_price": 348.5, "high_price": 360.78, "low_price": 346.56, "amplitude": 3.995, "volume": 491927.0, "turnover": 174689808.666, "bar_1030": {"close": 356.14, "vol": 170021.0, "max_gain": 1.3, "is_hit": false}, "bar_1130": {"close": 355.92, "vol": 71262.0, "max_gain": 1.37, "is_hit": false}, "completed_vol": 241283.0, "vol_share_pct": 49.0, "metrics": {"d_minus_3": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 5.17, "is_inflight": false, "hours": [{"time": "10:30", "entry": 365.885, "max_h": 376.74, "gain": 2.97, "is_hit": false}, {"time": "11:30", "entry": 364.2045, "max_h": 376.74, "gain": 3.44, "is_hit": false}, {"time": "12:30", "entry": 363.355, "max_h": 376.74, "gain": 3.68, "is_hit": false}, {"time": "13:30", "entry": 358.21, "max_h": 376.74, "gain": 5.17, "is_hit": true}, {"time": "14:30", "entry": 359.745, "max_h": 376.74, "gain": 4.72, "is_hit": false}, {"time": "15:30", "entry": 360.07, "max_h": 376.74, "gain": 4.63, "is_hit": false}, {"time": "16:00", "entry": 365.96, "max_h": 376.74, "gain": 2.95, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.6, "is_inflight": true, "hours": [{"time": "10:30", "entry": 371.2201, "max_h": 376.74, "gain": 1.49, "is_hit": false}, {"time": "11:30", "entry": 368.4307, "max_h": 376.74, "gain": 2.26, "is_hit": false}, {"time": "12:30", "entry": 367.195, "max_h": 376.74, "gain": 2.6, "is_hit": false}, {"time": "13:30", "entry": 372.185, "max_h": 376.74, "gain": 1.22, "is_hit": false}, {"time": "14:30", "entry": 373.65, "max_h": 374.27, "gain": 0.17, "is_hit": false}, {"time": "15:30", "entry": 369.0, "max_h": 370.46, "gain": 0.4, "is_hit": false}, {"time": "16:00", "entry": 368.56, "max_h": 369.0, "gain": 0.12, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.0, "is_inflight": true, "hours": [{"time": "10:30", "entry": 357.95, "max_h": 365.1, "gain": 2.0, "is_hit": false}, {"time": "11:30", "entry": 362.0, "max_h": 362.52, "gain": 0.14, "is_hit": false}, {"time": "12:30", "entry": 359.3, "max_h": 360.78, "gain": 0.41, "is_hit": false}, {"time": "13:30", "entry": 357.665, "max_h": 360.78, "gain": 0.87, "is_hit": false}, {"time": "14:30", "entry": 357.91, "max_h": 360.78, "gain": 0.8, "is_hit": false}, {"time": "15:30", "entry": 358.65, "max_h": 360.78, "gain": 0.59, "is_hit": false}, {"time": "16:00", "entry": 355.91, "max_h": 360.78, "gain": 1.37, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 1.37, "is_inflight": true, "hours": [{"time": "10:30", "entry": 356.14, "max_h": 360.78, "gain": 1.3, "is_hit": false}, {"time": "11:30", "entry": 355.92, "max_h": 360.78, "gain": 1.37, "is_hit": false}]}}}, {"code": "US.RMBS", "ticker": "RMBS", "name": "Rambus", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 103.6, "chg_pct": 0.13, "open_price": 101.62, "high_price": 108.6199, "low_price": 101.121, "amplitude": 7.247, "volume": 768072.0, "turnover": 80710287.775, "bar_1030": {"close": 105.03, "vol": 374245.0, "max_gain": 3.42, "is_hit": false}, "bar_1130": {"close": 103.64, "vol": 162649.0, "max_gain": 4.8, "is_hit": false}, "completed_vol": 536894.0, "vol_share_pct": 69.9, "metrics": {"d_minus_3": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 18.5, "is_inflight": false, "hours": [{"time": "10:30", "entry": 91.665, "max_h": 108.6199, "gain": 18.5, "is_hit": true}, {"time": "11:30", "entry": 94.69, "max_h": 108.6199, "gain": 14.71, "is_hit": true}, {"time": "12:30", "entry": 97.57, "max_h": 108.6199, "gain": 11.33, "is_hit": true}, {"time": "13:30", "entry": 96.95, "max_h": 108.6199, "gain": 12.04, "is_hit": true}, {"time": "14:30", "entry": 97.41, "max_h": 108.6199, "gain": 11.51, "is_hit": true}, {"time": "15:30", "entry": 97.775, "max_h": 108.6199, "gain": 11.09, "is_hit": true}, {"time": "16:00", "entry": 96.96, "max_h": 108.6199, "gain": 12.03, "is_hit": true}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 4.67, "is_inflight": true, "hours": [{"time": "10:30", "entry": 106.455, "max_h": 108.6199, "gain": 2.03, "is_hit": false}, {"time": "11:30", "entry": 103.775, "max_h": 108.6199, "gain": 4.67, "is_hit": false}, {"time": "12:30", "entry": 104.14, "max_h": 108.6199, "gain": 4.3, "is_hit": false}, {"time": "13:30", "entry": 104.005, "max_h": 108.6199, "gain": 4.44, "is_hit": false}, {"time": "14:30", "entry": 104.39, "max_h": 108.6199, "gain": 4.05, "is_hit": false}, {"time": "15:30", "entry": 105.03, "max_h": 108.6199, "gain": 3.42, "is_hit": false}, {"time": "16:00", "entry": 105.24, "max_h": 108.6199, "gain": 3.21, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 5, "rate": 71.4, "max_gain": 7.3, "is_inflight": true, "hours": [{"time": "10:30", "entry": 101.23, "max_h": 108.6199, "gain": 7.3, "is_hit": true}, {"time": "11:30", "entry": 103.79, "max_h": 108.6199, "gain": 4.65, "is_hit": false}, {"time": "12:30", "entry": 102.24, "max_h": 108.6199, "gain": 6.24, "is_hit": true}, {"time": "13:30", "entry": 101.79, "max_h": 108.6199, "gain": 6.71, "is_hit": true}, {"time": "14:30", "entry": 102.25, "max_h": 108.6199, "gain": 6.23, "is_hit": true}, {"time": "15:30", "entry": 102.065, "max_h": 108.6199, "gain": 6.42, "is_hit": true}, {"time": "16:00", "entry": 103.47, "max_h": 108.6199, "gain": 4.98, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 4.8, "is_inflight": true, "hours": [{"time": "10:30", "entry": 105.03, "max_h": 108.6199, "gain": 3.42, "is_hit": false}, {"time": "11:30", "entry": 103.64, "max_h": 108.6199, "gain": 4.8, "is_hit": false}]}}}, {"code": "US.LRNZ", "ticker": "LRNZ", "name": "TrueShares Technology, AI & Deep Learning ETF", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 69.28, "chg_pct": -0.27, "open_price": 68.86, "high_price": 69.28, "low_price": 68.86, "amplitude": 0.605, "volume": 3286.0, "turnover": 226844.0, "bar_1030": {"close": 69.28, "vol": 2434.0, "max_gain": 0.0, "is_hit": false}, "bar_1130": {"close": 69.28, "vol": 137.0, "max_gain": 0.0, "is_hit": false}, "completed_vol": 2571.0, "vol_share_pct": 78.2, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 4.0, "is_inflight": false, "hours": [{"time": "10:30", "entry": 67.08, "max_h": 69.76, "gain": 4.0, "is_hit": false}, {"time": "11:30", "entry": 67.34, "max_h": 69.76, "gain": 3.59, "is_hit": false}, {"time": "12:30", "entry": 67.34, "max_h": 69.76, "gain": 3.59, "is_hit": false}, {"time": "13:30", "entry": 67.34, "max_h": 69.76, "gain": 3.59, "is_hit": false}, {"time": "14:30", "entry": 67.47, "max_h": 69.76, "gain": 3.39, "is_hit": false}, {"time": "15:30", "entry": 67.71, "max_h": 69.76, "gain": 3.03, "is_hit": false}, {"time": "16:00", "entry": 67.9197, "max_h": 69.76, "gain": 2.71, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.18, "is_inflight": true, "hours": [{"time": "10:30", "entry": 68.945, "max_h": 69.76, "gain": 1.18, "is_hit": false}, {"time": "11:30", "entry": 69.0793, "max_h": 69.76, "gain": 0.99, "is_hit": false}, {"time": "12:30", "entry": 69.05, "max_h": 69.76, "gain": 1.03, "is_hit": false}, {"time": "13:30", "entry": 69.05, "max_h": 69.76, "gain": 1.03, "is_hit": false}, {"time": "14:30", "entry": 69.67, "max_h": 69.76, "gain": 0.13, "is_hit": false}, {"time": "15:30", "entry": 69.7599, "max_h": 69.64, "gain": -0.17, "is_hit": false}, {"time": "16:00", "entry": 69.6183, "max_h": 69.6183, "gain": 0.0, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.0, "is_inflight": true, "hours": [{"time": "10:30", "entry": 69.6183, "max_h": 69.6183, "gain": 0.0, "is_hit": false}, {"time": "11:30", "entry": 69.6183, "max_h": 69.6183, "gain": 0.0, "is_hit": false}, {"time": "12:30", "entry": 69.6183, "max_h": 69.6183, "gain": 0.0, "is_hit": false}, {"time": "13:30", "entry": 69.6183, "max_h": 69.6183, "gain": 0.0, "is_hit": false}, {"time": "14:30", "entry": 69.6183, "max_h": 69.6183, "gain": 0.0, "is_hit": false}, {"time": "15:30", "entry": 69.6183, "max_h": 69.468, "gain": -0.22, "is_hit": false}, {"time": "16:00", "entry": 69.468, "max_h": 69.468, "gain": 0.0, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 0.0, "is_inflight": true, "hours": [{"time": "10:30", "entry": 69.28, "max_h": 69.28, "gain": 0.0, "is_hit": false}, {"time": "11:30", "entry": 69.28, "max_h": 69.28, "gain": 0.0, "is_hit": false}]}}}, {"code": "US.ALAB", "ticker": "ALAB", "name": "Astera Labs", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 359.15, "chg_pct": -0.36, "open_price": 349.76, "high_price": 360.7, "low_price": 348.35, "amplitude": 3.426, "volume": 881089.0, "turnover": 312068491.326, "bar_1030": {"close": 355.275, "vol": 316631.0, "max_gain": 1.53, "is_hit": false}, "bar_1130": {"close": 357.36, "vol": 173533.0, "max_gain": 0.93, "is_hit": false}, "completed_vol": 490164.0, "vol_share_pct": 55.6, "metrics": {"d_minus_3": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 13.75, "is_inflight": false, "hours": [{"time": "10:30", "entry": 324.535, "max_h": 369.15, "gain": 13.75, "is_hit": true}, {"time": "11:30", "entry": 326.825, "max_h": 369.15, "gain": 12.95, "is_hit": true}, {"time": "12:30", "entry": 328.3, "max_h": 369.15, "gain": 12.44, "is_hit": true}, {"time": "13:30", "entry": 329.53, "max_h": 369.15, "gain": 12.02, "is_hit": true}, {"time": "14:30", "entry": 338.1139, "max_h": 369.15, "gain": 9.18, "is_hit": true}, {"time": "15:30", "entry": 339.55, "max_h": 369.15, "gain": 8.72, "is_hit": true}, {"time": "16:00", "entry": 340.74, "max_h": 369.15, "gain": 8.34, "is_hit": true}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.79, "is_inflight": true, "hours": [{"time": "10:30", "entry": 359.13, "max_h": 369.15, "gain": 2.79, "is_hit": false}, {"time": "11:30", "entry": 363.07, "max_h": 369.15, "gain": 1.67, "is_hit": false}, {"time": "12:30", "entry": 365.0, "max_h": 369.15, "gain": 1.14, "is_hit": false}, {"time": "13:30", "entry": 368.0356, "max_h": 368.81, "gain": 0.21, "is_hit": false}, {"time": "14:30", "entry": 362.8401, "max_h": 367.8698, "gain": 1.39, "is_hit": false}, {"time": "15:30", "entry": 362.095, "max_h": 367.8698, "gain": 1.59, "is_hit": false}, {"time": "16:00", "entry": 363.46, "max_h": 367.8698, "gain": 1.21, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.8, "is_inflight": true, "hours": [{"time": "10:30", "entry": 353.4504, "max_h": 363.33, "gain": 2.8, "is_hit": false}, {"time": "11:30", "entry": 358.8805, "max_h": 363.33, "gain": 1.24, "is_hit": false}, {"time": "12:30", "entry": 356.39, "max_h": 363.33, "gain": 1.95, "is_hit": false}, {"time": "13:30", "entry": 357.12, "max_h": 363.33, "gain": 1.74, "is_hit": false}, {"time": "14:30", "entry": 363.3024, "max_h": 363.05, "gain": -0.07, "is_hit": false}, {"time": "15:30", "entry": 361.01, "max_h": 361.65, "gain": 0.18, "is_hit": false}, {"time": "16:00", "entry": 360.46, "max_h": 360.7, "gain": 0.07, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 1.53, "is_inflight": true, "hours": [{"time": "10:30", "entry": 355.275, "max_h": 360.7, "gain": 1.53, "is_hit": false}, {"time": "11:30", "entry": 357.36, "max_h": 360.7, "gain": 0.93, "is_hit": false}]}}}, {"code": "US.AMD", "ticker": "AMD", "name": "美国超微公司", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 611.805, "chg_pct": -0.46, "open_price": 600.28, "high_price": 624.84, "low_price": 599.35, "amplitude": 4.147, "volume": 11008091.0, "turnover": 6754419496.319, "bar_1030": {"close": 617.25, "vol": 5105700.0, "max_gain": 1.23, "is_hit": false}, "bar_1130": {"close": 611.475, "vol": 1598382.0, "max_gain": 2.19, "is_hit": false}, "completed_vol": 6704082.0, "vol_share_pct": 60.9, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.04, "is_inflight": false, "hours": [{"time": "10:30", "entry": 609.5855, "max_h": 624.84, "gain": 2.5, "is_hit": false}, {"time": "11:30", "entry": 611.6425, "max_h": 624.84, "gain": 2.16, "is_hit": false}, {"time": "12:30", "entry": 612.55, "max_h": 624.84, "gain": 2.01, "is_hit": false}, {"time": "13:30", "entry": 606.4, "max_h": 624.84, "gain": 3.04, "is_hit": false}, {"time": "14:30", "entry": 609.53, "max_h": 624.84, "gain": 2.51, "is_hit": false}, {"time": "15:30", "entry": 614.4799, "max_h": 624.84, "gain": 1.69, "is_hit": false}, {"time": "16:00", "entry": 615.52, "max_h": 624.84, "gain": 1.51, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.87, "is_inflight": true, "hours": [{"time": "10:30", "entry": 618.65, "max_h": 624.84, "gain": 1.0, "is_hit": false}, {"time": "11:30", "entry": 617.68, "max_h": 624.84, "gain": 1.16, "is_hit": false}, {"time": "12:30", "entry": 613.36, "max_h": 624.84, "gain": 1.87, "is_hit": false}, {"time": "13:30", "entry": 616.58, "max_h": 624.84, "gain": 1.34, "is_hit": false}, {"time": "14:30", "entry": 620.16, "max_h": 624.84, "gain": 0.75, "is_hit": false}, {"time": "15:30", "entry": 620.765, "max_h": 624.84, "gain": 0.66, "is_hit": false}, {"time": "16:00", "entry": 623.77, "max_h": 624.84, "gain": 0.17, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.34, "is_inflight": true, "hours": [{"time": "10:30", "entry": 610.54, "max_h": 624.84, "gain": 2.34, "is_hit": false}, {"time": "11:30", "entry": 613.66, "max_h": 624.84, "gain": 1.82, "is_hit": false}, {"time": "12:30", "entry": 613.305, "max_h": 624.84, "gain": 1.88, "is_hit": false}, {"time": "13:30", "entry": 612.1, "max_h": 624.84, "gain": 2.08, "is_hit": false}, {"time": "14:30", "entry": 614.345, "max_h": 624.84, "gain": 1.71, "is_hit": false}, {"time": "15:30", "entry": 614.65, "max_h": 624.84, "gain": 1.66, "is_hit": false}, {"time": "16:00", "entry": 614.61, "max_h": 624.84, "gain": 1.66, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.19, "is_inflight": true, "hours": [{"time": "10:30", "entry": 617.25, "max_h": 624.84, "gain": 1.23, "is_hit": false}, {"time": "11:30", "entry": 611.475, "max_h": 624.84, "gain": 2.19, "is_hit": false}]}}}, {"code": "US.SDGR", "ticker": "SDGR", "name": "Schrodinger", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 28.925, "chg_pct": -1.04, "open_price": 28.97, "high_price": 30.24, "low_price": 28.45, "amplitude": 6.124, "volume": 878013.0, "turnover": 25684031.537, "bar_1030": {"close": 29.7495, "vol": 334917.0, "max_gain": 1.65, "is_hit": false}, "bar_1130": {"close": 28.83, "vol": 261916.0, "max_gain": 4.89, "is_hit": false}, "completed_vol": 596833.0, "vol_share_pct": 68.0, "metrics": {"d_minus_3": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 6.81, "is_inflight": false, "hours": [{"time": "10:30", "entry": 29.58, "max_h": 31.5948, "gain": 6.81, "is_hit": true}, {"time": "11:30", "entry": 30.434991, "max_h": 31.5948, "gain": 3.81, "is_hit": false}, {"time": "12:30", "entry": 30.4, "max_h": 31.5948, "gain": 3.93, "is_hit": false}, {"time": "13:30", "entry": 30.515, "max_h": 31.5948, "gain": 3.54, "is_hit": false}, {"time": "14:30", "entry": 30.73, "max_h": 31.5948, "gain": 2.81, "is_hit": false}, {"time": "15:30", "entry": 30.57, "max_h": 31.5948, "gain": 3.35, "is_hit": false}, {"time": "16:00", "entry": 30.24, "max_h": 31.5948, "gain": 4.48, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.47, "is_inflight": true, "hours": [{"time": "10:30", "entry": 30.68, "max_h": 31.5948, "gain": 2.98, "is_hit": false}, {"time": "11:30", "entry": 31.345, "max_h": 31.5948, "gain": 0.8, "is_hit": false}, {"time": "12:30", "entry": 30.23, "max_h": 31.28, "gain": 3.47, "is_hit": false}, {"time": "13:30", "entry": 30.68, "max_h": 31.28, "gain": 1.96, "is_hit": false}, {"time": "14:30", "entry": 30.64, "max_h": 31.28, "gain": 2.09, "is_hit": false}, {"time": "15:30", "entry": 30.85, "max_h": 31.14, "gain": 0.94, "is_hit": false}, {"time": "16:00", "entry": 30.7, "max_h": 31.14, "gain": 1.43, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 2, "rate": 28.6, "max_gain": 6.4, "is_inflight": true, "hours": [{"time": "10:30", "entry": 30.645, "max_h": 30.655, "gain": 0.03, "is_hit": false}, {"time": "11:30", "entry": 29.65, "max_h": 30.24, "gain": 1.99, "is_hit": false}, {"time": "12:30", "entry": 29.355, "max_h": 30.24, "gain": 3.01, "is_hit": false}, {"time": "13:30", "entry": 28.93, "max_h": 30.24, "gain": 4.53, "is_hit": false}, {"time": "14:30", "entry": 28.4205, "max_h": 30.24, "gain": 6.4, "is_hit": true}, {"time": "15:30", "entry": 28.685, "max_h": 30.24, "gain": 5.42, "is_hit": true}, {"time": "16:00", "entry": 29.23, "max_h": 30.24, "gain": 3.46, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 4.89, "is_inflight": true, "hours": [{"time": "10:30", "entry": 29.7495, "max_h": 30.24, "gain": 1.65, "is_hit": false}, {"time": "11:30", "entry": 28.83, "max_h": 30.24, "gain": 4.89, "is_hit": false}]}}}, {"code": "US.VNET", "ticker": "VNET", "name": "世纪互联", "category": "亏损特别关注", "is_holding": false, "pos_info": {}, "last_price": 6.845, "chg_pct": -1.08, "open_price": 6.82, "high_price": 6.93, "low_price": 6.815, "amplitude": 1.662, "volume": 358784.0, "turnover": 2460418.231, "bar_1030": {"close": 6.905, "vol": 65593.0, "max_gain": 0.36, "is_hit": false}, "bar_1130": {"close": 6.83, "vol": 77071.0, "max_gain": 1.46, "is_hit": false}, "completed_vol": 142664.0, "vol_share_pct": 39.8, "metrics": {"d_minus_3": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 6.35, "is_inflight": false, "hours": [{"time": "10:30", "entry": 6.93, "max_h": 7.37, "gain": 6.35, "is_hit": true}, {"time": "11:30", "entry": 7.11, "max_h": 7.37, "gain": 3.66, "is_hit": false}, {"time": "12:30", "entry": 7.19, "max_h": 7.37, "gain": 2.5, "is_hit": false}, {"time": "13:30", "entry": 7.255, "max_h": 7.31, "gain": 0.76, "is_hit": false}, {"time": "14:30", "entry": 7.265, "max_h": 7.31, "gain": 0.62, "is_hit": false}, {"time": "15:30", "entry": 7.305, "max_h": 7.31, "gain": 0.07, "is_hit": false}, {"time": "16:00", "entry": 7.235, "max_h": 7.25, "gain": 0.21, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.34, "is_inflight": true, "hours": [{"time": "10:30", "entry": 7.125, "max_h": 7.225, "gain": 1.4, "is_hit": false}, {"time": "11:30", "entry": 7.06, "max_h": 7.225, "gain": 2.34, "is_hit": false}, {"time": "12:30", "entry": 7.095, "max_h": 7.225, "gain": 1.83, "is_hit": false}, {"time": "13:30", "entry": 7.115, "max_h": 7.225, "gain": 1.55, "is_hit": false}, {"time": "14:30", "entry": 7.185, "max_h": 7.225, "gain": 0.56, "is_hit": false}, {"time": "15:30", "entry": 7.205, "max_h": 7.22, "gain": 0.21, "is_hit": false}, {"time": "16:00", "entry": 7.15, "max_h": 7.06, "gain": -1.26, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.91, "is_inflight": true, "hours": [{"time": "10:30", "entry": 6.825, "max_h": 6.94, "gain": 1.68, "is_hit": false}, {"time": "11:30", "entry": 6.865, "max_h": 6.94, "gain": 1.09, "is_hit": false}, {"time": "12:30", "entry": 6.81, "max_h": 6.94, "gain": 1.91, "is_hit": false}, {"time": "13:30", "entry": 6.825, "max_h": 6.94, "gain": 1.68, "is_hit": false}, {"time": "14:30", "entry": 6.86, "max_h": 6.94, "gain": 1.17, "is_hit": false}, {"time": "15:30", "entry": 6.905, "max_h": 6.94, "gain": 0.51, "is_hit": false}, {"time": "16:00", "entry": 6.92, "max_h": 6.93, "gain": 0.14, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 1.46, "is_inflight": true, "hours": [{"time": "10:30", "entry": 6.905, "max_h": 6.93, "gain": 0.36, "is_hit": false}, {"time": "11:30", "entry": 6.83, "max_h": 6.93, "gain": 1.46, "is_hit": false}]}}}, {"code": "US.CRDO", "ticker": "CRDO", "name": "Credo Technology", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 191.715, "chg_pct": -1.11, "open_price": 189.01, "high_price": 195.3199, "low_price": 187.0, "amplitude": 4.291, "volume": 2794635.0, "turnover": 532966709.465, "bar_1030": {"close": 190.79, "vol": 1144362.0, "max_gain": 2.37, "is_hit": false}, "bar_1130": {"close": 190.89, "vol": 554208.0, "max_gain": 2.32, "is_hit": false}, "completed_vol": 1698570.0, "vol_share_pct": 60.8, "metrics": {"d_minus_3": {"c": 7, "h": 5, "rate": 71.4, "max_gain": 6.2, "is_inflight": false, "hours": [{"time": "10:30", "entry": 187.45, "max_h": 196.15, "gain": 4.64, "is_hit": false}, {"time": "11:30", "entry": 185.25, "max_h": 196.15, "gain": 5.88, "is_hit": true}, {"time": "12:30", "entry": 185.04, "max_h": 196.15, "gain": 6.0, "is_hit": true}, {"time": "13:30", "entry": 184.7, "max_h": 196.15, "gain": 6.2, "is_hit": true}, {"time": "14:30", "entry": 186.065, "max_h": 196.15, "gain": 5.42, "is_hit": true}, {"time": "15:30", "entry": 186.75, "max_h": 196.15, "gain": 5.03, "is_hit": true}, {"time": "16:00", "entry": 187.27, "max_h": 196.15, "gain": 4.74, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.89, "is_inflight": true, "hours": [{"time": "10:30", "entry": 192.7, "max_h": 196.15, "gain": 1.79, "is_hit": false}, {"time": "11:30", "entry": 188.81, "max_h": 196.15, "gain": 3.89, "is_hit": false}, {"time": "12:30", "entry": 190.8118, "max_h": 196.15, "gain": 2.8, "is_hit": false}, {"time": "13:30", "entry": 191.405, "max_h": 196.15, "gain": 2.48, "is_hit": false}, {"time": "14:30", "entry": 191.51, "max_h": 196.15, "gain": 2.42, "is_hit": false}, {"time": "15:30", "entry": 191.825, "max_h": 196.15, "gain": 2.25, "is_hit": false}, {"time": "16:00", "entry": 192.56, "max_h": 196.15, "gain": 1.86, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.8, "is_inflight": true, "hours": [{"time": "10:30", "entry": 192.69, "max_h": 196.15, "gain": 1.8, "is_hit": false}, {"time": "11:30", "entry": 194.13, "max_h": 196.08, "gain": 1.0, "is_hit": false}, {"time": "12:30", "entry": 190.7301, "max_h": 196.08, "gain": 2.8, "is_hit": false}, {"time": "13:30", "entry": 191.605, "max_h": 196.08, "gain": 2.34, "is_hit": false}, {"time": "14:30", "entry": 194.38, "max_h": 196.08, "gain": 0.87, "is_hit": false}, {"time": "15:30", "entry": 195.05, "max_h": 195.7396, "gain": 0.35, "is_hit": false}, {"time": "16:00", "entry": 193.87, "max_h": 195.3199, "gain": 0.75, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.37, "is_inflight": true, "hours": [{"time": "10:30", "entry": 190.79, "max_h": 195.3199, "gain": 2.37, "is_hit": false}, {"time": "11:30", "entry": 190.89, "max_h": 195.3199, "gain": 2.32, "is_hit": false}]}}}, {"code": "US.SMTC", "ticker": "SMTC", "name": "先科电子", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 167.415, "chg_pct": -1.13, "open_price": 164.04, "high_price": 171.52, "low_price": 162.561, "amplitude": 5.291, "volume": 994528.0, "turnover": 166842970.163, "bar_1030": {"close": 168.985, "vol": 336167.0, "max_gain": 1.5, "is_hit": false}, "bar_1130": {"close": 167.4901, "vol": 227030.0, "max_gain": 2.41, "is_hit": false}, "completed_vol": 563197.0, "vol_share_pct": 56.6, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.26, "is_inflight": false, "hours": [{"time": "10:30", "entry": 181.01, "max_h": 182.19, "gain": 0.65, "is_hit": false}, {"time": "11:30", "entry": 179.06, "max_h": 180.11, "gain": 0.59, "is_hit": false}, {"time": "12:30", "entry": 179.365, "max_h": 180.11, "gain": 0.42, "is_hit": false}, {"time": "13:30", "entry": 176.59, "max_h": 178.81, "gain": 1.26, "is_hit": false}, {"time": "14:30", "entry": 178.3101, "max_h": 178.81, "gain": 0.28, "is_hit": false}, {"time": "15:30", "entry": 176.57, "max_h": 178.5, "gain": 1.09, "is_hit": false}, {"time": "16:00", "entry": 177.37, "max_h": 178.5, "gain": 0.64, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.35, "is_inflight": true, "hours": [{"time": "10:30", "entry": 175.825, "max_h": 178.3269, "gain": 1.42, "is_hit": false}, {"time": "11:30", "entry": 172.55, "max_h": 178.3269, "gain": 3.35, "is_hit": false}, {"time": "12:30", "entry": 174.44, "max_h": 178.3269, "gain": 2.23, "is_hit": false}, {"time": "13:30", "entry": 176.19, "max_h": 178.3269, "gain": 1.21, "is_hit": false}, {"time": "14:30", "entry": 177.775, "max_h": 177.9239, "gain": 0.08, "is_hit": false}, {"time": "15:30", "entry": 173.84, "max_h": 174.51, "gain": 0.39, "is_hit": false}, {"time": "16:00", "entry": 174.33, "max_h": 174.5, "gain": 0.1, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.07, "is_inflight": true, "hours": [{"time": "10:30", "entry": 167.17, "max_h": 171.52, "gain": 2.6, "is_hit": false}, {"time": "11:30", "entry": 170.1, "max_h": 171.52, "gain": 0.83, "is_hit": false}, {"time": "12:30", "entry": 169.735, "max_h": 171.52, "gain": 1.05, "is_hit": false}, {"time": "13:30", "entry": 166.405, "max_h": 171.52, "gain": 3.07, "is_hit": false}, {"time": "14:30", "entry": 167.045, "max_h": 171.52, "gain": 2.68, "is_hit": false}, {"time": "15:30", "entry": 169.17, "max_h": 171.52, "gain": 1.39, "is_hit": false}, {"time": "16:00", "entry": 169.33, "max_h": 171.52, "gain": 1.29, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.41, "is_inflight": true, "hours": [{"time": "10:30", "entry": 168.985, "max_h": 171.52, "gain": 1.5, "is_hit": false}, {"time": "11:30", "entry": 167.4901, "max_h": 171.52, "gain": 2.41, "is_hit": false}]}}}, {"code": "US.MU", "ticker": "MU", "name": "美光科技", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 1058.4844, "chg_pct": -1.25, "open_price": 1050.0, "high_price": 1061.78, "low_price": 1044.0, "amplitude": 1.659, "volume": 9369863.0, "turnover": 9862534457.028, "bar_1030": {"close": 1056.545, "vol": 3634358.0, "max_gain": 0.5, "is_hit": false}, "bar_1130": {"close": 1056.6701, "vol": 2336357.0, "max_gain": 0.48, "is_hit": false}, "completed_vol": 5970715.0, "vol_share_pct": 63.7, "metrics": {"d_minus_3": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 6.69, "is_inflight": false, "hours": [{"time": "10:30", "entry": 1036.2053, "max_h": 1105.5, "gain": 6.69, "is_hit": true}, {"time": "11:30", "entry": 1044.735, "max_h": 1105.5, "gain": 5.82, "is_hit": true}, {"time": "12:30", "entry": 1043.835, "max_h": 1105.5, "gain": 5.91, "is_hit": true}, {"time": "13:30", "entry": 1040.1, "max_h": 1105.5, "gain": 6.29, "is_hit": true}, {"time": "14:30", "entry": 1043.23, "max_h": 1105.5, "gain": 5.97, "is_hit": true}, {"time": "15:30", "entry": 1045.31, "max_h": 1105.5, "gain": 5.76, "is_hit": true}, {"time": "16:00", "entry": 1043.96, "max_h": 1105.5, "gain": 5.89, "is_hit": true}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.12, "is_inflight": true, "hours": [{"time": "10:30", "entry": 1080.79, "max_h": 1105.5, "gain": 2.29, "is_hit": false}, {"time": "11:30", "entry": 1072.0206, "max_h": 1105.5, "gain": 3.12, "is_hit": false}, {"time": "12:30", "entry": 1077.88, "max_h": 1105.5, "gain": 2.56, "is_hit": false}, {"time": "13:30", "entry": 1083.11, "max_h": 1105.5, "gain": 2.07, "is_hit": false}, {"time": "14:30", "entry": 1088.1401, "max_h": 1105.5, "gain": 1.6, "is_hit": false}, {"time": "15:30", "entry": 1091.89, "max_h": 1105.5, "gain": 1.25, "is_hit": false}, {"time": "16:00", "entry": 1096.16, "max_h": 1105.5, "gain": 0.85, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.75, "is_inflight": true, "hours": [{"time": "10:30", "entry": 1075.7428, "max_h": 1082.74, "gain": 0.65, "is_hit": false}, {"time": "11:30", "entry": 1078.5, "max_h": 1078.9599, "gain": 0.04, "is_hit": false}, {"time": "12:30", "entry": 1072.8628, "max_h": 1075.8599, "gain": 0.28, "is_hit": false}, {"time": "13:30", "entry": 1067.89, "max_h": 1075.8599, "gain": 0.75, "is_hit": false}, {"time": "14:30", "entry": 1073.79, "max_h": 1074.89, "gain": 0.1, "is_hit": false}, {"time": "15:30", "entry": 1069.455, "max_h": 1074.0, "gain": 0.42, "is_hit": false}, {"time": "16:00", "entry": 1071.88, "max_h": 1061.78, "gain": -0.94, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 0.5, "is_inflight": true, "hours": [{"time": "10:30", "entry": 1056.545, "max_h": 1061.78, "gain": 0.5, "is_hit": false}, {"time": "11:30", "entry": 1056.6701, "max_h": 1061.78, "gain": 0.48, "is_hit": false}]}}}, {"code": "US.MRVL", "ticker": "MRVL", "name": "迈威尔科技", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 257.315, "chg_pct": -1.37, "open_price": 254.19, "high_price": 260.54, "low_price": 252.19, "amplitude": 3.2, "volume": 5007630.0, "turnover": 1280356196.424, "bar_1030": {"close": 256.3, "vol": 1960747.0, "max_gain": 1.65, "is_hit": false}, "bar_1130": {"close": 254.47, "vol": 789814.0, "max_gain": 2.39, "is_hit": false}, "completed_vol": 2750561.0, "vol_share_pct": 54.9, "metrics": {"d_minus_3": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 5.77, "is_inflight": false, "hours": [{"time": "10:30", "entry": 251.4799, "max_h": 266.0, "gain": 5.77, "is_hit": true}, {"time": "11:30", "entry": 255.12, "max_h": 266.0, "gain": 4.26, "is_hit": false}, {"time": "12:30", "entry": 254.8486, "max_h": 266.0, "gain": 4.38, "is_hit": false}, {"time": "13:30", "entry": 254.55, "max_h": 266.0, "gain": 4.5, "is_hit": false}, {"time": "14:30", "entry": 258.88, "max_h": 266.0, "gain": 2.75, "is_hit": false}, {"time": "15:30", "entry": 259.19, "max_h": 266.0, "gain": 2.63, "is_hit": false}, {"time": "16:00", "entry": 257.38, "max_h": 266.0, "gain": 3.35, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.64, "is_inflight": true, "hours": [{"time": "10:30", "entry": 262.0325, "max_h": 266.0, "gain": 1.51, "is_hit": false}, {"time": "11:30", "entry": 261.7, "max_h": 266.0, "gain": 1.64, "is_hit": false}, {"time": "12:30", "entry": 262.26, "max_h": 266.0, "gain": 1.43, "is_hit": false}, {"time": "13:30", "entry": 262.7165, "max_h": 266.0, "gain": 1.25, "is_hit": false}, {"time": "14:30", "entry": 263.95, "max_h": 266.0, "gain": 0.78, "is_hit": false}, {"time": "15:30", "entry": 264.42, "max_h": 266.0, "gain": 0.6, "is_hit": false}, {"time": "16:00", "entry": 262.36, "max_h": 264.97, "gain": 0.99, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.48, "is_inflight": true, "hours": [{"time": "10:30", "entry": 257.58, "max_h": 261.15, "gain": 1.39, "is_hit": false}, {"time": "11:30", "entry": 260.28, "max_h": 261.15, "gain": 0.33, "is_hit": false}, {"time": "12:30", "entry": 258.39, "max_h": 261.15, "gain": 1.07, "is_hit": false}, {"time": "13:30", "entry": 257.34, "max_h": 261.15, "gain": 1.48, "is_hit": false}, {"time": "14:30", "entry": 259.555, "max_h": 261.15, "gain": 0.61, "is_hit": false}, {"time": "15:30", "entry": 258.83, "max_h": 261.15, "gain": 0.9, "is_hit": false}, {"time": "16:00", "entry": 260.9, "max_h": 260.54, "gain": -0.14, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.39, "is_inflight": true, "hours": [{"time": "10:30", "entry": 256.3, "max_h": 260.54, "gain": 1.65, "is_hit": false}, {"time": "11:30", "entry": 254.47, "max_h": 260.54, "gain": 2.39, "is_hit": false}]}}}, {"code": "US.LITE", "ticker": "LITE", "name": "Lumentum", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 922.945, "chg_pct": -1.5, "open_price": 921.07, "high_price": 954.4499, "low_price": 912.0, "amplitude": 4.53, "volume": 1800942.0, "turnover": 1666930878.224, "bar_1030": {"close": 924.71, "vol": 735435.0, "max_gain": 3.22, "is_hit": false}, "bar_1130": {"close": 922.235, "vol": 372384.0, "max_gain": 3.49, "is_hit": false}, "completed_vol": 1107819.0, "vol_share_pct": 61.5, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 4.98, "is_inflight": false, "hours": [{"time": "10:30", "entry": 982.72, "max_h": 1002.0, "gain": 1.96, "is_hit": false}, {"time": "11:30", "entry": 975.08, "max_h": 1002.0, "gain": 2.76, "is_hit": false}, {"time": "12:30", "entry": 968.7033, "max_h": 1002.0, "gain": 3.44, "is_hit": false}, {"time": "13:30", "entry": 956.77, "max_h": 1002.0, "gain": 4.73, "is_hit": false}, {"time": "14:30", "entry": 958.9, "max_h": 1002.0, "gain": 4.49, "is_hit": false}, {"time": "15:30", "entry": 961.0, "max_h": 1002.0, "gain": 4.27, "is_hit": false}, {"time": "16:00", "entry": 954.49, "max_h": 1002.0, "gain": 4.98, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.92, "is_inflight": true, "hours": [{"time": "10:30", "entry": 971.815, "max_h": 976.9999, "gain": 0.53, "is_hit": false}, {"time": "11:30", "entry": 946.12, "max_h": 960.71, "gain": 1.54, "is_hit": false}, {"time": "12:30", "entry": 949.9365, "max_h": 960.0, "gain": 1.06, "is_hit": false}, {"time": "13:30", "entry": 952.665, "max_h": 960.0, "gain": 0.77, "is_hit": false}, {"time": "14:30", "entry": 954.2693, "max_h": 960.0, "gain": 0.6, "is_hit": false}, {"time": "15:30", "entry": 941.91, "max_h": 960.0, "gain": 1.92, "is_hit": false}, {"time": "16:00", "entry": 945.67, "max_h": 960.0, "gain": 1.52, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.86, "is_inflight": true, "hours": [{"time": "10:30", "entry": 943.0, "max_h": 960.0, "gain": 1.8, "is_hit": false}, {"time": "11:30", "entry": 953.02, "max_h": 954.4499, "gain": 0.15, "is_hit": false}, {"time": "12:30", "entry": 942.5, "max_h": 954.4499, "gain": 1.27, "is_hit": false}, {"time": "13:30", "entry": 940.09, "max_h": 954.4499, "gain": 1.53, "is_hit": false}, {"time": "14:30", "entry": 941.115, "max_h": 954.4499, "gain": 1.42, "is_hit": false}, {"time": "15:30", "entry": 937.6401, "max_h": 954.4499, "gain": 1.79, "is_hit": false}, {"time": "16:00", "entry": 937.0, "max_h": 954.4499, "gain": 1.86, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 3.49, "is_inflight": true, "hours": [{"time": "10:30", "entry": 924.71, "max_h": 954.4499, "gain": 3.22, "is_hit": false}, {"time": "11:30", "entry": 922.235, "max_h": 954.4499, "gain": 3.49, "is_hit": false}]}}}, {"code": "US.CBRS", "ticker": "CBRS", "name": "Cerebras Systems", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 202.03, "chg_pct": -1.56, "open_price": 197.34, "high_price": 208.0, "low_price": 197.04, "amplitude": 5.34, "volume": 1129705.0, "turnover": 228527951.951, "bar_1030": {"close": 203.64, "vol": 451860.0, "max_gain": 2.14, "is_hit": false}, "bar_1130": {"close": 201.975, "vol": 197584.0, "max_gain": 2.98, "is_hit": false}, "completed_vol": 649444.0, "vol_share_pct": 57.5, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.9, "is_inflight": false, "hours": [{"time": "10:30", "entry": 210.1967, "max_h": 213.21, "gain": 1.43, "is_hit": false}, {"time": "11:30", "entry": 208.965, "max_h": 213.21, "gain": 2.03, "is_hit": false}, {"time": "12:30", "entry": 207.1301, "max_h": 213.21, "gain": 2.94, "is_hit": false}, {"time": "13:30", "entry": 205.21, "max_h": 213.21, "gain": 3.9, "is_hit": false}, {"time": "14:30", "entry": 208.005, "max_h": 213.21, "gain": 2.5, "is_hit": false}, {"time": "15:30", "entry": 208.6, "max_h": 213.21, "gain": 2.21, "is_hit": false}, {"time": "16:00", "entry": 208.49, "max_h": 213.21, "gain": 2.26, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.39, "is_inflight": true, "hours": [{"time": "10:30", "entry": 207.31, "max_h": 213.21, "gain": 2.85, "is_hit": false}, {"time": "11:30", "entry": 206.315, "max_h": 213.21, "gain": 3.34, "is_hit": false}, {"time": "12:30", "entry": 206.225, "max_h": 213.21, "gain": 3.39, "is_hit": false}, {"time": "13:30", "entry": 209.2, "max_h": 213.21, "gain": 1.92, "is_hit": false}, {"time": "14:30", "entry": 210.785, "max_h": 213.21, "gain": 1.15, "is_hit": false}, {"time": "15:30", "entry": 211.1, "max_h": 213.21, "gain": 1.0, "is_hit": false}, {"time": "16:00", "entry": 212.41, "max_h": 213.0, "gain": 0.28, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.52, "is_inflight": true, "hours": [{"time": "10:30", "entry": 203.9, "max_h": 209.03, "gain": 2.52, "is_hit": false}, {"time": "11:30", "entry": 208.15, "max_h": 208.6, "gain": 0.22, "is_hit": false}, {"time": "12:30", "entry": 205.95, "max_h": 208.0, "gain": 1.0, "is_hit": false}, {"time": "13:30", "entry": 204.55, "max_h": 208.0, "gain": 1.69, "is_hit": false}, {"time": "14:30", "entry": 205.26, "max_h": 208.0, "gain": 1.33, "is_hit": false}, {"time": "15:30", "entry": 205.35, "max_h": 208.0, "gain": 1.29, "is_hit": false}, {"time": "16:00", "entry": 205.24, "max_h": 208.0, "gain": 1.34, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.98, "is_inflight": true, "hours": [{"time": "10:30", "entry": 203.64, "max_h": 208.0, "gain": 2.14, "is_hit": false}, {"time": "11:30", "entry": 201.975, "max_h": 208.0, "gain": 2.98, "is_hit": false}]}}}, {"code": "US.AIPO", "ticker": "AIPO", "name": "Defiance AI & Power Infrastructure ETF", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 28.359, "chg_pct": -1.6, "open_price": 28.29, "high_price": 28.5, "low_price": 28.21, "amplitude": 1.006, "volume": 429945.0, "turnover": 12192731.181, "bar_1030": {"close": 28.4613, "vol": 148473.0, "max_gain": 0.14, "is_hit": false}, "bar_1130": {"close": 28.28, "vol": 74314.0, "max_gain": 0.78, "is_hit": false}, "completed_vol": 222787.0, "vol_share_pct": 51.8, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.66, "is_inflight": false, "hours": [{"time": "10:30", "entry": 28.92, "max_h": 29.4, "gain": 1.66, "is_hit": false}, {"time": "11:30", "entry": 29.09, "max_h": 29.4, "gain": 1.07, "is_hit": false}, {"time": "12:30", "entry": 29.16, "max_h": 29.4, "gain": 0.82, "is_hit": false}, {"time": "13:30", "entry": 29.1, "max_h": 29.4, "gain": 1.03, "is_hit": false}, {"time": "14:30", "entry": 29.14, "max_h": 29.4, "gain": 0.89, "is_hit": false}, {"time": "15:30", "entry": 29.16, "max_h": 29.4, "gain": 0.82, "is_hit": false}, {"time": "16:00", "entry": 29.06, "max_h": 29.4, "gain": 1.17, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.48, "is_inflight": true, "hours": [{"time": "10:30", "entry": 29.26, "max_h": 29.4, "gain": 0.48, "is_hit": false}, {"time": "11:30", "entry": 29.29, "max_h": 29.4, "gain": 0.38, "is_hit": false}, {"time": "12:30", "entry": 29.26, "max_h": 29.35, "gain": 0.31, "is_hit": false}, {"time": "13:30", "entry": 29.2899, "max_h": 29.35, "gain": 0.21, "is_hit": false}, {"time": "14:30", "entry": 29.32, "max_h": 29.35, "gain": 0.1, "is_hit": false}, {"time": "15:30", "entry": 29.3, "max_h": 29.35, "gain": 0.17, "is_hit": false}, {"time": "16:00", "entry": 29.29, "max_h": 29.2041, "gain": -0.29, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.73, "is_inflight": true, "hours": [{"time": "10:30", "entry": 28.88, "max_h": 29.09, "gain": 0.73, "is_hit": false}, {"time": "11:30", "entry": 29.02, "max_h": 29.03, "gain": 0.03, "is_hit": false}, {"time": "12:30", "entry": 28.92, "max_h": 28.95, "gain": 0.1, "is_hit": false}, {"time": "13:30", "entry": 28.85, "max_h": 28.95, "gain": 0.35, "is_hit": false}, {"time": "14:30", "entry": 28.92, "max_h": 28.92, "gain": 0.0, "is_hit": false}, {"time": "15:30", "entry": 28.86, "max_h": 28.89, "gain": 0.1, "is_hit": false}, {"time": "16:00", "entry": 28.82, "max_h": 28.5, "gain": -1.11, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 0.78, "is_inflight": true, "hours": [{"time": "10:30", "entry": 28.4613, "max_h": 28.5, "gain": 0.14, "is_hit": false}, {"time": "11:30", "entry": 28.28, "max_h": 28.5, "gain": 0.78, "is_hit": false}]}}}, {"code": "US.XNET", "ticker": "XNET", "name": "迅雷", "category": "亏损特别关注", "is_holding": false, "pos_info": {}, "last_price": 4.985, "chg_pct": -1.68, "open_price": 5.02, "high_price": 5.11, "low_price": 4.96, "amplitude": 2.959, "volume": 100907.0, "turnover": 505670.643, "bar_1030": {"close": 5.02, "vol": 30994.0, "max_gain": 1.79, "is_hit": false}, "bar_1130": {"close": 4.965, "vol": 17215.0, "max_gain": 2.92, "is_hit": false}, "completed_vol": 48209.0, "vol_share_pct": 47.8, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.2, "is_inflight": false, "hours": [{"time": "10:30", "entry": 5.03, "max_h": 5.11, "gain": 1.59, "is_hit": false}, {"time": "11:30", "entry": 5.04, "max_h": 5.11, "gain": 1.39, "is_hit": false}, {"time": "12:30", "entry": 5.025, "max_h": 5.11, "gain": 1.69, "is_hit": false}, {"time": "13:30", "entry": 5.015, "max_h": 5.11, "gain": 1.89, "is_hit": false}, {"time": "14:30", "entry": 5.025, "max_h": 5.11, "gain": 1.69, "is_hit": false}, {"time": "15:30", "entry": 5.025, "max_h": 5.11, "gain": 1.69, "is_hit": false}, {"time": "16:00", "entry": 5.0, "max_h": 5.11, "gain": 2.2, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.59, "is_inflight": true, "hours": [{"time": "10:30", "entry": 5.03, "max_h": 5.11, "gain": 1.59, "is_hit": false}, {"time": "11:30", "entry": 5.03, "max_h": 5.11, "gain": 1.59, "is_hit": false}, {"time": "12:30", "entry": 5.03, "max_h": 5.11, "gain": 1.59, "is_hit": false}, {"time": "13:30", "entry": 5.06, "max_h": 5.11, "gain": 0.99, "is_hit": false}, {"time": "14:30", "entry": 5.085, "max_h": 5.11, "gain": 0.49, "is_hit": false}, {"time": "15:30", "entry": 5.06, "max_h": 5.11, "gain": 0.99, "is_hit": false}, {"time": "16:00", "entry": 5.055, "max_h": 5.11, "gain": 1.09, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.49, "is_inflight": true, "hours": [{"time": "10:30", "entry": 5.035, "max_h": 5.11, "gain": 1.49, "is_hit": false}, {"time": "11:30", "entry": 5.05, "max_h": 5.11, "gain": 1.19, "is_hit": false}, {"time": "12:30", "entry": 5.045, "max_h": 5.11, "gain": 1.29, "is_hit": false}, {"time": "13:30", "entry": 5.055, "max_h": 5.11, "gain": 1.09, "is_hit": false}, {"time": "14:30", "entry": 5.065, "max_h": 5.11, "gain": 0.89, "is_hit": false}, {"time": "15:30", "entry": 5.065, "max_h": 5.11, "gain": 0.89, "is_hit": false}, {"time": "16:00", "entry": 5.07, "max_h": 5.11, "gain": 0.79, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.92, "is_inflight": true, "hours": [{"time": "10:30", "entry": 5.02, "max_h": 5.11, "gain": 1.79, "is_hit": false}, {"time": "11:30", "entry": 4.965, "max_h": 5.11, "gain": 2.92, "is_hit": false}]}}}, {"code": "US.AAOI", "ticker": "AAOI", "name": "Applied Optoelectronics", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 99.345, "chg_pct": -1.7, "open_price": 98.93, "high_price": 103.58, "low_price": 97.62, "amplitude": 5.897, "volume": 2496212.0, "turnover": 250021844.913, "bar_1030": {"close": 100.5984, "vol": 1039251.0, "max_gain": 2.96, "is_hit": false}, "bar_1130": {"close": 99.11, "vol": 395934.0, "max_gain": 4.51, "is_hit": false}, "completed_vol": 1435185.0, "vol_share_pct": 57.5, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.39, "is_inflight": false, "hours": [{"time": "10:30", "entry": 108.2, "max_h": 110.74, "gain": 2.35, "is_hit": false}, {"time": "11:30", "entry": 108.445, "max_h": 110.74, "gain": 2.12, "is_hit": false}, {"time": "12:30", "entry": 108.695, "max_h": 110.74, "gain": 1.88, "is_hit": false}, {"time": "13:30", "entry": 107.11, "max_h": 110.74, "gain": 3.39, "is_hit": false}, {"time": "14:30", "entry": 107.42, "max_h": 110.74, "gain": 3.09, "is_hit": false}, {"time": "15:30", "entry": 107.64, "max_h": 110.74, "gain": 2.88, "is_hit": false}, {"time": "16:00", "entry": 108.67, "max_h": 110.74, "gain": 1.9, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.4, "is_inflight": true, "hours": [{"time": "10:30", "entry": 107.84, "max_h": 108.25, "gain": 0.38, "is_hit": false}, {"time": "11:30", "entry": 104.69, "max_h": 108.25, "gain": 3.4, "is_hit": false}, {"time": "12:30", "entry": 105.5679, "max_h": 108.25, "gain": 2.54, "is_hit": false}, {"time": "13:30", "entry": 106.4, "max_h": 108.25, "gain": 1.74, "is_hit": false}, {"time": "14:30", "entry": 107.535, "max_h": 107.605, "gain": 0.07, "is_hit": false}, {"time": "15:30", "entry": 106.6, "max_h": 107.49, "gain": 0.83, "is_hit": false}, {"time": "16:00", "entry": 107.0, "max_h": 107.32, "gain": 0.3, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.49, "is_inflight": true, "hours": [{"time": "10:30", "entry": 102.84, "max_h": 104.68, "gain": 1.79, "is_hit": false}, {"time": "11:30", "entry": 104.01, "max_h": 104.15, "gain": 0.13, "is_hit": false}, {"time": "12:30", "entry": 103.395, "max_h": 103.7, "gain": 0.29, "is_hit": false}, {"time": "13:30", "entry": 103.355, "max_h": 103.65, "gain": 0.29, "is_hit": false}, {"time": "14:30", "entry": 102.66, "max_h": 103.58, "gain": 0.9, "is_hit": false}, {"time": "15:30", "entry": 101.38, "max_h": 103.58, "gain": 2.17, "is_hit": false}, {"time": "16:00", "entry": 101.06, "max_h": 103.58, "gain": 2.49, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 4.51, "is_inflight": true, "hours": [{"time": "10:30", "entry": 100.5984, "max_h": 103.58, "gain": 2.96, "is_hit": false}, {"time": "11:30", "entry": 99.11, "max_h": 103.58, "gain": 4.51, "is_hit": false}]}}}, {"code": "US.QCOM", "ticker": "QCOM", "name": "高通", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 193.8401, "chg_pct": -1.72, "open_price": 196.7, "high_price": 196.77, "low_price": 191.75, "amplitude": 2.545, "volume": 3207844.0, "turnover": 622043729.628, "bar_1030": {"close": 193.85, "vol": 1325074.0, "max_gain": 1.51, "is_hit": false}, "bar_1130": {"close": 193.21, "vol": 496110.0, "max_gain": 1.84, "is_hit": false}, "completed_vol": 1821184.0, "vol_share_pct": 56.8, "metrics": {"d_minus_3": {"c": 7, "h": 2, "rate": 28.6, "max_gain": 7.56, "is_inflight": false, "hours": [{"time": "10:30", "entry": 185.586, "max_h": 199.613, "gain": 7.56, "is_hit": true}, {"time": "11:30", "entry": 189.325, "max_h": 199.613, "gain": 5.43, "is_hit": true}, {"time": "12:30", "entry": 192.52, "max_h": 199.613, "gain": 3.68, "is_hit": false}, {"time": "13:30", "entry": 192.295, "max_h": 199.613, "gain": 3.81, "is_hit": false}, {"time": "14:30", "entry": 193.13, "max_h": 199.613, "gain": 3.36, "is_hit": false}, {"time": "15:30", "entry": 193.58, "max_h": 199.613, "gain": 3.12, "is_hit": false}, {"time": "16:00", "entry": 194.23, "max_h": 199.613, "gain": 2.77, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.66, "is_inflight": true, "hours": [{"time": "10:30", "entry": 194.445, "max_h": 199.613, "gain": 2.66, "is_hit": false}, {"time": "11:30", "entry": 196.275, "max_h": 199.613, "gain": 1.7, "is_hit": false}, {"time": "12:30", "entry": 196.44, "max_h": 199.613, "gain": 1.62, "is_hit": false}, {"time": "13:30", "entry": 195.875, "max_h": 199.613, "gain": 1.91, "is_hit": false}, {"time": "14:30", "entry": 195.56, "max_h": 199.613, "gain": 2.07, "is_hit": false}, {"time": "15:30", "entry": 196.27, "max_h": 199.613, "gain": 1.7, "is_hit": false}, {"time": "16:00", "entry": 198.27, "max_h": 199.613, "gain": 0.68, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.16, "is_inflight": true, "hours": [{"time": "10:30", "entry": 193.735, "max_h": 197.9199, "gain": 2.16, "is_hit": false}, {"time": "11:30", "entry": 196.17, "max_h": 197.9199, "gain": 0.89, "is_hit": false}, {"time": "12:30", "entry": 195.94, "max_h": 197.9199, "gain": 1.01, "is_hit": false}, {"time": "13:30", "entry": 196.27, "max_h": 197.9199, "gain": 0.84, "is_hit": false}, {"time": "14:30", "entry": 196.34, "max_h": 197.91, "gain": 0.8, "is_hit": false}, {"time": "15:30", "entry": 197.15, "max_h": 197.91, "gain": 0.39, "is_hit": false}, {"time": "16:00", "entry": 197.24, "max_h": 196.77, "gain": -0.24, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 1.84, "is_inflight": true, "hours": [{"time": "10:30", "entry": 193.85, "max_h": 196.77, "gain": 1.51, "is_hit": false}, {"time": "11:30", "entry": 193.21, "max_h": 196.77, "gain": 1.84, "is_hit": false}]}}}, {"code": "US.COHR", "ticker": "COHR", "name": "Coherent", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 294.155, "chg_pct": -2.14, "open_price": 294.02, "high_price": 300.89, "low_price": 291.0, "amplitude": 3.29, "volume": 1638865.0, "turnover": 482310086.13, "bar_1030": {"close": 294.12, "vol": 580814.0, "max_gain": 2.3, "is_hit": false}, "bar_1130": {"close": 293.99, "vol": 268059.0, "max_gain": 2.35, "is_hit": false}, "completed_vol": 848873.0, "vol_share_pct": 51.8, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.64, "is_inflight": false, "hours": [{"time": "10:30", "entry": 331.42, "max_h": 332.86, "gain": 0.43, "is_hit": false}, {"time": "11:30", "entry": 332.215, "max_h": 332.86, "gain": 0.19, "is_hit": false}, {"time": "12:30", "entry": 328.905, "max_h": 329.605, "gain": 0.21, "is_hit": false}, {"time": "13:30", "entry": 323.22, "max_h": 325.04, "gain": 0.56, "is_hit": false}, {"time": "14:30", "entry": 322.972, "max_h": 325.04, "gain": 0.64, "is_hit": false}, {"time": "15:30", "entry": 323.1638, "max_h": 324.63, "gain": 0.45, "is_hit": false}, {"time": "16:00", "entry": 321.52, "max_h": 323.4299, "gain": 0.59, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.87, "is_inflight": true, "hours": [{"time": "10:30", "entry": 313.22, "max_h": 314.4099, "gain": 0.38, "is_hit": false}, {"time": "11:30", "entry": 306.59, "max_h": 312.2398, "gain": 1.84, "is_hit": false}, {"time": "12:30", "entry": 307.46, "max_h": 312.2398, "gain": 1.55, "is_hit": false}, {"time": "13:30", "entry": 310.32, "max_h": 312.2398, "gain": 0.62, "is_hit": false}, {"time": "14:30", "entry": 310.2701, "max_h": 312.2398, "gain": 0.63, "is_hit": false}, {"time": "15:30", "entry": 306.51, "max_h": 312.2398, "gain": 1.87, "is_hit": false}, {"time": "16:00", "entry": 310.39, "max_h": 312.2398, "gain": 0.6, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.46, "is_inflight": true, "hours": [{"time": "10:30", "entry": 301.6, "max_h": 305.9899, "gain": 1.46, "is_hit": false}, {"time": "11:30", "entry": 303.785, "max_h": 304.5, "gain": 0.24, "is_hit": false}, {"time": "12:30", "entry": 302.74, "max_h": 303.5, "gain": 0.25, "is_hit": false}, {"time": "13:30", "entry": 301.415, "max_h": 302.6, "gain": 0.39, "is_hit": false}, {"time": "14:30", "entry": 302.3, "max_h": 302.36, "gain": 0.02, "is_hit": false}, {"time": "15:30", "entry": 300.17, "max_h": 300.969, "gain": 0.27, "is_hit": false}, {"time": "16:00", "entry": 300.6, "max_h": 300.89, "gain": 0.1, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.35, "is_inflight": true, "hours": [{"time": "10:30", "entry": 294.12, "max_h": 300.89, "gain": 2.3, "is_hit": false}, {"time": "11:30", "entry": 293.99, "max_h": 300.89, "gain": 2.35, "is_hit": false}]}}}, {"code": "US.VRT", "ticker": "VRT", "name": "Vertiv Holdings", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 242.53, "chg_pct": -2.51, "open_price": 240.41, "high_price": 243.7, "low_price": 239.0001, "amplitude": 1.889, "volume": 1687296.0, "turnover": 407526868.992, "bar_1030": {"close": 241.31, "vol": 465340.0, "max_gain": 0.99, "is_hit": false}, "bar_1130": {"close": 242.424, "vol": 354279.0, "max_gain": 0.53, "is_hit": false}, "completed_vol": 819619.0, "vol_share_pct": 48.6, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.81, "is_inflight": false, "hours": [{"time": "10:30", "entry": 251.1301, "max_h": 255.4, "gain": 1.7, "is_hit": false}, {"time": "11:30", "entry": 252.5211, "max_h": 255.4, "gain": 1.14, "is_hit": false}, {"time": "12:30", "entry": 254.5, "max_h": 255.4, "gain": 0.35, "is_hit": false}, {"time": "13:30", "entry": 252.62, "max_h": 255.4, "gain": 1.1, "is_hit": false}, {"time": "14:30", "entry": 252.925, "max_h": 255.4, "gain": 0.98, "is_hit": false}, {"time": "15:30", "entry": 252.53, "max_h": 255.4, "gain": 1.14, "is_hit": false}, {"time": "16:00", "entry": 250.86, "max_h": 255.4, "gain": 1.81, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.75, "is_inflight": true, "hours": [{"time": "10:30", "entry": 253.63, "max_h": 255.4, "gain": 0.7, "is_hit": false}, {"time": "11:30", "entry": 253.67, "max_h": 255.02, "gain": 0.53, "is_hit": false}, {"time": "12:30", "entry": 253.13, "max_h": 255.02, "gain": 0.75, "is_hit": false}, {"time": "13:30", "entry": 253.535, "max_h": 255.02, "gain": 0.59, "is_hit": false}, {"time": "14:30", "entry": 253.69, "max_h": 255.02, "gain": 0.52, "is_hit": false}, {"time": "15:30", "entry": 253.87, "max_h": 255.02, "gain": 0.45, "is_hit": false}, {"time": "16:00", "entry": 253.46, "max_h": 255.02, "gain": 0.62, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.63, "is_inflight": true, "hours": [{"time": "10:30", "entry": 250.49, "max_h": 254.58, "gain": 1.63, "is_hit": false}, {"time": "11:30", "entry": 253.365, "max_h": 253.59, "gain": 0.09, "is_hit": false}, {"time": "12:30", "entry": 251.92, "max_h": 252.24, "gain": 0.13, "is_hit": false}, {"time": "13:30", "entry": 250.0, "max_h": 251.02, "gain": 0.41, "is_hit": false}, {"time": "14:30", "entry": 250.64, "max_h": 250.68, "gain": 0.02, "is_hit": false}, {"time": "15:30", "entry": 249.425, "max_h": 249.82, "gain": 0.16, "is_hit": false}, {"time": "16:00", "entry": 248.78, "max_h": 243.7, "gain": -2.04, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 0.99, "is_inflight": true, "hours": [{"time": "10:30", "entry": 241.31, "max_h": 243.7, "gain": 0.99, "is_hit": false}, {"time": "11:30", "entry": 242.424, "max_h": 243.7, "gain": 0.53, "is_hit": false}]}}}, {"code": "US.NOK", "ticker": "NOK", "name": "诺基亚", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 10.2789, "chg_pct": -3.3, "open_price": 10.18, "high_price": 10.35, "low_price": 10.1701, "amplitude": 1.692, "volume": 31620969.0, "turnover": 323972963.233, "bar_1030": {"close": 10.235, "vol": 8286353.0, "max_gain": 1.12, "is_hit": false}, "bar_1130": {"close": 10.255, "vol": 8630550.0, "max_gain": 0.93, "is_hit": false}, "completed_vol": 16916903.0, "vol_share_pct": 53.5, "metrics": {"d_minus_3": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.06, "is_inflight": false, "hours": [{"time": "10:30", "entry": 10.96, "max_h": 11.05, "gain": 0.82, "is_hit": false}, {"time": "11:30", "entry": 10.95, "max_h": 11.05, "gain": 0.91, "is_hit": false}, {"time": "12:30", "entry": 10.925, "max_h": 11.0, "gain": 0.69, "is_hit": false}, {"time": "13:30", "entry": 10.885, "max_h": 11.0, "gain": 1.06, "is_hit": false}, {"time": "14:30", "entry": 10.965, "max_h": 11.0, "gain": 0.32, "is_hit": false}, {"time": "15:30", "entry": 10.935, "max_h": 10.99, "gain": 0.5, "is_hit": false}, {"time": "16:00", "entry": 10.94, "max_h": 10.9, "gain": -0.37, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.76, "is_inflight": true, "hours": [{"time": "10:30", "entry": 10.565, "max_h": 10.9, "gain": 3.17, "is_hit": false}, {"time": "11:30", "entry": 10.565, "max_h": 10.9, "gain": 3.17, "is_hit": false}, {"time": "12:30", "entry": 10.505, "max_h": 10.9, "gain": 3.76, "is_hit": false}, {"time": "13:30", "entry": 10.5605, "max_h": 10.9, "gain": 3.21, "is_hit": false}, {"time": "14:30", "entry": 10.73, "max_h": 10.9, "gain": 1.58, "is_hit": false}, {"time": "15:30", "entry": 10.805, "max_h": 10.9, "gain": 0.88, "is_hit": false}, {"time": "16:00", "entry": 10.82, "max_h": 10.9, "gain": 0.74, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 0.38, "is_inflight": true, "hours": [{"time": "10:30", "entry": 10.73, "max_h": 10.765, "gain": 0.33, "is_hit": false}, {"time": "11:30", "entry": 10.705, "max_h": 10.72, "gain": 0.14, "is_hit": false}, {"time": "12:30", "entry": 10.665, "max_h": 10.69, "gain": 0.23, "is_hit": false}, {"time": "13:30", "entry": 10.63, "max_h": 10.67, "gain": 0.38, "is_hit": false}, {"time": "14:30", "entry": 10.635, "max_h": 10.67, "gain": 0.33, "is_hit": false}, {"time": "15:30", "entry": 10.6484, "max_h": 10.6651, "gain": 0.16, "is_hit": false}, {"time": "16:00", "entry": 10.63, "max_h": 10.35, "gain": -2.63, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 1.12, "is_inflight": true, "hours": [{"time": "10:30", "entry": 10.235, "max_h": 10.35, "gain": 1.12, "is_hit": false}, {"time": "11:30", "entry": 10.255, "max_h": 10.35, "gain": 0.93, "is_hit": false}]}}}, {"code": "US.KOD", "ticker": "KOD", "name": "Kodiak Sciences", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 30.2, "chg_pct": -4.19, "open_price": 30.9, "high_price": 31.3, "low_price": 29.8101, "amplitude": 4.727, "volume": 345173.0, "turnover": 10545315.259, "bar_1030": {"close": 30.87, "vol": 93227.0, "max_gain": 1.39, "is_hit": false}, "bar_1130": {"close": 30.48, "vol": 111419.0, "max_gain": 2.69, "is_hit": false}, "completed_vol": 204646.0, "vol_share_pct": 59.3, "metrics": {"d_minus_3": {"c": 7, "h": 7, "rate": 100.0, "max_gain": 7.76, "is_inflight": false, "hours": [{"time": "10:30", "entry": 32.67, "max_h": 34.4775, "gain": 5.53, "is_hit": true}, {"time": "11:30", "entry": 32.58, "max_h": 34.4775, "gain": 5.82, "is_hit": true}, {"time": "12:30", "entry": 32.24, "max_h": 34.4775, "gain": 6.94, "is_hit": true}, {"time": "13:30", "entry": 31.995, "max_h": 34.4775, "gain": 7.76, "is_hit": true}, {"time": "14:30", "entry": 32.3, "max_h": 34.4775, "gain": 6.74, "is_hit": true}, {"time": "15:30", "entry": 32.57, "max_h": 34.4775, "gain": 5.86, "is_hit": true}, {"time": "16:00", "entry": 32.42, "max_h": 34.4775, "gain": 6.35, "is_hit": true}]}, "d_minus_2": {"c": 7, "h": 1, "rate": 14.3, "max_gain": 5.24, "is_inflight": true, "hours": [{"time": "10:30", "entry": 32.76, "max_h": 34.4775, "gain": 5.24, "is_hit": true}, {"time": "11:30", "entry": 33.378946, "max_h": 34.4775, "gain": 3.29, "is_hit": false}, {"time": "12:30", "entry": 33.27, "max_h": 34.4775, "gain": 3.63, "is_hit": false}, {"time": "13:30", "entry": 33.59, "max_h": 34.4775, "gain": 2.64, "is_hit": false}, {"time": "14:30", "entry": 33.83, "max_h": 34.4775, "gain": 1.91, "is_hit": false}, {"time": "15:30", "entry": 33.85, "max_h": 34.4775, "gain": 1.85, "is_hit": false}, {"time": "16:00", "entry": 33.8, "max_h": 34.4775, "gain": 2.0, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 1.67, "is_inflight": true, "hours": [{"time": "10:30", "entry": 32.105, "max_h": 32.01, "gain": -0.3, "is_hit": false}, {"time": "11:30", "entry": 31.5, "max_h": 31.8, "gain": 0.95, "is_hit": false}, {"time": "12:30", "entry": 31.5, "max_h": 31.75, "gain": 0.79, "is_hit": false}, {"time": "13:30", "entry": 31.265, "max_h": 31.75, "gain": 1.55, "is_hit": false}, {"time": "14:30", "entry": 31.23, "max_h": 31.75, "gain": 1.67, "is_hit": false}, {"time": "15:30", "entry": 31.65, "max_h": 31.75, "gain": 0.32, "is_hit": false}, {"time": "16:00", "entry": 31.52, "max_h": 31.3, "gain": -0.7, "is_hit": false}]}, "today": {"c": 2, "h": 0, "rate": 0.0, "max_gain": 2.69, "is_inflight": true, "hours": [{"time": "10:30", "entry": 30.87, "max_h": 31.3, "gain": 1.39, "is_hit": false}, {"time": "11:30", "entry": 30.48, "max_h": 31.3, "gain": 2.69, "is_hit": false}]}}}, {"code": "US.ARM", "ticker": "ARM", "name": "Arm Holdings", "category": "特别关注", "is_holding": false, "pos_info": {}, "last_price": 310.9, "chg_pct": -6.51, "open_price": 319.23, "high_price": 326.0, "low_price": 307.5701, "amplitude": 5.542, "volume": 3890873.0, "turnover": 1235894708.856, "bar_1030": {"close": 323.97, "vol": 1265911.0, "max_gain": 0.63, "is_hit": false}, "bar_1130": {"close": 309.9039, "vol": 991474.0, "max_gain": 5.19, "is_hit": true}, "completed_vol": 2257385.0, "vol_share_pct": 58.0, "metrics": {"d_minus_3": {"c": 7, "h": 5, "rate": 71.4, "max_gain": 8.69, "is_inflight": false, "hours": [{"time": "10:30", "entry": 310.03, "max_h": 336.98, "gain": 8.69, "is_hit": true}, {"time": "11:30", "entry": 314.98, "max_h": 336.98, "gain": 6.98, "is_hit": true}, {"time": "12:30", "entry": 319.06, "max_h": 336.98, "gain": 5.62, "is_hit": true}, {"time": "13:30", "entry": 319.365, "max_h": 336.98, "gain": 5.52, "is_hit": true}, {"time": "14:30", "entry": 319.38, "max_h": 336.98, "gain": 5.51, "is_hit": true}, {"time": "15:30", "entry": 321.1, "max_h": 336.98, "gain": 4.95, "is_hit": false}, {"time": "16:00", "entry": 322.9, "max_h": 336.98, "gain": 4.36, "is_hit": false}]}, "d_minus_2": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 3.18, "is_inflight": true, "hours": [{"time": "10:30", "entry": 326.61, "max_h": 336.98, "gain": 3.18, "is_hit": false}, {"time": "11:30", "entry": 329.06, "max_h": 336.98, "gain": 2.41, "is_hit": false}, {"time": "12:30", "entry": 329.305, "max_h": 336.98, "gain": 2.33, "is_hit": false}, {"time": "13:30", "entry": 332.6, "max_h": 336.98, "gain": 1.32, "is_hit": false}, {"time": "14:30", "entry": 332.965, "max_h": 336.98, "gain": 1.21, "is_hit": false}, {"time": "15:30", "entry": 331.15, "max_h": 336.98, "gain": 1.76, "is_hit": false}, {"time": "16:00", "entry": 333.2, "max_h": 336.98, "gain": 1.13, "is_hit": false}]}, "d_minus_1": {"c": 7, "h": 0, "rate": 0.0, "max_gain": 2.72, "is_inflight": true, "hours": [{"time": "10:30", "entry": 329.06, "max_h": 334.45, "gain": 1.64, "is_hit": false}, {"time": "11:30", "entry": 328.14, "max_h": 334.45, "gain": 1.92, "is_hit": false}, {"time": "12:30", "entry": 325.605, "max_h": 334.45, "gain": 2.72, "is_hit": false}, {"time": "13:30", "entry": 330.2, "max_h": 334.45, "gain": 1.29, "is_hit": false}, {"time": "14:30", "entry": 331.28, "max_h": 334.45, "gain": 0.96, "is_hit": false}, {"time": "15:30", "entry": 333.215, "max_h": 334.0, "gain": 0.24, "is_hit": false}, {"time": "16:00", "entry": 332.56, "max_h": 326.0, "gain": -1.97, "is_hit": false}]}, "today": {"c": 2, "h": 1, "rate": 50.0, "max_gain": 5.19, "is_inflight": true, "hours": [{"time": "10:30", "entry": 323.97, "max_h": 326.0, "gain": 0.63, "is_hit": false}, {"time": "11:30", "entry": 309.9039, "max_h": 326.0, "gain": 5.19, "is_hit": true}]}}}];
+let currentCategory = 'all';
+let searchQuery = '';
+let sortField = 'chg_pct';
+let sortAsc = false;
+
+function formatVol(v) {
+  if (!v) return '-';
+  if (v >= 1e6) return (v / 1e6).toFixed(2) + ' M';
+  if (v >= 1e3) return (v / 1e3).toFixed(1) + ' K';
+  return v.toLocaleString();
+}
+
+function getRateBadge(rate, h, c, maxGain, isToday, isInflight) {
+  if (rate === null || c === 0) return '<span style="color:#94a3b8;">-</span>';
+  let cls = 'rate-mid';
+  if (rate >= 50) cls = 'rate-high';
+  else if (rate < 25) cls = 'rate-low';
+  
+  let flightIcon = isInflight ? ' ⏳' : '';
+  let hitBadge = maxGain >= 5.0 ? `<span class="runup-badge hit">+${maxGain.toFixed(1)}%✓</span>` : `<span class="runup-badge">+${maxGain.toFixed(1)}%</span>`;
+  
+  return `
+    <div>
+      <span class="cell-rate ${cls}">${rate.toFixed(1)}%</span>
+      <span class="sub-pill">(${h}/${c})${flightIcon} ${hitBadge}</span>
+    </div>
+  `;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('table-body');
+  
+  // Filter
+  let list = RAW_DATA.filter(s => {
+    if (currentCategory === 'holding' && !s.is_holding) return false;
+    if (currentCategory === 'fav' && !s.category.includes('特别关注') && !s.category.includes('特注')) return false;
+    if (currentCategory === 'up' && s.chg_pct <= 0) return false;
+    if (currentCategory === 'hit') {
+      const d3Rate = s.metrics.d_minus_3.rate || 0;
+      const d2Rate = s.metrics.d_minus_2.rate || 0;
+      if (d3Rate < 50 && d2Rate < 50) return false;
+    }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      if (!s.ticker.toLowerCase().includes(q) && !s.name.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+  
+  // Sort
+  list.sort((a, b) => {
+    let va = a[sortField];
+    let vb = b[sortField];
+    if (sortField === 'rate_d3') va = a.metrics.d_minus_3.rate ?? -1, vb = b.metrics.d_minus_3.rate ?? -1;
+    if (sortField === 'rate_d2') va = a.metrics.d_minus_2.rate ?? -1, vb = b.metrics.d_minus_2.rate ?? -1;
+    if (sortField === 'rate_d1') va = a.metrics.d_minus_1.rate ?? -1, vb = b.metrics.d_minus_1.rate ?? -1;
+    if (sortField === 'rate_today') va = a.metrics.today.rate ?? -1, vb = b.metrics.today.rate ?? -1;
+    if (sortField === 'gain_1030') va = a.bar_1030.max_gain, vb = b.bar_1030.max_gain;
+    if (sortField === 'gain_1130') va = a.bar_1130.max_gain, vb = b.bar_1130.max_gain;
+    
+    if (typeof va === 'string') return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+    return sortAsc ? (va - vb) : (vb - va);
+  });
+  
+  // Update stats
+  const upCount = list.filter(s => s.chg_pct > 0).length;
+  document.getElementById('stat-up-count').innerText = `${upCount} / ${list.length} 只 (${(upCount/list.length*100).toFixed(0)}%)`;
+  
+  const d3Valid = list.filter(s => s.metrics.d_minus_3.rate !== null);
+  const d3Avg = d3Valid.length > 0 ? (d3Valid.reduce((acc, s) => acc + s.metrics.d_minus_3.rate, 0) / d3Valid.length).toFixed(1) : '-';
+  document.getElementById('stat-d3-avg').innerText = d3Avg + '%';
+  
+  const h1030Hits = list.filter(s => s.bar_1030.is_hit).length;
+  document.getElementById('stat-h1030-avg').innerText = `${(h1030Hits / list.length * 100).toFixed(1)}% (${h1030Hits}只达标)`;
+  
+  tbody.innerHTML = list.map(s => {
+    const chgClass = s.chg_pct > 0 ? 'chg-up' : (s.chg_pct < 0 ? 'chg-down' : 'chg-flat');
+    const chgSign = s.chg_pct > 0 ? '+' : '';
+    
+    let tagCls = 'tag-fav';
+    if (s.is_holding) tagCls = 'tag-holding';
+    else if (s.category.includes('亏损')) tagCls = 'tag-bad';
+    
+    const rowCls = s.is_holding ? 'row-holding' : '';
+    
+    let posDetail = '<span style="color:#94a3b8;">-</span>';
+    if (s.is_holding) {
+      const p = s.pos_info;
+      posDetail = `<span style="font-family:monospace; font-size:11px;">持仓: <b>${p.qty}</b>股 | 成本: $${p.cost?.toFixed(2)}</span>`;
+    }
+    
+    const gain1030 = s.bar_1030.max_gain;
+    const gain1130 = s.bar_1130.max_gain;
+    
+    return `
+      <tr class="${rowCls}">
+        <td class="col-sticky text-left">
+          <div style="font-weight:800; font-size:13px; font-family:monospace;">${s.ticker}</div>
+          <div style="font-size:11px; color:var(--muted);">${s.name}</div>
+        </td>
+        <td class="text-center">
+          <span class="tag-badge ${tagCls}">${s.category}</span>
+        </td>
+        <td style="font-family:monospace; font-weight:700;">$${s.last_price.toFixed(2)}</td>
+        <td class="${chgClass}">${chgSign}${s.chg_pct.toFixed(2)}%</td>
+        <td style="font-family:monospace; font-size:11.5px; color:var(--muted);">${s.amplitude.toFixed(2)}%</td>
+        <td>
+          <div style="font-family:monospace; font-weight:700;">${formatVol(s.completed_vol)}</div>
+          <div class="sub-pill">占今日全天 ${s.vol_share_pct}%</div>
+        </td>
+        <td>
+          <div style="font-family:monospace; font-weight:700; color:${gain1030 >= 5 ? 'var(--up)' : 'inherit'};">
+            ${gain1030 >= 0 ? '+' : ''}${gain1030.toFixed(2)}%
+          </div>
+          <div class="sub-pill">收 $${s.bar_1030.close.toFixed(2)} | ${formatVol(s.bar_1030.vol)}</div>
+        </td>
+        <td>
+          <div style="font-family:monospace; font-weight:700; color:${gain1130 >= 5 ? 'var(--up)' : 'inherit'};">
+            ${gain1130 >= 0 ? '+' : ''}${gain1130.toFixed(2)}%
+          </div>
+          <div class="sub-pill">收 $${s.bar_1130.close.toFixed(2)} | ${formatVol(s.bar_1130.vol)}</div>
+        </td>
+        <td class="text-center">
+          ${getRateBadge(s.metrics.d_minus_3.rate, s.metrics.d_minus_3.h, s.metrics.d_minus_3.c, s.metrics.d_minus_3.max_gain, false, s.metrics.d_minus_3.is_inflight)}
+        </td>
+        <td class="text-center">
+          ${getRateBadge(s.metrics.d_minus_2.rate, s.metrics.d_minus_2.h, s.metrics.d_minus_2.c, s.metrics.d_minus_2.max_gain, false, s.metrics.d_minus_2.is_inflight)}
+        </td>
+        <td class="text-center">
+          ${getRateBadge(s.metrics.d_minus_1.rate, s.metrics.d_minus_1.h, s.metrics.d_minus_1.c, s.metrics.d_minus_1.max_gain, false, s.metrics.d_minus_1.is_inflight)}
+        </td>
+        <td class="text-center" style="background:#f8fafc;">
+          ${getRateBadge(s.metrics.today.rate, s.metrics.today.h, s.metrics.today.c, s.metrics.today.max_gain, true, s.metrics.today.is_inflight)}
+        </td>
+        <td class="text-left">${posDetail}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function filterCategory(cat) {
+  currentCategory = cat;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.getElementById(`tab-${cat}`).classList.add('active');
+  renderTable();
+}
+
+function onSearch(val) {
+  searchQuery = val.trim();
+  renderTable();
+}
+
+function sortTable(field) {
+  if (sortField === field) {
+    sortAsc = !sortAsc;
+  } else {
+    sortField = field;
+    sortAsc = false;
+  }
+  renderTable();
+}
+
+// Initialize
+renderTable();
+</script>
+</body>
+</html>

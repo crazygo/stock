@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>增长区间触发规律研究看板</title>
+<style>
+:root{--bg:#0e1621;--panel:#121d2b;--line:#22303f;--txt:#dbe7f3;--dim:#8fa6bc;
+--good:#55dfc1;--bad:#ff8589;--accent:#6ea8fe;--warn:#f2c96b}
+*{box-sizing:border-box}
+body{margin:0;font:13px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--txt)}
+header{padding:18px 22px 14px;border-bottom:1px solid var(--line)}
+h1{margin:0 0 6px;font-size:19px}
+.sub{color:var(--dim);font-size:12px}
+.badge{display:inline-block;padding:2px 9px;border-radius:11px;font-size:12px;font-weight:600;
+background:rgba(242,201,107,.14);color:var(--warn);border:1px solid rgba(242,201,107,.35);margin-left:8px}
+.layout{display:flex;min-height:calc(100vh - 70px)}
+aside{width:250px;flex:0 0 250px;border-right:1px solid var(--line);padding:16px 14px;background:#0c141f}
+aside h2{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin:16px 0 8px}
+aside h2:first-child{margin-top:0}
+label{display:block;font-size:12px;color:var(--dim);margin:9px 0 3px}
+select,input[type=text]{width:100%;background:#0a121c;color:var(--txt);border:1px solid var(--line);
+border-radius:5px;padding:6px 8px;font-size:13px}
+.chk{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--txt);margin:9px 0}
+.chk input{accent-color:var(--accent)}
+main{flex:1;padding:16px 20px 40px;min-width:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin-bottom:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:11px 13px}
+.card b{display:block;font-size:21px;font-weight:650;margin-top:3px}
+.card span{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+.card.good b{color:var(--good)}.card.bad b{color:var(--bad)}
+.note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--warn);
+border-radius:6px;padding:10px 13px;margin-bottom:18px;font-size:12.5px;color:#e8d9b0}
+h3.sec{font-size:14px;margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(430px,1fr));gap:14px}
+.stock{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.stock header{all:unset;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.stock .t{font-weight:650;font-size:14px}
+.stock .m{font-size:11.5px;color:var(--dim)}
+canvas{width:100%;height:190px;display:block;cursor:crosshair}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin:4px 0 12px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+table{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+th,td{padding:5px 8px;text-align:right;border-bottom:1px solid #1a2634;white-space:nowrap}
+th{color:var(--dim);font-weight:600;text-align:right;cursor:pointer;user-select:none;position:sticky;top:0;background:var(--panel)}
+th:first-child,td:first-child{text-align:left}
+th.l,td.l{text-align:left}
+tr.miss td{color:#c9b3b5}
+tr.hit td{color:#bdf0e4}
+.wrap{max-height:460px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.pill{display:inline-block;padding:1px 7px;border-radius:9px;font-size:11px;border:1px solid var(--line)}
+.pill.hit{color:var(--good);border-color:rgba(85,223,193,.4)}
+.pill.miss{color:var(--bad);border-color:rgba(255,133,137,.4)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.two{grid-template-columns:1fr}.layout{flex-direction:column}aside{width:auto;flex:none;border-right:none;border-bottom:1px solid var(--line)}}
+small.dim{color:var(--dim)}
+</style></head><body>
+<header>
+  <h1>增长区间提前触发规律研究 · 看板<span class="badge" id="verdict">—</span></h1>
+  <div class="sub" id="meta"></div>
+</header>
+<div class="layout">
+<aside>
+  <h2>筛选</h2>
+  <label>候选规则</label><select id="rule"></select>
+  <label>去重口径</label><select id="dedup">
+    <option value="point">点位级（原始）</option>
+    <option value="day" selected>股票日级（每日 1 次）</option>
+    <option value="event">事件级（14 天 1 次）</option>
+  </select>
+  <label>时段</label><select id="sess">
+    <option value="">全部</option><option value="pre">盘前</option>
+    <option value="reg">常规时段</option><option value="post">盘后</option>
+  </select>
+  <div class="chk"><input type="checkbox" id="onlymiss"><label for="onlymiss" style="margin:0">只看未达成（误报）</label></div>
+  <div class="chk"><input type="checkbox" id="showwin" checked><label for="showwin" style="margin:0">显示历史区间</label></div>
+  <div class="chk"><input type="checkbox" id="showsig" checked><label for="showsig" style="margin:0">显示触发点</label></div>
+  <label>搜索股票</label><input type="text" id="q" placeholder="如 NVDA">
+  <h2>通过标准（事前冻结）</h2>
+  <div id="gate" style="font-size:12px;color:var(--dim)"></div>
+</aside>
+<main>
+  <div class="note" id="conclusion"></div>
+  <div class="cards" id="cards"></div>
+  <div class="legend">
+    <span><i style="background:rgba(85,223,193,.25);border:1px dashed var(--good)"></i>历史 8% 区间（标签，只作召回分母）</span>
+    <span><i style="background:var(--good);border-radius:50%"></i>触发且达成</span>
+    <span><i style="border:1.5px solid var(--bad);border-radius:50%"></i>触发未达成（误报）</span>
+    <span><i style="background:var(--accent)"></i>日收盘价</span>
+  </div>
+  <h3 class="sec">逐股 K 线与触发点</h3>
+  <div class="grid" id="charts"></div>
+  <h3 class="sec">逐条信号（点击表头排序）</h3>
+  <div class="wrap"><table id="sigtable"><thead></thead><tbody></tbody></table></div>
+  <h3 class="sec">稳定性拆分</h3>
+  <div class="two">
+    <div><h4 style="margin:0 0 6px;font-size:12.5px;color:var(--dim)">按月份</h4>
+      <div class="wrap" style="max-height:260px"><table id="bymonth"><thead></thead><tbody></tbody></table></div></div>
+    <div><h4 style="margin:0 0 6px;font-size:12.5px;color:var(--dim)">按股票</h4>
+      <div class="wrap" style="max-height:260px"><table id="byticker"><thead></thead><tbody></tbody></table></div></div>
+  </div>
+  <h3 class="sec">逐股召回率与精准率（当前规则，股票日级去重）</h3>
+  <div class="wrap" style="max-height:340px"><table id="byrecall"><thead></thead><tbody></tbody></table></div>
+</main>
+</div>
+<script>
+const DATA = /*__DATA__*/;
+const $ = id => document.getElementById(id);
+const pct = (x,d=1) => x==null ? '—' : (x*100).toFixed(d)+'%';
+const RULES = DATA.rules, META = DATA.metrics;
+
+let state = {rule:'R4', dedup:'day', sess:'', onlymiss:false, q:'', showwin:true, showsig:true, sort:'ts', dir:1};
+
+function signals(){
+  let s = DATA.signals.filter(x => x.rule===state.rule);
+  if(state.sess) s = s.filter(x => x.sess===state.sess);
+  if(state.onlymiss) s = s.filter(x => !x.hit);
+  if(state.q) s = s.filter(x => x.ticker.toLowerCase().includes(state.q.toLowerCase()));
+  if(state.dedup==='day'){
+    const best={}; s.forEach(x=>{const k=x.ticker+'|'+x.date; if(!best[k]||x.ts<best[k].ts) best[k]=x;});
+    s=Object.values(best);
+  } else if(state.dedup==='event'){
+    s.sort((a,b)=>a.ts<b.ts?-1:1); const last={}, keep=[];
+    s.forEach(x=>{const p=last[x.ticker];
+      if(!p || (new Date(x.date)-new Date(p))/86400000 > 14){keep.push(x); last[x.ticker]=new Date(x.date);}});
+    s=keep;
+  }
+  return s.sort((a,b)=> a.ts<b.ts?-1:1);
+}
+
+function cards(){
+  const sig = signals();
+  const m = META[state.rule] && META[state.rule][state.dedup];
+  const prec = sig.length ? sig.filter(x=>x.hit).length/sig.length : null;
+  const pool = DATA.pool[state.rule] && DATA.pool[state.rule][state.dedup];
+  const fp100 = pool ? (sig.length - sig.filter(x=>x.hit).length)/pool*100 : null;
+  const gate = m ? {
+    n: m.signals>=15,
+    recall: (m.recall||0)>=0.25,
+    lift: (m.lift||0)>=1.3,
+    ci: m.ci && m.ci[0]>DATA.base
+  } : {};
+  $('cards').innerHTML = [
+    ['信号数', sig.length, ''],
+    ['精准率', pct(prec), prec!=null && prec>DATA.base ? 'good':'bad'],
+    ['随机基准', pct(DATA.base), ''],
+    ['相对基准', m&&m.lift?'×'+m.lift.toFixed(2):'—', m&&m.lift>=1.3?'good':'bad'],
+    ['召回率', pct(m&&m.recall), (m&&m.recall>=0.25)?'good':'bad'],
+    ['误报/100 合格点', fp100==null?'—':fp100.toFixed(2), ''],
+    ['触发频率', pool?pct(sig.length/pool,2):'—', ''],
+    ['门槛', Object.values(gate).filter(Boolean).length+'/4', Object.values(gate).every(Boolean)?'good':'bad'],
+  ].map(([k,v,c])=>`<div class="card ${c}"><span>${k}</span><b>${v}</b></div>`).join('');
+  $('gate').innerHTML = Object.entries({n:'≥15 个去重信号',recall:'召回率 ≥25%',lift:'精准率 ≥1.3×基准',ci:'bootstrap 95% 下界 > 基准'})
+    .map(([k,label])=>`<div style="margin:5px 0">${gate[k]?'✅':'❌'} ${label}</div>`).join('');
+  $('verdict').textContent = META[state.rule] && META[state.rule][state.dedup]
+    ? (Object.values(gate).every(Boolean) ? '通过事前门槛' : '未通过事前门槛') : '—';
+  $('verdict').style.background = Object.values(gate).every(Boolean)
+    ? 'rgba(85,223,193,.14)' : 'rgba(242,201,107,.14)';
+  $('verdict').style.color = Object.values(gate).every(Boolean) ? '#55dfc1' : '#f2c96b';
+}
+
+function drawChart(tk){
+  const s = DATA.stocks[tk];
+  const bars = s.candles, W=420, H=190, L=44, R=8, T=10, B=22;
+  const cv = document.createElement('canvas'); cv.width=W*2; cv.height=H*2;
+  cv.style.width='100%'; cv.style.height=H+'px';
+  const ctx=cv.getContext('2d'); ctx.scale(2,2);
+  if(!bars.length){ctx.fillStyle='#8fa6bc';ctx.fillText('无小时线数据',10,20);return cv;}
+  const lo=Math.min(...bars.map(b=>b.l)), hi=Math.max(...bars.map(b=>b.h));
+  const pad=(hi-lo)*.07||1, y0=lo-pad, y1=hi+pad;
+  const step=(W-L-R)/bars.length, x=i=>L+i*step+step/2, y=p=>T+(y1-p)/(y1-y0)*(H-T-B);
+  ctx.font='9px -apple-system,sans-serif'; ctx.textAlign='right';
+  for(let k=0;k<=3;k++){const yy=T+k*(H-T-B)/4, p=y1-(y1-y0)*k/4;
+    ctx.strokeStyle='#1c2836'; ctx.beginPath(); ctx.moveTo(L,yy); ctx.lineTo(W-R,yy); ctx.stroke();
+    ctx.fillStyle='#7d93a8'; ctx.fillText(p.toFixed(0),L-5,yy+3);}
+  if(state.showwin) s.windows.forEach(w=>{
+    const i=bars.findIndex(b=>b.d===w.start_date), j=bars.findIndex(b=>b.d===w.end_date);
+    if(i<0||j<0) return;
+    ctx.fillStyle='rgba(85,223,193,.13)'; ctx.fillRect(x(i)-step/2,T,(j-i+1)*step,H-T-B);
+    ctx.strokeStyle='#55dfc1'; ctx.setLineDash([3,3]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(x(i),T); ctx.lineTo(x(i),H-B); ctx.moveTo(x(j+1),T); ctx.lineTo(x(j+1),H-B); ctx.stroke();
+    ctx.setLineDash([]);});
+  ctx.strokeStyle='#6ea8fe'; ctx.lineWidth=1.2; ctx.beginPath();
+  bars.forEach((b,i)=> i?ctx.lineTo(x(i),y(b.c)):ctx.moveTo(x(i),y(b.c))); ctx.stroke();
+  if(state.showsig){
+    const sig=signals().filter(z=>z.ticker===tk);
+    sig.forEach(z=>{const i=bars.findIndex(b=>b.d===z.date); if(i<0)return;
+      const px=y(z.entry)+9;
+      if(z.hit){ctx.fillStyle='#55dfc1'; ctx.beginPath(); ctx.moveTo(x(i),px); ctx.lineTo(x(i)-4,px+8); ctx.lineTo(x(i)+4,px+8); ctx.closePath(); ctx.fill();}
+      else{ctx.strokeStyle='#ff8589'; ctx.lineWidth=1.4; ctx.beginPath(); ctx.moveTo(x(i),px); ctx.lineTo(x(i)-4,px+8); ctx.lineTo(x(i)+4,px+8); ctx.closePath(); ctx.stroke();}});
+  }
+  ctx.fillStyle='#7d93a8'; ctx.textAlign='left';
+  ctx.fillText(bars[0].d, L, H-7); ctx.textAlign='right'; ctx.fillText(bars[bars.length-1].d, W-R, H-7);
+  const tip=document.createElement('div'); tip.style.cssText='font-size:11.5px;color:#8fa6bc;margin-top:4px;min-height:16px';
+  cv.onmousemove=e=>{const r=cv.getBoundingClientRect();
+    const i=Math.max(0,Math.min(bars.length-1,Math.floor((e.clientX-r.left-L)/step)));
+    const b=bars[i]; const sig=signals().filter(z=>z.ticker===tk&&z.date===b.d);
+    const win=s.windows.filter(w=>w.start_date<=b.d&&b.d<=w.end_date);
+    tip.textContent=`${b.d} 收 ${b.c.toFixed(2)}` + (win.length?` · 区间内 ${pct(win[0].return)}`:'')
+      + (sig.length?` · ${sig.length} 个触发点（${sig.filter(z=>z.hit).length} 达成）`:'') + (sig.length&&sig[0].max_return!=null?` · 最大 ${pct(sig[0].max_return)}`:'');
+  };
+  const box=document.createElement('div'); box.appendChild(cv); box.appendChild(tip); return box;
+}
+
+function table(el, cols, rows){
+  const th=el.querySelector('thead'), tb=el.querySelector('tbody');
+  th.innerHTML='<tr>'+cols.map(c=>`<th class="${c.l?'l':''}" data-k="${c.k||''}">${c.t}</th>`).join('')+'</tr>';
+  tb.innerHTML=rows.map(r=>'<tr class="'+(r._cls||'')+'">'+cols.map(c=>`<td class="${c.l?'l':''}">${r[c.k]}</td>`).join('')+'</tr>').join('');
+}
+
+function render(){
+  cards();
+  const order = Object.keys(DATA.stocks).filter(t=>!state.q||t.toLowerCase().includes(state.q.toLowerCase()));
+  $('charts').innerHTML='';
+  order.forEach(t=>{
+    const s=DATA.stocks[t];
+    const sig=signals().filter(z=>z.ticker===t);
+    const d=document.createElement('div'); d.className='stock';
+    const hd=document.createElement('header');
+    hd.innerHTML=`<span class="t">${t}</span><span class="m">区间 ${s.windows.length} 段 · 信号 ${sig.length}（达成 ${sig.filter(z=>z.hit).length}）</span>`;
+    d.appendChild(hd); d.appendChild(drawChart(t)); $('charts').appendChild(d);
+  });
+  const sig=signals();
+  table($('sigtable'), [
+    {t:'股票',k:'ticker',l:1},{t:'触发时间(美东)',k:'ts',l:1},{t:'时段',k:'sess'},
+    {t:'入场价',k:'entry'},{t:'结果',k:'hitPill'},{t:'最大涨幅',k:'maxret'},
+    {t:'20日涨幅',k:'ret_20d'},{t:'相对QQQ',k:'rel_20d'},{t:'量比',k:'vol_ratio'},
+    {t:'距20日高',k:'px_vs_hi20'},{t:'盘前涨幅',k:'premkt_ret'},{t:'QQQ20日',k:'qqq_20d'},
+  ], sig.map(s=>({...s, hitPill:`<span class="pill ${s.hit?'hit':'miss'}">${s.hit?'达成':'未达成'}</span>`,
+    maxret:pct(s.max_return), ret_20d:pct(s.ret_20d), rel_20d:pct(s.rel_20d),
+    vol_ratio:s.vol_ratio==null?'—':s.vol_ratio.toFixed(2), px_vs_hi20:pct(s.px_vs_hi20),
+    premkt_ret:s.premkt_ret==null?'—':pct(s.premkt_ret), qqq_20d:pct(s.qqq_20d),
+    _cls:s.hit?'hit':'miss'})));
+
+  const bym={}, byt={};
+  sig.forEach(s=>{const k=s.date.slice(0,7); (bym[k]=bym[k]||[]).push(s); (byt[s.ticker]=byt[s.ticker]||[]).push(s);});
+  table($('bymonth'), [{t:'月份',k:'m',l:1},{t:'信号',k:'n'},{t:'达成',k:'h'},{t:'精准率',k:'p'}],
+    Object.entries(bym).sort().map(([m,v])=>({m,n:v.length,h:v.filter(x=>x.hit).length,
+      p:pct(v.filter(x=>x.hit).length/v.length)})));
+  table($('byticker'), [{t:'股票',k:'t',l:1},{t:'信号',k:'n'},{t:'达成',k:'h'},{t:'精准率',k:'p'}],
+    Object.entries(byt).sort((a,b)=>b[1].length-a[1].length).map(([t,v])=>({t,n:v.length,
+      h:v.filter(x=>x.hit).length,p:pct(v.filter(x=>x.hit).length/v.length)})));
+  table($('byrecall'), [{t:'股票',k:'t',l:1},{t:'评估集区间',k:'ev'},{t:'命中',k:'cap'},{t:'召回率',k:'r'},
+    {t:'信号',k:'n'},{t:'精准率',k:'p'}], (DATA.recall[state.rule]||[]).map(r=>({...r, r:pct(r.r,0)})));
+}
+
+$('rule').innerHTML = RULES.map(r=>`<option value="${r}">${r}${DATA.ruleDesc[r]?' — '+DATA.ruleDesc[r]:''}</option>`).join('');
+$('rule').value='R4';
+$('meta').textContent = `生成于 ${DATA.generated_at} · 冻结规格 spec.md v1 · 评估集 ${DATA.eval_points.toLocaleString()} 个合格预测点 · ${DATA.eval_events} 个事件 · 股票池 ${DATA.stock_count} 只`;
+$('conclusion').innerHTML = `<b>结论：未找到通过事前门槛的触发规律。</b>${DATA.conclusion}`;
+['rule','dedup','sess'].forEach(id=>$(id).onchange=()=>{state[id]=$(id).value; render();});
+['onlymiss','showwin','showsig'].forEach(id=>$(id).onchange=()=>{state[id]=$(id).checked; render();});
+$('q').oninput=()=>{state.q=$('q').value.trim(); render();};
+render();
+</script></body></html>

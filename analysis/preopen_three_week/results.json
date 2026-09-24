@@ -1,0 +1,5322 @@
+{
+  "model": "preopen_prior_close_v0",
+  "asof_session": "2026-09-22",
+  "next_decision_session": "next U.S. session pre-open; conditional entry at market open",
+  "periods": {
+    "train": [
+      "2025-11-03",
+      "2026-03-06"
+    ],
+    "validation": [
+      "2026-04-01",
+      "2026-05-15"
+    ],
+    "test": [
+      "2026-06-15",
+      "2026-08-31"
+    ]
+  },
+  "rules": {
+    "horizon_sessions": 15,
+    "target": 0.2,
+    "stop": -0.1,
+    "round_trip_cost": 0.002,
+    "max_open_gap": 0.03,
+    "max_buys_per_day": 3,
+    "capital_slots": 10,
+    "p_buy_threshold": 0.04,
+    "expected_net_buy_threshold": -0.1
+  },
+  "coverage": {
+    "latest_members": 115,
+    "latest_quality_pass": 60,
+    "feature_rows": 12851,
+    "train_rows": 4659,
+    "validation_rows": 1845,
+    "test_rows": 3176,
+    "current_actions": {
+      "无法判断": 115
+    }
+  },
+  "train_base_hit_rate": 0.06138656364026615,
+  "validation": {
+    "trades": 35,
+    "buy_days": 20,
+    "target_rate": 0.5142857142857142,
+    "mean_net_return": 0.09210180355770654,
+    "median_net_return": 0.19799999999999973,
+    "loss_trade_rate": 0.2857142857142857,
+    "stop_rate": 0.22857142857142856,
+    "portfolio_return": 0.3329307688012888,
+    "marked_max_drawdown": -0.05424129887469509
+  },
+  "test": {
+    "trades": 68,
+    "buy_days": 40,
+    "target_rate": 0.17647058823529413,
+    "mean_net_return": -0.01702293230330006,
+    "median_net_return": -0.10199999999999998,
+    "loss_trade_rate": 0.6323529411764706,
+    "stop_rate": 0.5441176470588235,
+    "portfolio_return": -0.11921330826783227,
+    "marked_max_drawdown": -0.2211219701961541,
+    "test_stock_days": 3176,
+    "test_days": 54,
+    "test_base_target_rate": 0.1577455919395466,
+    "brier": 0.13734374817413147,
+    "constant_base_brier": 0.13286192016318865,
+    "matched_day_mean_net_return": 0.015173391022015245,
+    "winner_day_capture_rate": 0.22641509433962265,
+    "days_with_buy_rate": 0.7407407407407407,
+    "qqq_buy_hold_return": 0.022114213684816253
+  },
+  "quality_gate": {
+    "passed": false,
+    "checks": {
+      "至少30笔组合交易": true,
+      "至少8个买入日": true,
+      "平均交易净收益为正": false,
+      "平均交易净收益高于同日候选基准": false,
+      "10槽位组合收益为正": false,
+      "组合最大回撤不低于负20%": false,
+      "目标概率Brier优于常数基准": false
+    }
+  },
+  "threshold_grid": [
+    {
+      "p_cut": 0.04,
+      "net_cut": -0.1,
+      "utility": 0.30581011936394126,
+      "trades": 35,
+      "buy_days": 20,
+      "portfolio_return": 0.3329307688012888,
+      "marked_max_drawdown": -0.05424129887469509
+    },
+    {
+      "p_cut": 0.04,
+      "net_cut": -0.08,
+      "utility": 0.2833718405276562,
+      "trades": 34,
+      "buy_days": 18,
+      "portfolio_return": 0.30563332473561045,
+      "marked_max_drawdown": -0.044522968415908526
+    },
+    {
+      "p_cut": 0.04,
+      "net_cut": -0.06,
+      "utility": 0.26346316296281,
+      "trades": 25,
+      "buy_days": 14,
+      "portfolio_return": 0.28553785385613417,
+      "marked_max_drawdown": -0.04414938178664829
+    },
+    {
+      "p_cut": 0.05,
+      "net_cut": -0.1,
+      "utility": 0.25738668999128683,
+      "trades": 32,
+      "buy_days": 19,
+      "portfolio_return": 0.2775978170048121,
+      "marked_max_drawdown": -0.040422254027050575
+    },
+    {
+      "p_cut": 0.05,
+      "net_cut": -0.08,
+      "utility": 0.23718110682850235,
+      "trades": 33,
+      "buy_days": 18,
+      "portfolio_return": 0.2597051151827723,
+      "marked_max_drawdown": -0.04504801670853986
+    },
+    {
+      "p_cut": 0.05,
+      "net_cut": -0.06,
+      "utility": 0.14517375889194206,
+      "trades": 24,
+      "buy_days": 14,
+      "portfolio_return": 0.16573845098729967,
+      "marked_max_drawdown": -0.04112938419071521
+    },
+    {
+      "p_cut": 0.06,
+      "net_cut": -0.1,
+      "utility": 0.2399033346842594,
+      "trades": 29,
+      "buy_days": 16,
+      "portfolio_return": 0.25328382025494167,
+      "marked_max_drawdown": -0.026760971141364553
+    },
+    {
+      "p_cut": 0.06,
+      "net_cut": -0.08,
+      "utility": 0.15621195437531166,
+      "trades": 29,
+      "buy_days": 17,
+      "portfolio_return": 0.17859625403616164,
+      "marked_max_drawdown": -0.044768599321699964
+    },
+    {
+      "p_cut": 0.06,
+      "net_cut": -0.06,
+      "utility": 0.08751628205588813,
+      "trades": 19,
+      "buy_days": 10,
+      "portfolio_return": 0.11005156374519398,
+      "marked_max_drawdown": -0.045070563378611705
+    },
+    {
+      "p_cut": 0.07,
+      "net_cut": -0.1,
+      "utility": 0.15909752217730394,
+      "trades": 26,
+      "buy_days": 15,
+      "portfolio_return": 0.1825081712445189,
+      "marked_max_drawdown": -0.04682129813442992
+    },
+    {
+      "p_cut": 0.07,
+      "net_cut": -0.08,
+      "utility": 0.15401004283754544,
+      "trades": 26,
+      "buy_days": 15,
+      "portfolio_return": 0.17957764113744745,
+      "marked_max_drawdown": -0.051135196599804034
+    },
+    {
+      "p_cut": 0.07,
+      "net_cut": -0.06,
+      "utility": 0.07604146325548139,
+      "trades": 17,
+      "buy_days": 9,
+      "portfolio_return": 0.09575229730683144,
+      "marked_max_drawdown": -0.03942166810270009
+    },
+    {
+      "p_cut": 0.08,
+      "net_cut": -0.1,
+      "utility": 0.19461292708204825,
+      "trades": 22,
+      "buy_days": 13,
+      "portfolio_return": 0.21091190280928584,
+      "marked_max_drawdown": -0.032597951454475194
+    },
+    {
+      "p_cut": 0.08,
+      "net_cut": -0.08,
+      "utility": 0.20181209498767372,
+      "trades": 22,
+      "buy_days": 13,
+      "portfolio_return": 0.21524655695685868,
+      "marked_max_drawdown": -0.026868923938369926
+    }
+  ],
+  "current": [
+    {
+      "ticker": "PATH",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "买入",
+      "research_reason": "原始模型分数通过验证阈值，按分数进入每日前三",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 13.25,
+      "raw_p_target": 0.16397142955372385,
+      "raw_p_stop": 0.857720849987466,
+      "raw_expected_net": -0.02386322445716084,
+      "historical_test_signals": 37,
+      "historical_test_hit_rate": 0.5945945945945946,
+      "historical_test_mean_net": 0.11276245972960441,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.42592592592592593,
+      "test_opportunity_mean_net": 0.06131090848340818,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 1610572000,
+        "operating_cashflow": 371208000,
+        "net_income": 282330000,
+        "latest_filed": "2026-03-25",
+        "accessions": {
+          "revenue": "0001734722-26-000012",
+          "operating_cashflow": "0001734722-26-000012",
+          "net_income": "0001734722-26-000012"
+        }
+      }
+    },
+    {
+      "ticker": "APP",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "买入",
+      "research_reason": "原始模型分数通过验证阈值，按分数进入每日前三",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 328.73,
+      "raw_p_target": 0.0721053777830253,
+      "raw_p_stop": 0.5981210539557889,
+      "raw_expected_net": -0.02803917866965179,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.09259259259259259,
+      "historical_test_mean_net": -0.0516702917378784,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.09259259259259259,
+      "test_opportunity_mean_net": -0.0516702917378784,
+      "portfolio_test_buys": 7,
+      "portfolio_test_hit_rate": 0.14285714285714285,
+      "portfolio_test_mean_net": -0.050674207854015614,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 5480717000,
+        "operating_cashflow": 3971094000,
+        "net_income": 3333751000,
+        "latest_filed": "2026-02-19",
+        "accessions": {
+          "revenue": "0001751008-26-000010",
+          "operating_cashflow": "0001751008-26-000010",
+          "net_income": "0001751008-26-000010"
+        }
+      }
+    },
+    {
+      "ticker": "WDAY",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "买入",
+      "research_reason": "原始模型分数通过验证阈值，按分数进入每日前三",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 188.23,
+      "raw_p_target": 0.04801264524774534,
+      "raw_p_stop": 0.7504774654504299,
+      "raw_expected_net": -0.035236693802161115,
+      "historical_test_signals": 53,
+      "historical_test_hit_rate": 0.5094339622641509,
+      "historical_test_mean_net": 0.08101733833344892,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.5185185185185185,
+      "test_opportunity_mean_net": 0.08318368391986654,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 9552000000,
+        "operating_cashflow": 2939000000,
+        "net_income": 693000000,
+        "latest_filed": "2026-03-06",
+        "accessions": {
+          "revenue": "0001327811-26-000014",
+          "operating_cashflow": "0001327811-26-000014",
+          "net_income": "0001327811-26-000014"
+        }
+      }
+    },
+    {
+      "ticker": "NOW",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 137.0,
+      "raw_p_target": 0.05750918943217513,
+      "raw_p_stop": 0.7605342583309994,
+      "raw_expected_net": -0.03568255923425665,
+      "historical_test_signals": 51,
+      "historical_test_hit_rate": 0.3333333333333333,
+      "historical_test_mean_net": 0.07180504654846287,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.3148148148148148,
+      "test_opportunity_mean_net": 0.07103057021923954,
+      "portfolio_test_buys": 1,
+      "portfolio_test_hit_rate": 0.0,
+      "portfolio_test_mean_net": 0.12810177316126325,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 13278000000,
+        "operating_cashflow": 5444000000,
+        "net_income": 1748000000,
+        "latest_filed": "2026-01-29",
+        "accessions": {
+          "revenue": "0001373715-26-000007",
+          "operating_cashflow": "0001373715-26-000007",
+          "net_income": "0001373715-26-000007"
+        }
+      }
+    },
+    {
+      "ticker": "PLTR",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 184.99,
+      "raw_p_target": 0.0544806954039012,
+      "raw_p_stop": 0.6696932044853148,
+      "raw_expected_net": -0.035984449315945244,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.24074074074074073,
+      "historical_test_mean_net": 0.02574125444538923,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.24074074074074073,
+      "test_opportunity_mean_net": 0.02574125444538923,
+      "portfolio_test_buys": 4,
+      "portfolio_test_hit_rate": 0.25,
+      "portfolio_test_mean_net": 0.01893108974761601,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 4475446000,
+        "operating_cashflow": 2134473000,
+        "net_income": 1625033000,
+        "latest_filed": "2026-02-17",
+        "accessions": {
+          "revenue": "0001321655-26-000011",
+          "operating_cashflow": "0001321655-26-000011",
+          "net_income": "0001321655-26-000011"
+        }
+      }
+    },
+    {
+      "ticker": "ADBE",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 238.25,
+      "raw_p_target": 0.06084062601882279,
+      "raw_p_stop": 0.7183121259288837,
+      "raw_expected_net": -0.0372100248576568,
+      "historical_test_signals": 47,
+      "historical_test_hit_rate": 0.1702127659574468,
+      "historical_test_mean_net": 0.07902912378072827,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.14814814814814814,
+      "test_opportunity_mean_net": 0.06342438978027043,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-11-28",
+        "revenue": 23769000000,
+        "operating_cashflow": 10031000000,
+        "net_income": 7130000000,
+        "latest_filed": "2026-01-15",
+        "accessions": {
+          "revenue": "0000796343-26-000003",
+          "operating_cashflow": "0000796343-26-000003",
+          "net_income": "0000796343-26-000003"
+        }
+      }
+    },
+    {
+      "ticker": "ORCL",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 149.2,
+      "raw_p_target": 0.03208109106499745,
+      "raw_p_stop": 0.6789813354649319,
+      "raw_expected_net": -0.0374054771413911,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.2037037037037037,
+      "historical_test_mean_net": 0.007484630466719496,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.2037037037037037,
+      "test_opportunity_mean_net": 0.007484630466719496,
+      "portfolio_test_buys": 7,
+      "portfolio_test_hit_rate": 0.14285714285714285,
+      "portfolio_test_mean_net": -0.03331033457152894,
+      "quality": {
+        "fiscal_end": "2026-05-31",
+        "revenue": 67357000000,
+        "operating_cashflow": 31977000000,
+        "net_income": 17087000000,
+        "latest_filed": "2026-06-22",
+        "accessions": {
+          "revenue": "0001193125-26-277521",
+          "operating_cashflow": "0001193125-26-277521",
+          "net_income": "0001193125-26-277521"
+        }
+      }
+    },
+    {
+      "ticker": "MU",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 1096.16,
+      "raw_p_target": 0.026264859275884147,
+      "raw_p_stop": 0.6085347739850142,
+      "raw_expected_net": -0.03740872083245113,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.07407407407407407,
+      "historical_test_mean_net": -0.030254604911308453,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.07407407407407407,
+      "test_opportunity_mean_net": -0.030254604911308453,
+      "portfolio_test_buys": 7,
+      "portfolio_test_hit_rate": 0.14285714285714285,
+      "portfolio_test_mean_net": -0.046335252682409664,
+      "quality": {
+        "fiscal_end": "2025-08-28",
+        "revenue": 37378000000,
+        "operating_cashflow": 17525000000,
+        "net_income": 8539000000,
+        "latest_filed": "2025-10-03",
+        "accessions": {
+          "revenue": "0000723125-25-000028",
+          "operating_cashflow": "0000723125-25-000028",
+          "net_income": "0000723125-25-000028"
+        }
+      }
+    },
+    {
+      "ticker": "ZM",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 90.95,
+      "raw_p_target": 0.043380992560180694,
+      "raw_p_stop": 0.6653817239122841,
+      "raw_expected_net": -0.037902850805821425,
+      "historical_test_signals": 40,
+      "historical_test_hit_rate": 0.2,
+      "historical_test_mean_net": 0.05894374128170242,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.14814814814814814,
+      "test_opportunity_mean_net": 0.02141904952148599,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 4868769000,
+        "operating_cashflow": 1989048000,
+        "net_income": 1900148000,
+        "latest_filed": "2026-02-27",
+        "accessions": {
+          "revenue": "0001585521-26-000030",
+          "operating_cashflow": "0001585521-26-000030",
+          "net_income": "0001585521-26-000030"
+        }
+      }
+    },
+    {
+      "ticker": "MRVL",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 262.36,
+      "raw_p_target": 0.03447210825070886,
+      "raw_p_stop": 0.6344758159398094,
+      "raw_expected_net": -0.03794458168160022,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.16666666666666666,
+      "historical_test_mean_net": -0.039992091235149775,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.16666666666666666,
+      "test_opportunity_mean_net": -0.039992091235149775,
+      "portfolio_test_buys": 9,
+      "portfolio_test_hit_rate": 0.2222222222222222,
+      "portfolio_test_mean_net": -0.01166961961498494,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 8194600000,
+        "operating_cashflow": 1750500000,
+        "net_income": 2670100000,
+        "latest_filed": "2026-03-11",
+        "accessions": {
+          "revenue": "0001835632-26-000011",
+          "operating_cashflow": "0001835632-26-000011",
+          "net_income": "0001835632-26-000011"
+        }
+      }
+    },
+    {
+      "ticker": "STX",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 919.84,
+      "raw_p_target": 0.03406493264896004,
+      "raw_p_stop": 0.6797260691768249,
+      "raw_expected_net": -0.03866692812809044,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.12962962962962962,
+      "historical_test_mean_net": -0.04905640097547557,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.12962962962962962,
+      "test_opportunity_mean_net": -0.04905640097547557,
+      "portfolio_test_buys": 7,
+      "portfolio_test_hit_rate": 0.14285714285714285,
+      "portfolio_test_mean_net": -0.054226189287212234,
+      "quality": {
+        "fiscal_end": "2026-07-03",
+        "revenue": 12195000000,
+        "operating_cashflow": 3674000000,
+        "net_income": 3184000000,
+        "latest_filed": "2026-08-04",
+        "accessions": {
+          "revenue": "0001137789-26-000159",
+          "operating_cashflow": "0001137789-26-000159",
+          "net_income": "0001137789-26-000159"
+        }
+      }
+    },
+    {
+      "ticker": "META",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 736.595,
+      "raw_p_target": 0.04606456473033517,
+      "raw_p_stop": 0.6253599203022077,
+      "raw_expected_net": -0.04007618739863723,
+      "historical_test_signals": 53,
+      "historical_test_hit_rate": 0.2641509433962264,
+      "historical_test_mean_net": 0.027877370250129804,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.25925925925925924,
+      "test_opportunity_mean_net": 0.025472233764016288,
+      "portfolio_test_buys": 3,
+      "portfolio_test_hit_rate": 0.3333333333333333,
+      "portfolio_test_mean_net": 0.04402661596958172,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 200966000000,
+        "operating_cashflow": 115800000000,
+        "net_income": 60458000000,
+        "latest_filed": "2026-01-29",
+        "accessions": {
+          "revenue": "0001628280-26-003942",
+          "operating_cashflow": "0001628280-26-003942",
+          "net_income": "0001628280-26-003942"
+        }
+      }
+    },
+    {
+      "ticker": "WIX",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 80.1,
+      "raw_p_target": 0.07105600790843872,
+      "raw_p_stop": 0.8387280981572208,
+      "raw_expected_net": -0.040103263491037704,
+      "historical_test_signals": 53,
+      "historical_test_hit_rate": 0.6415094339622641,
+      "historical_test_mean_net": 0.10672786017415924,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.6296296296296297,
+      "test_opportunity_mean_net": 0.10286252943019335,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1993044000,
+        "operating_cashflow": 582858000,
+        "net_income": 50646000,
+        "latest_filed": "2026-03-05",
+        "accessions": {
+          "revenue": "0001628280-26-015222",
+          "operating_cashflow": "0001628280-26-015222",
+          "net_income": "0001628280-26-015222"
+        }
+      }
+    },
+    {
+      "ticker": "CDNS",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 302.95,
+      "raw_p_target": 0.0437665601102139,
+      "raw_p_stop": 0.7053227677157232,
+      "raw_expected_net": -0.04354914342452749,
+      "historical_test_signals": 46,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.06415347823438063,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.06973698637650425,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 5296759000,
+        "operating_cashflow": 1728781000,
+        "net_income": 1108888000,
+        "latest_filed": "2026-02-19",
+        "accessions": {
+          "revenue": "0000813672-26-000016",
+          "operating_cashflow": "0000813672-26-000016",
+          "net_income": "0000813672-26-000016"
+        }
+      }
+    },
+    {
+      "ticker": "OKTA",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 196.62,
+      "raw_p_target": 0.16096567280862406,
+      "raw_p_stop": 0.9104981805950997,
+      "raw_expected_net": -0.04429593805841334,
+      "historical_test_signals": 53,
+      "historical_test_hit_rate": 0.2641509433962264,
+      "historical_test_mean_net": 0.03192277444697012,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.25925925925925924,
+      "test_opportunity_mean_net": 0.029442723068322525,
+      "portfolio_test_buys": 1,
+      "portfolio_test_hit_rate": 0.0,
+      "portfolio_test_mean_net": 0.029407493974143772,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 2919000000,
+        "operating_cashflow": 884000000,
+        "net_income": 235000000,
+        "latest_filed": "2026-03-05",
+        "accessions": {
+          "revenue": "0001660134-26-000020",
+          "operating_cashflow": "0001660134-26-000020",
+          "net_income": "0001660134-26-000020"
+        }
+      }
+    },
+    {
+      "ticker": "HUBS",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 217.88,
+      "raw_p_target": 0.04179564274565219,
+      "raw_p_stop": 0.8396841977109988,
+      "raw_expected_net": -0.04583357884860232,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.4444444444444444,
+      "historical_test_mean_net": 0.047865074569171835,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.4444444444444444,
+      "test_opportunity_mean_net": 0.047865074569171835,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 3131266000,
+        "operating_cashflow": 760717000,
+        "net_income": 45911000,
+        "latest_filed": "2026-02-11",
+        "accessions": {
+          "revenue": "0001193125-26-046646",
+          "operating_cashflow": "0001193125-26-046646",
+          "net_income": "0001193125-26-046646"
+        }
+      }
+    },
+    {
+      "ticker": "PAYC",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 224.61,
+      "raw_p_target": 0.04079388991025696,
+      "raw_p_stop": 0.7523240077137487,
+      "raw_expected_net": -0.04587064354406671,
+      "historical_test_signals": 50,
+      "historical_test_hit_rate": 0.44,
+      "historical_test_mean_net": 0.11635889121967719,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.4444444444444444,
+      "test_opportunity_mean_net": 0.11422978048714355,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 2051700000,
+        "operating_cashflow": 678900000,
+        "net_income": 453400000,
+        "latest_filed": "2026-02-19",
+        "accessions": {
+          "revenue": "0001193125-26-059372",
+          "operating_cashflow": "0001193125-26-059372",
+          "net_income": "0001193125-26-059372"
+        }
+      }
+    },
+    {
+      "ticker": "HPE",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 61.03,
+      "raw_p_target": 0.051889576852929775,
+      "raw_p_stop": 0.8313119788108213,
+      "raw_expected_net": -0.04589892083360393,
+      "historical_test_signals": 51,
+      "historical_test_hit_rate": 0.27450980392156865,
+      "historical_test_mean_net": 0.02175690148886606,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.25925925925925924,
+      "test_opportunity_mean_net": 0.014885310111443431,
+      "portfolio_test_buys": 3,
+      "portfolio_test_hit_rate": 0.3333333333333333,
+      "portfolio_test_mean_net": 0.037194641090050995,
+      "quality": {
+        "fiscal_end": "2025-10-31",
+        "revenue": 34296000000,
+        "operating_cashflow": 2919000000,
+        "net_income": 57000000,
+        "latest_filed": "2025-12-18",
+        "accessions": {
+          "revenue": "0001645590-25-000130",
+          "operating_cashflow": "0001645590-25-000130",
+          "net_income": "0001645590-25-000130"
+        }
+      }
+    },
+    {
+      "ticker": "CRM",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 233.28,
+      "raw_p_target": 0.09875762029109779,
+      "raw_p_stop": 0.8825305454887191,
+      "raw_expected_net": -0.04590122655610635,
+      "historical_test_signals": 36,
+      "historical_test_hit_rate": 0.1111111111111111,
+      "historical_test_mean_net": 0.08817109170793,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.3333333333333333,
+      "test_opportunity_mean_net": 0.11611411441337088,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 41525000000,
+        "operating_cashflow": 14996000000,
+        "net_income": 7457000000,
+        "latest_filed": "2026-03-02",
+        "accessions": {
+          "revenue": "0001108524-26-000060",
+          "operating_cashflow": "0001108524-26-000060",
+          "net_income": "0001108524-26-000060"
+        }
+      }
+    },
+    {
+      "ticker": "DDOG",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 247.475,
+      "raw_p_target": 0.0337755458364326,
+      "raw_p_stop": 0.7453914919791309,
+      "raw_expected_net": -0.046786853490128746,
+      "historical_test_signals": 51,
+      "historical_test_hit_rate": 0.11764705882352941,
+      "historical_test_mean_net": -0.029923403424569096,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.1111111111111111,
+      "test_opportunity_mean_net": -0.03427156423376807,
+      "portfolio_test_buys": 2,
+      "portfolio_test_hit_rate": 0.5,
+      "portfolio_test_mean_net": 0.04799999999999999,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 3427158000,
+        "operating_cashflow": 1050135000,
+        "net_income": 107741000,
+        "latest_filed": "2026-02-18",
+        "accessions": {
+          "revenue": "0001628280-26-008819",
+          "operating_cashflow": "0001628280-26-008819",
+          "net_income": "0001628280-26-008819"
+        }
+      }
+    },
+    {
+      "ticker": "QCOM",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 198.27,
+      "raw_p_target": 0.023978651670177476,
+      "raw_p_stop": 0.6476139015448368,
+      "raw_expected_net": -0.04804498544224219,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.018518518518518517,
+      "historical_test_mean_net": -0.024583509615220316,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.018518518518518517,
+      "test_opportunity_mean_net": -0.024583509615220316,
+      "portfolio_test_buys": 5,
+      "portfolio_test_hit_rate": 0.0,
+      "portfolio_test_mean_net": -0.07171223674903057,
+      "quality": {
+        "fiscal_end": "2025-09-28",
+        "revenue": 44284000000,
+        "operating_cashflow": 14012000000,
+        "net_income": 5541000000,
+        "latest_filed": "2025-11-05",
+        "accessions": {
+          "revenue": "0000804328-25-000085",
+          "operating_cashflow": "0000804328-25-000085",
+          "net_income": "0000804328-25-000085"
+        }
+      }
+    },
+    {
+      "ticker": "TWLO",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 284.53,
+      "raw_p_target": 0.027957610778940125,
+      "raw_p_stop": 0.7451270526406021,
+      "raw_expected_net": -0.04857594296231216,
+      "historical_test_signals": 46,
+      "historical_test_hit_rate": 0.3695652173913043,
+      "historical_test_mean_net": 0.053026624669715125,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.35185185185185186,
+      "test_opportunity_mean_net": 0.04348692764399495,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 5067220000,
+        "operating_cashflow": 1003244000,
+        "net_income": 33834000,
+        "latest_filed": "2026-02-24",
+        "accessions": {
+          "revenue": "0001447669-26-000021",
+          "operating_cashflow": "0001447669-26-000021",
+          "net_income": "0001447669-26-000021"
+        }
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 498.0,
+      "raw_p_target": 0.01892708939997334,
+      "raw_p_stop": 0.5669206476116078,
+      "raw_expected_net": -0.04871798577140474,
+      "historical_test_signals": 33,
+      "historical_test_hit_rate": 0.36363636363636365,
+      "historical_test_mean_net": 0.09373597239135768,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.24074074074074073,
+      "test_opportunity_mean_net": 0.06424925145513055,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-06-30",
+        "revenue": 331839000000,
+        "operating_cashflow": 182935000000,
+        "net_income": 133749000000,
+        "latest_filed": "2026-07-29",
+        "accessions": {
+          "revenue": "0001193125-26-323660",
+          "operating_cashflow": "0001193125-26-323660",
+          "net_income": "0001193125-26-323660"
+        }
+      }
+    },
+    {
+      "ticker": "FIVN",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 38.65,
+      "raw_p_target": 0.0470390879461852,
+      "raw_p_stop": 0.8323353679392086,
+      "raw_expected_net": -0.04873597148023537,
+      "historical_test_signals": 49,
+      "historical_test_hit_rate": 0.30612244897959184,
+      "historical_test_mean_net": 0.024097210990716465,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.35185185185185186,
+      "test_opportunity_mean_net": 0.0378729514533065,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1149088000,
+        "operating_cashflow": 226207000,
+        "net_income": 39416000,
+        "latest_filed": "2026-02-20",
+        "accessions": {
+          "revenue": "0001288847-26-000023",
+          "operating_cashflow": "0001288847-26-000023",
+          "net_income": "0001288847-26-000023"
+        }
+      }
+    },
+    {
+      "ticker": "SNPS",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 409.24,
+      "raw_p_target": 0.04797630631898478,
+      "raw_p_stop": 0.7686989852596103,
+      "raw_expected_net": -0.04956922065215444,
+      "historical_test_signals": 40,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.02569755238248004,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.03047518799434785,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-10-31",
+        "revenue": 7054178000,
+        "operating_cashflow": 1518608000,
+        "net_income": 1332220000,
+        "latest_filed": "2025-12-22",
+        "accessions": {
+          "revenue": "0000883241-25-000028",
+          "operating_cashflow": "0000883241-25-000028",
+          "net_income": "0000883241-25-000028"
+        }
+      }
+    },
+    {
+      "ticker": "CCC",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 6.57,
+      "raw_p_target": 0.040938018474939955,
+      "raw_p_stop": 0.8420419046796298,
+      "raw_expected_net": -0.04957267149798543,
+      "historical_test_signals": 41,
+      "historical_test_hit_rate": 0.2682926829268293,
+      "historical_test_mean_net": 0.022087545266993993,
+      "test_opportunities": 45,
+      "test_opportunity_hit_rate": 0.26666666666666666,
+      "test_opportunity_mean_net": 0.024523244985075375,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1057001000,
+        "operating_cashflow": 315479000,
+        "net_income": 1688000,
+        "latest_filed": "2026-02-24",
+        "accessions": {
+          "revenue": "0001193125-26-067448",
+          "operating_cashflow": "0001193125-26-067448",
+          "net_income": "0001193125-26-067448"
+        }
+      }
+    },
+    {
+      "ticker": "AMD",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 623.77,
+      "raw_p_target": 0.023621977292031703,
+      "raw_p_stop": 0.6986812370265915,
+      "raw_expected_net": -0.051815891711957746,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.037037037037037035,
+      "historical_test_mean_net": -0.027602833069507598,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.037037037037037035,
+      "test_opportunity_mean_net": -0.027602833069507598,
+      "portfolio_test_buys": 3,
+      "portfolio_test_hit_rate": 0.0,
+      "portfolio_test_mean_net": 0.01027116614231253,
+      "quality": {
+        "fiscal_end": "2025-12-27",
+        "revenue": 34639000000,
+        "operating_cashflow": 7709000000,
+        "net_income": 4335000000,
+        "latest_filed": "2026-02-04",
+        "accessions": {
+          "revenue": "0000002488-26-000018",
+          "operating_cashflow": "0000002488-26-000018",
+          "net_income": "0000002488-26-000018"
+        }
+      }
+    },
+    {
+      "ticker": "AKAM",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 118.34,
+      "raw_p_target": 0.03428689780272211,
+      "raw_p_stop": 0.7566267117868215,
+      "raw_expected_net": -0.0539008239757455,
+      "historical_test_signals": 52,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.03847575115713534,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.04082850111427848,
+      "portfolio_test_buys": 2,
+      "portfolio_test_hit_rate": 0.0,
+      "portfolio_test_mean_net": -0.04074412833466273,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 4208175000,
+        "operating_cashflow": 1518765000,
+        "net_income": 452031000,
+        "latest_filed": "2026-02-20",
+        "accessions": {
+          "revenue": "0001086222-26-000022",
+          "operating_cashflow": "0001086222-26-000022",
+          "net_income": "0001086222-26-000022"
+        }
+      }
+    },
+    {
+      "ticker": "ACN",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 183.72,
+      "raw_p_target": 0.034741411588653764,
+      "raw_p_stop": 0.7632226910599196,
+      "raw_expected_net": -0.05396357356233097,
+      "historical_test_signals": 46,
+      "historical_test_hit_rate": 0.30434782608695654,
+      "historical_test_mean_net": 0.1027553157345027,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.25925925925925924,
+      "test_opportunity_mean_net": 0.09066374053234719,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-08-31",
+        "revenue": 69672977000,
+        "operating_cashflow": 11474399000,
+        "net_income": 7678433000,
+        "latest_filed": "2025-10-10",
+        "accessions": {
+          "revenue": "0001467373-25-000217",
+          "operating_cashflow": "0001467373-25-000217",
+          "net_income": "0001467373-25-000217"
+        }
+      }
+    },
+    {
+      "ticker": "SHOP",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 147.74,
+      "raw_p_target": 0.024939813071689805,
+      "raw_p_stop": 0.7514629576338201,
+      "raw_expected_net": -0.05412872336448214,
+      "historical_test_signals": 36,
+      "historical_test_hit_rate": 0.3333333333333333,
+      "historical_test_mean_net": 0.02780481907290766,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.24074074074074073,
+      "test_opportunity_mean_net": 0.017811109453723686,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 11556000000,
+        "operating_cashflow": 2033000000,
+        "net_income": 1231000000,
+        "latest_filed": "2026-02-11",
+        "accessions": {
+          "revenue": "0001594805-26-000007",
+          "operating_cashflow": "0001594805-26-000007",
+          "net_income": "0001594805-26-000007"
+        }
+      }
+    },
+    {
+      "ticker": "EFX",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 159.78,
+      "raw_p_target": 0.030367302433419726,
+      "raw_p_stop": 0.7588410533616544,
+      "raw_expected_net": -0.054315159971114135,
+      "historical_test_signals": 35,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": 0.044861558241477105,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": 0.010996637578973187,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 6074500000,
+        "operating_cashflow": 1615700000,
+        "net_income": 660300000,
+        "latest_filed": "2026-02-19",
+        "accessions": {
+          "revenue": "0000033185-26-000010",
+          "operating_cashflow": "0000033185-26-000010",
+          "net_income": "0000033185-26-000010"
+        }
+      }
+    },
+    {
+      "ticker": "DBX",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 33.9,
+      "raw_p_target": 0.03234934221642855,
+      "raw_p_stop": 0.7565644840153971,
+      "raw_expected_net": -0.055149857143560854,
+      "historical_test_signals": 39,
+      "historical_test_hit_rate": 0.1282051282051282,
+      "historical_test_mean_net": 0.10001259351409493,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.09259259259259259,
+      "test_opportunity_mean_net": 0.08174241954776024,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 2521000000,
+        "operating_cashflow": 951800000,
+        "net_income": 508400000,
+        "latest_filed": "2026-02-20",
+        "accessions": {
+          "revenue": "0001467623-26-000008",
+          "operating_cashflow": "0001467623-26-000008",
+          "net_income": "0001467623-26-000008"
+        }
+      }
+    },
+    {
+      "ticker": "NXPI",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 237.57,
+      "raw_p_target": 0.025258722587641214,
+      "raw_p_stop": 0.7082282991346802,
+      "raw_expected_net": -0.05571953559206139,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.058595365667137106,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.058595365667137106,
+      "portfolio_test_buys": 1,
+      "portfolio_test_hit_rate": 0.0,
+      "portfolio_test_mean_net": -0.03419934994582885,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 12269000000,
+        "operating_cashflow": 2820000000,
+        "net_income": 2021000000,
+        "latest_filed": "2026-02-19",
+        "accessions": {
+          "revenue": "0001413447-26-000008",
+          "operating_cashflow": "0001413447-26-000008",
+          "net_income": "0001413447-26-000008"
+        }
+      }
+    },
+    {
+      "ticker": "G",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 33.89,
+      "raw_p_target": 0.027978882117219068,
+      "raw_p_stop": 0.7584951988371995,
+      "raw_expected_net": -0.05608138747387949,
+      "historical_test_signals": 34,
+      "historical_test_hit_rate": 0.29411764705882354,
+      "historical_test_mean_net": 0.09403872140551112,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.2037037037037037,
+      "test_opportunity_mean_net": 0.06768738282471677,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 5079879000,
+        "operating_cashflow": 812856000,
+        "net_income": 552494000,
+        "latest_filed": "2026-02-26",
+        "accessions": {
+          "revenue": "0001398659-26-000004",
+          "operating_cashflow": "0001398659-26-000004",
+          "net_income": "0001398659-26-000004"
+        }
+      }
+    },
+    {
+      "ticker": "UBER",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 69.89,
+      "raw_p_target": 0.022386858802032318,
+      "raw_p_stop": 0.6844785313466959,
+      "raw_expected_net": -0.05623655079257196,
+      "historical_test_signals": 26,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": 0.004823878984613497,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.018518518518518517,
+      "test_opportunity_mean_net": -0.007328368442021353,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 52017000000,
+        "operating_cashflow": 10099000000,
+        "net_income": 10053000000,
+        "latest_filed": "2026-02-13",
+        "accessions": {
+          "revenue": "0001543151-26-000015",
+          "operating_cashflow": "0001543151-26-000015",
+          "net_income": "0001543151-26-000015"
+        }
+      }
+    },
+    {
+      "ticker": "DXC",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 10.93,
+      "raw_p_target": 0.03394471958546777,
+      "raw_p_stop": 0.8159707980068979,
+      "raw_expected_net": -0.05654754401331882,
+      "historical_test_signals": 50,
+      "historical_test_hit_rate": 0.38,
+      "historical_test_mean_net": 0.08459582140152964,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.35185185185185186,
+      "test_opportunity_mean_net": 0.07776956915601561,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-03-31",
+        "revenue": 12644000000,
+        "operating_cashflow": 1248000000,
+        "net_income": 18000000,
+        "latest_filed": "2026-05-08",
+        "accessions": {
+          "revenue": "0001688568-26-000022",
+          "operating_cashflow": "0001688568-26-000022",
+          "net_income": "0001688568-26-000022"
+        }
+      }
+    },
+    {
+      "ticker": "ZBRA",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 361.61,
+      "raw_p_target": 0.025224648641375164,
+      "raw_p_stop": 0.7588691573256421,
+      "raw_expected_net": -0.05666646281077325,
+      "historical_test_signals": 52,
+      "historical_test_hit_rate": 0.2692307692307692,
+      "historical_test_mean_net": 0.05702255807648098,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.25925925925925924,
+      "test_opportunity_mean_net": 0.05769659458024944,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 5396000000,
+        "operating_cashflow": 917000000,
+        "net_income": 419000000,
+        "latest_filed": "2026-02-12",
+        "accessions": {
+          "revenue": "0001628280-26-007668",
+          "operating_cashflow": "0001628280-26-007668",
+          "net_income": "0001628280-26-007668"
+        }
+      }
+    },
+    {
+      "ticker": "AVGO",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 364.54,
+      "raw_p_target": 0.021130439926317884,
+      "raw_p_stop": 0.6696925016434531,
+      "raw_expected_net": -0.056837086613447725,
+      "historical_test_signals": 40,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": 0.0019695142165171353,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.02007503125941145,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-11-02",
+        "revenue": 63887000000,
+        "operating_cashflow": 27537000000,
+        "net_income": 23126000000,
+        "latest_filed": "2025-12-18",
+        "accessions": {
+          "revenue": "0001730168-25-000121",
+          "operating_cashflow": "0001730168-25-000121",
+          "net_income": "0001730168-25-000121"
+        }
+      }
+    },
+    {
+      "ticker": "EQIX",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 1059.26,
+      "raw_p_target": 0.020053518602841068,
+      "raw_p_stop": 0.6594197001509242,
+      "raw_expected_net": -0.05737762336968837,
+      "historical_test_signals": 21,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": 0.0027495529063177693,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.015044398442711845,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 9217000000,
+        "operating_cashflow": 3911000000,
+        "net_income": 1350000000,
+        "latest_filed": "2026-02-11",
+        "accessions": {
+          "revenue": "0001101239-26-000032",
+          "operating_cashflow": "0001101239-26-000032",
+          "net_income": "0001101239-26-000032"
+        }
+      }
+    },
+    {
+      "ticker": "ISRG",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "BOTZ"
+      ],
+      "asof": "2026-09-22",
+      "close": 402.09,
+      "raw_p_target": 0.01824400830689301,
+      "raw_p_stop": 0.5810995640075571,
+      "raw_expected_net": -0.05818650249532222,
+      "historical_test_signals": 36,
+      "historical_test_hit_rate": 0.027777777777777776,
+      "historical_test_mean_net": 0.022650843331779427,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.018518518518518517,
+      "test_opportunity_mean_net": -0.013802572398603278,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 10064700000,
+        "operating_cashflow": 3030500000,
+        "net_income": 2856000000,
+        "latest_filed": "2026-02-03",
+        "accessions": {
+          "revenue": "0001035267-26-000010",
+          "operating_cashflow": "0001035267-26-000010",
+          "net_income": "0001035267-26-000010"
+        }
+      }
+    },
+    {
+      "ticker": "CLS",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 356.09,
+      "raw_p_target": 0.040209840719543734,
+      "raw_p_stop": 0.8200810955132888,
+      "raw_expected_net": -0.058418481981498564,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.07407407407407407,
+      "historical_test_mean_net": -0.05765395479567862,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.07407407407407407,
+      "test_opportunity_mean_net": -0.05765395479567862,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 12390900000,
+        "operating_cashflow": 659500000,
+        "net_income": 832500000,
+        "latest_filed": "2026-02-27",
+        "accessions": {
+          "revenue": "0001030894-26-000011",
+          "operating_cashflow": "0001030894-26-000011",
+          "net_income": "0001030894-26-000011"
+        }
+      }
+    },
+    {
+      "ticker": "CSCO",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 106.44,
+      "raw_p_target": 0.017112028334379414,
+      "raw_p_stop": 0.6804347123224088,
+      "raw_expected_net": -0.05968899242114396,
+      "historical_test_signals": 43,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.012989805244275749,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.023070927872046364,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-07-25",
+        "revenue": 63325000000,
+        "operating_cashflow": 14177000000,
+        "net_income": 13267000000,
+        "latest_filed": "2026-09-02",
+        "accessions": {
+          "revenue": "0000858877-26-000132",
+          "operating_cashflow": "0000858877-26-000132",
+          "net_income": "0000858877-26-000132"
+        }
+      }
+    },
+    {
+      "ticker": "NFLX",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 72.16,
+      "raw_p_target": 0.021704923900845233,
+      "raw_p_stop": 0.7173628137760834,
+      "raw_expected_net": -0.06107943727016759,
+      "historical_test_signals": 34,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.0163544591471675,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.010095938835850847,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 45183036000,
+        "operating_cashflow": 10149273000,
+        "net_income": 10981201000,
+        "latest_filed": "2026-01-23",
+        "accessions": {
+          "revenue": "0001065280-26-000034",
+          "operating_cashflow": "0001065280-26-000034",
+          "net_income": "0001065280-26-000034"
+        }
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 339.75,
+      "raw_p_target": 0.017461166982880198,
+      "raw_p_stop": 0.6230840498694554,
+      "raw_expected_net": -0.06137214930363068,
+      "historical_test_signals": 22,
+      "historical_test_hit_rate": 0.045454545454545456,
+      "historical_test_mean_net": -0.0031695513027681465,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.018518518518518517,
+      "test_opportunity_mean_net": 0.031089069300483867,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-09-27",
+        "revenue": 416161000000,
+        "operating_cashflow": 111482000000,
+        "net_income": 112010000000,
+        "latest_filed": "2025-10-31",
+        "accessions": {
+          "revenue": "0000320193-25-000079",
+          "operating_cashflow": "0000320193-25-000079",
+          "net_income": "0000320193-25-000079"
+        }
+      }
+    },
+    {
+      "ticker": "MCHP",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 75.82,
+      "raw_p_target": 0.021918421027321708,
+      "raw_p_stop": 0.7676195473657607,
+      "raw_expected_net": -0.06217562706253979,
+      "historical_test_signals": 54,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.07427658251828077,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.07427658251828077,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-03-31",
+        "revenue": 4713100000,
+        "operating_cashflow": 962100000,
+        "net_income": 230000000,
+        "latest_filed": "2026-05-21",
+        "accessions": {
+          "revenue": "0000827054-26-000016",
+          "operating_cashflow": "0000827054-26-000016",
+          "net_income": "0000827054-26-000016"
+        }
+      }
+    },
+    {
+      "ticker": "OMCL",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "BOTZ"
+      ],
+      "asof": "2026-09-22",
+      "close": 33.17,
+      "raw_p_target": 0.03492902609866936,
+      "raw_p_stop": 0.8598846939034045,
+      "raw_expected_net": -0.06242268625785396,
+      "historical_test_signals": 42,
+      "historical_test_hit_rate": 0.11904761904761904,
+      "historical_test_mean_net": -0.03545248888602567,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.09259259259259259,
+      "test_opportunity_mean_net": -0.03996222581222443,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1184845000,
+        "operating_cashflow": 127300000,
+        "net_income": 2052000,
+        "latest_filed": "2026-02-26",
+        "accessions": {
+          "revenue": "0000926326-26-000006",
+          "operating_cashflow": "0000926326-26-000006",
+          "net_income": "0000926326-26-000006"
+        }
+      }
+    },
+    {
+      "ticker": "PEGA",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 34.705,
+      "raw_p_target": 0.0308838483177974,
+      "raw_p_stop": 0.7984764583639506,
+      "raw_expected_net": -0.06285612621628472,
+      "historical_test_signals": 48,
+      "historical_test_hit_rate": 0.125,
+      "historical_test_mean_net": 0.012662897647623475,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.1111111111111111,
+      "test_opportunity_mean_net": 0.014325132567629094,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1745812000,
+        "operating_cashflow": 505227000,
+        "net_income": 393437000,
+        "latest_filed": "2026-02-10",
+        "accessions": {
+          "revenue": "0001013857-26-000017",
+          "operating_cashflow": "0001013857-26-000017",
+          "net_income": "0001013857-26-000017"
+        }
+      }
+    },
+    {
+      "ticker": "IBM",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 231.38,
+      "raw_p_target": 0.019597461642187137,
+      "raw_p_stop": 0.7534393660691997,
+      "raw_expected_net": -0.06290351739029999,
+      "historical_test_signals": 40,
+      "historical_test_hit_rate": 0.075,
+      "historical_test_mean_net": 0.006616843225116903,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.05555555555555555,
+      "test_opportunity_mean_net": -0.012618620198404755,
+      "portfolio_test_buys": 1,
+      "portfolio_test_hit_rate": 0.0,
+      "portfolio_test_mean_net": 0.019826965305226096,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 67535000000,
+        "operating_cashflow": 13193000000,
+        "net_income": 10593000000,
+        "latest_filed": "2026-02-24",
+        "accessions": {
+          "revenue": "0000051143-26-000010",
+          "operating_cashflow": "0000051143-26-000010",
+          "net_income": "0000051143-26-000010"
+        }
+      }
+    },
+    {
+      "ticker": "DT",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 57.2,
+      "raw_p_target": 0.022885763528145708,
+      "raw_p_stop": 0.762879388544532,
+      "raw_expected_net": -0.06376113949497093,
+      "historical_test_signals": 36,
+      "historical_test_hit_rate": 0.3055555555555556,
+      "historical_test_mean_net": 0.09378322299355835,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.2222222222222222,
+      "test_opportunity_mean_net": 0.0671229607241935,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-03-31",
+        "revenue": 2018387000,
+        "operating_cashflow": 561850000,
+        "net_income": 162669000,
+        "latest_filed": "2026-05-20",
+        "accessions": {
+          "revenue": "0001773383-26-000019",
+          "operating_cashflow": "0001773383-26-000019",
+          "net_income": "0001773383-26-000019"
+        }
+      }
+    },
+    {
+      "ticker": "BOX",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 32.87,
+      "raw_p_target": 0.02858822778660172,
+      "raw_p_stop": 0.822655638030147,
+      "raw_expected_net": -0.06421292886480227,
+      "historical_test_signals": 27,
+      "historical_test_hit_rate": 0.2222222222222222,
+      "historical_test_mean_net": 0.1042985911234619,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.1111111111111111,
+      "test_opportunity_mean_net": 0.07759590503577077,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 1177253000,
+        "operating_cashflow": 356450000,
+        "net_income": 115383000,
+        "latest_filed": "2026-03-09",
+        "accessions": {
+          "revenue": "0001193125-26-098466",
+          "operating_cashflow": "0001193125-26-098466",
+          "net_income": "0001193125-26-098466"
+        }
+      }
+    },
+    {
+      "ticker": "TDC",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ"
+      ],
+      "asof": "2026-09-22",
+      "close": 29.41,
+      "raw_p_target": 0.026179342092736792,
+      "raw_p_stop": 0.800016970910341,
+      "raw_expected_net": -0.06504841179621952,
+      "historical_test_signals": 49,
+      "historical_test_hit_rate": 0.16326530612244897,
+      "historical_test_mean_net": 0.0027583686305140613,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.14814814814814814,
+      "test_opportunity_mean_net": -0.005190565157410365,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1663000000,
+        "operating_cashflow": 305000000,
+        "net_income": 130000000,
+        "latest_filed": "2026-02-27",
+        "accessions": {
+          "revenue": "0001628280-26-012671",
+          "operating_cashflow": "0001628280-26-012671",
+          "net_income": "0001628280-26-012671"
+        }
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "BOTZ",
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 228.87,
+      "raw_p_target": 0.014083561625273027,
+      "raw_p_stop": 0.6294134422431448,
+      "raw_expected_net": -0.06574259994074881,
+      "historical_test_signals": 9,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": 0.07541972172239711,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": 0.020274248286569832,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-25",
+        "revenue": 215938000000,
+        "operating_cashflow": 102718000000,
+        "net_income": 120067000000,
+        "latest_filed": "2026-02-25",
+        "accessions": {
+          "revenue": "0001045810-26-000021",
+          "operating_cashflow": "0001045810-26-000021",
+          "net_income": "0001045810-26-000021"
+        }
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 254.98,
+      "raw_p_target": 0.014811965144238657,
+      "raw_p_stop": 0.7379175775110809,
+      "raw_expected_net": -0.06659076945718126,
+      "historical_test_signals": 18,
+      "historical_test_hit_rate": 0.2777777777777778,
+      "historical_test_mean_net": 0.06827114450910216,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.1111111111111111,
+      "test_opportunity_mean_net": 0.020348041887488275,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 716924000000,
+        "operating_cashflow": 139514000000,
+        "net_income": 77670000000,
+        "latest_filed": "2026-02-06",
+        "accessions": {
+          "revenue": "0001018724-26-000004",
+          "operating_cashflow": "0001018724-26-000004",
+          "net_income": "0001018724-26-000004"
+        }
+      }
+    },
+    {
+      "ticker": "UNIT",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 9.57,
+      "raw_p_target": 0.0166500300683634,
+      "raw_p_stop": 0.6610054678229661,
+      "raw_expected_net": -0.06667828640670509,
+      "historical_test_signals": 37,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.04466952106641152,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.035609266000306436,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 2234500000,
+        "operating_cashflow": 350200000,
+        "net_income": 1304700000,
+        "latest_filed": "2026-03-02",
+        "accessions": {
+          "revenue": "0001628280-26-013196",
+          "operating_cashflow": "0001628280-26-013196",
+          "net_income": "0001628280-26-013196"
+        }
+      }
+    },
+    {
+      "ticker": "DLR",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "CLOU",
+        "DTCR"
+      ],
+      "asof": "2026-09-22",
+      "close": 185.65,
+      "raw_p_target": 0.013658416527449249,
+      "raw_p_stop": 0.7043051337007238,
+      "raw_expected_net": -0.06789567074671347,
+      "historical_test_signals": 9,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": 0.05187507958858206,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": -0.003580745155794291,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 6112692000,
+        "operating_cashflow": 2412136000,
+        "net_income": 1308589000,
+        "latest_filed": "2026-02-13",
+        "accessions": {
+          "revenue": "0001104659-26-015365",
+          "operating_cashflow": "0001104659-26-015365",
+          "net_income": "0001104659-26-015365"
+        }
+      }
+    },
+    {
+      "ticker": "DE",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "BOTZ"
+      ],
+      "asof": "2026-09-22",
+      "close": 703.12,
+      "raw_p_target": 0.01791168293195571,
+      "raw_p_stop": 0.735525569118408,
+      "raw_expected_net": -0.06901361517767234,
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-11-02",
+        "revenue": 45684000000,
+        "operating_cashflow": 7459000000,
+        "net_income": 5027000000,
+        "latest_filed": "2025-12-18",
+        "accessions": {
+          "revenue": "0001104659-25-122321",
+          "operating_cashflow": "0001104659-25-122321",
+          "net_income": "0001104659-25-122321"
+        }
+      }
+    },
+    {
+      "ticker": "ROK",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "BOTZ"
+      ],
+      "asof": "2026-09-22",
+      "close": 427.19,
+      "raw_p_target": 0.01656157713814,
+      "raw_p_stop": 0.7372645849590954,
+      "raw_expected_net": -0.06921191950687873,
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-09-30",
+        "revenue": 8342000000,
+        "operating_cashflow": 1544000000,
+        "net_income": 869000000,
+        "latest_filed": "2025-11-12",
+        "accessions": {
+          "revenue": "0001024478-25-000116",
+          "operating_cashflow": "0001024478-25-000116",
+          "net_income": "0001024478-25-000116"
+        }
+      }
+    },
+    {
+      "ticker": "BABA",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 116.31,
+      "raw_p_target": 0.017424040552096034,
+      "raw_p_stop": 0.7801289067365662,
+      "raw_expected_net": -0.06990994652119226,
+      "historical_test_signals": 19,
+      "historical_test_hit_rate": 0.21052631578947367,
+      "historical_test_mean_net": 0.10053479795121341,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.14814814814814814,
+      "test_opportunity_mean_net": 0.01900193593936242,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-03-31",
+        "revenue": 148401000000,
+        "operating_cashflow": 11049000000,
+        "net_income": 15018000000,
+        "latest_filed": "2026-05-20",
+        "accessions": {
+          "revenue": "0001193125-26-231755",
+          "operating_cashflow": "0001193125-26-231755",
+          "net_income": "0001193125-26-231755"
+        }
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "BOTZ",
+        "CLOU"
+      ],
+      "asof": "2026-09-22",
+      "close": 351.16,
+      "raw_p_target": 0.008822303431170655,
+      "raw_p_stop": 0.6194962160177648,
+      "raw_expected_net": -0.07050837556553259,
+      "historical_test_signals": 7,
+      "historical_test_hit_rate": 0.14285714285714285,
+      "historical_test_mean_net": 0.04670733301770431,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.018518518518518517,
+      "test_opportunity_mean_net": -0.027551017893200157,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 402836000000,
+        "operating_cashflow": 164713000000,
+        "net_income": 132170000000,
+        "latest_filed": "2026-02-05",
+        "accessions": {
+          "revenue": "0001652044-26-000018",
+          "operating_cashflow": "0001652044-26-000018",
+          "net_income": "0001652044-26-000018"
+        }
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "action": "无法判断",
+      "reason": "样本外组合亏损且质量门槛未通过；原始模型信号仅供研究",
+      "quality_pass": true,
+      "research_action": "卖出",
+      "research_reason": "原始模型预估三周收益偏负，且跌破风险线分数较高",
+      "funds": [
+        "AIQ",
+        "BOTZ"
+      ],
+      "asof": "2026-09-22",
+      "close": 378.9,
+      "raw_p_target": 0.019613560085420208,
+      "raw_p_stop": 0.8151632175307302,
+      "raw_expected_net": -0.07298253511232329,
+      "historical_test_signals": 30,
+      "historical_test_hit_rate": 0.0,
+      "historical_test_mean_net": -0.004868051444728438,
+      "test_opportunities": 54,
+      "test_opportunity_hit_rate": 0.0,
+      "test_opportunity_mean_net": 0.002783389378213385,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 94827000000,
+        "operating_cashflow": 14747000000,
+        "net_income": 3794000000,
+        "latest_filed": "2026-01-29",
+        "accessions": {
+          "revenue": "0001628280-26-003952",
+          "operating_cashflow": "0001628280-26-003952",
+          "net_income": "0001628280-26-003952"
+        }
+      }
+    },
+    {
+      "ticker": "NOK",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 10.82,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "ZS",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 210.18,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-07-31",
+        "revenue": 3352523000,
+        "operating_cashflow": 1129654000,
+        "net_income": -63179000,
+        "latest_filed": "2026-09-03",
+        "accessions": {
+          "revenue": "0001713683-26-000157",
+          "operating_cashflow": "0001713683-26-000157",
+          "net_income": "0001713683-26-000157"
+        }
+      }
+    },
+    {
+      "ticker": "SMCI",
+      "funds": [
+        "AIQ",
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "经营现金流非正",
+      "asof": "2026-09-22",
+      "close": 41.54,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "经营现金流非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-06-30",
+        "revenue": 39063072000,
+        "operating_cashflow": -6809886000,
+        "net_income": 2230453000,
+        "latest_filed": "2026-08-31",
+        "accessions": {
+          "revenue": "0001375365-26-000022",
+          "operating_cashflow": "0001375365-26-000022",
+          "net_income": "0001375365-26-000022"
+        }
+      }
+    },
+    {
+      "ticker": "AI",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 10.85,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-04-30",
+        "revenue": 250268000,
+        "operating_cashflow": -190228000,
+        "net_income": -470369000,
+        "latest_filed": "2026-06-24",
+        "accessions": {
+          "revenue": "0001577526-26-000078",
+          "operating_cashflow": "0001577526-26-000078",
+          "net_income": "0001577526-26-000078"
+        }
+      }
+    },
+    {
+      "ticker": "SNAP",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 5.62,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 5931447000,
+        "operating_cashflow": 656170000,
+        "net_income": -460489000,
+        "latest_filed": "2026-02-05",
+        "accessions": {
+          "revenue": "0001564408-26-000013",
+          "operating_cashflow": "0001564408-26-000013",
+          "net_income": "0001564408-26-000013"
+        }
+      }
+    },
+    {
+      "ticker": "TRI",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 95.66,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "QUBT",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 9.08,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 682000,
+        "operating_cashflow": -30294000,
+        "net_income": -18674000,
+        "latest_filed": "2026-03-02",
+        "accessions": {
+          "revenue": "0001213900-26-022417",
+          "operating_cashflow": "0001213900-26-022417",
+          "net_income": "0001213900-26-022417"
+        }
+      }
+    },
+    {
+      "ticker": "GLOB",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 35.01,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "CRWV",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 86.76,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 5131000000,
+        "operating_cashflow": 3058000000,
+        "net_income": -1167000000,
+        "latest_filed": "2026-03-02",
+        "accessions": {
+          "revenue": "0001769628-26-000104",
+          "operating_cashflow": "0001769628-26-000104",
+          "net_income": "0001769628-26-000104"
+        }
+      }
+    },
+    {
+      "ticker": "GEHC",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 66.27,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "ERIC",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 9.82,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "PONY",
+      "funds": [
+        "AIQ",
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 7.29,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 90001000,
+        "operating_cashflow": -164955000,
+        "net_income": -133969000,
+        "latest_filed": "2026-04-22",
+        "accessions": {
+          "revenue": "0001104659-26-046406",
+          "operating_cashflow": "0001104659-26-046406",
+          "net_income": "0001104659-26-046406"
+        }
+      }
+    },
+    {
+      "ticker": "SOUN",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 6.12,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 168920000,
+        "operating_cashflow": -98222000,
+        "net_income": -14006000,
+        "latest_filed": "2026-03-02",
+        "accessions": {
+          "revenue": "0001840856-26-000006",
+          "operating_cashflow": "0001840856-26-000006",
+          "net_income": "0001840856-26-000006"
+        }
+      }
+    },
+    {
+      "ticker": "AMBA",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、净利润非正",
+      "asof": "2026-09-22",
+      "close": 67.06,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 390702000,
+        "operating_cashflow": 73519000,
+        "net_income": -75865000,
+        "latest_filed": "2026-03-23",
+        "accessions": {
+          "revenue": "0001193125-26-119321",
+          "operating_cashflow": "0001193125-26-119321",
+          "net_income": "0001193125-26-119321"
+        }
+      }
+    },
+    {
+      "ticker": "HUT",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 106.61,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 235118000,
+        "operating_cashflow": -139226000,
+        "net_income": -226149000,
+        "latest_filed": "2026-02-25",
+        "accessions": {
+          "revenue": "0001104659-26-019392",
+          "operating_cashflow": "0001104659-26-019392",
+          "net_income": "0001104659-26-019392"
+        }
+      }
+    },
+    {
+      "ticker": "BIDU",
+      "funds": [
+        "AIQ",
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "经营现金流非正",
+      "asof": "2026-09-22",
+      "close": 92.43,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "经营现金流非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 18458000000,
+        "operating_cashflow": -431000000,
+        "net_income": 799000000,
+        "latest_filed": "2026-03-17",
+        "accessions": {
+          "revenue": "0001193125-26-109289",
+          "operating_cashflow": "0001193125-26-109289",
+          "net_income": "0001193125-26-109289"
+        }
+      }
+    },
+    {
+      "ticker": "SPCX",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 154.72,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "INTC",
+      "funds": [
+        "AIQ",
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 123.86,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-27",
+        "revenue": 52853000000,
+        "operating_cashflow": 9697000000,
+        "net_income": -267000000,
+        "latest_filed": "2026-01-23",
+        "accessions": {
+          "revenue": "0000050863-26-000011",
+          "operating_cashflow": "0000050863-26-000011",
+          "net_income": "0000050863-26-000011"
+        }
+      }
+    },
+    {
+      "ticker": "TSM",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 452.0,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "SAP",
+      "funds": [
+        "AIQ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 210.68,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "SNOW",
+      "funds": [
+        "AIQ",
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 336.59,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 4683946000,
+        "operating_cashflow": 1221942000,
+        "net_income": -1331616000,
+        "latest_filed": "2026-03-20",
+        "accessions": {
+          "revenue": "0001640147-26-000008",
+          "operating_cashflow": "0001640147-26-000008",
+          "net_income": "0001640147-26-000008"
+        }
+      }
+    },
+    {
+      "ticker": "NOVT",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 144.17,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 980600000,
+        "operating_cashflow": 64056000,
+        "net_income": 53829000,
+        "latest_filed": "2026-02-23",
+        "accessions": {
+          "revenue": "0001193125-26-064230",
+          "operating_cashflow": "0001193125-26-064230",
+          "net_income": "0001193125-26-064230"
+        }
+      }
+    },
+    {
+      "ticker": "SERV",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 4.55,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 2651000,
+        "operating_cashflow": -80241000,
+        "net_income": -101361000,
+        "latest_filed": "2026-03-12",
+        "accessions": {
+          "revenue": "0001832483-26-000010",
+          "operating_cashflow": "0001832483-26-000010",
+          "net_income": "0001832483-26-000010"
+        }
+      }
+    },
+    {
+      "ticker": "RR",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 1.73,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-09-30",
+        "revenue": 5045000,
+        "operating_cashflow": -8911000,
+        "net_income": -49074000,
+        "latest_filed": "2026-08-07",
+        "accessions": {
+          "revenue": "0001213900-26-086751",
+          "operating_cashflow": "0001213900-26-086751",
+          "net_income": "0001213900-26-086751"
+        }
+      }
+    },
+    {
+      "ticker": "EH",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 4.73,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 59770000,
+        "operating_cashflow": -25668000,
+        "net_income": -39465000,
+        "latest_filed": "2026-05-15",
+        "accessions": {
+          "revenue": "0001193125-26-226608",
+          "operating_cashflow": "0001193125-26-226608",
+          "net_income": "0001193125-26-226608"
+        }
+      }
+    },
+    {
+      "ticker": "HSAI",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 17.1,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 432937000,
+        "operating_cashflow": 16732000,
+        "net_income": 62330000,
+        "latest_filed": "2026-04-24",
+        "accessions": {
+          "revenue": "0001104659-26-048025",
+          "operating_cashflow": "0001104659-26-048025",
+          "net_income": "0001104659-26-048025"
+        }
+      }
+    },
+    {
+      "ticker": "WRD",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 5.92,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "ALNT",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 108.06,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 554478000,
+        "operating_cashflow": 56675000,
+        "net_income": 22034000,
+        "latest_filed": "2026-03-05",
+        "accessions": {
+          "revenue": "0001104659-26-024123",
+          "operating_cashflow": "0001104659-26-024123",
+          "net_income": "0001104659-26-024123"
+        }
+      }
+    },
+    {
+      "ticker": "UMAC",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 24.03,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 11199217,
+        "operating_cashflow": -21177620,
+        "net_income": -19193617,
+        "latest_filed": "2026-03-12",
+        "accessions": {
+          "revenue": "0001683168-26-001730",
+          "operating_cashflow": "0001683168-26-001730",
+          "net_income": "0001683168-26-001730"
+        }
+      }
+    },
+    {
+      "ticker": "PRCT",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 18.43,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 308054000,
+        "operating_cashflow": -48985000,
+        "net_income": -95572000,
+        "latest_filed": "2026-02-26",
+        "accessions": {
+          "revenue": "0001588978-26-000009",
+          "operating_cashflow": "0001588978-26-000009",
+          "net_income": "0001588978-26-000009"
+        }
+      }
+    },
+    {
+      "ticker": "AVEX",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 15.9,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "XPEV",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 10.48,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "KDK",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 3.2,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 3797000,
+        "operating_cashflow": -94442000,
+        "net_income": -585525000,
+        "latest_filed": "2026-03-11",
+        "accessions": {
+          "revenue": "0001628280-26-016910",
+          "operating_cashflow": "0001628280-26-016910",
+          "net_income": "0001628280-26-016910"
+        }
+      }
+    },
+    {
+      "ticker": "AUR",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 6.46,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 3000000,
+        "operating_cashflow": -581000000,
+        "net_income": -816000000,
+        "latest_filed": "2026-02-11",
+        "accessions": {
+          "revenue": "0001828108-26-000016",
+          "operating_cashflow": "0001828108-26-000016",
+          "net_income": "0001828108-26-000016"
+        }
+      }
+    },
+    {
+      "ticker": "CGNX",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 58.97,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 994359000,
+        "operating_cashflow": 245514000,
+        "net_income": 114442000,
+        "latest_filed": "2026-02-12",
+        "accessions": {
+          "revenue": "0000851205-26-000012",
+          "operating_cashflow": "0000851205-26-000012",
+          "net_income": "0000851205-26-000012"
+        }
+      }
+    },
+    {
+      "ticker": "SYM",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 45.07,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-09-27",
+        "revenue": 2246922000,
+        "operating_cashflow": 866939000,
+        "net_income": -16937000,
+        "latest_filed": "2025-11-24",
+        "accessions": {
+          "revenue": "0001837240-25-000278",
+          "operating_cashflow": "0001837240-25-000278",
+          "net_income": "0001837240-25-000278"
+        }
+      }
+    },
+    {
+      "ticker": "OUST",
+      "funds": [
+        "BOTZ"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "asof": "2026-09-22",
+      "close": 40.25,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、经营现金流非正、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 169384000,
+        "operating_cashflow": -39956000,
+        "net_income": -60377000,
+        "latest_filed": "2026-03-02",
+        "accessions": {
+          "revenue": "0001628280-26-013313",
+          "operating_cashflow": "0001628280-26-013313",
+          "net_income": "0001628280-26-013313"
+        }
+      }
+    },
+    {
+      "ticker": "KC",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 10.12,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1366864000,
+        "operating_cashflow": 543540000,
+        "net_income": -133882000,
+        "latest_filed": "2026-04-23",
+        "accessions": {
+          "revenue": "0001104659-26-047100",
+          "operating_cashflow": "0001104659-26-047100",
+          "net_income": "0001104659-26-047100"
+        }
+      }
+    },
+    {
+      "ticker": "YEXT",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 6.37,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-01-31",
+        "revenue": 446579000,
+        "operating_cashflow": 55847000,
+        "net_income": 37871000,
+        "latest_filed": "2026-03-10",
+        "accessions": {
+          "revenue": "0001628280-26-016402",
+          "operating_cashflow": "0001628280-26-016402",
+          "net_income": "0001628280-26-016402"
+        }
+      }
+    },
+    {
+      "ticker": "PUBM",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、净利润非正",
+      "asof": "2026-09-22",
+      "close": 17.77,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 282926000,
+        "operating_cashflow": 81059000,
+        "net_income": -14462000,
+        "latest_filed": "2026-02-26",
+        "accessions": {
+          "revenue": "0001422930-26-000010",
+          "operating_cashflow": "0001422930-26-000010",
+          "net_income": "0001422930-26-000010"
+        }
+      }
+    },
+    {
+      "ticker": "NET",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 353.0,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 2167937000,
+        "operating_cashflow": 603114000,
+        "net_income": -102267000,
+        "latest_filed": "2026-02-26",
+        "accessions": {
+          "revenue": "0001477333-26-000016",
+          "operating_cashflow": "0001477333-26-000016",
+          "net_income": "0001477333-26-000016"
+        }
+      }
+    },
+    {
+      "ticker": "DOCN",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 146.0,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 901427000,
+        "operating_cashflow": 309604000,
+        "net_income": 259262000,
+        "latest_filed": "2026-02-24",
+        "accessions": {
+          "revenue": "0001582961-26-000019",
+          "operating_cashflow": "0001582961-26-000019",
+          "net_income": "0001582961-26-000019"
+        }
+      }
+    },
+    {
+      "ticker": "QLYS",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 183.32,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 669125000,
+        "operating_cashflow": 309400000,
+        "net_income": 198320000,
+        "latest_filed": "2026-02-20",
+        "accessions": {
+          "revenue": "0001107843-26-000008",
+          "operating_cashflow": "0001107843-26-000008",
+          "net_income": "0001107843-26-000008"
+        }
+      }
+    },
+    {
+      "ticker": "PCOR",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "净利润非正",
+      "asof": "2026-09-22",
+      "close": 50.85,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 1322509000,
+        "operating_cashflow": 300270000,
+        "net_income": -100783000,
+        "latest_filed": "2026-02-24",
+        "accessions": {
+          "revenue": "0001628280-26-011055",
+          "operating_cashflow": "0001628280-26-011055",
+          "net_income": "0001628280-26-011055"
+        }
+      }
+    },
+    {
+      "ticker": "FSLY",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、净利润非正",
+      "asof": "2026-09-22",
+      "close": 26.08,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 624018000,
+        "operating_cashflow": 94444000,
+        "net_income": -121677000,
+        "latest_filed": "2026-02-25",
+        "accessions": {
+          "revenue": "0001517413-26-000053",
+          "operating_cashflow": "0001517413-26-000053",
+          "net_income": "0001517413-26-000053"
+        }
+      }
+    },
+    {
+      "ticker": "WK",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、净利润非正",
+      "asof": "2026-09-22",
+      "close": 69.83,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 884568000,
+        "operating_cashflow": 140070000,
+        "net_income": -26169000,
+        "latest_filed": "2026-02-19",
+        "accessions": {
+          "revenue": "0001445305-26-000016",
+          "operating_cashflow": "0001445305-26-000016",
+          "net_income": "0001445305-26-000016"
+        }
+      }
+    },
+    {
+      "ticker": "FRSH",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 12.42,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 838809000,
+        "operating_cashflow": 242370000,
+        "net_income": 183723000,
+        "latest_filed": "2026-02-26",
+        "accessions": {
+          "revenue": "0001544522-26-000036",
+          "operating_cashflow": "0001544522-26-000036",
+          "net_income": "0001544522-26-000036"
+        }
+      }
+    },
+    {
+      "ticker": "SPSC",
+      "funds": [
+        "CLOU"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 81.48,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 751505000,
+        "operating_cashflow": 178790000,
+        "net_income": 93339000,
+        "latest_filed": "2026-02-19",
+        "accessions": {
+          "revenue": "0001092699-26-000012",
+          "operating_cashflow": "0001092699-26-000012",
+          "net_income": "0001092699-26-000012"
+        }
+      }
+    },
+    {
+      "ticker": "VNET",
+      "funds": [
+        "CLOU",
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 7.15,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "WYFI",
+      "funds": [
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、净利润非正",
+      "asof": "2026-09-22",
+      "close": 20.23,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 79164252,
+        "operating_cashflow": 45655356,
+        "net_income": -24682538,
+        "latest_filed": "2026-03-26",
+        "accessions": {
+          "revenue": "0001213900-26-034341",
+          "operating_cashflow": "0001213900-26-034341",
+          "net_income": "0001213900-26-034341"
+        }
+      }
+    },
+    {
+      "ticker": "AMT",
+      "funds": [
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 175.25,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 935900000,
+        "operating_cashflow": 5464000000,
+        "net_income": 2628500000,
+        "latest_filed": "2026-02-24",
+        "accessions": {
+          "revenue": "0001053507-26-000035",
+          "operating_cashflow": "0001053507-26-000035",
+          "net_income": "0001053507-26-000035"
+        }
+      }
+    },
+    {
+      "ticker": "CCI",
+      "funds": [
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 72.37,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 215000000,
+        "operating_cashflow": 3057000000,
+        "net_income": 444000000,
+        "latest_filed": "2026-02-23",
+        "accessions": {
+          "revenue": "0001051470-26-000016",
+          "operating_cashflow": "0001051470-26-000016",
+          "net_income": "0001051470-26-000016"
+        }
+      }
+    },
+    {
+      "ticker": "GDS",
+      "funds": [
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "asof": "2026-09-22",
+      "close": 33.75,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "缺少当时已披露且口径完整的营收、经营现金流或净利润年报",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": null
+    },
+    {
+      "ticker": "APLD",
+      "funds": [
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元、净利润非正",
+      "asof": "2026-09-22",
+      "close": 28.54,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元、净利润非正",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2026-05-31",
+        "revenue": 611311000,
+        "operating_cashflow": 89685000,
+        "net_income": -184339000,
+        "latest_filed": "2026-07-29",
+        "accessions": {
+          "revenue": "0001144879-26-000048",
+          "operating_cashflow": "0001144879-26-000048",
+          "net_income": "0001144879-26-000048"
+        }
+      }
+    },
+    {
+      "ticker": "SBAC",
+      "funds": [
+        "DTCR"
+      ],
+      "action": "无法判断",
+      "quality_pass": false,
+      "reason": "年营收不足 10 亿美元",
+      "asof": "2026-09-22",
+      "close": 175.84,
+      "raw_p_target": null,
+      "raw_p_stop": null,
+      "raw_expected_net": null,
+      "research_action": "无法判断",
+      "research_reason": "年营收不足 10 亿美元",
+      "historical_test_signals": 0,
+      "historical_test_hit_rate": null,
+      "historical_test_mean_net": null,
+      "test_opportunities": 0,
+      "test_opportunity_hit_rate": null,
+      "test_opportunity_mean_net": null,
+      "portfolio_test_buys": 0,
+      "portfolio_test_hit_rate": null,
+      "portfolio_test_mean_net": null,
+      "quality": {
+        "fiscal_end": "2025-12-31",
+        "revenue": 244498000,
+        "operating_cashflow": 1291328000,
+        "net_income": 1053632000,
+        "latest_filed": "2026-02-27",
+        "accessions": {
+          "revenue": "0001034054-26-000002",
+          "operating_cashflow": "0001034054-26-000002",
+          "net_income": "0001034054-26-000002"
+        }
+      }
+    }
+  ],
+  "test_trades": [
+    {
+      "asof": "2026-06-15",
+      "ticker": "APP",
+      "entry_date": "2026-06-16",
+      "exit_date": "2026-06-18",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.12495491488898415,
+      "expected_net": -0.011269856521081124
+    },
+    {
+      "asof": "2026-06-15",
+      "ticker": "MRVL",
+      "entry_date": "2026-06-16",
+      "exit_date": "2026-06-24",
+      "exit_reason": "stop",
+      "net_return": -0.10200000000000009,
+      "p_target": 0.3319752564545932,
+      "expected_net": -0.02235723234465785
+    },
+    {
+      "asof": "2026-06-15",
+      "ticker": "MU",
+      "entry_date": "2026-06-16",
+      "exit_date": "2026-07-02",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.2845368381417805,
+      "expected_net": -0.02408307018777435
+    },
+    {
+      "asof": "2026-06-16",
+      "ticker": "QCOM",
+      "entry_date": "2026-06-17",
+      "exit_date": "2026-06-24",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.3135262317241067,
+      "expected_net": 0.0009321563306516985
+    },
+    {
+      "asof": "2026-06-16",
+      "ticker": "STX",
+      "entry_date": "2026-06-17",
+      "exit_date": "2026-06-26",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.18465414882552939,
+      "expected_net": -0.002755356447261151
+    },
+    {
+      "asof": "2026-06-16",
+      "ticker": "PLTR",
+      "entry_date": "2026-06-17",
+      "exit_date": "2026-06-23",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.1112094858155734,
+      "expected_net": -0.004096325115312645
+    },
+    {
+      "asof": "2026-06-17",
+      "ticker": "SMCI",
+      "entry_date": "2026-06-18",
+      "exit_date": "2026-06-22",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.5953484897284218,
+      "expected_net": 0.01539418641540826
+    },
+    {
+      "asof": "2026-06-17",
+      "ticker": "NOW",
+      "entry_date": "2026-06-18",
+      "exit_date": "2026-07-10",
+      "exit_reason": "time",
+      "net_return": 0.12810177316126325,
+      "p_target": 0.2399267068276366,
+      "expected_net": 0.014902871089157964
+    },
+    {
+      "asof": "2026-06-17",
+      "ticker": "AKAM",
+      "entry_date": "2026-06-18",
+      "exit_date": "2026-06-25",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.16816158031922063,
+      "expected_net": 0.013501692506693475
+    },
+    {
+      "asof": "2026-06-18",
+      "ticker": "APP",
+      "entry_date": "2026-06-22",
+      "exit_date": "2026-07-01",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.19360220319598997,
+      "expected_net": 0.011874952892931888
+    },
+    {
+      "asof": "2026-06-18",
+      "ticker": "ORCL",
+      "entry_date": "2026-06-22",
+      "exit_date": "2026-06-24",
+      "exit_reason": "stop",
+      "net_return": -0.1107982008666557,
+      "p_target": 0.20330221477551022,
+      "expected_net": -0.010008564474899314
+    },
+    {
+      "asof": "2026-06-22",
+      "ticker": "SMCI",
+      "entry_date": "2026-06-23",
+      "exit_date": "2026-06-29",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.4753457286546497,
+      "expected_net": -0.007776235907963188
+    },
+    {
+      "asof": "2026-06-23",
+      "ticker": "PLTR",
+      "entry_date": "2026-06-24",
+      "exit_date": "2026-07-07",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.19043480138870245,
+      "expected_net": 0.01867608389360204
+    },
+    {
+      "asof": "2026-06-24",
+      "ticker": "ORCL",
+      "entry_date": "2026-06-25",
+      "exit_date": "2026-07-02",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999987,
+      "p_target": 0.3844367061761435,
+      "expected_net": 0.03726869642676877
+    },
+    {
+      "asof": "2026-06-24",
+      "ticker": "DDOG",
+      "entry_date": "2026-06-25",
+      "exit_date": "2026-07-01",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.34462905740014227,
+      "expected_net": 0.02666232365982215
+    },
+    {
+      "asof": "2026-06-24",
+      "ticker": "HPE",
+      "entry_date": "2026-06-25",
+      "exit_date": "2026-06-26",
+      "exit_reason": "stop",
+      "net_return": -0.10200000000000009,
+      "p_target": 0.5332656718975881,
+      "expected_net": 0.025059200202741702
+    },
+    {
+      "asof": "2026-06-25",
+      "ticker": "QCOM",
+      "entry_date": "2026-06-26",
+      "exit_date": "2026-07-02",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.30409752738017903,
+      "expected_net": 0.02757188647233938
+    },
+    {
+      "asof": "2026-06-26",
+      "ticker": "STX",
+      "entry_date": "2026-06-29",
+      "exit_date": "2026-07-02",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.33172106396982487,
+      "expected_net": 0.038964715463875164
+    },
+    {
+      "asof": "2026-06-26",
+      "ticker": "HPE",
+      "entry_date": "2026-06-29",
+      "exit_date": "2026-07-20",
+      "exit_reason": "time",
+      "net_return": 0.015583923270153123,
+      "p_target": 0.5372085310255552,
+      "expected_net": 0.03893795267894243
+    },
+    {
+      "asof": "2026-06-29",
+      "ticker": "SMCI",
+      "entry_date": "2026-06-30",
+      "exit_date": "2026-07-07",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.46464966176318767,
+      "expected_net": 0.023383822411908988
+    },
+    {
+      "asof": "2026-07-01",
+      "ticker": "APP",
+      "entry_date": "2026-07-02",
+      "exit_date": "2026-07-13",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.12667927159012646,
+      "expected_net": 0.03112636193962138
+    },
+    {
+      "asof": "2026-07-01",
+      "ticker": "MRVL",
+      "entry_date": "2026-07-02",
+      "exit_date": "2026-07-02",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.35492243633390586,
+      "expected_net": 0.0198813677616044
+    },
+    {
+      "asof": "2026-07-02",
+      "ticker": "ORCL",
+      "entry_date": "2026-07-06",
+      "exit_date": "2026-07-14",
+      "exit_reason": "stop",
+      "net_return": -0.10200000000000009,
+      "p_target": 0.1786969576499776,
+      "expected_net": 0.04524021738595445
+    },
+    {
+      "asof": "2026-07-02",
+      "ticker": "QCOM",
+      "entry_date": "2026-07-06",
+      "exit_date": "2026-07-24",
+      "exit_reason": "time",
+      "net_return": -0.06465087295795202,
+      "p_target": 0.26030346310827956,
+      "expected_net": 0.036093087793351575
+    },
+    {
+      "asof": "2026-07-02",
+      "ticker": "AKAM",
+      "entry_date": "2026-07-06",
+      "exit_date": "2026-07-24",
+      "exit_reason": "time",
+      "net_return": 0.020511743330674514,
+      "p_target": 0.13463130848554208,
+      "expected_net": 0.034090210182053875
+    },
+    {
+      "asof": "2026-07-06",
+      "ticker": "MRVL",
+      "entry_date": "2026-07-07",
+      "exit_date": "2026-07-15",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.45086508174145484,
+      "expected_net": 0.030489390986538408
+    },
+    {
+      "asof": "2026-07-06",
+      "ticker": "MU",
+      "entry_date": "2026-07-07",
+      "exit_date": "2026-07-17",
+      "exit_reason": "stop",
+      "net_return": -0.1108666428316053,
+      "p_target": 0.5155024510754106,
+      "expected_net": 0.030323507677055953
+    },
+    {
+      "asof": "2026-07-07",
+      "ticker": "SMCI",
+      "entry_date": "2026-07-08",
+      "exit_date": "2026-07-17",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.5142340411685195,
+      "expected_net": 0.03736499488729546
+    },
+    {
+      "asof": "2026-07-07",
+      "ticker": "STX",
+      "entry_date": "2026-07-08",
+      "exit_date": "2026-07-17",
+      "exit_reason": "stop",
+      "net_return": -0.1133439422140593,
+      "p_target": 0.35733334675704875,
+      "expected_net": 0.03293109280034171
+    },
+    {
+      "asof": "2026-07-10",
+      "ticker": "PLTR",
+      "entry_date": "2026-07-13",
+      "exit_date": "2026-07-31",
+      "exit_reason": "time",
+      "net_return": -0.03526917789386852,
+      "p_target": 0.07966576468819497,
+      "expected_net": 0.008418714306641295
+    },
+    {
+      "asof": "2026-07-13",
+      "ticker": "APP",
+      "entry_date": "2026-07-14",
+      "exit_date": "2026-07-24",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999987,
+      "p_target": 0.22363628926522455,
+      "expected_net": 0.046486894527631606
+    },
+    {
+      "asof": "2026-07-14",
+      "ticker": "ORCL",
+      "entry_date": "2026-07-15",
+      "exit_date": "2026-07-24",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.14981215281813187,
+      "expected_net": 0.030709736330225446
+    },
+    {
+      "asof": "2026-07-15",
+      "ticker": "MRVL",
+      "entry_date": "2026-07-16",
+      "exit_date": "2026-07-17",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.3501407918180868,
+      "expected_net": 0.03712709818615327
+    },
+    {
+      "asof": "2026-07-17",
+      "ticker": "MRVL",
+      "entry_date": "2026-07-20",
+      "exit_date": "2026-07-28",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.39691994860341917,
+      "expected_net": 0.06459268583827606
+    },
+    {
+      "asof": "2026-07-17",
+      "ticker": "STX",
+      "entry_date": "2026-07-20",
+      "exit_date": "2026-07-28",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.3623812832839216,
+      "expected_net": 0.05691030526576336
+    },
+    {
+      "asof": "2026-07-17",
+      "ticker": "SMCI",
+      "entry_date": "2026-07-20",
+      "exit_date": "2026-07-22",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.39471179569809733,
+      "expected_net": 0.04336872182408845
+    },
+    {
+      "asof": "2026-07-20",
+      "ticker": "HPE",
+      "entry_date": "2026-07-21",
+      "exit_date": "2026-08-10",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.25246347975259437,
+      "expected_net": 0.03586840540640453
+    },
+    {
+      "asof": "2026-07-20",
+      "ticker": "META",
+      "entry_date": "2026-07-21",
+      "exit_date": "2026-07-28",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.10902902607209534,
+      "expected_net": 0.025981188112322664
+    },
+    {
+      "asof": "2026-07-22",
+      "ticker": "MU",
+      "entry_date": "2026-07-23",
+      "exit_date": "2026-07-27",
+      "exit_reason": "stop",
+      "net_return": -0.10200000000000009,
+      "p_target": 0.4325317550414689,
+      "expected_net": 0.03260092402462284
+    },
+    {
+      "asof": "2026-07-24",
+      "ticker": "ORCL",
+      "entry_date": "2026-07-27",
+      "exit_date": "2026-08-03",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.2747209676171653,
+      "expected_net": 0.05330566513288112
+    },
+    {
+      "asof": "2026-07-24",
+      "ticker": "QCOM",
+      "entry_date": "2026-07-27",
+      "exit_date": "2026-07-30",
+      "exit_reason": "stop",
+      "net_return": -0.138773281498498,
+      "p_target": 0.2590753193480392,
+      "expected_net": 0.04923620828510618
+    },
+    {
+      "asof": "2026-07-24",
+      "ticker": "AMD",
+      "entry_date": "2026-07-27",
+      "exit_date": "2026-07-28",
+      "exit_reason": "stop",
+      "net_return": -0.11670033459398488,
+      "p_target": 0.21702285091920698,
+      "expected_net": 0.040950620623147506
+    },
+    {
+      "asof": "2026-07-27",
+      "ticker": "APP",
+      "entry_date": "2026-07-28",
+      "exit_date": "2026-08-06",
+      "exit_reason": "stop",
+      "net_return": -0.18543466512256324,
+      "p_target": 0.3778787212621667,
+      "expected_net": 0.08657922743108692
+    },
+    {
+      "asof": "2026-07-27",
+      "ticker": "MU",
+      "entry_date": "2026-07-28",
+      "exit_date": "2026-07-29",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.4344259100413382,
+      "expected_net": 0.07363828373556598
+    },
+    {
+      "asof": "2026-07-28",
+      "ticker": "MRVL",
+      "entry_date": "2026-07-29",
+      "exit_date": "2026-08-04",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.4054312093798969,
+      "expected_net": 0.08207303152395388
+    },
+    {
+      "asof": "2026-07-28",
+      "ticker": "IBM",
+      "entry_date": "2026-07-29",
+      "exit_date": "2026-08-18",
+      "exit_reason": "time",
+      "net_return": 0.019826965305226096,
+      "p_target": 0.26341826520811096,
+      "expected_net": 0.052967984177776976
+    },
+    {
+      "asof": "2026-07-28",
+      "ticker": "AMD",
+      "entry_date": "2026-07-29",
+      "exit_date": "2026-08-18",
+      "exit_reason": "time",
+      "net_return": 0.06806130225879481,
+      "p_target": 0.19618117946590327,
+      "expected_net": 0.05094552111482728
+    },
+    {
+      "asof": "2026-07-29",
+      "ticker": "OKTA",
+      "entry_date": "2026-07-30",
+      "exit_date": "2026-08-19",
+      "exit_reason": "time",
+      "net_return": 0.029407493974143772,
+      "p_target": 0.2944943079083209,
+      "expected_net": 0.06809522953195653
+    },
+    {
+      "asof": "2026-07-29",
+      "ticker": "META",
+      "entry_date": "2026-07-30",
+      "exit_date": "2026-08-19",
+      "exit_reason": "time",
+      "net_return": 0.03607984790874519,
+      "p_target": 0.17965425370222327,
+      "expected_net": 0.0633566020582556
+    },
+    {
+      "asof": "2026-07-30",
+      "ticker": "QCOM",
+      "entry_date": "2026-07-31",
+      "exit_date": "2026-08-20",
+      "exit_reason": "time",
+      "net_return": 0.04886297071129708,
+      "p_target": 0.16525820569478494,
+      "expected_net": 0.045860874255767826
+    },
+    {
+      "asof": "2026-07-31",
+      "ticker": "MU",
+      "entry_date": "2026-08-03",
+      "exit_date": "2026-08-13",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.26562757959955874,
+      "expected_net": 0.04060552432959071
+    },
+    {
+      "asof": "2026-08-03",
+      "ticker": "ORCL",
+      "entry_date": "2026-08-04",
+      "exit_date": "2026-08-24",
+      "exit_reason": "time",
+      "net_return": 0.008212041699170227,
+      "p_target": 0.12235278172910899,
+      "expected_net": 0.0167801979263801
+    },
+    {
+      "asof": "2026-08-04",
+      "ticker": "MRVL",
+      "entry_date": "2026-08-05",
+      "exit_date": "2026-08-25",
+      "exit_reason": "time",
+      "net_return": 0.11097342346513561,
+      "p_target": 0.15712870931890802,
+      "expected_net": -0.0009311343530305364
+    },
+    {
+      "asof": "2026-08-06",
+      "ticker": "APP",
+      "entry_date": "2026-08-07",
+      "exit_date": "2026-08-12",
+      "exit_reason": "stop",
+      "net_return": -0.10200000000000009,
+      "p_target": 0.18552501051994183,
+      "expected_net": 0.029411547449207272
+    },
+    {
+      "asof": "2026-08-10",
+      "ticker": "STX",
+      "entry_date": "2026-08-11",
+      "exit_date": "2026-08-14",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.12085368776117403,
+      "expected_net": -0.007840671603977185
+    },
+    {
+      "asof": "2026-08-12",
+      "ticker": "APP",
+      "entry_date": "2026-08-13",
+      "exit_date": "2026-09-02",
+      "exit_reason": "time",
+      "net_return": 0.040715210144453895,
+      "p_target": 0.14471826752264727,
+      "expected_net": -0.001438545498819424
+    },
+    {
+      "asof": "2026-08-13",
+      "ticker": "PLTR",
+      "entry_date": "2026-08-14",
+      "exit_date": "2026-09-03",
+      "exit_reason": "time",
+      "net_return": 0.014993536884332583,
+      "p_target": 0.09651289318674068,
+      "expected_net": -0.029659692189301024
+    },
+    {
+      "asof": "2026-08-14",
+      "ticker": "MU",
+      "entry_date": "2026-08-17",
+      "exit_date": "2026-08-24",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.13506054833116277,
+      "expected_net": -0.029657373117967033
+    },
+    {
+      "asof": "2026-08-18",
+      "ticker": "STX",
+      "entry_date": "2026-08-19",
+      "exit_date": "2026-08-24",
+      "exit_reason": "stop",
+      "net_return": -0.10382685977616846,
+      "p_target": 0.12991648721477378,
+      "expected_net": -0.0043367876619446405
+    },
+    {
+      "asof": "2026-08-18",
+      "ticker": "NXPI",
+      "entry_date": "2026-08-19",
+      "exit_date": "2026-09-09",
+      "exit_reason": "time",
+      "net_return": -0.03419934994582885,
+      "p_target": 0.08232198487959938,
+      "expected_net": -0.01920306236769359
+    },
+    {
+      "asof": "2026-08-19",
+      "ticker": "AMD",
+      "entry_date": "2026-08-20",
+      "exit_date": "2026-09-10",
+      "exit_reason": "time",
+      "net_return": 0.07945253076212766,
+      "p_target": 0.07061119493736505,
+      "expected_net": -0.010701255324656609
+    },
+    {
+      "asof": "2026-08-19",
+      "ticker": "META",
+      "entry_date": "2026-08-20",
+      "exit_date": "2026-09-09",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.061108323063680546,
+      "expected_net": -0.012626714361997375
+    },
+    {
+      "asof": "2026-08-20",
+      "ticker": "DDOG",
+      "entry_date": "2026-08-21",
+      "exit_date": "2026-09-02",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.12877927201514092,
+      "expected_net": -0.008680524760758689
+    },
+    {
+      "asof": "2026-08-24",
+      "ticker": "STX",
+      "entry_date": "2026-08-25",
+      "exit_date": "2026-09-15",
+      "exit_reason": "time",
+      "net_return": -0.0544125230202579,
+      "p_target": 0.16968599378464033,
+      "expected_net": 0.01625582777842932
+    },
+    {
+      "asof": "2026-08-24",
+      "ticker": "MU",
+      "entry_date": "2026-08-25",
+      "exit_date": "2026-09-15",
+      "exit_reason": "time",
+      "net_return": -0.003480125945262256,
+      "p_target": 0.15336644058251006,
+      "expected_net": 0.010457446526213542
+    },
+    {
+      "asof": "2026-08-24",
+      "ticker": "ORCL",
+      "entry_date": "2026-08-25",
+      "exit_date": "2026-09-15",
+      "exit_reason": "time",
+      "net_return": -0.022586182833217117,
+      "p_target": 0.13743598975924595,
+      "expected_net": 0.00499966775071848
+    },
+    {
+      "asof": "2026-08-25",
+      "ticker": "MRVL",
+      "entry_date": "2026-08-26",
+      "exit_date": "2026-08-28",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998,
+      "p_target": 0.15475857805984428,
+      "expected_net": 0.008133875163376785
+    },
+    {
+      "asof": "2026-08-28",
+      "ticker": "MRVL",
+      "entry_date": "2026-08-31",
+      "exit_date": "2026-09-21",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995,
+      "p_target": 0.10058908626532785,
+      "expected_net": 0.006764904220788101
+    }
+  ],
+  "validation_trades": [
+    {
+      "asof": "2026-04-01",
+      "ticker": "APP",
+      "entry_date": "2026-04-02",
+      "exit_date": "2026-04-15",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-01",
+      "ticker": "MU",
+      "entry_date": "2026-04-02",
+      "exit_date": "2026-04-08",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-01",
+      "ticker": "ADBE",
+      "entry_date": "2026-04-02",
+      "exit_date": "2026-04-23",
+      "exit_reason": "time",
+      "net_return": -0.016352882949765002
+    },
+    {
+      "asof": "2026-04-02",
+      "ticker": "META",
+      "entry_date": "2026-04-06",
+      "exit_date": "2026-04-24",
+      "exit_reason": "time",
+      "net_return": 0.1664986757603557
+    },
+    {
+      "asof": "2026-04-02",
+      "ticker": "PLTR",
+      "entry_date": "2026-04-06",
+      "exit_date": "2026-04-09",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999987
+    },
+    {
+      "asof": "2026-04-02",
+      "ticker": "HUBS",
+      "entry_date": "2026-04-06",
+      "exit_date": "2026-04-08",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998
+    },
+    {
+      "asof": "2026-04-06",
+      "ticker": "SMCI",
+      "entry_date": "2026-04-07",
+      "exit_date": "2026-04-14",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-06",
+      "ticker": "NOW",
+      "entry_date": "2026-04-07",
+      "exit_date": "2026-04-09",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998
+    },
+    {
+      "asof": "2026-04-06",
+      "ticker": "STX",
+      "entry_date": "2026-04-07",
+      "exit_date": "2026-04-17",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-07",
+      "ticker": "EQIX",
+      "entry_date": "2026-04-08",
+      "exit_date": "2026-04-28",
+      "exit_reason": "time",
+      "net_return": 0.05535700042239289
+    },
+    {
+      "asof": "2026-04-08",
+      "ticker": "MU",
+      "entry_date": "2026-04-09",
+      "exit_date": "2026-04-22",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-08",
+      "ticker": "UNIT",
+      "entry_date": "2026-04-09",
+      "exit_date": "2026-04-29",
+      "exit_reason": "time",
+      "net_return": 0.06358935361216744
+    },
+    {
+      "asof": "2026-04-09",
+      "ticker": "PLTR",
+      "entry_date": "2026-04-10",
+      "exit_date": "2026-04-30",
+      "exit_reason": "time",
+      "net_return": 0.08073661270236632
+    },
+    {
+      "asof": "2026-04-09",
+      "ticker": "DDOG",
+      "entry_date": "2026-04-10",
+      "exit_date": "2026-04-21",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999973
+    },
+    {
+      "asof": "2026-04-14",
+      "ticker": "AKAM",
+      "entry_date": "2026-04-15",
+      "exit_date": "2026-05-05",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-15",
+      "ticker": "SMCI",
+      "entry_date": "2026-04-16",
+      "exit_date": "2026-05-06",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-23",
+      "ticker": "APP",
+      "entry_date": "2026-04-24",
+      "exit_date": "2026-05-14",
+      "exit_reason": "time",
+      "net_return": 0.06428571428571428
+    },
+    {
+      "asof": "2026-04-23",
+      "ticker": "MRVL",
+      "entry_date": "2026-04-24",
+      "exit_date": "2026-04-27",
+      "exit_reason": "stop",
+      "net_return": -0.10200000000000009
+    },
+    {
+      "asof": "2026-04-23",
+      "ticker": "STX",
+      "entry_date": "2026-04-24",
+      "exit_date": "2026-05-01",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-27",
+      "ticker": "MRVL",
+      "entry_date": "2026-04-28",
+      "exit_date": "2026-05-13",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-28",
+      "ticker": "NFLX",
+      "entry_date": "2026-04-29",
+      "exit_date": "2026-05-19",
+      "exit_reason": "time",
+      "net_return": -0.02282648251671604
+    },
+    {
+      "asof": "2026-04-28",
+      "ticker": "WIX",
+      "entry_date": "2026-04-29",
+      "exit_date": "2026-05-13",
+      "exit_reason": "stop",
+      "net_return": -0.2854978843441466
+    },
+    {
+      "asof": "2026-04-28",
+      "ticker": "AMD",
+      "entry_date": "2026-04-29",
+      "exit_date": "2026-05-06",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-29",
+      "ticker": "MU",
+      "entry_date": "2026-04-30",
+      "exit_date": "2026-05-05",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-04-30",
+      "ticker": "NOW",
+      "entry_date": "2026-05-01",
+      "exit_date": "2026-05-19",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-05-04",
+      "ticker": "NXPI",
+      "entry_date": "2026-05-05",
+      "exit_date": "2026-05-26",
+      "exit_reason": "time",
+      "net_return": 0.13728082191780833
+    },
+    {
+      "asof": "2026-05-05",
+      "ticker": "STX",
+      "entry_date": "2026-05-06",
+      "exit_date": "2026-05-27",
+      "exit_reason": "time",
+      "net_return": 0.1304921956295526
+    },
+    {
+      "asof": "2026-05-05",
+      "ticker": "CLS",
+      "entry_date": "2026-05-06",
+      "exit_date": "2026-05-07",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998
+    },
+    {
+      "asof": "2026-05-06",
+      "ticker": "MU",
+      "entry_date": "2026-05-07",
+      "exit_date": "2026-05-11",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-05-06",
+      "ticker": "AMD",
+      "entry_date": "2026-05-07",
+      "exit_date": "2026-05-26",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-05-07",
+      "ticker": "DDOG",
+      "entry_date": "2026-05-08",
+      "exit_date": "2026-05-22",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-05-11",
+      "ticker": "MU",
+      "entry_date": "2026-05-12",
+      "exit_date": "2026-05-18",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998
+    },
+    {
+      "asof": "2026-05-13",
+      "ticker": "QCOM",
+      "entry_date": "2026-05-14",
+      "exit_date": "2026-05-26",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-05-13",
+      "ticker": "MRVL",
+      "entry_date": "2026-05-14",
+      "exit_date": "2026-05-26",
+      "exit_reason": "target",
+      "net_return": 0.19799999999999995
+    },
+    {
+      "asof": "2026-05-14",
+      "ticker": "AKAM",
+      "entry_date": "2026-05-15",
+      "exit_date": "2026-05-20",
+      "exit_reason": "stop",
+      "net_return": -0.10199999999999998
+    }
+  ]
+}
