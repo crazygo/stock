@@ -56,7 +56,7 @@ def js_segments(bars, delta, min_amp, min_bars, atr_mode, target, qualmode):
                for b in bars]
     template = (HERE / "debug_template.html").read_text(encoding="utf-8")
     start = template.index("function trueRanges")
-    end = template.index("let state=")
+    end = template.index("function readControls")
     js = template[start:end]
     script = (
         "const bars=" + json.dumps(payload) + ";\n" + js +
