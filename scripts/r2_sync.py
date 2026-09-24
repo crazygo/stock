@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
-"""Manual synchronization tool between local market data and Cloudflare R2.
+"""Manual synchronization tool between local market data (Parquet) and Cloudflare R2.
 
 Commands:
     diff    - Show differences between local and R2
-    push    - Manually upload local market data to R2 (multi-threaded)
-    pull    - Manually download remote market data from R2 (multi-threaded)
+    push    - Manually upload local Parquet files to R2 (multi-threaded)
+    pull    - Manually download remote Parquet files from R2 (multi-threaded)
     status  - Show bucket summary and storage statistics
 
 Examples:
-    # 1. Check diff for all market_data
+    # 1. Check diff for 60m Parquet data
     python3 scripts/r2_sync.py diff
 
-    # 2. Push all local market_data to R2
-    python3 scripts/r2_sync.py push --workers 12
+    # 2. Push all local Parquet files to R2
+    python3 scripts/r2_sync.py push --workers 16
 
-    # 3. Push only us_60m
-    python3 scripts/r2_sync.py push --dir market_data/us_60m --prefix market_data/us_60m
-
-    # 4. Push only specific tickers with dry-run check
+    # 3. Push only specific tickers with dry-run check
     python3 scripts/r2_sync.py push --symbols AAPL NVDA --dry-run
 """
 
@@ -28,7 +25,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import sys
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -47,12 +44,20 @@ def format_bytes(bytes_count: int) -> str:
     return f"{size:.2f} PB"
 
 
+def get_allowed_extensions(args: argparse.Namespace) -> Tuple[str, ...]:
+    if not args.ext:
+        return (".parquet",)
+    exts = [e.strip() if e.strip().startswith(".") else f".{e.strip()}" for e in args.ext.split(",")]
+    return tuple(exts)
+
+
 def cmd_diff(args: argparse.Namespace, client: R2Client) -> int:
     local_dir = Path(args.dir)
     prefix = args.prefix.rstrip("/")
-    print(f"Diffing local [{local_dir}] vs R2 [{client.bucket}/{prefix}]...")
+    exts = get_allowed_extensions(args)
+    print(f"Diffing local [{local_dir}] vs R2 [{client.bucket}/{prefix}] for {exts}...")
     start_t = time.time()
-    res = client.diff(local_dir, remote_prefix=prefix)
+    res = client.diff(local_dir, remote_prefix=prefix, allowed_extensions=exts)
     elapsed = time.time() - start_t
 
     only_loc = res["only_local"]
@@ -92,15 +97,16 @@ def cmd_push(args: argparse.Namespace, client: R2Client) -> int:
     local_dir = Path(args.dir)
     prefix = args.prefix.rstrip("/")
     symbols = {s.upper().strip() for s in (args.symbols or [])}
+    exts = get_allowed_extensions(args)
 
-    print(f"Scanning local directory [{local_dir}] to push to R2 [{client.bucket}/{prefix}]...")
-    diff_res = client.diff(local_dir, remote_prefix=prefix)
+    print(f"Scanning local directory [{local_dir}] for {exts} to push to R2 [{client.bucket}/{prefix}]...")
+    diff_res = client.diff(local_dir, remote_prefix=prefix, allowed_extensions=exts)
     candidates = diff_res["only_local"] + diff_res["different"]
 
     if args.force:
         candidates = [
             {"key": f"{prefix}/{p.relative_to(local_dir).as_posix()}", "local_path": str(p), "size": p.stat().st_size}
-            for p in local_dir.rglob("*") if p.is_file() and not p.name.startswith(".")
+            for p in local_dir.rglob("*") if p.is_file() and any(p.name.endswith(e) for e in exts)
         ]
 
     # Filter symbols if specified
@@ -109,7 +115,6 @@ def cmd_push(args: argparse.Namespace, client: R2Client) -> int:
         key = item["key"]
         if symbols:
             parts = key.split("/")
-            # Check if any path segment matches target symbols
             if not any(part.upper() in symbols for part in parts):
                 continue
         targets.append(item)
@@ -150,7 +155,7 @@ def cmd_push(args: argparse.Namespace, client: R2Client) -> int:
             if ok:
                 success += 1
                 if success % 20 == 0 or success == len(targets):
-                    print(f"  [{success}/{len(targets)}] Progress: {key} ({format_bytes(size)})")
+                    print(f"  [{success}/{len(targets)}] Uploaded: {key} ({format_bytes(size)})")
             else:
                 failed += 1
                 print(f"  [FAILED] {key} - {err}", file=sys.stderr)
@@ -165,10 +170,11 @@ def cmd_pull(args: argparse.Namespace, client: R2Client) -> int:
     local_dir = Path(args.dir)
     prefix = args.prefix.rstrip("/")
     symbols = {s.upper().strip() for s in (args.symbols or [])}
+    exts = get_allowed_extensions(args)
 
-    print(f"Checking R2 objects under [{client.bucket}/{prefix}]...")
-    remote_objs = client.list_objects(prefix=prefix)
-    diff_res = client.diff(local_dir, remote_prefix=prefix)
+    print(f"Checking R2 objects under [{client.bucket}/{prefix}] for {exts}...")
+    remote_objs = [o for o in client.list_objects(prefix=prefix) if any(o["key"].endswith(e) for e in exts)]
+    diff_res = client.diff(local_dir, remote_prefix=prefix, allowed_extensions=exts)
     candidates = diff_res["only_remote"] + diff_res["different"]
 
     if args.force:
@@ -220,7 +226,7 @@ def cmd_pull(args: argparse.Namespace, client: R2Client) -> int:
             if ok:
                 success += 1
                 if success % 20 == 0 or success == len(targets):
-                    print(f"  [{success}/{len(targets)}] Progress: {key} ({format_bytes(size)})")
+                    print(f"  [{success}/{len(targets)}] Downloaded: {key} ({format_bytes(size)})")
             else:
                 failed += 1
                 print(f"  [FAILED] {key} - {err}", file=sys.stderr)
@@ -236,12 +242,15 @@ def cmd_status(args: argparse.Namespace, client: R2Client) -> int:
     print(f"Fetching R2 bucket status for [{client.bucket}/{prefix or '(root)'}]...")
     objs = client.list_objects(prefix=prefix)
     total_size = sum(o["size"] for o in objs)
+    parquet_objs = [o for o in objs if o["key"].endswith(".parquet")]
+    parquet_size = sum(o["size"] for o in parquet_objs)
+
     print("\n--- Cloudflare R2 Bucket Status ---")
-    print(f"  Bucket Name       : {client.bucket}")
-    print(f"  Endpoint          : {client.endpoint}")
-    print(f"  Prefix            : {prefix or '(root)'}")
-    print(f"  Total Remote Files : {len(objs)}")
-    print(f"  Total Remote Size  : {format_bytes(total_size)}")
+    print(f"  Bucket Name        : {client.bucket}")
+    print(f"  Endpoint           : {client.endpoint}")
+    print(f"  Prefix             : {prefix or '(root)'}")
+    print(f"  Total Remote Files : {len(objs)} (Parquet: {len(parquet_objs)})")
+    print(f"  Total Remote Size  : {format_bytes(total_size)} (Parquet: {format_bytes(parquet_size)})")
     return 0
 
 
@@ -250,23 +259,24 @@ def main() -> int:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     def add_common_args(p):
-        p.add_argument("--dir", default=str(ROOT / "market_data"), help="Local directory (default: market_data)")
-        p.add_argument("--prefix", default="market_data", help="Remote R2 prefix (default: market_data)")
-        p.add_argument("--workers", type=int, default=12, help="Number of concurrent worker threads (default: 12)")
+        p.add_argument("--dir", default=str(ROOT / "market_data" / "us_60m"), help="Local directory (default: market_data/us_60m)")
+        p.add_argument("--prefix", default="market_data/us_60m", help="Remote R2 prefix (default: market_data/us_60m)")
+        p.add_argument("--ext", default=".parquet", help="File extensions to sync (default: .parquet)")
+        p.add_argument("--workers", type=int, default=16, help="Number of concurrent worker threads (default: 16)")
 
     # diff
     p_diff = subparsers.add_parser("diff", help="Diff local files against R2")
     add_common_args(p_diff)
 
     # push
-    p_push = subparsers.add_parser("push", help="Manually push local files to R2")
+    p_push = subparsers.add_parser("push", help="Manually push local Parquet files to R2")
     add_common_args(p_push)
     p_push.add_argument("--symbols", nargs="*", help="Filter specific ticker symbols (e.g. AAPL NVDA)")
     p_push.add_argument("--dry-run", action="store_true", help="Preview files to upload without modifying R2")
     p_push.add_argument("--force", action="store_true", help="Force upload all files even if identical")
 
     # pull
-    p_pull = subparsers.add_parser("pull", help="Manually pull files from R2 to local")
+    p_pull = subparsers.add_parser("pull", help="Manually pull Parquet files from R2 to local")
     add_common_args(p_pull)
     p_pull.add_argument("--symbols", nargs="*", help="Filter specific ticker symbols")
     p_pull.add_argument("--dry-run", action="store_true", help="Preview files to download")

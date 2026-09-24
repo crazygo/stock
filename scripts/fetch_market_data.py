@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Fetch market data with hierarchical fallback strategy.
+"""Fetch market data with hierarchical fallback strategy using Parquet format.
 
 Strategy:
-  1. Check local cache (market_data/us_60m/<SYMBOL>/...)
-  2. If missing or incomplete, check and download from Cloudflare R2
+  1. Check local Parquet cache (market_data/us_60m/<SYMBOL>/2026.parquet)
+  2. If missing or incomplete, check and download Parquet from Cloudflare R2
   3. If still missing from R2, fallback to Futu OpenD (futud)
   4. IMPORTANT: Fetched Futu data is saved locally only; NEVER automatically
      synced to R2. Manual sync must be triggered via `scripts/r2_sync.py push`.
@@ -25,8 +25,10 @@ import sys
 import time
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 from zoneinfo import ZoneInfo
+
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -34,46 +36,73 @@ sys.path.insert(0, str(ROOT))
 from scripts.r2_client import R2Client
 
 
-def load_local_bars(ticker: str, year: int = 2026, base_dir: Optional[Path] = None) -> Optional[Dict[str, Any]]:
-    """Load local gzip json bars for a ticker."""
-    target_dir = base_dir or (ROOT / "market_data" / "us_60m")
-    file_path = target_dir / ticker.upper() / f"{year}.json.gz"
-    if not file_path.exists():
-        return None
-    try:
-        with gzip.open(file_path, "rt", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"[Warning] Failed to read local {file_path}: {e}", file=sys.stderr)
-        return None
+FLOAT_COLS = ["open", "high", "low", "close", "volume", "turnover", "pe_ratio", "turnover_rate", "change_rate", "last_close"]
 
 
-def save_local_bars(ticker: str, payload: Dict[str, Any], year: int = 2026, base_dir: Optional[Path] = None) -> Path:
-    """Save bars locally in gzip json format."""
+def load_local_bars(ticker: str, year: int = 2026, base_dir: Optional[Path] = None) -> Optional[pd.DataFrame]:
+    """Load local Parquet bars (or fallback to gzip json)."""
     target_dir = base_dir or (ROOT / "market_data" / "us_60m")
-    file_path = target_dir / ticker.upper() / f"{year}.json.gz"
-    file_path.parent.mkdir(parents=True, exist_ok=True)
-    temp_path = file_path.with_suffix(".json.gz.tmp")
-    with gzip.open(temp_path, "wt", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False)
-    temp_path.replace(file_path)
-    return file_path
+    parquet_p = target_dir / ticker.upper() / f"{year}.parquet"
+    if parquet_p.exists():
+        try:
+            return pd.read_parquet(parquet_p)
+        except Exception as e:
+            print(f"[Warning] Failed to read Parquet {parquet_p}: {e}", file=sys.stderr)
+
+    # Fallback to json.gz
+    gz_p = target_dir / ticker.upper() / f"{year}.json.gz"
+    if gz_p.exists():
+        try:
+            with gzip.open(gz_p, "rt", encoding="utf-8") as f:
+                d = json.load(f)
+            bars = d.get("bars", [])
+            if bars:
+                df = pd.DataFrame(bars)
+                return df
+        except Exception:
+            pass
+
+    return None
+
+
+def save_local_bars(ticker: str, df: pd.DataFrame, year: int = 2026, base_dir: Optional[Path] = None) -> Path:
+    """Save bars locally in standard Parquet format (ZSTD compressed)."""
+    target_dir = base_dir or (ROOT / "market_data" / "us_60m")
+    ticker_dir = target_dir / ticker.upper()
+    ticker_dir.mkdir(parents=True, exist_ok=True)
+    parquet_p = ticker_dir / f"{year}.parquet"
+
+    # Normalize types
+    if "time_key" in df.columns:
+        df["time_key"] = df["time_key"].astype(str)
+    for c in FLOAT_COLS:
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors="coerce").astype("float64")
+
+    # Sort by time
+    if "time_key" in df.columns:
+        df = df.sort_values("time_key").drop_duplicates(subset=["time_key"], keep="last")
+
+    temp_p = parquet_p.with_suffix(".parquet.tmp")
+    df.to_parquet(temp_p, engine="pyarrow", compression="zstd")
+    temp_p.replace(parquet_p)
+    return parquet_p
 
 
 def try_download_from_r2(ticker: str, year: int = 2026, r2_client: Optional[R2Client] = None, base_dir: Optional[Path] = None) -> bool:
-    """Check R2 and download if exists."""
+    """Check R2 for Parquet file and download if exists."""
     client = r2_client or R2Client()
-    remote_key = f"market_data/us_60m/{ticker.upper()}/{year}.json.gz"
+    remote_key = f"market_data/us_60m/{ticker.upper()}/{year}.parquet"
     target_dir = base_dir or (ROOT / "market_data" / "us_60m")
-    dest_path = target_dir / ticker.upper() / f"{year}.json.gz"
+    dest_path = target_dir / ticker.upper() / f"{year}.parquet"
 
     head = client.head_object(remote_key)
-    if head is None:
-        return False
+    if head is not None:
+        print(f"  [R2 Hit] Found {remote_key} on R2 ({head['size']} bytes). Downloading to local...")
+        client.get_object(remote_key, dest_path)
+        return True
 
-    print(f"  [R2 Hit] Found {remote_key} on R2 ({head['size']} bytes). Downloading to local...")
-    client.get_object(remote_key, dest_path)
-    return True
+    return False
 
 
 def fetch_from_futu(
@@ -81,7 +110,7 @@ def fetch_from_futu(
     start_date: str,
     end_date: str,
     futu_ctx: Any,
-) -> List[Dict[str, Any]]:
+) -> pd.DataFrame:
     """Fetch 60m bars from Futu OpenD."""
     import futu
     print(f"  [Futu Fetch] Pulling {ticker} ({start_date} -> {end_date}) from Futu OpenD...")
@@ -101,14 +130,9 @@ def fetch_from_futu(
         raise RuntimeError(f"Futu OpenD request failed for {code}: {df}")
 
     if df is None or df.empty:
-        return []
+        return pd.DataFrame()
 
-    records = df.to_dict(orient="records")
-    clean_bars = []
-    for r in records:
-        clean = {k: (None if str(v) == "nan" else v) for k, v in r.items()}
-        clean_bars.append(clean)
-    return clean_bars
+    return df
 
 
 def ensure_symbol_data(
@@ -118,7 +142,7 @@ def ensure_symbol_data(
     r2_client: Optional[R2Client] = None,
     futu_ctx: Optional[Any] = None,
 ) -> Dict[str, Any]:
-    """Hierarchical fetch for a single symbol: Local -> R2 -> Futu OpenD."""
+    """Hierarchical fetch for a single symbol: Local Parquet -> R2 Parquet -> Futu OpenD."""
     ticker = ticker.upper().removeprefix("US.")
     today_ny = datetime.now(ZoneInfo("America/New_York")).date().isoformat()
     req_start = start_date or "2026-01-01"
@@ -127,32 +151,26 @@ def ensure_symbol_data(
 
     print(f"\nProcessing [{ticker}] (Target window: {req_start} -> {req_end}):")
 
-    # Step 1: Check Local Cache
-    data = load_local_bars(ticker, year=year)
-    if data:
-        bars = data.get("bars", [])
-        timestamps = [b["time_key"] for b in bars if "time_key" in b]
-        if timestamps:
-            first_ts = timestamps[0][:10]
-            last_ts = timestamps[-1][:10]
-            if first_ts <= req_start and last_ts >= req_end:
-                print(f"  [Local Hit] Up to date locally ({len(bars)} bars, {first_ts} ~ {last_ts}).")
-                return {"source": "local", "ticker": ticker, "bars_count": len(bars), "status": "cached"}
+    # Step 1: Check Local Cache (Parquet)
+    df = load_local_bars(ticker, year=year)
+    if df is not None and not df.empty and "time_key" in df.columns:
+        first_ts = str(df["time_key"].min())[:10]
+        last_ts = str(df["time_key"].max())[:10]
+        if first_ts <= req_start and last_ts >= req_end:
+            print(f"  [Local Hit] Up to date in local Parquet ({len(df)} bars, {first_ts} ~ {last_ts}).")
+            return {"source": "local", "ticker": ticker, "bars_count": len(df), "status": "cached"}
 
-    # Step 2: Check Cloudflare R2
-    print(f"  [Local Miss / Incomplete] Checking Cloudflare R2...")
+    # Step 2: Check Cloudflare R2 (Parquet)
+    print(f"  [Local Miss / Incomplete] Checking Cloudflare R2 for {ticker} Parquet...")
     r2_downloaded = try_download_from_r2(ticker, year=year, r2_client=r2_client)
     if r2_downloaded:
-        data = load_local_bars(ticker, year=year)
-        if data:
-            bars = data.get("bars", [])
-            timestamps = [b["time_key"] for b in bars if "time_key" in b]
-            if timestamps:
-                first_ts = timestamps[0][:10]
-                last_ts = timestamps[-1][:10]
-                if first_ts <= req_start and last_ts >= req_end:
-                    print(f"  [R2 Complete] Retrieved from R2 ({len(bars)} bars, {first_ts} ~ {last_ts}).")
-                    return {"source": "r2", "ticker": ticker, "bars_count": len(bars), "status": "downloaded_r2"}
+        df = load_local_bars(ticker, year=year)
+        if df is not None and not df.empty and "time_key" in df.columns:
+            first_ts = str(df["time_key"].min())[:10]
+            last_ts = str(df["time_key"].max())[:10]
+            if first_ts <= req_start and last_ts >= req_end:
+                print(f"  [R2 Complete] Retrieved from R2 Parquet ({len(df)} bars, {first_ts} ~ {last_ts}).")
+                return {"source": "r2", "ticker": ticker, "bars_count": len(df), "status": "downloaded_r2"}
 
     # Step 3: Fallback to Futu OpenD
     print(f"  [R2 Miss / Incomplete] Falling back to Futu OpenD...")
@@ -167,39 +185,25 @@ def ensure_symbol_data(
             raise RuntimeError(f"Could not connect to Futu OpenD at 127.0.0.1:11111: {e}") from e
 
     try:
-        futu_bars = fetch_from_futu(ticker, req_start, req_end, futu_ctx)
-        existing_bars = data.get("bars", []) if data else []
-        existing_keys = {b.get("time_key") for b in existing_bars}
+        futu_df = fetch_from_futu(ticker, req_start, req_end, futu_ctx)
+        if df is not None and not df.empty:
+            merged_df = pd.concat([df, futu_df], ignore_index=True)
+        else:
+            merged_df = futu_df
 
-        added = 0
-        for b in futu_bars:
-            if b.get("time_key") not in existing_keys:
-                existing_bars.append(b)
-                existing_keys.add(b.get("time_key"))
-                added += 1
+        saved_path = save_local_bars(ticker, merged_df, year=year)
+        added_bars = len(futu_df)
+        total_bars = len(merged_df)
 
-        existing_bars.sort(key=lambda x: str(x.get("time_key", "")))
-        payload = {
-            "ticker": ticker,
-            "year": year,
-            "interval": "60m",
-            "start": req_start,
-            "end": req_end,
-            "adjustment": "qfq",
-            "extended_time": True,
-            "session": "ALL",
-            "bars": existing_bars,
-        }
-        save_local_bars(ticker, payload, year=year)
-        print(f"  [Futu Saved] Fetched {len(futu_bars)} bars (+{added} new). Total local bars: {len(existing_bars)}.")
-        print(f"  [Manual Sync Notice] Data saved to local disk only. NOT automatically pushed to R2.")
+        print(f"  [Futu Saved] Fetched {added_bars} bars. Saved to {saved_path.name} (Total: {total_bars} bars).")
+        print(f"  [Manual Sync Notice] Parquet saved to local disk only. NOT automatically pushed to R2.")
         print(f"    -> Run `python3 scripts/r2_sync.py push --symbols {ticker}` when ready to sync.")
 
         return {
             "source": "futu",
             "ticker": ticker,
-            "added_bars": added,
-            "total_bars": len(existing_bars),
+            "added_bars": added_bars,
+            "total_bars": total_bars,
             "status": "saved_local_only",
         }
     finally:
