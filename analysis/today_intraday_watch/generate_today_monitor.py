@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch Realtime & Intraday 60m Data from Futu OpenD for Holdings & Favorites,
+"""Fetch Realtime & Intraday 60m Data from Futu OpenD for Moomoo US Cash Account (尾号 0086) & Favorites,
 and Generate Interactive Multi-Column Monitor Table.
 
 Directory: analysis/today_intraday_watch/
@@ -23,28 +23,61 @@ ft.SysConfig.enable_proto_encrypt(False)
 print("Connecting to Futu OpenD (127.0.0.1:11111)...")
 quote_ctx = ft.OpenQuoteContext(host="127.0.0.1", port=11111)
 
-# 1. Fetch Real User Positions
+# 1. Fetch Real User Positions from Moomoo US Cash Account (尾号 0086)
+TARGET_CASH_ACC_ID = 283445330641239202 # UniCard 1007292558030086 (尾号 0086)
+TARGET_MARGIN_ACC_ID = 283445330187455846 # Moomoo US Margin
+
 positions = {}
+account_summary = {
+    "acc_name": "Moomoo US 现金账户",
+    "card_tail": "0086",
+    "acc_id": str(TARGET_CASH_ACC_ID),
+    "total_pnl_val": 0.0,
+    "holdings_count": 0
+}
+
 try:
-    trd_ctx = ft.OpenSecTradeContext(filter_trdmarket=ft.TrdMarket.US, host="127.0.0.1", port=11111)
-    ret, acc_df = trd_ctx.get_acc_list()
-    if ret == ft.RET_OK:
-        for acc_id in acc_df["acc_id"]:
-            r_pos, pos_df = trd_ctx.position_list_query(acc_id=acc_id)
-            if r_pos == ft.RET_OK and len(pos_df) > 0:
-                for _, row in pos_df.iterrows():
-                    c = row["code"]
-                    if c.startswith("US."):
-                        positions[c] = {
-                            "name": row.get("stock_name", ""),
-                            "qty": float(row.get("qty", 0)),
-                            "cost": float(row.get("cost_price", 0)),
-                            "nominal_price": float(row.get("nominal_price", 0)),
-                            "pnl_ratio": float(row.get("pl_ratio", 0)) if "pl_ratio" in row else 0.0,
-                            "pnl_val": float(row.get("pl_val", 0)) if "pl_val" in row else 0.0
-                        }
+    trd_ctx = ft.OpenSecTradeContext(
+        filter_trdmarket=ft.TrdMarket.US,
+        host="127.0.0.1",
+        port=11111,
+        security_firm=ft.SecurityFirm.FUTUINC
+    )
+    r_pos, pos_df = trd_ctx.position_list_query(acc_id=TARGET_CASH_ACC_ID)
+    if r_pos == ft.RET_OK and len(pos_df) > 0:
+        for _, row in pos_df.iterrows():
+            c = row["code"]
+            if c.startswith("US."):
+                pl_v = float(row.get("pl_val", 0)) if "pl_val" in row and pd.notna(row["pl_val"]) else 0.0
+                positions[c] = {
+                    "name": row.get("stock_name", ""),
+                    "qty": float(row.get("qty", 0)),
+                    "cost": float(row.get("cost_price", 0)),
+                    "nominal_price": float(row.get("nominal_price", 0)),
+                    "pl_ratio": float(row.get("pl_ratio", 0)) if "pl_ratio" in row and pd.notna(row["pl_ratio"]) else 0.0,
+                    "pl_val": pl_v,
+                    "acc_source": "0086现金账户"
+                }
+                account_summary["total_pnl_val"] += pl_v
+        account_summary["holdings_count"] = len(positions)
+        print(f"Loaded {len(positions)} US holdings from Moomoo US Cash Acc 0086: {list(positions.keys())}")
+    
+    # Also check margin account for completeness
+    r_margin, margin_df = trd_ctx.position_list_query(acc_id=TARGET_MARGIN_ACC_ID)
+    if r_margin == ft.RET_OK and len(margin_df) > 0:
+        for _, row in margin_df.iterrows():
+            c = row["code"]
+            if c.startswith("US.") and c not in positions:
+                positions[c] = {
+                    "name": row.get("stock_name", ""),
+                    "qty": float(row.get("qty", 0)),
+                    "cost": float(row.get("cost_price", 0)),
+                    "nominal_price": float(row.get("nominal_price", 0)),
+                    "pl_ratio": float(row.get("pl_ratio", 0)) if "pl_ratio" in row and pd.notna(row["pl_ratio"]) else 0.0,
+                    "pl_val": float(row.get("pl_val", 0)) if "pl_val" in row and pd.notna(row["pl_val"]) else 0.0,
+                    "acc_source": "Moomoo融资账户"
+                }
     trd_ctx.close()
-    print(f"Loaded {len(positions)} US trade holdings: {list(positions.keys())}")
 except Exception as e:
     print(f"Warning: Failed to query trade positions: {e}")
 
@@ -128,13 +161,16 @@ for code in all_target_codes:
     
     # Classification tag
     is_holding = code in positions
+    is_0086 = is_holding and positions[code].get("acc_source") == "0086现金账户"
     is_fav = code in fav_codes
     is_bad = code in bad_codes
     
-    if is_holding and is_fav:
-        cat = "持仓+特注"
+    if is_0086 and is_fav:
+        cat = "0086持仓+特注"
+    elif is_0086:
+        cat = "0086现金持仓"
     elif is_holding:
-        cat = "我的持仓"
+        cat = "融资账户持仓"
     elif is_bad:
         cat = "亏损特别关注"
     else:
@@ -183,7 +219,6 @@ for code in all_target_codes:
             future = bars.iloc[bar_idx + 1 : bar_idx + 22]
             
             if len(future) == 0:
-                # If no future 60m bar yet, use current high price from snapshot
                 future_max_h = max(float(row["high"]), high_price)
             else:
                 future_max_h = max(future["high"].max(), high_price)
@@ -205,7 +240,6 @@ for code in all_target_codes:
             })
             
         rate = round(h_hits / c * 100, 1) if c > 0 else 0.0
-        # In-flight if date is 09-22, 09-23, or 09-24 (less than 21 bars closed)
         is_inflight = bool(date_str >= "2026-09-22")
         
         day_metrics[key] = {
@@ -223,6 +257,7 @@ for code in all_target_codes:
         "name": stock_name,
         "category": cat,
         "is_holding": is_holding,
+        "is_0086": is_0086,
         "pos_info": pos_info,
         "last_price": last_price,
         "chg_pct": chg_pct,
@@ -249,14 +284,15 @@ for code in all_target_codes:
         "metrics": day_metrics
     })
 
-# Sort stocks: Holdings first, then by today's change % descending
-stocks_data.sort(key=lambda s: (0 if s["is_holding"] else 1, -s["chg_pct"]))
+# Sort stocks: 0086 holdings first, then other holdings, then by today's change % descending
+stocks_data.sort(key=lambda s: (0 if s["is_0086"] else (1 if s["is_holding"] else 2), -s["chg_pct"]))
 
 payload = {
+    "account_summary": account_summary,
     "update_time_et": datetime.now().strftime("%Y-%m-%d %H:%M:%S ET"),
     "update_time_local": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "stocks_count": len(stocks_data),
-    "holdings_count": len(positions),
+    "holdings_count": account_summary["holdings_count"],
     "days_meta": DAYS,
     "stocks": stocks_data
 }
@@ -273,7 +309,7 @@ html_code = f"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>美股盘中实时异动与 3日5% 达成率监控看板（持仓 + 特别关注）</title>
+<title>Moomoo US 现金账户 (尾号 0086) 持仓与特别关注 · 盘中实时异动 & 3日5% 达成率监控看板</title>
 <style>
 :root {{
   --bg: #f8fafc;
@@ -291,8 +327,6 @@ html_code = f"""<!doctype html>
   --down-border: #fca5a5;
   --accent: #2563eb;
   --accent-bg: #eff6ff;
-  --hold-tag: #0f172a;
-  --hold-bg: #e2e8f0;
 }}
 
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -326,6 +360,16 @@ header.wf-header {{
   font-size: 12px;
   color: var(--muted);
   margin-top: 3px;
+}}
+.acc-badge-top {{
+  display: inline-block;
+  background: #0f172a;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 6px;
 }}
 .sync-badge {{
   display: flex;
@@ -460,11 +504,11 @@ th.text-left, td.text-left {{ text-align: left; }}
 th.text-center, td.text-center {{ text-align: center; }}
 
 tr:hover td {{ background: #f8fafc; }}
-tr.row-holding {{
-  background: #fcfcfc;
+tr.row-holding-0086 {{
+  background: #fafcff;
 }}
-tr.row-holding td:first-child {{
-  border-left: 3px solid #0f172a;
+tr.row-holding-0086 td:first-child {{
+  border-left: 3.5px solid #2563eb;
 }}
 
 /* Badges & Tags */
@@ -475,8 +519,9 @@ tr.row-holding td:first-child {{
   border-radius: 2px;
   display: inline-block;
 }}
-.tag-holding {{ background: #e2e8f0; color: #0f172a; border: 1px solid #cbd5e1; }}
-.tag-fav {{ background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }}
+.tag-0086-both {{ background: #eff6ff; color: #1e40af; border: 1px solid #93c5fd; font-weight:800; }}
+.tag-0086 {{ background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; font-weight:700; }}
+.tag-fav {{ background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }}
 .tag-bad {{ background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }}
 
 .cell-rate {{
@@ -545,8 +590,11 @@ footer.wf-footer {{
 
 <header class="wf-header">
   <div class="header-titles">
-    <h1>美股持仓与特别关注标的 · 盘中实时异动 & 3日5% 达成率监控</h1>
-    <p>实时读取富途 OpenD 真实账户持仓与自选分组 | 覆盖开盘至 -1 小时（10:30、11:30）走势与过去 3 日达成率闭环</p>
+    <h1>
+      <span class="acc-badge-top">Moomoo US 现金账户 · 尾号 0086</span>
+      持仓 ({account_summary["holdings_count"]}只) 与特别关注标的 · 盘中实时异动 & 3日5% 达成率
+    </h1>
+    <p>精准直连 Moomoo US 账户（ID: {TARGET_CASH_ACC_ID}，UniCard 尾号 0086）| 覆盖今日开盘至 -1 小时（10:30、11:30）走势与过去 3 日达成率闭环</p>
   </div>
   <div class="sync-badge">
     <div class="pulse-dot"></div>
@@ -561,11 +609,11 @@ footer.wf-footer {{
     <b>{payload["stocks_count"]} 只</b>
   </div>
   <div class="card">
-    <span>当前账户持仓</span>
-    <b>{payload["holdings_count"]} 只</b>
+    <span>0086 现金持仓</span>
+    <b>{account_summary["holdings_count"]} 只</b>
   </div>
   <div class="card">
-    <span>今日上涨标的数</span>
+    <span>今日上涨标的</span>
     <b style="color:var(--up);" id="stat-up-count">-</b>
   </div>
   <div class="card">
@@ -582,10 +630,12 @@ footer.wf-footer {{
 <details class="notes-panel">
   <summary>💡 本页面策略思路与字段说明（点击展开查看）</summary>
   <div class="notes-content">
-    <p><b>1. 为什么重点监控“开盘到现在的 -1 小时”？</b><br>
+    <p><b>1. 账户校准确认：</b><br>
+    当前页面已精准对齐 <b>Moomoo US (Futu Inc.) 现金账户（综合卡号尾号 0086，账户 ID: {TARGET_CASH_ACC_ID}）</b>，成功识别并载入该账户全部 <b>{account_summary["holdings_count"]} 只美股真实持仓</b>（含 WDC、VRT、SOXS、SNXX、SEDG、NXT、MRVL、INTC、HLTH、GOOG、FN、CRDO、COHR、CIEN、BBC、AVGO、AMAT、AIPO 等），并与牛牛“特别关注 (Favorites)”标的合并跟踪。</p>
+    <p style="margin-top:6px;"><b>2. 为什么重点监控“开盘到现在的 -1 小时”？</b><br>
     根据我们在聚类方法 1 与方法 2 中的重大实证发现：美股单日开盘首小时（10:30）与次小时（11:30）的群体达成率，对全天后续时段的胜率具有高达 <b>r = 0.788 ~ 0.886</b> 的决定性预测力。开盘两小时放量抗跌且达成率高（&ge;50%）的标的，往往全天动能强劲；反之首小时砸盘的标的，全天绝不轻易追入。</p>
-    <p style="margin-top:6px;"><b>2. 四大核心达成率列定义（以 3 日内最高价涨 &ge; 5% 为目标）：</b><br>
-    • <b>今天-3（09-21 周一）</b>：分母为当天 7 个交易小时（10:30~16:00），分子为后续 3 天内触达 +5% 的小时数。历经 3 天交易后，该列已近乎 100% 闭环，体现该股初期的突破兑现能力；<br>
+    <p style="margin-top:6px;"><b>3. 四大核心达成率列定义（以 3 日内最高价涨 &ge; 5% 为目标）：</b><br>
+    • <b>今天-3（09-21 周一）</b>：分母为当天 7 个交易小时（10:30~16:00），分子为后续 3 天内触达 +5% 的小时数（$T/7$），该列已近乎 100% 闭环，体现该股初期的突破兑现能力；<br>
     • <b>今天-2（09-22 周二）</b>与 <b>今天-1（09-23 周三）</b>：尚在 3 日窗口内（打 ⏳ 标识）。若当前已有小时触及 +5% 则提前确认为达成，并展示最大浮盈；<br>
     • <b>今天（09-24 周四）</b>：分母为今天已完成的时段数（10:30 与 11:30 共 2 个时段），分子为截至目前已触达 +5% 的时段数，并展示入场至今的盘中最高冲幅（Max Run-up %）。</p>
   </div>
@@ -595,7 +645,7 @@ footer.wf-footer {{
 <section class="controls-bar">
   <div class="filter-tabs">
     <button class="tab-btn active" id="tab-all" onclick="filterCategory('all')">全部标的 ({payload["stocks_count"]})</button>
-    <button class="tab-btn" id="tab-holding" onclick="filterCategory('holding')">我的持仓 ({payload["holdings_count"]})</button>
+    <button class="tab-btn" id="tab-holding" onclick="filterCategory('holding')">0086现金持仓 ({account_summary["holdings_count"]})</button>
     <button class="tab-btn" id="tab-fav" onclick="filterCategory('fav')">特别关注 ({len(fav_codes)})</button>
     <button class="tab-btn" id="tab-up" onclick="filterCategory('up')">今日上涨</button>
     <button class="tab-btn" id="tab-hit" onclick="filterCategory('hit')">近期高胜率 (&ge;50%)</button>
@@ -622,7 +672,7 @@ footer.wf-footer {{
         <th class="text-center" onclick="sortTable('rate_d2')" style="background:#e2e8f0; color:#0f172a;">今天-2 (09-22)<br>3日5% 达成率</th>
         <th class="text-center" onclick="sortTable('rate_d1')" style="background:#e2e8f0; color:#0f172a;">今天-1 (09-23)<br>3日5% 达成率</th>
         <th class="text-center" onclick="sortTable('rate_today')" style="background:#cbd5e1; color:#0f172a; font-weight:800;">今天 (09-24)<br>3日5% 达成率</th>
-        <th class="text-left">持仓详情 (若有)</th>
+        <th class="text-left">0086 持仓详情 (股数/成本/盈亏)</th>
       </tr>
     </thead>
     <tbody id="table-body">
@@ -632,7 +682,7 @@ footer.wf-footer {{
 </main>
 
 <footer class="wf-footer">
-  <span>数据来源：本地富途牛牛 OpenD (端口 11111) | 生成时间：{payload["update_time_local"]}</span>
+  <span>数据来源：本地富途牛牛 OpenD (端口 11111) | Moomoo US 现金账户 (UniCard 尾号 0086) | 生成时间：{payload["update_time_local"]}</span>
   <span>归档目录：analysis/today_intraday_watch/</span>
 </footer>
 
@@ -640,7 +690,7 @@ footer.wf-footer {{
 const RAW_DATA = {json.dumps(payload["stocks"], ensure_ascii=False)};
 let currentCategory = 'all';
 let searchQuery = '';
-let sortField = 'chg_pct';
+let sortField = 'is_0086';
 let sortAsc = false;
 
 function formatVol(v) {{
@@ -672,7 +722,7 @@ function renderTable() {{
   
   // Filter
   let list = RAW_DATA.filter(s => {{
-    if (currentCategory === 'holding' && !s.is_holding) return false;
+    if (currentCategory === 'holding' && !s.is_0086 && !s.is_holding) return false;
     if (currentCategory === 'fav' && !s.category.includes('特别关注') && !s.category.includes('特注')) return false;
     if (currentCategory === 'up' && s.chg_pct <= 0) return false;
     if (currentCategory === 'hit') {{
@@ -697,6 +747,10 @@ function renderTable() {{
     if (sortField === 'rate_today') va = a.metrics.today.rate ?? -1, vb = b.metrics.today.rate ?? -1;
     if (sortField === 'gain_1030') va = a.bar_1030.max_gain, vb = b.bar_1030.max_gain;
     if (sortField === 'gain_1130') va = a.bar_1130.max_gain, vb = b.bar_1130.max_gain;
+    if (sortField === 'is_0086') {{
+      if (a.is_0086 !== b.is_0086) return a.is_0086 ? -1 : 1;
+      return b.chg_pct - a.chg_pct;
+    }}
     
     if (typeof va === 'string') return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
     return sortAsc ? (va - vb) : (vb - va);
@@ -718,15 +772,24 @@ function renderTable() {{
     const chgSign = s.chg_pct > 0 ? '+' : '';
     
     let tagCls = 'tag-fav';
-    if (s.is_holding) tagCls = 'tag-holding';
+    if (s.category === '0086持仓+特注') tagCls = 'tag-0086-both';
+    else if (s.is_0086) tagCls = 'tag-0086';
+    else if (s.is_holding) tagCls = 'tag-0086';
     else if (s.category.includes('亏损')) tagCls = 'tag-bad';
     
-    const rowCls = s.is_holding ? 'row-holding' : '';
+    const rowCls = s.is_0086 ? 'row-holding-0086' : '';
     
     let posDetail = '<span style="color:#94a3b8;">-</span>';
     if (s.is_holding) {{
       const p = s.pos_info;
-      posDetail = `<span style="font-family:monospace; font-size:11px;">持仓: <b>${{p.qty}}</b>股 | 成本: $${{p.cost?.toFixed(2)}}</span>`;
+      const pnlCls = p.pl_val >= 0 ? 'chg-up' : 'chg-down';
+      const pnlSign = p.pl_val >= 0 ? '+' : '';
+      posDetail = `
+        <span style="font-family:monospace; font-size:11.5px;">
+          持仓 <b>${{p.qty}}</b>股 | 成本: $${{p.cost?.toFixed(2)}} | 
+          盈亏: <b class="${{pnlCls}}">${{pnlSign}}${{p.pl_ratio?.toFixed(2)}}% (${{pnlSign}}$${{p.pl_val?.toFixed(2)}})</b>
+        </span>
+      `;
     }}
     
     const gain1030 = s.bar_1030.max_gain;
@@ -746,7 +809,7 @@ function renderTable() {{
         <td style="font-family:monospace; font-size:11.5px; color:var(--muted);">${{s.amplitude.toFixed(2)}}%</td>
         <td>
           <div style="font-family:monospace; font-weight:700;">${{formatVol(s.completed_vol)}}</div>
-          <div class="sub-pill">占今日全天 ${{s.vol_share_pct}}%</div>
+          <div class="sub-pill">占全天 ${{s.vol_share_pct}}%</div>
         </td>
         <td>
           <div style="font-family:monospace; font-weight:700; color:${{gain1030 >= 5 ? 'var(--up)' : 'inherit'}};">

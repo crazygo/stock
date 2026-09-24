@@ -39,11 +39,14 @@
 
 ## 三、标的分类清单
 
-### 1. 真实持仓标的 (Holdings, 共 4 只)
-- `VOO` (标普500 ETF)
-- `SOXX` (半导体 ETF)
-- `SMH` (半导体指数 ETF)
-- `IHE` (美国医药 ETF)
+### 1. Moomoo US 现金账户持仓 (UniCard 尾号 0086 · 账户 ID: 283445330641239202，共 18 只美股)
+- 芯片 / 存储 / 算力：`WDC` (西部数据), `MRVL` (迈威尔科技), `INTC` (英特尔), `AMAT` (应用材料), `AVGO` (博通), `CRDO` (Credo Tech)
+- 光模块 / 通信：`CIEN` (Ciena), `COHR` (Coherent), `FN` (Fabrinet)
+- 基础设施 / 液冷 / 电力：`VRT` (Vertiv), `AIPO` (Defiance AI ETF), `NXT` (Nextpower)
+- 逆向 / 杠杆：`SOXS` (3倍做空半导体), `SNXX` (2倍做多SNDK)
+- 巨头 / 新能源 / 生物：`GOOG` (谷歌), `SEDG` (SolarEdge), `BBC` (BioShares), `HLTH` (Tema Healthcare AI)
+
+*(注：另包含 Moomoo 融资账户持仓 `LITX` 2倍做多LITE ETF)*
 
 ### 2. 特别关注标的 (Favorites, 共 25 只)
 - 半导体 / AI 算力：`AMD`, `ARM`, `MU`, `MRVL`, `QCOM`, `ALAB`, `CRDO`, `SMTC`, `CBRS`, `RMBS`
@@ -51,6 +54,8 @@
 - 算力基础设施 / 液冷：`VRT`
 - 热门弹性 / 生物医药 / 基因：`SDGR`, `TWST`, `TXG`, `KOD`, `LIFE`
 - 杠杆 / ETF / 关注：`IONL`, `LRNZ`, `AIPO`, `SOXS`
+
+*(其中 `VRT`, `SOXS`, `MRVL`, `CRDO`, `COHR`, `CIEN`, `AIPO` 既是 0086 持仓，又是特别关注)*
 
 ### 3. 亏损关注标的 (共 2 只)
 - `VNET`, `XNET`
