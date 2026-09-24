@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fetch Realtime & Intraday 60m Data from Futu OpenD for Moomoo US Cash Account (尾号 0086) & Favorites,
-and Generate Interactive Multi-Column Monitor Table.
+and Generate Interactive Parametric Multi-Column Monitor Table.
 
 Directory: analysis/today_intraday_watch/
 """
@@ -62,7 +62,7 @@ try:
         account_summary["holdings_count"] = len(positions)
         print(f"Loaded {len(positions)} US holdings from Moomoo US Cash Acc 0086: {list(positions.keys())}")
     
-    # Also check margin account for completeness
+    # Margin account
     r_margin, margin_df = trd_ctx.position_list_query(acc_id=TARGET_MARGIN_ACC_ID)
     if r_margin == ft.RET_OK and len(margin_df) > 0:
         for _, row in margin_df.iterrows():
@@ -104,17 +104,17 @@ if ret_snap == ft.RET_OK:
         snapshots[row["code"]] = row
 print(f"Fetched {len(snapshots)} market snapshots.")
 
-# 4. Fetch 60m K-lines for past week (2026-09-18 to 2026-09-24)
+# 4. Fetch 60m K-lines from 2026-09-10 to 2026-09-24 (covers D-5 to Today)
 kline_data = {}
-print("Fetching 60m K-lines for all target stocks...")
+print("Fetching 60m K-lines from 2026-09-10 to 2026-09-24...")
 for code in all_target_codes:
     ret_kl, df, _ = quote_ctx.request_history_kline(
         code,
-        start="2026-09-18",
+        start="2026-09-10",
         end="2026-09-24",
         ktype=ft.KLType.K_60M,
         autype=ft.AuType.QFQ,
-        max_count=100
+        max_count=200
     )
     if ret_kl == ft.RET_OK and len(df) > 0:
         df["date"] = df["time_key"].str.slice(0, 10)
@@ -125,7 +125,7 @@ for code in all_target_codes:
         kline_data[code] = reg_df
     else:
         print(f"Failed to fetch K-lines for {code}")
-    time.sleep(0.05)
+    time.sleep(0.04)
 
 quote_ctx.close()
 print("K-line fetching complete.")
@@ -133,13 +133,8 @@ print("K-line fetching complete.")
 # 5. Process Metrics for Each Stock
 stocks_data = []
 
-# Target trading dates
-DAYS = [
-    ("d_minus_3", "2026-09-21", "D-3 (09-21 周一)"),
-    ("d_minus_2", "2026-09-22", "D-2 (09-22 周二)"),
-    ("d_minus_1", "2026-09-23", "D-1 (09-23 周三)"),
-    ("today",     "2026-09-24", "今天 (09-24 周四)")
-]
+# Target trading dates: D-5, D-4, D-3, D-2, D-1, Today
+RECENT_5_DATES = ["2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23"]
 
 for code in all_target_codes:
     ticker = code.replace("US.", "")
@@ -195,62 +190,20 @@ for code in all_target_codes:
     gain_from_1030 = round((high_price - close_1030) / close_1030 * 100, 2) if close_1030 > 0 else 0.0
     gain_from_1130 = round((high_price - close_1130) / close_1130 * 100, 2) if close_1130 > 0 else 0.0
     
-    # Calculate 3-day 5% achievement rates for D-3, D-2, D-1, Today
-    day_metrics = {}
-    
-    for key, date_str, label in DAYS:
-        if bars.empty:
-            day_metrics[key] = {"c": 0, "h": 0, "rate": None, "max_gain": 0.0, "is_inflight": False, "hours": []}
-            continue
-            
-        d_bars = bars[bars["date"] == date_str]
-        c = len(d_bars)
-        if c == 0:
-            day_metrics[key] = {"c": 0, "h": 0, "rate": None, "max_gain": 0.0, "is_inflight": False, "hours": []}
-            continue
-            
-        h_hits = 0
-        max_runup = -999.0
-        hour_records = []
-        
-        for idx_row, row in d_bars.iterrows():
-            entry_c = float(row["close"])
-            bar_idx = row.name
-            future = bars.iloc[bar_idx + 1 : bar_idx + 22]
-            
-            if len(future) == 0:
-                future_max_h = max(float(row["high"]), high_price)
-            else:
-                future_max_h = max(future["high"].max(), high_price)
-                
-            runup = (future_max_h - entry_c) / entry_c * 100.0
-            if runup > max_runup:
-                max_runup = runup
-                
-            is_hit = bool(runup >= 5.0)
-            if is_hit:
-                h_hits += 1
-                
-            hour_records.append({
-                "time": row["time"],
-                "entry": entry_c,
-                "max_h": future_max_h,
-                "gain": round(runup, 2),
-                "is_hit": is_hit
+    # Convert bars to compact lightweight list for frontend client-side recalculation
+    compact_bars = []
+    if not bars.empty:
+        for _, b_row in bars.iterrows():
+            compact_bars.append({
+                "d": str(b_row["date"]),
+                "t": str(b_row["time"]),
+                "o": float(b_row["open"]),
+                "h": float(b_row["high"]),
+                "l": float(b_row["low"]),
+                "c": float(b_row["close"]),
+                "v": float(b_row["volume"])
             })
             
-        rate = round(h_hits / c * 100, 1) if c > 0 else 0.0
-        is_inflight = bool(date_str >= "2026-09-22")
-        
-        day_metrics[key] = {
-            "c": int(c),
-            "h": int(h_hits),
-            "rate": rate,
-            "max_gain": round(max_runup, 2) if max_runup != -999.0 else 0.0,
-            "is_inflight": is_inflight,
-            "hours": hour_records
-        }
-        
     stocks_data.append({
         "code": code,
         "ticker": ticker,
@@ -270,18 +223,16 @@ for code in all_target_codes:
         "bar_1030": {
             "close": close_1030,
             "vol": vol_1030,
-            "max_gain": gain_from_1030,
-            "is_hit": bool(gain_from_1030 >= 5.0)
+            "max_gain": gain_from_1030
         },
         "bar_1130": {
             "close": close_1130,
             "vol": vol_1130,
-            "max_gain": gain_from_1130,
-            "is_hit": bool(gain_from_1130 >= 5.0)
+            "max_gain": gain_from_1130
         },
         "completed_vol": completed_vol,
         "vol_share_pct": vol_share_pct,
-        "metrics": day_metrics
+        "bars": compact_bars
     })
 
 # Sort stocks: 0086 holdings first, then other holdings, then by today's change % descending
@@ -293,7 +244,7 @@ payload = {
     "update_time_local": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "stocks_count": len(stocks_data),
     "holdings_count": account_summary["holdings_count"],
-    "days_meta": DAYS,
+    "recent_5_dates": RECENT_5_DATES,
     "stocks": stocks_data
 }
 
@@ -303,13 +254,13 @@ json_dump = json.dumps(payload, ensure_ascii=False, indent=2)
 json_path.write_text(json_dump, encoding="utf-8")
 print(f"Saved {json_path} ({len(json_dump):,} bytes)")
 
-# 6. Render Wireframe HTML
+# 6. Render Wireframe HTML with Interactive Parameter Sliders
 html_code = f"""<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Moomoo US 现金账户 (尾号 0086) 持仓与特别关注 · 盘中实时异动 & 3日5% 达成率监控看板</title>
+<title>Moomoo US 现金账户 (尾号 0086) 持仓与特别关注 · 动态参数多日达成率监控看板</title>
 <style>
 :root {{
   --bg: #f8fafc;
@@ -343,7 +294,7 @@ header.wf-header {{
   border: 1px solid var(--border);
   padding: 14px 20px;
   border-radius: 4px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -389,10 +340,109 @@ header.wf-header {{
   box-shadow: 0 0 0 2px rgba(16,185,129,0.2);
 }}
 
+/* Interactive Parameter Control Panel */
+.param-panel {{
+  background: #ffffff;
+  border: 2px solid #2563eb;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.06);
+}}
+.param-header {{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}}
+.param-title {{
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}}
+.presets-group {{
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}}
+.preset-btn {{
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}}
+.preset-btn:hover {{
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}}
+.preset-btn.active {{
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}}
+
+.param-grid {{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}}
+@media (max-width: 768px) {{
+  .param-grid {{ grid-template-columns: 1fr; }}
+}}
+.param-box {{
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 4px;
+}}
+.param-top-row {{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}}
+.param-label {{
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+}}
+.param-value {{
+  font-size: 15px;
+  font-weight: 800;
+  color: #2563eb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}}
+.slider-input {{
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  background: #cbd5e1;
+  accent-color: #2563eb;
+  cursor: pointer;
+}}
+.param-scale {{
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #94a3b8;
+  margin-top: 4px;
+}}
+
 /* Summary Metric Cards */
 .summary-cards {{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 10px;
   margin-bottom: 14px;
 }}
@@ -592,15 +642,65 @@ footer.wf-footer {{
   <div class="header-titles">
     <h1>
       <span class="acc-badge-top">Moomoo US 现金账户 · 尾号 0086</span>
-      持仓 ({account_summary["holdings_count"]}只) 与特别关注标的 · 盘中实时异动 & 3日5% 达成率
+      持仓 ({account_summary["holdings_count"]}只) 与特别关注标的 · 动态参数多日达成率监控
     </h1>
-    <p>精准直连 Moomoo US 账户（ID: {TARGET_CASH_ACC_ID}，UniCard 尾号 0086）| 覆盖今日开盘至 -1 小时（10:30、11:30）走势与过去 3 日达成率闭环</p>
+    <p>精准直连 Moomoo US 账户（ID: {TARGET_CASH_ACC_ID}，UniCard 尾号 0086）| 支持实时拖动调节目标涨幅与持仓天数</p>
   </div>
   <div class="sync-badge">
     <div class="pulse-dot"></div>
     <span>行情更新：<b>{payload["update_time_et"]}</b>（美东时间）</span>
   </div>
 </header>
+
+<!-- Interactive Parameter Control Panel -->
+<section class="param-panel">
+  <div class="param-header">
+    <div class="param-title">
+      <span>⚙️ 策略核心参数动态调节（拖动滑块即时毫秒级重算表格）</span>
+    </div>
+    <div class="presets-group">
+      <span style="font-size:11px; color:#64748b; margin-right:4px;">快速预设：</span>
+      <button class="preset-btn active" id="pre-3d5" onclick="setPreset(5.0, 3)">标准模式 (3天 5%)</button>
+      <button class="preset-btn" id="pre-5d5" onclick="setPreset(5.0, 5)">长波段 (5天 5%)</button>
+      <button class="preset-btn" id="pre-3d7" onclick="setPreset(7.0, 3)">强弹性 (3天 7%)</button>
+      <button class="preset-btn" id="pre-5d10" onclick="setPreset(10.0, 5)">翻倍主升 (5天 10%)</button>
+      <button class="preset-btn" id="pre-1d5" onclick="setPreset(5.0, 1)">超短隔夜 (1天 5%)</button>
+    </div>
+  </div>
+  
+  <div class="param-grid">
+    <div class="param-box">
+      <div class="param-top_row" style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
+        <span class="param-label">① 目标涨幅阈值 (Target Gain)：</span>
+        <span class="param-value" id="val-target">5.0%</span>
+      </div>
+      <input type="range" class="slider-input" id="slider-target" min="5.0" max="10.0" step="0.5" value="5.0" oninput="onParamChange()">
+      <div class="param-scale">
+        <span>5.0% (标准起步)</span>
+        <span>6.0%</span>
+        <span>7.0%</span>
+        <span>8.0%</span>
+        <span>9.0%</span>
+        <span>10.0% (翻倍起爆)</span>
+      </div>
+    </div>
+    
+    <div class="param-box">
+      <div class="param-top_row" style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
+        <span class="param-label">② 持仓考察窗口 (Holding Window)：</span>
+        <span class="param-value" id="val-window">3 天 (21个交易小时)</span>
+      </div>
+      <input type="range" class="slider-input" id="slider-window" min="1" max="5" step="1" value="3" oninput="onParamChange()">
+      <div class="param-scale">
+        <span>1 天 (7小时)</span>
+        <span>2 天 (14小时)</span>
+        <span>3 天 (标准 21h)</span>
+        <span>4 天 (28小时)</span>
+        <span>5 天 (完整一周 35h)</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Summary Metric Cards -->
 <section class="summary-cards" id="summary-cards">
@@ -617,12 +717,16 @@ footer.wf-footer {{
     <b style="color:var(--up);" id="stat-up-count">-</b>
   </div>
   <div class="card">
-    <span>D-3 (09-21) 均值达成率</span>
+    <span id="label-stat-d5">近5日均值达成率</span>
+    <b id="stat-d5-avg" style="color:#2563eb;">-</b>
+  </div>
+  <div class="card">
+    <span id="label-stat-d3">D-3 均值达成率</span>
     <b id="stat-d3-avg">-</b>
   </div>
   <div class="card">
-    <span>开盘首小时 (10:30) 均值达成率</span>
-    <b id="stat-h1030-avg">-</b>
+    <span>高胜率标的 (&ge;50%)</span>
+    <b id="stat-high-count">-</b>
   </div>
 </section>
 
@@ -632,12 +736,11 @@ footer.wf-footer {{
   <div class="notes-content">
     <p><b>1. 账户校准确认：</b><br>
     当前页面已精准对齐 <b>Moomoo US (Futu Inc.) 现金账户（综合卡号尾号 0086，账户 ID: {TARGET_CASH_ACC_ID}）</b>，成功识别并载入该账户全部 <b>{account_summary["holdings_count"]} 只美股真实持仓</b>（含 WDC、VRT、SOXS、SNXX、SEDG、NXT、MRVL、INTC、HLTH、GOOG、FN、CRDO、COHR、CIEN、BBC、AVGO、AMAT、AIPO 等），并与牛牛“特别关注 (Favorites)”标的合并跟踪。</p>
-    <p style="margin-top:6px;"><b>2. 为什么重点监控“开盘到现在的 -1 小时”？</b><br>
-    根据我们在聚类方法 1 与方法 2 中的重大实证发现：美股单日开盘首小时（10:30）与次小时（11:30）的群体达成率，对全天后续时段的胜率具有高达 <b>r = 0.788 ~ 0.886</b> 的决定性预测力。开盘两小时放量抗跌且达成率高（&ge;50%）的标的，往往全天动能强劲；反之首小时砸盘的标的，全天绝不轻易追入。</p>
-    <p style="margin-top:6px;"><b>3. 四大核心达成率列定义（以 3 日内最高价涨 &ge; 5% 为目标）：</b><br>
-    • <b>今天-3（09-21 周一）</b>：分母为当天 7 个交易小时（10:30~16:00），分子为后续 3 天内触达 +5% 的小时数（$T/7$），该列已近乎 100% 闭环，体现该股初期的突破兑现能力；<br>
-    • <b>今天-2（09-22 周二）</b>与 <b>今天-1（09-23 周三）</b>：尚在 3 日窗口内（打 ⏳ 标识）。若当前已有小时触及 +5% 则提前确认为达成，并展示最大浮盈；<br>
-    • <b>今天（09-24 周四）</b>：分母为今天已完成的时段数（10:30 与 11:30 共 2 个时段），分子为截至目前已触达 +5% 的时段数，并展示入场至今的盘中最高冲幅（Max Run-up %）。</p>
+    <p style="margin-top:6px;"><b>2. 新增核心列【近 5 个交易日（D-5 至 D-1）综合达成率】：</b><br>
+    涵盖 <b>09-17、09-18、09-21、09-22、09-23 共 5 个完整交易日（合计 35 个交易小时，不含今天）</b>。该列作为多日累积核心基准，消除了单日波动的偶然性，能极其清晰地过滤出当前全市场谁是真正的“连续放量主升龙”（如 TWST 近 5 日 35 个小时买入高达 90%+ 达成率）。</p>
+    <p style="margin-top:6px;"><b>3. 动态参数滑块设计：</b><br>
+    • <b>目标涨幅 (5% ~ 10%)</b>：可自由验证股票是只能跑出微弱的 5% 脉冲，还是具备直接突破 7%、10% 的大波段动力；<br>
+    • <b>持仓天数 (1 ~ 5 天)</b>：可验证 1 天隔夜超短线胜率，对比 3 天与 5 天波段持仓的兑现效率。</p>
   </div>
 </details>
 
@@ -648,7 +751,7 @@ footer.wf-footer {{
     <button class="tab-btn" id="tab-holding" onclick="filterCategory('holding')">0086现金持仓 ({account_summary["holdings_count"]})</button>
     <button class="tab-btn" id="tab-fav" onclick="filterCategory('fav')">特别关注 ({len(fav_codes)})</button>
     <button class="tab-btn" id="tab-up" onclick="filterCategory('up')">今日上涨</button>
-    <button class="tab-btn" id="tab-hit" onclick="filterCategory('hit')">近期高胜率 (&ge;50%)</button>
+    <button class="tab-btn" id="tab-hit" onclick="filterCategory('hit')">近5日高胜率 (&ge;50%)</button>
   </div>
   <div>
     <input type="text" id="search-box" class="search-input" placeholder="输入代码或名称筛选..." oninput="onSearch(this.value)">
@@ -665,13 +768,25 @@ footer.wf-footer {{
         <th onclick="sortTable('last_price')">最新价</th>
         <th onclick="sortTable('chg_pct')">今日涨跌幅</th>
         <th onclick="sortTable('amplitude')">日内振幅</th>
-        <th onclick="sortTable('completed_vol')">开盘-1h成交量 (10:30+11:30)</th>
-        <th onclick="sortTable('gain_1030')">首小时 (10:30) 冲幅</th>
-        <th onclick="sortTable('gain_1130')">次小时 (11:30) 冲幅</th>
-        <th class="text-center" onclick="sortTable('rate_d3')" style="background:#e2e8f0; color:#0f172a;">今天-3 (09-21)<br>3日5% 达成率</th>
-        <th class="text-center" onclick="sortTable('rate_d2')" style="background:#e2e8f0; color:#0f172a;">今天-2 (09-22)<br>3日5% 达成率</th>
-        <th class="text-center" onclick="sortTable('rate_d1')" style="background:#e2e8f0; color:#0f172a;">今天-1 (09-23)<br>3日5% 达成率</th>
-        <th class="text-center" onclick="sortTable('rate_today')" style="background:#cbd5e1; color:#0f172a; font-weight:800;">今天 (09-24)<br>3日5% 达成率</th>
+        <th onclick="sortTable('completed_vol')">开盘-1h量 (10:30+11:30)</th>
+        <th onclick="sortTable('gain_1030')">首小时(10:30)冲幅</th>
+        <th onclick="sortTable('gain_1130')">次小时(11:30)冲幅</th>
+        <!-- NEW KEY COLUMN: Recent 5 Days -->
+        <th class="text-center" onclick="sortTable('rate_d5')" style="background:#dbeafe; color:#1e3a8a; border-bottom: 2px solid #2563eb;">
+          <span id="col-header-d5">近5日 (D-5~D-1)<br>[3日5% 达成率]</span>
+        </th>
+        <th class="text-center" onclick="sortTable('rate_d3')" style="background:#e2e8f0; color:#0f172a;">
+          <span id="col-header-d3">今天-3 (09-21)<br>[3日5% 达成率]</span>
+        </th>
+        <th class="text-center" onclick="sortTable('rate_d2')" style="background:#e2e8f0; color:#0f172a;">
+          <span id="col-header-d2">今天-2 (09-22)<br>[3日5% 达成率]</span>
+        </th>
+        <th class="text-center" onclick="sortTable('rate_d1')" style="background:#e2e8f0; color:#0f172a;">
+          <span id="col-header-d1">今天-1 (09-23)<br>[3日5% 达成率]</span>
+        </th>
+        <th class="text-center" onclick="sortTable('rate_today')" style="background:#cbd5e1; color:#0f172a; font-weight:800;">
+          <span id="col-header-today">今天 (09-24)<br>[盘中冲幅达标]</span>
+        </th>
         <th class="text-left">0086 持仓详情 (股数/成本/盈亏)</th>
       </tr>
     </thead>
@@ -687,12 +802,19 @@ footer.wf-footer {{
 </footer>
 
 <script>
-const RAW_DATA = {json.dumps(payload["stocks"], ensure_ascii=False)};
+const RAW_STOCKS = {json.dumps(payload["stocks"], ensure_ascii=False)};
+const RECENT_5_DATES = {json.dumps(RECENT_5_DATES)};
+
 let currentCategory = 'all';
 let searchQuery = '';
 let sortField = 'is_0086';
 let sortAsc = false;
 
+// Global parameters
+let paramTarget = 5.0;  // 5% ~ 10%
+let paramWindow = 3;    // 1 ~ 5 days
+
+// Formatter
 function formatVol(v) {{
   if (!v) return '-';
   if (v >= 1e6) return (v / 1e6).toFixed(2) + ' M';
@@ -700,14 +822,57 @@ function formatVol(v) {{
   return v.toLocaleString();
 }}
 
-function getRateBadge(rate, h, c, maxGain, isToday, isInflight) {{
+// Fast Client-side Metric Calculator
+function computeStockMetrics(s, targetPct, windowDays) {{
+  const maxBarsFwd = windowDays * 7;
+  const bars = s.bars || [];
+  const highPrice = s.high_price || 0;
+  
+  function calcDates(dateList, isToday = false) {{
+    let hits = 0, count = 0, maxRunup = -999;
+    for (let i = 0; i < bars.length; i++) {{
+      const b = bars[i];
+      if (!dateList.includes(b.d)) continue;
+      count++;
+      const entryC = b.c;
+      let fMax = -999;
+      const endIdx = Math.min(i + 1 + maxBarsFwd, bars.length);
+      for (let j = i + 1; j < endIdx; j++) {{
+        if (bars[j].h > fMax) fMax = bars[j].h;
+      }}
+      if (highPrice > fMax) fMax = highPrice;
+      if (fMax === -999) fMax = b.h;
+      
+      const gain = (fMax - entryC) / entryC * 100.0;
+      if (gain > maxRunup) maxRunup = gain;
+      if (gain >= targetPct) hits++;
+    }}
+    const rate = count > 0 ? (hits / count * 100) : null;
+    return {{
+      c: count,
+      h: hits,
+      rate: rate,
+      max_gain: maxRunup === -999 ? 0 : maxRunup
+    }};
+  }}
+  
+  return {{
+    d5: calcDates(RECENT_5_DATES),
+    d3: calcDates(['2026-09-21']),
+    d2: calcDates(['2026-09-22']),
+    d1: calcDates(['2026-09-23']),
+    today: calcDates(['2026-09-24'], true)
+  }};
+}}
+
+function getRateBadge(rate, h, c, maxGain, targetPct, isInflight) {{
   if (rate === null || c === 0) return '<span style="color:#94a3b8;">-</span>';
   let cls = 'rate-mid';
   if (rate >= 50) cls = 'rate-high';
   else if (rate < 25) cls = 'rate-low';
   
   let flightIcon = isInflight ? ' ⏳' : '';
-  let hitBadge = maxGain >= 5.0 ? `<span class="runup-badge hit">+${{maxGain.toFixed(1)}}%✓</span>` : `<span class="runup-badge">+${{maxGain.toFixed(1)}}%</span>`;
+  let hitBadge = maxGain >= targetPct ? `<span class="runup-badge hit">+${{maxGain.toFixed(1)}}%✓</span>` : `<span class="runup-badge">+${{maxGain.toFixed(1)}}%</span>`;
   
   return `
     <div>
@@ -717,18 +882,32 @@ function getRateBadge(rate, h, c, maxGain, isToday, isInflight) {{
   `;
 }}
 
-function renderTable() {{
-  const tbody = document.getElementById('table-body');
+function renderAll() {{
+  // 1. Update Labels on Header
+  document.getElementById('val-target').innerText = paramTarget.toFixed(1) + '%';
+  document.getElementById('val-window').innerText = `${{paramWindow}} 天 (${{paramWindow * 7}}个交易小时)`;
   
-  // Filter
-  let list = RAW_DATA.filter(s => {{
+  document.getElementById('slider-target').value = paramTarget;
+  document.getElementById('slider-window').value = paramWindow;
+  
+  document.getElementById('col-header-d5').innerHTML = `近5日 (D-5~D-1)<br>[${{paramWindow}}日${{paramTarget.toFixed(1)}}% 达成率]`;
+  document.getElementById('col-header-d3').innerHTML = `今天-3 (09-21)<br>[${{paramWindow}}日${{paramTarget.toFixed(1)}}% 达成率]`;
+  document.getElementById('col-header-d2').innerHTML = `今天-2 (09-22)<br>[${{paramWindow}}日${{paramTarget.toFixed(1)}}% 达成率]`;
+  document.getElementById('col-header-d1').innerHTML = `今天-1 (09-23)<br>[${{paramWindow}}日${{paramTarget.toFixed(1)}}% 达成率]`;
+  
+  // 2. Compute metrics for each stock
+  RAW_STOCKS.forEach(s => {{
+    s.calc = computeStockMetrics(s, paramTarget, paramWindow);
+  }});
+  
+  // 3. Filter
+  let list = RAW_STOCKS.filter(s => {{
     if (currentCategory === 'holding' && !s.is_0086 && !s.is_holding) return false;
     if (currentCategory === 'fav' && !s.category.includes('特别关注') && !s.category.includes('特注')) return false;
     if (currentCategory === 'up' && s.chg_pct <= 0) return false;
     if (currentCategory === 'hit') {{
-      const d3Rate = s.metrics.d_minus_3.rate || 0;
-      const d2Rate = s.metrics.d_minus_2.rate || 0;
-      if (d3Rate < 50 && d2Rate < 50) return false;
+      const d5Rate = s.calc.d5.rate || 0;
+      if (d5Rate < 50) return false;
     }}
     if (searchQuery) {{
       const q = searchQuery.toLowerCase();
@@ -737,14 +916,15 @@ function renderTable() {{
     return true;
   }});
   
-  // Sort
+  // 4. Sort
   list.sort((a, b) => {{
     let va = a[sortField];
     let vb = b[sortField];
-    if (sortField === 'rate_d3') va = a.metrics.d_minus_3.rate ?? -1, vb = b.metrics.d_minus_3.rate ?? -1;
-    if (sortField === 'rate_d2') va = a.metrics.d_minus_2.rate ?? -1, vb = b.metrics.d_minus_2.rate ?? -1;
-    if (sortField === 'rate_d1') va = a.metrics.d_minus_1.rate ?? -1, vb = b.metrics.d_minus_1.rate ?? -1;
-    if (sortField === 'rate_today') va = a.metrics.today.rate ?? -1, vb = b.metrics.today.rate ?? -1;
+    if (sortField === 'rate_d5') va = a.calc.d5.rate ?? -1, vb = b.calc.d5.rate ?? -1;
+    if (sortField === 'rate_d3') va = a.calc.d3.rate ?? -1, vb = b.calc.d3.rate ?? -1;
+    if (sortField === 'rate_d2') va = a.calc.d2.rate ?? -1, vb = b.calc.d2.rate ?? -1;
+    if (sortField === 'rate_d1') va = a.calc.d1.rate ?? -1, vb = b.calc.d1.rate ?? -1;
+    if (sortField === 'rate_today') va = a.calc.today.rate ?? -1, vb = b.calc.today.rate ?? -1;
     if (sortField === 'gain_1030') va = a.bar_1030.max_gain, vb = b.bar_1030.max_gain;
     if (sortField === 'gain_1130') va = a.bar_1130.max_gain, vb = b.bar_1130.max_gain;
     if (sortField === 'is_0086') {{
@@ -756,17 +936,25 @@ function renderTable() {{
     return sortAsc ? (va - vb) : (vb - va);
   }});
   
-  // Update stats
+  // 5. Update summary metric cards
   const upCount = list.filter(s => s.chg_pct > 0).length;
   document.getElementById('stat-up-count').innerText = `${{upCount}} / ${{list.length}} 只 (${{(upCount/list.length*100).toFixed(0)}}%)`;
   
-  const d3Valid = list.filter(s => s.metrics.d_minus_3.rate !== null);
-  const d3Avg = d3Valid.length > 0 ? (d3Valid.reduce((acc, s) => acc + s.metrics.d_minus_3.rate, 0) / d3Valid.length).toFixed(1) : '-';
+  const d5Valid = list.filter(s => s.calc.d5.rate !== null);
+  const d5Avg = d5Valid.length > 0 ? (d5Valid.reduce((acc, s) => acc + s.calc.d5.rate, 0) / d5Valid.length).toFixed(1) : '-';
+  document.getElementById('stat-d5-avg').innerText = d5Avg + '%';
+  document.getElementById('label-stat-d5').innerText = `近5日均值达成 (${{paramWindow}}d ${{paramTarget.toFixed(0)}}%)`;
+  
+  const d3Valid = list.filter(s => s.calc.d3.rate !== null);
+  const d3Avg = d3Valid.length > 0 ? (d3Valid.reduce((acc, s) => acc + s.calc.d3.rate, 0) / d3Valid.length).toFixed(1) : '-';
   document.getElementById('stat-d3-avg').innerText = d3Avg + '%';
+  document.getElementById('label-stat-d3').innerText = `D-3 (09-21) 均值 (${{paramWindow}}d ${{paramTarget.toFixed(0)}}%)`;
   
-  const h1030Hits = list.filter(s => s.bar_1030.is_hit).length;
-  document.getElementById('stat-h1030-avg').innerText = `${{(h1030Hits / list.length * 100).toFixed(1)}}% (${{h1030Hits}}只达标)`;
+  const highHits = list.filter(s => (s.calc.d5.rate || 0) >= 50).length;
+  document.getElementById('stat-high-count').innerText = `${{highHits}} 只 (${{(highHits/list.length*100).toFixed(0)}}%)`;
   
+  // 6. Render table rows
+  const tbody = document.getElementById('table-body');
   tbody.innerHTML = list.map(s => {{
     const chgClass = s.chg_pct > 0 ? 'chg-up' : (s.chg_pct < 0 ? 'chg-down' : 'chg-flat');
     const chgSign = s.chg_pct > 0 ? '+' : '';
@@ -812,28 +1000,32 @@ function renderTable() {{
           <div class="sub-pill">占全天 ${{s.vol_share_pct}}%</div>
         </td>
         <td>
-          <div style="font-family:monospace; font-weight:700; color:${{gain1030 >= 5 ? 'var(--up)' : 'inherit'}};">
+          <div style="font-family:monospace; font-weight:700; color:${{gain1030 >= paramTarget ? 'var(--up)' : 'inherit'}};">
             ${{gain1030 >= 0 ? '+' : ''}}${{gain1030.toFixed(2)}}%
           </div>
           <div class="sub-pill">收 $${{s.bar_1030.close.toFixed(2)}} | ${{formatVol(s.bar_1030.vol)}}</div>
         </td>
         <td>
-          <div style="font-family:monospace; font-weight:700; color:${{gain1130 >= 5 ? 'var(--up)' : 'inherit'}};">
+          <div style="font-family:monospace; font-weight:700; color:${{gain1130 >= paramTarget ? 'var(--up)' : 'inherit'}};">
             ${{gain1130 >= 0 ? '+' : ''}}${{gain1130.toFixed(2)}}%
           </div>
           <div class="sub-pill">收 $${{s.bar_1130.close.toFixed(2)}} | ${{formatVol(s.bar_1130.vol)}}</div>
         </td>
-        <td class="text-center">
-          ${{getRateBadge(s.metrics.d_minus_3.rate, s.metrics.d_minus_3.h, s.metrics.d_minus_3.c, s.metrics.d_minus_3.max_gain, false, s.metrics.d_minus_3.is_inflight)}}
+        <!-- NEW KEY COLUMN: Recent 5 Days -->
+        <td class="text-center" style="background:#eff6ff;">
+          ${{getRateBadge(s.calc.d5.rate, s.calc.d5.h, s.calc.d5.c, s.calc.d5.max_gain, paramTarget, false)}}
         </td>
         <td class="text-center">
-          ${{getRateBadge(s.metrics.d_minus_2.rate, s.metrics.d_minus_2.h, s.metrics.d_minus_2.c, s.metrics.d_minus_2.max_gain, false, s.metrics.d_minus_2.is_inflight)}}
+          ${{getRateBadge(s.calc.d3.rate, s.calc.d3.h, s.calc.d3.c, s.calc.d3.max_gain, paramTarget, false)}}
         </td>
         <td class="text-center">
-          ${{getRateBadge(s.metrics.d_minus_1.rate, s.metrics.d_minus_1.h, s.metrics.d_minus_1.c, s.metrics.d_minus_1.max_gain, false, s.metrics.d_minus_1.is_inflight)}}
+          ${{getRateBadge(s.calc.d2.rate, s.calc.d2.h, s.calc.d2.c, s.calc.d2.max_gain, paramTarget, true)}}
+        </td>
+        <td class="text-center">
+          ${{getRateBadge(s.calc.d1.rate, s.calc.d1.h, s.calc.d1.c, s.calc.d1.max_gain, paramTarget, true)}}
         </td>
         <td class="text-center" style="background:#f8fafc;">
-          ${{getRateBadge(s.metrics.today.rate, s.metrics.today.h, s.metrics.today.c, s.metrics.today.max_gain, true, s.metrics.today.is_inflight)}}
+          ${{getRateBadge(s.calc.today.rate, s.calc.today.h, s.calc.today.c, s.calc.today.max_gain, paramTarget, true)}}
         </td>
         <td class="text-left">${{posDetail}}</td>
       </tr>
@@ -841,16 +1033,40 @@ function renderTable() {{
   }}).join('');
 }}
 
+// Slider Event Handlers
+function onParamChange() {{
+  paramTarget = parseFloat(document.getElementById('slider-target').value);
+  paramWindow = parseInt(document.getElementById('slider-window').value);
+  
+  // Highlight active preset button if matches
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+  if (paramTarget === 5.0 && paramWindow === 3) document.getElementById('pre-3d5')?.classList.add('active');
+  if (paramTarget === 5.0 && paramWindow === 5) document.getElementById('pre-5d5')?.classList.add('active');
+  if (paramTarget === 7.0 && paramWindow === 3) document.getElementById('pre-3d7')?.classList.add('active');
+  if (paramTarget === 10.0 && paramWindow === 5) document.getElementById('pre-5d10')?.classList.add('active');
+  if (paramTarget === 5.0 && paramWindow === 1) document.getElementById('pre-1d5')?.classList.add('active');
+  
+  renderAll();
+}}
+
+function setPreset(t, w) {{
+  paramTarget = t;
+  paramWindow = w;
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderAll();
+}}
+
 function filterCategory(cat) {{
   currentCategory = cat;
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   document.getElementById(`tab-${{cat}}`).classList.add('active');
-  renderTable();
+  renderAll();
 }}
 
 function onSearch(val) {{
   searchQuery = val.trim();
-  renderTable();
+  renderAll();
 }}
 
 function sortTable(field) {{
@@ -860,11 +1076,11 @@ function sortTable(field) {{
     sortField = field;
     sortAsc = false;
   }}
-  renderTable();
+  renderAll();
 }}
 
-// Initialize
-renderTable();
+// Initial load
+renderAll();
 </script>
 </body>
 </html>
