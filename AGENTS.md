@@ -6,10 +6,10 @@
 
 开盘后预测“从延迟后可成交价出发，未来 3 个交易日内触及 +5%”的工程位于
 [`research/after_open_3d5pct/`](research/after_open_3d5pct/README.md)。参与该工程前必须阅读其
-[`AGENTS.md`](research/after_open_3d5pct/AGENTS.md) 及 README 列出的全部五份契约文档。
+[`AGENTS.md`](research/after_open_3d5pct/AGENTS.md) 及 README 列出的全部必读文档（01–08，含行情双路线训练方案与首轮训练记录）。
 
 **“重大核心量化实证结论”中的首小时/累计达成率，是等待未来标签成熟后计算的历史结果。当天同一时刻无法知道，不能直接作为实时特征、交易门禁或置信度乘数。**
-本次仅建立工程基础；新模型尚未完成真实训练或独立验证。新工程规则不改变旧研究的原始结果。
+本工程已完成首轮真实行情探索训练，尚未完成独立验证；结果见 [`08 · 首轮训练启动登记`](research/after_open_3d5pct/docs/08_training_launch.md)。新工程规则不改变旧研究的原始结果。
 
 ---
 
