@@ -1,0 +1,34 @@
+{
+  "protocol": "strategy_group_lab_v1",
+  "group_source": "research/group_expectation_matrix/outputs/20260925_v5",
+  "calendar": "market_data/calendars/nasdaq_sessions_2026_v1.json",
+  "bars_dir": "market_data/us_5m",
+  "actions_dir": "market_data/corporate_actions",
+  "start_date": "2026-01-02",
+  "source_end": "2026-09-24",
+  "as_of": "2026-09-24T20:00:01+00:00",
+  "cutoff_et": "11:30",
+  "history_sessions": 20,
+  "expectations": [
+    {"id":"d3_r5","name":"3 日 +5%","days":3,"target":0.05},
+    {"id":"d5_r8","name":"5 日 +8%","days":5,"target":0.08},
+    {"id":"d21_r10","name":"21 日 +10%","days":21,"target":0.10}
+  ],
+  "algorithms": ["lgbm","tcn"],
+  "granularities": [5,60],
+  "folds": [
+    {"id":"july","fit_before":"2026-05-01","outer_start":"2026-07-01","outer_end":"2026-07-31"},
+    {"id":"august","fit_before":"2026-06-01","outer_start":"2026-08-03","outer_end":"2026-08-25"}
+  ],
+  "minimum_train_rows":120,
+  "minimum_train_dates":15,
+  "minimum_train_symbols":2,
+  "minimum_train_class":10,
+  "threshold":0.5,
+  "lgbm":{"n_estimators":100,"learning_rate":0.04,"num_leaves":7,"max_depth":3,"min_child_samples":30,"reg_lambda":5.0,"verbosity":-1,"n_jobs":1},
+  "tcn":{"channels":8,"epochs":5,"batch_size":256,"learning_rate":0.001,"weight_decay":0.001},
+  "portfolio":{"initial_cash":100000,"max_positions":10,"max_weight":0.1,"top_k":3,"cost_bps":6},
+  "router":{"lookback_sessions":60,"minimum_candidates":20,"minimum_dates":10,"top_combinations":3},
+  "bootstrap_replicates":400,
+  "seed":260926
+}
