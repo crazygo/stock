@@ -1,0 +1,16 @@
+{
+  "failed_semantic_fits": [
+    {
+      "run": "runs/v7_b_group_R1",
+      "reason": "First 09:30 5m cross-bar return included a pre-window price gap in a feature described as regular-session curve",
+      "resolution": "Fixed first-bar boundary and refit as runs/v7_b_group_R1_fixed",
+      "outer_scored": false
+    },
+    {
+      "run": "runs/v7_b_group_R2",
+      "reason": "Own return used premarket plus regular prefix while peer and QQQ cutoff return used 09:30-11:30 only",
+      "resolution": "Aligned own return to the same 24 regular 5m bars and refit as runs/v7_b_group_R2_fixed",
+      "outer_scored": false
+    }
+  ]
+}

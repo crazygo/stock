@@ -1,0 +1,227 @@
+{
+  "scope": "frozen_v61_diagnostic_not_independent_validation",
+  "source_manifest": {
+    "protocol": "multiscale_groups_multitarget_v6.1_development",
+    "builder_sha256": "c50fee6d0a0a4a3b4ff9103d415e4d1022646ba0425f6833b1cf63bb624b60c7",
+    "availability_quality": "assumed_archived_end_plus_1s_no_received_at",
+    "universe_quality": "current_snapshot_retrospective",
+    "group_quality": "causal_weekly_reconstruction_on_current_universe_not_original_PIT",
+    "industry_branch": "excluded_current_snapshot_retrospective",
+    "counts": {
+      "candidate_symbol_dates": 9696,
+      "complete_rows": 9222,
+      "split_in_lookback": 396,
+      "unmature_or_incomplete_5day_label": 21,
+      "missing_or_late_prefix": 57
+    },
+    "rows": 9222,
+    "feature_columns": [
+      "bar_return",
+      "high_from_open",
+      "low_from_open",
+      "cross_bar_return",
+      "log_dollar",
+      "relative_dollar",
+      "duration_fraction",
+      "session_code",
+      "et_position",
+      "gap_log_hours",
+      "valid",
+      "relative_dollar_valid",
+      "log_price",
+      "log_share_volume"
+    ],
+    "groups": [
+      "trend_15",
+      "trend_63",
+      "trend_126",
+      "volatility",
+      "liquidity"
+    ],
+    "input_shapes": {
+      "x5": [
+        8,
+        192,
+        14
+      ],
+      "x60": [
+        31,
+        17,
+        14
+      ],
+      "xday": [
+        126,
+        14
+      ],
+      "group_seq": [
+        6,
+        6,
+        10
+      ]
+    }
+  },
+  "splits": {
+    "train": {
+      "rows": 5606,
+      "dates": 58,
+      "symbols": 99,
+      "start": "2026-05-01",
+      "end": "2026-07-24",
+      "daily_coverage": {
+        "complete_126": 1316,
+        "fraction": 0.23474848376739207,
+        "min_days": 0,
+        "median_days": 110.0,
+        "max_days": 126
+      },
+      "group_count_mean": 4.1336068498037815,
+      "no_valid_group": 34,
+      "labels": {
+        "1d_3pct": {
+          "hits": 1394,
+          "rate": 0.24866214394569397
+        },
+        "1d_5pct": {
+          "hits": 600,
+          "rate": 0.10702818632125854
+        },
+        "1d_8pct": {
+          "hits": 234,
+          "rate": 0.04174099117517471
+        },
+        "3d_3pct": {
+          "hits": 2600,
+          "rate": 0.46378880739212036
+        },
+        "3d_5pct": {
+          "hits": 1566,
+          "rate": 0.2793435752391815
+        },
+        "3d_8pct": {
+          "hits": 797,
+          "rate": 0.14216910302639008
+        },
+        "5d_3pct": {
+          "hits": 3192,
+          "rate": 0.5693899393081665
+        },
+        "5d_5pct": {
+          "hits": 2133,
+          "rate": 0.3804852068424225
+        },
+        "5d_8pct": {
+          "hits": 1222,
+          "rate": 0.21798072755336761
+        }
+      }
+    },
+    "inner": {
+      "rows": 1521,
+      "dates": 16,
+      "symbols": 96,
+      "start": "2026-08-03",
+      "end": "2026-08-24",
+      "daily_coverage": {
+        "complete_126": 1489,
+        "fraction": 0.9789612097304405,
+        "min_days": 32,
+        "median_days": 126.0,
+        "max_days": 126
+      },
+      "group_count_mean": 4.954635108481263,
+      "no_valid_group": 0,
+      "labels": {
+        "1d_3pct": {
+          "hits": 329,
+          "rate": 0.21630506217479706
+        },
+        "1d_5pct": {
+          "hits": 142,
+          "rate": 0.09335963428020477
+        },
+        "1d_8pct": {
+          "hits": 59,
+          "rate": 0.0387902706861496
+        },
+        "3d_3pct": {
+          "hits": 650,
+          "rate": 0.4273504316806793
+        },
+        "3d_5pct": {
+          "hits": 347,
+          "rate": 0.22813938558101654
+        },
+        "3d_8pct": {
+          "hits": 157,
+          "rate": 0.10322156548500061
+        },
+        "5d_3pct": {
+          "hits": 806,
+          "rate": 0.5299145579338074
+        },
+        "5d_5pct": {
+          "hits": 501,
+          "rate": 0.3293885588645935
+        },
+        "5d_8pct": {
+          "hits": 257,
+          "rate": 0.16896778345108032
+        }
+      }
+    },
+    "outer": {
+      "rows": 1140,
+      "dates": 12,
+      "symbols": 95,
+      "start": "2026-09-01",
+      "end": "2026-09-17",
+      "daily_coverage": {
+        "complete_126": 1116,
+        "fraction": 0.9789473684210527,
+        "min_days": 53,
+        "median_days": 126.0,
+        "max_days": 126
+      },
+      "group_count_mean": 4.96140350877193,
+      "no_valid_group": 0,
+      "labels": {
+        "1d_3pct": {
+          "hits": 185,
+          "rate": 0.16228070855140686
+        },
+        "1d_5pct": {
+          "hits": 71,
+          "rate": 0.06228070333600044
+        },
+        "1d_8pct": {
+          "hits": 17,
+          "rate": 0.01491228025406599
+        },
+        "3d_3pct": {
+          "hits": 413,
+          "rate": 0.3622806966304779
+        },
+        "3d_5pct": {
+          "hits": 239,
+          "rate": 0.20964911580085754
+        },
+        "3d_8pct": {
+          "hits": 123,
+          "rate": 0.10789473354816437
+        },
+        "5d_3pct": {
+          "hits": 518,
+          "rate": 0.4543859660625458
+        },
+        "5d_5pct": {
+          "hits": 343,
+          "rate": 0.300877183675766
+        },
+        "5d_8pct": {
+          "hits": 203,
+          "rate": 0.17807017266750336
+        }
+      }
+    }
+  }
+}

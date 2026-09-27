@@ -1,5 +1,7 @@
 # 开盘后 3 日 +5%：训练工程
 
+2026-09-27 已完成用户授权的 [v7 五路线、各三轮真实迭代](iterations_v7/REPORT.md)，承接 [v6.1.1 多尺度与动态群组证据](docs/27_multiscale_groups_v611_typefix_evidence.md)。此处 B 表示 LightGBM、C 表示轻量序列模型，与旧方案的 H/A/B 输入模块分别命名。五路线为 B有群、B无群、C有群、C无群、C无日级；保持九目标和相同样本，分别诊断瓶颈、登记修改、真实拟合和比较。C无群与C无日级修复了原训练缺陷，但增加曲线特征、群差分或任务权重没有持续改善；全部版本和负结果均保留。所有2026日期仍是已暴露开发数据。完整边界见 [协议](iterations_v7/PROTOCOL.md)及[诊断说明](iterations_v7/SHAPE_AND_DATA_NOTES.md)。
+
 状态：**基础工程及每小时一次运行研究系统已交付；v5 因果质量股票池的有限真实训练和评价已完成，但没有通过概率改善或行动证据开发目标，更无独立验证通过的高置信模型。** 旧训练登记见 [08](docs/08_training_launch.md)，每小时版本的真实结果和效果边界见 [16](docs/16_hourly_v3_delivery_evidence.md)；v5 的冻结口径与负结果见 [19](docs/19_quality_training_v5_registration.md)、[20](docs/20_quality_training_v5_evidence.md)。
 
 已继续执行独立 v5.1 校准策略迭代：[21 · 预登记](docs/21_quality_calibration_v51_registration.md)、[22 · 实测与复现](docs/22_quality_calibration_v51_evidence.md)。只在内层选择原始输出或 sigmoid，复用 23 个基础模型；August 内层改善成立，但外层改善较小且区间跨零，September 保持原模型。仍无行动达标模型，不能把内层选后改善称为独立验证。
