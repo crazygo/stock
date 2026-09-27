@@ -23,6 +23,7 @@ from research.after_open_3d5pct.v6_data import digest
 from .core import (HERE, PROTOCOL, GROUPS, TARGETS, FocusC, focus_weights, historical_baseline,
                    mature_prior, metrics, path_summary, score, splits)
 from .prepare import write
+from .support import build_c
 
 MECHANISMS = {
     "balance": "三组等权训练质量占75%，全池保留25%迁移样本",
@@ -35,6 +36,7 @@ MECHANISMS = {
     "regularization": "更强权重惩罚与dropout/最小叶子样本，限制小样本过拟合",
     "specialize": "仅在三组股票并集拟合，沿用全池构建的允许输入",
     "bagging": "训练日期的固定随机权重扰动，检验对单个市场日期依赖",
+    "support": "仅C路线：屏蔽fit中从未出现的日线位置及不足10个fit日期出现的群类型",
 }
 
 
@@ -55,15 +57,23 @@ def load_data(root):
     cache_id = {"dataset": identity, "transform": digest(HERE/"core.py")}
     cache_meta = root/"path_summary_identity.json"
     if cache.exists() and cache_meta.exists():
-        if json.loads(cache_meta.read_text()) != cache_id:
+        stored = json.loads(cache_meta.read_text())
+        stored_hash = stored.pop("cache_sha256", None)
+        if stored != cache_id:
             raise ValueError("path summary cache identity mismatch")
         paths = np.load(cache)
+        if stored_hash is not None and digest(cache) != stored_hash:
+            raise ValueError("path summary cache contents changed")
+        if stored_hash is None:
+            if not np.array_equal(paths, path_summary(data)):
+                raise ValueError("legacy path cache contents changed")
+            write(cache_meta, {**cache_id, "cache_sha256": digest(cache)})
     else:
         paths = path_summary(data)
         if cache.exists() and not np.array_equal(np.load(cache), paths):
             raise ValueError("legacy cache differs from reproducible transform")
         np.save(cache, paths)
-        write(cache_meta, cache_id)
+        write(cache_meta, {**cache_id, "cache_sha256": digest(cache)})
     xbase = tabular(data, group=True).to_numpy(np.float32)
     curve = curve_features(data).to_numpy(np.float32)
     relative = group_relative_features(data).to_numpy(np.float32)
@@ -104,8 +114,10 @@ def training_weights(rows, ids, recipe, seed):
 def fit_c(route, recipe, rows, y, arrays, fold, output, seed):
     torch.set_num_threads(1)
     torch.manual_seed(seed)
-    model = FocusC(route, recipe)
+    model = build_c(route, recipe)
     weights = training_weights(rows, fold["fit"], recipe, seed)
+    if recipe.get("support"):
+        model.fit_support(arrays, rows, fold["fit"][weights > 0])
     weight = torch.zeros(len(rows))
     weight[fold["fit"]] = torch.tensor(weights, dtype=torch.float32)
     target = torch.from_numpy(y)
@@ -140,12 +152,16 @@ def fit_c(route, recipe, rows, y, arrays, fold, output, seed):
     model.load_state_dict(state)
     torch.save({"route": route, "recipe": recipe, "state_dict": state, "seed": seed}, output / "model.pt")
     raw = {split: predict_c(model, arrays, ids) for split, ids in fold.items()}
-    replay = FocusC(route, recipe)
+    replay = build_c(route, recipe)
     replay.load_state_dict(torch.load(output / "model.pt", weights_only=True)["state_dict"])
     error = float(np.max(abs(predict_c(replay, arrays, fold["eval"])-raw["eval"])))
     if error > 1e-7:
         raise AssertionError("checkpoint replay mismatch")
-    return raw, {"parameters": sum(p.numel() for p in model.parameters()), "best_epoch": best_epoch, "trace": trace, "replay_max_error": error}
+    info = {"parameters": sum(p.numel() for p in model.parameters()), "best_epoch": best_epoch, "trace": trace, "replay_max_error": error}
+    if recipe.get("support"):
+        info["day_support"] = model.day_support.tolist() if model.daily else None
+        info["group_support"] = model.group_support.tolist() if model.group else None
+    return raw, info
 
 
 def fit_b(route, recipe, rows, y, prior, xbase, paths, curve, relative, fold, output, seed):
@@ -271,6 +287,7 @@ def pugh(incumbent, remaining, prior_results):
         "capacity": [0, 1, 0, -1, -1], "curves": [0, 1, 1, 0, 0],
         "calibration": [1, 0, 1, -1, 1], "regularization": [0, 0, 1, 1, 1],
         "specialize": [1, 1, 0, -1, 1], "bagging": [0, 0, 1, 1, 0],
+        "support": [1, 0, 1, 1, 1],
     }
     if gap < .05:
         for name in ("balance", "prior", "recency", "calibration", "specialize"):
@@ -306,7 +323,9 @@ def run_round(root, round_number):
         tested = prev["tested"] if prev else []
         if round_number:
             results = [json.loads((Path(p)/"result.json").read_text()) for p in prev["incumbent_paths"]]
-            matrix = pugh(recipe, [m for m in MECHANISMS if m not in tested], results)
+            remaining = [m for m in MECHANISMS if m not in tested and
+                         (m != "support" or (round_number == 10 and route.startswith("C")))]
+            matrix = pugh(recipe, remaining, results)
             recipe[matrix["chosen"]] = True
             tested = tested+[matrix["chosen"]]
         else:

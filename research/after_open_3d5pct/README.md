@@ -62,6 +62,8 @@ research/after_open_3d5pct/.venv/bin/python -m research.after_open_3d5pct.train_
 
 ## 合成脚手架仍能运行什么
 
+三组定向研究已经完成五路线各10轮迭代，主目标为3日内触及+5%，保留另外八个期限/涨幅目标。见 [v8结果与瓶颈](focus_v8/REPORT.md)、[Pugh矩阵](focus_v8/PUGH.md)、[分组与个股概率表](focus_v8/PROBABILITIES.md)。这是已暴露历史的开发期评价，五条路线均未达到预登记准出标准。
+
 从仓库根目录运行；脚手架只需要 Python 3.11+ 标准库，不联网，不访问 OpenD、不读取账户：
 
 ```bash

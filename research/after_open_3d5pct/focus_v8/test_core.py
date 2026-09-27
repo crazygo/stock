@@ -1,10 +1,14 @@
 import unittest
+import json
+import tempfile
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import torch
 
 from .core import FocusC, mature_prior, splits, within_auc, path_summary, focus_weights
+from .support import build_c
 
 
 class CausalityTests(unittest.TestCase):
@@ -77,6 +81,61 @@ class CausalityTests(unittest.TestCase):
         z = path_summary(data)
         self.assertAlmostEqual(z[0, 0], np.log(1.21), places=5)
         self.assertEqual(z[0, 2], 0)
+
+    def test_training_support_is_frozen_and_checkpointed(self):
+        torch.set_num_threads(1)
+        a = torch.zeros(12, 8, 192, 14)
+        b = torch.zeros(12, 31, 17, 14)
+        d = torch.zeros(12, 126, 14)
+        g = torch.zeros(12, 6, 6, 10)
+        a[..., 10] = 1; b[..., 10] = 1
+        d[:, 60:, 10] = 1; g[:, :, [0, 3, 4, 5], 9] = 1
+        p = torch.full((12, 9), .5)
+        rows = pd.DataFrame({"session_date": pd.date_range("2026-03-01", periods=12).strftime("%Y-%m-%d")})
+        for route in ("C_group", "C_no_group", "C_no_daily"):
+            recipe = {"support": True, "representation": True}
+            model = build_c(route, recipe).eval()
+            model.fit_support((a,b,d,g,p), rows, np.arange(10))
+            changed_d, changed_g = d.clone(), g.clone()
+            changed_d[:, :60] = float("nan")
+            changed_g[:, :, 1:3] = float("nan")
+            with torch.no_grad():
+                original = model(a,b,d,g,p)
+                revised = model(a,b,changed_d,changed_g,p)
+            torch.testing.assert_close(original, revised)
+            replay = build_c(route, recipe).eval()
+            replay.load_state_dict(model.state_dict())
+            with torch.no_grad():
+                torch.testing.assert_close(replay(a,b,changed_d,changed_g,p), original)
+
+    def test_reject_changed_dataset_before_reading_rows(self):
+        from .run import load_data
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); (root/"dataset").mkdir()
+            for name in ("features.npz", "rows.parquet", "manifest.json"):
+                (root/"dataset"/name).write_bytes(b"changed")
+            (root/"dataset_identity.json").write_text('{}')
+            with self.assertRaisesRegex(ValueError, "dataset contents changed"):
+                load_data(root)
+
+    def test_reject_cache_content_change(self):
+        from .run import load_data, digest, HERE
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); ds = root/"dataset"; ds.mkdir()
+            rows = pd.DataFrame({"symbol": ["A"], "decision_at": ["2026-03-01T15:30Z"],
+                                 "label_end_at": ["2026-03-06T15:30Z"], "label_available_at": ["2026-03-06T15:30Z"]})
+            rows.to_parquet(ds/"rows.parquet")
+            np.savez(ds/"features.npz", x5=np.zeros((1,8,192,14),np.float32),
+                     x60=np.zeros((1,31,17,14),np.float32), xday=np.zeros((1,126,14),np.float32),
+                     group_seq=np.zeros((1,6,6,10),np.float32), y=np.zeros((1,3,3),np.float32))
+            (ds/"manifest.json").write_text('{}')
+            identity = {n: digest(ds/n) for n in ("features.npz", "rows.parquet", "manifest.json")}
+            np.save(root/"path_summary.npy", np.zeros((1,84)))
+            meta = {"dataset": identity, "transform": digest(HERE/"core.py"), "cache_sha256": digest(root/"path_summary.npy")}
+            (root/"path_summary_identity.json").write_text(json.dumps(meta))
+            np.save(root/"path_summary.npy", np.ones((1,84)))
+            with self.assertRaisesRegex(ValueError, "cache contents changed"):
+                load_data(root)
 
 
 if __name__ == "__main__":
