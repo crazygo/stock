@@ -1,6 +1,12 @@
 # 开盘后 3 日 +5%：训练工程
 
-状态：**M0 基础工程已建立；已完成一轮真实行情的探索训练，尚无独立验证通过的预测模型。** 训练登记与结果见 [08 · 首轮训练启动登记](docs/08_training_launch.md)。
+状态：**基础工程及每小时一次运行研究系统已交付；v5 因果质量股票池的有限真实训练和评价已完成，但没有通过概率改善或行动证据开发目标，更无独立验证通过的高置信模型。** 旧训练登记见 [08](docs/08_training_launch.md)，每小时版本的真实结果和效果边界见 [16](docs/16_hourly_v3_delivery_evidence.md)；v5 的冻结口径与负结果见 [19](docs/19_quality_training_v5_registration.md)、[20](docs/20_quality_training_v5_evidence.md)。
+
+已继续执行独立 v5.1 校准策略迭代：[21 · 预登记](docs/21_quality_calibration_v51_registration.md)、[22 · 实测与复现](docs/22_quality_calibration_v51_evidence.md)。只在内层选择原始输出或 sigmoid，复用 23 个基础模型；August 内层改善成立，但外层改善较小且区间跨零，September 保持原模型。仍无行动达标模型，不能把内层选后改善称为独立验证。
+
+新增无中途止损的三日期末估值研究版本 `three_day_touch_terminal_valuation_v4`：目标仍是延迟入场后 1170 常规分钟内触及 +5%，未触及则用期末 Close 做可变现估值；成本与全体尾损另行评价，**不代表真实成交或三日强制卖出**。冻结候选、时间折和开发风险场景见 [17](docs/17_terminal_risk_v4_registration.md)，真实训练、负结果与只读预测命令见 [18](docs/18_terminal_risk_v4_evidence.md)。2026 外层已暴露、用户风险预算未定，当前没有正式行动模型。本版本不改研究看板。
+
+新增只读 [模型研究看板](dashboard/index.html) 与 `manual_three_cutoffs_v1` 模拟操作回放。产品/指标口径见 [09](docs/09_dashboard_product_metrics.md)，[产物与回放契约](docs/10_artifact_and_replay_contract.md)、[启动手册](docs/11_training_and_dashboard_runbook.md)、[未启动研究登记](docs/12_future_research_register.md) 分别说明可复现接口、运行方法及后续边界。首轮制品仍是开发期探索，页面不能作为交易建议。新阶段的每小时一次运行系统采用独立的 `hourly_once_v3` 协议；五个实施里程碑见 [13](docs/13_hourly_once_implementation.md)。
 
 核心问题：在预筛股票池中，用户开盘后实际会查看的时刻，从延迟后可成交价格出发，未来 3 个交易日内再上涨 5% 的概率是多少？用户手动决定是否下单，程序不自动交易。
 
@@ -21,8 +27,22 @@
 7. [06 · 数据采集可行性与交接单](docs/06_data_acquisition_feasibility.md)：有日期的现场证据、频率/完整性约束与本轮行情数据范围。
 8. [07 · 行情双路线训练方案](docs/07_model_training_plan.md)：H/A/B 定义、LightGBM/TCN 输入表示、4×2 对照与选择规则。
 9. [08 · 首轮训练启动登记](docs/08_training_launch.md)：本轮真实数据探索训练的固定配置、实际结果与局限。
+10. [09 · 看板产品与指标验收](docs/09_dashboard_product_metrics.md)：三个操作时点、各比例分母、下钻和页面验收。
+11. [10 · 产物与回放契约](docs/10_artifact_and_replay_contract.md)：ModelSpec/TrainingRun/PredictionSet/PolicyRun/Report、哈希和状态机。
+12. [11 · 训练与看板启动手册](docs/11_training_and_dashboard_runbook.md)：检查、配置、启动、日志、失败和复现。
+13. [12 · 后续研究登记](docs/12_future_research_register.md)：只登记，不自动训练。
+14. [13 · 每小时一次运行实施与验收](docs/13_hourly_once_implementation.md)：五个线性里程碑、新版本协议与发布门禁。
+15. [14 · 每小时训练前登记](docs/14_hourly_v3_training_registration.md)：新实验的有限候选、时间折、校准与阈值规则。
+16. [15 · 每小时一次运行手册](docs/15_hourly_once_runbook.md)：数据检查、训练、一次运行、看板和前向成熟评估。
+17. [16 · 每小时版本交付证据](docs/16_hourly_v3_delivery_evidence.md)：五项验收、真实开发期结果、独立效果门禁。
+18. [17 · 无止损三日期末收益与风险登记](docs/17_terminal_risk_v4_registration.md)：触及、期末估值、成本、完整窗口和嵌套选择。
+19. [18 · v4 实测与一次预测](docs/18_terminal_risk_v4_evidence.md)：完整窗口审计、真实开发期负结果和研究预测边界。
+20. [19 · 因果质量股票池拟合前登记](docs/19_quality_training_v5_registration.md)：63 日、严格 >60%、六时点成熟、有限候选及双重开发门槛。
+21. [20 · v5 真实训练和评价证据](docs/20_quality_training_v5_evidence.md)：23 个试验、逐日期/股票结果、失败门槛与复现命令。
+22. [21 · 质量池校准策略预登记](docs/21_quality_calibration_v51_registration.md)：仅按内层选择原始概率或 sigmoid，保持既有质量、收益和风险门槛。
+23. [22 · 校准迭代与最终复现](docs/22_quality_calibration_v51_evidence.md)：实际改善、未达标条件、检查点重放与完整验收证据。
 
-最新模型方案为 `market_dual_track_v2`，沿用 v1 的目标/入场/标签契约；新增特征需另建 v2 schema 和训练配置。事件信息留作后续研究，本轮不采集为训练硬依赖、不进入预测输入。旧讨论的 A/B/C/D 模型代号停用，统一使用本文的 H/A/B 模块与 H/HA/HB/HAB 实验 ID。
+原始双路线方案为 `market_dual_track_v2`，沿用 v1 的目标/入场/标签契约；后续每小时、期末收益风险和因果质量池分别升至 v3/v4/v5，按各自冻结文档与制品解释。事件信息留作后续研究，不进入这些主实验预测输入。旧讨论的 A/B/C/D 模型代号停用，统一使用 H/A/B 模块与 H/HA/HB/HAB 实验 ID。
 
 ## 已运行的探索训练
 
@@ -62,4 +82,15 @@ python3 -m research.after_open_3d5pct smoke --output research/after_open_3d5pct/
 | `templates/experiment.md` | 每轮真实实验开始前填写的登记单 |
 | `runs/`、`datasets/`、`models/` | 本地生成物，Git 忽略；不自动上传 |
 
-真实数据适配及固定窗口 H/A/B 的探索训练已有首版；历史 PIT 股票池、完整特征与超参搜索、概率校准、独立前向验证和可执行策略仍待完成。不要把本 README 的“能跑”理解为这些已经完成。
+真实数据适配、固定窗口 H/A/B 探索训练以及后续 v3–v5 有限训练已运行；部分版本具有内层概率校准，但**历史 PIT 股票池、真实接收时间校验、独立前向验证和可执行策略仍待完成**。不要把本 README 的“能跑”理解为这些已经完成。
+
+## 只读研究看板与模拟操作
+
+在仓库根目录运行以下命令，输出目录必须不存在；导出器核对冻结运行和本地 5m 源行情哈希，不联网、不训练、不接券商：
+
+```bash
+research/after_open_3d5pct/.venv/bin/python -m research.after_open_3d5pct.export_dashboard_v1 \
+  --output research/after_open_3d5pct/runs/research_dashboard_policy_v1_20260925
+```
+
+现有本地服务可直接访问 [研究台](http://127.0.0.1:8768/research/after_open_3d5pct/dashboard/index.html)；先检查 `lsof -nP -iTCP:8768 -sTCP:LISTEN`，不要重复启动。页面使用 11:30/13:30/14:30 ET 的独立操作协议；12:30 仍可在原训练评分对照中查看。阈值默认 0.35，只是演示配置，原始模型输出尚未校准。若换阈值或新运行目录，以 `--threshold` 和新的 `--output` 导出，再用页面 `?run=<目录名>` 查看，不改旧产物。详细规则和剩余局限见 09–12。

@@ -1,4 +1,4 @@
-"""Exploratory H/HA/HB/HAB LightGBM and small TCN run, with real market bars.
+"""Pre-registered hourly H/HA/HB/HAB LightGBM and small TCN run.
 
 Run from the repository root. This is a development experiment on a retrospective
 stock pool, not an independently validated model or a live trading signal.
@@ -23,16 +23,18 @@ import numpy as np
 import pandas as pd
 import sklearn
 from sklearn.metrics import brier_score_loss, log_loss
+from sklearn.linear_model import LogisticRegression
 import torch
 from torch import nn
 
-from .pilot_v2_data import Bundle, build_bundle
+from .hourly_v3_data import Bundle, build_bundle, SEQ_CHANNELS
 
 
 UTC = ZoneInfo("UTC")
 REPO = Path(__file__).resolve().parents[2]
 PROJECT = Path(__file__).resolve().parent
 SEED = 3505
+HOURS_V3 = ("10:30", "11:30", "12:30", "13:30", "14:30", "15:30")
 
 
 def _sha256(path: Path) -> str:
@@ -48,6 +50,40 @@ def _scores(y: np.ndarray, p: np.ndarray) -> dict[str, float]:
     return {"brier": float(brier_score_loss(y, p)),
             "log_loss": float(log_loss(y, p, labels=[0, 1])),
             "observed_rate": float(np.mean(y)), "predicted_mean": float(np.mean(p))}
+
+
+def _logit(p: np.ndarray) -> np.ndarray:
+    p = np.clip(np.asarray(p, dtype=float), 1e-5, 1-1e-5)
+    return np.log(p/(1-p))
+
+
+def _fit_calibrator(y: np.ndarray, p: np.ndarray) -> dict:
+    if len(y) < 100 or len(np.unique(y)) < 2:
+        raise ValueError("calibration requires >=100 mature observations and both classes")
+    model = LogisticRegression(C=1.0, random_state=3505)
+    model.fit(_logit(p).reshape(-1, 1), y)
+    return {"kind": "sigmoid_logit_v1", "coefficient": float(model.coef_[0, 0]),
+            "intercept": float(model.intercept_[0]), "n": int(len(y)),
+            "positives": int(y.sum())}
+
+
+def apply_calibrator(p: np.ndarray, calibrator: dict) -> np.ndarray:
+    z = calibrator["coefficient"]*_logit(p) + calibrator["intercept"]
+    return 1/(1+np.exp(-np.clip(z, -30, 30)))
+
+
+def _select_threshold(config: dict, y: np.ndarray, p: np.ndarray) -> dict:
+    baseline = float(np.mean(y))
+    for threshold in config["threshold_grid"]:
+        selected = p >= threshold
+        if selected.sum() >= config["threshold_min_recommendations"]:
+            precision = float(np.mean(y[selected]))
+            if precision >= baseline + config["threshold_min_precision_lift_absolute"]:
+                return {"status": "development_selected", "threshold": threshold,
+                        "selected": int(selected.sum()), "hits": int(y[selected].sum()),
+                        "precision": precision, "pool_rate": baseline}
+    return {"status": "disabled_no_inner_threshold_met_rule", "threshold": None,
+            "pool_rate": baseline, "grid": config["threshold_grid"]}
 
 
 class CausalBlock(nn.Module):
@@ -128,7 +164,7 @@ def _static(bundle: Bundle, input_set: str) -> np.ndarray:
             data[:, j] *= 100
         elif "dollar_actual_log" in c:
             data[:, j] /= 20
-    hour = r["cutoff_et"].map({"11:30": 0, "12:30": 1, "13:30": 2, "14:30": 3}).to_numpy(np.float32)
+    hour = r["cutoff_et"].map({h: i for i, h in enumerate(HOURS_V3)}).to_numpy(np.float32)
     return np.clip(np.nan_to_num(np.column_stack([data, hour]), nan=0.0, posinf=10, neginf=-10), -10, 10).astype(np.float32)
 
 
@@ -142,12 +178,13 @@ def _tabular(bundle: Bundle, input_set: str) -> pd.DataFrame:
     if "A" in input_set and "B" in input_set:
         columns += [c for c in r if c.startswith("ab_")]
     out = r[columns].copy()
-    out["cutoff_index"] = r["cutoff_et"].map({"11:30": 0, "12:30": 1, "13:30": 2, "14:30": 3}).astype(float)
+    out["cutoff_index"] = r["cutoff_et"].map({h: i for i, h in enumerate(HOURS_V3)}).astype(float)
     return out.replace([np.inf, -np.inf], np.nan)
 
 
 def _fit_tcn(bundle: Bundle, input_set: str, train: np.ndarray, inner: np.ndarray,
-             outer: np.ndarray, config: dict, model_path: Path) -> tuple[np.ndarray, dict]:
+             calibration: np.ndarray, outer: np.ndarray, config: dict,
+             model_path: Path) -> tuple[np.ndarray, np.ndarray, dict]:
     model_cfg = config["tcn"]
     torch.manual_seed(config["seed"])
     np.random.seed(config["seed"])
@@ -210,27 +247,30 @@ def _fit_tcn(bundle: Bundle, input_set: str, train: np.ndarray, inner: np.ndarra
     model.load_state_dict(best_state)
     torch.save({"state_dict": best_state, "input_set": input_set,
                 "static_columns": static.shape[1], "config": model_cfg}, model_path)
-    return predict(outer), {"inner_best_brier": best, "best_epoch": best_epoch,
+    return predict(outer), predict(calibration), {"inner_best_brier": best, "best_epoch": best_epoch,
                             "epochs": epoch_log, "parameters": sum(p.numel() for p in model.parameters()),
                             "device": str(device)}
 
 
-def _fold_indices(bundle: Bundle, fold: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
+def _fold_indices(bundle: Bundle, fold: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, dict]:
     r = bundle.rows
-    inner_start = pd.Timestamp(fold["inner_start"], tz="America/New_York").tz_convert("UTC")
+    inner_start = pd.Timestamp(fold["early_start"], tz="America/New_York").tz_convert("UTC")
+    cal_start = pd.Timestamp(fold["calibration_start"], tz="America/New_York").tz_convert("UTC")
     outer_start = pd.Timestamp(fold["outer_start"], tz="America/New_York").tz_convert("UTC")
     outer_end = pd.Timestamp(fold["outer_end_exclusive"], tz="America/New_York").tz_convert("UTC")
     decision = pd.to_datetime(r["decision_at"], utc=True)
     available = pd.to_datetime(r["label_available_at"], utc=True)
     end = pd.to_datetime(r["label_end_at"], utc=True)
     train_mask = (decision < inner_start) & (end < inner_start) & (available < inner_start)
-    inner_mask = (decision >= inner_start) & (decision < outer_start) & (end < outer_start) & (available < outer_start)
+    inner_mask = (decision >= inner_start) & (decision < cal_start) & (end < cal_start) & (available < cal_start)
+    cal_mask = (decision >= cal_start) & (decision < outer_start) & (end < outer_start) & (available < outer_start)
     outer_mask = (decision >= outer_start) & (decision < outer_end)
     ids = (np.flatnonzero(train_mask.to_numpy()), np.flatnonzero(inner_mask.to_numpy()),
-           np.flatnonzero(outer_mask.to_numpy()))
-    return (*ids, {"train": len(ids[0]), "inner": len(ids[1]), "outer": len(ids[2]),
+           np.flatnonzero(cal_mask.to_numpy()), np.flatnonzero(outer_mask.to_numpy()))
+    return (*ids, {"train": len(ids[0]), "inner": len(ids[1]), "calibration": len(ids[2]), "outer": len(ids[3]),
                     "purged_before_inner": int(((decision < inner_start) & ~train_mask).sum()),
-                    "purged_inner": int(((decision >= inner_start) & (decision < outer_start) & ~inner_mask).sum())})
+                    "purged_inner": int(((decision >= inner_start) & (decision < cal_start) & ~inner_mask).sum()),
+                    "purged_calibration": int(((decision >= cal_start) & (decision < outer_start) & ~cal_mask).sum())})
 
 
 def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) -> None:
@@ -239,6 +279,8 @@ def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) 
     config = json.loads(config_path.read_text())
     if config["universe_mode"] != "current_universe_retrospective":
         raise ValueError("pilot script requires explicit retrospective universe declaration")
+    if tuple(config["decision_hours_et"]) != HOURS_V3:
+        raise ValueError("hourly_v3 feature schema requires its declared six-hour schedule")
     started = time.monotonic()
     print("building source-prefix dataset", flush=True)
     bundle = build_bundle(REPO, config, smoke_symbols)
@@ -253,11 +295,20 @@ def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) 
              pre=bundle.pre_seq, b=bundle.b_seq)
     git = subprocess.run(["git", "status", "--short"], cwd=REPO, capture_output=True, text=True).stdout
     files = bundle.source_paths + [str(config_path.relative_to(REPO)),
-                                   str((PROJECT/"pilot_v2_data.py").relative_to(REPO)),
-                                   str((PROJECT/"train_pilot_v2.py").relative_to(REPO))]
+                                   str((PROJECT/"hourly_v3_data.py").relative_to(REPO)),
+                                   str((PROJECT/"train_hourly_v3.py").relative_to(REPO)),
+                                   str((PROJECT/"docs/14_hourly_v3_training_registration.md").relative_to(REPO))]
     manifest = {"created_at": datetime.now(UTC).isoformat(), "config_id": config["experiment_id"],
                 "scope": "development_exploratory_retrospective_universe",
                 "synthetic_availability": config["feature_availability"],
+                "schedule_version": config["schedule_version"],
+                "feature_schema": config["feature_schema"],
+                "supported_cutoffs_et": config["decision_hours_et"],
+                "sequence_channels": SEQ_CHANNELS,
+                "sequence_lengths": {"h": config["history_sessions"], "post": 48,
+                                     "pre": 66, "b": 72},
+                "feature_columns": feature_columns,
+                "preprocessing": "lgbm_nan_native; tcn_static_nan_to_zero_clip_-10_10; sequences_clip_-50_50_mask_channel_6",
                 "coverage": bundle.coverage, "exclusions": bundle.exclusions,
                 "total_eligible": len(rows), "dates": int(rows.session_date.nunique()),
                 "symbols": int(rows.symbol.nunique()), "observed_rate": float(rows.target.mean()),
@@ -272,9 +323,9 @@ def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) 
     predictions, metrics, trials = [], [], []
     y = rows["target"].to_numpy(int)
     for fold in config["folds"]:
-        train, inner, outer, audit = _fold_indices(bundle, fold)
+        train, inner, calibration, outer, audit = _fold_indices(bundle, fold)
         print(f"{fold['name']} fold={audit}", flush=True)
-        if min(len(train), len(inner), len(outer)) == 0 or len(np.unique(y[train])) < 2:
+        if min(len(train), len(inner), len(calibration), len(outer)) == 0 or len(np.unique(y[train])) < 2:
             raise RuntimeError(f"unusable fold {fold['name']}: {audit}")
         b0 = float(np.mean(y[train]))
         cutoff_train = rows.iloc[train]["cutoff_et"]
@@ -282,16 +333,20 @@ def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) 
                      (int((cutoff_train.to_numpy() == hour).sum())+100)
                      for hour in config["decision_hours_et"]}
         common = {"fold": fold["name"], "train_count": len(train), "inner_count": len(inner),
+                  "calibration_count": len(calibration),
                   "outer_count": len(outer), "outer_dates": int(rows.iloc[outer].session_date.nunique())}
         for name, proba in (("B0", np.full(len(outer), b0)),
                             ("B1_hour", rows.iloc[outer]["cutoff_et"].map(b1_by_hour).to_numpy(float))):
-            metric = {**common, "model": name, "input_set": "common", **_scores(y[outer], proba)}
+            metric = {**common, "model": name, "input_set": "common", "score_kind": "baseline", **_scores(y[outer], proba)}
             metric["brier_1130"] = _scores(y[outer][rows.iloc[outer].cutoff_et.to_numpy()=="11:30"],
                                             proba[rows.iloc[outer].cutoff_et.to_numpy()=="11:30"])["brier"]
             metrics.append(metric)
-            predictions.extend({"sample_id": rows.iloc[ix].sample_id, "fold": fold["name"],
+            predictions.extend({"sample_id": rows.iloc[ix].sample_id, "symbol": rows.iloc[ix].symbol,
+                                "session_date": rows.iloc[ix].session_date,
+                                "cutoff_et": rows.iloc[ix].cutoff_et, "fold": fold["name"],
                                 "model": name, "input_set": "common", "target": int(y[ix]),
-                                "probability": float(p)} for ix, p in zip(outer, proba))
+                                "probability": float(p), "raw_probability": float(p),
+                                "score_kind": "baseline"} for ix, p in zip(outer, proba))
         for group in config["input_sets"]:
             X = _tabular(bundle, group)
             for family in config["models"]:
@@ -313,6 +368,7 @@ def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) 
                                 callbacks=[lgb.early_stopping(20, verbose=False),
                                            lgb.record_evaluation(inner_curve), record_iteration_time])
                         proba = clf.predict_proba(X.iloc[outer])[:, 1]
+                        cal_raw = clf.predict_proba(X.iloc[calibration])[:, 1]
                         clf.booster_.save_model(str(checkpoint))
                         details = {"best_iteration": clf.best_iteration_,
                                    "inner_brier": _scores(y[inner], clf.predict_proba(X.iloc[inner])[:, 1])["brier"],
@@ -320,22 +376,40 @@ def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) 
                                    "inner_validation_curve": inner_curve,
                                    "iteration_cumulative_seconds": iteration_seconds}
                     else:
-                        proba, details = _fit_tcn(bundle, group, train, inner, outer,
+                        proba, cal_raw, details = _fit_tcn(bundle, group, train, inner, calibration, outer,
                                                    config, checkpoint)
+                    calibrator = _fit_calibrator(y[calibration], cal_raw)
+                    cal_probability = apply_calibrator(proba, calibrator)
+                    cal_inner = apply_calibrator(cal_raw, calibrator)
+                    threshold = _select_threshold(config, y[calibration], cal_inner)
+                    cal_path = output/"models"/f"{fold['name']}_{key}.calibration.json"
+                    cal_path.write_text(json.dumps({"calibrator": calibrator, "threshold": threshold,
+                                                   "calibration_dates": [fold["calibration_start"], fold["outer_start"]]},
+                                                  ensure_ascii=False, indent=2)+"\n")
+                    details["calibration"] = calibrator
+                    details["threshold"] = threshold
+                    details["calibration_file"] = cal_path.name
                     elapsed = time.monotonic()-start
                     mask_1130 = rows.iloc[outer].cutoff_et.to_numpy()=="11:30"
-                    metric = {**common, "model": family, "input_set": group,
-                              "seconds": elapsed, **_scores(y[outer], proba),
-                              "brier_1130": _scores(y[outer][mask_1130], proba[mask_1130])["brier"]}
-                    metrics.append(metric)
-                    predictions.extend({"sample_id": rows.iloc[ix].sample_id, "fold": fold["name"],
-                                        "model": family, "input_set": group,
-                                        "target": int(y[ix]), "probability": float(p)}
-                                       for ix, p in zip(outer, proba))
+                    for kind, score in (("raw", proba), ("calibrated", cal_probability)):
+                        metric = {**common, "model": family, "input_set": group,
+                                  "score_kind": kind, "seconds": elapsed,
+                                  **_scores(y[outer], score),
+                                  "brier_1130": _scores(y[outer][mask_1130], score[mask_1130])["brier"]}
+                        metrics.append(metric)
+                        predictions.extend({"sample_id": rows.iloc[ix].sample_id,
+                                            "symbol": rows.iloc[ix].symbol,
+                                            "session_date": rows.iloc[ix].session_date,
+                                            "cutoff_et": rows.iloc[ix].cutoff_et,
+                                            "fold": fold["name"], "model": family,
+                                            "input_set": group, "target": int(y[ix]),
+                                            "probability": float(p), "raw_probability": float(raw),
+                                            "score_kind": kind}
+                                           for ix, p, raw in zip(outer, score, proba))
                     trials.append({"fold": fold["name"], "model": family,
                                    "input_set": group, "status": "completed",
                                    "seconds": elapsed, "details": details})
-                    print(f"{fold['name']} {key} brier={metric['brier']:.5f} inner={details.get('inner_brier',details.get('inner_best_brier')):.5f} seconds={elapsed:.1f}", flush=True)
+                    print(f"{fold['name']} {key} raw_brier={_scores(y[outer], proba)['brier']:.5f} calibrated_brier={_scores(y[outer], cal_probability)['brier']:.5f} seconds={elapsed:.1f}", flush=True)
                 except Exception as exc:
                     trials.append({"fold": fold["name"], "model": family, "input_set": group,
                                    "status": "failed", "error": str(exc), "traceback": traceback.format_exc()})
@@ -348,13 +422,15 @@ def run(config_path: Path, output: Path, smoke_symbols: set[str] | None = None) 
     manifest["total_seconds"] = time.monotonic()-started
     manifest["completed_trials"] = sum(t["status"]=="completed" for t in trials)
     manifest["failed_trials"] = sum(t["status"]=="failed" for t in trials)
+    manifest["model_artifacts_sha256"] = {p.name: _sha256(p) for p in sorted((output/"models").iterdir())}
+    manifest["result_artifacts_sha256"] = {p.name: _sha256(p) for p in [output/"features.parquet", output/"outcomes.parquet", output/"sequences.npz", output/"predictions.parquet", output/"metrics.csv", output/"trials.jsonl"]}
     (output/"manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False)+"\n")
     print(f"finished completed={manifest['completed_trials']} failed={manifest['failed_trials']}", flush=True)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", type=Path, default=PROJECT/"configs/pilot_v2.json")
+    parser.add_argument("--config", type=Path, default=PROJECT/"configs/hourly_v3.json")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--smoke-symbols", nargs="*", help="engineering check only")
     args = parser.parse_args()

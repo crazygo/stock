@@ -37,12 +37,20 @@
 | bars | `symbol,start_at,end_at,available_at,OHLCV,price_basis,provider,source_snapshot_id`；可选 turnover/真实 VWAP，说明单位与覆盖 |
 | sessions | `session_date,open_at,close_at,calendar_version`；官方日历来源与完整日期覆盖 |
 | universe_membership | `symbol,effective_from,effective_to,announced_at,available_at,source,snapshot_id,role`；半开生效区间，role=candidate/benchmark |
-| events | `symbol,event_at,published_at,available_at,vintage,source`；修订不覆盖首版历史 |
+| events（后续预留，本轮不启用） | `symbol,event_at,published_at,available_at,vintage,source`；修订不覆盖首版历史；不是行情双路线的数据硬依赖 |
 | feature_rows | `sample_id,symbol,session_date,feature_cutoff_at,decision_at,feature_schema_version,source_ids,values,missing_reasons,max_source_available_at` |
 | outcomes | `sample_id,entry_at,entry_price_proxy,entry_policy,price_basis,label_end_at,label_available_at,status,reason,hit,mfe,mae,hit_time_interval` |
 | predictions | `sample_id,model_id,generated_at,feature_cutoff_at,reference_price,reference_price_at,p_hit_5pct_3d,data_quality,signal_age_seconds,expires_at` |
 
 特征与 outcomes 分表。训练器显式按 feature allowlist join，不能“删除几个 label 列，剩下全喂模型”。入场价、MFE、MAE、最终 cohort 结果、parent_episode_id 都不在 allowlist。
+
+## 行情双路线的输入契约（v2 待实现）
+
+按 [07 · 行情双路线训练方案](07_model_training_plan.md)同时提供 H/A/B 摘要与序列视图。H 截止上一完整常规时段；A 的盘后/夜盘/盘前分别标识；B 只到本次 cutoff。市场/行业行情使用相同边界，不能让 H-only 通过基准日线看见当日变化。
+
+每个序列片段保存 `sample_id, module, segment_id, session_type, start/end, available_at, granularity, values, validity_mask, missing_reason, elapsed_time, source_ids`。区分真实低波动、有证据的无成交、缺失、无覆盖/无资格与 padding；不能补零后当真实成交。序列视图与摘要视图共用相同 sample IDs 和来源，聚合不能跨时段边界，训练折外的数据不得参与缩放/填补拟合。
+
+5m 用于细路径及主入场/标签，60m/日线用于合适的背景尺度；输入尺度允许内层实验选择，但不改变标签粒度。首次实现须增加相应 schema，不宣称现有标准库 `Bar`/四项特征已经覆盖这些新字段。
 
 ## 股票池与价格基准
 

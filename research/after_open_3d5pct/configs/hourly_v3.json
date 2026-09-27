@@ -1,0 +1,105 @@
+{
+  "experiment_id": "hourly_once_v3_20260925",
+  "status": "development_exploratory",
+  "model_plan_version": "market_dual_track_hourly_v3",
+  "label_contract": "after_open_3d5pct_v1",
+  "feature_schema": "market_hab_hourly_v3",
+  "universe_mode": "current_universe_retrospective",
+  "price_basis": "NONE",
+  "session": "ALL_requested_observed_pre_regular_post_only",
+  "source_dir": "market_data/us_5m",
+  "calendar": "market_data/calendars/nasdaq_sessions_2026_v1.json",
+  "universe": "market_data/universe/qqq_retrospective_v1.json",
+  "corporate_actions_dir": "market_data/corporate_actions",
+  "decision_hours_et": [
+    "10:30",
+    "11:30",
+    "12:30",
+    "13:30",
+    "14:30",
+    "15:30"
+  ],
+  "feature_availability": "assumed_bar_end_plus_1_second",
+  "signal_latency_seconds": 30,
+  "manual_delay_seconds": 120,
+  "entry_bar_minutes": 5,
+  "target_return": 0.05,
+  "horizon_regular_minutes": 1170,
+  "history_sessions": 10,
+  "input_sets": [
+    "H",
+    "HA",
+    "HB",
+    "HAB"
+  ],
+  "models": [
+    "lgbm",
+    "tcn"
+  ],
+  "folds": [
+    {
+      "name": "august_2026",
+      "train_before": "2026-07-01",
+      "early_start": "2026-07-01",
+      "calibration_start": "2026-07-16",
+      "outer_start": "2026-08-03",
+      "outer_end_exclusive": "2026-09-01"
+    },
+    {
+      "name": "september_2026",
+      "train_before": "2026-08-03",
+      "early_start": "2026-08-03",
+      "calibration_start": "2026-08-17",
+      "outer_start": "2026-09-01",
+      "outer_end_exclusive": "2026-09-19"
+    }
+  ],
+  "hyperparameter_policy": "one_fixed_small_configuration_per_family; exploratory_launch_not_search_or_selection",
+  "lightgbm": {
+    "n_estimators": 180,
+    "learning_rate": 0.04,
+    "num_leaves": 15,
+    "max_depth": 5,
+    "min_child_samples": 150,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "reg_lambda": 5.0,
+    "verbosity": -1,
+    "n_jobs": 4
+  },
+  "tcn": {
+    "channels": 16,
+    "kernel_size": 3,
+    "dilations": [
+      1,
+      2,
+      4
+    ],
+    "fusion_width": 32,
+    "dropout": 0.15,
+    "learning_rate": 0.001,
+    "weight_decay": 0.001,
+    "batch_size": 256,
+    "max_epochs": 8,
+    "patience": 2
+  },
+  "seed": 3505,
+  "claims_allowed": "development_hourly_research_only_no_high_confidence_release",
+  "schedule_version": "hourly_once_v3",
+  "source_start_date": "2026-01-01",
+  "source_end_date": "2026-09-24",
+  "historical_source_quality": "assumed_bar_end_plus_1_second_no_received_at",
+  "max_training_wall_seconds": 2400,
+  "calibration": "sigmoid_logit_on_mature_inner_calibration_dates",
+  "threshold_grid": [
+    0.3,
+    0.4,
+    0.5,
+    0.6
+  ],
+  "threshold_min_recommendations": 100,
+  "threshold_min_precision_lift_absolute": 0.05,
+  "enable_model": "lgbm_HAB",
+  "enable_fold": "september_2026"
+}

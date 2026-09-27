@@ -1,0 +1,42 @@
+{
+  "experiment_id": "terminal_risk_v4_20260925",
+  "protocol_version": "three_day_touch_terminal_valuation_v4",
+  "status": "preregistered_development_exposed_history",
+  "source_run": "research/after_open_3d5pct/runs/hourly_once_v3_20260925",
+  "source_config": "research/after_open_3d5pct/configs/hourly_v3.json",
+  "feature_schema": "market_hab_hourly_v3",
+  "source_dir": "market_data/us_5m",
+  "calendar": "market_data/calendars/nasdaq_sessions_2026_v1.json",
+  "label_contract": "after_open_3d5pct_v1",
+  "candidate_input_sets": ["HB", "HAB"],
+  "candidate_families": ["lgbm", "tcn"],
+  "risk_head": "shared_hab_lightgbm_failure_only_v1",
+  "horizon_regular_bars": 234,
+  "touch_gross_return": 0.05,
+  "buy_cost_rate": 0.0006,
+  "sell_cost_rate": 0.0006,
+  "tail_fraction": 0.05,
+  "risk_quantiles": [0.1, 0.5, 0.9],
+  "folds": [
+    {"name": "august_2026", "early_start": "2026-06-01", "calibration_start": "2026-06-16", "selection_start": "2026-07-01", "outer_start": "2026-08-03", "outer_end_exclusive": "2026-09-01"},
+    {"name": "september_2026", "early_start": "2026-07-01", "calibration_start": "2026-07-16", "selection_start": "2026-08-03", "outer_start": "2026-09-01", "outer_end_exclusive": "2026-09-19"}
+  ],
+  "development_scenario": {
+    "ranking_scope": "each_ET_session_date_by_cutoff_cross_section_only",
+    "opportunity_budget_fraction": 0.05,
+    "min_selected_count": 100,
+    "min_selection_dates": 10,
+    "predicted_expected_net_min": 0.0,
+    "predicted_failure_q10_net_min": -0.15,
+    "observed_selected_mean_net_min": 0.0,
+    "observed_selected_es95_loss_max": 0.15,
+    "tie_precision_tolerance": 0.005,
+    "not_user_approved_risk_budget": true
+  },
+  "sensitivity": {"budgets": [0.05, 0.1], "failure_q10_net_min": [-0.1, -0.15, -0.2], "es95_loss_max": [0.1, 0.15, 0.2]},
+  "control": {"match": ["session_date", "cutoff_et", "b_range_actual", "b_dollar_actual_log"], "quantile_bins": 3, "repetitions": 100, "seed": 3505},
+  "bootstrap": {"block_sessions": [5, 10], "replicates": 500, "seed": 3505},
+  "seed": 3505,
+  "max_wall_seconds": 1800,
+  "release_status": "research_only_no_formal_action_without_forward_validation_and_user_risk_budget"
+}

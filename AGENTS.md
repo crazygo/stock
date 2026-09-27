@@ -10,6 +10,9 @@
 
 **“重大核心量化实证结论”中的首小时/累计达成率，是等待未来标签成熟后计算的历史结果。当天同一时刻无法知道，不能直接作为实时特征、交易门禁或置信度乘数。**
 本工程已完成首轮真实行情探索训练，尚未完成独立验证；结果见 [`08 · 首轮训练启动登记`](research/after_open_3d5pct/docs/08_training_launch.md)。新工程规则不改变旧研究的原始结果。
+只读研究看板与三时点模拟操作回放见 [`09 · 看板产品与指标验收`](research/after_open_3d5pct/docs/09_dashboard_product_metrics.md)及工程 README；操作回放另升版本，不接真实下单。
+后续每小时一次运行的 `hourly_once_v3` 协议与五项验收见 [`13 · 每小时一次运行实施与验收`](research/after_open_3d5pct/docs/13_hourly_once_implementation.md)；其授权与时点配置优先于旧训练协议的固定采样时点，真实交易仍由用户手动执行。
+每小时版本的开发期训练、校准退化及未通过的独立效果门禁见 [`16 · 交付证据`](research/after_open_3d5pct/docs/16_hourly_v3_delivery_evidence.md)。
 
 ---
 
