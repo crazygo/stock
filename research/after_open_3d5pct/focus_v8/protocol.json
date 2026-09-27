@@ -1,0 +1,36 @@
+{
+  "id": "focus_v8_20260927",
+  "status": "frozen_before_fit",
+  "max_rounds": 10,
+  "seed": 3566,
+  "confirmation_seed": 7566,
+  "groups": {
+    "chips": ["ALAB", "AMD", "ARM", "AVGO", "INTC", "MRVL", "NVDA", "QCOM"],
+    "optics": ["LITE", "COHR", "CIEN", "AAOI", "FN", "AXTI", "CRDO", "MRVL", "AVGO", "ALAB", "ANET", "CSCO"],
+    "storage": ["MU", "SNDK", "STX", "WDC"]
+  },
+  "optics_subgroups": {
+    "direct": ["LITE", "COHR", "AAOI", "CIEN", "FN", "AXTI"],
+    "connectivity_chips": ["CRDO", "MRVL", "AVGO", "ALAB"],
+    "switching": ["ANET", "CSCO"]
+  },
+  "routes": ["B_group", "B_no_group", "C_group", "C_no_group", "C_no_daily"],
+  "sample_start": "2026-03-02",
+  "sample_end": "2026-09-17",
+  "folds": [
+    {"id": "dev1", "tune": "2026-04-20", "cal": "2026-05-11", "eval": "2026-06-01", "end": "2026-06-27"},
+    {"id": "dev2", "tune": "2026-06-01", "cal": "2026-06-22", "eval": "2026-07-13", "end": "2026-08-08"},
+    {"id": "reserved", "tune": "2026-07-13", "cal": "2026-08-03", "eval": "2026-08-24", "end": "2026-09-18"}
+  ],
+  "primary": "3d_5pct",
+  "targets": ["1d_3pct", "1d_5pct", "1d_8pct", "3d_3pct", "3d_5pct", "3d_8pct", "5d_3pct", "5d_5pct", "5d_8pct"],
+  "epochs": 32,
+  "patience": 5,
+  "batch_size": 256,
+  "threads": 1,
+  "gate": {"relative_brier_gain": 0.05, "max_mean_calibration_gap": 0.05, "min_within_stock_auc": 0.60, "min_dates_each_fold": 15, "min_rows_each_group_fold": 50, "bootstrap_block_sessions": 5, "bootstrap_repeats": 2000, "familywise_alpha": 0.05},
+  "all_2026_dates_previously_exposed": true,
+  "industry_membership_basis": "user_confirmed_current_snapshot_retrospective_evaluation_and_training_weights_only",
+  "availability_basis": "archived_bar_end_plus_1s_assumption_not_observed_delivery",
+  "no_trading": true
+}
