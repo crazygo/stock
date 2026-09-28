@@ -1,0 +1,89 @@
+# 根协调器续接入口
+
+2026-09-27。只读本页、README/PROTOCOL及对应短交接，不加载各代理完整对话。当前 **0/5 达标，目标未完成**。14:15Z用户continue；get_goal当时报告usageLimited（不能自行改为active），根已恢复当前回合工作与指定代理。
+
+## 14:15Z 中断后继续
+
+此前acquisition_recovery_code、forward_evidence_plan、b_no_group_research均曾因usage limit失败；本次用户continue后按原模型/任务各续一次，等待实际结果，不换模型或重做旧numeric。14:16Z实查：native_artifact.py约853行、forward/schema.py存在，baseline已有部分接线，inference原生来源门禁/测试/旧engine对照尚未交付，不能称代码完成。local恢复74618/PID7064仍waiting，十源码逐SHA全同，新run只有registration/calendar/source_snapshot；另一96498仍在ASML历史采集。
+
+B_no_group代理已完成实际盘点与独立部分来源方案。原305片=60候选+QQQ的五个月，操作21股105片全部齐；缺48候选240片仍贡献约44%的旧fit行，不能声称完整P0。根采用日级单机制工程分支：保留108股/14424旧键，仅60股xday的106个有效列可变，其余563列与48股全输入严格不变。登记SHA6cb5d4b4862e17131bc4afb4b030dea73a0d89f23bd4c2ac046198156a16096d，inventory SHAf52065c57a32398bd6f5a4a7d8829627d0bc7719678f5bc201b91229067cfdd8，ADOPTION SHA0faca6eda0f2011bd7c07780db1ea5339d7c4e2e70fed3023048553f1aec0a87。14:34Z已交r03_recovery_prepare_code执行代码、离线构建/负对照、原两dev控制checkpoint复放；**尚不执行18头新拟合**，实际manifest/gates后交B_no_group Astra审查再根采用。独立入口不得修改native/baseline/inference或冻结十源码。新run B_no_group_partial_daily_history_v1。先2026-only精确no-op，再加2025；原rows字节保留、support sidecar，无网络。完整原R03仍单独排队。
+
+## 目标与代理
+
+用户目标：BUY信号实际达成率≥90%，每模型每群平均每5个官方session至少一条去重机会；至少三路线各自三群通过。每轮先实际状态/backlog/矩阵，执行后复盘。方案/复盘GPT-6 Astra xhigh，纯代码GPT-6 Sol xhigh。
+
+五路线独立句柄在/root下：b_group_research、b_no_group_research、c_group_research、c_no_group_research、c_no_daily_research。对应 routes/<route>/{STATE,BACKLOG,MATRIX,HANDOFF}.md 已完成，真实新结果回各自Astra复盘，不机械执行预写P1。四并发槽含root。
+
+- **r03_recovery_prepare_code（Sol，运行中）**：14:34Z承接上述B_no_group部分日级工程，禁止新treatment拟合，等待实际manifest后Astra独立审查。此前本地raw复用入口/prepare新version已交付，28定向通过并经Astra终审。运行十源码已冻结，不再修改。
+- **forward_evidence_plan（Astra，运行中）**：native_artifact四件已完成；REGISTRATION_DRAFT SHA74aa72e1cd346fbb428d04790eb34147bdfa5860d5672f9704b9aeca653f3711，根ADOPTION SHA01bd76f0806883c8c52b87f2838261cb7046f17b3ff51cc2338b1429707f9647已采用工程部分并交Sol。正在独立审查原生实现，已冻结两旧engine共91文件before；待真实导出与测试。PERFORMANCE_PLAN仍未执行，等新模型合法范围；不做旧六历史证书。
+- **acquisition_recovery_code（Sol，运行中）**：正在实现native_artifact生产schema/pre-fit合同/baseline连接/fit后导出/独立child load→predict/有限provenance门禁。只工程与已有两无群engine事后封装对照，不重训、不填未完成actual_manifest、不改local复用十源码。不启旧历史证书。此前numeric retry1全过，证据索引SHA108a01f13fe7416dd8d0b60ac681cda6cb005ecceab8bd3998a94272e1ed5b3e。
+- 原shared_pipeline_code复活曾遭agent thread limit拒绝，不重复尝试；其baseline/features工作已转交。
+- **r03_local_reuse_plan（Astra，已结束可续）**：终审28项+3独立检查通过、10源码前后全同，R1–R8问题闭合。CODE_INDEPENDENT_REVIEW SHA9a36d7fa7a3eecd9e27d456a623bee07f24bbd431833bbfb984b10ffc3834ad0；CODE_REVIEW_MANIFEST SHA60166647c52805403d5d486acb2974b9686e8a7dc48499b58660a8f53c5eefc3。根接受bundle复制一次但raw重复重放（约14次/5月组）的成本偏差；首次网络后180分钟含穿插Local，在新网络分片前检查，非纯网络计时。545状态齐备不等于545非空；十metadata-only空月不冒充provider成功。实际数据完成后可续派来源审计。
+
+## R03：原305/545后失败，新本地复用恢复器在排队
+
+原会话71777已于11:12:08Z退出，HONA/2025-08 RET_OK空数据导致旧标准化缺start_at。原audit/raw保留；原progress.running陈旧。305份bars哈希/完整RTH已核对。恢复器及prepare适配16项通过。
+
+采用：rounds/R03/RECOVERY_ADOPTION.md，SHA a512352c280d3a532c27916c00a5bc30b9486033a15b591ad0c3726b19441c6b。R03_recovery_v1已初始化登记/日历/7源码快照，首次共享锁失败时未发请求/继承part。不得改冻结采用登记。
+
+**唯一当前统一exec等待会话为74618，PID7064，13:37:55Z开始排队。** 根按local_reuse/RUN_ADOPTION SHA8cee62b3d1b40730ca6dea6509e7e871dad74362868a9a7df9c31c43ccb6dcc1完成接管：再次验原22976/PID97894仍等锁且旧v1无parts后13:36:49Z只中断自有waiter，22976已完成且PID消失。旧v1registration仍5ecaa...原样，**不再poll22976或71777**。
+
+新run `R03_recovery_local_v1` initialized13:37:14Z，registration SHA568806614a877b3e3b94e051ac8b3a2eef3a12d72ceb6005556d6cb0e535d572，calendar SHA26ac90fc8b48156ebb34f869d9b24fb5e81e3e420948b32ee582f0e16459365d，十执行源码已冻结。waiter前后核采用/registration/当前源码并在共享锁自然释放后调用acquire_local_reuse.run(...,max_minutes=180)。当前无新parts/请求，不能当作305已继承。详细根证据 local_reuse/ROOT_HANDOVER.md 及四机器记录。原305优先，剩240按当时Local→R2→OpenD；20分钟为根观察检查点。禁止另开collector，原10源码需保持不变，native任务已知此约束。
+
+占锁是另一任务PID96498（需要时实查）、scripts/backfill_model_history.py acquire；日志.cache/model_history_acquire.log，109股2023–2026长历史。13:31Z只读看到ADP/ADSK 2025窗口，尚未进入余下HONA等48股。不得终止、删除/tmp/stock_futu_acquisition.lock、改其脚本或重启OpenD。用户优先级async问题尚无答复，默认保持排队，不重复询问。旧锁检查点为历史记录，最新以local_reuse/ROOT_HANDOVER为准。
+
+## R03M：独立重建全键等价，数值/证书阶段待登记
+
+rounds/R03M四件已冻结；REGISTRATION SHA 7cd17fbcd49b8bbe648a3015ec8fd25df5dbc96155adaabf995b6095f4db7303；采用见ADOPTION。
+
+223/223冻结源匹配，109股218行情/行动文件，14,424旧keys。2026源足够本轮，不等2025。原101股走旧float64分类；新增7股走v8 float32路径。实际成功窗口重算history_end，不能猜日期。108candidate peers，QQQ独立benchmark。
+
+新run R03M_group_only_v1；保留全部旧keys/顺序及own/y/entry/terminal，只重建群。源码/helper/分类定义保存字节及前后SHA。单worker、20分钟观察预算，超限留进度不缩池。4项定向已实核AAPL/COHR两路径五策略与旧分类相同、history_end=05-29，晚到/行动/未来日期反例拒绝。
+
+首失败发生在109views/21060候选成员重建后，未生成群张量：比较器把30非candidate的5850旧成员也要求新池覆盖。Astra独立确认4 frozen benchmark、26 absent，lost candidate=0；20647共有分类相同，413新增全为新增七股insufficient_history空群。旧14424keys的六周覆盖W05–W38，不触达W01/W39；W01应按真实12/29周首，W39末周新闭合有效期不影响旧keys。不能据此提前称全张量等价。
+
+修复登记 rounds/R03M/FAILURE_REVIEW_AND_RETRY_REGISTRATION.md SHA 90a6b52e75ebf0c4a913faccfbd12e2c8dfd93830b8ac2dc0fb935e74c8f3b27 已由root采用。仅限定旧比较器candidate作用域、枚举排除项且缺candidate仍拒绝；新retry1一次全量，保留首失败。文档如实注明初步一行过滤先于登记草拟、完整guard/回归及重跑在登记后，不伪称全部代码均预登记。
+
+全输入全等→不训练，补全键九输出证据后另登记兼容证书loader路径；只群变化→三个带群Astra各自复盘，再另登记refit；非群/来源问题→失败修复。不得改原R03扩量登记。R03M当前实现不改forward，代表feature-only验收用下述最新冻结features。
+
+retry1已完成128.668秒/RSS约1.01GiB，result.json SHA d00e83c18a31ca26f65e40bc75d6c9a0f66ab401e96f97ddde49c3f50a8d88a5。Astra独立复核223源/9身份/6源码快照、全部行与六数组解压字节、prior/count/historyIDs/权重/3折4段keys均相同；before/after6共有section全同，after漏列的原REGISTRATION由Astra亲算原文件与run副本均7cd17...。可以采用metadata-only/no-refit分支，但正式G1未通过。
+
+接下来Astra正在写REVIEW、后续backlog/matrix和数值证据登记：5路线×dev1/dev2/final selected3566共15套checkpoints，全14424key九raw/p对比，不含7566，不拟合/重选阈值。三群另做预先冻结代表样本真实feature-only输入数值配对；当前loader不兼容causal到legacy，证据可显式离线用原权重计算，必须保留真实lineage，不能伪造legacy/训练provenance。完成数值证据后才另登记证书入口并实接G1。
+
+上述后续文档现已完成：独立REVIEW SHA ccc03d0b5b16733b6a31baa5aebff259b454798ea4d62d1580581c5e38db20c7；CERTIFICATE_STAGE_REGISTRATION_DRAFT SHA f58b9611ae5c5a3220c2d9fae9bf52098685574241073b11d2dd17b2d5d0c688，根已通过CERTIFICATE_STAGE_ADOPTION采用。六代表键固定AMD 3/2、6/1、7/10、7/13、9/17与COHR 6/1；全键与原eval均≤1e-7，明确离线数值证明不等于正式接口G1。
+
+数值首run `R03M_certificate_evidence_v1` 已保存失败：15套×14424全键旧/新九raw/p差全0、488项来源前后无漂移；但冻结eval复放14/15，C_group selected_3566的CIEN 2026-09-04 5d_8pct processed差1.0642043968278614e-7，超1e-7。Sol有界诊断单独按原1836 eval IDs/8批复放误差0，全键批次再切eval导致该超差；Astra待亲读诊断artifact。首失败不改判，必须另存retry登记并根采用后新run，六代表尚未执行。
+
+13:02Z状态：Astra已独立核验诊断来源/IDs/批次哈希（没有重复推理），完成NUMERIC_FAILURE_REVIEW_AND_RETRY_REGISTRATION SHA 008709af95dc6e8ee556eb6f5b6fca21d23c4a112d9664eae4b55fdcfbac9db5并结束可续。根NUMERIC_RETRY_ADOPTION SHA 382b393cdf1665f439cc3213822a9d113672000bf037932449399589f54a32d1已采用；Sol启动唯一 `R03M_certificate_evidence_v1_retry1`，inventory15/source497通过。全键同批配对、原eval按原独立批次、六代表两侧singleton；跨批次差异另报，容差/样本/模型不变。下一步实际结果后续派Astra复盘。
+
+13:14Z retry1已结束：15套×14424旧新全键九raw/p=0、15原eval历史批次九raw/p=0；六代表90/90配对通过、局部/全局source changed均空。all_keys_summary SHA 4f2f520bcf0da619cc07f5667c9c5b227dd77874e96aacb631c8d09d992c7904；representative_summary SHA 84533c1b4742a19354beb6765ce7a233e59ede4e5cdd176a4698ed6925f07c27；**representative_final_status.json** SHA 767c3aa4438167cb59c5302e8fa4ef82507bdd791eae5ba0a898c8c37c65654d（没有final_status.json），pass=true/fatal=null。根亲核代表summary/终态，Astra正在独立核全部代表证据并写复盘/矩阵；尚无采用的loader登记、证书或G1/G2/G3。
+
+后续最终优先级：Astra NUMERIC_RETRY_REVIEW SHA f2215fcc1d0c02a00db1764ded7f0b2bd4f6599f359f879541eee6a482444902已独立核90/90/全部截止与源，根通过NUMERIC_EVIDENCE_ADOPTION_AND_PRIORITY SHA1daa4ee48366153b68ff4888b9fe589c2d0b1f1149dc166e85bbfa36c357f168采用。六历史key loader草案SHA d2e513773b47c5dd155eec5be12d24dc88e5670bb90aa012e12b66446e3f8dae **暂缓未采用，不实现**；仅作用旧样本不服务新日期。优先R03原生模型导出合同（Astra正在写），old_common保留legacy，新臂必须真实causal来源；不改配方/种子/目标，数据未完不提前拟合。全21×5性能等合法新范围。代表跨batch raw最大1.1920928955078125e-7（COHR06-01 C_group dev2）、p最大1.4517552993087435e-7（AMD07-13 C_no_group dev1）独立保留，不声称任意batch恒等。
+
+15套中的6早期dev登记旧run.py SHA 7f6189949f792b043c6c4a0dc4d0eedb6462717d9b9be3e4e6da5476627f8b11，已由Git 101d357恢复精确19628bytes；同commit test_core.py SHA 974ad8aea54e868ef3a64387982fc8f751b55c71d6eeb3e10f6c6395b3ab55b1。当前脚本来自后续版本，差异涉训练支持/cache校验。原训练版本与本次实际重放版本分别封存，不伪称历史训练用了当前源码；仍须完整冻结eval门禁。
+
+## Forward当前采用状态
+
+- 五路线静态checkpoint九输出≤1e-7、两无群真实feature-only配对保留。三带群首次数值FAIL仍未转PASS，拒绝测试绿不能替代正向G1。
+- 原liquidity 568 peer×周/95股缺history_end是元数据证据不足，不等于前视。趋势残差已确证QQQ误入peer；108candidate-only六周非liquidity差0。权威独立证据 forward_readiness/GROUP_PARITY_QQQ_CORRECTION.md；不再引用曾错误传candidate+QQQ的中间结论。
+- 原诊断 forward/GROUP_PEER_DIAGNOSTIC.json SHA 9ba039c5d5cec0f8b79a432582729b47a07a4363d219df742d28ade747b560f1 未覆盖。修前字节在forward/evidence_baseline；GROUP_PARITY_FIRST_FAIL.json明确为后来从修前字节重放。
+- 群首修见forward/GROUP_GATE_REVIEW.md。后续root修复adapter吞PriorStore seal/chain失败：同view SHA也拒绝，保留fatal/seal_error。Astra另发现未知类别、实际classified未知version、群候选集合未绑定，并先登记后补修。
+- 补登记 forward_readiness/GATE_FOLLOWUP_REGISTRATION.md SHA 25e7f304733e4072d6372e77ae78173d3859cbeda006ea9cc24540c900627341。修后Astra独立16项及直接反例通过，已采用。最新features SHA 528344d95bab167fb520584e854c0223e2ccba2b592b3fcaa5a2a9818229e646；adapter 0987c1d1425addf81fffcc18cb35d725b46352f142e44a55c2669e41eccdbf98。inference未改证书路径。
+- 独立复盘 forward_readiness/INTEGRATION_REVIEW.md SHA 068bf0303739d661265535bf8785bcd3e337d83f19ee2bb40864a23e87d2354e；原INTEGRATION_PLAN SHA 2e8431c5fe63a259a4c55f9357ae508c7000018f9739c912d2b1b456277d85c3未改。补修索引 forward/LOCAL_ADAPTER_CODE_REVIEW.md SHA 83bec27c2e717ac631e49b870de4a26e20a8e974a8d6221f47582339d39e32e0。
+- PriorStore全候选（含非BUY）九结果/实际known时间/不可变view；adapter分prior全池、forecast子集、市场依赖，账本前后核全部来源。真实历史AMD无群链路被缺receipt拒绝；导入于现在的prior不能证明June数值配对。合成N5=TP2+FP1+U2仅独立ledger/labels/evaluate组合，不是五路线adapter E2E。
+- 独立官方日历 forward/calendar_2026_official_v1 完成：两官网原bytes/时间/SHA、251sessions、10休市/2半日、builder快照。session SHA a2c25174768f04cb6bfb43bc527eb37c4b5ade52bcfd9178b645b76398c50a14。4日历测试、合计58forward测试通过；root独立verify退出0。具体cohort仍检查最后1950RTH分钟覆盖，2027拒绝，共享日历未改。
+- **G2/G3、冻结动作、全池30秒性能均未证明，未启真实cohort/调度/订单。** 单candidate107依赖约22秒不是全池性能。Mac runtime须forward先加载LightGBM后torch，late B import已有显式拒绝。
+
+## R03完整后的顺序
+
+确认全部545片/失败空状态→prepare完整新dataset→审核paired_2026_audit（标签/entry/terminal差异不可越过）→五Astra按实际行/日期/正权重/126日支持各自登记P0→root接受exposed_development manifest→baseline三臂old_common/new_common/new_expanded_fit。保留旧recipe/seed3566，不带R01失败机制；新两臂共同旧行features/prior一致。先dev1/dev2，决定后显式diagnostic；所有2026已暴露。各路线复盘后才执行P1。
+
+旧B_no_group/C_no_group baseline engine smoke九输出差0仅执行器证据，不是新R03结果。R00失败、R01五候选15拟合全回退、R02试采完成，证据索引见README。
+
+根13:09Z只读新增backlog：baseline.py冻结数据/训练源码但目前只B_no_group输出feature_schema，尚无正式route artifact/model_version/group_training_provenance。正式R03拟合前需另登记原生causal工件导出/验真，依据真实新训练来源，不能事后改名伪装。当前未修改baseline。旧历史证书若仅许可六代表，则21×5性能计划必须顺延或另登记扩大输入身份范围；Astra下一矩阵须明确这一边界，不默默扩证书。
+
+## 环境边界
+
+Python research/after_open_3d5pct/.venv/bin/python（3.12）；OpenD11111不重启。共享dirty WIP不提交/清理；本新package/newruns才属本任务。不上传R2、不写交易、不发外部消息。行情skill含凭证，勿再全量输出。无重复goal，不以工程完成标goal complete。
+
+Memory已用于本任务：最终若引用相关历史，末尾一个memory citation；不要更新memory。registry MEMORY.md 70–104/141–160，最终引用前核对有效行；rollout IDs见前次上下文。

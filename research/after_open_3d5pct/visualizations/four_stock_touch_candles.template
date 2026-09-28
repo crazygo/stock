@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>四只股票 · 三日 +5% 触及 K 线核验</title>
+<style>
+:root{--bg:#edf2f4;--surface:#fff;--surface-alt:#f4f8f9;--ink:#16323e;--muted:#5d737c;--rule:#cbd9de;--accent:#13717b;--entry:#255fad;--entry-soft:#e4effd;--hit:#ad6418;--hit-soft:#fff0db;--up:#158579;--down:#bb5962;--focus:#127e8d;--shadow:0 8px 30px #1538460e}
+@media(prefers-color-scheme:dark){:root{--bg:#091c26;--surface:#102c39;--surface-alt:#183746;--ink:#e7f2f4;--muted:#afc4cb;--rule:#3c5a65;--accent:#70cbd0;--entry:#8ebeff;--entry-soft:#193f69;--hit:#f2b970;--hit-soft:#50371f;--up:#70c9ad;--down:#f08e99;--focus:#9adce2;--shadow:0 8px 30px #0003}}
+:root[data-theme="light"]{--bg:#edf2f4;--surface:#fff;--surface-alt:#f4f8f9;--ink:#16323e;--muted:#5d737c;--rule:#cbd9de;--accent:#13717b;--entry:#255fad;--entry-soft:#e4effd;--hit:#ad6418;--hit-soft:#fff0db;--up:#158579;--down:#bb5962;--focus:#127e8d;--shadow:0 8px 30px #1538460e}
+:root[data-theme="dark"]{--bg:#091c26;--surface:#102c39;--surface-alt:#183746;--ink:#e7f2f4;--muted:#afc4cb;--rule:#3c5a65;--accent:#70cbd0;--entry:#8ebeff;--entry-soft:#193f69;--hit:#f2b970;--hit-soft:#50371f;--up:#70c9ad;--down:#f08e99;--focus:#9adce2;--shadow:0 8px 30px #0003}
+*{box-sizing:border-box}html{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif}body{margin:0}button,select{font:inherit;color:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}h1,h2,h3,p{margin:0}.mono,code,.stat strong,.fact strong,.trade{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}.shell{max-width:1550px;margin:auto;padding:24px 28px 60px;display:grid;gap:17px}.mast{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent)}h1{font-size:clamp(25px,3vw,37px);line-height:1.16;letter-spacing:-.035em;margin-top:7px;text-wrap:balance}h2{font-size:19px;line-height:1.3}h3{font-size:14px}.subtitle{font-size:14px;line-height:1.55;color:var(--muted);max-width:74ch;margin-top:9px}.plain-btn{background:var(--surface);border:1px solid var(--rule);padding:8px 12px}.scope{padding:12px 15px;background:var(--surface);border-left:4px solid var(--accent);font-size:13px;line-height:1.6;color:var(--muted)}.scope b{color:var(--ink)}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tab{border:1px solid var(--rule);background:var(--surface);padding:11px 18px;min-width:106px;text-align:left;display:grid;gap:3px}.tab b{font-size:18px}.tab small{font-size:11px;color:var(--muted)}.tab[aria-selected="true"]{border-color:var(--accent);box-shadow:inset 0 -3px var(--accent);background:var(--surface-alt)}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:var(--surface);border:1px solid var(--rule);padding:13px 15px;min-width:0}.stat small{display:block;color:var(--muted);font-size:11px;font-weight:700;line-height:1.3}.stat strong{display:block;font-size:20px;margin-top:5px}.stat span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.panel{background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow);padding:17px;min-width:0}.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}.panel-head p{font-size:12px;color:var(--muted)}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:10px 0 4px}.legend span{display:inline-flex;align-items:center;gap:6px}.diamond{width:10px;height:10px;transform:rotate(45deg);border:2px solid var(--entry);background:var(--entry-soft);display:inline-block}.circle{width:11px;height:11px;border:2px solid var(--hit);background:var(--hit-soft);border-radius:50%;display:inline-block}.dash{width:17px;border-top:2px dashed var(--accent);display:inline-block}.chart-scroll{overflow-x:auto;overscroll-behavior-inline:contain;border:1px solid var(--rule);background:var(--surface-alt)}svg.chart{width:100%;min-width:1120px;height:auto;display:block}#detailChart{min-width:950px}.chart-note{color:var(--muted);font-size:12px;line-height:1.5;margin-top:9px}.focus-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(305px,.55fr);gap:15px}.step{display:flex;gap:7px;align-items:center}.step button{background:var(--surface-alt);border:1px solid var(--rule);min-width:34px;height:34px}.step button:disabled{opacity:.4;cursor:default}.evidence{display:grid;gap:13px;align-content:start}.evidence-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.evidence-head .tag{font-size:11px;border:1px solid var(--accent);color:var(--accent);padding:3px 6px}.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fact{background:var(--surface-alt);padding:10px;min-width:0}.fact small{font-size:11px;color:var(--muted);display:block;line-height:1.3}.fact strong{font-size:14px;display:block;margin-top:5px;overflow-wrap:anywhere}.fact.wide{grid-column:1/-1}.proof{padding:11px 12px;background:var(--hit-soft);border-left:3px solid var(--hit);font-size:12px;line-height:1.55}.proof b{color:var(--ink)}.ledger-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.ledger-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ledger-tools select,.ledger-tools button{border:1px solid var(--rule);background:var(--surface-alt);padding:7px 9px}.ledger{display:grid;gap:10px;margin-top:13px}.ledger-day{display:grid;grid-template-columns:73px minmax(0,1fr);gap:10px;align-items:start}.ledger-day-label{font-size:12px;font-weight:800;color:var(--muted);padding-top:12px}.trade-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.trade{border:1px solid var(--rule);background:var(--surface-alt);padding:9px 7px;text-align:left;min-width:0;display:grid;gap:4px;font-size:11px}.trade b{font-size:13px;color:var(--entry)}.trade small{font-size:10px;color:var(--muted);overflow-wrap:anywhere}.trade[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--entry-soft)}.footer{border-top:1px solid var(--rule);padding-top:13px;font-size:12px;color:var(--muted);line-height:1.6;overflow-wrap:anywhere}.footer a{color:var(--accent)}.small-mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}
+@media(max-width:1000px){.focus-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.trade-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.shell{padding:15px 12px 45px}.mast{display:grid}.mast button{justify-self:start}.tabs{display:grid;grid-template-columns:1fr 1fr}.tab{min-width:0}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:17px}.panel{padding:12px}.trade-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ledger-day{grid-template-columns:1fr;gap:4px}.ledger-day-label{padding-top:4px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="mast">
+  <div><p class="eyebrow">PRICE PATH / EVIDENCE</p><h1>四只股票，逐笔核对 +5% 触及</h1><p class="subtitle">ALAB、MU、NBIS、RKLB 的常规时段 5 分钟 K 线。蓝色菱形是一次假设买入，琥珀色圆点是这笔交易首次触及 +5% 的 K 线。选中任一时点，可看入场到触及的完整路径。</p></div>
+  <button class="plain-btn" id="theme" type="button" aria-label="切换明暗主题">切换明暗</button>
+</header>
+<div class="scope"><b>研究标签，而非真实成交：</b>2026-09-14 至 09-21 的六个决策日，每只股票每天六个不同的决策时点。每个时点只计一次假设买入；画出的价格路径延伸至 09-24，以核验完整的 1170 个常规交易分钟。价格触及取 5 分钟 K 线最高价，未应用模型行动阈值，也没有真实订单成交回报。</div>
+<nav class="tabs" id="tabs" role="tablist" aria-label="选择股票"></nav>
+<section class="stats" id="stats" aria-label="当前股票核验摘要"></section>
+<section class="panel" aria-labelledby="overviewTitle">
+  <div class="panel-head"><h2 id="overviewTitle">全部 36 个点 · 九个交易日全览</h2><p>只显示常规时段；夜间间隔被折叠，日期分界有竖线</p></div>
+  <div class="legend"><span><i class="diamond"></i>假设入场</span><span><i class="circle"></i>首次触及；数字表示同一根 K 线对应的入场数</span><span><i class="dash"></i>当前选中交易的 +5% 门槛</span></div>
+  <div class="chart-scroll"><svg class="chart" id="overviewChart" viewBox="0 0 1200 285" role="img" aria-label="全部常规时段五分钟K线与36个入场及触及标记"></svg></div>
+  <p class="chart-note">全览中，若多个买入点被同一根未来 K 线首次触及，圆点只画一次，并标出对应笔数。这表示不同交易共享后续行情，不是重复计算同一个买入时点。</p>
+</section>
+<div class="focus-grid">
+  <section class="panel" aria-labelledby="detailTitle">
+    <div class="panel-head"><h2 id="detailTitle">选中交易 · 入场至首次触及</h2><div class="step"><button id="prev" type="button" aria-label="上一交易点">←</button><span id="stepCount" class="small-mono"></span><button id="next" type="button" aria-label="下一交易点">→</button></div></div>
+    <div class="legend"><span><i class="diamond"></i>蓝色：入场 K 线开盘价</span><span><i class="circle"></i>琥珀色：首次触及 K 线最高价</span><span><i class="dash"></i>横线：入场价 × 1.05</span></div>
+    <div class="chart-scroll"><svg class="chart" id="detailChart" viewBox="0 0 1200 420" role="img" aria-label="选中交易的五分钟K线与入场、止盈门槛、首次触及位置"></svg></div>
+    <p class="chart-note">横轴按实际交易 K 线顺序排列，每个交易日之间折叠非交易时段。悬停 K 线可读开、高、低、收与成交量。</p>
+  </section>
+  <aside class="panel evidence" id="evidence" aria-live="polite" aria-label="选中交易数据依据"></aside>
+</div>
+<section class="panel" aria-labelledby="ledgerTitle">
+  <div class="ledger-head"><div><h2 id="ledgerTitle">选择一个交易点</h2><p class="chart-note">六个时点各只有一条记录；点击后上方放大对应的价格路径。</p></div><div class="ledger-tools"><label for="dayFilter">决策日期</label><select id="dayFilter"></select><button id="download" type="button">下载当前股票 36 条 CSV</button></div></div>
+  <div class="ledger" id="ledger"></div>
+</section>
+<footer class="footer" id="provenance"></footer>
+</main>
+<script id="payload" type="application/json">__PAYLOAD__</script>
+<script>
+(()=>{
+'use strict';
+const DATA=JSON.parse(document.getElementById('payload').textContent),SYMS=['ALAB','MU','NBIS','RKLB'];
+const $=id=>document.getElementById(id);let symbol='ALAB',selected=0,dayFilter='all';
+const e=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=x=>Number(x).toFixed(4),short=t=>String(t).slice(5),q=t=>`$${money(t)}`;
+function chart(svg,bars,trades,start,end,selectedTrade,kind){
+ const W=1200,H=kind==='overview'?285:420,L=67,R=18,T=kind==='overview'?32:36,B=42,pw=W-L-R,ph=H-T-B;
+ const visible=bars.slice(start,end+1),vals=visible.flatMap(b=>[b[2],b[3]]);
+ let lo=Math.min(...vals),hi=Math.max(...vals),pad=(hi-lo)*.09||1;lo-=pad;hi+=pad;
+ const N=end-start+1,step=pw/N,x=i=>L+(i-start+.5)*step,y=v=>T+(hi-v)/(hi-lo)*ph;
+ const p=[],grid=[];
+ p.push(`<title>${e(symbol)} 5分钟K线：${e(bars[start][0])} 至 ${e(bars[end][0])}</title>`);
+ if(kind==='overview'){
+  let xa=x(Math.max(start,selectedTrade.entry_index)),xb=x(Math.min(end,selectedTrade.hit_index));
+  p.push(`<rect x="${xa.toFixed(2)}" y="${T}" width="${Math.max(1,xb-xa).toFixed(2)}" height="${ph}" fill="var(--entry-soft)" opacity=".38"/>`);
+ }
+ for(let k=0;k<=4;k++){
+  let v=lo+(hi-lo)*(1-k/4),yy=y(v);grid.push(`<line x1="${L}" x2="${W-R}" y1="${yy.toFixed(2)}" y2="${yy.toFixed(2)}" stroke="var(--rule)" stroke-width=".7"/><text x="${L-8}" y="${(yy+3).toFixed(2)}" text-anchor="end" fill="var(--muted)" font-size="10">${v.toFixed(2)}</text>`)
+ }
+ p.push(grid.join(''));
+ let lastDay='';
+ for(let j=start;j<=end;j++){
+  let b=bars[j],day=b[0].slice(0,10);
+  if(day!==lastDay){let xx=x(j)-step/2;p.push(`<line x1="${xx.toFixed(2)}" x2="${xx.toFixed(2)}" y1="${T}" y2="${H-B}" stroke="var(--rule)" stroke-dasharray="3 4"/><text x="${Math.min(W-R-38,Math.max(L+4,xx+4)).toFixed(2)}" y="${H-14}" fill="var(--muted)" font-size="10">${e(day.slice(5))}</text>`);lastDay=day}
+ }
+ let bw=Math.max(.75,Math.min(7,step*.62));
+ for(let j=start;j<=end;j++){
+  let b=bars[j],xx=x(j),yo=y(b[1]),yh=y(b[2]),yl=y(b[3]),yc=y(b[4]),col=b[4]>=b[1]?'var(--up)':'var(--down)';
+  p.push(`<g><title>${e(b[0])} ET · O ${b[1]} · H ${b[2]} · L ${b[3]} · C ${b[4]} · V ${b[5]}</title><line x1="${xx.toFixed(2)}" y1="${yh.toFixed(2)}" x2="${xx.toFixed(2)}" y2="${yl.toFixed(2)}" stroke="${col}" stroke-width="${kind==='overview'?.85:1.1}"/><rect x="${(xx-bw/2).toFixed(2)}" y="${Math.min(yo,yc).toFixed(2)}" width="${bw.toFixed(2)}" height="${Math.max(1,Math.abs(yc-yo)).toFixed(2)}" fill="${col}"/></g>`)
+ }
+ if(selectedTrade.threshold>=lo&&selectedTrade.threshold<=hi){let yy=y(selectedTrade.threshold);let from=kind==='overview'?Math.max(start,selectedTrade.entry_index):start,to=kind==='overview'?Math.min(end,selectedTrade.hit_index):end;p.push(`<line x1="${x(from).toFixed(2)}" x2="${x(to).toFixed(2)}" y1="${yy.toFixed(2)}" y2="${yy.toFixed(2)}" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="6 4"/><text x="${W-R-3}" y="${Math.max(T+12,yy-4).toFixed(2)}" text-anchor="end" fill="var(--accent)" font-size="11" font-weight="700">+5% ${money(selectedTrade.threshold)}</text>`)}
+ const entryMarks=kind==='overview'?trades:[selectedTrade];
+ for(let t of entryMarks){if(t.entry_index<start||t.entry_index>end)continue;let xx=x(t.entry_index),yy=y(t.entry_price),r=t===selectedTrade?7:4.2;let poly=`${xx.toFixed(2)},${(yy-r).toFixed(2)} ${(xx+r).toFixed(2)},${yy.toFixed(2)} ${xx.toFixed(2)},${(yy+r).toFixed(2)} ${(xx-r).toFixed(2)},${yy.toFixed(2)}`;p.push(`<g><title>${e(t.day)} ${e(t.cutoff)} · 假设入场 ${money(t.entry_price)} · +5% ${money(t.threshold)}</title><polygon points="${poly}" fill="var(--entry-soft)" stroke="var(--entry)" stroke-width="${t===selectedTrade?2:1.5}"/></g>`)}
+ if(kind==='overview'){
+  const hits=new Map();for(let t of trades){let a=hits.get(t.hit_index)||[];a.push(t);hits.set(t.hit_index,a)}
+  for(let [idx,ts] of hits){if(idx<start||idx>end)continue;let xx=x(idx),yy=y(bars[idx][2]);p.push(`<g><title>${e(bars[idx][0])} ET · 最高价 ${bars[idx][2]} · 对应 ${ts.length} 个不同入场点首次触及</title><circle cx="${xx.toFixed(2)}" cy="${yy.toFixed(2)}" r="${ts.some(t=>t===selectedTrade)?7:5}" fill="var(--hit-soft)" stroke="var(--hit)" stroke-width="2"/>${ts.length>1?`<text x="${xx.toFixed(2)}" y="${(yy-11).toFixed(2)}" text-anchor="middle" fill="var(--hit)" font-size="11" font-weight="800">×${ts.length}</text>`:''}</g>`)}
+ }else{
+  let t=selectedTrade,xx=x(t.hit_index),yy=y(t.hit_high);
+  p.push(`<line x1="${x(t.entry_index).toFixed(2)}" x2="${x(t.entry_index).toFixed(2)}" y1="${T}" y2="${H-B}" stroke="var(--entry)" stroke-dasharray="3 4" opacity=".8"/><line x1="${xx.toFixed(2)}" x2="${xx.toFixed(2)}" y1="${T}" y2="${H-B}" stroke="var(--hit)" stroke-dasharray="3 4" opacity=".8"/><g><title>${e(t.hit_bar_start_et)}–${e(t.hit_bar_end_et)} ET · 首次触及 · 最高价 ${t.hit_high}</title><circle cx="${xx.toFixed(2)}" cy="${yy.toFixed(2)}" r="8" fill="var(--hit-soft)" stroke="var(--hit)" stroke-width="2.7"/></g>`);
+  let ex=x(t.entry_index),hy=y(t.entry_price);p.push(`<text x="${Math.max(L+20,ex).toFixed(2)}" y="${Math.max(T+14,hy-15).toFixed(2)}" text-anchor="middle" fill="var(--entry)" font-size="12" font-weight="800">入场</text><text x="${Math.min(W-R-20,xx).toFixed(2)}" y="${Math.max(T+14,yy-15).toFixed(2)}" text-anchor="middle" fill="var(--hit)" font-size="12" font-weight="800">首次触及</text>`)
+ }
+ svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=p.join('');
+}
+function renderTabs(){ $('tabs').innerHTML=SYMS.map(s=>`<button type="button" class="tab" role="tab" data-symbol="${s}" aria-selected="${s===symbol}"><b>${s}</b><small>36 / 36 触及</small></button>`).join('') }
+function renderStats(){let d=DATA.symbols[symbol],m=d.metrics;const stats=[['价格触及',`${m.touches} / ${m.decisions}`,'六天 × 六个独立时点'],['首次触及K线',String(m.distinct_hit_bars),'多笔可触及于同一根线'],['最大同线笔数',String(m.largest_hit_cluster),'一个标记代表多笔入场'],['入场到首次触及',`${m.min_elapsed_regular_minutes}–${m.max_elapsed_regular_minutes}`,'常规交易分钟；上限 1170']];$('stats').innerHTML=stats.map(([a,b,c])=>`<div class="stat"><small>${a}</small><strong>${b}</strong><span>${c}</span></div>`).join('')}
+function renderEvidence(){let t=DATA.symbols[symbol].trades[selected],bar=DATA.symbols[symbol].bars[t.hit_index];$('evidence').innerHTML=`<div class="evidence-head"><div><p class="eyebrow">${symbol} · ${e(t.day)}</p><h2>${e(t.cutoff)} 决策点</h2></div><span class="tag">第 ${selected+1} / 36 笔</span></div><div class="facts"><div class="fact"><small>假设入场 K 线</small><strong>${e(t.entry_at_et)} ET</strong></div><div class="fact"><small>入场开盘价</small><strong>${q(t.entry_price)}</strong></div><div class="fact"><small>+5% 价格门槛</small><strong>${q(t.threshold)}</strong></div><div class="fact"><small>首次触及 K 线最高价</small><strong>${q(t.hit_high)}</strong></div><div class="fact wide"><small>首次触及发生于这根 5 分钟线</small><strong>${e(t.hit_bar_start_et)} – ${e(t.hit_bar_end_et)} ET</strong></div><div class="fact"><small>该线开盘 / 收盘</small><strong>${q(t.hit_open)} / ${q(t.hit_close)}</strong></div><div class="fact"><small>该线成交量</small><strong>${Number(t.hit_volume).toLocaleString('en-US')}</strong></div><div class="fact"><small>首次触及最晚交易分钟</small><strong>${t.elapsed_regular_bars_upper*5} / 1170</strong></div><div class="fact"><small>完整标签窗口终点</small><strong>${e(t.full_window_end_et)} ET</strong></div></div><p class="proof"><b>核验：</b>入场后的 234 根常规时段 5 分钟线完整；首次达标线的 High ${q(bar[2])} ≥ 入场价 × 1.05 = ${q(t.threshold)}。这证明历史价格触及，不证明真实买单与止盈卖单成交。</p>`}
+function renderLedger(){let d=DATA.symbols[symbol],days=DATA.session_dates_et;let show=dayFilter==='all'?days:days.filter(x=>x===dayFilter);$('ledger').innerHTML=show.map(day=>{let xs=d.trades.map((t,i)=>({t,i})).filter(x=>x.t.day===day);return `<div class="ledger-day"><div class="ledger-day-label">${e(short(day))}</div><div class="trade-grid">${xs.map(({t,i})=>`<button type="button" class="trade" data-index="${i}" aria-pressed="${i===selected}"><b>${e(t.cutoff)} 入场</b><span>${q(t.entry_price)} → ${q(t.threshold)}</span><small>首触 ${e(short(t.hit_bar_start_et))}</small></button>`).join('')}</div></div>`}).join('')}
+function render(){let d=DATA.symbols[symbol],t=d.trades[selected];renderTabs();renderStats();chart($('overviewChart'),d.bars,d.trades,0,d.bars.length-1,t,'overview');let a=Math.max(0,t.entry_index-8),b=Math.min(d.bars.length-1,t.hit_index+8);if(b-a<48){let extra=Math.ceil((48-(b-a))/2);a=Math.max(0,a-extra);b=Math.min(d.bars.length-1,b+extra)}chart($('detailChart'),d.bars,d.trades,a,b,t,'detail');renderEvidence();renderLedger();$('stepCount').textContent=`${selected+1} / 36`;$('prev').disabled=selected===0;$('next').disabled=selected===35;$('dayFilter').value=dayFilter;$('detailTitle').textContent=`${symbol} · ${e(t.day)} ${e(t.cutoff)} 的价格路径`;$('overviewTitle').textContent=`${symbol} · 全部 36 个点与九个交易日 K 线`}
+function makeCsv(){let rows=DATA.symbols[symbol].trades;const keys=['day','cutoff','entry_at_et','entry_price','threshold','hit_bar_start_et','hit_bar_end_et','hit_high','hit_open','hit_close','hit_volume','elapsed_regular_bars_upper','full_window_end_et','id'];let csv=[keys.join(','),...rows.map(t=>keys.map(k=>`"${String(t[k]).replaceAll('"','""')}"`).join(','))].join('\n');let url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));let a=document.createElement('a');a.href=url;a.download=`${symbol}_36_touch_candles.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('tabs').addEventListener('click',ev=>{let btn=ev.target.closest('[data-symbol]');if(!btn)return;symbol=btn.dataset.symbol;selected=0;dayFilter='all';render()});
+$('ledger').addEventListener('click',ev=>{let btn=ev.target.closest('[data-index]');if(!btn)return;selected=Number(btn.dataset.index);render()});
+$('dayFilter').innerHTML='<option value="all">全部六天</option>'+DATA.session_dates_et.map(d=>`<option value="${d}">${e(d)}</option>`).join('');
+$('dayFilter').addEventListener('change',ev=>{dayFilter=ev.target.value;renderLedger()});
+$('prev').addEventListener('click',()=>{selected=Math.max(0,selected-1);dayFilter='all';render()});
+$('next').addEventListener('click',()=>{selected=Math.min(35,selected+1);dayFilter='all';render()});
+$('download').addEventListener('click',makeCsv);
+$('theme').addEventListener('click',()=>{let root=document.documentElement;root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('touchChartTheme',root.dataset.theme)}catch{}});
+try{let saved=localStorage.getItem('touchChartTheme');if(saved==='dark'||saved==='light')document.documentElement.dataset.theme=saved}catch{}
+$('provenance').innerHTML=`<b>数据依据：</b>富途 OpenD 原始价格口径（NONE）的历史 5 分钟 K 线；2026-09-24 尾盘在独立快照中补齐。四只股票各 702 根展示 K 线、36 个唯一决策点、每个入场后 234 根完整标签 K 线，均已从原始路径重新计算并与冻结历史标签对照。图只显示常规时段；横轴压缩了隔夜。<br><span class="small-mono">生成 ${e(DATA.generated_at_utc)} · 结果源 SHA-256 ${e(DATA.source_hashes.frozen_v4_terminal_outcomes.slice(0,16))}… · 图表数据内嵌，离线可用。</span>`;
+render();
+})();
+</script>
+</body>
+</html>

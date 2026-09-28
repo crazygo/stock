@@ -1,0 +1,124 @@
+{
+  "version": "v1",
+  "frozen_at": "2026-09-26T14:58:26.784829+00:00",
+  "discovery_dates": [
+    "2026-09-21",
+    "2026-09-25"
+  ],
+  "validation_last_date": "2026-09-17",
+  "purged_target_date": "2026-09-18",
+  "primary_target": "close8",
+  "secondary_target": "high10",
+  "rules": [
+    {
+      "id": "R1",
+      "name": "放量收强",
+      "english_name": "Volume + strong close",
+      "atoms": [
+        [
+          "prev_relvol",
+          ">=",
+          1.5
+        ],
+        [
+          "prev_location",
+          ">=",
+          0.8
+        ]
+      ],
+      "origin": "AMD, ALAB, ARM, MPWR in discovery"
+    },
+    {
+      "id": "R2",
+      "name": "放量尾盘拉升",
+      "english_name": "Volume + late rally",
+      "atoms": [
+        [
+          "prev_relvol",
+          ">=",
+          1.5
+        ],
+        [
+          "prev_last60",
+          ">=",
+          0.01
+        ]
+      ],
+      "origin": "AMD, ALAB, ARM, INTC in discovery"
+    },
+    {
+      "id": "R3",
+      "name": "放量下跌、收在低位",
+      "english_name": "Heavy selling near lows",
+      "atoms": [
+        [
+          "prev_relvol",
+          ">=",
+          1.5
+        ],
+        [
+          "prev_cc",
+          "<=",
+          -0.02
+        ],
+        [
+          "prev_location",
+          "<=",
+          0.25
+        ]
+      ],
+      "origin": "QCOM in primary discovery; META action-excluded appendix"
+    },
+    {
+      "id": "R4",
+      "name": "单纯放量对照",
+      "english_name": "Volume-only control",
+      "atoms": [
+        [
+          "prev_relvol",
+          ">=",
+          1.5
+        ]
+      ],
+      "origin": "Controls whether shape adds anything beyond volume"
+    },
+    {
+      "id": "R5",
+      "name": "盘后上涨",
+      "english_name": "After-hours jump",
+      "atoms": [
+        [
+          "prev_post_return",
+          ">=",
+          0.02
+        ]
+      ],
+      "origin": "Negative-control hypothesis; no recent primary winners show this"
+    },
+    {
+      "id": "R6",
+      "name": "缩量窄幅收强",
+      "english_name": "Quiet tight strong close",
+      "atoms": [
+        [
+          "prev_relvol",
+          "<=",
+          0.8
+        ],
+        [
+          "prev_range_ratio",
+          "<=",
+          0.8
+        ],
+        [
+          "prev_location",
+          ">=",
+          0.7
+        ]
+      ],
+      "origin": "Alternative hypothesis; no recent primary winners show this"
+    }
+  ],
+  "selection": "six manually interpretable hypotheses, no grid search; R1-R3 observed, R4 control, R5-R6 alternative checks",
+  "discovery_sha256": "0954b4175523d47b9c4b07b99ce33804fa28d627bbb0de3836392ab58b74739a"
+}

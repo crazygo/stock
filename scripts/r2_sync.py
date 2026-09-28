@@ -101,7 +101,9 @@ def cmd_push(args: argparse.Namespace, client: R2Client) -> int:
 
     print(f"Scanning local directory [{local_dir}] for {exts} to push to R2 [{client.bucket}/{prefix}]...")
     diff_res = client.diff(local_dir, remote_prefix=prefix, allowed_extensions=exts)
-    candidates = diff_res["only_local"] + diff_res["different"]
+    candidates = diff_res["only_local"] + [
+        {**item, "size": item["local_size"]} for item in diff_res["different"]
+    ]
 
     if args.force:
         candidates = [
@@ -175,7 +177,9 @@ def cmd_pull(args: argparse.Namespace, client: R2Client) -> int:
     print(f"Checking R2 objects under [{client.bucket}/{prefix}] for {exts}...")
     remote_objs = [o for o in client.list_objects(prefix=prefix) if any(o["key"].endswith(e) for e in exts)]
     diff_res = client.diff(local_dir, remote_prefix=prefix, allowed_extensions=exts)
-    candidates = diff_res["only_remote"] + diff_res["different"]
+    candidates = diff_res["only_remote"] + [
+        {**item, "size": item["remote_size"]} for item in diff_res["different"]
+    ]
 
     if args.force:
         candidates = remote_objs

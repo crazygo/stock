@@ -1,0 +1,64 @@
+{
+  "plan_id": "acquisition_plan_v1",
+  "generated_at": "2026-09-25T02:15:00Z",
+  "mandate_reference": "research/after_open_3d5pct/docs/06_data_acquisition_feasibility.md",
+  "contract_version": "research/after_open_3d5pct/configs/v1.json",
+  "strategy_id": "after_open_3d5pct_v1",
+  "market": "US_EQUITIES",
+  "time_range": {
+    "warmup_start": "2025-12-01",
+    "research_start": "2026-01-02",
+    "research_end": "2026-09-24",
+    "calendar_horizon_end": "2026-10-15"
+  },
+  "universe": {
+    "source_file": "market_data/research_v2/universe/qqq_retrospective_v1.json",
+    "total_symbols": 108,
+    "candidates_count": 101,
+    "benchmarks": ["QQQ", "SPY", "DIA", "SOXX", "SMH", "IGV", "XLU"],
+    "universe_mode": "current_universe_retrospective"
+  },
+  "storage_hierarchy": {
+    "base_path": "market_data/research_v2/futu",
+    "partition_template": "market_data/research_v2/futu/<SYMBOL>/<INTERVAL>/<PRICE_BASIS>/<SESSION>/<YEAR>.parquet",
+    "format": "Apache Parquet",
+    "compression": "ZSTD (level 7)",
+    "git_tracked": false
+  },
+  "three_tier_strategy": {
+    "tier_1": "Local Parquet filesystem hit",
+    "tier_2": "Cloudflare R2 object store hit (S3 SigV4 zero-dependency client)",
+    "tier_3": "Futu OpenD Gateway fallback (paginated history K-line requests)"
+  },
+  "rate_limiting_and_pacing": {
+    "inter_symbol_pacing_seconds": 1.2,
+    "inter_page_pacing_seconds": 0.3,
+    "max_requests_per_30s": 60,
+    "backoff_on_limit_seconds": 5.0,
+    "max_retries": 3
+  },
+  "quota_management": {
+    "total_futu_allowance": 300,
+    "currently_used": 220,
+    "currently_remaining": 80,
+    "qqq_candidates_in_quota": 104,
+    "additional_quota_required_for_qqq": 0,
+    "status": "ALL_CANDIDATES_PRE_AUTHORIZED"
+  },
+  "data_packages": {
+    "P0_price_volume": {
+      "intervals": ["5m", "60m"],
+      "price_basis": "NONE",
+      "sessions": ["ALL"],
+      "corporate_actions": "get_rehab (splits & dividends)"
+    },
+    "P1_events": {
+      "status": "planned_for_M3_M4",
+      "types": ["earnings_reports", "sec_8k_filings"]
+    },
+    "P2_forward_audit": {
+      "status": "ready",
+      "log_file": "market_data/research_v2/manifests/request_audit.jsonl"
+    }
+  }
+}

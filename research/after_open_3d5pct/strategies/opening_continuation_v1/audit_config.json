@@ -1,0 +1,21 @@
+{
+  "protocol": "opening_continuation_audit_v1",
+  "strategy_id": "opening_continuation_v1",
+  "source_start": "2026-01-02",
+  "source_end": "2026-09-24",
+  "cutoff_minutes_after_open": 10,
+  "signal_latency_seconds": 30,
+  "entry_minutes_after_open": [15, 20, 25],
+  "horizons_minutes": [20, 30, 45, 60],
+  "targets": [0.005, 0.0075, 0.01, 0.015, 0.02, 0.03, 0.05],
+  "efficiency_min": 0.5,
+  "late_contribution_min": 0.25,
+  "bootstrap_blocks": [5, 10],
+  "bootstrap_repeats": 1000,
+  "seed": 254020,
+  "universe": "market_data/universe/qqq_retrospective_v1.json",
+  "calendar": "market_data/calendars/nasdaq_sessions_2026_v1.json",
+  "data_root": "market_data/us_5m",
+  "evidence_level": "exposed_history_descriptive_only",
+  "availability_quality": "assumed_not_observed"
+}

@@ -1,0 +1,201 @@
+{
+  "source": "research/group_expectation_matrix/outputs/20260925_v5",
+  "source_hashes": {
+    "outcomes.parquet": "d20ca51f9bc28f81d3ba7ae2641f5b8853a799002848f5812ddccaf71c88f740",
+    "instruments.json": "67322e77421894eff96de676e55eccc696404964f9d5ba98fccd2e7c89aa32e9",
+    "manifest.json": "83b78ff7b6c47198cbc27b9e1dc02b3118f0986c992330f03c5e134ab99c50cb",
+    "config.json": "d976fa5f36eb4acce1482d45e8c29ad255e486bd37aadd8829f034518bf5ff18"
+  },
+  "script_sha256": "f2b0b55207978b2152051163305920e41fafc5cbf7f7b33b3da2de6fff270540",
+  "entry": "Each stock once per session at 11:35 ET, 5m Open; shared reference price",
+  "horizons": "2/3/5 times 390 regular-session minutes, excluding extended hours",
+  "target": "High touch >= +8% within 5 days, conditional on first +5% touch within 2 or 3 days",
+  "candidate_stocks": 101,
+  "effective_stocks": 101,
+  "eligible_samples": 17721,
+  "entry_date_range": [
+    "2026-01-02",
+    "2026-09-17"
+  ],
+  "entry_dates": 178,
+  "all_status_counts": {
+    "mature": 17721,
+    "pending": 505,
+    "missing": 226,
+    "corporate_action": 31
+  },
+  "unconditional_5d8pct": {
+    "numerator": 3567,
+    "denominator": 17721,
+    "rate": 0.20128660910783816
+  },
+  "results": [
+    {
+      "condition_days": 2,
+      "denominator": 3333,
+      "numerator": 2334,
+      "rate": 0.7002700270027002,
+      "date_block_bootstrap_95pct": [
+        0.668718205795819,
+        0.7274967525828994
+      ]
+    },
+    {
+      "condition_days": 3,
+      "denominator": 4554,
+      "numerator": 2985,
+      "rate": 0.6554677206851119,
+      "date_block_bootstrap_95pct": [
+        0.6223008787244684,
+        0.6836940560630818
+      ]
+    }
+  ],
+  "monthly": [
+    {
+      "condition_days": 2,
+      "month": "2026-01",
+      "denominator": 301,
+      "numerator": 205,
+      "rate": 0.6810631229235881
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-02",
+      "denominator": 334,
+      "numerator": 224,
+      "rate": 0.6706586826347305
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-03",
+      "denominator": 293,
+      "numerator": 194,
+      "rate": 0.6621160409556314
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-04",
+      "denominator": 519,
+      "numerator": 391,
+      "rate": 0.7533718689788054
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-05",
+      "denominator": 447,
+      "numerator": 340,
+      "rate": 0.7606263982102909
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-06",
+      "denominator": 449,
+      "numerator": 312,
+      "rate": 0.6948775055679287
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-07",
+      "denominator": 504,
+      "numerator": 341,
+      "rate": 0.6765873015873016
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-08",
+      "denominator": 314,
+      "numerator": 203,
+      "rate": 0.6464968152866242
+    },
+    {
+      "condition_days": 2,
+      "month": "2026-09",
+      "denominator": 172,
+      "numerator": 124,
+      "rate": 0.7209302325581395
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-01",
+      "denominator": 424,
+      "numerator": 265,
+      "rate": 0.625
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-02",
+      "denominator": 455,
+      "numerator": 280,
+      "rate": 0.6153846153846154
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-03",
+      "denominator": 411,
+      "numerator": 245,
+      "rate": 0.5961070559610706
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-04",
+      "denominator": 729,
+      "numerator": 512,
+      "rate": 0.7023319615912208
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-05",
+      "denominator": 592,
+      "numerator": 434,
+      "rate": 0.7331081081081081
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-06",
+      "denominator": 577,
+      "numerator": 377,
+      "rate": 0.6533795493934142
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-07",
+      "denominator": 680,
+      "numerator": 432,
+      "rate": 0.6352941176470588
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-08",
+      "denominator": 430,
+      "numerator": 267,
+      "rate": 0.6209302325581395
+    },
+    {
+      "condition_days": 3,
+      "month": "2026-09",
+      "denominator": 256,
+      "numerator": 173,
+      "rate": 0.67578125
+    }
+  ],
+  "audit": {
+    "three_day_label_comparisons": 17721,
+    "raw_window_spot_checks": 30,
+    "passed": true
+  },
+  "bootstrap": {
+    "method": "circular moving date blocks with full cross-sections",
+    "block_sessions": 10,
+    "replicates": 5000,
+    "seed": 20260926
+  },
+  "limitations": [
+    "Historical descriptive rate, not independently validated future probability",
+    "Overlapping stock-date windows are not independent trades",
+    "Current candidate-universe retrospective selection",
+    "Includes samples already at +8% within the 2/3-day condition period",
+    "Both targets refer to original entry; +8% is not an additional +8% after +5%",
+    "Touch is not closing return or an executable fill; no stop or costs included"
+  ]
+}

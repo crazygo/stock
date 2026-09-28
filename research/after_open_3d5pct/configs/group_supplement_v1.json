@@ -1,0 +1,24 @@
+{
+  "protocol": "group_supplement_report_v1",
+  "additional_symbols": ["CRDO", "COHR", "VRT", "SOXL", "SOXS"],
+  "evaluation_start": "2026-09-01",
+  "evaluation_end": "2026-09-17",
+  "snapshot_date": "2026-09-24",
+  "ranking_metric": "accuracy50",
+  "classification_threshold": 0.5,
+  "top_k_groups": 3,
+  "tie_break": ["mature_n_desc", "group_id_asc"],
+  "training": false,
+  "existing_predictions": "reuse_exactly",
+  "new_symbol_peer_universe": "original_frozen_candidate_pool",
+  "new_symbol_split_policy": "mask_history_before_latest_effective_capital_action",
+  "industry_usage": "report_slice_only_current_snapshot_retrospective",
+  "report_history": "exposed_post_selection_descriptive",
+  "five_model_sources": {
+    "B_lgbm_group": "research/after_open_3d5pct/runs/multiscale_groups_v61_fit_20260926",
+    "B_lgbm_no_group": "research/after_open_3d5pct/runs/multiscale_groups_v61_fit_20260926",
+    "C_patch_group": "research/after_open_3d5pct/runs/multiscale_groups_v611_typefix_fit_20260926",
+    "C_patch_no_group": "research/after_open_3d5pct/runs/multiscale_groups_v61_fit_20260926",
+    "C_patch_no_daily": "research/after_open_3d5pct/runs/multiscale_groups_v611_typefix_fit_20260926"
+  }
+}

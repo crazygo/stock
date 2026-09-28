@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "protocol_version": "group_expectation_daily_v1",
+  "start_date": "2026-01-02",
+  "end_date": "2026-09-24",
+  "evaluation_as_of": "2026-09-24T20:00:01+00:00",
+  "universe": "market_data/universe/qqq_retrospective_v1.json",
+  "calendar": "market_data/calendars/nasdaq_sessions_2026_v1.json",
+  "bars_dir": "market_data/us_5m",
+  "actions_dir": "market_data/corporate_actions",
+  "industry_tags": "research/group_expectation_matrix/config/industry_tags_v3.json",
+  "decision_time_et": "11:30",
+  "generation_delay_seconds": 30,
+  "manual_delay_seconds": 120,
+  "entry_max_wait_minutes": 5,
+  "trend_windows": [
+    15,
+    63,
+    126
+  ],
+  "trend_z_threshold": 1.0,
+  "volatility_window": 20,
+  "volatility_annual_cuts": [
+    0.2,
+    0.4
+  ],
+  "liquidity_window": 20,
+  "liquidity_dollars_cuts": [
+    50000000,
+    200000000
+  ],
+  "cost_bps_per_side": 6,
+  "bootstrap_block_sessions": 10,
+  "bootstrap_replicates": 400,
+  "minimum_inference_dates": 40,
+  "minimum_inference_stocks": 5,
+  "seed": 20260925,
+  "expectations": [
+    {
+      "expectation_id": "d1_r2",
+      "name": "1 日 +2%",
+      "trading_days": 1,
+      "target_return": 0.02
+    },
+    {
+      "expectation_id": "d3_r3",
+      "name": "3 日 +3%",
+      "trading_days": 3,
+      "target_return": 0.03
+    },
+    {
+      "expectation_id": "d3_r5",
+      "name": "3 日 +5%",
+      "trading_days": 3,
+      "target_return": 0.05
+    },
+    {
+      "expectation_id": "d5_r5",
+      "name": "5 日 +5%",
+      "trading_days": 5,
+      "target_return": 0.05
+    },
+    {
+      "expectation_id": "d10_r8",
+      "name": "10 日 +8%",
+      "trading_days": 10,
+      "target_return": 0.08
+    },
+    {
+      "expectation_id": "d20_r10",
+      "name": "20 日 +10%",
+      "trading_days": 20,
+      "target_return": 0.1
+    }
+  ]
+}

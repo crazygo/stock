@@ -1,0 +1,1438 @@
+{
+  "schema_version": "1.0",
+  "taxonomy_version": "industry_value_chain_v2",
+  "generated_at": "2026-09-25T15:22:13.009138Z",
+  "historical_membership": "current_snapshot_retrospective",
+  "source_available_at": "2026-09-25T15:22:13.009138Z",
+  "classification_method": "flat_refinement_of_manual_multi_label_official_business_evidence",
+  "derived_from_taxonomy_version": "industry_value_chain_v1",
+  "derived_from_taxonomy_sha256": "f76808e7c5f19c584073ecbb903fc6d4aca794420bbec6f88c36032339cf8f85",
+  "refinement": [
+    {
+      "source_group_id": "industry:compute_connectivity_chips",
+      "source_name": "计算与通信芯片",
+      "source_symbols": [
+        "ALAB",
+        "AMD",
+        "ARM",
+        "AVGO",
+        "INTC",
+        "MRVL",
+        "NVDA",
+        "QCOM"
+      ],
+      "subgroup_ids": [
+        "industry:compute_connectivity_chips__processor_accelerator",
+        "industry:compute_connectivity_chips__architecture_ip",
+        "industry:compute_connectivity_chips__connectivity_custom_silicon"
+      ]
+    },
+    {
+      "source_group_id": "industry:analog_embedded_power",
+      "source_name": "模拟、嵌入式与电源芯片",
+      "source_symbols": [
+        "ADI",
+        "MCHP",
+        "MPWR",
+        "NXPI",
+        "TXN"
+      ],
+      "subgroup_ids": [
+        "industry:analog_embedded_power__signal_conversion",
+        "industry:analog_embedded_power__embedded_control",
+        "industry:analog_embedded_power__power_management"
+      ]
+    },
+    {
+      "source_group_id": "industry:semiconductor_equipment",
+      "source_name": "半导体设备与测试",
+      "source_symbols": [
+        "AMAT",
+        "ASML",
+        "KLAC",
+        "LRCX",
+        "TER"
+      ],
+      "subgroup_ids": [
+        "industry:semiconductor_equipment__process_equipment",
+        "industry:semiconductor_equipment__lithography",
+        "industry:semiconductor_equipment__inspection_test"
+      ]
+    },
+    {
+      "source_group_id": "industry:eda_design_ip",
+      "source_name": "EDA 与半导体设计 IP",
+      "source_symbols": [
+        "ARM",
+        "CDNS",
+        "SNPS"
+      ],
+      "subgroup_ids": [
+        "industry:eda_design_ip__design_automation",
+        "industry:eda_design_ip__reusable_design_ip"
+      ]
+    },
+    {
+      "source_group_id": "industry:memory_storage",
+      "source_name": "存储器与数据存储",
+      "source_symbols": [
+        "MU",
+        "SNDK",
+        "STX",
+        "WDC"
+      ],
+      "subgroup_ids": [
+        "industry:memory_storage__dram",
+        "industry:memory_storage__flash_ssd",
+        "industry:memory_storage__hard_disk"
+      ]
+    },
+    {
+      "source_group_id": "industry:network_interconnect",
+      "source_name": "网络与高速互连",
+      "source_symbols": [
+        "ALAB",
+        "AVGO",
+        "CSCO",
+        "LITE",
+        "MRVL",
+        "NVDA"
+      ],
+      "subgroup_ids": [
+        "industry:network_interconnect__interconnect_chips",
+        "industry:network_interconnect__network_systems",
+        "industry:network_interconnect__optical_communications"
+      ]
+    },
+    {
+      "source_group_id": "industry:cloud_infrastructure",
+      "source_name": "云基础设施平台",
+      "source_symbols": [
+        "AMZN",
+        "CRWV",
+        "GOOG",
+        "GOOGL",
+        "MSFT",
+        "NBIS"
+      ],
+      "subgroup_ids": [
+        "industry:cloud_infrastructure__general_public_cloud",
+        "industry:cloud_infrastructure__ai_compute_cloud"
+      ]
+    },
+    {
+      "source_group_id": "industry:cybersecurity",
+      "source_name": "网络与云安全",
+      "source_symbols": [
+        "AVGO",
+        "CRWD",
+        "CSCO",
+        "DDOG",
+        "FTNT",
+        "MSFT",
+        "PANW"
+      ],
+      "subgroup_ids": [
+        "industry:cybersecurity__network_access",
+        "industry:cybersecurity__endpoint_operations",
+        "industry:cybersecurity__cloud_application"
+      ]
+    },
+    {
+      "source_group_id": "industry:enterprise_application_software",
+      "source_name": "企业应用与开发软件",
+      "source_symbols": [
+        "ADBE",
+        "ADSK",
+        "AVGO",
+        "DDOG",
+        "INTU",
+        "MSFT",
+        "PLTR",
+        "SHOP",
+        "WDAY"
+      ],
+      "subgroup_ids": [
+        "industry:enterprise_application_software__creation_engineering",
+        "industry:enterprise_application_software__finance_business",
+        "industry:enterprise_application_software__data_infrastructure"
+      ]
+    },
+    {
+      "source_group_id": "industry:commerce_platform",
+      "source_name": "数字商业平台",
+      "source_symbols": [
+        "AMZN",
+        "MELI",
+        "SHOP"
+      ],
+      "subgroup_ids": [
+        "industry:commerce_platform__marketplaces",
+        "industry:commerce_platform__merchant_tools"
+      ]
+    },
+    {
+      "source_group_id": "industry:digital_advertising",
+      "source_name": "数字广告平台",
+      "source_symbols": [
+        "AMZN",
+        "APP",
+        "GOOG",
+        "GOOGL",
+        "META"
+      ],
+      "subgroup_ids": [
+        "industry:digital_advertising__search_retail",
+        "industry:digital_advertising__social_video",
+        "industry:digital_advertising__in_app"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "group_id": "industry:compute_connectivity_chips__processor_accelerator",
+      "name": "计算与通信芯片 - 处理器与计算加速",
+      "derived_from_group_id": "industry:compute_connectivity_chips",
+      "segment": "处理器与计算加速",
+      "description": "提供通用处理器、图形处理器或计算加速产品；不把业务标签等同于收入纯度。",
+      "chain_stage": "计算器件",
+      "symbols": [
+        "AMD",
+        "INTC",
+        "NVDA",
+        "QCOM"
+      ],
+      "symbol_count": 4,
+      "issuer_count": 4,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.amd.com/en/products.html",
+          "title": "AMD Products: processors, graphics, AI accelerators, networking",
+          "supports": [
+            "AMD"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.intel.com/content/www/us/en/company-overview/company-overview.html",
+          "title": "Intel Company Overview: processors and foundry",
+          "supports": [
+            "INTC"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.nvidia.com/en-us/data-center/",
+          "title": "NVIDIA Data Centers: GPU, CPU, and networking architectures",
+          "supports": [
+            "NVDA"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.qualcomm.com/products",
+          "title": "Qualcomm Products: mobile and compute chipsets",
+          "supports": [
+            "QCOM"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:compute_connectivity_chips__architecture_ip",
+      "name": "计算与通信芯片 - 架构与计算 IP",
+      "derived_from_group_id": "industry:compute_connectivity_chips",
+      "segment": "架构与计算 IP",
+      "description": "提供处理器架构、计算子系统和可复用计算 IP；本候选池中只有 Arm。",
+      "chain_stage": "计算架构与 IP",
+      "symbols": [
+        "ARM"
+      ],
+      "symbol_count": 1,
+      "issuer_count": 1,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.arm.com/company/arm-compute-platform",
+          "title": "Arm Compute Platform: architecture, subsystems, IP and interconnects",
+          "supports": [
+            "ARM"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:compute_connectivity_chips__connectivity_custom_silicon",
+      "name": "计算与通信芯片 - 连接与定制芯片",
+      "derived_from_group_id": "industry:compute_connectivity_chips",
+      "segment": "连接与定制芯片",
+      "description": "提供连接、交换或定制数据基础设施芯片；成员不必同时具备所有列出的产品。",
+      "chain_stage": "数据基础设施芯片",
+      "symbols": [
+        "ALAB",
+        "AVGO",
+        "MRVL"
+      ],
+      "symbol_count": 3,
+      "issuer_count": 3,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.asteralabs.com/about/",
+          "title": "Astera Labs About: semiconductor connectivity for rack-scale AI",
+          "supports": [
+            "ALAB"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.broadcom.com/company/about-us",
+          "title": "Broadcom About Us: semiconductors and infrastructure software",
+          "supports": [
+            "AVGO"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.marvell.com/solutions/data-center.html",
+          "title": "Marvell Data Center: custom compute and electrical/optical interconnect silicon",
+          "supports": [
+            "MRVL"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:analog_embedded_power__signal_conversion",
+      "name": "模拟、嵌入式与电源芯片 - 模拟信号与转换",
+      "derived_from_group_id": "industry:analog_embedded_power",
+      "segment": "模拟信号与转换",
+      "description": "提供模拟/数字信号转换器，覆盖 ADC、DAC 及相关信号链器件。",
+      "chain_stage": "物理信号与数字系统接口",
+      "symbols": [
+        "ADI",
+        "TXN"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.analog.com/en/product-category/data-converters.html",
+          "title": "Analog Devices Data Converters: ADC and DAC products",
+          "supports": [
+            "ADI"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://www.ti.com/product-category/data-converters/overview.html",
+          "title": "TI Data Converters: ADC, DAC and integrated data converters",
+          "supports": [
+            "TXN"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:analog_embedded_power__embedded_control",
+      "name": "模拟、嵌入式与电源芯片 - 嵌入式控制",
+      "derived_from_group_id": "industry:analog_embedded_power",
+      "segment": "嵌入式控制",
+      "description": "提供面向设备控制的微控制器、嵌入式处理器及相关控制器件。",
+      "chain_stage": "终端设备控制",
+      "symbols": [
+        "MCHP",
+        "NXPI",
+        "TXN"
+      ],
+      "symbol_count": 3,
+      "issuer_count": 3,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.microchip.com/en-us/about/corporate-overview/what-we-do",
+          "title": "Microchip: analog and embedded control semiconductors",
+          "supports": [
+            "MCHP"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.nxp.com/products/processors-and-microcontrollers%3AMICROCONTROLLERS-AND-PROCESSORS",
+          "title": "NXP Processors and Microcontrollers: embedded control, analog and communications IP",
+          "supports": [
+            "NXPI"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.ti.com/about-ti.html",
+          "title": "Texas Instruments: analog and embedded processing chips",
+          "supports": [
+            "TXN"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:analog_embedded_power__power_management",
+      "name": "模拟、嵌入式与电源芯片 - 电源管理",
+      "derived_from_group_id": "industry:analog_embedded_power",
+      "segment": "电源管理",
+      "description": "提供稳压、功率转换或集成电源管理器件；按产品存在关系定义。",
+      "chain_stage": "电子系统供电",
+      "symbols": [
+        "ADI",
+        "MCHP",
+        "MPWR",
+        "TXN"
+      ],
+      "symbol_count": 4,
+      "issuer_count": 4,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.analog.com/en/product-category/pmic.html",
+          "title": "Analog Devices Power Management Integrated Circuits",
+          "supports": [
+            "ADI"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://www.microchip.com/en-us/products/power-management/voltage-current-power-conversion",
+          "title": "Microchip Voltage/Current Regulators, Converters and Controllers",
+          "supports": [
+            "MCHP"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://www.monolithicpower.com/en/products.html",
+          "title": "MPS: power management and analog products",
+          "supports": [
+            "MPWR"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.ti.com/product-category/power-management/power-embedded-systems.html",
+          "title": "TI Power for Embedded Systems: power management solutions",
+          "supports": [
+            "TXN"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:semiconductor_equipment__process_equipment",
+      "name": "半导体设备与测试 - 晶圆工艺设备",
+      "derived_from_group_id": "industry:semiconductor_equipment",
+      "segment": "晶圆工艺设备",
+      "description": "提供沉积、刻蚀、清洗、材料处理等晶圆制造工艺设备。",
+      "chain_stage": "晶圆工艺",
+      "symbols": [
+        "AMAT",
+        "LRCX"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.appliedmaterials.com/us/en/semiconductor/products.html",
+          "title": "Applied Materials: semiconductor manufacturing products",
+          "supports": [
+            "AMAT"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.lamresearch.com/products/products-overview/",
+          "title": "Lam Research: deposition, etch, strip and wafer cleaning",
+          "supports": [
+            "LRCX"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:semiconductor_equipment__lithography",
+      "name": "半导体设备与测试 - 光刻设备",
+      "derived_from_group_id": "industry:semiconductor_equipment",
+      "segment": "光刻设备",
+      "description": "提供半导体光刻系统；本候选池中只有 ASML。",
+      "chain_stage": "图形转移与光刻",
+      "symbols": [
+        "ASML"
+      ],
+      "symbol_count": 1,
+      "issuer_count": 1,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.asml.com/en/products",
+          "title": "ASML Products: lithography, metrology and inspection",
+          "supports": [
+            "ASML"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:semiconductor_equipment__inspection_test",
+      "name": "半导体设备与测试 - 检测与测试",
+      "derived_from_group_id": "industry:semiconductor_equipment",
+      "segment": "检测与测试",
+      "description": "KLA 侧重制程量检测，Teradyne 侧重芯片电性/系统测试；二者都服务制造质量保障但所处阶段不同。",
+      "chain_stage": "制造质量检测与芯片测试",
+      "symbols": [
+        "KLAC",
+        "TER"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://ir.kla.com/sec-filings/all-sec-filings/content/0000319201-26-000027/klac-20260630.htm",
+          "title": "KLA FY2026 Form 10-K: process control and process equipment",
+          "supports": [
+            "KLAC"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.teradyne.com/semiconductor-testing/",
+          "title": "Teradyne Semiconductor Test",
+          "supports": [
+            "TER"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:eda_design_ip__design_automation",
+      "name": "EDA 与半导体设计 IP - 设计自动化工具",
+      "derived_from_group_id": "industry:eda_design_ip",
+      "segment": "设计自动化工具",
+      "description": "提供电子设计自动化、仿真、验证或实现工具。",
+      "chain_stage": "芯片设计工具",
+      "symbols": [
+        "CDNS",
+        "SNPS"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.cadence.com/en_US/home/resources/factsheets/cadence-design-systems-inc-fs.html",
+          "title": "Cadence Factsheet: EDA and semiconductor IP",
+          "supports": [
+            "CDNS"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.synopsys.com/silicon-design.html",
+          "title": "Synopsys: EDA and silicon IP",
+          "supports": [
+            "SNPS"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:eda_design_ip__reusable_design_ip",
+      "name": "EDA 与半导体设计 IP - 可复用设计 IP",
+      "derived_from_group_id": "industry:eda_design_ip",
+      "segment": "可复用设计 IP",
+      "description": "提供可被集成到芯片中的架构、处理器、接口或基础设施 IP。",
+      "chain_stage": "芯片设计知识产权",
+      "symbols": [
+        "ARM",
+        "CDNS",
+        "SNPS"
+      ],
+      "symbol_count": 3,
+      "issuer_count": 3,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.arm.com/company/arm-compute-platform",
+          "title": "Arm Compute Platform: architecture, subsystems, IP and interconnects",
+          "supports": [
+            "ARM"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.cadence.com/en_US/home/tools/silicon-solutions/design-ip/interface-ip.html",
+          "title": "Cadence Interface IP: silicon-proven Design IP portfolio",
+          "supports": [
+            "CDNS"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://www.synopsys.com/designware-ip/soc-infrastructure-ip/designware-library.html",
+          "title": "Synopsys Library IP: reusable infrastructure, bus and microcontroller IP",
+          "supports": [
+            "SNPS"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:memory_storage__dram",
+      "name": "存储器与数据存储 - DRAM 存储器",
+      "derived_from_group_id": "industry:memory_storage",
+      "segment": "DRAM 存储器",
+      "description": "提供 DRAM 易失性存储器；本候选池中只有 Micron。",
+      "chain_stage": "运行内存",
+      "symbols": [
+        "MU"
+      ],
+      "symbol_count": 1,
+      "issuer_count": 1,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.micron.com/about/company/corporate-profile",
+          "title": "Micron Corporate Profile: DRAM, NAND and NOR",
+          "supports": [
+            "MU"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:memory_storage__flash_ssd",
+      "name": "存储器与数据存储 - 闪存与固态存储",
+      "derived_from_group_id": "industry:memory_storage",
+      "segment": "闪存与固态存储",
+      "description": "提供 NAND/闪存或以闪存为基础的固态存储产品。",
+      "chain_stage": "非易失性固态存储",
+      "symbols": [
+        "MU",
+        "SNDK"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.micron.com/about/company/corporate-profile",
+          "title": "Micron Corporate Profile: DRAM, NAND and NOR",
+          "supports": [
+            "MU"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.sandisk.com/products.aspx",
+          "title": "Sandisk: flash storage, SSD and memory card products",
+          "supports": [
+            "SNDK"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:memory_storage__hard_disk",
+      "name": "存储器与数据存储 - 硬盘存储",
+      "derived_from_group_id": "industry:memory_storage",
+      "segment": "硬盘存储",
+      "description": "提供磁性硬盘存储产品，区别于本版的 DRAM 和闪存组。",
+      "chain_stage": "大容量磁性存储",
+      "symbols": [
+        "STX",
+        "WDC"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.seagate.com/gb/en/stories/corporate-overview/",
+          "title": "Seagate Corporate Overview: hard drive data storage",
+          "supports": [
+            "STX"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.westerndigital.com/products/product-portfolio",
+          "title": "Western Digital: hard drive product portfolio",
+          "supports": [
+            "WDC"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:network_interconnect__interconnect_chips",
+      "name": "网络与高速互连 - 互连与交换芯片",
+      "derived_from_group_id": "industry:network_interconnect",
+      "segment": "互连与交换芯片",
+      "description": "提供 PCIe/CXL、以太网、交换或高速传输器件；强调网络器件角色。",
+      "chain_stage": "连接器件",
+      "symbols": [
+        "ALAB",
+        "AVGO",
+        "MRVL"
+      ],
+      "symbol_count": 3,
+      "issuer_count": 3,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.asteralabs.com/about/",
+          "title": "Astera Labs About: semiconductor connectivity for rack-scale AI",
+          "supports": [
+            "ALAB"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.broadcom.com/company/about-us",
+          "title": "Broadcom About Us: semiconductors and infrastructure software",
+          "supports": [
+            "AVGO"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.marvell.com/solutions/data-center.html",
+          "title": "Marvell Data Center: custom compute and electrical/optical interconnect silicon",
+          "supports": [
+            "MRVL"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:network_interconnect__network_systems",
+      "name": "网络与高速互连 - 网络系统与平台",
+      "derived_from_group_id": "industry:network_interconnect",
+      "segment": "网络系统与平台",
+      "description": "提供交换网络、以太网/InfiniBand 等网络系统或平台；两者终端市场不同。",
+      "chain_stage": "网络系统",
+      "symbols": [
+        "CSCO",
+        "NVDA"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.cisco.com/site/us/en/products/networking/index.html",
+          "title": "Cisco Networking Products and Solutions",
+          "supports": [
+            "CSCO"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.nvidia.com/en-us/networking/",
+          "title": "NVIDIA Networking: Spectrum-X Ethernet, Quantum InfiniBand and BlueField systems",
+          "supports": [
+            "NVDA"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:network_interconnect__optical_communications",
+      "name": "网络与高速互连 - 光通信器件",
+      "derived_from_group_id": "industry:network_interconnect",
+      "segment": "光通信器件",
+      "description": "提供用于通信和数据网络的光学/光子器件；本候选池中只有 Lumentum。",
+      "chain_stage": "光通信器件",
+      "symbols": [
+        "LITE"
+      ],
+      "symbol_count": 1,
+      "issuer_count": 1,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.lumentum.com/en/solutions",
+          "title": "Lumentum: optical and photonic networking technologies",
+          "supports": [
+            "LITE"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:cloud_infrastructure__general_public_cloud",
+      "name": "云基础设施平台 - 通用公有云",
+      "derived_from_group_id": "industry:cloud_infrastructure",
+      "segment": "通用公有云",
+      "description": "运营具有广泛计算、存储、数据与应用服务的公有云平台；同时可能提供 AI 服务。",
+      "chain_stage": "通用云平台",
+      "symbols": [
+        "AMZN",
+        "GOOG",
+        "GOOGL",
+        "MSFT"
+      ],
+      "symbol_count": 4,
+      "issuer_count": 3,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.aboutamazon.com/about-us",
+          "title": "Amazon About Us: online shopping, cloud computing and advertising",
+          "supports": [
+            "AMZN"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://abc.xyz/assets/cc/27/3ada14014efbadd7a58472f1f3f4/2025q2-alphabet-earnings-release.pdf",
+          "title": "Alphabet Q2 2025 Results: Google advertising and Google Cloud",
+          "supports": [
+            "GOOG",
+            "GOOGL"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.microsoft.com/investor/reports/ar25/",
+          "title": "Microsoft 2025 Annual Report: Azure, server and productivity software",
+          "supports": [
+            "MSFT"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:cloud_infrastructure__ai_compute_cloud",
+      "name": "云基础设施平台 - AI 算力云",
+      "derived_from_group_id": "industry:cloud_infrastructure",
+      "segment": "AI 算力云",
+      "description": "以 AI 模型训练、推理及相关算力基础设施为核心定位的云平台。",
+      "chain_stage": "AI 云平台",
+      "symbols": [
+        "CRWV",
+        "NBIS"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.coreweave.com/about-us",
+          "title": "CoreWeave About Us: cloud for AI workloads",
+          "supports": [
+            "CRWV"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://nebius.com/about",
+          "title": "Nebius About: AI cloud platform",
+          "supports": [
+            "NBIS"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:cybersecurity__network_access",
+      "name": "网络与云安全 - 网络与接入安全",
+      "derived_from_group_id": "industry:cybersecurity",
+      "segment": "网络与接入安全",
+      "description": "提供网络网关、访问控制、防火墙或安全接入类产品。",
+      "chain_stage": "网络与访问保护",
+      "symbols": [
+        "AVGO",
+        "CSCO",
+        "FTNT",
+        "PANW"
+      ],
+      "symbol_count": 4,
+      "issuer_count": 4,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.broadcom.com/products/cybersecurity/network/web-protection/proxy-sg-and-advanced-secure-gateway",
+          "title": "Broadcom Symantec Edge Secure Web Gateway: appliance and cloud network access protection",
+          "supports": [
+            "AVGO"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://www.cisco.com/site/us/en/products/security/index.html",
+          "title": "Cisco Security: cloud, endpoint and network protection",
+          "supports": [
+            "CSCO"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.fortinet.com/corporate/about-us/about-us",
+          "title": "Fortinet About: cybersecurity and networking",
+          "supports": [
+            "FTNT"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.paloaltonetworks.com/about-us",
+          "title": "Palo Alto Networks: network, cloud and security operations",
+          "supports": [
+            "PANW"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:cybersecurity__endpoint_operations",
+      "name": "网络与云安全 - 终端保护与安全运营",
+      "derived_from_group_id": "industry:cybersecurity",
+      "segment": "终端保护与安全运营",
+      "description": "提供终端保护、检测响应与威胁调查能力；并不表示两家公司仅做终端。",
+      "chain_stage": "终端与威胁响应",
+      "symbols": [
+        "CRWD",
+        "MSFT"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.crowdstrike.com/wp-content/uploads/2024/10/Falcon-Endpoint-Protection-Enterprise-Datasheet.pdf",
+          "title": "CrowdStrike Falcon Endpoint Protection: antivirus, EDR and threat hunting",
+          "supports": [
+            "CRWD"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://www.microsoft.com/en-us/security/business/endpoint-security/microsoft-defender-business",
+          "title": "Microsoft Defender for Business: device, server and endpoint protection",
+          "supports": [
+            "MSFT"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:cybersecurity__cloud_application",
+      "name": "网络与云安全 - 云与应用安全",
+      "derived_from_group_id": "industry:cybersecurity",
+      "segment": "云与应用安全",
+      "description": "提供云工作负载、云配置、代码或应用运行时安全产品。",
+      "chain_stage": "云与应用保护",
+      "symbols": [
+        "CRWD",
+        "DDOG",
+        "PANW"
+      ],
+      "symbol_count": 3,
+      "issuer_count": 3,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.crowdstrike.com/en-us/platform/cloud-security/",
+          "title": "CrowdStrike Falcon Cloud Security",
+          "supports": [
+            "CRWD"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://docs.datadoghq.com/security/",
+          "title": "Datadog Security: application, host, container and cloud infrastructure protection",
+          "supports": [
+            "DDOG"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://www.paloaltonetworks.com/cloud-security/prisma-public-cloud",
+          "title": "Palo Alto Networks Prisma Cloud: code-to-cloud application security",
+          "supports": [
+            "PANW"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:enterprise_application_software__creation_engineering",
+      "name": "企业应用与开发软件 - 创作与工程设计",
+      "derived_from_group_id": "industry:enterprise_application_software",
+      "segment": "创作与工程设计",
+      "description": "面向创作者与专业设计/工程用户提供数字创作或设计软件。",
+      "chain_stage": "创作与设计应用",
+      "symbols": [
+        "ADBE",
+        "ADSK"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.adobe.com/about-adobe.html",
+          "title": "Adobe About: creative, document and experience software",
+          "supports": [
+            "ADBE"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.autodesk.com/company",
+          "title": "Autodesk: Design and Make platform",
+          "supports": [
+            "ADSK"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:enterprise_application_software__finance_business",
+      "name": "企业应用与开发软件 - 财务与企业经营",
+      "derived_from_group_id": "industry:enterprise_application_software",
+      "segment": "财务与企业经营",
+      "description": "提供财务、HR、规划或商家经营应用；商家工具与大型企业 ERP 并非同一市场。",
+      "chain_stage": "企业经营应用",
+      "symbols": [
+        "INTU",
+        "SHOP",
+        "WDAY"
+      ],
+      "symbol_count": 3,
+      "issuer_count": 3,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.intuit.com/company/",
+          "title": "Intuit: TurboTax, QuickBooks, Mailchimp and enterprise software",
+          "supports": [
+            "INTU"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.shopify.com/about",
+          "title": "Shopify: commerce platform for online and physical stores",
+          "supports": [
+            "SHOP"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.workday.com/en-au/company.html",
+          "title": "Workday: finance, HR and planning software",
+          "supports": [
+            "WDAY"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:enterprise_application_software__data_infrastructure",
+      "name": "企业应用与开发软件 - 数据与基础平台",
+      "derived_from_group_id": "industry:enterprise_application_software",
+      "segment": "数据与基础平台",
+      "description": "提供基础软件、运维可观测性、企业数据/AI 或开发云平台；仍是需进一步检验的宽子群。",
+      "chain_stage": "数据与基础平台软件",
+      "symbols": [
+        "AVGO",
+        "DDOG",
+        "MSFT",
+        "PLTR"
+      ],
+      "symbol_count": 4,
+      "issuer_count": 4,
+      "small_group": false,
+      "small_issuer_group": false,
+      "sources": [
+        {
+          "url": "https://www.broadcom.com/company/about-us",
+          "title": "Broadcom About Us: semiconductors and infrastructure software",
+          "supports": [
+            "AVGO"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.datadoghq.com/product/",
+          "title": "Datadog: observability, monitoring and security platform",
+          "supports": [
+            "DDOG"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.microsoft.com/investor/reports/ar25/",
+          "title": "Microsoft 2025 Annual Report: Azure, server and productivity software",
+          "supports": [
+            "MSFT"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://www.palantir.com/docs/foundry/architecture-center/overview",
+          "title": "Palantir Architecture: AIP, Foundry and Apollo",
+          "supports": [
+            "PLTR"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:commerce_platform__marketplaces",
+      "name": "数字商业平台 - 交易市场平台",
+      "derived_from_group_id": "industry:commerce_platform",
+      "segment": "交易市场平台",
+      "description": "运营连接买家、卖家和商品交易的数字市场平台。",
+      "chain_stage": "交易撮合与市场运营",
+      "symbols": [
+        "AMZN",
+        "MELI"
+      ],
+      "symbol_count": 2,
+      "issuer_count": 2,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.aboutamazon.com/about-us",
+          "title": "Amazon About Us: online shopping, cloud computing and advertising",
+          "supports": [
+            "AMZN"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        },
+        {
+          "url": "https://investor.mercadolibre.com/about-meli",
+          "title": "Mercado Libre: commerce and fintech ecosystem",
+          "supports": [
+            "MELI"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:commerce_platform__merchant_tools",
+      "name": "数字商业平台 - 商家经营工具",
+      "derived_from_group_id": "industry:commerce_platform",
+      "segment": "商家经营工具",
+      "description": "提供商家独立经营线上/线下商务的工具和基础设施；本候选池中只有 Shopify。",
+      "chain_stage": "商家工具与基础设施",
+      "symbols": [
+        "SHOP"
+      ],
+      "symbol_count": 1,
+      "issuer_count": 1,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.shopify.com/about",
+          "title": "Shopify: commerce platform for online and physical stores",
+          "supports": [
+            "SHOP"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:digital_advertising__search_retail",
+      "name": "数字广告平台 - 搜索与零售媒体",
+      "derived_from_group_id": "industry:digital_advertising",
+      "segment": "搜索与零售媒体",
+      "description": "提供基于搜索/购物场景的广告位；不声称该渠道覆盖这些公司的全部广告收入。",
+      "chain_stage": "搜索与购物意图变现",
+      "symbols": [
+        "AMZN",
+        "GOOG",
+        "GOOGL"
+      ],
+      "symbol_count": 3,
+      "issuer_count": 2,
+      "small_group": false,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://advertising.amazon.com/en-ca/solutions/products/sponsored-products",
+          "title": "Amazon Sponsored Products: ads within shopping results and product pages",
+          "supports": [
+            "AMZN"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        },
+        {
+          "url": "https://ads.google.com/intl/en_na/home/",
+          "title": "Google Ads: advertising to people searching for products and services",
+          "supports": [
+            "GOOG",
+            "GOOGL"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:digital_advertising__social_video",
+      "name": "数字广告平台 - 社交与短视频广告",
+      "derived_from_group_id": "industry:digital_advertising",
+      "segment": "社交与短视频广告",
+      "description": "通过 Facebook/Instagram 等社交和短视频场景提供广告位；本候选池中只有 Meta。",
+      "chain_stage": "社交内容流变现",
+      "symbols": [
+        "META"
+      ],
+      "symbol_count": 1,
+      "issuer_count": 1,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
+          "title": "Meta for Business: Facebook and Instagram Reels ads",
+          "supports": [
+            "META"
+          ],
+          "observed_at": "2026-09-25T15:22:13.009138Z"
+        }
+      ]
+    },
+    {
+      "group_id": "industry:digital_advertising__in_app",
+      "name": "数字广告平台 - 应用内广告",
+      "derived_from_group_id": "industry:digital_advertising",
+      "segment": "应用内广告",
+      "description": "通过移动应用/游戏内广告与变现平台服务广告主和发行方；本候选池中只有 AppLovin。",
+      "chain_stage": "应用流量变现",
+      "symbols": [
+        "APP"
+      ],
+      "symbol_count": 1,
+      "issuer_count": 1,
+      "small_group": true,
+      "small_issuer_group": true,
+      "sources": [
+        {
+          "url": "https://www.applovin.com/en/about",
+          "title": "AppLovin About: performance advertising platform",
+          "supports": [
+            "APP"
+          ],
+          "observed_at": "2026-09-25T14:42:56.483361Z"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "candidate_count": 101,
+    "classified_count": 45,
+    "classified_symbols": [
+      "ADBE",
+      "ADI",
+      "ADSK",
+      "ALAB",
+      "AMAT",
+      "AMD",
+      "AMZN",
+      "APP",
+      "ARM",
+      "ASML",
+      "AVGO",
+      "CDNS",
+      "CRWD",
+      "CRWV",
+      "CSCO",
+      "DDOG",
+      "FTNT",
+      "GOOG",
+      "GOOGL",
+      "INTC",
+      "INTU",
+      "KLAC",
+      "LITE",
+      "LRCX",
+      "MCHP",
+      "MELI",
+      "META",
+      "MPWR",
+      "MRVL",
+      "MSFT",
+      "MU",
+      "NBIS",
+      "NVDA",
+      "NXPI",
+      "PANW",
+      "PLTR",
+      "QCOM",
+      "SHOP",
+      "SNDK",
+      "SNPS",
+      "STX",
+      "TER",
+      "TXN",
+      "WDAY",
+      "WDC"
+    ],
+    "unclassified_symbols": [
+      "AAPL",
+      "ABNB",
+      "ADP",
+      "AEP",
+      "ALNY",
+      "AMGN",
+      "AXON",
+      "BKNG",
+      "BKR",
+      "CCEP",
+      "CEG",
+      "CMCSA",
+      "COST",
+      "CPRT",
+      "CSX",
+      "CTAS",
+      "DASH",
+      "DXCM",
+      "EXC",
+      "FANG",
+      "FAST",
+      "FER",
+      "GEHC",
+      "GILD",
+      "HON",
+      "HONA",
+      "IDXX",
+      "ISRG",
+      "KDP",
+      "LIN",
+      "MAR",
+      "MDLZ",
+      "MNST",
+      "MSTR",
+      "NFLX",
+      "ODFL",
+      "ORLY",
+      "PAYX",
+      "PCAR",
+      "PDD",
+      "PEP",
+      "PYPL",
+      "REGN",
+      "RKLB",
+      "ROP",
+      "ROST",
+      "SBUX",
+      "SPCX",
+      "TMUS",
+      "TRI",
+      "TSLA",
+      "TTWO",
+      "VRTX",
+      "WBD",
+      "WMT",
+      "XEL"
+    ]
+  },
+  "issuer_aliases": {
+    "GOOG": "Alphabet",
+    "GOOGL": "Alphabet"
+  },
+  "equivalent_membership_groups": [
+    {
+      "symbols": [
+        "ALAB",
+        "AVGO",
+        "MRVL"
+      ],
+      "group_ids": [
+        "industry:compute_connectivity_chips__connectivity_custom_silicon",
+        "industry:network_interconnect__interconnect_chips"
+      ],
+      "meaning": "候选池内成员恰好相同；研究命题标签不同，统计结果不是独立证据。"
+    }
+  ],
+  "statistics": {
+    "original_group_count": 11,
+    "group_count": 30,
+    "original_membership_edges": 61,
+    "membership_edges": 70,
+    "classified_symbol_count": 45,
+    "small_group_count": 18,
+    "small_issuer_group_count": 19
+  },
+  "notes": [
+    "30 个群全部为平级研究行；不保留 11 个旧宽群行，不构建 UI 父子层级。derived_from_group_id 和 refinement 仅用于来源谱系与覆盖校验。",
+    "每个原群有 2–3 个细分群，细分成员并集严格等于原群成员集合。未扩充 45 个已分类证券；未分类仍为原来的 56 个证券。",
+    "来源支持产品或业务存在，不等于主营收入占比、正式行业分类、已证明供应链边或股价传导关系。",
+    "子群允许多标签：例如 MU 属于 DRAM 与闪存，TXN 涉及信号转换、嵌入式控制与电源管理，CDNS/SNPS 涉及 EDA 与 IP。",
+    "既有来源保留 v1 的 observed_at；新补充或重新核验的细分来源记录本次 observed_at。generated_at 和 source_available_at 不能回填到历史。",
+    "current_snapshot_retrospective 仅支持当前身份的历史描述性回看；严格 PIT 回测需历史披露、可获取日期和成员变更快照。",
+    "不同群可能包含相同或重叠证券，格子统计不可视作独立证据。equivalent_membership_groups 明确列出成员集合完全相同的群。",
+    "1–2 个证券的小群允许存在，但其结果可能只是个股历史特征，不能自动推广为行业共性。small_group 依据证券数，small_issuer_group 依据已知发行人去重。",
+    "GOOG 和 GOOGL 均归属于 Alphabet；搜索与零售媒体虽有 3 个证券，但只有 2 个发行人。",
+    "本次细分没有用任何期望达成率选择标签。标签的预测增益和收益/期限/回撤适配仍须在独立时间段检验。",
+    "标签整理非业务暴露穷尽清单；未列入某子群不等于公司没有该业务，尤其综合云、广告与软件厂商跨业务较广。"
+  ]
+}

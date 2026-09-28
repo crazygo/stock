@@ -1,0 +1,142 @@
+// Browser checks for this artifact; pass a Playwright package path if not in NODE_PATH.
+const { chromium } = require(process.env.MATRIX_PLAYWRIGHT_PATH || 'playwright');
+const fs = require('fs');
+const path = require('path');
+const assert = require('assert').strict;
+
+async function main() {
+  const run = path.resolve(process.argv[2]);
+  const bundle = JSON.parse(fs.readFileSync(path.join(run, 'bundle.json')));
+  const allCells = bundle.cells.filter(c => c.scope === 'all');
+  const matureGroups = new Set(allCells.filter(c => c.mature_n > 0).map(c => c.group_id));
+  const industry = bundle.groups.filter(g => g.strategy_id === 'industry');
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1512, height: 1100 } });
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.goto('file://' + path.join(run, 'index.html'));
+  await page.waitForSelector('#matrix .cell');
+  assert.equal(await page.locator('#matrix .cell').count(), allCells.length);
+  await page.locator('#sufficient').check();
+  assert.equal(await page.locator('#matrix .cell').count(), matureGroups.size * bundle.expectations.length);
+  await page.locator('#sufficient').uncheck();
+  await page.screenshot({ path: path.join(run, 'desktop.png'), fullPage: false });
+  await page.selectOption('#strategy', 'industry');
+  assert.equal(await page.locator('#matrix .cell').count(), industry.length * bundle.expectations.length);
+  assert.deepEqual(await page.locator('#matrix .group-name').allTextContents(), industry.map(g => g.name));
+  assert.equal(await page.locator('#matrix .group-heading').count(), 1);
+  if (bundle.industry_refinement?.length) {
+    assert.ok(industry.filter(g => g.group_kind !== 'parent').every(g => g.name.includes(' - ')));
+    assert.ok(bundle.industry_refinement.every(r => r.subgroup_ids.length >= 2 && r.subgroup_ids.length <= 3));
+    const hasParents = bundle.manifest.industry_parent_group_count > 0;
+    assert.ok(bundle.industry_refinement.every(r => bundle.groups.some(g => g.group_id === r.source_group_id) === hasParents));
+    if (hasParents) {
+      assert.equal(bundle.group_relations.length, bundle.manifest.industry_subgroup_count);
+      const parent = industry.find(g => g.group_kind === 'parent');
+      const child = industry.find(g => g.parent_group_id === parent.group_id);
+      await page.locator(`#matrix [data-group="${parent.group_id}"][data-expectation="d3_r5"]`).click();
+      assert.match(await page.locator('#detail').innerText(), /父群成员按子群并集去重/);
+      await page.locator(`#detail [data-related-group="${child.group_id}"]`).click();
+      assert.equal(await page.locator('#detail h2').innerText(), child.name);
+      await page.locator(`#detail [data-related-group="${parent.group_id}"]`).click();
+      assert.equal(await page.locator('#detail h2').innerText(), parent.name);
+    }
+  }
+  await page.locator('#matrix .cell').first().click();
+  await page.screenshot({ path: path.join(run, 'industry-desktop.png'), fullPage: false });
+  await page.locator('#open-profile').click();
+  assert.match(await page.locator('#group-profile').innerText(), /官方业务来源/);
+  await page.locator('[data-view="matrix-view"]').click();
+  if (bundle.manifest.etf_candidate_count) {
+    const etfEntities = bundle.instruments.filter(i => i.candidate && i.instrument_type === 'etf');
+    assert.equal(etfEntities.length, bundle.manifest.etf_candidate_count);
+    assert.equal(bundle.watchlist_snapshot.members.length, etfEntities.length);
+    await page.selectOption('#strategy', 'watchlist_etf');
+    assert.equal(await page.locator('#matrix .cell').count(), bundle.expectations.length);
+    await page.locator('#matrix [data-group="watchlist:ETF"][data-expectation="d3_r5"]').click();
+    const detail = await page.locator('#detail').innerText();
+    assert.match(detail, /无完整5分钟行情或公司行动表/);
+    assert.match(detail, new RegExp(`${bundle.manifest.etf_market_data_unavailable_count} 只`));
+    await page.screenshot({ path: path.join(run, 'etf-desktop.png'), fullPage: false });
+    await page.locator('#open-profile').click();
+    assert.match(await page.locator('#group-profile').innerText(), /FutuD 自选群/);
+    assert.match(await page.locator('#group-profile').innerText(), /SOXS · ETF · 缺行情/);
+    await page.locator('[data-view="matrix-view"]').click();
+  }
+  await page.selectOption('#strategy', 'volatility');
+  assert.equal(await page.locator('#matrix .cell').count(), 18);
+  await page.locator('#matrix [data-group="volatility:high"][data-expectation="d3_r5"]').click();
+  const highVol = allCells.find(c => c.group_id === 'volatility:high' && c.expectation_id === 'd3_r5');
+  assert.ok((await page.locator('#detail').innerText()).includes((highVol.hit_rate * 100).toFixed(1) + '%'));
+  await page.selectOption('#metric', 'lift');
+  assert.match(await page.locator('#matrix [data-group="volatility:high"][data-expectation="d3_r5"]').innerText(), /pp/);
+  await page.selectOption('#week', '2026-W39');
+  assert.match(await page.locator('#matrix-title').innerText(), /2026-W39/);
+  await page.locator('#open-profile').click();
+  assert.equal(await page.locator('#groups-view').isVisible(), true);
+  assert.match(await page.locator('#group-profile').innerText(), /版本 ID/);
+  await page.locator('.select-week[data-week="2026-W30"]').click();
+  assert.equal(await page.inputValue('#week'), '2026-W30');
+  await page.locator('[data-view="matrix-view"]').click();
+  await page.locator('#reset').click();
+  await page.fill('#search', 'NVDA');
+  assert.ok(await page.locator('#matrix .cell').count() >= 6);
+  await page.fill('#search', 'NO_SUCH_GROUP_999');
+  assert.equal(await page.locator('#matrix .cell').count(), 0);
+  assert.match(await page.locator('#matrix').innerText(), /没有匹配/);
+  await page.locator('#reset').click();
+  await page.selectOption('#strategy', 'all');
+  assert.equal(await page.locator('#matrix .cell').count(), 6);
+  await page.locator('#reset').click();
+  const downloadEvent = page.waitForEvent('download');
+  await page.locator('#export-current').click();
+  const download = await downloadEvent;
+  const exportPath = path.join(run, 'browser_export_test.json');
+  await download.saveAs(exportPath);
+  const exported = JSON.parse(fs.readFileSync(exportPath));
+  assert.equal(exported.cells.length, allCells.length);
+  fs.unlinkSync(exportPath);
+  const allDownloadEvent = page.waitForEvent('download');
+  await page.locator('#export-all').click();
+  const allDownload = await allDownloadEvent;
+  const allExportPath = path.join(run, 'browser_bundle_test.json');
+  await allDownload.saveAs(allExportPath);
+  const allExported = JSON.parse(fs.readFileSync(allExportPath));
+  assert.equal(allExported.cells.length, bundle.cells.length);
+  assert.equal(allExported.versions.length, bundle.versions.length);
+  fs.unlinkSync(allExportPath);
+  await page.locator('[data-view="method-view"]').click();
+  assert.match(await page.locator('#method').innerText(), /当前名单回溯/);
+  const hasInsights = fs.existsSync(path.join(run, 'model_insights.json'));
+  if (hasInsights) {
+    await page.locator('[data-view="insights-view"]').click();
+    assert.ok(await page.locator('#insights article.finding').count() >= 5);
+    await page.locator('.inspect-evidence').first().click();
+    assert.equal(await page.locator('#matrix-view').isVisible(), true);
+  }
+  await page.locator('[data-view="matrix-view"]').click();
+  await page.locator('#reset').click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.screenshot({ path: path.join(run, 'mobile.png'), fullPage: false });
+  await page.selectOption('#strategy', 'industry');
+  await page.locator('#matrix .group-name').first().scrollIntoViewIfNeeded();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.screenshot({ path: path.join(run, 'industry-mobile.png'), fullPage: false });
+  await page.locator('#reset').click();
+  await page.locator('#matrix [data-group="all:all"][data-expectation="d3_r5"]').click();
+  assert.equal(await page.locator('#detail').isVisible(), true);
+  await page.locator('[data-view="groups-view"]').click();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.locator('[data-view="insights-view"]').click();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.locator('[data-view="method-view"]').click();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  assert.deepEqual(errors, []);
+  const result = { passed: true, desktop: '1512x1100', mobile: '390x844', hasInsights, javascriptErrors: errors,
+    checked: ['matrix shape','flat industry entities, parent-child navigation and sources','ETF security entities and missing-data state','strategy including baseline','week switch','cell detail','group versions','symbol search','empty search','metric switch','JSON export','method view','responsive overflow','insight navigation when present'] };
+  fs.writeFileSync(path.join(run, 'browser_verification.json'), JSON.stringify(result, null, 2));
+  await browser.close();
+  console.log(JSON.stringify(result));
+}
+main().catch(e => { console.error(e); process.exit(1); });

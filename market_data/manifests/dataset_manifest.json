@@ -1,0 +1,50 @@
+{
+  "manifest_version": 1,
+  "created_at": "2026-09-25T02:15:30Z",
+  "dataset_id": "after_open_3d5pct_pilot_dataset_v1",
+  "environment": {
+    "python": "3.14.7",
+    "futu_api": "10.11.7108",
+    "pandas": "3.0.6",
+    "pyarrow": "25.0.1",
+    "opend_host": "127.0.0.1:11111"
+  },
+  "artifacts": {
+    "calendar": {
+      "file": "market_data/research_v2/calendars/nasdaq_sessions_2026_v1.json",
+      "sha256": "870c35550128d17729da2935427ac8d08f1794fed3272680981ac3d4094aee07",
+      "total_sessions": 220,
+      "date_range": "2025-12-01 to 2026-10-15"
+    },
+    "universe": {
+      "file": "market_data/research_v2/universe/qqq_retrospective_v1.json",
+      "sha256": "4b43bebfe416a870a6997cfcd487707c46540592b6cabf70eb4316cafca590d8",
+      "candidates": 101,
+      "benchmarks": 7,
+      "mode": "current_universe_retrospective"
+    },
+    "pilot_market_data": {
+      "symbols": ["AAPL", "NVDA", "CRDO", "SOXX", "QQQ"],
+      "intervals": ["5m", "60m"],
+      "price_basis": "NONE",
+      "session": "ALL",
+      "5m_bars_total": 52446,
+      "compression": "zstd_level_7",
+      "storage_size_bytes": 10452390
+    },
+    "audited_findings": {
+      "quality_report": "market_data/research_v2/manifests/quality_findings.md",
+      "coverage_report": "market_data/research_v2/manifests/coverage_report.md",
+      "rth_ohlc_alignment_match_rate": "100.0%",
+      "vwap_screening": "RTH bounds valid (<0.5% out of bounds); Extended hours masked due to bound violation"
+    },
+    "sample_dataset": {
+      "directory": "research/after_open_3d5pct/datasets/pilot_test",
+      "total_samples": 1095,
+      "mature_samples": 1035,
+      "b0_train_base_rate": 0.1427,
+      "b0_validation_observed_rate": 0.25,
+      "b0_validation_brier_score": 0.1990
+    }
+  }
+}

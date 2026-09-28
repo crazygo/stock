@@ -1,0 +1,418 @@
+{
+  "status": "readiness_only_no_new_dataset_or_fit",
+  "created_at_utc": "2026-09-27T14:23:48.246029+00:00",
+  "source_root": "research/after_open_3d5pct/runs/precision_v9_20260927/R03",
+  "coverage_encoding": "Every complete_symbols member has every months entry with a verified bars hash and successful complete-RTH result; every missing_symbols member has no completed result among months. Missing means unacquired/unfinalized here, not provider-empty.",
+  "months": [
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+  ],
+  "complete_symbols": [
+    "AAOI",
+    "AAPL",
+    "ABNB",
+    "ADBE",
+    "ADI",
+    "ADP",
+    "ADSK",
+    "AEP",
+    "ALAB",
+    "ALNY",
+    "AMAT",
+    "AMD",
+    "AMGN",
+    "AMZN",
+    "ANET",
+    "APP",
+    "ARM",
+    "ASML",
+    "AVGO",
+    "AXON",
+    "AXTI",
+    "BKNG",
+    "BKR",
+    "CCEP",
+    "CDNS",
+    "CEG",
+    "CIEN",
+    "CMCSA",
+    "COHR",
+    "COST",
+    "CPRT",
+    "CRDO",
+    "CRWD",
+    "CRWV",
+    "CSCO",
+    "CSX",
+    "CTAS",
+    "DASH",
+    "DDOG",
+    "DXCM",
+    "EXC",
+    "FANG",
+    "FAST",
+    "FER",
+    "FN",
+    "FTNT",
+    "GEHC",
+    "GILD",
+    "GOOG",
+    "GOOGL",
+    "HON",
+    "INTC",
+    "LITE",
+    "MRVL",
+    "MU",
+    "NVDA",
+    "QCOM",
+    "QQQ",
+    "SNDK",
+    "STX",
+    "WDC"
+  ],
+  "complete_candidate_count": 60,
+  "missing_symbols": [
+    "HONA",
+    "IDXX",
+    "INTU",
+    "ISRG",
+    "KDP",
+    "KLAC",
+    "LIN",
+    "LRCX",
+    "MAR",
+    "MCHP",
+    "MDLZ",
+    "MELI",
+    "META",
+    "MNST",
+    "MPWR",
+    "MSFT",
+    "MSTR",
+    "NBIS",
+    "NFLX",
+    "NXPI",
+    "ODFL",
+    "ORLY",
+    "PANW",
+    "PAYX",
+    "PCAR",
+    "PDD",
+    "PEP",
+    "PLTR",
+    "PYPL",
+    "REGN",
+    "RKLB",
+    "ROP",
+    "ROST",
+    "SBUX",
+    "SHOP",
+    "SNPS",
+    "SPCX",
+    "TER",
+    "TMUS",
+    "TRI",
+    "TSLA",
+    "TTWO",
+    "TXN",
+    "VRTX",
+    "WBD",
+    "WDAY",
+    "WMT",
+    "XEL"
+  ],
+  "completed_parts": 305,
+  "planned_parts": 545,
+  "missing_completed_parts": 240,
+  "raw_rows": 1851996,
+  "invalid_completed_parts": [],
+  "completed_part_identity_sha256": "65285abf00edf915132fb93367b76d26dfc1ae1db32d5818440c79b19a912614",
+  "by_month": {
+    "2025-08": {
+      "parts": 61,
+      "raw_rows": 365338,
+      "rth_expected_rows": 99918
+    },
+    "2025-09": {
+      "parts": 61,
+      "raw_rows": 370929,
+      "rth_expected_rows": 99918
+    },
+    "2025-10": {
+      "parts": 61,
+      "raw_rows": 400541,
+      "rth_expected_rows": 109434
+    },
+    "2025-11": {
+      "parts": 61,
+      "raw_rows": 334227,
+      "rth_expected_rows": 88206
+    },
+    "2025-12": {
+      "parts": 61,
+      "raw_rows": 380961,
+      "rth_expected_rows": 102480
+    }
+  },
+  "focus_symbols": [
+    "AAOI",
+    "ALAB",
+    "AMD",
+    "ANET",
+    "ARM",
+    "AVGO",
+    "AXTI",
+    "CIEN",
+    "COHR",
+    "CRDO",
+    "CSCO",
+    "FN",
+    "INTC",
+    "LITE",
+    "MRVL",
+    "MU",
+    "NVDA",
+    "QCOM",
+    "SNDK",
+    "STX",
+    "WDC"
+  ],
+  "focus_completed_parts": 105,
+  "focus_missing_symbols": [],
+  "old_dataset": {
+    "rows": 14424,
+    "stocks": 108,
+    "completed_candidate_rows": 8099,
+    "unacquired_candidate_rows": 6325,
+    "focus_rows": 2919,
+    "all108_retained": true,
+    "new_rows_added": 0
+  },
+  "incumbent_recipe": {
+    "representation": true,
+    "regularization": true,
+    "calibration": true
+  },
+  "fit_weights": "Every original fit row has positive weight=1; no balance/specialize/recency/bagging. Tune and cal retain original group-focus weights.",
+  "prior_is_active_model_input": false,
+  "folds": [
+    {
+      "fold": {
+        "id": "dev1",
+        "tune": "2026-04-20",
+        "cal": "2026-05-11",
+        "eval": "2026-06-01",
+        "end": "2026-06-27"
+      },
+      "segments": {
+        "fit": {
+          "rows": 3064,
+          "stocks": 106,
+          "dates": 29,
+          "completed_source_candidate_rows": 1730,
+          "unacquired_source_candidate_rows": 1334,
+          "focus_rows": 609,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 1730,
+          "source_calendar_projected_focus_full126_rows": 609
+        },
+        "tune": {
+          "rows": 1045,
+          "stocks": 105,
+          "dates": 10,
+          "completed_source_candidate_rows": 590,
+          "unacquired_source_candidate_rows": 455,
+          "focus_rows": 210,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 590,
+          "source_calendar_projected_focus_full126_rows": 210
+        },
+        "cal": {
+          "rows": 936,
+          "stocks": 104,
+          "dates": 9,
+          "completed_source_candidate_rows": 531,
+          "unacquired_source_candidate_rows": 405,
+          "focus_rows": 189,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 531,
+          "source_calendar_projected_focus_full126_rows": 189
+        },
+        "eval": {
+          "rows": 1975,
+          "stocks": 106,
+          "dates": 19,
+          "completed_source_candidate_rows": 1114,
+          "unacquired_source_candidate_rows": 861,
+          "focus_rows": 399,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 1114,
+          "source_calendar_projected_focus_full126_rows": 399
+        }
+      }
+    },
+    {
+      "fold": {
+        "id": "dev2",
+        "tune": "2026-06-01",
+        "cal": "2026-06-22",
+        "eval": "2026-07-13",
+        "end": "2026-08-08"
+      },
+      "segments": {
+        "fit": {
+          "rows": 6090,
+          "stocks": 106,
+          "dates": 58,
+          "completed_source_candidate_rows": 3441,
+          "unacquired_source_candidate_rows": 2649,
+          "focus_rows": 1218,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 3441,
+          "source_calendar_projected_focus_full126_rows": 1218
+        },
+        "tune": {
+          "rows": 934,
+          "stocks": 105,
+          "dates": 9,
+          "completed_source_candidate_rows": 531,
+          "unacquired_source_candidate_rows": 403,
+          "focus_rows": 189,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 531,
+          "source_calendar_projected_focus_full126_rows": 189
+        },
+        "cal": {
+          "rows": 930,
+          "stocks": 104,
+          "dates": 9,
+          "completed_source_candidate_rows": 516,
+          "unacquired_source_candidate_rows": 414,
+          "focus_rows": 189,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 516,
+          "source_calendar_projected_focus_full126_rows": 189
+        },
+        "eval": {
+          "rows": 2056,
+          "stocks": 103,
+          "dates": 20,
+          "completed_source_candidate_rows": 1140,
+          "unacquired_source_candidate_rows": 916,
+          "focus_rows": 420,
+          "old_full126_rows": 2016,
+          "source_calendar_projected_full126_rows": 2016,
+          "source_calendar_projected_focus_full126_rows": 420
+        }
+      }
+    },
+    {
+      "fold": {
+        "id": "reserved",
+        "tune": "2026-07-13",
+        "cal": "2026-08-03",
+        "eval": "2026-08-24",
+        "end": "2026-09-18"
+      },
+      "segments": {
+        "fit": {
+          "rows": 8997,
+          "stocks": 108,
+          "dates": 86,
+          "completed_source_candidate_rows": 5078,
+          "unacquired_source_candidate_rows": 3919,
+          "focus_rows": 1806,
+          "old_full126_rows": 0,
+          "source_calendar_projected_full126_rows": 5078,
+          "source_calendar_projected_focus_full126_rows": 1806
+        },
+        "tune": {
+          "rows": 1030,
+          "stocks": 103,
+          "dates": 10,
+          "completed_source_candidate_rows": 570,
+          "unacquired_source_candidate_rows": 460,
+          "focus_rows": 210,
+          "old_full126_rows": 1010,
+          "source_calendar_projected_full126_rows": 1010,
+          "source_calendar_projected_focus_full126_rows": 210
+        },
+        "cal": {
+          "rows": 1021,
+          "stocks": 103,
+          "dates": 10,
+          "completed_source_candidate_rows": 570,
+          "unacquired_source_candidate_rows": 451,
+          "focus_rows": 210,
+          "old_full126_rows": 1001,
+          "source_calendar_projected_full126_rows": 1001,
+          "source_calendar_projected_focus_full126_rows": 210
+        },
+        "eval": {
+          "rows": 1836,
+          "stocks": 102,
+          "dates": 18,
+          "completed_source_candidate_rows": 1026,
+          "unacquired_source_candidate_rows": 810,
+          "focus_rows": 378,
+          "old_full126_rows": 1800,
+          "source_calendar_projected_full126_rows": 1800,
+          "source_calendar_projected_focus_full126_rows": 378
+        }
+      }
+    }
+  ],
+  "projected_support_caveat": "Derived from old valid-day counts plus complete acquired 2025 official RTH sessions; not an actually rebuilt tensor result. Coder must verify exact float32 validity and availability before fit.",
+  "unchanged_dependency_boundaries": {
+    "x5_all_old_keys_from": "2026-03-02",
+    "x60_no_2025_20day_denominator_from": "2026-03-17",
+    "xday_no_2025_visible_candles_from": "2026-07-07",
+    "xday_no_2025_20day_denominator_from": "2026-08-04"
+  },
+  "frozen_action_events_in_source_period": {
+    "BKNG": [
+      "2026-04-06"
+    ],
+    "CRWD": [
+      "2026-07-02"
+    ],
+    "HON": [
+      "2026-06-29"
+    ]
+  },
+  "action_conflicts_in_selected_old_keys_146_session_source_window": [],
+  "action_scope": "Frozen provider event list only; external completeness not certified; no network checks.",
+  "input_identities": {
+    "research/after_open_3d5pct/runs/precision_v9_20260927/R03/registration.json": "5eabd78e764f31dadf87d36d76eb5ee131a597379a1781deaee122a083b78789",
+    "research/after_open_3d5pct/runs/precision_v9_20260927/R03/calendar.json": "26ac90fc8b48156ebb34f869d9b24fb5e81e3e420948b32ee582f0e16459365d",
+    "research/after_open_3d5pct/runs/precision_v9_20260927/R03/progress.json": "a69cca599e83e2eb9c78420fd3ae2105d73f1ceebcbc911c05baa9f210bdc537",
+    "research/after_open_3d5pct/runs/focus_v8_20260927/dataset/rows.parquet": "b6220c3645ff6477ff59763d75deaff26b6f60c7b1ad34f6d0b2b913a4fed2fe",
+    "research/after_open_3d5pct/runs/focus_v8_20260927/dataset/manifest.json": "43bbf25f88c62313b610657b77b1ae99e4b45973fa41a91cef4f8279a067d9e9",
+    "research/after_open_3d5pct/runs/focus_v8_20260927/dataset_identity.json": "3734bac33c74b783c8c64a44ae40941e19d57af9073ede0ab22e515ab766cbb8",
+    "research/after_open_3d5pct/runs/focus_v8_20260927/round_10/summary.json": "ed1b7801e31c2aa5e3b616e521ae0a44e4d70445c2f2170798f8ebfa84639c61",
+    "research/after_open_3d5pct/runs/focus_v8_20260927/source_provenance.json": "e2f92d6742a58c46e836cb6b30bcccfacbae57696ddfdb211e2b9ff410869d84",
+    "research/after_open_3d5pct/focus_v8/run.py": "abeca557643910acbb79d7a00ecbfd6572a93da6de72231df836efbfa94645cd",
+    "research/after_open_3d5pct/focus_v8/core.py": "093a1e399f566c437611ee14789b4c8512761f5c800cbf6a932c3f542545a590",
+    "research/after_open_3d5pct/v6_data.py": "c50fee6d0a0a4a3b4ff9103d415e4d1022646ba0425f6833b1cf63bb624b60c7",
+    "research/after_open_3d5pct/train_multiscale_v6.py": "9b9f84686890afe533eb9af4cbe1966f29d19b730ef87e1be00b81bed579a136"
+  },
+  "proposal": {
+    "id": "B_no_group_partial_daily_history_v1",
+    "status": "draft_pending_root_adoption_no_execution",
+    "changed_feature_ranges": [
+      "f_507..f_584",
+      "path_056..path_083"
+    ],
+    "allowed_change_columns": 106,
+    "strict_unchanged_columns": 563,
+    "daily_only": true,
+    "new_dataset_built": false,
+    "new_fit_count": 0,
+    "actual_changed_tensor_elements": null,
+    "source_calendar_projected_support_is_not_tensor_acceptance": true,
+    "draft_sha256": "6cb5d4b4862e17131bc4afb4b030dea73a0d89f23bd4c2ac046198156a16096d"
+  }
+}

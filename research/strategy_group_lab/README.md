@@ -6,6 +6,8 @@
 
 ## 查看本轮
 
+- **光产业链事实核查与三轮迭代（09-26）**：[工程入口](optics_iterations/README.md)、[交互报告](runs/optics_3round_20260926/index.html)。保留原期望，完成216个新模型；覆盖修复，但尚未建立稳定预测优势。
+
 - [交互结果表](runs/20260926_v1_checked/index.html)：搜索群、切换期望/算法/粒度/训练范围，查看分类准确率、Brier、候选触及率、资金收益；点击行查看月份、校准、逐笔交易与资金曲线。
 - [完整 CSV](runs/20260926_v1_checked/results.csv)、[逐条预测](runs/20260926_v1_checked/predictions.parquet)、[全部训练记录](runs/20260926_v1_checked/trials.json)。
 - [整体周选择器](runs/20260926_v1_checked/router.json)：只用当周之前已成熟的预测证据选组合，多群重复股票去重后使用一个账户。

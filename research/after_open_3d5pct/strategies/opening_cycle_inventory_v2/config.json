@@ -1,0 +1,16 @@
+{
+  "version": "opening_cycle_inventory_v2",
+  "start_date": "2026-01-02",
+  "end_date": "2026-09-24",
+  "widths_minutes": [20, 30, 45, 60, 90, 120],
+  "amplitudes": [0.03, 0.04, 0.05, 0.06, 0.08, 0.10, 0.12],
+  "scopes": {"open": 1, "first30": 6, "first60": 12, "all": 78},
+  "min_peak_upper_minutes": 20,
+  "entry_minutes_after_start": 15,
+  "profit_target": 0.08,
+  "early_entry_ceiling": 0.02,
+  "universe": "market_data/universe/qqq_retrospective_v1.json",
+  "calendar": "market_data/calendars/nasdaq_sessions_2026_v1.json",
+  "source_dir": "market_data/us_5m",
+  "dedup": "largest_gain_then_shortest_then_earliest_nonoverlap"
+}
