@@ -1,0 +1,57 @@
+{
+  "id": "C_no_group_chips",
+  "parent": "C_no_group",
+  "target": {
+    "primary": "3d_5pct",
+    "entry": "11:35 five-minute open",
+    "horizon_regular_minutes": 1170,
+    "barrier": 0.05,
+    "touch": "high",
+    "also_emit": [
+      "1d_3pct",
+      "1d_5pct",
+      "1d_8pct",
+      "3d_3pct",
+      "3d_5pct",
+      "3d_8pct",
+      "5d_3pct",
+      "5d_5pct",
+      "5d_8pct"
+    ]
+  },
+  "inputs": {
+    "family": "sequence",
+    "include": [
+      "x5_7d",
+      "x60_30d",
+      "xday_126d",
+      "own_mature_prior_63"
+    ],
+    "exclude": [
+      "other_stocks",
+      "qqq",
+      "group_sequence"
+    ]
+  },
+  "universe": {
+    "predict": {
+      "type": "group",
+      "id": "chips",
+      "name": "半导体组"
+    }
+  },
+  "code": {
+    "kind": "focus_v8_group",
+    "route": "C_no_group",
+    "group": "chips",
+    "builder": "research.after_open_3d5pct.focus_v8.run.fit_one",
+    "dataset": "runs/focus_v8_20260927",
+    "fold": "reserved",
+    "seed": 3566,
+    "recipe": {
+      "prior": true,
+      "specialize": true,
+      "calibration": true
+    }
+  }
+}

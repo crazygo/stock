@@ -1,0 +1,33 @@
+{
+  "id": "C_no_daily",
+  "target": {
+    "primary": "3d_5pct",
+    "entry": "11:35 five-minute open",
+    "horizon_regular_minutes": 1170,
+    "barrier": 0.05,
+    "touch": "high",
+    "also_emit": ["1d_3pct", "1d_5pct", "1d_8pct", "3d_3pct", "3d_5pct", "3d_8pct", "5d_3pct", "5d_5pct", "5d_8pct"]
+  },
+  "inputs": {
+    "family": "sequence",
+    "include": ["x5_7d", "x60_30d", "group_seq_6x6x10"],
+    "exclude": ["own_xday"]
+  },
+  "universe": {
+    "predict": {"type": "pool", "id": "focus_v8_candidates_108"}
+  },
+  "code": {
+    "kind": "focus_v8_route",
+    "route": "C_no_daily",
+    "builder": "research.after_open_3d5pct.focus_v8.run.fit_one",
+    "dataset": "runs/focus_v8_20260927",
+    "fold": "reserved",
+    "seed": 3566,
+    "recipe": {
+      "balance": true,
+      "regularization": true,
+      "calibration": true,
+      "support": true
+    }
+  }
+}

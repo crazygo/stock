@@ -1,0 +1,27 @@
+{
+  "id": "SNXX_3d3pct",
+  "target": {
+    "primary": "3d_3pct",
+    "entry": "hourly_proxy 11:30 hour-bar open",
+    "horizon_regular_minutes": 1170,
+    "barrier": 0.03,
+    "touch": "high",
+    "also_emit": ["3d_3pct"]
+  },
+  "inputs": {
+    "family": "tabular",
+    "include": ["own_rth_hourly_returns_1_5_10_20", "morning_return", "overnight_gap", "range_position_20", "volume_ratio_20", "range_mean_10"],
+    "exclude": ["other_stocks", "group_sequence", "qqq", "future_bars"]
+  },
+  "universe": {
+    "predict": {"type": "symbol", "id": "SNXX"}
+  },
+  "code": {
+    "kind": "module",
+    "module": "research.after_open_3d5pct.models.SNXX_3d3pct.train",
+    "builder": "research.after_open_3d5pct.models.SNXX_3d3pct.train.run",
+    "bars": "market_data/us_60m/SNXX/2026.parquet",
+    "seed": 3566,
+    "fold": "reserved_calendar"
+  }
+}

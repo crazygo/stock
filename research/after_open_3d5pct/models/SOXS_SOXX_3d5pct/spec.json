@@ -1,0 +1,28 @@
+{
+  "id": "SOXS_SOXX_3d5pct",
+  "target": {
+    "primary": "3d_5pct",
+    "entry": "11:35 five-minute open",
+    "horizon_regular_minutes": 1170,
+    "barrier": 0.05,
+    "touch": "high",
+    "actions": ["buy_SOXS", "buy_SOXX", "flat"],
+    "also_emit": ["3d_5pct"]
+  },
+  "inputs": {
+    "family": "tabular",
+    "include": ["SOXS_regular_5m_to_1130", "SOXX_regular_5m_to_1130", "morning_spread", "r12_spread"],
+    "exclude": ["other_stocks", "entry_bar_high_low_close"]
+  },
+  "universe": {
+    "predict": {"type": "symbols", "id": ["SOXS", "SOXX"]}
+  },
+  "code": {
+    "kind": "module",
+    "module": "research.after_open_3d5pct.models.SOXS_SOXX_3d5pct.train",
+    "builder": "research.after_open_3d5pct.models.SOXS_SOXX_3d5pct.train.run",
+    "bars": ["market_data/us_5m/SOXS/2026.parquet", "market_data/us_5m/SOXX/2026.parquet"],
+    "seed": 3566,
+    "fold": "reserved_calendar"
+  }
+}
