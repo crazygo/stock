@@ -160,9 +160,9 @@ def extract_micro_atoms_for_stock(df_5m, macro_bars, codebook, centroids, stock_
     # Sort by salience
     raw_matches.sort(key=lambda x: x["salience"], reverse=True)
 
-    # Non-Maximum Suppression (NMS): at most 1 salient feature per day, max 4-5 features across 30 days
+    # Non-Maximum Suppression (NMS): at most 1 salient feature per day
     selected_days = set()
-    selected = []
+    all_stock_matches = []
     for m in raw_matches:
         if m["date"] in selected_days:
             continue
@@ -177,26 +177,27 @@ def extract_micro_atoms_for_stock(df_5m, macro_bars, codebook, centroids, stock_
         m["macro_start_idx"] = s_macro
         m["macro_end_idx"] = e_macro
 
-        # Compute macro forward performance strictly anchored at the micro interval's start price!
-        p_base_micro = float(m["start_price"])
+        # Compute macro forward performance: simulated entry at micro completion (P_end)
+        p_entry = float(m["end_price"])
         perf = {}
         for h_bars, key in [(7, 'h7'), (14, 'h14'), (21, 'h21')]:
-            end_fwd_idx = min(len(macro_bars) - 1, s_macro + h_bars)
-            fwd_bars = macro_bars[s_macro:end_fwd_idx + 1]
+            end_fwd_idx = min(len(macro_bars) - 1, e_macro + h_bars)
+            fwd_bars = macro_bars[e_macro:end_fwd_idx + 1]
             if len(fwd_bars) > 1:
-                highs = [(b.get('high', b['close']), idx + s_macro) for idx, b in enumerate(fwd_bars)]
-                lows = [(b.get('low', b['close']), idx + s_macro) for idx, b in enumerate(fwd_bars)]
+                highs = [(b.get('high', b['close']), idx + e_macro) for idx, b in enumerate(fwd_bars)]
+                lows = [(b.get('low', b['close']), idx + e_macro) for idx, b in enumerate(fwd_bars)]
                 max_high, peak_idx = max(highs, key=lambda x: x[0])
                 min_low, trough_idx = min(lows, key=lambda x: x[0])
                 end_close = fwd_bars[-1]['close']
                 
-                # Base is STRICTLY micro start price p_base_micro!
-                gain_pct = round((max_high / p_base_micro - 1.0) * 100.0, 2)
-                dd_pct = round((min_low / p_base_micro - 1.0) * 100.0, 2)
-                end_ret_pct = round((end_close / p_base_micro - 1.0) * 100.0, 2)
+                # Baseline is STRICTLY micro end price (execution / confirmation price P_end)!
+                gain_pct = round((max_high / p_entry - 1.0) * 100.0, 2)
+                dd_pct = round((min_low / p_entry - 1.0) * 100.0, 2)
+                end_ret_pct = round((end_close / p_entry - 1.0) * 100.0, 2)
                 
                 perf[key] = {
-                    'base_price': round(float(p_base_micro), 2),
+                    'base_price': round(p_entry, 2),
+                    'start_idx': e_macro,
                     'bars_count': len(fwd_bars),
                     'end_idx': end_fwd_idx,
                     'max_gain': gain_pct,
@@ -210,13 +211,38 @@ def extract_micro_atoms_for_stock(df_5m, macro_bars, codebook, centroids, stock_
                     'trough_price': round(float(min_low), 2)
                 }
         m['macro_perf'] = perf
-        selected.append(m)
-        if len(selected) >= 5:
-            break
+        all_stock_matches.append(m)
 
-    # Sort chronologically
-    selected.sort(key=lambda x: x["start_time"])
-    return selected
+    # For visual chart presentation: Pick up to 5-6 features with diversity across atom types
+    # (Prevents high-volatility A-06/A-02 from completely crowding out A-01/A-10)
+    seen_atoms = set()
+    chart_selected = []
+    
+    # Pass 1: pick top-1 salience per distinct atom type
+    for m in all_stock_matches:
+        if m["atom"] not in seen_atoms:
+            seen_atoms.add(m["atom"])
+            m["is_top_salient"] = True
+            chart_selected.append(m)
+            if len(chart_selected) >= 5:
+                break
+                
+    # Pass 2: fill remaining slots up to 5 if any slots left
+    if len(chart_selected) < 5:
+        for m in all_stock_matches:
+            if m not in chart_selected:
+                m["is_top_salient"] = True
+                chart_selected.append(m)
+                if len(chart_selected) >= 5:
+                    break
+
+    for m in all_stock_matches:
+        if "is_top_salient" not in m:
+            m["is_top_salient"] = False
+
+    # Sort chronologically for SVG drawing
+    all_stock_matches.sort(key=lambda x: x["start_time"])
+    return all_stock_matches
 
 def main():
     t0 = time.time()
@@ -242,6 +268,7 @@ def main():
         print(f"Notice: Cannot connect to Futu OpenD ({e}), relying on local 5m parquets.")
 
     total_atoms_extracted = 0
+    all_population_matches = []
 
     for i, s in enumerate(stocks, 1):
         ticker = s["ticker"]
@@ -273,34 +300,37 @@ def main():
             s["micro_atoms"] = []
             continue
 
-        # Extract 2-hour micro atomic features
+        # Extract 2-hour micro atomic features (all non-overlapping matches with is_top_salient flag)
         micro_atoms = extract_micro_atoms_for_stock(df_5m, macro_bars, codebook, centroids, code)
         s["micro_atoms"] = micro_atoms
-        total_atoms_extracted += len(micro_atoms)
+        s["matched_atoms"] = sorted(list(set([m["atom"] for m in micro_atoms])))
+        
+        salient_count = len([m for m in micro_atoms if m.get("is_top_salient")])
+        total_atoms_extracted += salient_count
+        all_population_matches.extend(micro_atoms)
 
-        atom_summary = ", ".join([f"{a['atom']}({a['sim']}%)" for a in micro_atoms])
-        print(f"[{i}/{len(stocks)}] {code:10s} | Found {len(micro_atoms)} micro atoms: {atom_summary}")
+        salient_summary = ", ".join([f"{a['atom']}({a['sim']}%)" for a in micro_atoms if a.get("is_top_salient")])
+        print(f"[{i}/{len(stocks)}] {code:10s} | Top: {salient_count} ({salient_summary}) | All matches: {len(micro_atoms)} | Matched: {s['matched_atoms']}")
 
     if quote_ctx:
         quote_ctx.close()
 
-    # Compute empirical summary across all micro atoms
+    # Compute empirical summary across ALL valid population matches (unconstrained by chart cap)
     results = []
-    for s in stocks:
-        for a in s.get('micro_atoms', []):
-            for h, h_name in [(7, 'h7'), (14, 'h14'), (21, 'h21')]:
-                p = a.get('macro_perf', {}).get(h_name)
-                if p:
-                    results.append({
-                        'atom': a['atom'],
-                        'name': a['name'],
-                        'color': a['color'],
-                        'horizon': h_name,
-                        'hit_5pct': 1 if p['hit_5pct'] else 0,
-                        'max_gain': p['max_gain'],
-                        'max_dd': p['max_dd'],
-                        'end_ret': p['end_ret']
-                    })
+    for a in all_population_matches:
+        for h, h_name in [(7, 'h7'), (14, 'h14'), (21, 'h21')]:
+            p = a.get('macro_perf', {}).get(h_name)
+            if p:
+                results.append({
+                    'atom': a['atom'],
+                    'name': a['name'],
+                    'color': a['color'],
+                    'horizon': h_name,
+                    'hit_5pct': 1 if p['hit_5pct'] else 0,
+                    'max_gain': p['max_gain'],
+                    'max_dd': p['max_dd'],
+                    'end_ret': p['end_ret']
+                })
 
     summary = []
     curve_map = {c['code']: [round(float(v), 2) for v in c['curve']] for c in codebook}

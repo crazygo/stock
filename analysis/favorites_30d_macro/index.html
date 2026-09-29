@@ -590,6 +590,104 @@
       display: inline-block;
     }
 
+    /* Micro Atomic Code Filter Bar */
+    .atom-filter-bar {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .atom-filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .atom-filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .atom-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .atom-pill-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .atom-pill-btn.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+    }
+
+    .atom-pill-btn .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .atom-pill-btn .pill-count {
+      font-size: 10px;
+      opacity: 0.8;
+      font-family: monospace;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: rgba(0,0,0,0.06);
+    }
+
+    .atom-pill-btn.active .pill-count {
+      background: rgba(255,255,255,0.25);
+      color: #ffffff;
+    }
+
+    .active-filter-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .clear-filter-btn {
+      cursor: pointer;
+      margin-left: 2px;
+      color: #dc2626;
+      font-weight: bold;
+      padding: 0 2px;
+    }
+    .clear-filter-btn:hover {
+      text-decoration: underline;
+    }
+
     /* Card Footer Info */
     .card-footer {
       display: flex;
@@ -703,12 +801,15 @@
 
     <!-- 2-Hour Micro Atomic Motifs Color Legend -->
     <div class="motif-legend-bar">
-      <span style="font-weight: 700; color: var(--text-main);">🔬 2小时微观原子形态图例 (滑动窗口 24根5m K线跨尺度投影):</span>
-      <span class="legend-item"><span class="legend-box" style="background:#059669;"></span> <b>翡翠绿 (A-06/A-12)</b>: 脉冲强攻 / 尾盘突袭</span>
-      <span class="legend-item"><span class="legend-box" style="background:#10b981;"></span> <b>亮绿/青绿 (A-03/A-04)</b>: 稳步攀升 / 深V探底回升</span>
-      <span class="legend-item"><span class="legend-box" style="background:#dc2626;"></span> <b>血红/暗红 (A-02/A-05)</b>: 倒V诱多暴跌 / 恐慌杀跌</span>
-      <span class="legend-item"><span class="legend-box" style="background:#f97316;"></span> <b>橙红/暖黄 (A-07/A-08)</b>: 双顶滞涨 / 阶梯筑底</span>
-      <span class="legend-item"><span class="legend-box" style="background:#8b5cf6;"></span> <b>紫色系 (A-01/A-11)</b>: 震荡过渡 / 窄幅收敛</span>
+      <span style="font-weight: 700; color: var(--text-main);">🔬 2小时微观原子图例 (点击快速过滤):</span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-06')"><span class="legend-box" style="background:#059669;"></span> <b>A-06 脉冲强攻</b></span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-04')"><span class="legend-box" style="background:#06b6d4;"></span> <b>A-04 深V探底</b></span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-07')"><span class="legend-box" style="background:#f97316;"></span> <b>A-07 高位双顶</b></span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-10')"><span class="legend-box" style="background:#d97706;"></span> <b>A-10 窄幅沉寂</b></span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-01')"><span class="legend-box" style="background:#8b5cf6;"></span> <b>A-01 震荡整理</b></span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-11')"><span class="legend-box" style="background:#6366f1;"></span> <b>A-11 破位二探</b></span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-02')"><span class="legend-box" style="background:#dc2626;"></span> <b>A-02 倒V诱多</b></span>
+      <span class="legend-item" style="cursor:pointer;" onclick="setAtomFilter('A-05')"><span class="legend-box" style="background:#991b1b;"></span> <b>A-05 恐慌杀跌</b></span>
     </div>
 
     <!-- Micro-to-Macro Forward Statistical Drawer -->
@@ -716,29 +817,29 @@
       <div class="stat-drawer-header" onclick="toggleStatDrawer()">
         <div style="display:flex; align-items:center; gap:8px;">
           <span style="font-size:15px;">📊</span>
-          <strong style="color:var(--text-main);">微观原子 ➜ 宏观表现实证大盘 (228 处微观特征触发追踪)</strong>
+          <strong id="stat-drawer-title" style="color:var(--text-main);">微观原子 ➜ 宏观表现实证大盘 (全量 1,064 处微观特征触发前瞻追踪 · 基于微观末期买入价基准)</strong>
           <span class="pill-badge pill-fav" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0;">
-            多空分化率高达 +51.5%
+            最高触及率 79.2%
           </span>
         </div>
-        <span id="stat-toggle-icon" style="font-size:12px; color:var(--text-muted); font-weight:500;">▼ 展开 11 类原子形态前瞻转化率</span>
+        <span id="stat-toggle-icon" style="font-size:12px; color:var(--text-muted); font-weight:500;">▼ 展开 12 类原子形态前瞻转化率 (含 5m Mini 波形)</span>
       </div>
       <div class="stat-drawer-body" id="stat-drawer-body" style="display:none;">
         <div class="stat-summary-cards">
           <div class="stat-summary-card" style="border-left: 4px solid #059669;">
-            <div style="font-size:11px; color:var(--text-muted);">🟢 多头脉冲类 (A-03, A-06, A-12)</div>
-            <div style="font-size:18px; font-weight:700; color:#059669; margin-top:2px;">77.0% <span style="font-size:12px; font-weight:normal;">3天触及+5%</span></div>
-            <div style="font-size:11px; color:#475569; margin-top:3px;">样本数: 100 次 | 平均冲高: <strong>+15.2%</strong> | 最大回撤: <strong>-4.3%</strong></div>
+            <div style="font-size:11px; color:var(--text-muted);">🟢 企稳反弹/突破类 (A-04, A-07, A-10, A-11)</div>
+            <div style="font-size:18px; font-weight:700; color:#059669; margin-top:2px;">62.3% <span style="font-size:12px; font-weight:normal;">3天触及+5%</span></div>
+            <div style="font-size:11px; color:#475569; margin-top:3px;">样本数: 122 次 | 平均冲高: <strong>+10.7%</strong> | 平均回撤: <strong>-6.2%</strong></div>
           </div>
           <div class="stat-summary-card" style="border-left: 4px solid #dc2626;">
-            <div style="font-size:11px; color:var(--text-muted);">🔴 空头破位类 (A-02, A-05)</div>
-            <div style="font-size:18px; font-weight:700; color:#dc2626; margin-top:2px;">25.5% <span style="font-size:12px; font-weight:normal;">3天触及+5%</span></div>
-            <div style="font-size:11px; color:#475569; margin-top:3px;">样本数: 110 次 | 平均冲高: <strong>+4.9%</strong> | 最大回撤: <strong>-8.8%</strong></div>
+            <div style="font-size:11px; color:var(--text-muted);">🔴 诱多杀跌/弱反类 (A-02, A-05, A-12)</div>
+            <div style="font-size:18px; font-weight:700; color:#dc2626; margin-top:2px;">43.2% <span style="font-size:12px; font-weight:normal;">3天触及+5%</span></div>
+            <div style="font-size:11px; color:#475569; margin-top:3px;">样本数: 500 次 | 平均冲高: <strong>+6.9%</strong> | 平均期末: <strong>+0.2%</strong></div>
           </div>
           <div class="stat-summary-card" style="border-left: 4px solid #3b82f6;">
-            <div style="font-size:11px; color:var(--text-muted);">⚖️ 微观对齐宏观筛选效益</div>
-            <div style="font-size:18px; font-weight:700; color:#2563eb; margin-top:2px;">+51.5% <span style="font-size:12px; font-weight:normal;">多空分化极差</span></div>
-            <div style="font-size:11px; color:#475569; margin-top:3px;">盈亏空间比: <strong>3.54 vs 0.55</strong> (微观先导过滤价值极高)</div>
+            <div style="font-size:11px; color:var(--text-muted);">⚖️ 微观确认买入对齐效益 (P_end 基准)</div>
+            <div style="font-size:18px; font-weight:700; color:#2563eb; margin-top:2px;">+19.1% <span style="font-size:12px; font-weight:normal;">胜率优势分化</span></div>
+            <div style="font-size:11px; color:#475569; margin-top:3px;">冲高空间比: <strong>+10.7% vs +6.9%</strong> (微观确认末期入场显著避坑)</div>
           </div>
         </div>
         <div style="overflow-x:auto;">
@@ -765,6 +866,26 @@
       </div>
     </div>
   </header>
+
+  <!-- Micro Atomic Code Filter Bar -->
+  <div class="atom-filter-bar" id="atom-filter-bar">
+    <div class="atom-filter-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-weight:700; color:var(--text-main); font-size:12px;">🔬 微观形态代号过滤:</span>
+        <span id="atom-filter-active-pill" class="active-filter-indicator" style="display:none;">
+          <span id="atom-filter-active-text">仅看 A-01</span>
+          <span class="clear-filter-btn" onclick="setAtomFilter('all')" title="清除过滤">✕</span>
+        </span>
+        <span id="atom-filter-status" style="font-size:11px; color:var(--text-muted);">全部自选标的 (49 只)</span>
+      </div>
+      <div style="font-size:11px; color:var(--text-muted);">
+        💡 点击代号快速聚焦：只看历史上命中该微观原子的标的，图上自动仅高亮该波形与 3 天宏观持仓窗
+      </div>
+    </div>
+    <div class="atom-filter-pills" id="atom-filter-pills">
+      <!-- Dynamic Atom Filter Buttons -->
+    </div>
+  </div>
 
   <!-- Toolbar: Filter, Sort & Scale -->
   <div class="toolbar">
@@ -817,6 +938,7 @@
   let RAW_DATA = null;
   let DISPLAY_STOCKS = [];
   let CURRENT_FILTER = 'all';
+  let CURRENT_ATOM_FILTER = 'all'; // 'all' | 'A-01' ~ 'A-12'
   let CURRENT_SORT = 'ret_desc';
   let CURRENT_SCALE = 'auto'; // 'auto' | 'unified'
   let CURRENT_HORIZON = 'h21'; // 'h21' (3d) | 'h14' (2d) | 'h7' (1d) | 'none'
@@ -871,16 +993,86 @@
       document.getElementById('kpi-top-loser-sub').textContent = `${topL.name} | 30d谷值: ${topL.ret_min_pct.toFixed(1)}%`;
     }
 
-    // Counts for filter pills
-    document.getElementById('cnt-all').textContent = RAW_DATA.favorites_count;
-    document.getElementById('cnt-holdings').textContent = RAW_DATA.holdings_count;
-    document.getElementById('cnt-up').textContent = stocks.filter(s => s.is_favorite && s.ret_end_pct > 0).length;
-    document.getElementById('cnt-down').textContent = stocks.filter(s => s.is_favorite && s.ret_end_pct <= 0).length;
-    document.getElementById('cnt-us').textContent = stocks.filter(s => s.is_favorite && s.market === 'US').length;
-    document.getElementById('cnt-hk').textContent = stocks.filter(s => s.is_favorite && s.market === 'HK').length;
-
+    renderAtomFilterPills();
     renderStatDrawer();
     applyFiltersAndSort();
+  }
+
+  function setAtomFilter(atomCode) {
+    if (CURRENT_ATOM_FILTER === atomCode) {
+      CURRENT_ATOM_FILTER = 'all'; // toggle off to all
+    } else {
+      CURRENT_ATOM_FILTER = atomCode;
+    }
+    renderAtomFilterPills();
+    applyFiltersAndSort();
+  }
+
+  function renderAtomFilterPills() {
+    if (!RAW_DATA || !RAW_DATA.stocks) return;
+
+    // Count stocks matching each atom
+    const atomCounts = {};
+    const atomMeta = {};
+    (RAW_DATA.macro_summary || []).forEach(m => {
+      atomMeta[m.atom] = { name: m.name, color: m.color, count: m.count, hitRate: m.h21_hit };
+    });
+
+    RAW_DATA.stocks.forEach(s => {
+      const atoms = s.matched_atoms || (s.micro_atoms ? [...new Set(s.micro_atoms.map(a => a.atom))] : []);
+      atoms.forEach(a => {
+        atomCounts[a] = (atomCounts[a] || 0) + 1;
+      });
+    });
+
+    const pillsContainer = document.getElementById('atom-filter-pills');
+    if (!pillsContainer) return;
+
+    const allAtomsList = ['A-01', 'A-02', 'A-03', 'A-04', 'A-05', 'A-06', 'A-07', 'A-08', 'A-09', 'A-10', 'A-11', 'A-12'];
+
+    let html = `
+      <button class="atom-pill-btn ${CURRENT_ATOM_FILTER === 'all' ? 'active' : ''}" onclick="setAtomFilter('all')">
+        <span>全部代号</span>
+        <span class="pill-count">${RAW_DATA.stocks.length}</span>
+      </button>
+    `;
+
+    allAtomsList.forEach(code => {
+      const meta = atomMeta[code] || { name: code, color: '#64748b' };
+      const stCount = atomCounts[code] || 0;
+      const isActive = CURRENT_ATOM_FILTER === code;
+      const activeStyle = isActive ? `background:${meta.color}; color:#fff; border-color:${meta.color};` : '';
+      
+      html += `
+        <button class="atom-pill-btn ${isActive ? 'active' : ''}" style="${activeStyle}" onclick="setAtomFilter('${code}')" title="${code} ${meta.name} (共 ${stCount} 只股票命中，3天+5%胜率: ${meta.hitRate || '--'}%)">
+          <span class="pill-dot" style="background:${isActive ? '#fff' : meta.color}"></span>
+          <strong>${code}</strong>
+          <span>${meta.name.slice(0, 2)}</span>
+          <span class="pill-count" style="${isActive ? 'background:rgba(255,255,255,0.3); color:#fff;' : ''}">${stCount}</span>
+        </button>
+      `;
+    });
+
+    pillsContainer.innerHTML = html;
+
+    // Update active status indicator
+    const activePill = document.getElementById('atom-filter-active-pill');
+    const activeText = document.getElementById('atom-filter-active-text');
+    const statusText = document.getElementById('atom-filter-status');
+    
+    if (CURRENT_ATOM_FILTER === 'all') {
+      if (activePill) activePill.style.display = 'none';
+      if (statusText) statusText.textContent = `全部自选标的 (${RAW_DATA.stocks.length} 只)`;
+    } else {
+      const currentMeta = atomMeta[CURRENT_ATOM_FILTER] || { name: CURRENT_ATOM_FILTER };
+      if (activePill) {
+        activePill.style.display = 'inline-flex';
+        activeText.textContent = `仅看 ${CURRENT_ATOM_FILTER} ${currentMeta.name}`;
+      }
+      if (statusText) {
+        statusText.innerHTML = `命中 <strong>${CURRENT_ATOM_FILTER} ${currentMeta.name}</strong> 的标的: <strong>${atomCounts[CURRENT_ATOM_FILTER] || 0}</strong> 只 (图上已过滤，仅展示 ${CURRENT_ATOM_FILTER} 形态与 3 天宏观持仓窗)`;
+      }
+    }
   }
 
   function toggleStatDrawer() {
@@ -971,8 +1163,11 @@
       
       const sparkSvg = generateAtomSparklineSvg(item.curve, item.color);
       
+      const isSelected = CURRENT_ATOM_FILTER === item.atom;
+      const rowBg = isSelected ? `${item.color}15` : '';
+
       return `
-        <tr>
+        <tr onclick="setAtomFilter('${item.atom}')" style="cursor:pointer; background:${rowBg}; transition:background 0.15s;" title="点击过滤：只看命中 ${item.atom} 的股票图表">
           <td>
             <div style="display:flex; align-items:center; gap:6px;">
               <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${item.color};"></span>
@@ -993,10 +1188,13 @@
           <td><span style="color:${gainColor}; font-weight:600;">+${item.h21_gain}%</span></td>
           <td><span style="color:${ddColor};">${item.h21_dd}%</span></td>
           <td><strong style="color:${retColor};">${item.h21_ret > 0 ? '+' : ''}${item.h21_ret}%</strong></td>
-          <td>
+          <td style="white-space:nowrap;">
             <span style="padding:2px 6px; border-radius:4px; font-size:10.5px; font-weight:600; background:${tagBg}; color:${tagColor};">
               ${tag}
             </span>
+            <button class="btn-outline" style="font-size:9.5px; padding:2px 6px; margin-left:6px; cursor:pointer;" onclick="event.stopPropagation(); setAtomFilter('${item.atom}')">
+              ${isSelected ? '✓ 正在过滤' : '过滤图表 ↗'}
+            </button>
           </td>
         </tr>
       `;
@@ -1040,12 +1238,20 @@
 
     let list = RAW_DATA.stocks.filter(s => {
       // Base group filter
-      if (CURRENT_FILTER === 'all') return s.is_favorite;
-      if (CURRENT_FILTER === 'holdings') return s.is_holding;
-      if (CURRENT_FILTER === 'up') return s.is_favorite && s.ret_end_pct > 0;
-      if (CURRENT_FILTER === 'down') return s.is_favorite && s.ret_end_pct <= 0;
-      if (CURRENT_FILTER === 'us') return s.is_favorite && s.market === 'US';
-      if (CURRENT_FILTER === 'hk') return s.is_favorite && s.market === 'HK';
+      if (CURRENT_FILTER === 'all') { if (!s.is_favorite) return false; }
+      else if (CURRENT_FILTER === 'holdings') { if (!s.is_holding) return false; }
+      else if (CURRENT_FILTER === 'up') { if (!s.is_favorite || s.ret_end_pct <= 0) return false; }
+      else if (CURRENT_FILTER === 'down') { if (!s.is_favorite || s.ret_end_pct > 0) return false; }
+      else if (CURRENT_FILTER === 'us') { if (!s.is_favorite || s.market !== 'US') return false; }
+      else if (CURRENT_FILTER === 'hk') { if (!s.is_favorite || s.market !== 'HK') return false; }
+
+      // Micro Atomic Code Filter
+      if (CURRENT_ATOM_FILTER !== 'all') {
+        const hasAtom = (s.matched_atoms && s.matched_atoms.includes(CURRENT_ATOM_FILTER)) ||
+                        (s.micro_atoms && s.micro_atoms.some(a => a.atom === CURRENT_ATOM_FILTER));
+        if (!hasAtom) return false;
+      }
+
       return true;
     });
 
@@ -1068,6 +1274,26 @@
     } else if (CURRENT_SORT === 'amp_desc') {
       list.sort((a, b) => b.amplitude_pct - a.amplitude_pct);
     } // 'default' preserves original order
+
+    // Dynamic toolbar counts based on current atom filter
+    const baseList = RAW_DATA.stocks.filter(s => {
+      if (CURRENT_ATOM_FILTER === 'all') return true;
+      return (s.matched_atoms && s.matched_atoms.includes(CURRENT_ATOM_FILTER)) ||
+             (s.micro_atoms && s.micro_atoms.some(a => a.atom === CURRENT_ATOM_FILTER));
+    });
+
+    const elAll = document.getElementById('cnt-all');
+    if (elAll) elAll.textContent = baseList.filter(s => s.is_favorite).length;
+    const elHold = document.getElementById('cnt-holdings');
+    if (elHold) elHold.textContent = baseList.filter(s => s.is_holding).length;
+    const elUp = document.getElementById('cnt-up');
+    if (elUp) elUp.textContent = baseList.filter(s => s.is_favorite && s.ret_end_pct > 0).length;
+    const elDown = document.getElementById('cnt-down');
+    if (elDown) elDown.textContent = baseList.filter(s => s.is_favorite && s.ret_end_pct <= 0).length;
+    const elUs = document.getElementById('cnt-us');
+    if (elUs) elUs.textContent = baseList.filter(s => s.is_favorite && s.market === 'US').length;
+    const elHk = document.getElementById('cnt-hk');
+    if (elHk) elHk.textContent = baseList.filter(s => s.is_favorite && s.market === 'HK').length;
 
     DISPLAY_STOCKS = list;
     renderGrid();
@@ -1109,25 +1335,37 @@
 
     // 2-Hour Micro Atomic Motifs Row
     let microAtomsHtml = "";
-    const atoms = s.micro_atoms || [];
-    if (atoms.length > 0) {
+    const allAtoms = s.micro_atoms || [];
+    let displayedAtoms = allAtoms;
+    if (CURRENT_ATOM_FILTER === 'all') {
+      displayedAtoms = allAtoms.filter(a => a.is_top_salient);
+      if (displayedAtoms.length === 0 && allAtoms.length > 0) {
+        displayedAtoms = allAtoms.slice(0, 5);
+      }
+    } else {
+      displayedAtoms = allAtoms.filter(a => a.atom === CURRENT_ATOM_FILTER);
+    }
+
+    if (displayedAtoms.length > 0) {
+      const isFiltered = CURRENT_ATOM_FILTER !== 'all';
+      const labelText = isFiltered ? `🎯 命中 ${CURRENT_ATOM_FILTER}:` : `🔬 2h微观显着特征:`;
+      const subText = isFiltered ? `共命中 ${displayedAtoms.length} 处波形 (图上单独高亮)` : `以微观确认价为买入基准`;
       microAtomsHtml = `
         <div class="card-features-row">
-          <span style="font-size:11px; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:3px;" title="微观原子收益率严格以该2小时微观窗口起点价为基准计算（绝非全图P0）">
-            <span>🔬 2h微观原子:</span>
-            <span style="font-size:9.5px; font-weight:normal; color:#64748b; background:#f1f5f9; padding:1px 5px; border-radius:3px;">以各微观起点为基准</span>
+          <span style="font-size:11px; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:3px;">
+            <span>${labelText}</span>
+            <span style="font-size:9.5px; font-weight:normal; color:#64748b; background:#f1f5f9; padding:1px 5px; border-radius:3px;">${subText}</span>
           </span>
-          ${atoms.map(a => {
+          ${displayedAtoms.map(a => {
             const retSign = a.ret > 0 ? '+' : '';
             const retColor = a.ret >= 0 ? '#059669' : '#dc2626';
-            const spStr = a.start_price ? `$${a.start_price}` : '起点价';
-            const epStr = a.end_price ? `$${a.end_price}` : '终点价';
+            const epStr = a.end_price ? `$${a.end_price}` : '确认价';
             return `
-              <span class="feat-pill" style="border-left: 3.5px solid ${a.color}; background: ${a.color}15;" title="微观2h窗口: ${a.start_time} ~ ${a.end_time}&#10;微观起点价: ${spStr} ➜ 终点价: ${epStr}&#10;2h收益率: ${retSign}${a.ret}% (以微观起点 ${spStr} 为基准，绝非全图P0)&#10;2h波幅: ${a.amplitude}%">
+              <span class="feat-pill" style="border-left: 3.5px solid ${a.color}; background: ${a.color}15; cursor:pointer;" onclick="setAtomFilter('${a.atom}')" title="微观2h窗口: ${a.start_time} ~ ${a.end_time}&#10;确认买入价: ${epStr}&#10;2h波幅: ${a.amplitude}% | 相似度: ${a.sim}%&#10;点击过滤仅看 ${a.atom}">
                 <span class="feat-dot" style="background:${a.color}"></span>
                 <strong style="color:${a.color}">${a.atom} ${a.name}</strong>
                 <span class="feat-sim">${a.sim}%</span>
-                <span style="font-size:10px; font-weight:700; color:${retColor};" title="2h区间收益 (以微观起点 ${spStr} 为基准)">2h:${retSign}${a.ret}%</span>
+                <span style="font-size:10px; font-weight:700; color:${retColor};">2h:${retSign}${a.ret}%</span>
                 <span class="feat-dates">${a.start_time.slice(5,10)} ${a.start_time.slice(11,16)}</span>
               </span>
             `;
@@ -1137,9 +1375,15 @@
     } else {
       microAtomsHtml = `
         <div class="card-features-row" style="color:var(--text-sub); font-size:11px;">
-          <span>⚪ 暂未检索到 2 小时高振幅 (≥1.8%) 微观原子</span>
+          <span>⚪ 该标的未检索到当前选定微观形态</span>
         </div>
       `;
+    }
+
+    let atomHitBadge = '';
+    if (CURRENT_ATOM_FILTER !== 'all') {
+      const matchCount = (s.micro_atoms || []).filter(a => a.atom === CURRENT_ATOM_FILTER).length;
+      atomHitBadge = `<span class="pill-badge" style="background:#8b5cf618; color:#7c3aed; border:1px solid #7c3aed40; font-weight:700;">🎯 命中 ${CURRENT_ATOM_FILTER} (${matchCount}次)</span>`;
     }
 
     return `
@@ -1152,6 +1396,7 @@
               <span class="pill-badge pill-trend" style="background:${s.trend_color}18; color:${s.trend_color}; border: 1px solid ${s.trend_color}40;">
                 ${s.trend_tag}
               </span>
+              ${atomHitBadge}
             </div>
             <div style="margin-top:4px;">
               ${badges}
@@ -1310,7 +1555,18 @@
     let featureCurves = "";
     let featureLabels = "";
 
-    (s.micro_atoms || []).forEach((a, aIdx) => {
+    const allAtoms = s.micro_atoms || [];
+    let targetAtoms = allAtoms;
+    if (CURRENT_ATOM_FILTER === 'all') {
+      targetAtoms = allAtoms.filter(a => a.is_top_salient);
+      if (targetAtoms.length === 0 && allAtoms.length > 0) {
+        targetAtoms = allAtoms.slice(0, 5);
+      }
+    } else {
+      targetAtoms = allAtoms.filter(a => a.atom === CURRENT_ATOM_FILTER);
+    }
+
+    targetAtoms.forEach((a, aIdx) => {
       const sIdx = Math.max(0, Math.min(bars.length - 1, a.macro_start_idx));
       const eIdx = Math.max(sIdx, Math.min(bars.length - 1, a.macro_end_idx));
       if (sIdx >= 0 && eIdx < bars.length) {
@@ -1365,22 +1621,22 @@
       }
     });
 
-    // Macro Forward Performance Windows (Aligned with micro start, width = CURRENT_HORIZON)
+    // Macro Forward Performance Windows (Aligned with micro confirmation end, width = CURRENT_HORIZON)
     let macroPerfBands = "";
     let macroPerfMarkers = "";
 
     if (CURRENT_HORIZON !== 'none') {
-      (s.micro_atoms || []).forEach(a => {
+      targetAtoms.forEach(a => {
         const perf = a.macro_perf ? a.macro_perf[CURRENT_HORIZON] : null;
         if (!perf) return;
         
-        const sIdx = a.macro_start_idx;
+        const sIdx = perf.start_idx != null ? perf.start_idx : a.macro_end_idx;
         const eIdx = perf.end_idx;
         if (sIdx >= bars.length || eIdx < sIdx) return;
         
         const bx = toX(sIdx);
         const ex = toX(eIdx);
-        const bw = Math.max(12, ex - bx);
+        const bw = Math.max(8, ex - bx);
         
         const isHit5 = perf.hit_5pct;
         const isBigDD = perf.max_dd <= -4.0 && !isHit5;
@@ -1390,7 +1646,7 @@
         // Forward performance shaded zone
         macroPerfBands += `
           <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="${zoneColor}" opacity="${zoneOpacity}" rx="2">
-            <title>宏观观察窗 (${CURRENT_HORIZON.slice(1)}h): 冲高: +${perf.max_gain}% | 回撤: ${perf.max_dd}% | 期末: ${perf.end_ret}%</title>
+            <title>宏观持仓窗 (${CURRENT_HORIZON.slice(1)}h): 微观末期买入基准 $${perf.base_price} | 冲高: +${perf.max_gain}% | 回撤: ${perf.max_dd}% | 期末: ${perf.end_ret}%</title>
           </rect>
           <line x1="${ex.toFixed(1)}" y1="${padY + 2}" x2="${ex.toFixed(1)}" y2="${height - padB - 2}" stroke="${zoneColor}" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.65"/>
         `;
@@ -1532,8 +1788,12 @@
     const retSign = b.ret_pct > 0 ? '+' : '';
     const retColor = b.ret_pct >= 0 ? '#34d399' : '#f87171';
     
-    // Check if current idx falls into any 2h micro atom zone (or within 1 bar)
-    const atom = (s.micro_atoms || []).find(a => {
+    // Check if current idx falls into any 2h micro atom zone (filtered by CURRENT_ATOM_FILTER)
+    const targetAtomsForHover = (s.micro_atoms || []).filter(a => {
+      if (CURRENT_ATOM_FILTER === 'all') return a.is_top_salient;
+      return a.atom === CURRENT_ATOM_FILTER;
+    });
+    const atom = targetAtomsForHover.find(a => {
       const sI = Math.max(0, a.macro_start_idx - 1);
       const eI = Math.min(bars.length - 1, a.macro_end_idx + 1);
       return idx >= sI && idx <= eI;
@@ -1550,15 +1810,15 @@
         const gainSign = p.max_gain > 0 ? '+' : '';
         const endSign = p.end_ret > 0 ? '+' : '';
         const targetBadge = p.hit_5pct ? '<span style="background:#059669; color:#fff; padding:1px 5px; border-radius:3px; font-size:9px; font-weight:bold;">🎯+5%达标</span>' : '';
-        const baseStr = atom.start_price ? `$${atom.start_price}` : '微观起点';
+        const baseStr = atom.end_price ? `$${atom.end_price}` : '微观确认买入价';
         macroPerfHtml = `
           <div style="margin-top:5px; padding-top:4px; border-top:1px dashed #475569; font-size:10px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="color:#94a3b8; font-weight:600;">宏观表现窗 [${hLabel}]:</span>
+              <span style="color:#94a3b8; font-weight:600;">宏观持仓窗 [${hLabel}]:</span>
               ${targetBadge}
             </div>
             <div style="color:#e2e8f0; margin-top:2px;">
-              最大冲高: <b style="color:${p.hit_5pct ? '#34d399' : '#38bdf8'}">${gainSign}${p.max_gain}%</b> (相对微观起点 ${baseStr}，第${p.peak_idx - atom.macro_start_idx}h)
+              最大冲高: <b style="color:${p.hit_5pct ? '#34d399' : '#38bdf8'}">${gainSign}${p.max_gain}%</b> (基准:微观末期买入价 ${baseStr}，持仓第${Math.max(0, p.peak_idx - (perf.start_idx || atom.macro_end_idx))}h)
             </div>
             <div style="color:#e2e8f0; margin-top:1px;">
               最大回撤: <b style="color:${p.max_dd <= -3 ? '#f87171' : '#cbd5e1'}">${p.max_dd}%</b> · 窗口期末: <b style="color:${p.end_ret >= 0 ? '#34d399' : '#f87171'}">${endSign}${p.end_ret}%</b>
