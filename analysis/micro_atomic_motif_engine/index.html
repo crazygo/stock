@@ -215,7 +215,50 @@
     .pill-win { background: #000; color: #fff; }
     .pill-loss { background: #e4e4e7; color: #555; }
     .pill-hold { background: #d4d4d8; color: #111; font-weight: 600; }
-    .pill-cross { background: #1a1a1a; color: #fff; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+    .pill-cross { background: #1a1a1a; color: #fff; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+    .pill-fixed { background: #e4e4e7; color: #333; font-weight: 600; padding: 2px 6px; border-radius: 3px; }
+
+    .filter-btn-group { display: flex; gap: 4px; align-items: center; }
+    .btn-filter {
+      font-size: 11px;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .btn-filter.active {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+      font-weight: 700;
+    }
+
+    .stepper-ctrl {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border-light);
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .sim-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .sim-high { background: #000; color: #fff; }
+    .sim-med { background: #52525b; color: #fff; }
+    .sim-low { background: #e4e4e7; color: #333; }
 
     /* Timeline & Chart Canvas */
     .timeline-container {
@@ -231,7 +274,7 @@
       background: #fafafa;
       border: 1px solid var(--border-light);
       border-radius: 3px;
-      height: 220px;
+      height: 250px;
       overflow: hidden;
       margin-top: 10px;
     }
@@ -323,59 +366,119 @@
 
   <!-- TAB 1: 4 Stocks 30-Day Rolling Showcase -->
   <main id="tab-showcase" class="tab-panel active">
-    <!-- Stock Selector Bar -->
+    <!-- Stock & View Controls Bar -->
     <div class="controls-bar">
-      <div style="display:flex; align-items:center; gap:8px;">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
         <span style="font-weight:700;">选择查看标的:</span>
-        <button class="btn-ctrl active" onclick="selectStock('SOXS', this)">SOXS (3x做空半导体)</button>
-        <button class="btn-ctrl" onclick="selectStock('SDGR', this)">SDGR (薛定谔)</button>
-        <button class="btn-ctrl" onclick="selectStock('AMAT', this)">AMAT (应用材料)</button>
-        <button class="btn-ctrl" onclick="selectStock('LITE', this)">LITE (朗美通)</button>
+        <button class="btn-ctrl active" id="btn-stock-SOXS" onclick="selectStock('SOXS', this)">SOXS (3x做空半导体)</button>
+        <button class="btn-ctrl" id="btn-stock-SDGR" onclick="selectStock('SDGR', this)">SDGR (薛定谔)</button>
+        <button class="btn-ctrl" id="btn-stock-AMAT" onclick="selectStock('AMAT', this)">AMAT (应用材料)</button>
+        <button class="btn-ctrl" id="btn-stock-LITE" onclick="selectStock('LITE', this)">LITE (朗美通)</button>
       </div>
 
-      <div style="font-size:12px; font-family:var(--font-mono); color:var(--text-muted);" id="stock-kpi-summary">
-        <!-- Injected by JS -->
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
+        <span style="font-weight:700;">视图模式:</span>
+        <button class="btn-ctrl active" id="btn-mode-day" onclick="switchViewMode('day')">单日 5m 高清穿透 (Day View)</button>
+        <button class="btn-ctrl" id="btn-mode-macro" onclick="switchViewMode('macro')">30 天宏观走势 (30D Macro)</button>
+        
+        <label for="select-day" style="font-weight:600; margin-left:6px;">选择交易日:</label>
+        <select id="select-day" onchange="changeDay(this.value)">
+          <!-- Injected by JS -->
+        </select>
       </div>
+    </div>
+
+    <!-- Live Window KPI Status Bar -->
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; background:#fff; border:1px solid var(--border); padding:8px 12px; border-radius:4px; margin-bottom:12px; font-size:12px;" id="live-window-kpi">
+      <!-- Injected by JS -->
     </div>
 
     <!-- Main Chart Container -->
     <div class="timeline-container">
       <div style="display:flex; justify-content:space-between; align-items:baseline;">
         <strong style="font-size:13px; text-transform:uppercase;" id="chart-title">
-          SOXS 最近 30 天 5 分钟 K 线走势与相对滑动命中标记
+          SOXS 5 分钟 K 线走势与相对滑动命中标记
         </strong>
-        <span style="font-size:11px; color:var(--text-muted);">
-          提示: 阴影区标明了滑动窗口捕获的经典 2 小时微原子形态
+        <span style="font-size:11px; color:var(--text-muted);" id="chart-sub-hint">
+          提示: 黑色虚线标出 11:30/13:30 传统固定切分边界，阴影带显示 2 小时 (24根 5m 线) 连续滑动窗口
         </span>
       </div>
 
       <div class="timeline-canvas-wrapper" id="timeline-chart">
         <!-- SVG injected by JS -->
       </div>
+
+      <!-- Stepper Controls (Active in Day View) -->
+      <div class="stepper-ctrl" id="stepper-container">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn-filter" onclick="stepWindow(-1)">◀ 前一滑动 (15m)</button>
+          <input type="range" id="window-slider" min="0" max="18" value="1" style="width:140px; cursor:pointer;" oninput="onSliderChange(this.value)">
+          <button class="btn-filter" onclick="stepWindow(1)">后一滑动 (15m) ▶</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="color:var(--text-muted);">当日滑动窗口:</span>
+          <select id="day-windows-select" onchange="onSelectWindow(this.value)" style="font-size:11px; padding:2px 6px;">
+            <!-- Injected by JS -->
+          </select>
+        </div>
+        <div id="step-window-info" style="font-family:var(--font-mono); font-weight:600;">
+          <!-- Injected by JS -->
+        </div>
+      </div>
     </div>
 
-    <!-- Comparative Proof Table -->
+    <!-- Comparative Proof Table Container with Multi-Filter -->
     <div style="margin-top: 18px; border: 1px solid var(--border); border-radius: 4px; padding: 14px; background: #fff;">
       <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--border-light); padding-bottom:6px; margin-bottom:10px;">
         <strong style="font-size:13px; text-transform:uppercase;">
-          滑动窗口独家捕获的“跨时段相对形态”精选切片 (Cross-Boundary Exemplars)
+          微观原子波形全量匹配与跨边界实证明细
         </strong>
-        <span style="font-size:11px; color:var(--text-muted);">
-          这些形态发生在 10:15~12:15 或 12:30~14:30 等跨越 11:30/13:30 的相对时段，传统固定切分将其完全切碎漏判！
+        <span style="font-size:11px; color:var(--text-muted);" id="table-filter-stats">
+          <!-- Injected by JS -->
         </span>
+      </div>
+
+      <!-- Filter Controls Bar -->
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; background:var(--bg-alt); padding:8px 12px; border:1px solid var(--border-light); border-radius:3px; margin-bottom:10px; font-size:12px;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-weight:600;">相似度门限:</span>
+          <div class="filter-btn-group">
+            <button class="btn-filter active" id="f-sim-85" onclick="setFilterSim(85)">极高契合 (≥85%)</button>
+            <button class="btn-filter" id="f-sim-80" onclick="setFilterSim(80)">高度契合 (≥80%)</button>
+            <button class="btn-filter" id="f-sim-70" onclick="setFilterSim(70)">全部切片 (≥70%)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-weight:600;">时段属性:</span>
+          <div class="filter-btn-group">
+            <button class="btn-filter active" id="f-type-cross" onclick="setFilterType('cross')">仅看跨边界相对时段 (证明滑动价值)</button>
+            <button class="btn-filter" id="f-type-all" onclick="setFilterType('all')">全部时段 (570个)</button>
+            <button class="btn-filter" id="f-type-fixed" onclick="setFilterType('fixed')">传统固定时钟 (90个)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-weight:600;">最小波幅:</span>
+          <div class="filter-btn-group">
+            <button class="btn-filter active" id="f-amp-10" onclick="setFilterAmp(1.0)">≥ 1.0% (过滤微噪)</button>
+            <button class="btn-filter" id="f-amp-20" onclick="setFilterAmp(2.0)">≥ 2.0% (大波幅)</button>
+            <button class="btn-filter" id="f-amp-0" onclick="setFilterAmp(0)">不限</button>
+          </div>
+        </div>
       </div>
 
       <table>
         <thead>
           <tr>
-            <th>相对时间窗口 (2 小时)</th>
-            <th>跨越时相</th>
+            <th>时间窗口 (2 小时)</th>
+            <th>时相属性</th>
             <th>匹配原子代码</th>
             <th>几何形态定性</th>
-            <th class="num">拟合距离 (Dist)</th>
-            <th class="num">内部涨跌幅</th>
-            <th class="num">见顶时点</th>
-            <th class="num">见底时点</th>
+            <th class="num">形态相似度 (Sim)</th>
+            <th class="num">2h 振幅 (Amp)</th>
+            <th class="num">2h 净收益</th>
+            <th class="num">见顶 / 见底</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -496,6 +599,13 @@
     let SHOWCASE_DATA = null;
     let ENGINE_DATA = null;
     let CURRENT_STOCK = "SOXS";
+    let CURRENT_VIEW_MODE = "day"; // "day" or "macro"
+    let CURRENT_DATE = "";
+    let ACTIVE_WINDOW_IDX = 1;
+    let FILTER_SIM = 85;
+    let FILTER_TYPE = "cross";
+    let FILTER_AMP = 1.0;
+    let FILTERED_SLICES = [];
 
     // 24-point 5m SVG Sparkline Generator
     function generateAtomSvg(curve, peakMin, troughMin, width = 270, height = 48) {
@@ -524,7 +634,6 @@
       });
 
       const peakIdx = Math.min(coords.length - 1, Math.max(0, Math.round(peakMin / 5)));
-      const troughIdx = Math.min(coords.length - 1, Math.max(0, Math.round(troughMin / 5)));
 
       return `
         <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;">
@@ -537,21 +646,23 @@
       `;
     }
 
-    // Timeline Price Chart Generator for 30 Days (SVG)
-    function renderTimelineChart(bars, exemplars, width = 1000, height = 200) {
-      if (!bars || bars.length === 0) return "";
-      const padX = 14;
-      const padY = 16;
+    // High-Resolution Day View Chart (78 5m bars, shaded active 2h sliding window, 11:30/13:30 dividers)
+    function renderDayViewChart(bars, daySlices, activeSlice, width = 980, height = 240) {
+      if (!bars || bars.length === 0) {
+        return `<div style="padding:40px; text-align:center; color:#888;">当日无 5 分钟行情数据</div>`;
+      }
+      const padX = 45;
+      const padY = 28;
+      const padB = 26;
       const w = width - padX * 2;
-      const h = height - padY * 2;
+      const h = height - padY - padB;
 
       const closes = bars.map(b => b.close);
       const minP = Math.min(...closes);
       const maxP = Math.max(...closes);
 
-      // Map time to X
       function toX(idx) {
-        return padX + (idx / (bars.length - 1)) * w;
+        return padX + (idx / Math.max(1, bars.length - 1)) * w;
       }
       function toY(price) {
         const norm = (price - minP) / (maxP - minP + 1e-6);
@@ -565,32 +676,154 @@
         return idx === 0 ? `M ${x.toFixed(1)},${y.toFixed(1)}` : `L ${x.toFixed(1)},${y.toFixed(1)}`;
       }).join(" ");
 
-      // Highlight exemplar relative windows (shaded bands)
-      let bands = "";
-      (exemplars || []).forEach(ex => {
-        // find start and end index in bars
-        const sIdx = bars.findIndex(b => b.time === ex.start_time);
-        const eIdx = bars.findIndex(b => b.time === ex.end_time);
+      // Vertical fixed divider lines at 11:30 and 13:30
+      let dividers = "";
+      const idx1130 = bars.findIndex(b => b.time.includes("11:30:00"));
+      const idx1330 = bars.findIndex(b => b.time.includes("13:30:00"));
+      if (idx1130 >= 0) {
+        const x1130 = toX(idx1130);
+        dividers += `
+          <line x1="${x1130.toFixed(1)}" y1="${padY}" x2="${x1130.toFixed(1)}" y2="${height - padB}" stroke="#aaa" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <text x="${(x1130 + 3).toFixed(1)}" y="${padY + 12}" font-size="10" font-family="monospace" fill="#888">11:30 (固定分界线)</text>
+        `;
+      }
+      if (idx1330 >= 0) {
+        const x1330 = toX(idx1330);
+        dividers += `
+          <line x1="${x1330.toFixed(1)}" y1="${padY}" x2="${x1330.toFixed(1)}" y2="${height - padB}" stroke="#aaa" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <text x="${(x1330 + 3).toFixed(1)}" y="${padY + 12}" font-size="10" font-family="monospace" fill="#888">13:30 (固定分界线)</text>
+        `;
+      }
+
+      // Shaded active sliding window
+      let windowBand = "";
+      if (activeSlice) {
+        const sIdx = bars.findIndex(b => b.time === activeSlice.start_time);
+        const eIdx = bars.findIndex(b => b.time === activeSlice.end_time);
         if (sIdx >= 0 && eIdx >= 0) {
           const bx = toX(sIdx);
-          const bw = Math.max(4, toX(eIdx) - bx);
-          bands += `
-            <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="#000000" opacity="0.10"/>
-            <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padY}" stroke="#555" stroke-width="1" stroke-dasharray="2,2"/>
-            <text x="${(bx + 2).toFixed(1)}" y="${padY + 12}" font-size="9" font-family="monospace" fill="#222" font-weight="bold">${ex.matched_atom}</text>
+          const bw = Math.max(8, toX(eIdx) - bx);
+          const isCross = activeSlice.is_cross_boundary;
+          const labelX = Math.max(padX, Math.min(width - padX - 310, bx));
+          const retSign = activeSlice.ret > 0 ? '+' : '';
+          const retPct = (activeSlice.ret * 100).toFixed(2);
+
+          windowBand = `
+            <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="#000000" opacity="0.12"/>
+            <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padB}" stroke="#111" stroke-width="1.8" stroke-dasharray="3,2"/>
+            <line x1="${(bx + bw).toFixed(1)}" y1="${padY}" x2="${(bx + bw).toFixed(1)}" y2="${height - padB}" stroke="#111" stroke-width="1.8" stroke-dasharray="3,2"/>
+            
+            <!-- Floating Tag above Window -->
+            <rect x="${labelX.toFixed(1)}" y="${(padY - 24)}" width="300" height="20" fill="#111" rx="3"/>
+            <text x="${(labelX + 8).toFixed(1)}" y="${(padY - 10)}" font-size="11" font-family="monospace" fill="#fff" font-weight="bold">
+              ${activeSlice.matched_atom} (${activeSlice.similarity}% 相似度 · ${activeSlice.atom_desc} ${retSign}${retPct}%)
+            </text>
+          `;
+        }
+      }
+
+      // Timeline axis labels (09:30, 10:30, 11:30, 12:30, 13:30, 14:30, 15:30)
+      let timeLabels = "";
+      ["09:30:00", "10:30:00", "11:30:00", "12:30:00", "13:30:00", "14:30:00", "15:30:00"].forEach(t => {
+        const idx = bars.findIndex(b => b.time.includes(t));
+        if (idx >= 0) {
+          const x = toX(idx);
+          timeLabels += `
+            <line x1="${x.toFixed(1)}" y1="${height - padB}" x2="${x.toFixed(1)}" y2="${height - padB + 4}" stroke="#666" stroke-width="1"/>
+            <text x="${x.toFixed(1)}" y="${height - padB + 16}" font-size="10" font-family="monospace" fill="#666" text-anchor="middle">${t.slice(0, 5)}</text>
+          `;
+        }
+      });
+
+      // Bottom step dots for each rolling window
+      let stepDots = "";
+      (daySlices || []).forEach((sl, idx) => {
+        const eIdx = bars.findIndex(b => b.time === sl.end_time);
+        if (eIdx >= 0) {
+          const x = toX(eIdx);
+          const y = height - padB;
+          const isActive = idx === ACTIVE_WINDOW_IDX;
+          const isHigh = sl.similarity >= 85;
+          const dotR = isActive ? 5 : (isHigh ? 3.5 : 2);
+          const dotFill = isActive ? "#000" : (isHigh ? "#333" : "#bbb");
+          stepDots += `
+            <circle cx="${x.toFixed(1)}" cy="${y}" r="${dotR}" fill="${dotFill}" stroke="${isActive ? '#fff' : 'none'}" stroke-width="1.5" style="cursor:pointer;" onclick="jumpToWindow(${idx})">
+              <title>${sl.start_time.slice(11, 16)} ~ ${sl.end_time.slice(11, 16)}: ${sl.matched_atom} (${sl.similarity}%)</title>
+            </circle>
           `;
         }
       });
 
       return `
         <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" style="display:block;">
-          <!-- Shaded matched relative windows -->
-          ${bands}
-          <!-- Continuous 5m price line -->
-          <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.6"/>
+          <!-- Traditional Dividers -->
+          ${dividers}
+          <!-- Active Window Shading -->
+          ${windowBand}
+          <!-- Price Curve -->
+          <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.8"/>
+          <!-- Time Axis -->
+          <line x1="${padX}" y1="${height - padB}" x2="${width - padX}" y2="${height - padB}" stroke="#ccc" stroke-width="1"/>
+          ${timeLabels}
+          <!-- Step Dots -->
+          ${stepDots}
           <!-- High / Low labels -->
-          <text x="${padX}" y="${padY + 10}" font-size="10" font-family="monospace" fill="#666">最高: $${maxP.toFixed(2)}</text>
-          <text x="${padX}" y="${height - padY}" font-size="10" font-family="monospace" fill="#666">最低: $${minP.toFixed(2)}</text>
+          <text x="${padX}" y="${padY + 10}" font-size="10" font-family="monospace" fill="#555">最高: $${maxP.toFixed(2)}</text>
+          <text x="${padX}" y="${height - padB - 4}" font-size="10" font-family="monospace" fill="#555">最低: $${minP.toFixed(2)}</text>
+        </svg>
+      `;
+    }
+
+    // Macro 30-Day View Chart (2369 bars, continuous overview)
+    function renderMacroViewChart(bars, exemplars, width = 980, height = 240) {
+      if (!bars || bars.length === 0) return "";
+      const padX = 20;
+      const padY = 24;
+      const padB = 26;
+      const w = width - padX * 2;
+      const h = height - padY - padB;
+
+      const closes = bars.map(b => b.close);
+      const minP = Math.min(...closes);
+      const maxP = Math.max(...closes);
+
+      function toX(idx) {
+        return padX + (idx / Math.max(1, bars.length - 1)) * w;
+      }
+      function toY(price) {
+        const norm = (price - minP) / (maxP - minP + 1e-6);
+        return padY + h - norm * h;
+      }
+
+      const pathStr = bars.map((b, idx) => {
+        const x = toX(idx);
+        const y = toY(b.close);
+        return idx === 0 ? `M ${x.toFixed(1)},${y.toFixed(1)}` : `L ${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(" ");
+
+      // Shaded exemplar windows
+      let bands = "";
+      (exemplars || []).forEach(ex => {
+        const sIdx = bars.findIndex(b => b.time === ex.start_time);
+        const eIdx = bars.findIndex(b => b.time === ex.end_time);
+        if (sIdx >= 0 && eIdx >= 0) {
+          const bx = toX(sIdx);
+          const bw = Math.max(3, toX(eIdx) - bx);
+          bands += `
+            <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="#000000" opacity="0.12" style="cursor:pointer;" onclick="locateOnChart('${ex.date}', '${ex.start_time}')"/>
+            <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padB}" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+          `;
+        }
+      });
+
+      return `
+        <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" style="display:block;">
+          ${bands}
+          <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.4"/>
+          <line x1="${padX}" y1="${height - padB}" x2="${width - padX}" y2="${height - padB}" stroke="#ccc" stroke-width="1"/>
+          <text x="${padX}" y="${padY + 10}" font-size="10" font-family="monospace" fill="#555">最高: $${maxP.toFixed(2)}</text>
+          <text x="${padX}" y="${height - padB - 4}" font-size="10" font-family="monospace" fill="#555">最低: $${minP.toFixed(2)}</text>
+          <text x="${width - padX}" y="${height - padB + 16}" font-size="10" font-family="monospace" fill="#888" text-anchor="end">提示: 点击阴影带直接进入单日 5m 高清穿透</text>
         </svg>
       `;
     }
@@ -604,9 +837,100 @@
 
     function selectStock(ticker, btn) {
       CURRENT_STOCK = ticker;
-      document.querySelectorAll('.btn-ctrl').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      document.querySelectorAll('#tab-showcase .btn-ctrl').forEach(b => {
+        if (b.id && b.id.startsWith('btn-stock-')) b.classList.remove('active');
+      });
+      if (btn) btn.classList.add('active');
+
+      const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
+      // Pick top exemplar date for this stock
+      if (s.exemplar_cross_matches && s.exemplar_cross_matches.length > 0) {
+        CURRENT_DATE = s.exemplar_cross_matches[0].date.slice(0, 10);
+      } else {
+        CURRENT_DATE = s.available_dates[s.available_dates.length - 1];
+      }
+      ACTIVE_WINDOW_IDX = 1;
+
+      populateDaySelector();
       renderShowcaseView();
+    }
+
+    function switchViewMode(mode) {
+      CURRENT_VIEW_MODE = mode;
+      document.getElementById('btn-mode-day').classList.toggle('active', mode === 'day');
+      document.getElementById('btn-mode-macro').classList.toggle('active', mode === 'macro');
+      document.getElementById('stepper-container').style.display = mode === 'day' ? 'flex' : 'none';
+      renderShowcaseView();
+    }
+
+    function changeDay(newDate) {
+      CURRENT_DATE = newDate;
+      ACTIVE_WINDOW_IDX = 1;
+      if (CURRENT_VIEW_MODE !== 'day') switchViewMode('day');
+      else renderShowcaseView();
+    }
+
+    function populateDaySelector() {
+      const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
+      const select = document.getElementById('select-day');
+      if (!s || !s.available_dates) return;
+
+      const starDates = new Set((s.exemplar_cross_matches || []).map(x => x.date.slice(0, 10)));
+      select.innerHTML = s.available_dates.map(d => {
+        const isStar = starDates.has(d);
+        const label = isStar ? `${d} ★ (高拟合爆发日)` : d;
+        const sel = d === CURRENT_DATE ? 'selected' : '';
+        return `<option value="${d}" ${sel}>${label}</option>`;
+      }).join('');
+    }
+
+    function stepWindow(delta) {
+      const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
+      const daySlices = s.rolling_slices.filter(x => x.date === CURRENT_DATE);
+      if (daySlices.length === 0) return;
+      ACTIVE_WINDOW_IDX = Math.max(0, Math.min(daySlices.length - 1, ACTIVE_WINDOW_IDX + delta));
+      renderShowcaseView();
+    }
+
+    function onSliderChange(val) {
+      ACTIVE_WINDOW_IDX = parseInt(val, 10);
+      renderShowcaseView();
+    }
+
+    function onSelectWindow(idx) {
+      ACTIVE_WINDOW_IDX = parseInt(idx, 10);
+      renderShowcaseView();
+    }
+
+    function jumpToWindow(idx) {
+      ACTIVE_WINDOW_IDX = idx;
+      renderShowcaseView();
+    }
+
+    // Filter controls for Table
+    function setFilterSim(sim) {
+      FILTER_SIM = sim;
+      [85, 80, 70].forEach(v => {
+        document.getElementById(`f-sim-${v}`).classList.toggle('active', v === sim);
+      });
+      renderFilteredTable();
+    }
+
+    function setFilterType(type) {
+      FILTER_TYPE = type;
+      ['cross', 'all', 'fixed'].forEach(t => {
+        document.getElementById(`f-type-${t}`).classList.toggle('active', t === type);
+      });
+      renderFilteredTable();
+    }
+
+    function setFilterAmp(amp) {
+      FILTER_AMP = amp;
+      [1.0, 2.0, 0].forEach(a => {
+        const idKey = a === 1.0 ? '10' : (a === 2.0 ? '20' : '0');
+        document.getElementById(`f-amp-${idKey}`).classList.toggle('active', a === amp);
+      });
+      renderFilteredTable();
     }
 
     function renderShowcaseView() {
@@ -614,54 +938,154 @@
       const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
       if (!s) return;
 
-      document.getElementById('chart-title').textContent = `${s.ticker} 最近 30 天 5 分钟 K 线走势与相对滑动命中标记 (步长 15m)`;
-      document.getElementById('stock-kpi-summary').innerHTML = `
-        5m K线: <strong>${s.total_5m_bars}</strong> 根 | 
-        固定分段: <strong>${s.fixed_count}</strong> 个 | 
-        <strong>滑动窗口: ${s.rolling_count} 个 (${s.coverage_multiplier}x)</strong> | 
-        跨边界捕捉: <strong>${s.cross_boundary_count} 个</strong>
+      const dayBars = s.chart_bars.filter(b => b.time.startsWith(CURRENT_DATE));
+      const daySlices = s.rolling_slices.filter(x => x.date === CURRENT_DATE);
+      if (ACTIVE_WINDOW_IDX >= daySlices.length) ACTIVE_WINDOW_IDX = Math.max(0, daySlices.length - 1);
+      const activeSlice = daySlices[ACTIVE_WINDOW_IDX] || null;
+
+      // Update Chart Title & Sub-Hint
+      if (CURRENT_VIEW_MODE === 'day') {
+        document.getElementById('chart-title').textContent = `${s.ticker} [${CURRENT_DATE}] 全天 5 分钟 K 线走势与连续滑动窗口拟合`;
+        document.getElementById('chart-sub-hint').textContent = `提示: 黑色虚线标出 11:30/13:30 传统固定切分边界，阴影带显示 2 小时 (24根 5m 线) 连续滑动窗口`;
+        document.getElementById('stepper-container').style.display = 'flex';
+
+        // Update Slider & Dropdown in Stepper
+        const slider = document.getElementById('window-slider');
+        slider.max = Math.max(0, daySlices.length - 1);
+        slider.value = ACTIVE_WINDOW_IDX;
+
+        const winSelect = document.getElementById('day-windows-select');
+        winSelect.innerHTML = daySlices.map((sl, idx) => {
+          const crossTag = sl.is_cross_boundary ? '★ 跨边界' : '固定';
+          return `<option value="${idx}" ${idx === ACTIVE_WINDOW_IDX ? 'selected' : ''}>${sl.start_time.slice(11, 16)}~${sl.end_time.slice(11, 16)} | ${sl.matched_atom} (${sl.similarity}% ${crossTag})</option>`;
+        }).join('');
+
+        if (activeSlice) {
+          document.getElementById('step-window-info').innerHTML = `
+            ${activeSlice.start_time.slice(11, 16)} ~ ${activeSlice.end_time.slice(11, 16)}: 
+            <span class="pill ${activeSlice.is_cross_boundary ? 'pill-cross' : 'pill-fixed'}">${activeSlice.is_cross_boundary ? '跨边界' : '固定'}</span>
+            <strong>${activeSlice.matched_atom}</strong> (${activeSlice.similarity}% 相似度, 2h波幅: ${activeSlice.amplitude}%)
+          `;
+        } else {
+          document.getElementById('step-window-info').textContent = "当日无可滑动窗口";
+        }
+
+        // Render Day Chart SVG
+        const chartHtml = renderDayViewChart(dayBars, daySlices, activeSlice, 980, 240);
+        document.getElementById('timeline-chart').innerHTML = chartHtml;
+      } else {
+        document.getElementById('chart-title').textContent = `${s.ticker} 最近 30 天 5 分钟 K 线走势全景 (2,369 根 5m 线)`;
+        document.getElementById('chart-sub-hint').textContent = `提示: 阴影区标明了跨越 11:30/13:30 边界的高契合微原子形态，点击直接进入该日高清穿透`;
+        document.getElementById('stepper-container').style.display = 'none';
+
+        const chartHtml = renderMacroViewChart(s.chart_bars, s.exemplar_cross_matches, 980, 240);
+        document.getElementById('timeline-chart').innerHTML = chartHtml;
+      }
+
+      // Update Live Window KPI Bar
+      if (activeSlice) {
+        const retSign = activeSlice.ret > 0 ? '+' : '';
+        const retColor = activeSlice.ret > 0 ? '#000' : '#444';
+        document.getElementById('live-window-kpi').innerHTML = `
+          <div>选定窗口: <strong>${activeSlice.start_time.slice(5, 16)} ~ ${activeSlice.end_time.slice(11, 16)}</strong></div>
+          <div>时相属性: <span class="pill ${activeSlice.is_cross_boundary ? 'pill-cross' : 'pill-fixed'}">${activeSlice.is_cross_boundary ? '跨边界相对时段 (独家捕捉)' : '传统固定时段'}</span></div>
+          <div>匹配原子: <strong style="font-family:monospace;">${activeSlice.matched_atom} (${activeSlice.atom_desc})</strong></div>
+          <div>形态相似度: <span class="sim-badge ${activeSlice.similarity >= 90 ? 'sim-high' : 'sim-med'}">${activeSlice.similarity.toFixed(1)}%</span></div>
+          <div>2h波幅: <strong>${activeSlice.amplitude.toFixed(2)}%</strong></div>
+          <div>2h收益: <strong style="color:${retColor};">${retSign}${(activeSlice.ret * 100).toFixed(2)}%</strong></div>
+          <div>冲顶/见底: <strong>${activeSlice.peak_min}m / ${activeSlice.trough_min}m</strong></div>
+        `;
+      } else {
+        document.getElementById('live-window-kpi').innerHTML = `
+          <div>5m K线: <strong>${s.total_5m_bars}</strong> 根</div>
+          <div>固定分段: <strong>${s.fixed_count}</strong> 个</div>
+          <div>连续滑动切片: <strong>${s.rolling_count}</strong> 个 (6.3x 覆盖增益)</div>
+          <div>跨边界切片捕捉: <strong>${s.cross_boundary_count}</strong> 个 (73.7% 占比)</div>
+        `;
+      }
+
+      renderFilteredTable();
+    }
+
+    function renderFilteredTable() {
+      if (!SHOWCASE_DATA) return;
+      const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
+      if (!s) return;
+
+      let pool = FILTER_TYPE === 'fixed' ? s.fixed_slices : s.rolling_slices;
+      let filtered = pool.filter(x => {
+        if (x.similarity < FILTER_SIM) return false;
+        if (x.amplitude < FILTER_AMP) return false;
+        if (FILTER_TYPE === 'cross' && !x.is_cross_boundary) return false;
+        return true;
+      });
+
+      filtered.sort((a, b) => b.similarity - a.similarity || b.amplitude - a.amplitude);
+      FILTERED_SLICES = filtered;
+
+      const avgSim = filtered.length > 0 ? (filtered.reduce((acc, c) => acc + c.similarity, 0) / filtered.length).toFixed(1) : "0.0";
+      const avgAmp = filtered.length > 0 ? (filtered.reduce((acc, c) => acc + c.amplitude, 0) / filtered.length).toFixed(2) : "0.00";
+
+      document.getElementById('table-filter-stats').innerHTML = `
+        筛选结果: <strong>${filtered.length}</strong> / ${pool.length} 个切片 · 平均相似度: <strong>${avgSim}%</strong> · 平均波幅: <strong>${avgAmp}%</strong>
       `;
 
-      // Render timeline chart
-      const chartHtml = renderTimelineChart(s.chart_bars, s.exemplar_cross_matches, 980, 200);
-      document.getElementById('timeline-chart').innerHTML = chartHtml;
-
-      // Render exemplars table
       const tbody = document.getElementById('cross-exemplars-tbody');
-      tbody.innerHTML = s.exemplar_cross_matches.map((ex, idx) => {
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:20px; color:#888;">当前筛选门槛下无切片，请调低门限或选择全部切片</td></tr>`;
+        return;
+      }
+
+      // Show top 60 rows
+      const displayList = filtered.slice(0, 60);
+      tbody.innerHTML = displayList.map((ex, idx) => {
         const retPct = (ex.ret * 100).toFixed(2);
-        const retColor = ex.ret > 0 ? '#000' : '#666';
+        const retColor = ex.ret > 0 ? '#000' : '#555';
+        const crossLabel = ex.is_cross_boundary ? '跨边界相对时段' : (ex.seg_name || '固定时钟');
 
         return `
           <tr>
             <td style="font-family:monospace; font-weight:700;">${ex.start_time.slice(5, 16)} ~ ${ex.end_time.slice(11, 16)}</td>
-            <td><span class="pill pill-cross">跨边界相对时间</span></td>
+            <td><span class="pill ${ex.is_cross_boundary ? 'pill-cross' : 'pill-fixed'}">${crossLabel}</span></td>
             <td><strong style="font-family:monospace;">${ex.matched_atom}</strong></td>
             <td style="font-size:11px;">${ex.atom_desc}</td>
-            <td class="num">${ex.distance.toFixed(3)}</td>
+            <td class="num"><span class="sim-badge ${ex.similarity >= 90 ? 'sim-high' : (ex.similarity >= 80 ? 'sim-med' : 'sim-low')}">${ex.similarity.toFixed(1)}%</span></td>
+            <td class="num">${ex.amplitude.toFixed(2)}%</td>
             <td class="num" style="font-weight:700; color:${retColor};">${ex.ret > 0 ? '+' : ''}${retPct}%</td>
-            <td class="num">${ex.peak_min}m</td>
-            <td class="num">${ex.trough_min}m</td>
+            <td class="num" style="font-size:11px;">顶${ex.peak_min}m / 底${ex.trough_min}m</td>
             <td>
-              <button style="font-size:11px; padding:2px 8px; cursor:pointer;" onclick="showDrilldown(${idx})">
-                穿透拟合图
-              </button>
+              <button class="btn-filter" style="font-size:10px; padding:2px 6px;" onclick="locateOnChart('${ex.date}', '${ex.start_time}')">定位走势</button>
+              <button class="btn-filter" style="font-size:10px; padding:2px 6px; margin-left:3px;" onclick="showDrilldownByObject(${idx})">穿透拟合图</button>
             </td>
           </tr>
         `;
       }).join('');
     }
 
-    function showDrilldown(idx) {
-      if (!SHOWCASE_DATA) return;
+    function locateOnChart(targetDate, targetStartTime) {
+      CURRENT_DATE = targetDate.slice(0, 10);
+      populateDaySelector();
+      if (CURRENT_VIEW_MODE !== 'day') switchViewMode('day');
+
       const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
-      const ex = s.exemplar_cross_matches[idx];
+      const daySlices = s.rolling_slices.filter(x => x.date === CURRENT_DATE);
+      const matchIdx = daySlices.findIndex(x => x.start_time === targetStartTime);
+      if (matchIdx >= 0) ACTIVE_WINDOW_IDX = matchIdx;
+      else ACTIVE_WINDOW_IDX = 0;
+
+      renderShowcaseView();
+      document.querySelector('.timeline-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function showDrilldownByObject(filteredIdx) {
+      if (!FILTERED_SLICES || !FILTERED_SLICES[filteredIdx]) return;
+      const ex = FILTERED_SLICES[filteredIdx];
       const atomCb = SHOWCASE_DATA.codebook.find(c => c.code === ex.matched_atom);
+      const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
 
       document.getElementById('modal-title').textContent = `${s.ticker} 相对时间窗口 [${ex.start_time} ~ ${ex.end_time}] 拟合详情`;
-      document.getElementById('modal-subtitle').textContent = `匹配原子代码: ${ex.matched_atom} (${ex.atom_desc}) · 欧氏距离: ${ex.distance} · 2小时收益: ${(ex.ret * 100).toFixed(2)}%`;
+      document.getElementById('modal-subtitle').textContent = `匹配原子代码: ${ex.matched_atom} (${ex.atom_desc}) · 相似度: ${ex.similarity}% · 2小时振幅: ${ex.amplitude}% · 净收益: ${(ex.ret * 100).toFixed(2)}%`;
 
-      // Draw overlay of actual 24-point z_curve vs atom centroid curve
       const padX = 10; const padY = 12;
       const width = 760; const height = 150;
       const w = width - padX * 2; const h = height - padY * 2;
@@ -694,15 +1118,18 @@
 
       document.getElementById('modal-chart').innerHTML = `
         <div style="display:flex; justify-content:space-between; font-size:11px; font-family:monospace; margin-bottom:4px;">
-          <span>实线(黑色): ${s.ticker} 真实 24 根 5m 线 | 虚线(灰色): ${ex.matched_atom} 质心基准</span>
+          <span>实线(黑色): ${s.ticker} 真实 24 根 5m 归一化曲线 | 虚线(灰色): ${ex.matched_atom} 质心基准</span>
           <span>X轴: 0分钟 ~ 120分钟</span>
         </div>
         ${svgOverlay}
       `;
 
       document.getElementById('modal-stats').innerHTML = `
-        <strong>为什么固定时钟会漏判这个波形？</strong><br>
-        该形态起始于 <code>${ex.start_time.split(' ')[1]}</code>，结束于 <code>${ex.end_time.split(' ')[1]}</code>，完整横跨了常规午盘分界线。在传统固定切分下，它会被直接截断；而连续滑动窗口在 <code>${ex.end_time.split(' ')[1]}</code> 收尾的当前这一刻，精准捕获了这完整的两小时微观形态！
+        <div style="background:#fafafa; border:1px solid var(--border-light); padding:10px 14px; border-radius:4px; margin-top:8px;">
+          <strong>为什么固定时钟分段会漏判这个波形？</strong><br>
+          该形态起始于 <code>${ex.start_time.split(' ')[1]}</code>，结束于 <code>${ex.end_time.split(' ')[1]}</code>。
+          ${ex.is_cross_boundary ? '传统固定切分在 11:30 或 13:30 机械下刀，直接将该形态腰斩为两段残片，导致前后两段均被作为噪声过滤；而连续滑动窗口以 15 分钟自适应向前滑动，完整捕获了该 2 小时波形全貌！' : '该形态完整落在固定时段内部，但在滑动窗口下可与前后时序平滑衔接。'}
+        </div>
       `;
 
       document.getElementById('drilldown-modal').classList.add('active');
@@ -814,6 +1241,15 @@
         SHOWCASE_DATA = await resShowcase.json();
         ENGINE_DATA = await resEngine.json();
 
+        const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
+        if (s && s.exemplar_cross_matches && s.exemplar_cross_matches.length > 0) {
+          CURRENT_DATE = s.exemplar_cross_matches[0].date.slice(0, 10);
+        } else if (s && s.available_dates) {
+          CURRENT_DATE = s.available_dates[s.available_dates.length - 1];
+        }
+        ACTIVE_WINDOW_IDX = 1;
+
+        populateDaySelector();
         renderShowcaseView();
         renderAtomCards();
         initBranchSelector();

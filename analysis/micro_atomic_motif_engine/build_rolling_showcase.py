@@ -102,6 +102,12 @@ def main():
                     best_atom_idx = int(np.argmin(dists))
                     best_atom = codebook[best_atom_idx]
 
+                    p_min = int(np.argmax(sc)) * 5
+                    t_min = int(np.argmin(sc)) * 5
+                    ret = float((sc[-1] - sc[0]) / sc[0])
+                    amp_pct = float((np.max(sc) - np.min(sc)) / sc[0] * 100.0)
+                    sim_pct = float(max(0.0, 1.0 - (dists[best_atom_idx]**2 / 48.0)) * 100.0)
+
                     fixed_slices.append({
                         "mode": "fixed",
                         "seg_name": seg_name,
@@ -111,7 +117,15 @@ def main():
                         "matched_atom": best_atom["code"],
                         "atom_desc": best_atom["descriptor"],
                         "distance": round(float(dists[best_atom_idx]), 3),
-                        "ret": round(float((sc[-1] - sc[0]) / sc[0]), 4)
+                        "similarity": round(sim_pct, 1),
+                        "amplitude": round(amp_pct, 2),
+                        "is_flat": bool(amp_pct < 0.4),
+                        "ret": round(ret, 4),
+                        "peak_min": p_min,
+                        "trough_min": t_min,
+                        "is_cross_boundary": False,
+                        "z_curve": list(np.round(z, 2)),
+                        "raw_closes": [round(float(x), 2) for x in sc]
                     })
 
         # 3. Extract ROLLING Sliding Window (Step = 3 bars = 15 mins)
@@ -151,6 +165,8 @@ def main():
                 p_min = int(np.argmax(sub_c)) * 5
                 t_min = int(np.argmin(sub_c)) * 5
                 ret = float((sub_c[-1] - sub_c[0]) / sub_c[0])
+                amp_pct = float((np.max(sub_c) - np.min(sub_c)) / sub_c[0] * 100.0)
+                sim_pct = float(max(0.0, 1.0 - (dists[best_atom_idx]**2 / 48.0)) * 100.0)
 
                 rolling_slices.append({
                     "mode": "rolling",
@@ -160,6 +176,9 @@ def main():
                     "matched_atom": best_atom["code"],
                     "atom_desc": best_atom["descriptor"],
                     "distance": round(float(dists[best_atom_idx]), 3),
+                    "similarity": round(sim_pct, 1),
+                    "amplitude": round(amp_pct, 2),
+                    "is_flat": bool(amp_pct < 0.4),
                     "ret": round(ret, 4),
                     "peak_min": p_min,
                     "trough_min": t_min,
@@ -171,14 +190,18 @@ def main():
         print(f"  Fixed slices: {len(fixed_slices)} | Rolling slices: {len(rolling_slices)} ({len(rolling_slices)/len(fixed_slices):.1f}x more!)")
         print(f"  Cross-boundary relative slices captured: {cross_boundary_count} (completely missed by fixed blocks!)")
 
-        # Pick Top 10 distinctive cross-boundary matches for drill-down showcase
-        distinctive_cross = [s for s in rolling_slices if s["is_cross_boundary"] and s["distance"] < 1.2]
-        distinctive_cross.sort(key=lambda x: abs(x["ret"]), reverse=True)
+        # Pick Top high-fidelity cross-boundary matches for drill-down showcase
+        # Calibrated: Sim >= 85% and Amp >= 0.8% to ensure real non-flat shape match
+        distinctive_cross = [s for s in rolling_slices if s["is_cross_boundary"] and s["similarity"] >= 85.0 and s["amplitude"] >= 0.8]
+        if len(distinctive_cross) < 10:
+            distinctive_cross = [s for s in rolling_slices if s["is_cross_boundary"] and s["similarity"] >= 80.0]
+        distinctive_cross.sort(key=lambda x: (x["similarity"], x["amplitude"]), reverse=True)
 
         stock_results[stock] = {
             "ticker": stock,
             "total_5m_bars": len(reg_df),
             "date_range": f"{recent_30_dates[0]} ~ {recent_30_dates[-1]}",
+            "available_dates": recent_30_dates,
             "fixed_count": len(fixed_slices),
             "rolling_count": len(rolling_slices),
             "coverage_multiplier": round(len(rolling_slices) / max(1, len(fixed_slices)), 1),
@@ -186,7 +209,7 @@ def main():
             "chart_bars": chart_bars,
             "fixed_slices": fixed_slices,
             "rolling_slices": rolling_slices,
-            "exemplar_cross_matches": distinctive_cross[:12]
+            "exemplar_cross_matches": distinctive_cross[:30]
         }
 
     payload = {
