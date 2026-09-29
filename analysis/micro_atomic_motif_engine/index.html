@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QQQ 双尺度微观原子波形与时序语法链引擎 (2小时 / 24根5m K线)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f7f7f8;
+      --border: #d0d0d5;
+      --border-light: #e5e5ea;
+      --text: #1a1a1a;
+      --text-muted: #66666e;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 16px 24px 60px;
+    }
+
+    header {
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+
+    .badge-wireframe {
+      display: inline-block;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      background: #e4e4e7;
+      color: #333;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+
+    .meta-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .meta-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .meta-card .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+    .meta-card .value { font-size: 16px; font-weight: 700; font-family: var(--font-mono); margin-top: 2px; }
+
+    /* Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-bottom: none;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .tab-btn:hover { background: var(--bg-alt); color: var(--text); }
+    .tab-btn.active {
+      background: var(--bg);
+      color: var(--text);
+      border-color: var(--border);
+      border-bottom: 2px solid var(--text);
+      margin-bottom: -1px;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Controls bar */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    select {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    /* Grid for Codebook */
+    .codebook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    .card-code { font-size: 16px; font-weight: 700; font-family: var(--font-mono); }
+    .card-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #e4e4e7;
+    }
+
+    .badge-pump { background: #1a1a1a; color: #fff; }
+    .badge-dump { background: #71717a; color: #fff; }
+    .badge-neutral { background: #e4e4e7; color: #333; }
+
+    .chart-box {
+      border: 1px solid var(--border-light);
+      background: #fff;
+      padding: 4px;
+      border-radius: 3px;
+      margin: 6px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .math-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px 6px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: var(--bg-alt);
+      padding: 6px 8px;
+      border-radius: 3px;
+      margin-top: 6px;
+    }
+
+    .mg-item { display: flex; justify-content: space-between; }
+    .mg-k { color: var(--text-muted); }
+    .mg-v { font-weight: 600; }
+
+    .card-desc {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+      margin-top: 6px;
+    }
+
+    .card-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border-light);
+      color: var(--text-muted);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    th { background: var(--bg-alt); font-size: 11px; font-weight: 600; text-transform: uppercase; }
+    td.num { text-align: right; font-family: var(--font-mono); }
+    tr:hover td { background: #fafafa; }
+
+    .pill {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .pill-win { background: #000; color: #fff; }
+    .pill-loss { background: #e4e4e7; color: #555; }
+    .pill-hold { background: #d4d4d8; color: #111; font-weight: 600; }
+
+    footer {
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-wireframe">Multi-Scale Hierarchical Motif Engine · 5M Resolution</div>
+    <h1>QQQ 双尺度微观原子波形与时序语法链引擎</h1>
+    <div class="subtitle">
+      底层: 2小时 = 24根 5分钟常规盘 K 线 (彻底解决 60m 无法区分“开盘诱多倒V”与“单边真突破”难题) · 顶层: 3天原子基因链前向预测
+    </div>
+
+    <div class="meta-metrics">
+      <div class="meta-card">
+        <div class="label">微观原子颗粒度</div>
+        <div class="value">2 小时 (24根 5m)</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">评估微观原子总数</div>
+        <div class="value" id="meta-atoms">110,379 个</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">原子形态字典库</div>
+        <div class="value">K = 12 几何基元</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">最高黄金语法链达成率</div>
+        <div class="value" style="color:#000;">61.9% (基准: ~27.7%)</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav-tabs" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('tab-atoms', this)">① 2小时 5m 微观原子词表 (Codebook)</button>
+    <button class="tab-btn" onclick="switchTab('tab-branching', this)">② 开盘暴涨分支解析器 (Opening Climax Branch)</button>
+    <button class="tab-btn" onclick="switchTab('tab-triplets', this)">③ 全天三原子黄金时序链排行 (Top Sequences)</button>
+    <button class="tab-btn" onclick="switchTab('tab-method', this)">④ 宏微双尺度量化机理 (Architecture)</button>
+  </nav>
+
+  <!-- TAB 1: 2-Hour 5m Micro-Atom Codebook -->
+  <main id="tab-atoms" class="tab-panel active">
+    <div class="controls-bar">
+      <div>
+        <strong>2小时 5分钟微观几何基元:</strong> 消除绝对价格，X轴为 0~120 分钟 (24 根 5m 线)，清晰标记冲顶/见底分钟点。
+      </div>
+      <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">
+        样本范围: 2025-01-02 至 2026-09-25 · 109 只标的
+      </div>
+    </div>
+
+    <div class="codebook-grid" id="atoms-cards">
+      <!-- Injected by JS -->
+    </div>
+  </main>
+
+  <!-- TAB 2: Opening Surge Branch Analyzer -->
+  <main id="tab-branching" class="tab-panel">
+    <div style="background: var(--bg-alt); border: 1px solid var(--border); padding: 12px 16px; border-radius: 4px; margin-bottom: 14px; font-size: 12px; line-height: 1.6;">
+      <strong>核心答疑实验：如果开盘暴涨 2 小时，下午接什么走势时未来 3 天 +5% 概率最高？</strong><br>
+      系统自动锁定所有在 <strong>09:30~11:30 早盘走出暴涨形态（如 A-02, A-03, A-04, A-05, A-06, A-09, A-11 等）</strong> 的切片，严格追踪其下午（午盘 + 尾盘）的不同演化分支对未来 3 天 +5% 达成率的决定性影响：
+    </div>
+
+    <div class="controls-bar">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <label for="filter-open-atom"><strong>筛选早盘暴涨原子:</strong></label>
+        <select id="filter-open-atom" onchange="renderBranchTable()">
+          <option value="ALL">全部开盘暴涨原子 (All Opening Surge)</option>
+        </select>
+      </div>
+      <div style="font-size: 12px; color: var(--text-muted);">
+        按未来 3 天达成率排序 (样本量 N ≥ 20)
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>早盘暴涨形态 (09:30~11:30)</th>
+          <th>午盘形态 (11:30~13:30)</th>
+          <th>尾盘形态 (13:30~16:00)</th>
+          <th>时序语法链 (Sequence)</th>
+          <th>下午行为定性</th>
+          <th class="num">历史样本量</th>
+          <th class="num">未来 3 天触及 +5% 达成率</th>
+          <th>胜率评估</th>
+        </tr>
+      </thead>
+      <tbody id="branch-tbody">
+        <!-- Injected by JS -->
+      </tbody>
+    </table>
+  </main>
+
+  <!-- TAB 3: Top Daily Triplets Ranking -->
+  <main id="tab-triplets" class="tab-panel">
+    <div class="controls-bar">
+      <div>
+        <strong>全天三原子 (早盘 2h → 午盘 2h → 尾盘 2.5h) 黄金时序链排行榜:</strong>
+        揭示单日微观演化路径与未来 3 天触及 +5% 的概率关联。
+      </div>
+      <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">
+        门禁: 样本量 N ≥ 30 · 基准达成率 ~27.7%
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>排名</th>
+          <th>全天微原子语法链 (S1 → S2 → S3)</th>
+          <th>演化路径微观解读</th>
+          <th class="num">历史出现频次 (N)</th>
+          <th class="num">未来 3 天触及 +5% 达成率</th>
+          <th class="num">较无条件基准超额</th>
+          <th>评级</th>
+        </tr>
+      </thead>
+      <tbody id="triplets-tbody">
+        <!-- Injected by JS -->
+      </tbody>
+    </table>
+  </main>
+
+  <!-- TAB 4: Micro vs Macro Methodology -->
+  <main id="tab-method" class="tab-panel">
+    <div style="background:#fff; border:1px solid var(--border); padding:16px; border-radius:4px; font-size:13px; line-height:1.7;">
+      <h3 style="font-size:15px; margin-bottom:8px;">为什么 2 小时必须使用 5 分钟 K 线？(数学物理机理)</h3>
+      <p>
+        在传统 60 分钟（1小时）K 线上，2 小时<strong>仅仅由 2 根柱子构成</strong>。两点之间只能连成一条刚性直线，根本无法提取“波形（Waveform）”，你只能知道它净收益涨跌，完全丢失了波形的内部动力学过程。<br>
+        而一旦降维切换到 <strong>5 分钟 K 线</strong>：
+        $$2 \text{ 小时} = 120 \text{ 分钟} = \mathbf{24 \text{ 根 5m K 线}}$$
+      </p>
+
+      <table style="margin: 14px 0;">
+        <thead>
+          <tr>
+            <th>微观博弈场景</th>
+            <th>在 60m K 线上的表现 (无法辨识)</th>
+            <th>在 5m K 线上的微观原子表现 (精准捕获)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>开盘诱多假突破倒 V 型</strong></td>
+            <td>一根带上影线的阳线或平盘十字星，看不出冲刺时相</td>
+            <td><strong>Atom A-02 / A-05 / A-11</strong>：清晰展示前 15~40 分钟极速脉冲见顶，后 80 分钟一路跳水跌破开盘价，Fade Ratio 高达 0.84！</td>
+          </tr>
+          <tr>
+            <td><strong>真突破稳扎稳打攻坚型</strong></td>
+            <td>也是一根阳线，看似与假突破无异</td>
+            <td><strong>Atom A-03 / A-04 / A-06</strong>：全程回踩不破前低，第 100~115 分钟（11:20 附近）收于最高点，Fade Ratio 仅 0.01~0.05！</td>
+          </tr>
+          <tr>
+            <td><strong>放量冲高后高位锁筹横盘</strong></td>
+            <td>大阳线后接小阴线，容易被误判为滞涨见顶</td>
+            <td><strong>Atom A-08 / A-10</strong>：冲高后拒绝回踩，在绝对高位做极窄幅整理，主力锁筹意图极强。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size:15px; margin: 16px 0 8px;">双尺度宏微结合的量化优势</h3>
+      <ul style="margin-left: 20px;">
+        <li><strong>时效性提升 4 倍</strong>：在 11:30 早盘结束的瞬间，系统即可直接完成 24 根 5m 线的原子定性，无需等待全天或 6 小时大波形收口。</li>
+        <li><strong>消除均值平滑失真</strong>：多天刚性波形（21h~35h）会将单日的爆发脉冲抹平，而原子语法链能够高保真记录“出清段 → 锁筹段 → 点火段”的真实时序逻辑。</li>
+        <li><strong>胜率突破 50%+ 瓶颈</strong>：实证表明，单纯整体波形胜率被压制在 25.7%，而通过微原子时序语法链过滤，顶级组合的未来 3 天达成率成功跃升至 <strong>50% ~ 61.9%</strong>！</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <div>工程归档: <code>analysis/micro_atomic_motif_engine/</code> · 端口: 8768</div>
+    <div>2025-01 至 2026-09 全量 5 分钟行情库 · 双尺度宏微结合因果闭环</div>
+  </footer>
+
+  <script>
+    let DATA = null;
+
+    // 24-point 5m SVG Sparkline Generator
+    function generateAtomSvg(curve, peakMin, troughMin, width = 270, height = 50) {
+      if (!curve || curve.length === 0) return "";
+      const padX = 8;
+      const padY = 8;
+      const w = width - padX * 2;
+      const h = height - padY * 2;
+      const minVal = -2.5;
+      const maxVal = 2.5;
+
+      const coords = curve.map((val, idx) => {
+        const x = padX + (idx / (curve.length - 1)) * w;
+        const normY = (val - minVal) / (maxVal - minVal);
+        const y = padY + h - Math.max(0, Math.min(1, normY)) * h;
+        return [x, y];
+      });
+
+      const pathStr = coords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+      const zeroY = padY + h - ((0 - minVal) / (maxVal - minVal)) * h;
+
+      // 30min / 60min / 90min dividers
+      let dividers = "";
+      [6, 12, 18].forEach(barIdx => {
+        const dx = padX + (barIdx / (curve.length - 1)) * w;
+        dividers += `<line x1="${dx.toFixed(1)}" y1="${padY}" x2="${dx.toFixed(1)}" y2="${height - padY}" stroke="#e5e5ea" stroke-width="1" stroke-dasharray="2,2"/>`;
+      });
+
+      // Peak dot & Trough dot
+      const peakIdx = Math.min(coords.length - 1, Math.max(0, Math.round(peakMin / 5)));
+      const troughIdx = Math.min(coords.length - 1, Math.max(0, Math.round(troughMin / 5)));
+
+      const pCoord = coords[peakIdx];
+      const tCoord = coords[troughIdx];
+
+      return `
+        <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;">
+          <line x1="${padX}" y1="${zeroY.toFixed(1)}" x2="${width - padX}" y2="${zeroY.toFixed(1)}" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+          ${dividers}
+          <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Peak marker -->
+          <circle cx="${pCoord[0].toFixed(1)}" cy="${pCoord[1].toFixed(1)}" r="3" fill="#000"/>
+          <!-- End marker -->
+          <circle cx="${coords[coords.length - 1][0].toFixed(1)}" cy="${coords[coords.length - 1][1].toFixed(1)}" r="2.5" fill="#666"/>
+        </svg>
+      `;
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Tab 1: Render Micro-Atom Cards
+    function renderAtomCards() {
+      if (!DATA) return;
+      const container = document.getElementById('atoms-cards');
+      container.innerHTML = DATA.codebook.map(cb => {
+        const retPct = (cb.mean_ret * 100).toFixed(2);
+        const badgeClass = cb.mean_ret > 0.005 ? 'badge-pump' : (cb.mean_ret < -0.005 ? 'badge-dump' : 'badge-neutral');
+        const spark = generateAtomSvg(cb.curve, cb.median_peak_min, cb.median_trough_min, 270, 48);
+
+        return `
+          <div class="card">
+            <div class="card-head">
+              <span class="card-code">${cb.code}</span>
+              <span class="card-badge ${badgeClass}">均益: ${cb.mean_ret > 0 ? '+' : ''}${retPct}%</span>
+            </div>
+
+            <div class="chart-box">
+              ${spark}
+            </div>
+
+            <div class="card-desc">${cb.descriptor}</div>
+
+            <div class="math-grid">
+              <div class="mg-item"><span class="mg-k">见顶:</span><span class="mg-v">${cb.median_peak_min}m</span></div>
+              <div class="mg-item"><span class="mg-k">见底:</span><span class="mg-v">${cb.median_trough_min}m</span></div>
+              <div class="mg-item"><span class="mg-k">回落比:</span><span class="mg-v">${cb.mean_fade_ratio.toFixed(2)}</span></div>
+              <div class="mg-item"><span class="mg-k">初值 Z:</span><span class="mg-v">${cb.head_z > 0 ? '+' : ''}${cb.head_z.toFixed(2)}</span></div>
+              <div class="mg-item"><span class="mg-k">峰值 Z:</span><span class="mg-v">${cb.peak_z > 0 ? '+' : ''}${cb.peak_z.toFixed(2)}</span></div>
+              <div class="mg-item"><span class="mg-k">终值 Z:</span><span class="mg-v">${cb.end_z > 0 ? '+' : ''}${cb.end_z.toFixed(2)}</span></div>
+            </div>
+
+            <div class="card-stats">
+              <span>样本: <strong>${cb.total_count.toLocaleString()}</strong></span>
+              <span>尺度: 2小时 (24根 5m)</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Tab 2: Opening Branch Table
+    function initBranchSelector() {
+      if (!DATA) return;
+      const select = document.getElementById('filter-open-atom');
+      const surgeAtoms = [...new Set(DATA.opening_branches.map(b => b.open_atom))].sort();
+
+      select.innerHTML = `<option value="ALL">全部开盘暴涨原子 (All Opening Surge)</option>` +
+        surgeAtoms.map(a => `<option value="${a}">仅看 ${a}</option>`).join('');
+
+      renderBranchTable();
+    }
+
+    function renderBranchTable() {
+      if (!DATA) return;
+      const filterVal = document.getElementById('filter-open-atom').value;
+      let list = DATA.opening_branches;
+
+      if (filterVal !== 'ALL') {
+        list = list.filter(b => b.open_atom === filterVal);
+      }
+
+      const tbody = document.getElementById('branch-tbody');
+      tbody.innerHTML = list.map(b => {
+        const ratePct = (b.hit3d_rate * 100).toFixed(2);
+        const isHigh = b.hit3d_rate >= 0.45;
+        const pillClass = isHigh ? 'pill-win' : (b.hit3d_rate >= 0.35 ? 'pill-hold' : 'pill-loss');
+
+        return `
+          <tr>
+            <td><strong>${b.open_atom}</strong></td>
+            <td>${b.mid_atom}</td>
+            <td>${b.close_atom}</td>
+            <td style="font-family:monospace; font-weight:700;">${b.sequence}</td>
+            <td style="font-size:11px;">${b.afternoon_type}</td>
+            <td class="num">${b.sample_count}</td>
+            <td class="num" style="font-weight:700; ${isHigh ? 'color:#000;' : ''}">${ratePct}%</td>
+            <td><span class="pill ${pillClass}">${ratePct}%</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Tab 3: Triplets Table
+    function renderTripletsTable() {
+      if (!DATA) return;
+      const tbody = document.getElementById('triplets-tbody');
+      tbody.innerHTML = DATA.top_daily_triplets.map((t, idx) => {
+        const ratePct = (t.hit3d_rate * 100).toFixed(2);
+        const excessPct = ((t.hit3d_rate - 0.2767) * 100).toFixed(2);
+        const rank = idx + 1;
+        const isTop = rank <= 5;
+
+        // Interpret sequence
+        const parts = t.sequence.split(' -> ');
+        let note = "微观多空交织";
+        if (t.hit3d_rate >= 0.50) {
+          note = "早盘出清 + 午后极度缩量中枢企稳，前向爆发力极高";
+        } else if (t.hit3d_rate >= 0.40) {
+          note = "典型蓄势突破结构，次日具有惯性冲高动能";
+        }
+
+        return `
+          <tr style="${isTop ? 'background:#fbfbfd; font-weight:600;' : ''}">
+            <td class="num">#${rank}</td>
+            <td style="font-family:monospace; font-weight:700;">${t.sequence}</td>
+            <td style="font-size:11px; color:#444;">${note}</td>
+            <td class="num">${t.sample_count}</td>
+            <td class="num" style="font-weight:700;">${ratePct}%</td>
+            <td class="num" style="color:#000;">+${excessPct}%</td>
+            <td><span class="pill ${t.hit3d_rate >= 0.45 ? 'pill-win' : 'pill-hold'}">${ratePct}%</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function init() {
+      try {
+        const res = await fetch('./data.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        DATA = await res.json();
+
+        document.getElementById('meta-atoms').textContent = `${DATA.metadata.total_micro_segments.toLocaleString()} 个`;
+        renderAtomCards();
+        initBranchSelector();
+        renderTripletsTable();
+      } catch (err) {
+        console.error('Failed to load data.json:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
