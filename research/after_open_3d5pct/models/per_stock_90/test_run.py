@@ -3,7 +3,20 @@ from __future__ import annotations
 
 import unittest
 
+import numpy as np
+
+from research.after_open_3d5pct.models.per_stock_90.coarse_quartile import top_quartile_mask
 from research.after_open_3d5pct.models.per_stock_90.run import choose_candidate, wilson_lower
+
+
+class QuartileTests(unittest.TestCase):
+    def test_quiet_day_is_not_a_buy(self):
+        vol = np.array([1.0] * 41)
+        self.assertFalse(bool(top_quartile_mask(vol)[-1]))
+
+    def test_spike_after_quiet_history_is_a_buy(self):
+        vol = np.array([1.0] * 40 + [2.0])
+        self.assertTrue(bool(top_quartile_mask(vol)[-1]))
 
 
 class ChoiceTests(unittest.TestCase):
