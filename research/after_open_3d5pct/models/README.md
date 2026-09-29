@@ -20,3 +20,5 @@ research/after_open_3d5pct/.venv/bin/python -m research.after_open_3d5pct.models
 父模型的 checkpoint 先重放。重放最大误差超过 `1e-4` 时，不采用这次新拟合的准确度。
 
 尚未训练的点子记在 `ideas/`。交易启动时点是否适合预测，见 [`ideas/clock_time_predictability.md`](ideas/clock_time_predictability.md)。
+
+Pugh 矩阵里 5 分及以上的四项，以及跑完锁定周后的复盘，见 [`pugh_ge5/PROTOCOL.md`](pugh_ge5/PROTOCOL.md) 和 [`pugh_ge5/REVIEW.md`](pugh_ge5/REVIEW.md)。
