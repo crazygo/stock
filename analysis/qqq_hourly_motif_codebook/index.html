@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QQQ 小时级微波形字典与跨股票检索器 (N=5天 / 35小时)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f7f7f8;
+      --border: #d0d0d5;
+      --border-light: #e5e5ea;
+      --text: #1a1a1a;
+      --text-muted: #66666e;
+      --text-dim: #8e8e93;
+      --card-bg: #ffffff;
+      --hover: #efeff2;
+      --active-tab: #1a1a1a;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 16px 24px 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+
+    .badge-wireframe {
+      display: inline-block;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      background: #e4e4e7;
+      color: #333;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .meta-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .meta-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .meta-card .label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-card .value {
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+
+    /* Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-bottom: none;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .tab-btn:hover {
+      background: var(--bg-alt);
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      background: var(--bg);
+      color: var(--text);
+      border-color: var(--border);
+      border-bottom: 2px solid var(--text);
+      margin-bottom: -1px;
+    }
+
+    /* Tab Contents */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Controls bar */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    select, input[type="text"] {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: 2px solid #000;
+    }
+
+    /* Grid for Codebook */
+    .codebook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 14px;
+    }
+
+    .motif-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+
+    .motif-card:hover {
+      border-color: #000;
+    }
+
+    .motif-card.selected {
+      border: 2px solid #000;
+      background: #fbfbfd;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    .motif-code {
+      font-size: 17px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      letter-spacing: -0.01em;
+    }
+
+    .hit-rate-badge {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #e4e4e7;
+    }
+
+    .hit-high {
+      background: #1a1a1a;
+      color: #fff;
+    }
+
+    .hit-mid {
+      background: #71717a;
+      color: #fff;
+    }
+
+    .hit-low {
+      background: #e4e4e7;
+      color: #333;
+    }
+
+    .chart-container {
+      margin: 8px 0;
+      border: 1px solid var(--border-light);
+      background: #fff;
+      border-radius: 3px;
+      padding: 4px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .math-props {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px 8px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: var(--bg-alt);
+      padding: 6px 8px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
+    .prop-item {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .prop-k {
+      color: var(--text-muted);
+    }
+
+    .prop-v {
+      font-weight: 600;
+    }
+
+    .rates-summary {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-top: 6px;
+      color: var(--text-muted);
+      border-top: 1px dashed var(--border-light);
+      padding-top: 6px;
+    }
+
+    /* Modal / Drawer for Representative samples */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .drawer-overlay.active {
+      display: flex;
+    }
+
+    .drawer-content {
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 6px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .drawer-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--bg-alt);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    td.num {
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+
+    tr:hover td {
+      background: #fafafa;
+    }
+
+    /* Tab 2: Cross Matcher Layout */
+    .matcher-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .matcher-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stock-picker-panel {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg-alt);
+      padding: 14px;
+    }
+
+    .cross-results-panel {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .panel-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+
+    .overlay-chart-box {
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 4px;
+      margin: 14px 0;
+      background: #fafafa;
+    }
+
+    .overlay-chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-line {
+      width: 18px;
+      height: 2px;
+      display: inline-block;
+    }
+
+    .legend-line.stock-a {
+      background: #000;
+      height: 3px;
+    }
+
+    .legend-line.centroid {
+      background: #888;
+      border-top: 1px dashed #888;
+    }
+
+    .legend-line.future {
+      background: #333;
+      border-top: 2px dotted #333;
+    }
+
+    .pill {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #eaeaea;
+    }
+
+    .pill-win {
+      background: #000;
+      color: #fff;
+    }
+
+    .pill-loss {
+      background: #e4e4e7;
+      color: #555;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="badge-wireframe">Low-Fidelity HTML Wireframe · Empirical Research</div>
+    <h1>QQQ 小时级微波形字典与跨股票检索器</h1>
+    <div class="subtitle">
+      无主观命名的纯几何代码集 (W-01 ~ W-12) · N=5个完整交易日 (35根60m常规K线) · 滑动窗口前向回测 (未来3天触及+5%)
+    </div>
+
+    <div class="meta-metrics">
+      <div class="meta-card">
+        <div class="label">样本空间 (QQQ成分股)</div>
+        <div class="value" id="meta-stocks">104 只</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">切片总数 / 成熟切片</div>
+        <div class="value" id="meta-slices">21,840 / 19,656</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">波形代码字表规模</div>
+        <div class="value">K = 12 类别</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">前向预测 3天+5% 离散极差</div>
+        <div class="value" id="meta-spread">11.9% ~ 23.8% (2.0x)</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('tab-codebook', this)">① 波形代码字典 (Codebook Grid)</button>
+    <button class="tab-btn" onclick="switchTab('tab-matcher', this)">② 跨股票时空检索器 (Cross-Stock Matcher)</button>
+    <button class="tab-btn" onclick="switchTab('tab-ranking', this)">③ 全量矩阵与形态对比 (Outcome Matrix)</button>
+  </nav>
+
+  <!-- TAB 1: CODEBOOK GRID -->
+  <main id="tab-codebook" class="tab-panel active">
+    <div class="controls-bar">
+      <div class="controls-group">
+        <label for="sort-codebook"><strong>排序方式:</strong></label>
+        <select id="sort-codebook" onchange="renderCodebookGrid()">
+          <option value="hit3d">按未来 3 天 +5% 达成率 (从高到低)</option>
+          <option value="code">按代码顺序 (W-01 ~ W-12)</option>
+          <option value="beta">按线性斜率 β (上升到下降)</option>
+          <option value="kappa">按二次曲率 κ (凹向上到凹向下)</option>
+          <option value="count">按样本覆盖度 (切片数量)</option>
+        </select>
+      </div>
+      <div style="font-size: 12px; color: var(--text-muted);">
+        提示: 点击任意波形卡片，可穿透查看该波形在历史不同股票中的 12 个真实匹配切片及后续 3 天轨迹。
+      </div>
+    </div>
+
+    <div class="codebook-grid" id="codebook-cards">
+      <!-- Injected by JS -->
+    </div>
+  </main>
+
+  <!-- TAB 2: CROSS-STOCK MATCHER -->
+  <main id="tab-matcher" class="tab-panel">
+    <div class="matcher-layout">
+      <!-- Left: Stock A Selector & Current Pattern -->
+      <aside class="stock-picker-panel">
+        <div class="panel-section-title">选择当前标的 (Stock A)</div>
+        <div style="margin-bottom: 12px;">
+          <label for="select-stock" style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">搜索/选择 QQQ 成分股:</label>
+          <select id="select-stock" style="width: 100%;" onchange="handleStockChange()">
+            <!-- Options populated by JS -->
+          </select>
+        </div>
+
+        <div id="stock-summary-card" style="background: #fff; border: 1px solid var(--border); padding: 12px; border-radius: 4px;">
+          <!-- Injected by JS -->
+        </div>
+
+        <div style="margin-top: 14px; font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+          <strong>时空检索原理:</strong><br>
+          系统提取当前标的最近 5 个交易日（35 根常规小时 K 线）消除价格绝对值的 Z-Score 无量纲序列，比对发现其与波形代码 <span id="hint-code" style="font-weight:700;">W-??</span> 吻合度最高。右侧列出历史上<strong>其他不同股票</strong>曾走出该相似几何形态的具体时段及后续 3 天真实演化。
+        </div>
+      </aside>
+
+      <!-- Right: Cross-Stock Matching Analogues -->
+      <section class="cross-results-panel">
+        <div class="panel-section-title" id="cross-title">历史跨标的相似案例检索结果</div>
+
+        <!-- Overlay Visualization -->
+        <div class="overlay-chart-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="font-size: 12px; text-transform: uppercase;">形态对齐与前向路径重叠 (35h 过去 + 21h 未来)</strong>
+            <span style="font-size: 11px; color: var(--text-muted);">X轴: -35h ~ 0h (过去5天) | 0h ~ +21h (未来3天)</span>
+          </div>
+
+          <div class="overlay-chart-legend">
+            <div class="legend-item">
+              <span class="legend-line stock-a"></span>
+              <span id="legend-stock-a">当前标的 (最近5天)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-line centroid"></span>
+              <span id="legend-centroid">对应代码质心基准</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-line future"></span>
+              <span>历史跨股票案例未来 3 天实际路径</span>
+            </div>
+          </div>
+
+          <div id="cross-overlay-chart" style="display: flex; justify-content: center; background: #fff; border: 1px solid var(--border-light); padding: 6px; border-radius: 3px;">
+            <!-- SVG injected by JS -->
+          </div>
+        </div>
+
+        <div style="margin-top: 14px;">
+          <strong style="font-size: 12px; text-transform: uppercase;">跨股票最近相似时段列表 (Top Analogues)</strong>
+          <table id="cross-matches-table" style="margin-top: 6px;">
+            <thead>
+              <tr>
+                <th>标的代码 / 名称</th>
+                <th>相似历史时段 (N=5天)</th>
+                <th>切片终点价</th>
+                <th class="num">形态距离 (Dist)</th>
+                <th>3天触及+5%?</th>
+                <th class="num">触及耗时</th>
+                <th class="num">3天最大涨幅</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="cross-matches-tbody">
+              <!-- Injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- TAB 3: OUTCOME MATRIX & RANKING -->
+  <main id="tab-ranking" class="tab-panel">
+    <div class="controls-bar">
+      <div style="font-size: 13px;">
+        <strong>12 种纯几何波形全量统计对比表:</strong> 样本覆盖 2026-08-14 至 2026-09-25 共 21,840 个滑动小时切片
+      </div>
+      <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">
+        基准触及率 (qqq pool baseline): ~17.5%
+      </div>
+    </div>
+
+    <table id="full-ranking-table">
+      <thead>
+        <tr>
+          <th>代码</th>
+          <th>质心波形图 (35h)</th>
+          <th class="num">切片总数</th>
+          <th class="num">成熟样本</th>
+          <th class="num">未来3天触及+5%</th>
+          <th class="num">未来2天触及+5%</th>
+          <th class="num">未来1天触及+5%</th>
+          <th class="num">3天均值最大涨幅</th>
+          <th class="num">斜率 β</th>
+          <th class="num">曲率 κ</th>
+          <th class="num">谷位 τ_min</th>
+          <th class="num">峰位 τ_max</th>
+          <th class="num">波动收缩 CR</th>
+          <th class="num">最大回撤 MDD</th>
+        </tr>
+      </thead>
+      <tbody id="ranking-tbody">
+        <!-- Injected by JS -->
+      </tbody>
+    </table>
+
+    <div style="margin-top: 16px; background: var(--bg-alt); border: 1px solid var(--border); padding: 12px 16px; border-radius: 4px; font-size: 12px; line-height: 1.6;">
+      <strong>实证量化发现 (Empirical Observations):</strong>
+      <ul style="margin-left: 20px; margin-top: 4px;">
+        <li><strong>曲率分化效应 (Curvature Bifurcation)</strong>: 预测胜率最高的前 4 个波形代码 (<code>W-01</code> ~ <code>W-04</code>，胜率均在 20.3%~23.8%) 均呈现显著的<strong>正二次曲率 (κ > 0)</strong>，即经历过中段或尾段的凹向上回弹弧底；而胜率垫底的 <code>W-11</code>、<code>W-12</code> (11.9%~14.4%) 呈现持续的<strong>负二次曲率 (κ < 0)</strong>，呈现“见顶翻转衰退”或“无抵抗阴跌”走势。</li>
+        <li><strong>时空一致性 (Cross-Asset Invariance)</strong>: 跨股票检索证明，个股当前走出的几何波形并不孤立，同一代码的波形曾在其他股票中高频出现，且跨股票的历史后验路径呈现高度的胜率聚类。</li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- Modal / Drawer for Representative Cases -->
+  <div class="drawer-overlay" id="sample-drawer" onclick="closeDrawer(event)">
+    <div class="drawer-content" onclick="event.stopPropagation()">
+      <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+      <h2 id="drawer-title" style="font-size: 16px; margin-bottom: 4px;">波形代码历史穿透样本</h2>
+      <div id="drawer-subtitle" style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;"></div>
+      
+      <table style="width: 100%;">
+        <thead>
+          <tr>
+            <th>标的代码</th>
+            <th>公司名称</th>
+            <th>时段范围 (N=5天)</th>
+            <th>切片终点价</th>
+            <th class="num">形态距离</th>
+            <th>3天触及+5%?</th>
+            <th class="num">触及用时</th>
+            <th class="num">3天最大涨幅</th>
+          </tr>
+        </thead>
+        <tbody id="drawer-tbody">
+          <!-- Injected by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>工程归档: <code>analysis/qqq_hourly_motif_codebook/</code> · 端口: 8768</div>
+    <div>无语义主观预设 · 纯数学特征描述 · 样本外前向因果闭环检验</div>
+  </footer>
+
+  <script>
+    let GLOBAL_DATA = null;
+    let CURRENT_STOCK_TICKER = "NVDA";
+    let HIGHLIGHTED_CROSS_MATCH_IDX = 0;
+
+    // SVG Sparkline Generator
+    function generateSparklineSvg(points, width = 180, height = 45, isCentroid = false) {
+      if (!points || points.length === 0) return "";
+      const padX = 6;
+      const padY = 6;
+      const w = width - padX * 2;
+      const h = height - padY * 2;
+
+      // Scale points: standard Z range [-2.5, +2.5]
+      const minVal = -2.5;
+      const maxVal = 2.5;
+
+      const coords = points.map((val, idx) => {
+        const x = padX + (idx / (points.length - 1)) * w;
+        const normY = (val - minVal) / (maxVal - minVal);
+        const y = padY + h - Math.max(0, Math.min(1, normY)) * h;
+        return [x, y];
+      });
+
+      const pathStr = coords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+      const zeroY = padY + h - ((0 - minVal) / (maxVal - minVal)) * h;
+
+      // Day divider lines (every 7 bars, total 35 bars = 5 days)
+      let dividers = "";
+      for (let day = 1; day <= 4; day++) {
+        const dx = padX + ((day * 7) / (points.length - 1)) * w;
+        dividers += `<line x1="${dx.toFixed(1)}" y1="${padY}" x2="${dx.toFixed(1)}" y2="${height - padY}" stroke="#e5e5ea" stroke-width="1" stroke-dasharray="2,2"/>`;
+      }
+
+      const strokeColor = isCentroid ? "#000000" : "#444444";
+      const strokeWidth = isCentroid ? "2" : "1.5";
+
+      return `
+        <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;">
+          <!-- Zero mean line -->
+          <line x1="${padX}" y1="${zeroY.toFixed(1)}" x2="${width - padX}" y2="${zeroY.toFixed(1)}" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+          <!-- Day dividers -->
+          ${dividers}
+          <!-- Waveform path -->
+          <path d="${pathStr}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- End dot -->
+          <circle cx="${coords[coords.length - 1][0].toFixed(1)}" cy="${coords[coords.length - 1][1].toFixed(1)}" r="2.5" fill="#000"/>
+        </svg>
+      `;
+    }
+
+    // Overlay Chart Generator for Matcher
+    function generateOverlayChartSvg(stockCurve, centroidCurve, matchSample, width = 640, height = 160) {
+      const padX = 12;
+      const padY = 14;
+      const totalPastBars = 35;
+      const totalFutBars = 21;
+      const totalBars = totalPastBars + totalFutBars; // 56 bars
+
+      const w = width - padX * 2;
+      const h = height - padY * 2;
+      const minVal = -3.0;
+      const maxVal = 3.0;
+
+      function toCoords(arr, startBarOffset = 0) {
+        return arr.map((val, idx) => {
+          const globalIdx = startBarOffset + idx;
+          const x = padX + (globalIdx / (totalBars - 1)) * w;
+          const normY = (val - minVal) / (maxVal - minVal);
+          const y = padY + h - Math.max(0, Math.min(1, normY)) * h;
+          return [x, y];
+        });
+      }
+
+      const zeroY = padY + h - ((0 - minVal) / (maxVal - minVal)) * h;
+      const splitX = padX + ((totalPastBars - 1) / (totalBars - 1)) * w;
+
+      // Divider vertical line at endpoint 0h
+      let svg = `
+        <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block; max-width:${width}px;">
+          <!-- Shaded background for future 3 days -->
+          <rect x="${splitX.toFixed(1)}" y="${padY}" width="${(width - padX - splitX).toFixed(1)}" height="${h}" fill="#f4f4f6"/>
+          
+          <!-- Zero line -->
+          <line x1="${padX}" y1="${zeroY.toFixed(1)}" x2="${width - padX}" y2="${zeroY.toFixed(1)}" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+          
+          <!-- T=0 split line -->
+          <line x1="${splitX.toFixed(1)}" y1="${padY}" x2="${splitX.toFixed(1)}" y2="${height - padY}" stroke="#888" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="${(splitX - 6).toFixed(1)}" y="${padY + 10}" font-size="10" font-family="monospace" text-anchor="end" fill="#666">T=0 (切片终点)</text>
+          <text x="${(splitX + 6).toFixed(1)}" y="${padY + 10}" font-size="10" font-family="monospace" text-anchor="start" fill="#666">未来 3 天 (21h)</text>
+      `;
+
+      // 1. Centroid curve (0 to 34)
+      if (centroidCurve && centroidCurve.length) {
+        const cCoords = toCoords(centroidCurve, 0);
+        const cPath = cCoords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+        svg += `<path d="${cPath}" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+      }
+
+      // 2. Matched historical past and future curve
+      if (matchSample) {
+        if (matchSample.z_curve && matchSample.z_curve.length) {
+          const mCoords = toCoords(matchSample.z_curve, 0);
+          const mPath = mCoords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+          svg += `<path d="${mPath}" fill="none" stroke="#777" stroke-width="1.5" opacity="0.7"/>`;
+        }
+
+        if (matchSample.fut_z && matchSample.fut_z.length) {
+          const lastPast = matchSample.z_curve[matchSample.z_curve.length - 1];
+          const futCombined = [lastPast, ...matchSample.fut_z];
+          const fCoords = toCoords(futCombined, totalPastBars - 1);
+          const fPath = fCoords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+          const hitColor = matchSample.hit_3d_5pct ? "#000000" : "#777777";
+          svg += `<path d="${fPath}" fill="none" stroke="${hitColor}" stroke-width="2" stroke-dasharray="4,2"/>`;
+
+          // Mark touch dot if hit
+          if (matchSample.hit_3d_5pct && matchSample.bars_to_hit) {
+            const touchIdx = Math.min(matchSample.bars_to_hit, matchSample.fut_z.length);
+            const tc = fCoords[touchIdx];
+            if (tc) {
+              svg += `<circle cx="${tc[0].toFixed(1)}" cy="${tc[1].toFixed(1)}" r="4" fill="#000"/>`;
+              svg += `<text x="${tc[0].toFixed(1)}" y="${(tc[1] - 8).toFixed(1)}" font-size="10" font-family="monospace" font-weight="bold" text-anchor="middle" fill="#000">+5% 达成 (${matchSample.bars_to_hit}h)</text>`;
+            }
+          }
+        }
+      }
+
+      // 3. Stock A current curve (bold black, 0 to 34)
+      if (stockCurve && stockCurve.length) {
+        const sCoords = toCoords(stockCurve, 0);
+        const sPath = sCoords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+        svg += `<path d="${sPath}" fill="none" stroke="#000000" stroke-width="2.5"/>`;
+        svg += `<circle cx="${sCoords[sCoords.length - 1][0].toFixed(1)}" cy="${sCoords[sCoords.length - 1][1].toFixed(1)}" r="3.5" fill="#000"/>`;
+      }
+
+      svg += `</svg>`;
+      return svg;
+    }
+
+    // Tab Switching
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Render Tab 1: Codebook Grid
+    function renderCodebookGrid() {
+      if (!GLOBAL_DATA) return;
+      const sortBy = document.getElementById('sort-codebook').value;
+      let list = [...GLOBAL_DATA.codebook];
+
+      if (sortBy === 'hit3d') {
+        list.sort((a, b) => b.stats.hit3d_rate - a.stats.hit3d_rate);
+      } else if (sortBy === 'code') {
+        list.sort((a, b) => a.code.localeCompare(b.code));
+      } else if (sortBy === 'beta') {
+        list.sort((a, b) => b.math.beta - a.math.beta);
+      } else if (sortBy === 'kappa') {
+        list.sort((a, b) => b.math.kappa - a.math.kappa);
+      } else if (sortBy === 'count') {
+        list.sort((a, b) => b.stats.total_count - a.stats.total_count);
+      }
+
+      const container = document.getElementById('codebook-cards');
+      container.innerHTML = list.map(cb => {
+        const hitPct = (cb.stats.hit3d_rate * 100).toFixed(1);
+        const badgeClass = cb.stats.hit3d_rate >= 0.20 ? 'hit-high' : (cb.stats.hit3d_rate >= 0.16 ? 'hit-mid' : 'hit-low');
+        const sparklineSvg = generateSparklineSvg(cb.curve, 280, 52, true);
+
+        return `
+          <div class="motif-card" onclick="openDrawerForCode('${cb.code}')">
+            <div class="card-header">
+              <span class="motif-code">${cb.code}</span>
+              <span class="hit-rate-badge ${badgeClass}">3天+5%: ${hitPct}%</span>
+            </div>
+
+            <div class="chart-container">
+              ${sparklineSvg}
+            </div>
+
+            <div class="math-props">
+              <div class="prop-item"><span class="prop-k">斜率 β:</span><span class="prop-v">${cb.math.beta > 0 ? '+' : ''}${cb.math.beta.toFixed(2)}</span></div>
+              <div class="prop-item"><span class="prop-k">曲率 κ:</span><span class="prop-v">${cb.math.kappa > 0 ? '+' : ''}${cb.math.kappa.toFixed(2)}</span></div>
+              <div class="prop-item"><span class="prop-k">收缩 CR:</span><span class="prop-v">${cb.math.cr.toFixed(2)}</span></div>
+              <div class="prop-item"><span class="prop-k">谷位 τ_min:</span><span class="prop-v">${cb.math.tau_min}h</span></div>
+              <div class="prop-item"><span class="prop-k">峰位 τ_max:</span><span class="prop-v">${cb.math.tau_max}h</span></div>
+              <div class="prop-item"><span class="prop-k">回撤 MDD:</span><span class="prop-v">${cb.math.mdd.toFixed(2)}</span></div>
+            </div>
+
+            <div class="rates-summary">
+              <span>样本: <strong>${cb.stats.total_count}</strong></span>
+              <span>1天: ${(cb.stats.hit1d_rate * 100).toFixed(1)}%</span>
+              <span>2天: ${(cb.stats.hit2d_rate * 100).toFixed(1)}%</span>
+              <span>均益: +${(cb.stats.avg_max_gain * 100).toFixed(2)}%</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Tab 2: Cross Matcher Setup & Updates
+    function initStockSelector() {
+      if (!GLOBAL_DATA) return;
+      const select = document.getElementById('select-stock');
+      const tickers = Object.keys(GLOBAL_DATA.stocks).sort();
+
+      select.innerHTML = tickers.map(t => {
+        const s = GLOBAL_DATA.stocks[t];
+        return `<option value="${t}" ${t === CURRENT_STOCK_TICKER ? 'selected' : ''}>${t} - ${s.name} (${s.matched_code})</option>`;
+      }).join('');
+
+      handleStockChange();
+    }
+
+    function handleStockChange() {
+      const select = document.getElementById('select-stock');
+      CURRENT_STOCK_TICKER = select.value;
+      HIGHLIGHTED_CROSS_MATCH_IDX = 0;
+      updateMatcherPanel();
+    }
+
+    function updateMatcherPanel() {
+      if (!GLOBAL_DATA) return;
+      const s = GLOBAL_DATA.stocks[CURRENT_STOCK_TICKER];
+      if (!s) return;
+
+      const cb = GLOBAL_DATA.codebook.find(c => c.code === s.matched_code);
+      document.getElementById('hint-code').textContent = s.matched_code;
+
+      // Summary Card
+      const stockSpark = generateSparklineSvg(s.z_curve, 260, 50, false);
+      document.getElementById('stock-summary-card').innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+          <span style="font-size:16px; font-weight:700;">${s.ticker} · ${s.name}</span>
+          <span style="font-family:monospace; font-size:13px; font-weight:700;">$${s.latest_price.toFixed(2)}</span>
+        </div>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">
+          最新切片截止: ${s.latest_time}
+        </div>
+        <div class="chart-container" style="background:#fcfcfd;">
+          ${stockSpark}
+        </div>
+        <div style="margin-top:8px; font-size:12px; background:var(--bg-alt); padding:8px; border-radius:3px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span>匹配波形代码:</span>
+            <strong style="font-family:monospace;">${s.matched_code}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span>欧氏距离 (Dist):</span>
+            <span style="font-family:monospace;">${s.distance.toFixed(3)}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span>该代码历史3天+5%达成率:</span>
+            <strong style="font-family:monospace;">${(s.code_hit3d_rate * 100).toFixed(1)}%</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span>局部斜率 β / 曲率 κ:</span>
+            <span style="font-family:monospace;">${s.math.beta > 0 ? '+' : ''}${s.math.beta.toFixed(2)} / ${s.math.kappa > 0 ? '+' : ''}${s.math.kappa.toFixed(2)}</span>
+          </div>
+        </div>
+      `;
+
+      // Cross Results
+      document.getElementById('cross-title').textContent = `与 ${s.ticker} 匹配代码 [${s.matched_code}] 的历史跨标的真实切片`;
+      document.getElementById('legend-stock-a').textContent = `${s.ticker} 当前 5 天走势`;
+      document.getElementById('legend-centroid').textContent = `质心基准 ${s.matched_code}`;
+
+      const matches = s.cross_matches || [];
+      const currentMatch = matches[HIGHLIGHTED_CROSS_MATCH_IDX] || matches[0];
+
+      // Overlay chart
+      const overlaySvg = generateOverlayChartSvg(s.z_curve, cb ? cb.curve : null, currentMatch, 680, 160);
+      document.getElementById('cross-overlay-chart').innerHTML = overlaySvg;
+
+      // Table of cross matches
+      const tbody = document.getElementById('cross-matches-tbody');
+      if (matches.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:16px; color:#888;">暂无历史跨股票匹配案例</td></tr>`;
+      } else {
+        tbody.innerHTML = matches.map((m, idx) => {
+          const isSelected = idx === HIGHLIGHTED_CROSS_MATCH_IDX;
+          const hitPill = m.hit_3d_5pct ? `<span class="pill pill-win">已触及 (+5%)</span>` : `<span class="pill pill-loss">未触及</span>`;
+          const timeToHit = m.bars_to_hit ? `${m.bars_to_hit} 小时` : `-`;
+          const gainPct = `+${(m.max_gain * 100).toFixed(2)}%`;
+
+          return `
+            <tr style="${isSelected ? 'background:#f0f0f5; font-weight:600;' : ''}">
+              <td><strong>${m.ticker}</strong> <span style="font-size:11px; color:#666;">${m.name}</span></td>
+              <td style="font-family:monospace; font-size:11px;">${m.start_time.slice(5, 16)} ~ ${m.end_time.slice(5, 16)}</td>
+              <td class="num">$${m.end_price.toFixed(2)}</td>
+              <td class="num">${m.distance.toFixed(3)}</td>
+              <td>${hitPill}</td>
+              <td class="num">${timeToHit}</td>
+              <td class="num" style="font-weight:700;">${gainPct}</td>
+              <td>
+                <button style="font-size:11px; padding:2px 6px; cursor:pointer;" onclick="selectCrossMatch(${idx})">
+                  ${isSelected ? '正在重叠' : '重叠对比'}
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    function selectCrossMatch(idx) {
+      HIGHLIGHTED_CROSS_MATCH_IDX = idx;
+      updateMatcherPanel();
+    }
+
+    // Tab 3: Full Outcome Matrix Table
+    function renderFullRankingTable() {
+      if (!GLOBAL_DATA) return;
+      const tbody = document.getElementById('ranking-tbody');
+      tbody.innerHTML = GLOBAL_DATA.codebook.map(cb => {
+        const spark = generateSparklineSvg(cb.curve, 140, 36, true);
+        const hit3Pct = (cb.stats.hit3d_rate * 100).toFixed(1);
+        const hit2Pct = (cb.stats.hit2d_rate * 100).toFixed(1);
+        const hit1Pct = (cb.stats.hit1d_rate * 100).toFixed(1);
+        const avgGain = (cb.stats.avg_max_gain * 100).toFixed(2);
+
+        return `
+          <tr>
+            <td><strong>${cb.code}</strong></td>
+            <td style="padding:2px 6px;">${spark}</td>
+            <td class="num">${cb.stats.total_count}</td>
+            <td class="num">${cb.stats.matured_count}</td>
+            <td class="num" style="font-weight:700;">${hit3Pct}%</td>
+            <td class="num">${hit2Pct}%</td>
+            <td class="num">${hit1Pct}%</td>
+            <td class="num">+${avgGain}%</td>
+            <td class="num">${cb.math.beta > 0 ? '+' : ''}${cb.math.beta.toFixed(2)}</td>
+            <td class="num" style="font-weight:${cb.math.kappa > 0 ? '700' : '400'};">${cb.math.kappa > 0 ? '+' : ''}${cb.math.kappa.toFixed(2)}</td>
+            <td class="num">${cb.math.tau_min}h</td>
+            <td class="num">${cb.math.tau_max}h</td>
+            <td class="num">${cb.math.cr.toFixed(2)}</td>
+            <td class="num">${cb.math.mdd.toFixed(2)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Modal Drawer for Codebook representative samples
+    function openDrawerForCode(code) {
+      if (!GLOBAL_DATA) return;
+      const cb = GLOBAL_DATA.codebook.find(c => c.code === code);
+      if (!cb) return;
+
+      document.getElementById('drawer-title').textContent = `波形代码 [${cb.code}] 历史真实切片抽样 (K-Means 质心最近邻)`;
+      document.getElementById('drawer-subtitle').textContent = `未来 3 天触及 +5% 达成率: ${(cb.stats.hit3d_rate * 100).toFixed(1)}% · 质心斜率 β: ${cb.math.beta} · 质心曲率 κ: ${cb.math.kappa}`;
+
+      const tbody = document.getElementById('drawer-tbody');
+      tbody.innerHTML = cb.representative_samples.map(s => {
+        const hitBadge = s.hit_3d_5pct ? `<span class="pill pill-win">触及 (+5%)</span>` : `<span class="pill pill-loss">未触及</span>`;
+        return `
+          <tr>
+            <td><strong>${s.ticker}</strong></td>
+            <td>${s.name}</td>
+            <td style="font-family:monospace; font-size:11px;">${s.start_time.slice(5, 16)} ~ ${s.end_time.slice(5, 16)}</td>
+            <td class="num">$${s.end_price.toFixed(2)}</td>
+            <td class="num">${s.distance.toFixed(3)}</td>
+            <td>${hitBadge}</td>
+            <td class="num">${s.bars_to_hit ? s.bars_to_hit + 'h' : '-'}</td>
+            <td class="num" style="font-weight:700;">+${(s.max_gain * 100).toFixed(2)}%</td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('sample-drawer').classList.add('active');
+    }
+
+    function closeDrawer() {
+      document.getElementById('sample-drawer').classList.remove('active');
+    }
+
+    // Init function
+    async function init() {
+      try {
+        const res = await fetch('./data.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        GLOBAL_DATA = await res.json();
+
+        // Update meta cards
+        document.getElementById('meta-stocks').textContent = `${GLOBAL_DATA.metadata.tickers_count} 只`;
+        document.getElementById('meta-slices').textContent = `${GLOBAL_DATA.metadata.total_slices.toLocaleString()} / ${GLOBAL_DATA.metadata.matured_slices.toLocaleString()}`;
+
+        // Compute spread
+        const rates = GLOBAL_DATA.codebook.map(c => c.stats.hit3d_rate);
+        const minR = (Math.min(...rates) * 100).toFixed(1);
+        const maxR = (Math.max(...rates) * 100).toFixed(1);
+        const ratio = (Math.max(...rates) / Math.min(...rates)).toFixed(1);
+        document.getElementById('meta-spread').textContent = `${minR}% ~ ${maxR}% (${ratio}x)`;
+
+        // Render views
+        renderCodebookGrid();
+        initStockSelector();
+        renderFullRankingTable();
+      } catch (err) {
+        console.error("Failed to load data.json:", err);
+        document.body.innerHTML += `<div style="color:red; padding:20px;">数据加载失败: ${err.message}. 请确保在本地 HTTP 服务下运行。</div>`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
