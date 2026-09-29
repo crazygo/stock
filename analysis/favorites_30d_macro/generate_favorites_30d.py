@@ -46,12 +46,94 @@ def classify_trend(ret_end, ret_min, ret_max, p_series):
         return "弱势回调 ↘️", "#b91c1c"
     return "箱体震荡 ⏸️", "#6b7280"
 
+# Hourly motif codebook & centroids
+CODEBOOK_PATH = ROOT_DIR / "analysis" / "qqq_hourly_motif_codebook" / "data.json"
+CENTROIDS = None
+CODEBOOK = None
+
+W_INFO = {
+    "W-01": {"name": "弧形底企稳", "color": "#06b6d4", "type": "深U反转"},
+    "W-02": {"name": "超跌极值见底", "color": "#0284c7", "type": "恐慌探底"},
+    "W-03": {"name": "深凹回抽破高", "color": "#10b981", "type": "强力反转"},
+    "W-04": {"name": "凸性加速主升", "color": "#059669", "type": "加速主升"},
+    "W-05": {"name": "平缓震荡走高", "color": "#3b82f6", "type": "稳步爬坡"},
+    "W-06": {"name": "倒U见顶回落", "color": "#f97316", "type": "冲高受阻"},
+    "W-07": {"name": "阶梯下行破位", "color": "#ea580c", "type": "台阶阴跌"},
+    "W-08": {"name": "箱体收敛盘整", "color": "#8b5cf6", "type": "收敛整理"},
+    "W-09": {"name": "弱势探底抽升", "color": "#6366f1", "type": "超跌反抽"},
+    "W-10": {"name": "早期冲高滞涨", "color": "#f59e0b", "type": "高位横盘"},
+    "W-11": {"name": "抛物线见顶下坠", "color": "#e11d48", "type": "加速见顶"},
+    "W-12": {"name": "破位阴跌破底", "color": "#dc2626", "type": "单边破位"}
+}
+
+def load_codebook():
+    global CENTROIDS, CODEBOOK
+    if CODEBOOK_PATH.exists():
+        with open(CODEBOOK_PATH, "r", encoding="utf-8") as f:
+            cb_data = json.load(f)
+        CODEBOOK = cb_data.get("codebook", [])
+        CENTROIDS = np.array([c["curve"] for c in CODEBOOK])
+        print(f"Loaded {len(CENTROIDS)} centroids from {CODEBOOK_PATH.name}")
+
+def extract_matched_features(bars):
+    if CENTROIDS is None or len(CENTROIDS) == 0:
+        return []
+    closes = np.array([b["close"] for b in bars])
+    if len(closes) < 35:
+        return []
+    raw_matches = []
+    for i in range(0, len(closes) - 35 + 1):
+        sub = closes[i:i+35]
+        std = float(np.std(sub))
+        if std < 1e-6:
+            continue
+        z = (sub - np.mean(sub)) / std
+        dists = np.linalg.norm(CENTROIDS - z, axis=1)
+        best_idx = int(np.argmin(dists))
+        best_dist = float(dists[best_idx])
+        sim = max(0.0, 1.0 - (best_dist**2) / 70.0) * 100.0
+        m_code = CODEBOOK[best_idx]["code"]
+        info = W_INFO.get(m_code, {"name": m_code, "color": "#64748b", "type": "波形"})
+        raw_matches.append({
+            "start_idx": i,
+            "end_idx": i + 34,
+            "start_time": bars[i]["time"],
+            "end_time": bars[i+34]["time"],
+            "code": m_code,
+            "name": info["name"],
+            "type": info["type"],
+            "color": info["color"],
+            "sim": round(sim, 1),
+            "hit3d_rate": round(CODEBOOK[best_idx]["stats"]["hit3d_rate"] * 100.0, 1)
+        })
+    raw_matches.sort(key=lambda x: x["sim"], reverse=True)
+    selected = []
+    for m in raw_matches:
+        if m["sim"] < 78.0:
+            break
+        overlap = False
+        for s in selected:
+            inter_s = max(m["start_idx"], s["start_idx"])
+            inter_e = min(m["end_idx"], s["end_idx"])
+            if inter_e > inter_s:
+                overlap_len = inter_e - inter_s
+                if overlap_len > 12:
+                    overlap = True
+                    break
+        if not overlap:
+            selected.append(m)
+            if len(selected) >= 3:
+                break
+    selected.sort(key=lambda x: x["start_idx"])
+    return selected
+
 def main():
     t0 = time.time()
     print("=" * 70)
     print("FETCHING 30-DAY MACRO TRENDS FOR USER FAVORITES FROM FUTU OPEND")
     print("=" * 70)
 
+    load_codebook()
     ft.SysConfig.enable_proto_encrypt(False)
     
     quote_ctx = None
@@ -216,6 +298,7 @@ def main():
             })
 
         trend_tag, trend_color = classify_trend(ret_end, ret_min, ret_max, closes)
+        matched_features = extract_matched_features(bars)
 
         stock_item = {
             "code": code,
@@ -242,6 +325,7 @@ def main():
             "pe_ratio": pe_ratio,
             "trend_tag": trend_tag,
             "trend_color": trend_color,
+            "matched_features": matched_features,
             "bars_count": len(bars),
             "start_time": bars[0]["time"],
             "end_time": bars[-1]["time"],

@@ -423,6 +423,78 @@
       overflow: visible;
     }
 
+    /* Matched Features Row */
+    .card-features-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-top: 2px;
+    }
+
+    .feat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .feat-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+
+    .feat-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .feat-sim {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .feat-dates {
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    /* Motif Legend Bar in Header */
+    .motif-legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 9px 16px;
+      margin-top: 14px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-box {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
     /* Card Footer Info */
     .card-footer {
       display: flex;
@@ -532,6 +604,16 @@
         <div class="kpi-val" id="kpi-updated-at" style="font-size: 14px; font-weight: 600;">--</div>
         <div class="kpi-sub">30交易日 · 60m连贯时序</div>
       </div>
+    </div>
+
+    <!-- Known Feature Motifs Color Legend -->
+    <div class="motif-legend-bar">
+      <span style="font-weight: 700; color: var(--text-main);">🎨 已知特征形态色彩映射:</span>
+      <span class="legend-item"><span class="legend-box" style="background:#059669;"></span> <b>绿色系 (W-03/W-04)</b>: 凸性主升 / 强力反转 (3d+5%达成率: 20~23%)</span>
+      <span class="legend-item"><span class="legend-box" style="background:#06b6d4;"></span> <b>青/蓝系 (W-01/W-02)</b>: 弧形底企稳 / 极限恐慌见底 (3d+5%达成率: 22~24%)</span>
+      <span class="legend-item"><span class="legend-box" style="background:#3b82f6;"></span> <b>纯蓝系 (W-05/W-09)</b>: 稳步爬坡 / 探底反抽</span>
+      <span class="legend-item"><span class="legend-box" style="background:#f59e0b;"></span> <b>暖黄/紫色 (W-08/W-10)</b>: 高位横盘滞涨 / 箱体收敛整理</span>
+      <span class="legend-item"><span class="legend-box" style="background:#ea580c;"></span> <b>橙红/鲜红 (W-06/W-07/W-11/W-12)</b>: 冲高受阻 / 台阶破位 / 单边阴跌</span>
     </div>
   </header>
 
@@ -739,6 +821,32 @@
     // SVG Chart
     const svgHtml = generateChartSvg(s, CURRENT_SCALE === 'unified');
 
+    // Matched Features Row
+    let featureTagsHtml = "";
+    if (s.matched_features && s.matched_features.length > 0) {
+      featureTagsHtml = `
+        <div class="card-features-row">
+          <span style="font-size:11px; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:3px;">
+            <span>🎯 命中特征:</span>
+          </span>
+          ${s.matched_features.map(f => `
+            <span class="feat-pill" style="border-left: 3.5px solid ${f.color}; background: ${f.color}15;" title="${f.start_time.slice(5,16)} ~ ${f.end_time.slice(5,16)} | 3天+5%胜率: ${f.hit3d_rate}%">
+              <span class="feat-dot" style="background:${f.color}"></span>
+              <strong style="color:${f.color}">${f.code} ${f.name}</strong>
+              <span class="feat-sim">${f.sim}%</span>
+              <span class="feat-dates">${f.start_time.slice(5,10)}~${f.end_time.slice(5,10)}</span>
+            </span>
+          `).join('')}
+        </div>
+      `;
+    } else {
+      featureTagsHtml = `
+        <div class="card-features-row" style="color:var(--text-sub); font-size:11px;">
+          <span>⚪ 暂未检索到相似度 &ge; 78% 的典型微波形</span>
+        </div>
+      `;
+    }
+
     return `
       <div class="stock-card" id="card-${s.ticker}">
         <div class="card-top">
@@ -769,10 +877,13 @@
           </div>
         </div>
 
-        <!-- SVG 30-Day Trend Chart -->
+        <!-- SVG 30-Day Trend Chart with Multi-Color Feature Regions -->
         <div class="chart-container" onmouseleave="hideTooltip()">
           ${svgHtml}
         </div>
+
+        <!-- Matched Features Row -->
+        ${featureTagsHtml}
 
         <div class="card-footer">
           <div class="footer-metrics">
@@ -796,7 +907,7 @@
     const height = 180;
     const padL = 60; // For percentage Y-axis labels
     const padR = 75; // For end return pill
-    const padY = 20;
+    const padY = 22;
     const padB = 24;
     const w = width - padL - padR;
     const h = height - padY - padB;
@@ -892,12 +1003,60 @@
       areaPathStr = `M ${firstX.toFixed(1)},${yBase.toFixed(1)} L ${linePts} L ${lastX.toFixed(1)},${yBase.toFixed(1)} Z`;
     }
 
-    // Continuous Line Path
+    // Continuous Base Line Path (Dark charcoal)
     const linePathStr = bars.map((b, idx) => {
       const x = toX(idx);
       const y = toYPrice(b.close);
       return idx === 0 ? `M ${x.toFixed(1)},${y.toFixed(1)}` : `L ${x.toFixed(1)},${y.toFixed(1)}`;
     }).join(" ");
+
+    // Matched Features Multi-Color Highlights (Bands, Colored Segments, Top Badges)
+    let featureBands = "";
+    let featureCurves = "";
+    let featureLabels = "";
+
+    (s.matched_features || []).forEach((f, fIdx) => {
+      const sIdx = f.start_idx;
+      const eIdx = f.end_idx;
+      if (sIdx >= 0 && eIdx < bars.length) {
+        const bx = toX(sIdx);
+        const bw = Math.max(10, toX(eIdx) - bx);
+        const fColor = f.color || "#0284c7";
+
+        // Vertical highlight band
+        featureBands += `
+          <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="${fColor}" opacity="0.10" rx="3">
+            <title>${f.code} ${f.name} (${f.sim}% 相似度, 3d+5%胜率: ${f.hit3d_rate}%)</title>
+          </rect>
+          <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padB}" stroke="${fColor}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.6"/>
+          <line x1="${(bx + bw).toFixed(1)}" y1="${padY}" x2="${(bx + bw).toFixed(1)}" y2="${height - padB}" stroke="${fColor}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.6"/>
+        `;
+
+        // Colored curve segment for this feature
+        const featPts = [];
+        for (let j = sIdx; j <= eIdx; j++) {
+          const px = toX(j);
+          const py = toYPrice(bars[j].close);
+          featPts.push(`${px.toFixed(1)},${py.toFixed(1)}`);
+        }
+        featureCurves += `
+          <path d="M ${featPts.join(' L ')}" fill="none" stroke="${fColor}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        `;
+
+        // Floating top tag: show name & similarity
+        const badgeW = Math.min(bw, 126);
+        const badgeX = bx + (bw - badgeW) / 2;
+        const tagY = padY + 2 + (fIdx % 2) * 16;
+        featureLabels += `
+          <g>
+            <rect x="${badgeX.toFixed(1)}" y="${tagY}" width="${badgeW.toFixed(1)}" height="15" rx="3" fill="${fColor}" opacity="0.92"/>
+            <text x="${(badgeX + badgeW/2).toFixed(1)}" y="${tagY + 11}" font-size="8.5" font-family="monospace" fill="#ffffff" text-anchor="middle" font-weight="bold">
+              ${f.code} ${f.name.slice(0, 4)} ${f.sim}%
+            </text>
+          </g>
+        `;
+      }
+    });
 
     // End marker
     const endX = toX(bars.length - 1);
@@ -915,8 +1074,17 @@
         <!-- 0% Baseline Area Gradient -->
         <path d="${areaPathStr}" fill="${isUp ? '#10b981' : '#ef4444'}" opacity="0.08" />
 
-        <!-- 30d Trend Line -->
-        <path d="${linePathStr}" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+        <!-- Feature Colored Background Bands -->
+        ${featureBands}
+
+        <!-- Continuous Base Line -->
+        <path d="${linePathStr}" fill="none" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+
+        <!-- Multi-Colored Feature Curve Segments -->
+        ${featureCurves}
+
+        <!-- Top Feature Labels (Code, Name, Similarity) -->
+        ${featureLabels}
 
         <!-- Bottom X Axis -->
         <line x1="${padL}" y1="${height - padB}" x2="${padL + w}" y2="${height - padB}" stroke="#cbd5e1" stroke-width="1"/>
@@ -944,7 +1112,7 @@
     `;
   }
 
-  // Hover Tooltip with O(1) Snapping
+  // Hover Tooltip with O(1) Snapping & Feature Awareness
   const STOCKS_MAP = {};
 
   function onChartHover(e, svg, ticker) {
@@ -959,7 +1127,7 @@
 
     const padL = 60;
     const padR = 75;
-    const padY = 20;
+    const padY = 22;
     const padB = 24;
     const w = 740 - padL - padR;
     const h = 180 - padY - padB;
@@ -998,9 +1166,29 @@
       hoverDot.setAttribute('cy', ptY.toFixed(1));
     }
 
-    // Tooltip content
+    // Tooltip content & feature inspection
     const retSign = b.ret_pct > 0 ? '+' : '';
     const retColor = b.ret_pct >= 0 ? '#34d399' : '#f87171';
+    
+    // Check if current idx falls into any matched feature zone
+    const feat = (s.matched_features || []).find(f => idx >= f.start_idx && idx <= f.end_idx);
+    let featHtml = "";
+    if (feat) {
+      featHtml = `
+        <div style="margin-top:6px; padding-top:5px; border-top:1px dashed #475569;">
+          <div style="display:flex; align-items:center; gap:5px;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${feat.color};"></span>
+            <strong style="color:${feat.color}; font-size:12px;">${feat.code} ${feat.name}</strong>
+            <span style="color:#94a3b8; font-size:10px;">(${feat.type})</span>
+          </div>
+          <div style="color:#e2e8f0; font-size:10.5px; margin-top:2px;">
+            形态相似度: <b style="color:#38bdf8;">${feat.sim}%</b> · 历史3d+5%达成率: <b style="color:#34d399;">${feat.hit3d_rate}%</b>
+          </div>
+          <div style="color:#64748b; font-size:9.5px; margin-top:1px;">特征时段: ${feat.start_time.slice(5,16)} ~ ${feat.end_time.slice(5,16)}</div>
+        </div>
+      `;
+    }
+
     const tooltip = document.getElementById('chart-tooltip');
     tooltip.style.display = 'block';
     tooltip.innerHTML = `
@@ -1008,9 +1196,10 @@
       <div>现价: <strong>$${b.close.toFixed(2)}</strong></div>
       <div>相对P0收益: <strong style="color:${retColor};">${retSign}${b.ret_pct.toFixed(2)}%</strong></div>
       <div>成交量: ${b.volume.toLocaleString()} 股</div>
+      ${featHtml}
     `;
 
-    const tipW = 160;
+    const tipW = 180;
     let tipLeft = e.pageX + 15;
     if (tipLeft + tipW > window.innerWidth) tipLeft = e.pageX - tipW - 15;
     tooltip.style.left = tipLeft + 'px';
