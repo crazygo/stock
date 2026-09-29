@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[WIREFRAME] Daily Report · 2026-09-29-grok-main · 方案 A 任务树审计台</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --wash: #f3f4f6;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--wash);
+      line-height: 1.45;
+      font-size: 14px;
+    }
+    code, pre, .mono { font-family: ui-monospace, Menlo, Consolas, monospace; }
+    a { color: var(--ink); }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    header.bar {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 12px 16px;
+    }
+    header.bar h1 { margin: 0; font-size: 16px; font-weight: 650; }
+    header.bar p { margin: 4px 0 0; color: var(--wash); font-size: 12px; }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 12px 16px 0;
+    }
+    .kpi {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+    }
+    .kpi .label { color: var(--muted); font-size: 12px; }
+    .kpi .value { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 20px; margin-top: 4px; }
+    .kpi .note { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .cockpit {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.2fr);
+      gap: 12px;
+      padding: 12px 16px;
+      align-items: start;
+    }
+    section.panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      min-width: 0;
+    }
+    section.panel h2 {
+      margin: 0;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+      background: var(--wash);
+    }
+    .scroll { max-height: 70vh; overflow: auto; }
+    pre {
+      margin: 0;
+      padding: 12px;
+      font-size: 12px;
+      line-height: 1.4;
+      white-space: pre;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--wash); position: sticky; top: 0; }
+    td.id { font-family: ui-monospace, Menlo, Consolas, monospace; white-space: nowrap; }
+    .below { padding: 0 16px 24px; }
+    .below article {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      margin-top: 12px;
+    }
+    .below h2 { margin: 0; padding: 8px 12px; background: var(--wash); border-bottom: 1px solid var(--line); font-size: 14px; }
+    .below h3 { margin: 14px 12px 6px; font-size: 14px; }
+    .below ol, .below p, .below ul { margin: 6px 12px 12px; padding-left: 18px; }
+    .below p { padding-left: 0; }
+    .status { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; }
+    @media (max-width: 900px) {
+      .kpis, .cockpit { grid-template-columns: 1fr; }
+      .scroll { max-height: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <h1>[WIREFRAME] Daily Report · 2026-09-29-grok-main</h1>
+    <p>方案 A 任务树审计台。灰阶线框，只读。不收录同一天 agy-main 的自选股打分回测。</p>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="label">今日父任务</div>
+      <div class="value">7</div>
+      <div class="note">4 项 DONE，3 项 PAUSED，0 项 IN_PROGRESS</div>
+    </div>
+    <div class="kpi">
+      <div class="label">已交付完成率</div>
+      <div class="value">4/7</div>
+      <div class="note">完成的是四段训练。暂停的是 90%、缺线、ALAB 周历</div>
+    </div>
+    <div class="kpi">
+      <div class="label">核心产出</div>
+      <div class="value">49.6%</div>
+      <div class="note">逐根收益两周里较低的一周。起点 46.8% / 45.8%。5179 笔与 5132 笔</div>
+    </div>
+    <div class="kpi">
+      <div class="label">重大纠偏</div>
+      <div class="value">5</div>
+      <div class="note">要前后命中率；路线并行；0.01 个百分点；单股背诵；窗口内涨幅</div>
+    </div>
+  </div>
+
+  <div class="cockpit">
+    <section class="panel" aria-labelledby="tree-title">
+      <h2 id="tree-title">任务层级树</h2>
+      <div class="scroll">
+        <pre>tasks:
+  - id: T-01
+    name: 八周窗口上重训五个父模型家族
+    status: DONE
+    subtasks:
+      - id: T-01-01
+        name: 21 只，2024-07-03 起，102 组训完
+        status: DONE
+      - id: T-01-02
+        name: 对照 1 周窗口的微观×宏观
+        status: DONE
+  - id: T-02
+    name: 微观推动 × 30 日趋势，11:30 可知
+    status: DONE
+    subtasks:
+      - id: T-02-01
+        name: 势能四项对照 8 个数与微观×5 日宏观
+        status: DONE
+      - id: T-02-02
+        name: 同向才买
+        status: DONE
+  - id: T-03
+    name: 窗口走完再进场，两轮长度事先写死
+    status: DONE
+    subtasks:
+      - id: T-03-01
+        name: 2 小时，每 5 分钟，最早 11:30
+        status: DONE
+      - id: T-03-02
+        name: 30 分钟，最早 10:00
+        status: DONE
+  - id: T-04
+    name: 五条路线各自迭代到变不动
+    status: DONE
+    subtasks:
+      - id: T-04-01
+        name: 重放 2 小时第一次越线
+        status: DONE
+      - id: T-04-02
+        name: 冲量必须高于当天更早的每一窗
+        status: DONE
+      - id: T-04-03
+        name: 本股过去 60 窗的 80 分位
+        status: DONE
+      - id: T-04-04
+        name: 1170 分钟未结束不再开仓
+        status: DONE
+      - id: T-04-05
+        name: AMD MRVL MU LITE ALAB 各一棵树
+        status: DONE
+      - id: T-04-06
+        name: 24 根路径拆到每一根
+        status: DONE
+  - id: T-05
+    name: 两周都至少 15 笔且 90%
+    status: PAUSED
+  - id: T-06
+    name: SMTC SOXS SOXX 单股模型
+    status: PAUSED
+  - id: T-07
+    name: ALAB 改用父样本周历
+    status: PAUSED</pre>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="out-title">
+      <h2 id="out-title">任务交付成果</h2>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>量化结果</th>
+              <th>文件</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="id">T-01</td>
+              <td>8 周后 B_no_group 62.4% / 63.0%（1873 / 1982 笔）。C_no_group 最高 63.1% / 63.9%。五个父模型相差约 4 个百分点。1 周窗口对照是 50.7% / 55.4%。没有 15 笔且 90%。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/break_v1/REPORT.md">break_v1/REPORT.md</a><br><span class="mono">2557e01</span></td>
+            </tr>
+            <tr>
+              <td class="id">T-02</td>
+              <td>8 个数 61.6% / 62.2%。加势能 60.9% / 62.4%。再叠到微观×5 日宏观：下一周 62.4% 降到 60.8%，再下一周 63.0% 升到 63.5%。同向规则 44.6% 对每天都买 44.7%，45.1% 对 45.4%。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/potential_v1/REPORT.md">potential_v1/REPORT.md</a><br><span class="mono">4bebbf7</span></td>
+            </tr>
+            <tr>
+              <td class="id">T-03-01</td>
+              <td>2 小时第一次越线 4539 笔 46.8%，4495 笔 45.8%。只留 11:30 是 46.3% / 44.4%。滑动高 0.5 与 1.4 个百分点。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/micro_entry_v1/REPORT.md">micro_entry_v1/REPORT.md</a><br><span class="mono">3d09f9e</span></td>
+            </tr>
+            <tr>
+              <td class="id">T-03-02</td>
+              <td>30 分钟滑动 45.2% / 45.5%。它自己的 11:30 是 46.6% / 46.4%。两段都更低。没有第三种长度。</td>
+              <td>同上</td>
+            </tr>
+            <tr>
+              <td class="id">T-04-01</td>
+              <td>起点重放一致：4539 笔 46.77%，4495 笔 45.78%。127 组，训练排序 0.726。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/micro_entry_v1/tracks/common.py">tracks/common.py</a></td>
+            </tr>
+            <tr>
+              <td class="id">T-04-02</td>
+              <td>冲量创新高：3617 笔 45.0%，3670 笔 44.3%。两周都低于起点。分数创新高那一轮没有跑。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/micro_entry_v1/tracks/action/REPORT.md">action/REPORT.md</a></td>
+            </tr>
+            <tr>
+              <td class="id">T-04-03</td>
+              <td>本股过去 60 窗：12309 笔 42.3%，12272 笔 42.5%。13075 个股票日买了 12309 天，命中回到当天第一窗。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/micro_entry_v1/tracks/own_scale/REPORT.md">own_scale/REPORT.md</a></td>
+            </tr>
+            <tr>
+              <td class="id">T-04-04</td>
+              <td>未平仓不再买：1846 笔 46.6%，1824 笔 44.6%。再下一周下降。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/micro_entry_v1/tracks/occupancy/REPORT.md">occupancy/REPORT.md</a></td>
+            </tr>
+            <tr>
+              <td class="id">T-04-05</td>
+              <td>单股树训练排序 0.96–0.98。五只都没有两周同时高于全体模型在该股上的第一次越线。MU 只有下一周更高（51.2% 对 46.0%），再下一周 44.1% 对 46.3%。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/micro_entry_v1/tracks/per_stock/REPORT.md">per_stock/REPORT.md</a></td>
+            </tr>
+            <tr>
+              <td class="id">T-04-06</td>
+              <td>半窗差 47.1/47.2，两半分开 48.4/47.7，四段 49.1/48.4，八段 49.4/49.6，逐根 49.7/49.6。再下一周只比八段高 0.01 个百分点。同伴冲量 46.7/45.7，低于起点。较低一周 49.6%。</td>
+              <td><a href="file:///Users/admin/Code/stock/research/after_open_3d5pct/models/micro_entry_v1/tracks/REPORT.md">tracks/REPORT.md</a><br><span class="mono">ada3dfd</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="below">
+    <article>
+      <h2>踩坑复盘与用户反馈</h2>
+
+      <h3>1. 交了未测量的排序，用户说没看懂</h3>
+      <ol>
+        <li><strong>事实。</strong>先排了串行三轮，又交了跑之前的 Pugh 打分。用户要每个模型的当前状态、迭代后的效果，并且干到瓶颈才停。每条模型单独想。</li>
+        <li><strong>目的。</strong>用户不用排名做交易。契约是改前命中率、改后命中率、以及为什么不能再往上。隔离上下文是为了防止五条规则互相改门槛。</li>
+        <li><strong>规则。</strong>训练交付物是两周的笔数和命中率，外加停在哪一步。跑之前的矩阵不能代替跑完的表。看到分数之后再换门槛，不算这条路线的上界。</li>
+      </ol>
+
+      <h3>2. 把第一轮当成已经改对</h3>
+      <ol>
+        <li><strong>事实。</strong>曾把动作、形状、一股一模型排成先后依赖。用户指出越线条件可以单独研究很多轮，后面的课题也各自迭代。</li>
+        <li><strong>目的。</strong>串行计划会把没测过的第一轮写成后面实验的前提，考试周被一条还没站稳的假设占用。</li>
+        <li><strong>规则。</strong>五条共用同一张 2 小时样本。一条没超过起点就停这条，不挡住其他条。</li>
+      </ol>
+
+      <h3>3. 严格更高把 0.01 个百分点算成新上界</h3>
+      <ol>
+        <li><strong>事实。</strong>八段 49.35% / 49.64%，逐根 49.74% / 49.65%。再下一周只高 0.012 个百分点。按“两周都严格更高”算，逐根胜出。停的原因是 24 根窗口不能再拆，不是下一刀失败。</li>
+        <li><strong>目的。</strong>瓶颈是再改一次已经不能让两周一起变好。大样本上 0.01 个百分点也会过线。把它写成明显更好的模型，就会在看过的考试周上继续加特征。</li>
+        <li><strong>规则。</strong>同时写出差值的大小。0.01 个百分点只说明过了严格大于。上界取两周里较低的一周。看到这个差值之后，不为同一条路径再登记新几何。</li>
+      </ol>
+
+      <h3>4. 单股树背下了重叠窗口，ALAB 周历错开</h3>
+      <ol>
+        <li><strong>事实。</strong>训练排序 0.96 到 0.98。一天 54 个重叠窗口。五只都没有两周同时更高。ALAB 验证周是 2026-09-17 至 09-23，其余四只是 09-11 至 09-17。SMTC、SOXS、SOXX 没有另写加载器。</li>
+        <li><strong>目的。</strong>用户要的是个股买入命中单独到 90%。训练排序高、考试周不高于全体模型，说明树记住的是同一天。周历错开时，两个命中率不是同一批日子。</li>
+        <li><strong>规则。</strong>单股对照用父样本的周块。训练排序到 0.96 以上而两周没有一起变高，就停，不加特征。缺 2024 年以来的常规 5 分钟线，缺数据就是瓶颈。</li>
+      </ol>
+
+      <h3>5. 自选股表的高命中，有一半发生在窗口内部</h3>
+      <ol>
+        <li><strong>事实。</strong>多头原子约 77% 到 89%。100 次的 2 小时涨幅中位数已经是 +5.03%，50 次在窗口里就碰到 +5%。改成 11:30 可知之后，同向规则与每天都买是 44.6% 对 44.7%、45.1% 对 45.4%。</li>
+        <li><strong>目的。</strong>用户希望微观推动变成进场之后的信息。标签若含窗口内部涨幅，学到的是已经发生的那段。</li>
+        <li><strong>规则。</strong>标签从下一根开盘价起算。页面上含窗口内部涨幅的命中率不写成模型成绩。已发表的 A/W 代号不作为输入。</li>
+      </ol>
+    </article>
+
+    <article>
+      <h2>未竟任务</h2>
+      <p>今天没有还在跑的训练。进行中（IN_PROGRESS）：无。</p>
+      <table>
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>状态</th>
+            <th>为什么停</th>
+            <th>若重开，只做这一件</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="id">T-05</td>
+            <td class="status">PAUSED</td>
+            <td>固定 11:30 父模型最高 63.9%。滑动进场较低的一周是 49.6%。再改 0.80 或换更容易碰到的标签，会把看过的周当成新发现。</td>
+            <td>先写死新的研究对象和两周都要超过的对照，再训。</td>
+          </tr>
+          <tr>
+            <td class="id">T-06</td>
+            <td class="status">PAUSED</td>
+            <td>SMTC、SOXS、SOXX 没有 2024 年起的常规 5 分钟线，8 周加两周考试填不满。</td>
+            <td>历史补齐后用现有加载器再读。不新写加载器。</td>
+          </tr>
+          <tr>
+            <td class="id">T-07</td>
+            <td class="status">PAUSED</td>
+            <td>ALAB 单股树大约低 12 与 8 个百分点。当天没有为对齐周历而重训。</td>
+            <td>只用父样本周块过滤 ALAB 再比一次。不改树，不加特征。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>形状停在逐根收益。更细的切法在这张窗口里不存在。看到 0.01 个百分点之后，没有再开一种新几何。没有下单，没有推 R2，没有改 22 个注册模型。</p>
+      <p>全文：<a href="file:///Users/admin/Code/stock/reports/daily/2026-09-29-grok-main.md">2026-09-29-grok-main.md</a></p>
+    </article>
+  </div>
+</body>
+</html>
