@@ -6,6 +6,7 @@ import unittest
 import numpy as np
 
 from research.after_open_3d5pct.models.per_stock_90.coarse_quartile import top_quartile_mask
+from research.after_open_3d5pct.models.per_stock_90.morning_shape import is_inverted_v, is_true_push
 from research.after_open_3d5pct.models.per_stock_90.run import choose_candidate, wilson_lower
 
 
@@ -17,6 +18,23 @@ class QuartileTests(unittest.TestCase):
     def test_spike_after_quiet_history_is_a_buy(self):
         vol = np.array([1.0] * 40 + [2.0])
         self.assertTrue(bool(top_quartile_mask(vol)[-1]))
+
+
+class ShapeTests(unittest.TestCase):
+    def test_late_high_held_to_the_close_is_a_buy(self):
+        close = np.linspace(100, 110, 24)
+        self.assertTrue(is_true_push(close))
+        self.assertFalse(is_inverted_v(close))
+
+    def test_early_spike_given_back_is_not_a_buy(self):
+        close = np.array([100.0, 120.0] + [101.0] * 22)
+        self.assertFalse(is_true_push(close))
+        self.assertTrue(is_inverted_v(close))
+
+    def test_high_before_bar_16_is_not_a_buy(self):
+        close = np.linspace(100, 110, 24)
+        close[15] = 111
+        self.assertFalse(is_true_push(close))
 
 
 class ChoiceTests(unittest.TestCase):
