@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QQQ 双尺度微观原子波形与时序语法链引擎 (2小时 / 24根5m K线)</title>
+  <title>QQQ 双尺度微观原子引擎 · 连续滑动窗口实证 (SOXS, SDGR, AMAT, LITE)</title>
   <style>
     :root {
       --bg: #ffffff;
@@ -111,13 +111,21 @@
       font-size: 13px;
     }
 
-    select {
+    select, button.btn-ctrl {
       font-family: var(--font-sans);
       font-size: 13px;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border: 1px solid var(--border);
       border-radius: 4px;
       background: #fff;
+      cursor: pointer;
+    }
+
+    button.btn-ctrl.active {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+      font-weight: 700;
     }
 
     /* Grid for Codebook */
@@ -183,12 +191,7 @@
     .mg-k { color: var(--text-muted); }
     .mg-v { font-weight: 600; }
 
-    .card-desc {
-      font-size: 12px;
-      font-weight: 600;
-      color: #333;
-      margin-top: 6px;
-    }
+    .card-desc { font-size: 12px; font-weight: 600; color: #333; margin-top: 6px; }
 
     .card-stats {
       display: flex;
@@ -202,33 +205,72 @@
     }
 
     /* Tables */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      margin-top: 8px;
-    }
-
-    th, td {
-      border: 1px solid var(--border);
-      padding: 6px 10px;
-      text-align: left;
-    }
-
+    table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+    th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
     th { background: var(--bg-alt); font-size: 11px; font-weight: 600; text-transform: uppercase; }
     td.num { text-align: right; font-family: var(--font-mono); }
     tr:hover td { background: #fafafa; }
 
-    .pill {
-      font-size: 11px;
-      font-family: var(--font-mono);
-      padding: 2px 6px;
-      border-radius: 3px;
-    }
-
+    .pill { font-size: 11px; font-family: var(--font-mono); padding: 2px 6px; border-radius: 3px; }
     .pill-win { background: #000; color: #fff; }
     .pill-loss { background: #e4e4e7; color: #555; }
     .pill-hold { background: #d4d4d8; color: #111; font-weight: 600; }
+    .pill-cross { background: #1a1a1a; color: #fff; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+
+    /* Timeline & Chart Canvas */
+    .timeline-container {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px;
+      background: #fff;
+      margin-bottom: 16px;
+    }
+
+    .timeline-canvas-wrapper {
+      position: relative;
+      background: #fafafa;
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      height: 220px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    /* Modal / Drawer for Drill-down */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .drawer-overlay.active { display: flex; }
+
+    .drawer-content {
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 6px;
+      width: 90%;
+      max-width: 820px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .drawer-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
 
     footer {
       margin-top: 40px;
@@ -246,47 +288,112 @@
 <body>
 
   <header>
-    <div class="badge-wireframe">Multi-Scale Hierarchical Motif Engine · 5M Resolution</div>
-    <h1>QQQ 双尺度微观原子波形与时序语法链引擎</h1>
+    <div class="badge-wireframe">Rolling Window vs Fixed Blocks · 5M Resolution Proof</div>
+    <h1>QQQ 连续滑动窗口与 30 天实证对比 (SOXS, SDGR, AMAT, LITE)</h1>
     <div class="subtitle">
-      底层: 2小时 = 24根 5分钟常规盘 K 线 (彻底解决 60m 无法区分“开盘诱多倒V”与“单边真突破”难题) · 顶层: 3天原子基因链前向预测
+      以 15 分钟为相对步长的 2 小时 (24 根 5m 线) 连续滑动窗口 · 证明实盘能够捕获 6.3 倍以上的跨边界微观波形
     </div>
 
     <div class="meta-metrics">
       <div class="meta-card">
-        <div class="label">微观原子颗粒度</div>
-        <div class="value">2 小时 (24根 5m)</div>
+        <div class="label">实证目标标的</div>
+        <div class="value">SOXS, SDGR, AMAT, LITE</div>
       </div>
       <div class="meta-card">
-        <div class="label">评估微观原子总数</div>
-        <div class="value" id="meta-atoms">110,379 个</div>
+        <div class="label">时间跨度 (最近 30 天)</div>
+        <div class="value">2026-08-17 ~ 2026-09-28</div>
       </div>
       <div class="meta-card">
-        <div class="label">原子形态字典库</div>
-        <div class="value">K = 12 几何基元</div>
+        <div class="label">传统固定时钟切片数</div>
+        <div class="value">90 个 / 股</div>
       </div>
       <div class="meta-card">
-        <div class="label">最高黄金语法链达成率</div>
-        <div class="value" style="color:#000;">61.9% (基准: ~27.7%)</div>
+        <div class="label">连续滑动窗口切片数</div>
+        <div class="value" style="color:#000;">570 个 / 股 (6.3x 覆盖!)</div>
       </div>
     </div>
   </header>
 
   <nav class="nav-tabs" role="tablist">
-    <button class="tab-btn active" onclick="switchTab('tab-atoms', this)">① 2小时 5m 微观原子词表 (Codebook)</button>
-    <button class="tab-btn" onclick="switchTab('tab-branching', this)">② 开盘暴涨分支解析器 (Opening Climax Branch)</button>
-    <button class="tab-btn" onclick="switchTab('tab-triplets', this)">③ 全天三原子黄金时序链排行 (Top Sequences)</button>
-    <button class="tab-btn" onclick="switchTab('tab-method', this)">④ 宏微双尺度量化机理 (Architecture)</button>
+    <button class="tab-btn active" onclick="switchTab('tab-showcase', this)">① 4 标的 30 天滑动窗口实证与 K 线穿透 (SOXS/SDGR/AMAT/LITE)</button>
+    <button class="tab-btn" onclick="switchTab('tab-atoms', this)">② 2小时 5m 微观原子词表 (Codebook A-01~A-12)</button>
+    <button class="tab-btn" onclick="switchTab('tab-branching', this)">③ 开盘暴涨分支解析器 (Opening Branch)</button>
+    <button class="tab-btn" onclick="switchTab('tab-triplets', this)">④ 全天三原子黄金时序链排行 (Top Sequences)</button>
   </nav>
 
-  <!-- TAB 1: 2-Hour 5m Micro-Atom Codebook -->
-  <main id="tab-atoms" class="tab-panel active">
+  <!-- TAB 1: 4 Stocks 30-Day Rolling Showcase -->
+  <main id="tab-showcase" class="tab-panel active">
+    <!-- Stock Selector Bar -->
+    <div class="controls-bar">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-weight:700;">选择查看标的:</span>
+        <button class="btn-ctrl active" onclick="selectStock('SOXS', this)">SOXS (3x做空半导体)</button>
+        <button class="btn-ctrl" onclick="selectStock('SDGR', this)">SDGR (薛定谔)</button>
+        <button class="btn-ctrl" onclick="selectStock('AMAT', this)">AMAT (应用材料)</button>
+        <button class="btn-ctrl" onclick="selectStock('LITE', this)">LITE (朗美通)</button>
+      </div>
+
+      <div style="font-size:12px; font-family:var(--font-mono); color:var(--text-muted);" id="stock-kpi-summary">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+
+    <!-- Main Chart Container -->
+    <div class="timeline-container">
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <strong style="font-size:13px; text-transform:uppercase;" id="chart-title">
+          SOXS 最近 30 天 5 分钟 K 线走势与相对滑动命中标记
+        </strong>
+        <span style="font-size:11px; color:var(--text-muted);">
+          提示: 阴影区标明了滑动窗口捕获的经典 2 小时微原子形态
+        </span>
+      </div>
+
+      <div class="timeline-canvas-wrapper" id="timeline-chart">
+        <!-- SVG injected by JS -->
+      </div>
+    </div>
+
+    <!-- Comparative Proof Table -->
+    <div style="margin-top: 18px; border: 1px solid var(--border); border-radius: 4px; padding: 14px; background: #fff;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--border-light); padding-bottom:6px; margin-bottom:10px;">
+        <strong style="font-size:13px; text-transform:uppercase;">
+          滑动窗口独家捕获的“跨时段相对形态”精选切片 (Cross-Boundary Exemplars)
+        </strong>
+        <span style="font-size:11px; color:var(--text-muted);">
+          这些形态发生在 10:15~12:15 或 12:30~14:30 等跨越 11:30/13:30 的相对时段，传统固定切分将其完全切碎漏判！
+        </span>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>相对时间窗口 (2 小时)</th>
+            <th>跨越时相</th>
+            <th>匹配原子代码</th>
+            <th>几何形态定性</th>
+            <th class="num">拟合距离 (Dist)</th>
+            <th class="num">内部涨跌幅</th>
+            <th class="num">见顶时点</th>
+            <th class="num">见底时点</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="cross-exemplars-tbody">
+          <!-- Injected by JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- TAB 2: Micro-Atom Codebook -->
+  <main id="tab-atoms" class="tab-panel">
     <div class="controls-bar">
       <div>
-        <strong>2小时 5分钟微观几何基元:</strong> 消除绝对价格，X轴为 0~120 分钟 (24 根 5m 线)，清晰标记冲顶/见底分钟点。
+        <strong>2小时 5分钟微观几何基元 (Codebook A-01 ~ A-12):</strong> X轴为 0~120 分钟 (24 根 5m 线)，清晰标记冲顶/见底分钟点。
       </div>
       <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">
-        样本范围: 2025-01-02 至 2026-09-25 · 109 只标的
+        样本范围: 2025-01-02 至 2026-09-25 · 109 只标的 · 110,379 个 2小时微观原子切片
       </div>
     </div>
 
@@ -295,11 +402,11 @@
     </div>
   </main>
 
-  <!-- TAB 2: Opening Surge Branch Analyzer -->
+  <!-- TAB 3: Opening Surge Branch Analyzer -->
   <main id="tab-branching" class="tab-panel">
     <div style="background: var(--bg-alt); border: 1px solid var(--border); padding: 12px 16px; border-radius: 4px; margin-bottom: 14px; font-size: 12px; line-height: 1.6;">
-      <strong>核心答疑实验：如果开盘暴涨 2 小时，下午接什么走势时未来 3 天 +5% 概率最高？</strong><br>
-      系统自动锁定所有在 <strong>09:30~11:30 早盘走出暴涨形态（如 A-02, A-03, A-04, A-05, A-06, A-09, A-11 等）</strong> 的切片，严格追踪其下午（午盘 + 尾盘）的不同演化分支对未来 3 天 +5% 达成率的决定性影响：
+      <strong>开盘暴涨分支解析：如果开盘暴涨 2 小时，下午接什么走势时未来 3 天 +5% 概率最高？</strong><br>
+      系统自动锁定所有在 <strong>09:30~11:30 早盘走出暴涨形态（如 A-02, A-03, A-04, A-05, A-06, A-09, A-11 等）</strong> 的切片，严格追踪其下午的微原子分支对未来 3 天 +5% 达成率的决定性影响：
     </div>
 
     <div class="controls-bar">
@@ -324,7 +431,7 @@
           <th>下午行为定性</th>
           <th class="num">历史样本量</th>
           <th class="num">未来 3 天触及 +5% 达成率</th>
-          <th>胜率评估</th>
+          <th>评级</th>
         </tr>
       </thead>
       <tbody id="branch-tbody">
@@ -333,7 +440,7 @@
     </table>
   </main>
 
-  <!-- TAB 3: Top Daily Triplets Ranking -->
+  <!-- TAB 4: Top Triplets Ranking -->
   <main id="tab-triplets" class="tab-panel">
     <div class="controls-bar">
       <div>
@@ -363,62 +470,35 @@
     </table>
   </main>
 
-  <!-- TAB 4: Micro vs Macro Methodology -->
-  <main id="tab-method" class="tab-panel">
-    <div style="background:#fff; border:1px solid var(--border); padding:16px; border-radius:4px; font-size:13px; line-height:1.7;">
-      <h3 style="font-size:15px; margin-bottom:8px;">为什么 2 小时必须使用 5 分钟 K 线？(数学物理机理)</h3>
-      <p>
-        在传统 60 分钟（1小时）K 线上，2 小时<strong>仅仅由 2 根柱子构成</strong>。两点之间只能连成一条刚性直线，根本无法提取“波形（Waveform）”，你只能知道它净收益涨跌，完全丢失了波形的内部动力学过程。<br>
-        而一旦降维切换到 <strong>5 分钟 K 线</strong>：
-        $$2 \text{ 小时} = 120 \text{ 分钟} = \mathbf{24 \text{ 根 5m K 线}}$$
-      </p>
+  <!-- Modal for Atom Drill-down -->
+  <div class="drawer-overlay" id="drilldown-modal" onclick="closeModal(event)">
+    <div class="drawer-content" onclick="event.stopPropagation()">
+      <button class="drawer-close" onclick="closeModal()">&times;</button>
+      <h2 id="modal-title" style="font-size:16px; margin-bottom:4px;">相对滑动切片拟合详情</h2>
+      <div id="modal-subtitle" style="font-size:12px; color:var(--text-muted); margin-bottom:12px;"></div>
 
-      <table style="margin: 14px 0;">
-        <thead>
-          <tr>
-            <th>微观博弈场景</th>
-            <th>在 60m K 线上的表现 (无法辨识)</th>
-            <th>在 5m K 线上的微观原子表现 (精准捕获)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>开盘诱多假突破倒 V 型</strong></td>
-            <td>一根带上影线的阳线或平盘十字星，看不出冲刺时相</td>
-            <td><strong>Atom A-02 / A-05 / A-11</strong>：清晰展示前 15~40 分钟极速脉冲见顶，后 80 分钟一路跳水跌破开盘价，Fade Ratio 高达 0.84！</td>
-          </tr>
-          <tr>
-            <td><strong>真突破稳扎稳打攻坚型</strong></td>
-            <td>也是一根阳线，看似与假突破无异</td>
-            <td><strong>Atom A-03 / A-04 / A-06</strong>：全程回踩不破前低，第 100~115 分钟（11:20 附近）收于最高点，Fade Ratio 仅 0.01~0.05！</td>
-          </tr>
-          <tr>
-            <td><strong>放量冲高后高位锁筹横盘</strong></td>
-            <td>大阳线后接小阴线，容易被误判为滞涨见顶</td>
-            <td><strong>Atom A-08 / A-10</strong>：冲高后拒绝回踩，在绝对高位做极窄幅整理，主力锁筹意图极强。</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="border:1px solid var(--border-light); background:#fafafa; padding:12px; border-radius:4px; margin-bottom:14px;" id="modal-chart">
+        <!-- SVG injected by JS -->
+      </div>
 
-      <h3 style="font-size:15px; margin: 16px 0 8px;">双尺度宏微结合的量化优势</h3>
-      <ul style="margin-left: 20px;">
-        <li><strong>时效性提升 4 倍</strong>：在 11:30 早盘结束的瞬间，系统即可直接完成 24 根 5m 线的原子定性，无需等待全天或 6 小时大波形收口。</li>
-        <li><strong>消除均值平滑失真</strong>：多天刚性波形（21h~35h）会将单日的爆发脉冲抹平，而原子语法链能够高保真记录“出清段 → 锁筹段 → 点火段”的真实时序逻辑。</li>
-        <li><strong>胜率突破 50%+ 瓶颈</strong>：实证表明，单纯整体波形胜率被压制在 25.7%，而通过微原子时序语法链过滤，顶级组合的未来 3 天达成率成功跃升至 <strong>50% ~ 61.9%</strong>！</li>
-      </ul>
+      <div id="modal-stats" style="font-size:12px; line-height:1.6;">
+        <!-- Injected by JS -->
+      </div>
     </div>
-  </main>
+  </div>
 
   <footer>
     <div>工程归档: <code>analysis/micro_atomic_motif_engine/</code> · 端口: 8768</div>
-    <div>2025-01 至 2026-09 全量 5 分钟行情库 · 双尺度宏微结合因果闭环</div>
+    <div>纯本地 5 分钟行情归档 · 相对时间连续滑动 · 杜绝固定时钟切碎波形</div>
   </footer>
 
   <script>
-    let DATA = null;
+    let SHOWCASE_DATA = null;
+    let ENGINE_DATA = null;
+    let CURRENT_STOCK = "SOXS";
 
     // 24-point 5m SVG Sparkline Generator
-    function generateAtomSvg(curve, peakMin, troughMin, width = 270, height = 50) {
+    function generateAtomSvg(curve, peakMin, troughMin, width = 270, height = 48) {
       if (!curve || curve.length === 0) return "";
       const padX = 8;
       const padY = 8;
@@ -437,29 +517,80 @@
       const pathStr = coords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
       const zeroY = padY + h - ((0 - minVal) / (maxVal - minVal)) * h;
 
-      // 30min / 60min / 90min dividers
       let dividers = "";
       [6, 12, 18].forEach(barIdx => {
         const dx = padX + (barIdx / (curve.length - 1)) * w;
         dividers += `<line x1="${dx.toFixed(1)}" y1="${padY}" x2="${dx.toFixed(1)}" y2="${height - padY}" stroke="#e5e5ea" stroke-width="1" stroke-dasharray="2,2"/>`;
       });
 
-      // Peak dot & Trough dot
       const peakIdx = Math.min(coords.length - 1, Math.max(0, Math.round(peakMin / 5)));
       const troughIdx = Math.min(coords.length - 1, Math.max(0, Math.round(troughMin / 5)));
-
-      const pCoord = coords[peakIdx];
-      const tCoord = coords[troughIdx];
 
       return `
         <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;">
           <line x1="${padX}" y1="${zeroY.toFixed(1)}" x2="${width - padX}" y2="${zeroY.toFixed(1)}" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
           ${dividers}
           <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Peak marker -->
-          <circle cx="${pCoord[0].toFixed(1)}" cy="${pCoord[1].toFixed(1)}" r="3" fill="#000"/>
-          <!-- End marker -->
+          <circle cx="${coords[peakIdx][0].toFixed(1)}" cy="${coords[peakIdx][1].toFixed(1)}" r="3" fill="#000"/>
           <circle cx="${coords[coords.length - 1][0].toFixed(1)}" cy="${coords[coords.length - 1][1].toFixed(1)}" r="2.5" fill="#666"/>
+        </svg>
+      `;
+    }
+
+    // Timeline Price Chart Generator for 30 Days (SVG)
+    function renderTimelineChart(bars, exemplars, width = 1000, height = 200) {
+      if (!bars || bars.length === 0) return "";
+      const padX = 14;
+      const padY = 16;
+      const w = width - padX * 2;
+      const h = height - padY * 2;
+
+      const closes = bars.map(b => b.close);
+      const minP = Math.min(...closes);
+      const maxP = Math.max(...closes);
+
+      // Map time to X
+      function toX(idx) {
+        return padX + (idx / (bars.length - 1)) * w;
+      }
+      function toY(price) {
+        const norm = (price - minP) / (maxP - minP + 1e-6);
+        return padY + h - norm * h;
+      }
+
+      // Draw continuous price line
+      const pathStr = bars.map((b, idx) => {
+        const x = toX(idx);
+        const y = toY(b.close);
+        return idx === 0 ? `M ${x.toFixed(1)},${y.toFixed(1)}` : `L ${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(" ");
+
+      // Highlight exemplar relative windows (shaded bands)
+      let bands = "";
+      (exemplars || []).forEach(ex => {
+        // find start and end index in bars
+        const sIdx = bars.findIndex(b => b.time === ex.start_time);
+        const eIdx = bars.findIndex(b => b.time === ex.end_time);
+        if (sIdx >= 0 && eIdx >= 0) {
+          const bx = toX(sIdx);
+          const bw = Math.max(4, toX(eIdx) - bx);
+          bands += `
+            <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="#000000" opacity="0.10"/>
+            <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padY}" stroke="#555" stroke-width="1" stroke-dasharray="2,2"/>
+            <text x="${(bx + 2).toFixed(1)}" y="${padY + 12}" font-size="9" font-family="monospace" fill="#222" font-weight="bold">${ex.matched_atom}</text>
+          `;
+        }
+      });
+
+      return `
+        <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" style="display:block;">
+          <!-- Shaded matched relative windows -->
+          ${bands}
+          <!-- Continuous 5m price line -->
+          <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.6"/>
+          <!-- High / Low labels -->
+          <text x="${padX}" y="${padY + 10}" font-size="10" font-family="monospace" fill="#666">最高: $${maxP.toFixed(2)}</text>
+          <text x="${padX}" y="${height - padY}" font-size="10" font-family="monospace" fill="#666">最低: $${minP.toFixed(2)}</text>
         </svg>
       `;
     }
@@ -471,11 +602,121 @@
       btn.classList.add('active');
     }
 
-    // Tab 1: Render Micro-Atom Cards
+    function selectStock(ticker, btn) {
+      CURRENT_STOCK = ticker;
+      document.querySelectorAll('.btn-ctrl').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderShowcaseView();
+    }
+
+    function renderShowcaseView() {
+      if (!SHOWCASE_DATA) return;
+      const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
+      if (!s) return;
+
+      document.getElementById('chart-title').textContent = `${s.ticker} 最近 30 天 5 分钟 K 线走势与相对滑动命中标记 (步长 15m)`;
+      document.getElementById('stock-kpi-summary').innerHTML = `
+        5m K线: <strong>${s.total_5m_bars}</strong> 根 | 
+        固定分段: <strong>${s.fixed_count}</strong> 个 | 
+        <strong>滑动窗口: ${s.rolling_count} 个 (${s.coverage_multiplier}x)</strong> | 
+        跨边界捕捉: <strong>${s.cross_boundary_count} 个</strong>
+      `;
+
+      // Render timeline chart
+      const chartHtml = renderTimelineChart(s.chart_bars, s.exemplar_cross_matches, 980, 200);
+      document.getElementById('timeline-chart').innerHTML = chartHtml;
+
+      // Render exemplars table
+      const tbody = document.getElementById('cross-exemplars-tbody');
+      tbody.innerHTML = s.exemplar_cross_matches.map((ex, idx) => {
+        const retPct = (ex.ret * 100).toFixed(2);
+        const retColor = ex.ret > 0 ? '#000' : '#666';
+
+        return `
+          <tr>
+            <td style="font-family:monospace; font-weight:700;">${ex.start_time.slice(5, 16)} ~ ${ex.end_time.slice(11, 16)}</td>
+            <td><span class="pill pill-cross">跨边界相对时间</span></td>
+            <td><strong style="font-family:monospace;">${ex.matched_atom}</strong></td>
+            <td style="font-size:11px;">${ex.atom_desc}</td>
+            <td class="num">${ex.distance.toFixed(3)}</td>
+            <td class="num" style="font-weight:700; color:${retColor};">${ex.ret > 0 ? '+' : ''}${retPct}%</td>
+            <td class="num">${ex.peak_min}m</td>
+            <td class="num">${ex.trough_min}m</td>
+            <td>
+              <button style="font-size:11px; padding:2px 8px; cursor:pointer;" onclick="showDrilldown(${idx})">
+                穿透拟合图
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function showDrilldown(idx) {
+      if (!SHOWCASE_DATA) return;
+      const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
+      const ex = s.exemplar_cross_matches[idx];
+      const atomCb = SHOWCASE_DATA.codebook.find(c => c.code === ex.matched_atom);
+
+      document.getElementById('modal-title').textContent = `${s.ticker} 相对时间窗口 [${ex.start_time} ~ ${ex.end_time}] 拟合详情`;
+      document.getElementById('modal-subtitle').textContent = `匹配原子代码: ${ex.matched_atom} (${ex.atom_desc}) · 欧氏距离: ${ex.distance} · 2小时收益: ${(ex.ret * 100).toFixed(2)}%`;
+
+      // Draw overlay of actual 24-point z_curve vs atom centroid curve
+      const padX = 10; const padY = 12;
+      const width = 760; const height = 150;
+      const w = width - padX * 2; const h = height - padY * 2;
+      const minVal = -2.5; const maxVal = 2.5;
+
+      function toCoords(arr) {
+        return arr.map((val, i) => {
+          const x = padX + (i / (arr.length - 1)) * w;
+          const normY = (val - minVal) / (maxVal - minVal);
+          const y = padY + h - Math.max(0, Math.min(1, normY)) * h;
+          return [x, y];
+        });
+      }
+
+      const actCoords = toCoords(ex.z_curve);
+      const actPath = actCoords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+
+      const cbCoords = toCoords(atomCb.curve);
+      const cbPath = cbCoords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+
+      const svgOverlay = `
+        <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;">
+          <!-- Centroid Reference (Dashed Grey) -->
+          <path d="${cbPath}" fill="none" stroke="#888" stroke-width="1.8" stroke-dasharray="4,3"/>
+          <!-- Actual Stock 5m Curve (Solid Black) -->
+          <path d="${actPath}" fill="none" stroke="#000" stroke-width="2.2"/>
+          <circle cx="${actCoords[actCoords.length - 1][0].toFixed(1)}" cy="${actCoords[actCoords.length - 1][1].toFixed(1)}" r="3" fill="#000"/>
+        </svg>
+      `;
+
+      document.getElementById('modal-chart').innerHTML = `
+        <div style="display:flex; justify-content:space-between; font-size:11px; font-family:monospace; margin-bottom:4px;">
+          <span>实线(黑色): ${s.ticker} 真实 24 根 5m 线 | 虚线(灰色): ${ex.matched_atom} 质心基准</span>
+          <span>X轴: 0分钟 ~ 120分钟</span>
+        </div>
+        ${svgOverlay}
+      `;
+
+      document.getElementById('modal-stats').innerHTML = `
+        <strong>为什么固定时钟会漏判这个波形？</strong><br>
+        该形态起始于 <code>${ex.start_time.split(' ')[1]}</code>，结束于 <code>${ex.end_time.split(' ')[1]}</code>，完整横跨了常规午盘分界线。在传统固定切分下，它会被直接截断；而连续滑动窗口在 <code>${ex.end_time.split(' ')[1]}</code> 收尾的当前这一刻，精准捕获了这完整的两小时微观形态！
+      `;
+
+      document.getElementById('drilldown-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('drilldown-modal').classList.remove('active');
+    }
+
+    // Tab 2: Render Micro-Atom Cards
     function renderAtomCards() {
-      if (!DATA) return;
+      if (!ENGINE_DATA) return;
       const container = document.getElementById('atoms-cards');
-      container.innerHTML = DATA.codebook.map(cb => {
+      container.innerHTML = ENGINE_DATA.codebook.map(cb => {
         const retPct = (cb.mean_ret * 100).toFixed(2);
         const badgeClass = cb.mean_ret > 0.005 ? 'badge-pump' : (cb.mean_ret < -0.005 ? 'badge-dump' : 'badge-neutral');
         const spark = generateAtomSvg(cb.curve, cb.median_peak_min, cb.median_trough_min, 270, 48);
@@ -486,13 +727,8 @@
               <span class="card-code">${cb.code}</span>
               <span class="card-badge ${badgeClass}">均益: ${cb.mean_ret > 0 ? '+' : ''}${retPct}%</span>
             </div>
-
-            <div class="chart-box">
-              ${spark}
-            </div>
-
+            <div class="chart-box">${spark}</div>
             <div class="card-desc">${cb.descriptor}</div>
-
             <div class="math-grid">
               <div class="mg-item"><span class="mg-k">见顶:</span><span class="mg-v">${cb.median_peak_min}m</span></div>
               <div class="mg-item"><span class="mg-k">见底:</span><span class="mg-v">${cb.median_trough_min}m</span></div>
@@ -501,7 +737,6 @@
               <div class="mg-item"><span class="mg-k">峰值 Z:</span><span class="mg-v">${cb.peak_z > 0 ? '+' : ''}${cb.peak_z.toFixed(2)}</span></div>
               <div class="mg-item"><span class="mg-k">终值 Z:</span><span class="mg-v">${cb.end_z > 0 ? '+' : ''}${cb.end_z.toFixed(2)}</span></div>
             </div>
-
             <div class="card-stats">
               <span>样本: <strong>${cb.total_count.toLocaleString()}</strong></span>
               <span>尺度: 2小时 (24根 5m)</span>
@@ -511,33 +746,27 @@
       }).join('');
     }
 
-    // Tab 2: Opening Branch Table
+    // Tab 3: Branch Table
     function initBranchSelector() {
-      if (!DATA) return;
+      if (!ENGINE_DATA) return;
       const select = document.getElementById('filter-open-atom');
-      const surgeAtoms = [...new Set(DATA.opening_branches.map(b => b.open_atom))].sort();
-
+      const surgeAtoms = [...new Set(ENGINE_DATA.opening_branches.map(b => b.open_atom))].sort();
       select.innerHTML = `<option value="ALL">全部开盘暴涨原子 (All Opening Surge)</option>` +
         surgeAtoms.map(a => `<option value="${a}">仅看 ${a}</option>`).join('');
-
       renderBranchTable();
     }
 
     function renderBranchTable() {
-      if (!DATA) return;
+      if (!ENGINE_DATA) return;
       const filterVal = document.getElementById('filter-open-atom').value;
-      let list = DATA.opening_branches;
-
-      if (filterVal !== 'ALL') {
-        list = list.filter(b => b.open_atom === filterVal);
-      }
+      let list = ENGINE_DATA.opening_branches;
+      if (filterVal !== 'ALL') list = list.filter(b => b.open_atom === filterVal);
 
       const tbody = document.getElementById('branch-tbody');
       tbody.innerHTML = list.map(b => {
         const ratePct = (b.hit3d_rate * 100).toFixed(2);
         const isHigh = b.hit3d_rate >= 0.45;
         const pillClass = isHigh ? 'pill-win' : (b.hit3d_rate >= 0.35 ? 'pill-hold' : 'pill-loss');
-
         return `
           <tr>
             <td><strong>${b.open_atom}</strong></td>
@@ -553,30 +782,20 @@
       }).join('');
     }
 
-    // Tab 3: Triplets Table
+    // Tab 4: Triplets
     function renderTripletsTable() {
-      if (!DATA) return;
+      if (!ENGINE_DATA) return;
       const tbody = document.getElementById('triplets-tbody');
-      tbody.innerHTML = DATA.top_daily_triplets.map((t, idx) => {
+      tbody.innerHTML = ENGINE_DATA.top_daily_triplets.map((t, idx) => {
         const ratePct = (t.hit3d_rate * 100).toFixed(2);
         const excessPct = ((t.hit3d_rate - 0.2767) * 100).toFixed(2);
         const rank = idx + 1;
         const isTop = rank <= 5;
-
-        // Interpret sequence
-        const parts = t.sequence.split(' -> ');
-        let note = "微观多空交织";
-        if (t.hit3d_rate >= 0.50) {
-          note = "早盘出清 + 午后极度缩量中枢企稳，前向爆发力极高";
-        } else if (t.hit3d_rate >= 0.40) {
-          note = "典型蓄势突破结构，次日具有惯性冲高动能";
-        }
-
         return `
           <tr style="${isTop ? 'background:#fbfbfd; font-weight:600;' : ''}">
             <td class="num">#${rank}</td>
             <td style="font-family:monospace; font-weight:700;">${t.sequence}</td>
-            <td style="font-size:11px; color:#444;">${note}</td>
+            <td style="font-size:11px; color:#444;">${t.hit3d_rate >= 0.50 ? '极度出清后高位锁筹企稳，前向爆发力极高' : '蓄势整理突破结构'}</td>
             <td class="num">${t.sample_count}</td>
             <td class="num" style="font-weight:700;">${ratePct}%</td>
             <td class="num" style="color:#000;">+${excessPct}%</td>
@@ -588,16 +807,19 @@
 
     async function init() {
       try {
-        const res = await fetch('./data.json');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        DATA = await res.json();
+        const [resShowcase, resEngine] = await Promise.all([
+          fetch('./rolling_showcase.json'),
+          fetch('./data.json')
+        ]);
+        SHOWCASE_DATA = await resShowcase.json();
+        ENGINE_DATA = await resEngine.json();
 
-        document.getElementById('meta-atoms').textContent = `${DATA.metadata.total_micro_segments.toLocaleString()} 个`;
+        renderShowcaseView();
         renderAtomCards();
         initBranchSelector();
         renderTripletsTable();
       } catch (err) {
-        console.error('Failed to load data.json:', err);
+        console.error('Failed to load JSON data:', err);
       }
     }
 
