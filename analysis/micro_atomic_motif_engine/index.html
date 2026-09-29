@@ -811,30 +811,82 @@
       `;
     }
 
-    // Macro 30-Day View Chart (2369 bars, continuous overview)
+    // Macro 30-Day View Chart (2369 bars, Log-scale Return % Y-axis)
     function renderMacroViewChart(bars, exemplars, width = 980, height = 240) {
       if (!bars || bars.length === 0) return "";
-      const padX = 20;
+      const padL = 72; // Left padding for percentage labels like "+40.0%"
+      const padR = 85; // Right padding for latest return label
       const padY = 24;
       const padB = 26;
-      const w = width - padX * 2;
+      const w = width - padL - padR;
       const h = height - padY - padB;
 
       const closes = bars.map(b => b.close);
+      const p0 = closes[0]; // Base price at period start (2026-08-17 09:30)
       const minP = Math.min(...closes);
       const maxP = Math.max(...closes);
 
+      const lnMin = Math.log(minP);
+      const lnMax = Math.log(maxP);
+
+      const retMin = ((minP / p0) - 1.0) * 100.0;
+      const retMax = ((maxP / p0) - 1.0) * 100.0;
+      const retEnd = ((closes[closes.length - 1] / p0) - 1.0) * 100.0;
+
+      // Log-coordinate Y transformation
       function toX(idx) {
-        return padX + (idx / Math.max(1, bars.length - 1)) * w;
+        return padL + (idx / Math.max(1, bars.length - 1)) * w;
       }
-      function toY(price) {
-        const norm = (price - minP) / (maxP - minP + 1e-6);
+      function toYPrice(price) {
+        const lnP = Math.log(price);
+        const norm = (lnP - lnMin) / (lnMax - lnMin + 1e-8);
         return padY + h - norm * h;
       }
+      function toYReturn(retPct) {
+        const p = p0 * (1.0 + retPct / 100.0);
+        return toYPrice(p);
+      }
 
+      // Generate clean round return ticks
+      const span = retMax - retMin;
+      let step = 10;
+      if (span > 60) step = 20;
+      else if (span > 30) step = 10;
+      else if (span > 15) step = 5;
+      else step = 2;
+
+      const startTick = Math.floor(retMin / step) * step;
+      const endTick = Math.ceil(retMax / step) * step;
+      const ticks = [];
+      for (let t = startTick; t <= endTick; t += step) {
+        if (t >= retMin - 1e-4 && t <= retMax + 1e-4) ticks.push(t);
+      }
+      if (!ticks.includes(0) && retMin <= 0 && retMax >= 0) {
+        ticks.push(0);
+        ticks.sort((a, b) => a - b);
+      }
+
+      // Y-axis grid lines and percentage labels
+      let yGrid = "";
+      ticks.forEach(t => {
+        const y = toYReturn(t);
+        const isBase = t === 0;
+        const lineStroke = isBase ? "#555" : "#e5e5e7";
+        const strokeWidth = isBase ? 1.4 : 1;
+        const dashArray = isBase ? "4,3" : "2,2";
+        const textColor = isBase ? "#000" : "#666";
+        const labelText = isBase ? "0.0% (基准)" : `${t > 0 ? '+' : ''}${t.toFixed(0)}%`;
+
+        yGrid += `
+          <line x1="${padL}" y1="${y.toFixed(1)}" x2="${padL + w}" y2="${y.toFixed(1)}" stroke="${lineStroke}" stroke-width="${strokeWidth}" stroke-dasharray="${dashArray}"/>
+          <text x="${padL - 6}" y="${(y + 3.5).toFixed(1)}" font-size="10" font-family="monospace" fill="${textColor}" text-anchor="end" font-weight="${isBase ? 'bold' : 'normal'}">${labelText}</text>
+        `;
+      });
+
+      // Price path on log scale
       const pathStr = bars.map((b, idx) => {
         const x = toX(idx);
-        const y = toY(b.close);
+        const y = toYPrice(b.close);
         return idx === 0 ? `M ${x.toFixed(1)},${y.toFixed(1)}` : `L ${x.toFixed(1)},${y.toFixed(1)}`;
       }).join(" ");
 
@@ -847,20 +899,58 @@
           const bx = toX(sIdx);
           const bw = Math.max(3, toX(eIdx) - bx);
           bands += `
-            <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="#000000" opacity="0.12" style="cursor:pointer;" onclick="locateOnChart('${ex.date}', '${ex.start_time}')"/>
-            <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padB}" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+            <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="#000000" opacity="0.10" style="cursor:pointer;" onclick="locateOnChart('${ex.date}', '${ex.start_time}')">
+              <title>${ex.start_time.slice(5, 16)} ~ ${ex.end_time.slice(11, 16)} | ${ex.matched_atom} (${ex.similarity}% 相似度)</title>
+            </rect>
+            <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padB}" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
           `;
         }
       });
 
+      // End point pin & label
+      const endX = toX(bars.length - 1);
+      const endY = toYPrice(closes[closes.length - 1]);
+      const endRetText = `${retEnd > 0 ? '+' : ''}${retEnd.toFixed(2)}%`;
+      const endPriceText = `$${closes[closes.length - 1].toFixed(2)}`;
+
+      // Time axis baseline ticks (dates every ~5 trading days)
+      let timeTicks = "";
+      const stepIdx = Math.max(1, Math.floor(bars.length / 5));
+      for (let i = 0; i < bars.length; i += stepIdx) {
+        const x = toX(i);
+        const dStr = bars[i].time.slice(5, 10);
+        timeTicks += `
+          <line x1="${x.toFixed(1)}" y1="${height - padB}" x2="${x.toFixed(1)}" y2="${height - padB + 4}" stroke="#888" stroke-width="1"/>
+          <text x="${x.toFixed(1)}" y="${height - padB + 16}" font-size="10" font-family="monospace" fill="#777" text-anchor="middle">${dStr}</text>
+        `;
+      }
+
       return `
         <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" style="display:block;">
+          <!-- Y-Axis Log Return Grid -->
+          ${yGrid}
+          <!-- Exemplar Shaded Bands -->
           ${bands}
-          <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.4"/>
-          <line x1="${padX}" y1="${height - padB}" x2="${width - padX}" y2="${height - padB}" stroke="#ccc" stroke-width="1"/>
-          <text x="${padX}" y="${padY + 10}" font-size="10" font-family="monospace" fill="#555">最高: $${maxP.toFixed(2)}</text>
-          <text x="${padX}" y="${height - padB - 4}" font-size="10" font-family="monospace" fill="#555">最低: $${minP.toFixed(2)}</text>
-          <text x="${width - padX}" y="${height - padB + 16}" font-size="10" font-family="monospace" fill="#888" text-anchor="end">提示: 点击阴影带直接进入单日 5m 高清穿透</text>
+          <!-- Continuous 5m Price Curve in Log-Scale Return -->
+          <path d="${pathStr}" fill="none" stroke="#111" stroke-width="1.6"/>
+          
+          <!-- Bottom Axis Line -->
+          <line x1="${padL}" y1="${height - padB}" x2="${padL + w}" y2="${height - padB}" stroke="#bbb" stroke-width="1"/>
+          ${timeTicks}
+
+          <!-- Extreme Badges -->
+          <text x="${padL + 8}" y="${padY + 12}" font-size="10" font-family="monospace" fill="#333" font-weight="bold">
+            最高收益: ${retMax > 0 ? '+' : ''}${retMax.toFixed(2)}% ($${maxP.toFixed(2)})
+          </text>
+          <text x="${padL + 8}" y="${height - padB - 6}" font-size="10" font-family="monospace" fill="#555">
+            最低收益: ${retMin.toFixed(2)}% ($${minP.toFixed(2)})
+          </text>
+
+          <!-- Right End Marker -->
+          <circle cx="${endX.toFixed(1)}" cy="${endY.toFixed(1)}" r="3.5" fill="#000"/>
+          <rect x="${(endX + 5).toFixed(1)}" y="${(endY - 14).toFixed(1)}" width="74" height="24" fill="#000" rx="3"/>
+          <text x="${(endX + 9).toFixed(1)}" y="${(endY - 2).toFixed(1)}" font-size="10" font-family="monospace" fill="#fff" font-weight="bold">${endRetText}</text>
+          <text x="${(endX + 9).toFixed(1)}" y="${(endY + 8).toFixed(1)}" font-size="9" font-family="monospace" fill="#bbb">${endPriceText}</text>
         </svg>
       `;
     }
@@ -1011,8 +1101,12 @@
         const chartHtml = renderDayViewChart(dayBars, daySlices, activeSlice, 980, 240);
         document.getElementById('timeline-chart').innerHTML = chartHtml;
       } else {
-        document.getElementById('chart-title').textContent = `${s.ticker} 最近 30 天 5 分钟 K 线走势全景 (2,369 根 5m 线)`;
-        document.getElementById('chart-sub-hint').textContent = `提示: 阴影区标明了跨越 11:30/13:30 边界的高契合微原子形态，点击直接进入该日高清穿透`;
+        const closes = s.chart_bars.map(b => b.close);
+        const p0 = closes[0];
+        const retEnd = ((closes[closes.length - 1] / p0) - 1.0) * 100.0;
+        const retSign = retEnd > 0 ? '+' : '';
+        document.getElementById('chart-title').textContent = `${s.ticker} 最近 30 天 5 分钟连续走势 · 对数坐标收益率 (Log Return %) · 累积收益: ${retSign}${retEnd.toFixed(2)}%`;
+        document.getElementById('chart-sub-hint').textContent = `纵轴为对数百分比收益率 (以 30 天首根开盘价 P0=$${p0.toFixed(2)} 为 0.0% 基准线) · 阴影带标出跨越 11:30/13:30 边界的高契合微原子 · 点击直接穿透进入该日`;
         document.getElementById('stepper-container').style.display = 'none';
 
         const chartHtml = renderMacroViewChart(s.chart_bars, s.exemplar_cross_matches, 980, 240);
