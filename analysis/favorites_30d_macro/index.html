@@ -268,6 +268,101 @@
       font-weight: 600;
     }
 
+    /* Horizon Toggle Buttons */
+    .horizon-btn {
+      padding: 5px 9px;
+      border: none;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .horizon-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .horizon-btn.active {
+      background: #0f172a;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Statistical Drawer */
+    .stat-drawer {
+      background: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      margin-top: 14px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .stat-drawer-header {
+      padding: 10px 16px;
+      background: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+
+    .stat-drawer-header:hover {
+      background: #f1f5f9;
+    }
+
+    .stat-drawer-body {
+      padding: 16px;
+      border-top: 1px solid var(--card-border);
+      background: #fafafa;
+    }
+
+    .stat-summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .stat-summary-card {
+      background: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .stat-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .stat-table th, .stat-table td {
+      padding: 7px 10px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .stat-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .stat-table tr:hover {
+      background: #f8fafc;
+    }
+
     /* Stock Charts Grid: STRICT TWO CHARTS PER ROW */
     .stock-grid {
       display: grid;
@@ -615,6 +710,59 @@
       <span class="legend-item"><span class="legend-box" style="background:#f97316;"></span> <b>橙红/暖黄 (A-07/A-08)</b>: 双顶滞涨 / 阶梯筑底</span>
       <span class="legend-item"><span class="legend-box" style="background:#8b5cf6;"></span> <b>紫色系 (A-01/A-11)</b>: 震荡过渡 / 窄幅收敛</span>
     </div>
+
+    <!-- Micro-to-Macro Forward Statistical Drawer -->
+    <div class="stat-drawer">
+      <div class="stat-drawer-header" onclick="toggleStatDrawer()">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:15px;">📊</span>
+          <strong style="color:var(--text-main);">微观原子 ➜ 宏观表现实证大盘 (228 处微观特征触发追踪)</strong>
+          <span class="pill-badge pill-fav" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0;">
+            多空分化率高达 +51.5%
+          </span>
+        </div>
+        <span id="stat-toggle-icon" style="font-size:12px; color:var(--text-muted); font-weight:500;">▼ 展开 11 类原子形态前瞻转化率</span>
+      </div>
+      <div class="stat-drawer-body" id="stat-drawer-body" style="display:none;">
+        <div class="stat-summary-cards">
+          <div class="stat-summary-card" style="border-left: 4px solid #059669;">
+            <div style="font-size:11px; color:var(--text-muted);">🟢 多头脉冲类 (A-03, A-06, A-12)</div>
+            <div style="font-size:18px; font-weight:700; color:#059669; margin-top:2px;">77.0% <span style="font-size:12px; font-weight:normal;">3天触及+5%</span></div>
+            <div style="font-size:11px; color:#475569; margin-top:3px;">样本数: 100 次 | 平均冲高: <strong>+15.2%</strong> | 最大回撤: <strong>-4.3%</strong></div>
+          </div>
+          <div class="stat-summary-card" style="border-left: 4px solid #dc2626;">
+            <div style="font-size:11px; color:var(--text-muted);">🔴 空头破位类 (A-02, A-05)</div>
+            <div style="font-size:18px; font-weight:700; color:#dc2626; margin-top:2px;">25.5% <span style="font-size:12px; font-weight:normal;">3天触及+5%</span></div>
+            <div style="font-size:11px; color:#475569; margin-top:3px;">样本数: 110 次 | 平均冲高: <strong>+4.9%</strong> | 最大回撤: <strong>-8.8%</strong></div>
+          </div>
+          <div class="stat-summary-card" style="border-left: 4px solid #3b82f6;">
+            <div style="font-size:11px; color:var(--text-muted);">⚖️ 微观对齐宏观筛选效益</div>
+            <div style="font-size:18px; font-weight:700; color:#2563eb; margin-top:2px;">+51.5% <span style="font-size:12px; font-weight:normal;">多空分化极差</span></div>
+            <div style="font-size:11px; color:#475569; margin-top:3px;">盈亏空间比: <strong>3.54 vs 0.55</strong> (微观先导过滤价值极高)</div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="stat-table" id="stat-table">
+            <thead>
+              <tr>
+                <th>微观形态代码与名称</th>
+                <th>样本数</th>
+                <th>1天(7h) +5%率</th>
+                <th>2天(14h) +5%率</th>
+                <th>3天(21h) +5%率</th>
+                <th>3天最高冲幅</th>
+                <th>3天最大回撤</th>
+                <th>3天期末均益</th>
+                <th>宏观筛选定位</th>
+              </tr>
+            </thead>
+            <tbody id="stat-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </header>
 
   <!-- Toolbar: Filter, Sort & Scale -->
@@ -643,6 +791,13 @@
         <button id="scale-unified" onclick="setScaleMode('unified')">统一刻度对比</button>
       </div>
 
+      <div class="scale-toggle" id="horizon-toggle-group" title="设置与微观起点对齐的宏观表现延展观察窗">
+        <button class="horizon-btn active" data-horizon="h21" onclick="setHorizonMode('h21')">🎯 3天 (21h)</button>
+        <button class="horizon-btn" data-horizon="h14" onclick="setHorizonMode('h14')">⚡ 2天 (14h)</button>
+        <button class="horizon-btn" data-horizon="h7" onclick="setHorizonMode('h7')">⏱️ 1天 (7h)</button>
+        <button class="horizon-btn" data-horizon="none" onclick="setHorizonMode('none')">🚫 隐藏表现</button>
+      </div>
+
       <input type="text" class="search-input" id="search-input" placeholder="🔍 代码 / 名称快速检索..." oninput="onSearchInput(this.value)">
     </div>
   </div>
@@ -663,6 +818,7 @@
   let CURRENT_FILTER = 'all';
   let CURRENT_SORT = 'ret_desc';
   let CURRENT_SCALE = 'auto'; // 'auto' | 'unified'
+  let CURRENT_HORIZON = 'h21'; // 'h21' (3d) | 'h14' (2d) | 'h7' (1d) | 'none'
   let SEARCH_QUERY = '';
 
   async function loadData() {
@@ -722,7 +878,67 @@
     document.getElementById('cnt-us').textContent = stocks.filter(s => s.is_favorite && s.market === 'US').length;
     document.getElementById('cnt-hk').textContent = stocks.filter(s => s.is_favorite && s.market === 'HK').length;
 
+    renderStatDrawer();
     applyFiltersAndSort();
+  }
+
+  function toggleStatDrawer() {
+    const body = document.getElementById('stat-drawer-body');
+    const icon = document.getElementById('stat-toggle-icon');
+    if (!body) return;
+    const isHidden = body.style.display === 'none';
+    body.style.display = isHidden ? 'block' : 'none';
+    icon.textContent = isHidden ? '▲ 收起实证大盘' : '▼ 展开 11 类原子形态前瞻转化率';
+  }
+
+  function renderStatDrawer() {
+    const list = RAW_DATA.macro_summary || [];
+    const tbody = document.getElementById('stat-table-body');
+    if (!tbody || list.length === 0) return;
+    
+    tbody.innerHTML = list.map(item => {
+      const hitH21Color = item.h21_hit >= 70 ? '#059669' : (item.h21_hit <= 30 ? '#dc2626' : '#d97706');
+      const gainColor = item.h21_gain >= 10 ? '#059669' : '#0f172a';
+      const ddColor = item.h21_dd <= -7 ? '#dc2626' : '#64748b';
+      const retColor = item.h21_ret >= 0 ? '#059669' : '#dc2626';
+      
+      let tag = '中继过渡';
+      let tagBg = '#f1f5f9';
+      let tagColor = '#475569';
+      if (item.h21_hit >= 70) {
+        tag = '🚀 强催化做多';
+        tagBg = '#ecfdf5';
+        tagColor = '#059669';
+      } else if (item.h21_hit <= 30 && item.h21_dd <= -7) {
+        tag = '⚠️ 极高危诱多/杀跌';
+        tagBg = '#fef2f2';
+        tagColor = '#dc2626';
+      }
+      
+      return `
+        <tr>
+          <td>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${item.color};"></span>
+              <strong style="color:${item.color};">${item.atom}</strong>
+              <span style="color:#0f172a; font-weight:500;">${item.name}</span>
+            </div>
+          </td>
+          <td><b>${item.count}</b> 次</td>
+          <td><b>${item.h7_hit}%</b></td>
+          <td><b>${item.h14_hit}%</b></td>
+          <td><strong style="color:${hitH21Color}; font-size:12px;">${item.h21_hit}%</strong></td>
+          <td><span style="color:${gainColor}; font-weight:600;">+${item.h21_gain}%</span></td>
+          <td><span style="color:${ddColor};">${item.h21_dd}%</span></td>
+          <td><strong style="color:${retColor};">${item.h21_ret > 0 ? '+' : ''}${item.h21_ret}%</strong></td>
+          <td>
+            <span style="padding:2px 6px; border-radius:4px; font-size:10.5px; font-weight:600; background:${tagBg}; color:${tagColor};">
+              ${tag}
+            </span>
+          </td>
+        </tr>
+      `;
+    }).join('');
   }
 
   function setFilter(filterType, btn) {
@@ -741,6 +957,14 @@
     CURRENT_SCALE = mode;
     document.getElementById('scale-auto').classList.toggle('active', mode === 'auto');
     document.getElementById('scale-unified').classList.toggle('active', mode === 'unified');
+    renderGrid();
+  }
+
+  function setHorizonMode(horizon) {
+    CURRENT_HORIZON = horizon;
+    document.querySelectorAll('.horizon-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.horizon === horizon);
+    });
     renderGrid();
   }
 
@@ -1076,6 +1300,55 @@
       }
     });
 
+    // Macro Forward Performance Windows (Aligned with micro start, width = CURRENT_HORIZON)
+    let macroPerfBands = "";
+    let macroPerfMarkers = "";
+
+    if (CURRENT_HORIZON !== 'none') {
+      (s.micro_atoms || []).forEach(a => {
+        const perf = a.macro_perf ? a.macro_perf[CURRENT_HORIZON] : null;
+        if (!perf) return;
+        
+        const sIdx = a.macro_start_idx;
+        const eIdx = perf.end_idx;
+        if (sIdx >= bars.length || eIdx < sIdx) return;
+        
+        const bx = toX(sIdx);
+        const ex = toX(eIdx);
+        const bw = Math.max(12, ex - bx);
+        
+        const isHit5 = perf.hit_5pct;
+        const isBigDD = perf.max_dd <= -4.0 && !isHit5;
+        const zoneColor = isHit5 ? "#059669" : (isBigDD ? "#dc2626" : "#64748b");
+        const zoneOpacity = isHit5 ? 0.08 : (isBigDD ? 0.07 : 0.035);
+
+        // Forward performance shaded zone
+        macroPerfBands += `
+          <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="${zoneColor}" opacity="${zoneOpacity}" rx="2">
+            <title>宏观观察窗 (${CURRENT_HORIZON.slice(1)}h): 冲高: +${perf.max_gain}% | 回撤: ${perf.max_dd}% | 期末: ${perf.end_ret}%</title>
+          </rect>
+          <line x1="${ex.toFixed(1)}" y1="${padY + 2}" x2="${ex.toFixed(1)}" y2="${height - padB - 2}" stroke="${zoneColor}" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.65"/>
+        `;
+
+        // Peak runup point
+        const peakIdx = perf.peak_idx;
+        if (peakIdx >= 0 && peakIdx < bars.length) {
+          const px = toX(peakIdx);
+          const py = toYPrice(perf.peak_price);
+          const peakSign = perf.max_gain > 0 ? '+' : '';
+          const peakColor = isHit5 ? "#047857" : (perf.max_gain >= 3.0 ? "#0284c7" : "#64748b");
+          
+          macroPerfMarkers += `
+            <circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3" fill="${peakColor}" stroke="#ffffff" stroke-width="1.2"/>
+            <line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${px.toFixed(1)}" y2="${Math.max(padY + 4, py - 9).toFixed(1)}" stroke="${peakColor}" stroke-width="0.9" stroke-dasharray="1.5,1.5"/>
+            <text x="${px.toFixed(1)}" y="${Math.max(padY + 11, py - 8).toFixed(1)}" font-size="8" font-family="monospace" fill="${peakColor}" font-weight="${isHit5 ? 'bold' : '600'}" text-anchor="middle">
+              ${isHit5 ? '🎯' : ''}${peakSign}${perf.max_gain.toFixed(1)}%
+            </text>
+          `;
+        }
+      });
+    }
+
     // End marker
     const endX = toX(bars.length - 1);
     const endY = toYPrice(bars[bars.length - 1].close);
@@ -1092,6 +1365,9 @@
         <!-- 0% Baseline Area Gradient -->
         <path d="${areaPathStr}" fill="${isUp ? '#10b981' : '#ef4444'}" opacity="0.08" />
 
+        <!-- Macro Forward Performance Shaded Windows -->
+        ${macroPerfBands}
+
         <!-- Feature Colored Background Bands -->
         ${featureBands}
 
@@ -1103,6 +1379,9 @@
 
         <!-- Top Feature Labels (Code, Name, Similarity) -->
         ${featureLabels}
+
+        <!-- Macro Forward Performance Peak Indicators -->
+        ${macroPerfMarkers}
 
         <!-- Bottom X Axis -->
         <line x1="${padL}" y1="${height - padB}" x2="${padL + w}" y2="${height - padB}" stroke="#cbd5e1" stroke-width="1"/>
@@ -1198,6 +1477,30 @@
     if (atom) {
       const retSign2 = atom.ret > 0 ? '+' : '';
       const retColor2 = atom.ret >= 0 ? '#34d399' : '#f87171';
+
+      let macroPerfHtml = "";
+      if (CURRENT_HORIZON !== 'none' && atom.macro_perf && atom.macro_perf[CURRENT_HORIZON]) {
+        const p = atom.macro_perf[CURRENT_HORIZON];
+        const hLabel = CURRENT_HORIZON === 'h21' ? '3天(21h)' : (CURRENT_HORIZON === 'h14' ? '2天(14h)' : '1天(7h)');
+        const gainSign = p.max_gain > 0 ? '+' : '';
+        const endSign = p.end_ret > 0 ? '+' : '';
+        const targetBadge = p.hit_5pct ? '<span style="background:#059669; color:#fff; padding:1px 5px; border-radius:3px; font-size:9px; font-weight:bold;">🎯+5%达标</span>' : '';
+        macroPerfHtml = `
+          <div style="margin-top:5px; padding-top:4px; border-top:1px dashed #475569; font-size:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:#94a3b8; font-weight:600;">宏观表现窗 [${hLabel}]:</span>
+              ${targetBadge}
+            </div>
+            <div style="color:#e2e8f0; margin-top:2px;">
+              最大冲高: <b style="color:${p.hit_5pct ? '#34d399' : '#38bdf8'}">${gainSign}${p.max_gain}%</b> (第${p.peak_idx - atom.macro_start_idx}h)
+            </div>
+            <div style="color:#e2e8f0; margin-top:1px;">
+              最大回撤: <b style="color:${p.max_dd <= -3 ? '#f87171' : '#cbd5e1'}">${p.max_dd}%</b> · 窗口期末: <b style="color:${p.end_ret >= 0 ? '#34d399' : '#f87171'}">${endSign}${p.end_ret}%</b>
+            </div>
+          </div>
+        `;
+      }
+
       atomHtml = `
         <div style="margin-top:6px; padding-top:5px; border-top:1px dashed #475569;">
           <div style="display:flex; align-items:center; gap:5px;">
@@ -1211,6 +1514,7 @@
           <div style="color:#94a3b8; font-size:9.5px; margin-top:1px;">
             微观窗口: ${atom.start_time.slice(5,16)} ~ ${atom.end_time.slice(11,16)}
           </div>
+          ${macroPerfHtml}
         </div>
       `;
     }
