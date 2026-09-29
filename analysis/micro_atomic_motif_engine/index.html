@@ -362,6 +362,7 @@
     <button class="tab-btn" onclick="switchTab('tab-atoms', this)">② 2小时 5m 微观原子词表 (Codebook A-01~A-12)</button>
     <button class="tab-btn" onclick="switchTab('tab-branching', this)">③ 开盘暴涨分支解析器 (Opening Branch)</button>
     <button class="tab-btn" onclick="switchTab('tab-triplets', this)">④ 全天三原子黄金时序链排行 (Top Sequences)</button>
+    <button class="tab-btn" onclick="switchTab('tab-cross-scale', this)">⑤ 宏微双尺度交叉分布矩阵 (Macro 5D × Micro 2H)</button>
   </nav>
 
   <!-- TAB 1: 4 Stocks 30-Day Rolling Showcase -->
@@ -571,6 +572,42 @@
         <!-- Injected by JS -->
       </tbody>
     </table>
+  </main>
+
+  <!-- TAB 5: Macro x Micro Cross-Scale Distribution -->
+  <main id="tab-cross-scale" class="tab-panel">
+    <div style="background: var(--bg-alt); border: 1px solid var(--border); padding: 12px 16px; border-radius: 4px; margin-bottom: 14px; font-size: 12px; line-height: 1.6;">
+      <strong>宏微双尺度交叉分布：宏观 5 天波形 (W-01~W-12) 与 微观 2 小时原子 (A-01~A-12) 的联合概率空间</strong><br>
+      全量覆盖 QQQ 全部 104 只成分股 · 126,692 个宏微时空配对点 · 揭示宏观 3 天 5% 图形究竟由哪些微观原子支撑、哪些微观原子构成最强爆发触发器。
+    </div>
+
+    <div class="controls-bar">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
+        <span style="font-weight:700;">矩阵展示口径:</span>
+        <button class="btn-ctrl active" id="btn-matrix-freq" onclick="switchMatrixMode('freq')">微观原子频次占比 (Frequency %)</button>
+        <button class="btn-ctrl" id="btn-matrix-hit" onclick="switchMatrixMode('hit')">未来 3 天 +5% 达成率 (Hit Rate %)</button>
+      </div>
+
+      <div style="font-size:12px; font-family:var(--font-mono); color:var(--text-muted);" id="matrix-kpi-summary">
+        总样本: 126,692 对 · 宏观 35h x 微观 2h · 无条件 3d+5% 基准: 25.5%
+      </div>
+    </div>
+
+    <!-- Heatmap Table Container -->
+    <div style="overflow-x:auto; margin-bottom:18px; border:1px solid var(--border); border-radius:4px; background:#fff; padding:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; font-size:12px;">
+        <strong style="text-transform:uppercase;">12 × 12 宏微条件分布热力矩阵 (点击任意宏观行查看下方微观结构穿透)</strong>
+        <span style="color:var(--text-muted); font-size:11px;">纵轴: 宏观 5 天波形 (W-01 ~ W-12) | 横轴: 微观 2 小时原子 (A-01 ~ A-12)</span>
+      </div>
+      <table id="matrix-heatmap-table" style="font-size:11px; text-align:center; width:100%; border-collapse:collapse;">
+        <!-- Injected by JS -->
+      </table>
+    </div>
+
+    <!-- Selected Macro Profile Detail Card -->
+    <div id="macro-detail-card" style="border:1px solid var(--border); border-radius:4px; padding:16px; background:#fff;">
+      <!-- Injected by JS -->
+    </div>
   </main>
 
   <!-- Modal for Atom Drill-down -->
@@ -1232,14 +1269,226 @@
       }).join('');
     }
 
+    // Tab 5: Macro x Micro Cross-Scale Matrix
+    let CROSS_SCALE_DATA = null;
+    let CURRENT_MATRIX_MODE = "freq"; // 'freq' or 'hit'
+    let SELECTED_MACRO_CODE = "W-02";
+
+    function generateMacroSparkline(curve, width = 130, height = 28) {
+      if (!curve || curve.length === 0) return "";
+      const padX = 4, padY = 4;
+      const w = width - padX * 2, h = height - padY * 2;
+      const minV = -2.5, maxV = 2.5;
+      const coords = curve.map((v, i) => {
+        const x = padX + (i / (curve.length - 1)) * w;
+        const norm = (v - minV) / (maxV - minV);
+        const y = padY + h - Math.max(0, Math.min(1, norm)) * h;
+        return [x, y];
+      });
+      const pathStr = coords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+      return `
+        <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:inline-block; vertical-align:middle;">
+          <path d="${pathStr}" fill="none" stroke="#222" stroke-width="1.6"/>
+          <circle cx="${coords[0][0].toFixed(1)}" cy="${coords[0][1].toFixed(1)}" r="2" fill="#777"/>
+          <circle cx="${coords[coords.length - 1][0].toFixed(1)}" cy="${coords[coords.length - 1][1].toFixed(1)}" r="2.5" fill="#000"/>
+        </svg>
+      `;
+    }
+
+    function switchMatrixMode(mode) {
+      CURRENT_MATRIX_MODE = mode;
+      document.getElementById('btn-matrix-freq').classList.toggle('active', mode === 'freq');
+      document.getElementById('btn-matrix-hit').classList.toggle('active', mode === 'hit');
+      renderMatrixHeatmap();
+    }
+
+    function selectMacroRow(code) {
+      SELECTED_MACRO_CODE = code;
+      renderMatrixHeatmap();
+      renderMacroDetailCard();
+    }
+
+    function renderMatrixHeatmap() {
+      if (!CROSS_SCALE_DATA) return;
+      const { macro_profiles, micro_codes, micro_codebook } = CROSS_SCALE_DATA;
+      const table = document.getElementById('matrix-heatmap-table');
+
+      let thead = `
+        <thead>
+          <tr>
+            <th style="width:70px;">宏观代号</th>
+            <th style="width:140px;">宏观走势 (5天 35h)</th>
+            <th style="width:75px;" class="num">基准胜率</th>
+            ${micro_codes.map(a => `<th style="width:55px;">${a}</th>`).join('')}
+          </tr>
+        </thead>
+      `;
+
+      let tbody = `<tbody>`;
+      macro_profiles.forEach(p => {
+        const isSelected = p.macro_code === SELECTED_MACRO_CODE;
+        const basePct = (p.base_hit3d_rate * 100).toFixed(1);
+        const spark = generateMacroSparkline(p.curve, 130, 26);
+
+        let cells = "";
+        for (let a = 0; a < 12; a++) {
+          const count = p.row_counts[a];
+          const freqPct = p.row_freq_pcts[a];
+          const hitRate = p.row_hit_rates[a];
+          const hitPct = (hitRate * 100).toFixed(1);
+
+          let cellText = "";
+          let bgStyle = "";
+          let textStyle = "";
+
+          if (CURRENT_MATRIX_MODE === 'freq') {
+            cellText = `${freqPct.toFixed(1)}%`;
+            const alpha = Math.min(0.45, (freqPct / 22.0) * 0.45);
+            bgStyle = `background: rgba(0,0,0, ${alpha.toFixed(2)});`;
+            if (freqPct >= 14.0) textStyle = "font-weight:700; color:#000;";
+          } else {
+            cellText = `${hitPct}%`;
+            const excess = hitRate - 0.25;
+            if (excess >= 0.04) {
+              bgStyle = "background: #111; color: #fff; font-weight:700;";
+            } else if (excess >= 0.015) {
+              bgStyle = "background: #e4e4e7; color: #000; font-weight:700;";
+            } else if (excess <= -0.04) {
+              bgStyle = "background: #fafafa; color: #aaa;";
+            }
+          }
+
+          cells += `
+            <td style="padding:5px 2px; font-family:var(--font-mono); font-size:11px; cursor:pointer; ${bgStyle} ${textStyle}" title="${p.macro_code} x ${micro_codes[a]}: 样本数=${count}, 频次=${freqPct}%, 胜率=${hitPct}%">
+              ${cellText}
+            </td>
+          `;
+        }
+
+        tbody += `
+          <tr style="cursor:pointer; ${isSelected ? 'outline:2px solid #000; background:#f4f4f5;' : ''}" onclick="selectMacroRow('${p.macro_code}')">
+            <td><strong style="font-family:monospace; font-size:12px;">${p.macro_code}</strong></td>
+            <td style="padding:2px 6px;">${spark}</td>
+            <td class="num" style="font-family:monospace; font-weight:600;">${basePct}%</td>
+            ${cells}
+          </tr>
+        `;
+      });
+      tbody += `</tbody>`;
+
+      table.innerHTML = thead + tbody;
+    }
+
+    function renderMacroDetailCard() {
+      if (!CROSS_SCALE_DATA) return;
+      const { macro_profiles, micro_codes, micro_codebook } = CROSS_SCALE_DATA;
+      const p = macro_profiles.find(x => x.macro_code === SELECTED_MACRO_CODE) || macro_profiles[1];
+      const card = document.getElementById('macro-detail-card');
+
+      const sparkLg = generateMacroSparkline(p.curve, 320, 70);
+      const basePct = (p.base_hit3d_rate * 100).toFixed(1);
+
+      const allRowAtoms = micro_codes.map((code, a) => ({
+        code: code,
+        desc: micro_codebook[a].descriptor,
+        count: p.row_counts[a],
+        freqPct: p.row_freq_pcts[a],
+        hitRate: p.row_hit_rates[a],
+        excess: p.row_hit_rates[a] - p.base_hit3d_rate
+      })).sort((a, b) => b.freqPct - a.freqPct);
+
+      const barsHtml = allRowAtoms.map(a => {
+        const isTopTrigger = p.top_hit_atoms.some(t => t.atom === a.code);
+        const isWorst = p.worst_hit_atoms.some(w => w.atom === a.code);
+        const tag = isTopTrigger ? `<span style="background:#000; color:#fff; font-size:9px; padding:1px 5px; border-radius:2px; font-weight:700;">★ 最强触发器</span>` : (isWorst ? `<span style="background:#e4e4e7; color:#555; font-size:9px; padding:1px 5px; border-radius:2px;">⚠ 抑制噪音</span>` : '');
+        const barWidth = Math.min(100, Math.round(a.freqPct * 4.5));
+
+        return `
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; font-size:11px;">
+            <div style="width:200px; font-family:monospace; display:flex; align-items:center; gap:4px;">
+              <strong>${a.code}</strong>
+              <span style="color:#666; font-size:10px;">(${a.desc.slice(0, 6)})</span>
+              ${tag}
+            </div>
+            <div style="flex:1; margin:0 12px; background:#f0f0f0; border-radius:2px; height:12px; overflow:hidden;">
+              <div style="width:${barWidth}%; background:#222; height:100%; border-radius:2px;"></div>
+            </div>
+            <div style="width:140px; text-align:right; font-family:monospace;">
+              <span>占比: <strong>${a.freqPct.toFixed(1)}%</strong></span>
+              <span style="margin-left:8px; font-weight:700; color:${a.excess >= 0 ? '#000' : '#888'};">3d率: ${(a.hitRate*100).toFixed(1)}%</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      let macroDesc = "";
+      if (p.macro_code === 'W-01') macroDesc = "前半程急跌后弧形底抬升，企稳反弹动能最强 (正二次曲率 κ=+0.503)。";
+      else if (p.macro_code === 'W-02') macroDesc = "单边深蹲下探，尾盘收在谷相等待暴力反弹。最后一杀极易引发报复性大阳线。";
+      else if (p.macro_code === 'W-03') macroDesc = "深凹蓄势突破，尾盘以高斜率拔高收于切片最高点，前向爆发力极高。";
+      else if (p.macro_code === 'W-04') macroDesc = "强凸性加速主升浪，多头单边攻坚。";
+      else if (p.macro_code === 'W-11') macroDesc = "见顶后抛物线下坠衰竭，多头动能耗尽。";
+      else if (p.macro_code === 'W-12') macroDesc = "单边无抵抗阴跌破位，均线呈死叉空头排列。";
+      else macroDesc = "高低点收敛的震荡整理或波段转换结构。";
+
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--border-light); padding-bottom:8px; margin-bottom:12px;">
+          <div>
+            <strong style="font-size:15px; font-family:monospace;">宏观波形 【${p.macro_code}】 内部微观原子分布与前向爆发特征</strong>
+            <span style="font-size:12px; color:var(--text-muted); margin-left:8px;">(Rank #${p.macro_rank} · 样本量: ${p.total_count.toLocaleString()} · 宏观基准胜率: ${basePct}%)</span>
+          </div>
+          <span style="font-size:11px; color:var(--text-muted);">
+            观察: 宏观形态内部，不同微观原子的出现频率与胜率分化
+          </span>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 340px 1fr; gap:20px;">
+          <!-- Left: Macro Shape Sparkline & Key Invariants -->
+          <div style="background:var(--bg-alt); padding:14px; border-radius:4px; border:1px solid var(--border-light);">
+            <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;">宏观 5 天几何轨迹 (35 根 60m K 线)</div>
+            <div style="background:#fff; border:1px solid var(--border-light); padding:10px; border-radius:3px; text-align:center; margin-bottom:12px;">
+              ${sparkLg}
+            </div>
+
+            <div style="font-size:12px; line-height:1.6;">
+              <strong>宏观几何定性:</strong><br>
+              ${macroDesc}
+            </div>
+
+            <div style="margin-top:12px; padding-top:10px; border-top:1px dashed var(--border-light); font-size:11px; line-height:1.5;">
+              <div style="margin-bottom:6px;">
+                <strong>★ 最佳微观触发器:</strong>
+                <code>${p.top_hit_atoms[0].atom}</code> (${p.top_hit_atoms[0].desc})
+                <br>该微观原子触发时胜率达 <strong>${(p.top_hit_atoms[0].hit3d_rate*100).toFixed(1)}%</strong> (+${(p.top_hit_atoms[0].excess*100).toFixed(1)}% 超额)!
+              </div>
+              <div>
+                <strong>⚠ 最弱微观抑制:</strong>
+                <code>${p.worst_hit_atoms[0].atom}</code> (${p.worst_hit_atoms[0].desc})
+                <br>胜率压制至 <strong>${(p.worst_hit_atoms[0].hit3d_rate*100).toFixed(1)}%</strong> (${(p.worst_hit_atoms[0].excess*100).toFixed(1)}%)。
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Micro Atom Spectrum -->
+          <div>
+            <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">
+              微观原子出现频次占比 (Frequency %) 与 3天+5% 达成率
+            </div>
+            ${barsHtml}
+          </div>
+        </div>
+      `;
+    }
+
     async function init() {
       try {
-        const [resShowcase, resEngine] = await Promise.all([
+        const [resShowcase, resEngine, resCross] = await Promise.all([
           fetch('./rolling_showcase.json'),
-          fetch('./data.json')
+          fetch('./data.json'),
+          fetch('./cross_scale_matrix.json')
         ]);
         SHOWCASE_DATA = await resShowcase.json();
         ENGINE_DATA = await resEngine.json();
+        CROSS_SCALE_DATA = await resCross.json();
 
         const s = SHOWCASE_DATA.stocks[CURRENT_STOCK];
         if (s && s.exemplar_cross_matches && s.exemplar_cross_matches.length > 0) {
@@ -1254,6 +1503,10 @@
         renderAtomCards();
         initBranchSelector();
         renderTripletsTable();
+
+        // Init Tab 5
+        renderMatrixHeatmap();
+        renderMacroDetailCard();
       } catch (err) {
         console.error('Failed to load JSON data:', err);
       }
