@@ -18,3 +18,5 @@
 四条都没有同时达到 15 笔和 90%。
 
 逐行数字在 `research/after_open_3d5pct/runs/micro_entry_v1/result.json`，该目录不进 Git。
+
+同一条 2 小时滑动上，五条路线各自再迭代的结果见 [tracks/REPORT.md](tracks/REPORT.md)。
