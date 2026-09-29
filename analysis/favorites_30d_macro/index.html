@@ -746,6 +746,7 @@
             <thead>
               <tr>
                 <th>微观形态代码与名称</th>
+                <th style="min-width: 110px;">5m 函数形状 (2h/24根)</th>
                 <th>样本数</th>
                 <th>1天(7h) +5%率</th>
                 <th>2天(14h) +5%率</th>
@@ -891,6 +892,59 @@
     icon.textContent = isHidden ? '▲ 收起实证大盘' : '▼ 展开 11 类原子形态前瞻转化率';
   }
 
+  function generateAtomSparklineSvg(curve, color) {
+    if (!curve || curve.length === 0) return `<span style="color:#94a3b8; font-size:10px;">--</span>`;
+    
+    const width = 100;
+    const height = 30;
+    const padX = 5;
+    const padY = 4;
+    const w = width - padX * 2;
+    const h = height - padY * 2;
+
+    const minV = Math.min(...curve);
+    const maxV = Math.max(...curve);
+    const span = Math.max(1e-4, maxV - minV);
+
+    const pts = curve.map((v, i) => {
+      const x = padX + (i / (curve.length - 1)) * w;
+      const y = padY + h - ((v - minV) / span) * h;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    });
+
+    const firstX = padX;
+    const firstY = padY + h - ((curve[0] - minV) / span) * h;
+    const lastX = padX + w;
+    const lastY = padY + h - ((curve[curve.length - 1] - minV) / span) * h;
+    const baseY = padY + h;
+
+    const areaD = `M ${firstX.toFixed(1)},${baseY} L ${pts.join(' L ')} L ${lastX.toFixed(1)},${baseY} Z`;
+    const lineD = `M ${pts.join(' L ')}`;
+
+    // Peak dot
+    const peakIdx = curve.indexOf(maxV);
+    const peakX = (padX + (peakIdx / (curve.length - 1)) * w).toFixed(1);
+    const peakY = (padY + h - ((maxV - minV) / span) * h).toFixed(1);
+
+    // Subtle 0-line if 0 in range
+    let zeroLine = "";
+    if (minV <= 0 && maxV >= 0) {
+      const y0 = (padY + h - ((0 - minV) / span) * h).toFixed(1);
+      zeroLine = `<line x1="${padX}" y1="${y0}" x2="${padX + w}" y2="${y0}" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.4"/>`;
+    }
+
+    return `
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:4px;" title="5m标准函数波形: 24根5m K线归一化曲线&#10;起点Z: ${curve[0]} | 峰值Z: ${maxV} | 终点Z: ${curve[curve.length-1]}">
+        ${zeroLine}
+        <path d="${areaD}" fill="${color}" opacity="0.14"/>
+        <path d="${lineD}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="${firstX.toFixed(1)}" cy="${firstY.toFixed(1)}" r="2" fill="${color}"/>
+        <circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="2.4" fill="${color}" stroke="#fff" stroke-width="0.8"/>
+        <circle cx="${peakX}" cy="${peakY}" r="2.2" fill="#f59e0b" stroke="#fff" stroke-width="0.8"/>
+      </svg>
+    `;
+  }
+
   function renderStatDrawer() {
     const list = RAW_DATA.macro_summary || [];
     const tbody = document.getElementById('stat-table-body');
@@ -915,6 +969,8 @@
         tagColor = '#dc2626';
       }
       
+      const sparkSvg = generateAtomSparklineSvg(item.curve, item.color);
+      
       return `
         <tr>
           <td>
@@ -922,6 +978,12 @@
               <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${item.color};"></span>
               <strong style="color:${item.color};">${item.atom}</strong>
               <span style="color:#0f172a; font-weight:500;">${item.name}</span>
+            </div>
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">${item.descriptor || ''}</div>
+          </td>
+          <td>
+            <div style="display:flex; align-items:center;" title="微观2小时标准函数波形（5m K线 × 24根归一化均值曲线）">
+              ${sparkSvg}
             </div>
           </td>
           <td><b>${item.count}</b> 次</td>

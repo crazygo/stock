@@ -303,6 +303,9 @@ def main():
                     })
 
     summary = []
+    curve_map = {c['code']: [round(float(v), 2) for v in c['curve']] for c in codebook}
+    desc_map = {c['code']: c.get('descriptor', '') for c in codebook}
+
     if len(results) > 0:
         df_res = pd.DataFrame(results)
         for (atom, name, color), g in df_res.groupby(['atom', 'name', 'color']):
@@ -319,6 +322,8 @@ def main():
                 'name': name,
                 'color': color,
                 'count': cnt,
+                'descriptor': desc_map.get(atom, ''),
+                'curve': curve_map.get(atom, []),
                 'h7_hit': round(h7_hit, 1),
                 'h14_hit': round(h14_hit, 1),
                 'h21_hit': round(h21_hit, 1),
