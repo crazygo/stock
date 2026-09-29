@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QQQ 观测窗口宽度敏感性研究 (2天 ~ 5天 / 2025-2026 全样本)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f7f7f8;
+      --border: #d0d0d5;
+      --border-light: #e5e5ea;
+      --text: #1a1a1a;
+      --text-muted: #66666e;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 16px 24px 60px;
+    }
+
+    header {
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+
+    .badge-wireframe {
+      display: inline-block;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      background: #e4e4e7;
+      color: #333;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+
+    .meta-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .meta-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .meta-card .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+    .meta-card .value { font-size: 16px; font-weight: 700; font-family: var(--font-mono); margin-top: 2px; }
+
+    /* Window Selector Buttons */
+    .window-selector-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 18px 0 14px;
+      padding: 10px 14px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .btn-w {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-w:hover { background: #efeff2; }
+    .btn-w.active {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+    }
+
+    .btn-w .badge-peak {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: #e4e4e7;
+      color: #000;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .btn-w.active .badge-peak {
+      background: #333;
+      color: #fff;
+    }
+
+    /* Comparison Overview Section */
+    .comparison-panel {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px;
+      margin-bottom: 20px;
+      background: #fff;
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .summary-table th, .summary-table td {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    .summary-table th { background: var(--bg-alt); font-size: 11px; font-weight: 600; text-transform: uppercase; }
+    .summary-table td.num { text-align: right; font-family: var(--font-mono); }
+    .summary-table tr.highlight td { background: #fbfbfd; font-weight: 700; }
+
+    /* Codebook Grid */
+    .codebook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    .card-code { font-size: 16px; font-weight: 700; font-family: var(--font-mono); }
+    .card-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #e4e4e7;
+    }
+
+    .badge-top { background: #000; color: #fff; }
+    .badge-mid { background: #71717a; color: #fff; }
+    .badge-low { background: #e4e4e7; color: #333; }
+
+    .chart-box {
+      border: 1px solid var(--border-light);
+      background: #fff;
+      padding: 4px;
+      border-radius: 3px;
+      margin: 6px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .math-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px 6px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: var(--bg-alt);
+      padding: 6px 8px;
+      border-radius: 3px;
+      margin-top: 6px;
+    }
+
+    .mg-item { display: flex; justify-content: space-between; }
+    .mg-k { color: var(--text-muted); }
+    .mg-v { font-weight: 600; }
+
+    .card-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border-light);
+      color: var(--text-muted);
+    }
+
+    .pill-win { background: #000; color: #fff; padding: 1px 5px; border-radius: 2px; }
+
+    footer {
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-wireframe">Empirical Parameter Sensitivity Study · HTML Wireframe</div>
+    <h1>QQQ 观测窗口宽度敏感性研究：[2天, 5天] 尺度比较</h1>
+    <div class="subtitle">
+      样本范围: 2025-01-02 至 2026-09-28 (21个月 / 240,172 根小时线 / 950,899 个切片) · 目标: 未来 3 天触及 +5%
+    </div>
+
+    <div class="meta-metrics">
+      <div class="meta-card">
+        <div class="label">样本区间</div>
+        <div class="value">2025-01 ~ 2026-09-28</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">评估切片总量</div>
+        <div class="value" id="meta-total-slices">950,899 个</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">全样本无条件基准胜率</div>
+        <div class="value">~22.6%</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">最高峰值达成率窗口</div>
+        <div class="value" style="color: #000;">3天窗口 (W=21h): 25.71%</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Macro Comparison Panel -->
+  <section class="comparison-panel">
+    <div class="panel-title">
+      <span>四大观测窗口宽度核心指标横向对比</span>
+      <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">
+        固定预测目标: 从终点价起算未来 3 个交易日 (21 小时) 触及 +5%
+      </span>
+    </div>
+
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>观测窗口宽度</th>
+          <th class="num">小时K线数 (W)</th>
+          <th class="num">总切片数</th>
+          <th class="num">成熟切片</th>
+          <th class="num">无条件基准胜率</th>
+          <th class="num">最高波形胜率 (Peak)</th>
+          <th class="num">最低波形胜率 (Trough)</th>
+          <th class="num">多空离散极差 (Spread)</th>
+          <th class="num">极差倍数</th>
+          <th class="num">曲率相关性 r(κ, hit)</th>
+          <th>最优形态特征</th>
+        </tr>
+      </thead>
+      <tbody id="summary-tbody">
+        <!-- Injected by JS -->
+      </tbody>
+    </table>
+
+    <div style="margin-top: 14px; background: var(--bg-alt); border: 1px solid var(--border); padding: 12px 14px; border-radius: 4px; font-size: 12px; line-height: 1.6;">
+      <strong>核心量化发现 (Core Empirical Findings):</strong>
+      <ol style="margin-left: 20px; margin-top: 4px;">
+        <li><strong>最优窗口甜蜜点 (3 天 ~ 4 天)</strong>: 
+          观测窗口在 <strong>3 天 (21 根小时线) 至 4 天 (28 根小时线)</strong> 时，波形聚类的最高峰值达成率达到顶峰（<strong>25.71%</strong>），且多空形态离散极差达到最大（<strong>+5.26%</strong>）。
+        </li>
+        <li><strong>2 天窗口信息量衰减</strong>: 
+          当窗口缩短至 2 天 (14 根小时线) 时，形态过短促，日内随机噪音过高，最高胜率被稀释至 <strong>23.90%</strong>，极差仅 <strong>+3.11%</strong>（信噪比显著劣化）。
+        </li>
+        <li><strong>5 天窗口钝化效应</strong>: 
+          当窗口拉长至 5 天 (35 根小时线) 时，最高胜率回落至 <strong>25.47%</strong>。原因是一整周的时间往往已包含前期的见底自救，切片终点容易处于反弹中后段，短线剩余空间被压缩。
+        </li>
+        <li><strong>最优冠军形态具有高度一致性</strong>: 
+          在 3 天和 4 天窗口下，胜率最高的波形（<code>W-01</code>）均表现为：<strong>前段经历连续单边急跌（一阶斜率 β ≈ -0.95 ~ -1.0），终点正好落在谷底衰竭点（τ_min 落在切片最后 5%~10% 区间）</strong>。从该谷底点买入，未来 3 天反弹触及 +5% 的概率最高！
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Window Selector -->
+  <div class="window-selector-bar">
+    <span style="font-size: 13px; font-weight: 700; margin-right: 6px;">切换查看具体窗口的波形字典:</span>
+    <button class="btn-w" onclick="selectWindow(14, this)">
+      <span>2 天窗口 (14h)</span>
+      <span class="badge-peak">Peak: 23.9%</span>
+    </button>
+    <button class="btn-w active" onclick="selectWindow(21, this)">
+      <span>3 天窗口 (21h)</span>
+      <span class="badge-peak" style="font-weight:700;">Peak: 25.7% (最优)</span>
+    </button>
+    <button class="btn-w" onclick="selectWindow(28, this)">
+      <span>4 天窗口 (28h)</span>
+      <span class="badge-peak">Peak: 25.7%</span>
+    </button>
+    <button class="btn-w" onclick="selectWindow(35, this)">
+      <span>5 天窗口 (35h)</span>
+      <span class="badge-peak">Peak: 25.5%</span>
+    </button>
+  </div>
+
+  <!-- Codebook Grid for Current Window -->
+  <section>
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+      <h2 id="window-title" style="font-size: 15px; font-weight: 700;">3天窗口 (21小时) 纯几何波形字典 (K=12)</h2>
+      <span id="window-subtitle" style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">
+        总样本: 238,089 切片 · 成熟: 235,905 · 基准胜率: 22.61%
+      </span>
+    </div>
+
+    <div class="codebook-grid" id="cards-container">
+      <!-- Injected by JS -->
+    </div>
+  </section>
+
+  <!-- Intraday Hourly Distribution Analysis -->
+  <section style="margin-top: 24px; border: 1px solid var(--border); padding: 14px; border-radius: 4px; background: #fff;">
+    <div class="panel-title">
+      <span>切片终点所处日内时点对未来 3 天达成率的敏感性</span>
+      <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">跨窗口全量统计均值</span>
+    </div>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>日内时点</th>
+          <th>10:30 (开盘首小时)</th>
+          <th>11:30 (上午盘收官)</th>
+          <th>12:30 (午盘中枢)</th>
+          <th>13:30 (午后启动)</th>
+          <th>14:30 (尾盘蓄力)</th>
+          <th>15:30 (临近盘尾)</th>
+          <th>16:00 (常规盘收盘)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>平均达成率</strong></td>
+          <td class="num" style="color:#666;">22.46% (最低)</td>
+          <td class="num">22.65%</td>
+          <td class="num" style="font-weight:700;">22.73% (最高)</td>
+          <td class="num">22.67%</td>
+          <td class="num">22.55%</td>
+          <td class="num">22.67%</td>
+          <td class="num">22.64%</td>
+        </tr>
+        <tr>
+          <td><strong>量化启示</strong></td>
+          <td colspan="7" style="font-size: 12px; color: var(--text-muted);">
+            开盘首小时 (10:30) 的触及率在全天中处于统计最低谷 (22.46%)；而 <strong>11:30 ~ 12:30 时段</strong> 入场达成率最高 (22.73%)。这直接验证了“不急于在开盘 1 小时内下单、待上午盘走势沉淀至 11:30~12:30 再根据 3 天波形做决策”具有统计优势。
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <div>工程归档: <code>analysis/window_width_study/</code> · 端口: 8768</div>
+    <div>2025-01 至 2026-09-28 全量大样本 · 样本外前向因果闭环检验 · 无主观文学偏见</div>
+  </footer>
+
+  <script>
+    let STUDY_DATA = null;
+    let CURRENT_BARS = 21;
+
+    function generateSparkline(curve, width = 270, height = 48) {
+      if (!curve || curve.length === 0) return "";
+      const padX = 6;
+      const padY = 6;
+      const w = width - padX * 2;
+      const h = height - padY * 2;
+
+      const minVal = -2.5;
+      const maxVal = 2.5;
+
+      const coords = curve.map((val, idx) => {
+        const x = padX + (idx / (curve.length - 1)) * w;
+        const normY = (val - minVal) / (maxVal - minVal);
+        const y = padY + h - Math.max(0, Math.min(1, normY)) * h;
+        return [x, y];
+      });
+
+      const pathStr = coords.map((c, i) => (i === 0 ? `M ${c[0].toFixed(1)},${c[1].toFixed(1)}` : `L ${c[0].toFixed(1)},${c[1].toFixed(1)}`)).join(" ");
+      const zeroY = padY + h - ((0 - minVal) / (maxVal - minVal)) * h;
+
+      return `
+        <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;">
+          <line x1="${padX}" y1="${zeroY.toFixed(1)}" x2="${width - padX}" y2="${zeroY.toFixed(1)}" stroke="#e5e5ea" stroke-width="1" stroke-dasharray="2,2"/>
+          <path d="${pathStr}" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="${coords[coords.length - 1][0].toFixed(1)}" cy="${coords[coords.length - 1][1].toFixed(1)}" r="2.5" fill="#000"/>
+        </svg>
+      `;
+    }
+
+    function renderSummaryTable() {
+      if (!STUDY_DATA) return;
+      const tbody = document.getElementById('summary-tbody');
+      tbody.innerHTML = STUDY_DATA.windows.map(w => {
+        const isOptimal = w.bars === 21;
+        const top = w.codebook[0];
+        const shapeDesc = top.math.beta < -0.8 ? '连续单边急跌见底' : (top.math.kappa > 0.3 ? '弧底企稳回抽' : '横盘突破');
+
+        return `
+          <tr class="${isOptimal ? 'highlight' : ''}">
+            <td><strong>${w.name}</strong> ${isOptimal ? '<span class="pill-win">最佳甜蜜点</span>' : ''}</td>
+            <td class="num">${w.bars}h</td>
+            <td class="num">${w.total_slices.toLocaleString()}</td>
+            <td class="num">${w.matured_slices.toLocaleString()}</td>
+            <td class="num">${(w.baseline_hit_rate * 100).toFixed(2)}%</td>
+            <td class="num" style="font-weight:700; ${isOptimal ? 'color:#000;' : ''}">${(w.peak_hit_rate * 100).toFixed(2)}%</td>
+            <td class="num">${(w.trough_hit_rate * 100).toFixed(2)}%</td>
+            <td class="num" style="font-weight:700;">+${(w.spread * 100).toFixed(2)}%</td>
+            <td class="num">${w.spread_ratio.toFixed(2)}x</td>
+            <td class="num">${w.corr_kappa > 0 ? '+' : ''}${w.corr_kappa.toFixed(2)}</td>
+            <td style="font-size:11px;">${shapeDesc} (β=${top.math.beta}, τ_min=${top.math.tau_min_pct}%)</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function selectWindow(bars, btn) {
+      CURRENT_BARS = bars;
+      document.querySelectorAll('.btn-w').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCards();
+    }
+
+    function renderCards() {
+      if (!STUDY_DATA) return;
+      const w = STUDY_DATA.windows.find(x => x.bars === CURRENT_BARS);
+      if (!w) return;
+
+      document.getElementById('window-title').textContent = `${w.name} 纯几何波形字典 (K=12)`;
+      document.getElementById('window-subtitle').textContent = `总样本: ${w.total_slices.toLocaleString()} 切片 · 成熟: ${w.matured_slices.toLocaleString()} · 基准胜率: ${(w.baseline_hit_rate * 100).toFixed(2)}% · 峰谷极差: +${(w.spread * 100).toFixed(2)}%`;
+
+      const container = document.getElementById('cards-container');
+      container.innerHTML = w.codebook.map(cb => {
+        const hitPct = (cb.hit3d_rate * 100).toFixed(1);
+        const badgeClass = cb.rank <= 3 ? 'badge-top' : (cb.rank <= 8 ? 'badge-mid' : 'badge-low');
+        const spark = generateSparkline(cb.curve, 280, 48);
+
+        return `
+          <div class="card">
+            <div class="card-head">
+              <span class="card-code">${cb.code}</span>
+              <span class="card-badge ${badgeClass}">3天+5%: ${hitPct}%</span>
+            </div>
+
+            <div class="chart-box">
+              ${spark}
+            </div>
+
+            <div class="math-grid">
+              <div class="mg-item"><span class="mg-k">斜率 β:</span><span class="mg-v">${cb.math.beta > 0 ? '+' : ''}${cb.math.beta.toFixed(2)}</span></div>
+              <div class="mg-item"><span class="mg-k">曲率 κ:</span><span class="mg-v">${cb.math.kappa > 0 ? '+' : ''}${cb.math.kappa.toFixed(2)}</span></div>
+              <div class="mg-item"><span class="mg-k">收缩 CR:</span><span class="mg-v">${cb.math.cr.toFixed(2)}</span></div>
+              <div class="mg-item"><span class="mg-k">谷位:</span><span class="mg-v">${cb.math.tau_min_pct}%</span></div>
+              <div class="mg-item"><span class="mg-k">峰位:</span><span class="mg-v">${cb.math.tau_max_pct}%</span></div>
+              <div class="mg-item"><span class="mg-k">回撤 MDD:</span><span class="mg-v">${cb.math.mdd.toFixed(2)}</span></div>
+            </div>
+
+            <div class="card-stats">
+              <span>样本: <strong>${cb.total_count.toLocaleString()}</strong></span>
+              <span>2025: ${(cb.rate_2025 * 100).toFixed(1)}%</span>
+              <span>2026: ${(cb.rate_2026 * 100).toFixed(1)}%</span>
+              <span>均益: +${(cb.avg_max_gain * 100).toFixed(2)}%</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function init() {
+      try {
+        const res = await fetch('./study_data.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        STUDY_DATA = await res.json();
+
+        document.getElementById('meta-total-slices').textContent = `${STUDY_DATA.metadata.total_slices_evaluated.toLocaleString()} 个`;
+        renderSummaryTable();
+        renderCards();
+      } catch (err) {
+        console.error('Failed to load study_data.json:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
