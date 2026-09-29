@@ -144,6 +144,8 @@ def extract_micro_atoms_for_stock(df_5m, macro_bars, codebook, centroids, stock_
                 "date": sub_t[0][:10],
                 "start_time": sub_t[0],
                 "end_time": sub_t[-1],
+                "start_price": round(float(p_base), 2),
+                "end_price": round(float(sub_c[-1]), 2),
                 "atom": atom_code,
                 "name": info["name"],
                 "type": info["type"],
@@ -174,6 +176,40 @@ def extract_micro_atoms_for_stock(df_5m, macro_bars, codebook, centroids, stock_
 
         m["macro_start_idx"] = s_macro
         m["macro_end_idx"] = e_macro
+
+        # Compute macro forward performance strictly anchored at the micro interval's start price!
+        p_base_micro = float(m["start_price"])
+        perf = {}
+        for h_bars, key in [(7, 'h7'), (14, 'h14'), (21, 'h21')]:
+            end_fwd_idx = min(len(macro_bars) - 1, s_macro + h_bars)
+            fwd_bars = macro_bars[s_macro:end_fwd_idx + 1]
+            if len(fwd_bars) > 1:
+                highs = [(b.get('high', b['close']), idx + s_macro) for idx, b in enumerate(fwd_bars)]
+                lows = [(b.get('low', b['close']), idx + s_macro) for idx, b in enumerate(fwd_bars)]
+                max_high, peak_idx = max(highs, key=lambda x: x[0])
+                min_low, trough_idx = min(lows, key=lambda x: x[0])
+                end_close = fwd_bars[-1]['close']
+                
+                # Base is STRICTLY micro start price p_base_micro!
+                gain_pct = round((max_high / p_base_micro - 1.0) * 100.0, 2)
+                dd_pct = round((min_low / p_base_micro - 1.0) * 100.0, 2)
+                end_ret_pct = round((end_close / p_base_micro - 1.0) * 100.0, 2)
+                
+                perf[key] = {
+                    'base_price': round(float(p_base_micro), 2),
+                    'bars_count': len(fwd_bars),
+                    'end_idx': end_fwd_idx,
+                    'max_gain': gain_pct,
+                    'max_dd': dd_pct,
+                    'end_ret': end_ret_pct,
+                    'hit_5pct': gain_pct >= 5.0,
+                    'hit_3pct': gain_pct >= 3.0,
+                    'peak_idx': peak_idx,
+                    'peak_price': round(float(max_high), 2),
+                    'trough_idx': trough_idx,
+                    'trough_price': round(float(min_low), 2)
+                }
+        m['macro_perf'] = perf
         selected.append(m)
         if len(selected) >= 5:
             break
@@ -248,10 +284,54 @@ def main():
     if quote_ctx:
         quote_ctx.close()
 
-    # Save enriched payload
+    # Compute empirical summary across all micro atoms
+    results = []
+    for s in stocks:
+        for a in s.get('micro_atoms', []):
+            for h, h_name in [(7, 'h7'), (14, 'h14'), (21, 'h21')]:
+                p = a.get('macro_perf', {}).get(h_name)
+                if p:
+                    results.append({
+                        'atom': a['atom'],
+                        'name': a['name'],
+                        'color': a['color'],
+                        'horizon': h_name,
+                        'hit_5pct': 1 if p['hit_5pct'] else 0,
+                        'max_gain': p['max_gain'],
+                        'max_dd': p['max_dd'],
+                        'end_ret': p['end_ret']
+                    })
+
+    summary = []
+    if len(results) > 0:
+        df_res = pd.DataFrame(results)
+        for (atom, name, color), g in df_res.groupby(['atom', 'name', 'color']):
+            cnt = len(g) // 3
+            h7_hit = g[g['horizon'] == 'h7']['hit_5pct'].mean() * 100
+            h14_hit = g[g['horizon'] == 'h14']['hit_5pct'].mean() * 100
+            h21_hit = g[g['horizon'] == 'h21']['hit_5pct'].mean() * 100
+            h21_gain = g[g['horizon'] == 'h21']['max_gain'].mean()
+            h21_dd = g[g['horizon'] == 'h21']['max_dd'].mean()
+            h21_ret = g[g['horizon'] == 'h21']['end_ret'].mean()
+            
+            summary.append({
+                'atom': atom,
+                'name': name,
+                'color': color,
+                'count': cnt,
+                'h7_hit': round(h7_hit, 1),
+                'h14_hit': round(h14_hit, 1),
+                'h21_hit': round(h21_hit, 1),
+                'h21_gain': round(h21_gain, 1),
+                'h21_dd': round(h21_dd, 1),
+                'h21_ret': round(h21_ret, 1)
+            })
+        summary.sort(key=lambda x: x['h21_hit'], reverse=True)
+
+    fav_payload["macro_summary"] = summary
     fav_payload["micro_atoms_total"] = total_atoms_extracted
     with open(FAV_DATA_JSON, "w", encoding="utf-8") as f:
-        json.dump(fav_payload, f, ensure_ascii=False, indent=2)
+        json.dump(fav_payload, f, ensure_ascii=False)
 
     print("\n" + "=" * 70)
     print(f"SUCCESS: Enriched {len(stocks)} stocks with {total_atoms_extracted} 2-hour micro atoms ({time.time() - t0:.1f}s)")

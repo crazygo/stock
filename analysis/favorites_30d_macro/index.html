@@ -1051,18 +1051,21 @@
     if (atoms.length > 0) {
       microAtomsHtml = `
         <div class="card-features-row">
-          <span style="font-size:11px; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:3px;">
+          <span style="font-size:11px; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:3px;" title="微观原子收益率严格以该2小时微观窗口起点价为基准计算（绝非全图P0）">
             <span>🔬 2h微观原子:</span>
+            <span style="font-size:9.5px; font-weight:normal; color:#64748b; background:#f1f5f9; padding:1px 5px; border-radius:3px;">以各微观起点为基准</span>
           </span>
           ${atoms.map(a => {
             const retSign = a.ret > 0 ? '+' : '';
             const retColor = a.ret >= 0 ? '#059669' : '#dc2626';
+            const spStr = a.start_price ? `$${a.start_price}` : '起点价';
+            const epStr = a.end_price ? `$${a.end_price}` : '终点价';
             return `
-              <span class="feat-pill" style="border-left: 3.5px solid ${a.color}; background: ${a.color}15;" title="${a.start_time} ~ ${a.end_time} | 2h收益: ${retSign}${a.ret}% | 2h波幅: ${a.amplitude}%">
+              <span class="feat-pill" style="border-left: 3.5px solid ${a.color}; background: ${a.color}15;" title="微观2h窗口: ${a.start_time} ~ ${a.end_time}&#10;微观起点价: ${spStr} ➜ 终点价: ${epStr}&#10;2h收益率: ${retSign}${a.ret}% (以微观起点 ${spStr} 为基准，绝非全图P0)&#10;2h波幅: ${a.amplitude}%">
                 <span class="feat-dot" style="background:${a.color}"></span>
                 <strong style="color:${a.color}">${a.atom} ${a.name}</strong>
                 <span class="feat-sim">${a.sim}%</span>
-                <span style="font-size:10px; font-weight:700; color:${retColor};">${retSign}${a.ret}%</span>
+                <span style="font-size:10px; font-weight:700; color:${retColor};" title="2h区间收益 (以微观起点 ${spStr} 为基准)">2h:${retSign}${a.ret}%</span>
                 <span class="feat-dates">${a.start_time.slice(5,10)} ${a.start_time.slice(11,16)}</span>
               </span>
             `;
@@ -1485,6 +1488,7 @@
         const gainSign = p.max_gain > 0 ? '+' : '';
         const endSign = p.end_ret > 0 ? '+' : '';
         const targetBadge = p.hit_5pct ? '<span style="background:#059669; color:#fff; padding:1px 5px; border-radius:3px; font-size:9px; font-weight:bold;">🎯+5%达标</span>' : '';
+        const baseStr = atom.start_price ? `$${atom.start_price}` : '微观起点';
         macroPerfHtml = `
           <div style="margin-top:5px; padding-top:4px; border-top:1px dashed #475569; font-size:10px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1492,7 +1496,7 @@
               ${targetBadge}
             </div>
             <div style="color:#e2e8f0; margin-top:2px;">
-              最大冲高: <b style="color:${p.hit_5pct ? '#34d399' : '#38bdf8'}">${gainSign}${p.max_gain}%</b> (第${p.peak_idx - atom.macro_start_idx}h)
+              最大冲高: <b style="color:${p.hit_5pct ? '#34d399' : '#38bdf8'}">${gainSign}${p.max_gain}%</b> (相对微观起点 ${baseStr}，第${p.peak_idx - atom.macro_start_idx}h)
             </div>
             <div style="color:#e2e8f0; margin-top:1px;">
               最大回撤: <b style="color:${p.max_dd <= -3 ? '#f87171' : '#cbd5e1'}">${p.max_dd}%</b> · 窗口期末: <b style="color:${p.end_ret >= 0 ? '#34d399' : '#f87171'}">${endSign}${p.end_ret}%</b>
@@ -1501,6 +1505,7 @@
         `;
       }
 
+      const spDisplay = atom.start_price ? ` (基准: $${atom.start_price})` : '';
       atomHtml = `
         <div style="margin-top:6px; padding-top:5px; border-top:1px dashed #475569;">
           <div style="display:flex; align-items:center; gap:5px;">
@@ -1509,7 +1514,7 @@
             <span style="color:#38bdf8; font-size:11px; font-weight:bold;">${atom.sim}% 相似度</span>
           </div>
           <div style="color:#e2e8f0; font-size:10.5px; margin-top:2px;">
-            2h微观收益: <b style="color:${retColor2};">${retSign2}${atom.ret}%</b> · 2h波幅: <b style="color:#fbbf24;">${atom.amplitude}%</b>
+            2h微观收益: <b style="color:${retColor2};">${retSign2}${atom.ret}%</b>${spDisplay} · 2h波幅: <b style="color:#fbbf24;">${atom.amplitude}%</b>
           </div>
           <div style="color:#94a3b8; font-size:9.5px; margin-top:1px;">
             微观窗口: ${atom.start_time.slice(5,16)} ~ ${atom.end_time.slice(11,16)}
