@@ -106,40 +106,62 @@ def score_week(panel: pd.DataFrame, dates: list[str], week: list[str], role: str
     return record
 
 
-def run() -> dict:
-    panel, coverage = build_panel()
+def run(history: str = "short") -> dict:
+    panel, coverage = build_panel(history)
     dates = sorted(panel["session_date"].unique())
+    print(json.dumps({"stage": "panel", "history": history, "rows": coverage["rows"], "first": coverage["first"], "last": coverage["last"], "weeks_ahead": len(dates)}), flush=True)
     dev = [day for day in dates if day <= "2026-09-18"]
     weeks = [dev[i:i + 5] for i in range(0, len(dev), 5)]
     locked = [day for day in LOCKED if day in set(dates)]
     missing = [day for day in LOCKED if day not in set(dates)]
-    results = [score_week(panel, dates, week, "development") for week in weeks if week]
+    results = []
+    for index, week in enumerate(weeks):
+        if week and index % 20 == 0:
+            print(json.dumps({"stage": "week", "index": index, "start": week[0]}), flush=True)
+        if week:
+            results.append(score_week(panel, dates, week, "development"))
     if locked:
         results.append(score_week(panel, dates, locked, "locked"))
+    replay = []
+    previous_path = OUT / "result.json"
+    if history == "2024" and previous_path.exists():
+        previous = json.loads(previous_path.read_text())
+        for item in previous["weeks"]:
+            if item.get("role") == "development" and item.get("dates"):
+                replay.append(score_week(panel, dates, item["dates"], "replay"))
     judged = [item for item in results if item["role"] == "development" and item["judgement"] != "undetermined"]
     payload = {
+        "history": history,
         "coverage": coverage,
         "locked_dates_requested": LOCKED,
         "locked_dates_scored": locked,
         "locked_dates_immature": missing,
         "weeks": results,
+        "replay_of_short_weeks": replay,
         "development_judged_weeks": len(judged),
         "development_positive_weeks": sum(item["judgement"] == "positive" for item in judged),
         "locked": next((item for item in results if item["role"] == "locked"), None),
     }
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "result.json").write_text(json.dumps(payload, indent=2, default=str))
+    destination = OUT if history == "short" else OUT.parent / "pugh_ge5_2024"
+    destination.mkdir(parents=True, exist_ok=True)
+    (destination / "result.json").write_text(json.dumps(payload, indent=2, default=str))
     return payload
 
 
 if __name__ == "__main__":
-    done = run()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--history", choices=["short", "2024"], default="short")
+    done = run(parser.parse_args().history)
     locked = done["locked"]
     print(json.dumps({
+        "history": done["history"],
         "full_126_fraction": done["coverage"]["full_126_fraction"],
         "rows": done["coverage"]["rows"],
+        "first": done["coverage"]["first"],
+        "last": done["coverage"]["last"],
         "development_positive_weeks": done["development_positive_weeks"],
         "development_judged_weeks": done["development_judged_weeks"],
-        "locked": None if locked is None else {k: locked[k] for k in ("dates", "buys", "precision", "mean_excess", "judgement", "threshold")},
+        "locked": None if locked is None else {k: locked[k] for k in ("dates", "buys", "precision", "mean_excess", "judgement", "threshold", "fit_rows", "threshold_rule")},
         "immature": done["locked_dates_immature"],
     }, default=str))

@@ -79,8 +79,46 @@ def _daily(symbol: str) -> pd.DataFrame:
     return frame.sort_values("session_date").drop_duplicates("session_date").reset_index(drop=True)
 
 
+def history_floor(required_from: str | None, year_floor: str = "2024-01-01") -> str:
+    if required_from and required_from > year_floor:
+        return required_from
+    return year_floor
+
+
+def valid_ohlcv(frame: pd.DataFrame) -> pd.Series:
+    prices = frame[["open", "high", "low", "close"]]
+    return (
+        prices.notna().all(axis=1)
+        & frame["volume"].notna()
+        & frame["open"].gt(0)
+        & frame["high"].gt(0)
+        & frame["low"].gt(0)
+        & frame["close"].gt(0)
+        & frame["volume"].ge(0)
+        & frame["high"].ge(prices.max(axis=1))
+        & frame["low"].le(prices.min(axis=1))
+    )
+
+
+def complete_daily(bars: pd.DataFrame, expected: dict[str, int]) -> pd.DataFrame:
+    columns = ["session_date", "open", "high", "low", "close", "volume", "is_complete"]
+    if bars.empty:
+        return pd.DataFrame(columns=columns)
+    grouped = bars.groupby("session_date", sort=True).agg(
+        open=("open", "first"), high=("high", "max"), low=("low", "min"),
+        close=("close", "last"), volume=("volume", "sum"), n=("start", "nunique"),
+    ).reset_index()
+    grouped["expected"] = grouped["session_date"].map(expected)
+    keep = grouped["n"].eq(grouped["expected"])
+    out = grouped.loc[keep, ["session_date", "open", "high", "low", "close", "volume"]].copy()
+    out["is_complete"] = True
+    return out.reset_index(drop=True)
+
+
 def _read_5m(path: Path) -> pd.DataFrame:
-    return pd.read_parquet(path, columns=["start_at_et", "end_at_et", "session_type", "session_date", "open", "high", "close", "volume"])
+    return pd.read_parquet(
+        path, columns=["start_at_et", "end_at_et", "session_type", "session_date", "open", "high", "low", "close", "volume"]
+    )
 
 
 def _regular(symbol: str) -> pd.DataFrame:
@@ -88,13 +126,46 @@ def _regular(symbol: str) -> pd.DataFrame:
     extra = ROOT / "market_data/us_5m" / symbol / "2026.parquet"
     if extra.exists():
         frames.append(_read_5m(extra))
-    frame = pd.concat(frames, ignore_index=True)
+    return _as_regular(pd.concat(frames, ignore_index=True))
+
+
+def _listing_floors() -> dict[str, str]:
+    import json
+    path = HISTORY / "security_history.json"
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text())
+    return {symbol: row["required_from"] for symbol, row in payload.items() if row.get("required_from")}
+
+
+def _expected_regular_bars() -> dict[str, int]:
+    frame = load_calendar()
+    return {str(row.session_date): int(row.duration_minutes) // 5 for row in frame.itertuples(index=False)}
+
+
+def _as_regular(frame: pd.DataFrame, floor: str | None = None) -> pd.DataFrame:
     frame = frame.loc[frame["session_type"].eq("regular")].copy()
+    if floor:
+        frame = frame.loc[frame["session_date"].astype(str).ge(floor) & valid_ohlcv(frame)]
     frame["start"] = _naive_et(frame["start_at_et"])
     frame["end"] = _naive_et(frame["end_at_et"])
     frame["minutes"] = ((frame["end"] - frame["start"]).dt.total_seconds() // 60).astype(int)
     frame = frame.loc[frame["minutes"].gt(0)].sort_values("start").drop_duplicates("start")
     return frame.reset_index(drop=True)
+
+
+def _regular_from_2024(symbol: str) -> tuple[pd.DataFrame, str]:
+    floor = history_floor(_listing_floors().get(symbol))
+    folder = HISTORY / "parts" / symbol
+    paths = []
+    if folder.exists():
+        paths.extend(path for path in sorted(folder.glob("*/bars.parquet")) if path.parent.name >= floor[:7])
+    extra = ROOT / "market_data/us_5m" / symbol / "2026.parquet"
+    if extra.exists():
+        paths.append(extra)
+    if not paths:
+        return _as_regular(pd.DataFrame(columns=["session_type", "session_date", "start_at_et", "end_at_et", "open", "high", "low", "close", "volume"])), floor
+    return _as_regular(pd.concat([_read_5m(path) for path in paths], ignore_index=True), floor), floor
 
 
 def _prior_features(daily: pd.DataFrame, day: str) -> dict | None:
@@ -133,10 +204,20 @@ def _morning(day_bars: pd.DataFrame) -> dict | None:
     }
 
 
-def build_symbol(symbol: str) -> tuple[pd.DataFrame, dict]:
-    daily = _daily(symbol)
-    bars = _regular(symbol)
-    bars["session_date"] = bars["start"].dt.strftime("%Y-%m-%d")
+def build_symbol(symbol: str, history: str = "short") -> tuple[pd.DataFrame, dict]:
+    floor = None
+    if history == "short":
+        daily = _daily(symbol)
+        bars = _regular(symbol)
+    elif history == "2024":
+        bars, floor = _regular_from_2024(symbol)
+        if len(bars):
+            bars["session_date"] = bars["start"].dt.strftime("%Y-%m-%d")
+        daily = complete_daily(bars, _expected_regular_bars())
+    else:
+        raise ValueError(history)
+    if history == "short":
+        bars["session_date"] = bars["start"].dt.strftime("%Y-%m-%d")
     high = bars["high"].to_numpy(float)
     minutes = bars["minutes"].to_numpy(int)
     ends = list(bars["end"])
@@ -176,18 +257,29 @@ def build_symbol(symbol: str) -> tuple[pd.DataFrame, dict]:
         row = {"symbol": symbol, "session_date": day, "decision_at": decision, "entry": entry,
                "own_base": base, "label_end": label_end, **features, **morning, **labels}
         rows.append(row)
-    coverage = {"symbol": symbol, "decision_days_from_20260302": decision_days, "full_126_days": ready_days}
+    coverage = {
+        "symbol": symbol,
+        "history": history,
+        "floor": floor,
+        "decision_days_from_20260302": decision_days,
+        "full_126_days": ready_days,
+        "complete_days": int(len(daily)),
+        "first_complete": None if daily.empty else str(daily["session_date"].min()),
+        "last_complete": None if daily.empty else str(daily["session_date"].max()),
+        "rows": len(rows),
+    }
     return pd.DataFrame(rows), coverage
 
 
-def build_panel() -> tuple[pd.DataFrame, dict]:
-    built = [build_symbol(symbol) for symbol in union_symbols()]
-    frames = [frame for frame, _ in built]
+def build_panel(history: str = "short") -> tuple[pd.DataFrame, dict]:
+    built = [build_symbol(symbol, history) for symbol in union_symbols()]
+    frames = [frame for frame, _ in built if len(frame)]
     per_symbol = [item for _, item in built]
-    panel = pd.concat(frames, ignore_index=True)
+    panel = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
     decision_days = sum(item["decision_days_from_20260302"] for item in per_symbol)
     ready_days = sum(item["full_126_days"] for item in per_symbol)
     coverage = {
+        "history": history,
         "symbols": union_symbols(),
         "rows": int(len(panel)),
         "first": None if panel.empty else str(panel["session_date"].min()),
@@ -195,5 +287,6 @@ def build_panel() -> tuple[pd.DataFrame, dict]:
         "decision_days_from_20260302": decision_days,
         "full_126_days": ready_days,
         "full_126_fraction": ready_days / decision_days if decision_days else None,
+        "per_symbol": per_symbol,
     }
     return panel, coverage
