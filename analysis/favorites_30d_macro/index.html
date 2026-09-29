@@ -606,14 +606,14 @@
       </div>
     </div>
 
-    <!-- Known Feature Motifs Color Legend -->
+    <!-- 2-Hour Micro Atomic Motifs Color Legend -->
     <div class="motif-legend-bar">
-      <span style="font-weight: 700; color: var(--text-main);">🎨 已知特征形态色彩映射:</span>
-      <span class="legend-item"><span class="legend-box" style="background:#059669;"></span> <b>绿色系 (W-03/W-04)</b>: 凸性主升 / 强力反转 (3d+5%达成率: 20~23%)</span>
-      <span class="legend-item"><span class="legend-box" style="background:#06b6d4;"></span> <b>青/蓝系 (W-01/W-02)</b>: 弧形底企稳 / 极限恐慌见底 (3d+5%达成率: 22~24%)</span>
-      <span class="legend-item"><span class="legend-box" style="background:#3b82f6;"></span> <b>纯蓝系 (W-05/W-09)</b>: 稳步爬坡 / 探底反抽</span>
-      <span class="legend-item"><span class="legend-box" style="background:#f59e0b;"></span> <b>暖黄/紫色 (W-08/W-10)</b>: 高位横盘滞涨 / 箱体收敛整理</span>
-      <span class="legend-item"><span class="legend-box" style="background:#ea580c;"></span> <b>橙红/鲜红 (W-06/W-07/W-11/W-12)</b>: 冲高受阻 / 台阶破位 / 单边阴跌</span>
+      <span style="font-weight: 700; color: var(--text-main);">🔬 2小时微观原子形态图例 (滑动窗口 24根5m K线跨尺度投影):</span>
+      <span class="legend-item"><span class="legend-box" style="background:#059669;"></span> <b>翡翠绿 (A-06/A-12)</b>: 脉冲强攻 / 尾盘突袭</span>
+      <span class="legend-item"><span class="legend-box" style="background:#10b981;"></span> <b>亮绿/青绿 (A-03/A-04)</b>: 稳步攀升 / 深V探底回升</span>
+      <span class="legend-item"><span class="legend-box" style="background:#dc2626;"></span> <b>血红/暗红 (A-02/A-05)</b>: 倒V诱多暴跌 / 恐慌杀跌</span>
+      <span class="legend-item"><span class="legend-box" style="background:#f97316;"></span> <b>橙红/暖黄 (A-07/A-08)</b>: 双顶滞涨 / 阶梯筑底</span>
+      <span class="legend-item"><span class="legend-box" style="background:#8b5cf6;"></span> <b>紫色系 (A-01/A-11)</b>: 震荡过渡 / 窄幅收敛</span>
     </div>
   </header>
 
@@ -821,28 +821,34 @@
     // SVG Chart
     const svgHtml = generateChartSvg(s, CURRENT_SCALE === 'unified');
 
-    // Matched Features Row
-    let featureTagsHtml = "";
-    if (s.matched_features && s.matched_features.length > 0) {
-      featureTagsHtml = `
+    // 2-Hour Micro Atomic Motifs Row
+    let microAtomsHtml = "";
+    const atoms = s.micro_atoms || [];
+    if (atoms.length > 0) {
+      microAtomsHtml = `
         <div class="card-features-row">
           <span style="font-size:11px; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:3px;">
-            <span>🎯 命中特征:</span>
+            <span>🔬 2h微观原子:</span>
           </span>
-          ${s.matched_features.map(f => `
-            <span class="feat-pill" style="border-left: 3.5px solid ${f.color}; background: ${f.color}15;" title="${f.start_time.slice(5,16)} ~ ${f.end_time.slice(5,16)} | 3天+5%胜率: ${f.hit3d_rate}%">
-              <span class="feat-dot" style="background:${f.color}"></span>
-              <strong style="color:${f.color}">${f.code} ${f.name}</strong>
-              <span class="feat-sim">${f.sim}%</span>
-              <span class="feat-dates">${f.start_time.slice(5,10)}~${f.end_time.slice(5,10)}</span>
-            </span>
-          `).join('')}
+          ${atoms.map(a => {
+            const retSign = a.ret > 0 ? '+' : '';
+            const retColor = a.ret >= 0 ? '#059669' : '#dc2626';
+            return `
+              <span class="feat-pill" style="border-left: 3.5px solid ${a.color}; background: ${a.color}15;" title="${a.start_time} ~ ${a.end_time} | 2h收益: ${retSign}${a.ret}% | 2h波幅: ${a.amplitude}%">
+                <span class="feat-dot" style="background:${a.color}"></span>
+                <strong style="color:${a.color}">${a.atom} ${a.name}</strong>
+                <span class="feat-sim">${a.sim}%</span>
+                <span style="font-size:10px; font-weight:700; color:${retColor};">${retSign}${a.ret}%</span>
+                <span class="feat-dates">${a.start_time.slice(5,10)} ${a.start_time.slice(11,16)}</span>
+              </span>
+            `;
+          }).join('')}
         </div>
       `;
     } else {
-      featureTagsHtml = `
+      microAtomsHtml = `
         <div class="card-features-row" style="color:var(--text-sub); font-size:11px;">
-          <span>⚪ 暂未检索到相似度 &ge; 78% 的典型微波形</span>
+          <span>⚪ 暂未检索到 2 小时高振幅 (≥1.8%) 微观原子</span>
         </div>
       `;
     }
@@ -882,8 +888,8 @@
           ${svgHtml}
         </div>
 
-        <!-- Matched Features Row -->
-        ${featureTagsHtml}
+        <!-- 2-Hour Micro Atomic Motifs Row -->
+        ${microAtomsHtml}
 
         <div class="card-footer">
           <div class="footer-metrics">
@@ -1010,48 +1016,60 @@
       return idx === 0 ? `M ${x.toFixed(1)},${y.toFixed(1)}` : `L ${x.toFixed(1)},${y.toFixed(1)}`;
     }).join(" ");
 
-    // Matched Features Multi-Color Highlights (Bands, Colored Segments, Top Badges)
+    // 2-Hour Micro Atomic Motifs Multi-Color Highlights (Bands, Colored Segments, Top Badges)
     let featureBands = "";
     let featureCurves = "";
     let featureLabels = "";
 
-    (s.matched_features || []).forEach((f, fIdx) => {
-      const sIdx = f.start_idx;
-      const eIdx = f.end_idx;
+    (s.micro_atoms || []).forEach((a, aIdx) => {
+      const sIdx = Math.max(0, Math.min(bars.length - 1, a.macro_start_idx));
+      const eIdx = Math.max(sIdx, Math.min(bars.length - 1, a.macro_end_idx));
       if (sIdx >= 0 && eIdx < bars.length) {
         const bx = toX(sIdx);
-        const bw = Math.max(10, toX(eIdx) - bx);
-        const fColor = f.color || "#0284c7";
+        const ex = toX(eIdx);
+        const bw = Math.max(16, ex - bx);
+        const aColor = a.color || "#059669";
 
         // Vertical highlight band
         featureBands += `
-          <rect x="${bx.toFixed(1)}" y="${padY}" width="${bw.toFixed(1)}" height="${h}" fill="${fColor}" opacity="0.10" rx="3">
-            <title>${f.code} ${f.name} (${f.sim}% 相似度, 3d+5%胜率: ${f.hit3d_rate}%)</title>
+          <rect x="${(bx - 2).toFixed(1)}" y="${padY}" width="${(bw + 4).toFixed(1)}" height="${h}" fill="${aColor}" opacity="0.14" rx="3">
+            <title>2h微观原子: ${a.atom} ${a.name} (${a.sim}% 相似度, 2h收益: ${a.ret}%, 2h波幅: ${a.amplitude}%)&#10;${a.start_time} ~ ${a.end_time}</title>
           </rect>
-          <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padB}" stroke="${fColor}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.6"/>
-          <line x1="${(bx + bw).toFixed(1)}" y1="${padY}" x2="${(bx + bw).toFixed(1)}" y2="${height - padB}" stroke="${fColor}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.6"/>
+          <line x1="${bx.toFixed(1)}" y1="${padY}" x2="${bx.toFixed(1)}" y2="${height - padB}" stroke="${aColor}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.75"/>
+          <line x1="${(bx + bw).toFixed(1)}" y1="${padY}" x2="${(bx + bw).toFixed(1)}" y2="${height - padB}" stroke="${aColor}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.75"/>
         `;
 
-        // Colored curve segment for this feature
+        // Colored curve segment for this 2h micro atom
         const featPts = [];
-        for (let j = sIdx; j <= eIdx; j++) {
+        const segEnd = Math.max(sIdx + 1, eIdx);
+        for (let j = sIdx; j <= Math.min(bars.length - 1, segEnd); j++) {
           const px = toX(j);
           const py = toYPrice(bars[j].close);
           featPts.push(`${px.toFixed(1)},${py.toFixed(1)}`);
         }
+        if (featPts.length > 1) {
+          featureCurves += `
+            <path d="M ${featPts.join(' L ')}" fill="none" stroke="${aColor}" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+          `;
+        }
+
+        // Center marker pin dot on the curve
+        const midIdx = Math.floor((sIdx + eIdx) / 2);
+        const midX = toX(midIdx);
+        const midY = toYPrice(bars[midIdx].close);
         featureCurves += `
-          <path d="M ${featPts.join(' L ')}" fill="none" stroke="${fColor}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="${midX.toFixed(1)}" cy="${midY.toFixed(1)}" r="3.8" fill="${aColor}" stroke="#ffffff" stroke-width="1.5"/>
         `;
 
-        // Floating top tag: show name & similarity
-        const badgeW = Math.min(bw, 126);
-        const badgeX = bx + (bw - badgeW) / 2;
-        const tagY = padY + 2 + (fIdx % 2) * 16;
+        // Floating top tag: show atom, name & similarity
+        const badgeW = 106;
+        const badgeX = Math.max(padL + 2, Math.min(padL + w - badgeW - 2, bx + (bw - badgeW) / 2));
+        const tagY = padY + 3 + (aIdx % 3) * 16;
         featureLabels += `
           <g>
-            <rect x="${badgeX.toFixed(1)}" y="${tagY}" width="${badgeW.toFixed(1)}" height="15" rx="3" fill="${fColor}" opacity="0.92"/>
-            <text x="${(badgeX + badgeW/2).toFixed(1)}" y="${tagY + 11}" font-size="8.5" font-family="monospace" fill="#ffffff" text-anchor="middle" font-weight="bold">
-              ${f.code} ${f.name.slice(0, 4)} ${f.sim}%
+            <rect x="${badgeX.toFixed(1)}" y="${tagY}" width="${badgeW}" height="14" rx="3" fill="${aColor}" opacity="0.95"/>
+            <text x="${(badgeX + badgeW/2).toFixed(1)}" y="${tagY + 10.5}" font-size="8.5" font-family="monospace" fill="#ffffff" text-anchor="middle" font-weight="bold">
+              ${a.atom} ${a.name.slice(0, 4)} ${a.sim}%
             </text>
           </g>
         `;
@@ -1170,21 +1188,29 @@
     const retSign = b.ret_pct > 0 ? '+' : '';
     const retColor = b.ret_pct >= 0 ? '#34d399' : '#f87171';
     
-    // Check if current idx falls into any matched feature zone
-    const feat = (s.matched_features || []).find(f => idx >= f.start_idx && idx <= f.end_idx);
-    let featHtml = "";
-    if (feat) {
-      featHtml = `
+    // Check if current idx falls into any 2h micro atom zone (or within 1 bar)
+    const atom = (s.micro_atoms || []).find(a => {
+      const sI = Math.max(0, a.macro_start_idx - 1);
+      const eI = Math.min(bars.length - 1, a.macro_end_idx + 1);
+      return idx >= sI && idx <= eI;
+    });
+    let atomHtml = "";
+    if (atom) {
+      const retSign2 = atom.ret > 0 ? '+' : '';
+      const retColor2 = atom.ret >= 0 ? '#34d399' : '#f87171';
+      atomHtml = `
         <div style="margin-top:6px; padding-top:5px; border-top:1px dashed #475569;">
           <div style="display:flex; align-items:center; gap:5px;">
-            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${feat.color};"></span>
-            <strong style="color:${feat.color}; font-size:12px;">${feat.code} ${feat.name}</strong>
-            <span style="color:#94a3b8; font-size:10px;">(${feat.type})</span>
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${atom.color};"></span>
+            <strong style="color:${atom.color}; font-size:12px;">${atom.atom} ${atom.name}</strong>
+            <span style="color:#38bdf8; font-size:11px; font-weight:bold;">${atom.sim}% 相似度</span>
           </div>
           <div style="color:#e2e8f0; font-size:10.5px; margin-top:2px;">
-            形态相似度: <b style="color:#38bdf8;">${feat.sim}%</b> · 历史3d+5%达成率: <b style="color:#34d399;">${feat.hit3d_rate}%</b>
+            2h微观收益: <b style="color:${retColor2};">${retSign2}${atom.ret}%</b> · 2h波幅: <b style="color:#fbbf24;">${atom.amplitude}%</b>
           </div>
-          <div style="color:#64748b; font-size:9.5px; margin-top:1px;">特征时段: ${feat.start_time.slice(5,16)} ~ ${feat.end_time.slice(5,16)}</div>
+          <div style="color:#94a3b8; font-size:9.5px; margin-top:1px;">
+            微观窗口: ${atom.start_time.slice(5,16)} ~ ${atom.end_time.slice(11,16)}
+          </div>
         </div>
       `;
     }
@@ -1196,7 +1222,7 @@
       <div>现价: <strong>$${b.close.toFixed(2)}</strong></div>
       <div>相对P0收益: <strong style="color:${retColor};">${retSign}${b.ret_pct.toFixed(2)}%</strong></div>
       <div>成交量: ${b.volume.toLocaleString()} 股</div>
-      ${featHtml}
+      ${atomHtml}
     `;
 
     const tipW = 180;
