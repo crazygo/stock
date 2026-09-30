@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>逐根模型的参数对照</title>
+<style>
+body { margin: 0; padding: 24px; font-family: sans-serif; color: #111827; background: #fff; }
+main { max-width: 1080px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border-bottom: 1px solid #d1d5db; text-align: left; padding: 8px; vertical-align: top; }
+.scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+<h1>同一批逐根特征，五组 LightGBM 参数</h1>
+<p>特征、09:40 决策、三个标签和 2026-08-18 至 2026-09-29 这 30 个交易日都不变。这 30 天已经看过达成率，下表只描述参数改变后的变化。</p>
+<ul><li><b>当前</b>：40 棵，深度 3，7 叶，min_child_samples=10，学习率 0.05，reg_lambda=10.0，colsample_bytree=1.0</li><li><b>200 棵树</b>：200 棵，深度 3，7 叶，min_child_samples=10，学习率 0.05，reg_lambda=10.0，colsample_bytree=1.0</li><li><b>深度 6</b>：100 棵，深度 6，31 叶，min_child_samples=10，学习率 0.05，reg_lambda=10.0，colsample_bytree=1.0</li><li><b>更弱正则</b>：40 棵，深度 3，7 叶，min_child_samples=5，学习率 0.05，reg_lambda=1.0，colsample_bytree=1.0</li><li><b>深树加列抽样</b>：200 棵，深度 6，31 叶，min_child_samples=20，学习率 0.05，reg_lambda=1.0，colsample_bytree=0.2</li></ul>
+<h2>到期预报达成</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>目标</th><th>当前</th><th>200 棵树</th><th>深度 6</th><th>更弱正则</th><th>深树加列抽样</th></tr></thead>
+<tbody>
+<tr><th>1 天 +5%</th><td>5/29<br>17.2%</td><td>5/29<br>17.2%</td><td>5/29<br>17.2%</td><td>5/29<br>17.2%</td><td>4/29<br>13.8%</td></tr><tr><th>3 天 +5%</th><td>15/27<br>55.6%</td><td>13/27<br>48.1%</td><td>14/27<br>51.9%</td><td>14/27<br>51.9%</td><td>10/27<br>37.0%</td></tr><tr><th>5 天 +10%</th><td>9/25<br>36.0%</td><td>10/25<br>40.0%</td><td>8/25<br>32.0%</td><td>7/25<br>28.0%</td><td>6/25<br>24.0%</td></tr>
+<tr><th>训练 AUC</th><td>79.1%</td><td>84.4%</td><td>91.5%</td><td>79.3%</td><td>96.7%</td></tr>
+</tbody>
+</table>
+</div>
+<h2>分裂增益落在哪一类列</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>列的类别</th><th>当前</th><th>200 棵树</th><th>深度 6</th><th>更弱正则</th><th>深树加列抽样</th></tr></thead>
+<tbody><tr><th>20 日波动、日收益、QQQ</th><td>47.0%</td><td>34.7%</td><td>27.2%</td><td>46.6%</td><td>12.2%</td></tr><tr><th>当天 09:35 与 09:40 的振幅</th><td>20.0%</td><td>12.7%</td><td>8.5%</td><td>19.1%</td><td>7.1%</td></tr><tr><th>当天这两根的涨跌、成交量、跳空</th><td>0.4%</td><td>1.2%</td><td>1.4%</td><td>0.5%</td><td>1.2%</td></tr><tr><th>更早每一根的振幅</th><td>25.7%</td><td>22.4%</td><td>20.3%</td><td>26.0%</td><td>27.4%</td></tr><tr><th>更早每一根的成交量</th><td>4.3%</td><td>9.8%</td><td>13.9%</td><td>4.1%</td><td>18.0%</td></tr><tr><th>更早每一根的涨跌</th><td>1.3%</td><td>12.8%</td><td>18.9%</td><td>2.0%</td><td>20.6%</td></tr><tr><th>更早每一根的跳空</th><td>1.3%</td><td>6.3%</td><td>9.8%</td><td>1.8%</td><td>13.5%</td></tr></tbody>
+</table>
+</div>
+<h2>增益最高的五列</h2>
+<p><b>当前</b>　训练 AUC 79.1%<br>atr_20d_pct 43.5%，d0_0940_range 12.6%，d0_0935_range 7.3%，rth_1135_range 2.4%，rth_1230_range 2.2%</p><p><b>200 棵树</b>　训练 AUC 84.4%<br>atr_20d_pct 27.9%，d0_0940_range 8.0%，d0_0935_range 4.7%，qqq_vwap_dev 2.3%，qqq_gap 1.8%</p><p><b>深度 6</b>　训练 AUC 91.5%<br>atr_20d_pct 21.8%，d0_0940_range 6.0%，d0_0935_range 2.5%，qqq_vwap_dev 1.5%，qqq_gap 1.4%</p><p><b>更弱正则</b>　训练 AUC 79.3%<br>atr_20d_pct 42.6%，d0_0940_range 11.8%，d0_0935_range 7.3%，rth_1135_range 2.5%，rth_1230_range 2.2%</p><p><b>深树加列抽样</b>　训练 AUC 96.7%<br>atr_20d_pct 8.1%，d0_0935_range 4.4%，d0_0940_range 2.7%，qqq_vwap_dev 1.4%，rth_1135_range 1.3%</p>
+</main>
+</body>
+</html>
