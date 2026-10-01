@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图形段模型的七组参数</title>
+<style>
+body { margin: 0; padding: 24px; font-family: sans-serif; color: #111827; background: #fff; }
+main { max-width: 1080px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border-bottom: 1px solid #d1d5db; text-align: left; padding: 8px; vertical-align: top; }
+.scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+<h1>图形段模型，七组 LightGBM 参数</h1>
+<p>样本仍是 8 种图形走完的区间加上前面 24 根。标签仍是其后常规盘最高价，收到决策日之后第 2 个交易日，碰到 +5%。考试日仍是 2026-08-18 至 2026-09-29。这 30 天里全部到期图形段是 118/309 = 38.2%。</p>
+<p>按考试日之前最近 20 个出现过图形的交易日选择参数，再只用更早的样本重训并预报当天。这样选出来的结果：每天留一只 12/27 = 44.4%，训练分前 20% 7/27 = 25.9%。各天用到的参数：当前 3 天，200 棵树 5 天，深度 6 3 天，慢学习 9 天，更弱正则 4 天，深树加列抽样 6 天。</p>
+<p>下表是七组参数从头到尾固定时的分数。固定参数谁更高，不拿来替换模型，因为这些分数来自已经看过的 30 天。</p>
+<ul><li><b>当前</b>：40 棵，深度 3，7 叶，min_child_samples=10，学习率 0.05，reg_lambda=10.0，colsample_bytree=1.0。每天留一只 12/27 = 44.4%，训练分前 20% 11/38 = 28.9%。</li><li><b>200 棵树</b>：200 棵，深度 3，7 叶，min_child_samples=10，学习率 0.05，reg_lambda=10.0，colsample_bytree=1.0。每天留一只 13/27 = 48.1%，训练分前 20% 7/26 = 26.9%。</li><li><b>深度 6</b>：100 棵，深度 6，31 叶，min_child_samples=10，学习率 0.05，reg_lambda=10.0，colsample_bytree=1.0。每天留一只 11/27 = 40.7%，训练分前 20% 7/27 = 25.9%。</li><li><b>每叶至少 40 行</b>：40 棵，深度 3，7 叶，min_child_samples=40，学习率 0.05，reg_lambda=10.0，colsample_bytree=1.0。每天留一只 12/27 = 44.4%，训练分前 20% 11/38 = 28.9%。</li><li><b>慢学习</b>：300 棵，深度 3，7 叶，min_child_samples=20，学习率 0.02，reg_lambda=20.0，colsample_bytree=1.0。每天留一只 11/27 = 40.7%，训练分前 20% 7/27 = 25.9%。</li><li><b>更弱正则</b>：40 棵，深度 3，7 叶，min_child_samples=5，学习率 0.05，reg_lambda=1.0，colsample_bytree=1.0。每天留一只 13/27 = 48.1%，训练分前 20% 11/34 = 32.4%。</li><li><b>深树加列抽样</b>：200 棵，深度 6，31 叶，min_child_samples=30，学习率 0.05，reg_lambda=1.0，colsample_bytree=0.5。每天留一只 11/27 = 40.7%，训练分前 20% 7/25 = 28.0%。</li></ul>
+<h2>到期预报达成</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>口径</th><th>当前</th><th>200 棵树</th><th>深度 6</th><th>每叶至少 40 行</th><th>慢学习</th><th>更弱正则</th><th>深树加列抽样</th></tr></thead>
+<tbody>
+<tr><th>每天留一只</th><td>12/27<br>44.4%</td><td>13/27<br>48.1%</td><td>11/27<br>40.7%</td><td>12/27<br>44.4%</td><td>11/27<br>40.7%</td><td>13/27<br>48.1%</td><td>11/27<br>40.7%</td></tr>
+<tr><th>训练分前 20%</th><td>11/38<br>28.9%</td><td>7/26<br>26.9%</td><td>7/27<br>25.9%</td><td>11/38<br>28.9%</td><td>7/27<br>25.9%</td><td>11/34<br>32.4%</td><td>7/25<br>28.0%</td></tr>
+<tr><th>训练 AUC</th><td>68.1%</td><td>72.4%</td><td>80.1%</td><td>68.1%</td><td>70.4%</td><td>68.3%</td><td>87.2%</td></tr>
+</tbody>
+</table>
+</div>
+<h2>分裂增益落在哪一类列</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>列的类别</th><th>当前</th><th>200 棵树</th><th>深度 6</th><th>每叶至少 40 行</th><th>慢学习</th><th>更弱正则</th><th>深树加列抽样</th></tr></thead>
+<tbody><tr><th>8 类图形</th><td>0.0%</td><td>0.7%</td><td>0.6%</td><td>0.0%</td><td>0.5%</td><td>0.0%</td><td>1.0%</td></tr><tr><th>图形区间</th><td>30.1%</td><td>36.7%</td><td>40.2%</td><td>30.1%</td><td>35.9%</td><td>31.1%</td><td>44.1%</td></tr><tr><th>区间前 24 根</th><td>29.1%</td><td>30.4%</td><td>30.9%</td><td>29.2%</td><td>30.8%</td><td>28.1%</td><td>32.8%</td></tr><tr><th>20 日振幅</th><td>40.3%</td><td>28.3%</td><td>23.8%</td><td>40.3%</td><td>30.7%</td><td>39.4%</td><td>16.5%</td></tr><tr><th>离开盘的分钟</th><td>0.5%</td><td>3.9%</td><td>4.6%</td><td>0.4%</td><td>2.0%</td><td>1.4%</td><td>5.6%</td></tr></tbody>
+</table>
+</div>
+<h2>按更早 20 天选出的参数，每天留一只</h2>
+<table>
+<thead><tr><th>交易日</th><th>当天参数</th><th>最高概率</th></tr></thead>
+<tbody><tr><th>2026-08-18</th><td>深树加列抽样</td><td>AAOI · 破位阴跌 · 84.3% · 未达成</td></tr><tr><th>2026-08-19</th><td>当前</td><td>AXTI · 探底回抽 · 73.1% · 未达成</td></tr><tr><th>2026-08-20</th><td>200 棵树</td><td>AXTI · 破位阴跌 · 75.1% · 达成</td></tr><tr><th>2026-08-21</th><td>慢学习</td><td>COHR · 破位阴跌 · 73.1% · 未达成</td></tr><tr><th>2026-08-24</th><td>200 棵树</td><td>AAOI · 探底回抽 · 70.8% · 达成</td></tr><tr><th>2026-08-25</th><td>慢学习</td><td>AXTI · 单边拉升 · 68.3% · 未达成</td></tr><tr><th>2026-08-26</th><td>深树加列抽样</td><td>LITE · 单边拉升 · 52.4% · 达成</td></tr><tr><th>2026-08-27</th><td>慢学习</td><td>ARM · 单边下杀 · 67.0% · 未达成</td></tr><tr><th>2026-08-28</th><td>慢学习</td><td>AXTI · 单边下杀 · 79.5% · 未达成</td></tr><tr><th>2026-08-31</th><td>慢学习</td><td>AXTI · 阶梯中继 · 55.8% · 未达成</td></tr><tr><th>2026-09-01</th><td>200 棵树</td><td>CRDO · 破位阴跌 · 67.0% · 未达成</td></tr><tr><th>2026-09-02</th><td>慢学习</td><td>CRDO · 破位阴跌 · 73.7% · 未达成</td></tr><tr><th>2026-09-03</th><td>慢学习</td><td>CIEN · 破位阴跌 · 59.9% · 达成</td></tr><tr><th>2026-09-04</th><td>慢学习</td><td>AXTI · 阶梯中继 · 59.2% · 达成</td></tr><tr><th>2026-09-08</th><td>慢学习</td><td>AXTI · 单边拉升 · 64.4% · 达成</td></tr><tr><th>2026-09-09</th><td>更弱正则</td><td>AXTI · 阶梯中继 · 59.2% · 未达成</td></tr><tr><th>2026-09-10</th><td>更弱正则</td><td>AXTI · 单边下杀 · 60.8% · 达成</td></tr><tr><th>2026-09-11</th><td>200 棵树</td><td>SNDK · 单边下杀 · 52.6% · 未达成</td></tr><tr><th>2026-09-14</th><td>200 棵树</td><td>AXTI · 单边下杀 · 75.5% · 达成</td></tr><tr><th>2026-09-15</th><td>深度 6</td><td>STX · 单边下杀 · 50.2% · 达成</td></tr><tr><th>2026-09-16</th><td>当前</td><td>AXTI · 单边拉升 · 57.7% · 达成</td></tr><tr><th>2026-09-17</th><td>更弱正则</td><td>CIEN · 单边下杀 · 69.8% · 未达成</td></tr><tr><th>2026-09-18</th><td>更弱正则</td><td>LITE · 阶梯中继 · 56.4% · 达成</td></tr><tr><th>2026-09-21</th><td>当前</td><td>AXTI · 阶梯中继 · 61.5% · 未达成</td></tr><tr><th>2026-09-22</th><td>深树加列抽样</td><td>AXTI · 破位阴跌 · 52.3% · 未达成</td></tr><tr><th>2026-09-23</th><td>深度 6</td><td>CIEN · 破位阴跌 · 56.7% · 未达成</td></tr><tr><th>2026-09-24</th><td>深度 6</td><td>ARM · 破位阴跌 · 62.6% · 达成</td></tr><tr><th>2026-09-25</th><td>深树加列抽样</td><td>CRDO · 单边拉升 · 53.8% · 未到期</td></tr><tr><th>2026-09-28</th><td>深树加列抽样</td><td>SNDK · 破位阴跌 · 63.7% · 未到期</td></tr><tr><th>2026-09-29</th><td>深树加列抽样</td><td>LITE · 阶梯中继 · 58.3% · 未到期</td></tr></tbody>
+</table>
+</main>
+</body>
+</html>

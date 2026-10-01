@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模型原理与 90% 准确度方案</title>
+<style>
+  :root {
+    --ink: #1c1c1c;
+    --muted: #5c5c5c;
+    --line: #bdbdbd;
+    --bg: #f7f7f7;
+    --paper: #fff;
+    --mark: #ececec;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.45 ui-sans-serif, system-ui, sans-serif;
+  }
+  header, main { padding: 16px; }
+  header { border-bottom: 1px solid var(--line); background: var(--paper); }
+  h1 { font-size: 22px; line-height: 1.25; margin: 0 0 8px; }
+  h2 { font-size: 16px; margin: 0 0 8px; }
+  h3 { font-size: 15px; margin: 0 0 6px; }
+  p { margin: 0 0 8px; }
+  .question { max-width: 68ch; }
+  .note { color: var(--muted); font-size: 13px; }
+  fieldset {
+    border: 1px solid var(--line);
+    margin: 12px 0 0;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+  legend { padding: 0 4px; }
+  label { display: flex; gap: 6px; align-items: flex-start; }
+  button, summary { font: inherit; }
+  button {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 6px 8px;
+    text-align: left;
+    width: 100%;
+  }
+  button[aria-current="true"] { background: var(--mark); }
+  button:focus-visible, summary:focus-visible, input:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+  .layout { display: grid; gap: 12px; }
+  .catalog { grid-template-columns: minmax(180px, 240px) 1fr; }
+  .list { display: flex; flex-direction: column; gap: 4px; max-height: 70vh; overflow: auto; }
+  .panel, .card, details {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 12px;
+  }
+  dl { display: grid; grid-template-columns: 7em 1fr; gap: 4px 8px; margin: 0 0 8px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { border-bottom: 1px solid var(--line); text-align: left; padding: 6px 8px; vertical-align: top; }
+  .scroll { overflow-x: auto; }
+  ol { margin: 0; padding-left: 1.2em; }
+  li { margin-bottom: 8px; }
+  .families { display: grid; gap: 12px; }
+  .flag {
+    display: inline-block;
+    border: 1px solid var(--line);
+    padding: 0 6px;
+    font-size: 12px;
+  }
+  .anno { border-left: 3px solid var(--ink); padding-left: 8px; margin-top: 8px; }
+  @media (max-width: 720px) {
+    .catalog { grid-template-columns: 1fr; }
+    #detail { order: -1; }
+    .list { max-height: 32vh; }
+    dl { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>22 个模型：原理，以及通向 90% 准确度的方案</h1>
+  <p class="question">给研究者看的线框。要决定的是：下一轮改哪一个模型的哪一项，以及 90% 算的是逐行准确度，还是发出的买入后来有 90% 触及。</p>
+  <p class="note">低保真结构稿。颜色、字体和图表样式留到以后的视觉稿。</p>
+  <fieldset>
+    <legend>三种排法</legend>
+    <label><input type="radio" name="dir" value="catalog" checked> 名册：一次看清一个模型</label>
+    <label><input type="radio" name="dir" value="family"> 家族：按学习器收拢</label>
+    <label><input type="radio" name="dir" value="ladder"> 阶梯：先定 90% 的做法，再点名模型</label>
+  </fieldset>
+  <p class="note" id="tradeoff"></p>
+</header>
+<main>
+  <section id="catalog" class="layout catalog" data-dir="catalog"></section>
+  <section id="family" class="families" data-dir="family" hidden></section>
+  <section id="ladder" data-dir="ladder" hidden></section>
+</main>
+<script>
+const MODELS = [
+  {id:"B_group", family:"B 表格树", target:"3 日 +5%", universe:"108 只候选，验收看 21 只并集", acc:"53.7%", majority:"54.2%",
+    principle:"每个目标一棵 LightGBM。输入是把 5 分钟、60 分钟、日线压成的本股摘要，再加群序列摘要、路径摘要、曲线和本股相对群的坐标。",
+    now:"准确度没有离开基线，仍低于多数类。"},
+  {id:"B_no_group", family:"B 表格树", target:"3 日 +5%", universe:"同上，特征不含其他股票", acc:"55.3%", majority:"54.2%",
+    principle:"同一棵树，只留本股前 585 列摘要和 84 列路径摘要。不进同伴、群或 QQQ 行情。",
+    now:"略高于多数类。提升来自列的删减，不是后来的概率平移。"},
+  {id:"C_group", family:"C 序列网", target:"3 日 +5%", universe:"108 只候选，验收看 21 只并集", acc:"55.6%", majority:"54.2%",
+    principle:"5 分钟和 60 分钟走 patch 卷积，日线分支打开，群序列用 GRU 去调 5 分钟表示。输出九个触及概率。",
+    now:"略高于多数类。群序列已经在模型里。"},
+  {id:"C_no_group", family:"C 序列网", target:"3 日 +5%", universe:"预测仍是 108 只；拟合权重落在 21 只", acc:"59.0%", majority:"54.2%",
+    principle:"三条本股序列加本股最多 63 条已成熟先验。不进同伴行情。这是五个父模型里逐行准确度最高的一个。",
+    now:"比多数类高 4.8 个百分点。离 90% 仍差约 31 个百分点。"},
+  {id:"C_no_daily", family:"C 序列网", target:"3 日 +5%", universe:"108 只候选，验收看 21 只并集", acc:"53.2%", majority:"54.2%",
+    principle:"关掉本股日线，只留 5 分钟和 60 分钟，群序列仍打开。现在的 53.2% 来自把概率往下平移，使一部分行落到 0.5 以下。",
+    now:"仍低于多数类。这一次「提升」是决策门槛搬家，不是新信息。"},
+  {id:"B_group_chips", family:"B 表格树", target:"3 日 +5%", universe:"半导体组 8 只", acc:"52.1%", majority:"52.1%",
+    principle:"B_group 的配方，拟合和预测只留半导体组。原先 61.8% 被第五轮偏置拉回多数类。",
+    now:"当前等于多数类。回退那个偏置，才回到 61.8% 的开发读数。"},
+  {id:"B_group_optics", family:"B 表格树", target:"3 日 +5%", universe:"光通信组 12 只", acc:"63.9%", majority:"56.0%",
+    principle:"B_group 只在光通信组上拟合。63.9% 来自对原始概率做缩放，不是新列。",
+    now:"高于多数类，但是在已经看过的 eval 上选出的缩放。"},
+  {id:"B_group_storage", family:"B 表格树", target:"3 日 +5%", universe:"存储组 4 只", acc:"58.3%", majority:"52.8%",
+    principle:"B_group 只在存储组上拟合，并混入了父模型概率。",
+    now:"高于多数类。样本只有 72 行 eval，缩放很容易贴住这段历史。"},
+  {id:"B_no_group_chips", family:"B 表格树", target:"3 日 +5%", universe:"半导体组 8 只", acc:"60.4%", majority:"52.1%",
+    principle:"无群列表格树，只出半导体组的概率。",
+    now:"明显高于多数类，而且没有靠后来的概率平移。"},
+  {id:"B_no_group_optics", family:"B 表格树", target:"3 日 +5%", universe:"光通信组 12 只", acc:"62.0%", majority:"56.0%",
+    principle:"无群列表格树，只出光通信组的概率。",
+    now:"高于多数类，保持基线。"},
+  {id:"B_no_group_storage", family:"B 表格树", target:"3 日 +5%", universe:"存储组 4 只", acc:"54.2%", majority:"52.8%",
+    principle:"无群列表格树，只出存储组的概率。54.2% 来自与父模型概率平均后再缩放。",
+    now:"只比多数类高 1.4 个百分点。"},
+  {id:"C_group_chips", family:"C 序列网", target:"3 日 +5%", universe:"半导体组 8 只", acc:"62.5%", majority:"52.1%",
+    principle:"带群序列的网络，只在半导体组上拟合。",
+    now:"这组里最高的未改门槛读数。"},
+  {id:"C_group_optics", family:"C 序列网", target:"3 日 +5%", universe:"光通信组 12 只", acc:"56.0%", majority:"56.0%",
+    principle:"带群序列的网络，只出光通信组。现在的读数被分股票偏置推到了多数类。",
+    now:"等于「一律猜不会触及」。"},
+  {id:"C_group_storage", family:"C 序列网", target:"3 日 +5%", universe:"存储组 4 只", acc:"55.6%", majority:"52.8%",
+    principle:"带群序列的网络，只出存储组。",
+    now:"略高于多数类，来自原始概率缩放。"},
+  {id:"C_no_group_chips", family:"C 序列网", target:"3 日 +5%", universe:"半导体组 8 只", acc:"61.8%", majority:"52.1%",
+    principle:"无同伴行情的序列网，只出半导体组。",
+    now:"保持基线，高于多数类。"},
+  {id:"C_no_group_optics", family:"C 序列网", target:"3 日 +5%", universe:"光通信组 12 只", acc:"61.6%", majority:"56.0%",
+    principle:"无同伴行情的序列网，只出光通信组。",
+    now:"保持基线，高于多数类。"},
+  {id:"C_no_group_storage", family:"C 序列网", target:"3 日 +5%", universe:"存储组 4 只", acc:"54.2%", majority:"52.8%",
+    principle:"无同伴行情的序列网，只出存储组。",
+    now:"只比多数类高 1.4 个百分点。"},
+  {id:"C_no_daily_chips", family:"C 序列网", target:"3 日 +5%", universe:"半导体组 8 只", acc:"52.1%", majority:"52.1%",
+    principle:"无本股日线的序列网，只出半导体组。",
+    now:"被偏置推到多数类，相对基线 +8.7%，没有到 +10%。"},
+  {id:"C_no_daily_optics", family:"C 序列网", target:"3 日 +5%", universe:"光通信组 12 只", acc:"56.0%", majority:"56.0%",
+    principle:"无本股日线的序列网，只出光通信组。",
+    now:"等于多数类。"},
+  {id:"C_no_daily_storage", family:"C 序列网", target:"3 日 +5%", universe:"存储组 4 只", acc:"52.8%", majority:"52.8%",
+    principle:"无本股日线的序列网，只出存储组。",
+    now:"等于多数类。"},
+  {id:"SNXX_3d3pct", family:"单名小时代理", target:"3 日 +3%", universe:"只预测 SNXX", acc:"86.7%", majority:"86.7%",
+    principle:"用 11:30 之前的本股小时线，预测 11:30 那根小时 K 的 Open 之后 1170 个常规分钟内最高价是否碰到 +3%。这不是 11:35 的五分钟 Open。",
+    now:"15 天里 13 天会碰到。模型 15 天全部判成会碰到，所以准确度等于基准率。"},
+  {id:"SOXS_SOXX_3d5pct", family:"两只 ETF 的三选一", target:"3 日 +5%", universe:"每天只在买入 SOXS、买入 SOXX、不行动里选一个", acc:"60%", majority:"60%",
+    principle:"两只股票各自用 11:30 前的常规 5 分钟路径。11:35 的 Open 作入场。两只都没碰到则不行动；只有一只碰到就买那只；都碰到时训练标签取涨幅更大的一只。",
+    now:"eval 的标签本身有 60% 是买入 SOXS。模型的动作准确度等于每天都买 SOXS。"}
+];
+
+const PLAN = [
+  ["先写明 90% 的分母", "逐行准确度：概率 ≥ 0.5 与标签一致的比例。买入精准率：发出的买入里，后来有多少真的碰到障碍。两者不是同一个数。项目里原来的 90% 是买入精准率，并且要求每群还有足够的信号。本页按你说的逐行准确度排方案，同时把另一口径留在每一步旁边。"],
+  ["把已看过的 eval 降为开发段", "2026-08-24 至 2026-09-18 已经用来报过数，也用来决定过下一轮试什么。它可以继续做开发对照，不能再当作「达到 90%」的考卷。达标要等一段开始前还没看过标签的窗口。"],
+  ["禁止只平移概率", "sigmoid(logit(p)+b) 再和 0.5 比，等于把门槛改成别的数。这种轮次即使准确度上升，也记为门槛实验，不记为模型迭代。B_group_chips 从 61.8% 掉到 52.1% 就是这个门没有拦住。"],
+  ["每一轮只改一项", "复制父模型规格，只改输入、学习器或预测股票里的一项。拟合前重放父模型，九列最大差仍要在 1e-7 以内。tune 选择，cal 确认，然后对开发段打一次分。"],
+  ["三次内容改动后看距离", "如果开发段准确度仍离多数类不到 5 个百分点，这个标签下的 90% 逐行准确度就停。改记距离，不把门槛挪动说成还在路上。若改目标本身，必须另开一个模型 id。"]
+];
+
+const FAMILY = {
+  "B 表格树": "LightGBM。每个触及目标一棵树。差别只在列：有群的拼上同伴摘要和相对坐标，无群的只留本股。",
+  "C 序列网": "小型多尺度网络。5 分钟和 60 分钟是共同主干。日线和群序列按路线开关。最后一层一次输出九个概率。",
+  "单名小时代理": "只有 SNXX。小时 K 不能当成五个父模型的 11:35 成交价。",
+  "两只 ETF 的三选一": "只有 SOXS 与 SOXX。输出不是九个概率，而是当天的一个动作。"
+};
+
+const NEXT = {
+  "B 表格树": "下一轮只加一组 11:30 之前已经知道、而当前列里没有的输入：固定同伴从 10:30 到 11:30 的变化。不改树的损失，不加偏置。",
+  "C 序列网": "五个开关已经试过。下一轮不再拨日线或群序列的开关，而是在冻结的父模型旁边加一个残差头，输入仍是父模型的同一批张量。",
+  "单名小时代理": "90% 在 15 天上意味着至少 14 天判对。先在更早的日期上找能认出那 2 个没碰到的日子的本股特征。eval 不满 40 天之前，不把 90% 写成结论。",
+  "两只 ETF 的三选一": "先分开报三件事：不行动是否认对、只碰一只时是否买对、两只都碰时买到的那只是否真的碰到。下一轮只加两只之间的相对路径，不改 0.5 的动作规则。"
+};
+
+const tradeoffs = {
+  catalog: "名册一次只展开一个模型，原理和数字靠得近。共同的 90% 规则要在每张卡片里重复，容易看成 22 套方案。",
+  family: "家族把 15 个组模型收在父模型下面，能看出它们不是新算法。单名和两只 ETF 的动作定义容易被表格带过去。",
+  ladder: "阶梯先逼你选定 90% 的分母和停止规则。单个模型的输入细节要再点开，不适合拿来核对代码。"
+};
+
+function card(model) {
+  return `<article class="card">
+    <h2>${model.id}</h2>
+    <dl>
+      <dt>家族</dt><dd>${model.family}</dd>
+      <dt>预测什么</dt><dd>${model.target}。${model.principle}</dd>
+      <dt>对谁出动作</dt><dd>${model.universe}</dd>
+      <dt>现在</dt><dd>逐行准确度 ${model.acc}。该切片多数类 ${model.majority}。${model.now}</dd>
+      <dt>下一轮</dt><dd>${NEXT[model.family]}</dd>
+    </dl>
+    <p class="anno">假设：90% 指逐行准确度，不是买入精准率。这个模型离 90% 的差距要在新窗口上算，不在 8 月 24 日到 9 月 18 日上宣布。</p>
+  </article>`;
+}
+
+function renderCatalog() {
+  const root = document.getElementById("catalog");
+  root.innerHTML = `<div class="list" role="list"></div><div id="detail"></div>`;
+  const list = root.querySelector(".list");
+  MODELS.forEach((model, index) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = model.id;
+    btn.setAttribute("aria-current", index === 0 ? "true" : "false");
+    btn.addEventListener("click", () => select(model.id));
+    list.appendChild(btn);
+  });
+  select(MODELS[0].id);
+}
+
+function select(id) {
+  document.querySelectorAll(".list button").forEach(btn => {
+    btn.setAttribute("aria-current", btn.textContent === id ? "true" : "false");
+  });
+  document.getElementById("detail").innerHTML = card(MODELS.find(model => model.id === id));
+}
+
+function renderFamily() {
+  const root = document.getElementById("family");
+  const order = ["B 表格树", "C 序列网", "单名小时代理", "两只 ETF 的三选一"];
+  root.innerHTML = `<section class="panel"><h2>共同的下一步</h2><p>${PLAN.map(step => step[0]).join(" → ")}</p>
+    <p class="note">组模型不是第五种算法。它们使用父模型的学习器，只是拟合和预测的股票换成一个组。</p></section>` +
+    order.map(name => {
+      const rows = MODELS.filter(model => model.family === name).map(model =>
+        `<tr><td>${model.id}</td><td>${model.universe}</td><td>${model.acc}</td><td>${model.majority}</td></tr>`).join("");
+      return `<section class="panel"><h2>${name}</h2><p>${FAMILY[name]}</p>
+        <p>${NEXT[name]}</p>
+        <div class="scroll"><table><thead><tr><th>模型</th><th>预测范围</th><th>现在</th><th>多数类</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+    }).join("");
+}
+
+function renderLadder() {
+  const root = document.getElementById("ladder");
+  root.innerHTML = `<ol>${PLAN.map((step, index) => `<li><h2>${step[0]}</h2><p>${step[1]}</p></li>`).join("")}</ol>
+    <section class="panel"><h2>这一步卡住的模型</h2>
+    ${["B 表格树","C 序列网","单名小时代理","两只 ETF 的三选一"].map(name => `<details>
+      <summary>${name}：${NEXT[name]}</summary>
+      <ul>${MODELS.filter(model => model.family === name).map(model => `<li>${model.id}，现在 ${model.acc}，多数类 ${model.majority}</li>`).join("")}</ul>
+    </details>`).join("")}
+    </section>
+    <p class="anno">待决：若选定的是买入精准率 90%，上面的逐行数字只作背景，方案要从「何时允许发出买入」重写，而不是继续追 0.5 准确度。</p>`;
+}
+
+function applyDir(value) {
+  document.querySelectorAll("[data-dir]").forEach(node => {
+    node.hidden = node.dataset.dir !== value;
+  });
+  document.getElementById("tradeoff").textContent = tradeoffs[value];
+}
+renderCatalog();
+renderFamily();
+renderLadder();
+document.querySelectorAll('input[name="dir"]').forEach(input => {
+  input.addEventListener("change", () => applyDir(input.value));
+});
+applyDir(document.querySelector('input[name="dir"]:checked').value);
+</script>
+</body>
+</html>

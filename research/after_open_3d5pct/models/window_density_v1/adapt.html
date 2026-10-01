@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>达成率回溯长度</title>
+<style>
+body { margin: 0; padding: 24px; font-family: sans-serif; color: #111827; background: #fff; }
+main { max-width: 1100px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border-bottom: 1px solid #d1d5db; text-align: left; padding: 8px; vertical-align: top; }
+.scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+<h1>每次留一只，改达成率要往回看多久</h1>
+<p>间隔 15 分钟，09:45 到 16:00，每个时刻仍只留一只。原先按振幅挑的小树是 317/702 = 45.2%。只看该股票这个时刻最近 60 个已到期交易日的达成率，是 328/702 = 46.7%。这 30 天里 AXTI 自己的达成率是 54.8%，21 只里至少有一只碰到 +5% 是 622/702 = 88.6%。</p>
+<p>考试日之前，同样的 60 日规则是 9691/16542 = 58.6%。当天 2 小时涨跌最大或最小的那一只，在考试日前大约只有 47%。所以这一轮不改树，只改往回看的长度。每天用的规则，由那天之前最近 20 个已经全部到期的交易日选出。四条固定规则的考试数字写在下面，供对照；当天的标签不参与选择。选择次数：最近 20 个已到期交易日 0 天，最近 60 个已到期交易日 0 天，最近 120 个已到期交易日 30 天，60 日达成率，只留今天涨跌两端 0 天。</p>
+<p>考试日之前四条规则：最近 20 个已到期交易日 9665/16542 = 58.4%，最近 60 个已到期交易日 9691/16542 = 58.6%，最近 120 个已到期交易日 10006/16542 = 60.5%，60 日达成率，只留今天涨跌两端 9736/16542 = 58.9%。</p>
+<h2>2026-08-18 至 2026-09-29</h2>
+<table>
+<thead><tr><th>方法</th><th>每次留一只</th><th>发出预报的时刻</th><th>留得最多的股票</th></tr></thead>
+<tbody><tr><th>最近 20 个已到期交易日</th><td>334/702 = 47.6%</td><td>772</td><td>AXTI 375 次</td></tr><tr><th>最近 60 个已到期交易日</th><td>328/702 = 46.7%</td><td>772</td><td>AXTI 303 次</td></tr><tr><th>最近 120 个已到期交易日</th><td>380/702 = 54.1%</td><td>772</td><td>AXTI 630 次</td></tr><tr><th>60 日达成率，只留今天涨跌两端</th><td>320/702 = 45.6%</td><td>772</td><td>AXTI 290 次</td></tr><tr><th>前 20 天在这四条里选</th><td>380/702 = 54.1%</td><td>772</td><td>AXTI 630 次</td></tr></tbody>
+</table>
+<h2>每个时刻的命中数</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>时刻</th><th>全部股票</th><th>最近 20 个已到期交易日</th><th>最近 60 个已到期交易日</th><th>最近 120 个已到期交易日</th><th>60 日达成率，只留今天涨跌两端</th><th>前 20 天在这四条里选</th></tr></thead>
+<tbody><tr><th>09:45</th><td>204/567</td><td>13/27</td><td>8/27</td><td>11/27</td><td>11/27</td><td>11/27</td></tr><tr><th>10:00</th><td>214/567</td><td>14/27</td><td>11/27</td><td>15/27</td><td>12/27</td><td>15/27</td></tr><tr><th>10:15</th><td>212/567</td><td>14/27</td><td>13/27</td><td>13/27</td><td>13/27</td><td>13/27</td></tr><tr><th>10:30</th><td>202/567</td><td>13/27</td><td>14/27</td><td>15/27</td><td>14/27</td><td>15/27</td></tr><tr><th>10:45</th><td>203/567</td><td>12/27</td><td>15/27</td><td>14/27</td><td>15/27</td><td>14/27</td></tr><tr><th>11:00</th><td>203/567</td><td>10/27</td><td>14/27</td><td>14/27</td><td>14/27</td><td>14/27</td></tr><tr><th>11:15</th><td>199/567</td><td>11/27</td><td>13/27</td><td>14/27</td><td>13/27</td><td>14/27</td></tr><tr><th>11:30</th><td>199/567</td><td>12/27</td><td>12/27</td><td>14/27</td><td>10/27</td><td>14/27</td></tr><tr><th>11:45</th><td>191/567</td><td>13/27</td><td>13/27</td><td>15/27</td><td>13/27</td><td>15/27</td></tr><tr><th>12:00</th><td>193/567</td><td>11/27</td><td>13/27</td><td>14/27</td><td>12/27</td><td>14/27</td></tr><tr><th>12:15</th><td>199/567</td><td>13/27</td><td>13/27</td><td>12/27</td><td>12/27</td><td>12/27</td></tr><tr><th>12:30</th><td>203/567</td><td>15/27</td><td>13/27</td><td>16/27</td><td>12/27</td><td>16/27</td></tr><tr><th>12:45</th><td>196/567</td><td>12/27</td><td>13/27</td><td>14/27</td><td>14/27</td><td>14/27</td></tr><tr><th>13:00</th><td>194/567</td><td>14/27</td><td>11/27</td><td>15/27</td><td>10/27</td><td>15/27</td></tr><tr><th>13:15</th><td>198/567</td><td>10/27</td><td>10/27</td><td>13/27</td><td>10/27</td><td>13/27</td></tr><tr><th>13:30</th><td>197/567</td><td>12/27</td><td>10/27</td><td>14/27</td><td>10/27</td><td>14/27</td></tr><tr><th>13:45</th><td>197/567</td><td>9/27</td><td>11/27</td><td>13/27</td><td>12/27</td><td>13/27</td></tr><tr><th>14:00</th><td>196/567</td><td>15/27</td><td>13/27</td><td>15/27</td><td>10/27</td><td>15/27</td></tr><tr><th>14:15</th><td>197/567</td><td>14/27</td><td>14/27</td><td>15/27</td><td>13/27</td><td>15/27</td></tr><tr><th>14:30</th><td>193/567</td><td>15/27</td><td>12/27</td><td>15/27</td><td>12/27</td><td>15/27</td></tr><tr><th>14:45</th><td>193/567</td><td>16/27</td><td>13/27</td><td>16/27</td><td>12/27</td><td>16/27</td></tr><tr><th>15:00</th><td>193/567</td><td>15/27</td><td>15/27</td><td>17/27</td><td>14/27</td><td>17/27</td></tr><tr><th>15:15</th><td>193/567</td><td>12/27</td><td>14/27</td><td>16/27</td><td>12/27</td><td>16/27</td></tr><tr><th>15:30</th><td>187/567</td><td>12/27</td><td>13/27</td><td>16/27</td><td>15/27</td><td>16/27</td></tr><tr><th>15:45</th><td>192/567</td><td>14/27</td><td>14/27</td><td>17/27</td><td>12/27</td><td>17/27</td></tr><tr><th>16:00</th><td>188/567</td><td>13/27</td><td>13/27</td><td>17/27</td><td>13/27</td><td>17/27</td></tr></tbody>
+</table>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>窗口长度和 K 线粗细</title>
+<style>
+body { margin: 0; padding: 24px; font-family: sans-serif; color: #111827; background: #fff; }
+main { max-width: 1080px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border-bottom: 1px solid #d1d5db; text-align: left; padding: 8px; vertical-align: top; }
+.scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+<h1>用一段 K 线窗口预测 3 天 +5%</h1>
+<p>每一行是一只股票在一个时刻的窗口。特征是窗口里每一根 K 线的涨跌、振幅、成交量占前一常规盘的比例、和相对前一根的跳空。缺的 K 线留空，后面的不往前补。入场价是决策时刻那根 K 线的收盘价。标签是这根收盘之后的常规盘最高价，收到决策日之后第 2 个交易日，有没有碰到 +5%。当天把 21 只里概率最高的一只留下。树是 40 棵、深度 3、7 叶。考试日是 2026-08-18 至 2026-09-29。</p>
+<p>提议的输入是 2 小时、5 分钟，决策在 11:30，也就是开盘后第一段完整的 2 小时。同一决策时刻的标签相同，所以命中差只来自窗口。4 小时要到 13:30 才覆盖得满，因此和另一组 2 小时、5 分钟一起放在 13:30。</p>
+<h2>八组输入</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>输入</th><th>决策</th><th>根数</th><th>每天留一只</th><th>当天全部股票</th><th>训练分前 20%</th><th>训练 AUC</th><th>分裂增益</th></tr></thead>
+<tbody><tr><th>2 小时，5 分钟</th><td>11:30</td><td>24</td><td>13/27 = 48.1%</td><td>199/567 = 35.1%</td><td>27/94 = 28.7%</td><td>73.6%</td><td>振幅 93.3%，涨跌 1.1%，量 2.0%，跳空 3.6%</td></tr><tr><th>30 分钟，5 分钟</th><td>11:30</td><td>6</td><td>11/27 = 40.7%</td><td>199/567 = 35.1%</td><td>23/89 = 25.8%</td><td>72.4%</td><td>振幅 90.8%，涨跌 0.2%，量 4.5%，跳空 4.6%</td></tr><tr><th>60 分钟，5 分钟</th><td>11:30</td><td>12</td><td>14/27 = 51.9%</td><td>199/567 = 35.1%</td><td>23/82 = 28.0%</td><td>73.1%</td><td>振幅 92.4%，涨跌 0.7%，量 2.2%，跳空 4.7%</td></tr><tr><th>2 小时，15 分钟</th><td>11:30</td><td>8</td><td>12/27 = 44.4%</td><td>199/567 = 35.1%</td><td>32/92 = 34.8%</td><td>72.9%</td><td>振幅 96.2%，涨跌 0.7%，量 1.1%，跳空 2.0%</td></tr><tr><th>2 小时，30 分钟</th><td>11:30</td><td>4</td><td>15/27 = 55.6%</td><td>199/567 = 35.1%</td><td>32/91 = 35.2%</td><td>72.2%</td><td>振幅 96.2%，涨跌 0.9%，量 1.4%，跳空 1.6%</td></tr><tr><th>2 小时，60 分钟</th><td>11:30</td><td>2</td><td>15/27 = 55.6%</td><td>199/567 = 35.1%</td><td>34/97 = 35.1%</td><td>71.2%</td><td>振幅 95.4%，涨跌 1.2%，量 2.1%，跳空 1.4%</td></tr><tr><th>4 小时，5 分钟</th><td>13:30</td><td>48</td><td>10/27 = 37.0%</td><td>197/567 = 34.7%</td><td>25/79 = 31.6%</td><td>74.2%</td><td>振幅 92.7%，涨跌 2.4%，量 0.9%，跳空 4.1%</td></tr><tr><th>2 小时，5 分钟，13:30</th><td>13:30</td><td>24</td><td>10/27 = 37.0%</td><td>197/567 = 34.7%</td><td>15/54 = 27.8%</td><td>73.7%</td><td>振幅 91.7%，涨跌 1.1%，量 1.6%，跳空 5.6%</td></tr></tbody>
+</table>
+</div>
+<h2>2 小时、5 分钟，11:30，每天留一只</h2>
+<table>
+<thead><tr><th>交易日</th><th>只数</th><th>最高概率</th></tr></thead>
+<tbody><tr><th>2026-08-18</th><td>21</td><td>AXTI · 66.0% · 未达成 · 当天 3/21</td></tr><tr><th>2026-08-19</th><td>21</td><td>AXTI · 66.8% · 未达成 · 当天 3/21</td></tr><tr><th>2026-08-20</th><td>21</td><td>AAOI · 60.6% · 未达成 · 当天 2/21</td></tr><tr><th>2026-08-21</th><td>21</td><td>AXTI · 62.2% · 未达成 · 当天 1/21</td></tr><tr><th>2026-08-24</th><td>21</td><td>AXTI · 59.5% · 达成 · 当天 15/21</td></tr><tr><th>2026-08-25</th><td>21</td><td>AAOI · 53.8% · 未达成 · 当天 12/21</td></tr><tr><th>2026-08-26</th><td>21</td><td>AXTI · 53.8% · 达成 · 当天 12/21</td></tr><tr><th>2026-08-27</th><td>21</td><td>AXTI · 51.9% · 未达成 · 当天 1/21</td></tr><tr><th>2026-08-28</th><td>21</td><td>AXTI · 50.9% · 未达成 · 当天 1/21</td></tr><tr><th>2026-08-31</th><td>21</td><td>AXTI · 54.5% · 未达成 · 当天 1/21</td></tr><tr><th>2026-09-01</th><td>21</td><td>AXTI · 46.7% · 达成 · 当天 2/21</td></tr><tr><th>2026-09-02</th><td>21</td><td>AXTI · 58.9% · 达成 · 当天 11/21</td></tr><tr><th>2026-09-03</th><td>21</td><td>CRDO · 59.1% · 达成 · 当天 19/21</td></tr><tr><th>2026-09-04</th><td>21</td><td>AXTI · 62.1% · 达成 · 当天 14/21</td></tr><tr><th>2026-09-08</th><td>21</td><td>AXTI · 56.4% · 达成 · 当天 2/21</td></tr><tr><th>2026-09-09</th><td>21</td><td>AXTI · 60.9% · 未达成 · 当天 1/21</td></tr><tr><th>2026-09-10</th><td>21</td><td>AXTI · 55.6% · 未达成 · 当天 0/21</td></tr><tr><th>2026-09-11</th><td>21</td><td>AXTI · 57.2% · 未达成 · 当天 0/21</td></tr><tr><th>2026-09-14</th><td>21</td><td>AXTI · 59.6% · 达成 · 当天 11/21</td></tr><tr><th>2026-09-15</th><td>21</td><td>AXTI · 48.5% · 达成 · 当天 16/21</td></tr><tr><th>2026-09-16</th><td>21</td><td>AXTI · 51.6% · 达成 · 当天 16/21</td></tr><tr><th>2026-09-17</th><td>21</td><td>AXTI · 48.1% · 达成 · 当天 15/21</td></tr><tr><th>2026-09-18</th><td>21</td><td>AXTI · 51.4% · 达成 · 当天 18/21</td></tr><tr><th>2026-09-21</th><td>21</td><td>AXTI · 53.6% · 未达成 · 当天 8/21</td></tr><tr><th>2026-09-22</th><td>21</td><td>AAOI · 55.0% · 未达成 · 当天 2/21</td></tr><tr><th>2026-09-23</th><td>21</td><td>STX · 54.8% · 未达成 · 当天 4/21</td></tr><tr><th>2026-09-24</th><td>21</td><td>AXTI · 49.7% · 达成 · 当天 9/21</td></tr><tr><th>2026-09-25</th><td>21</td><td>CRDO · 53.1% · 未到期 · 当天 —</td></tr><tr><th>2026-09-28</th><td>21</td><td>AXTI · 51.0% · 未到期 · 当天 —</td></tr><tr><th>2026-09-29</th><td>14</td><td>ALAB · 44.6% · 未到期 · 当天 —</td></tr></tbody>
+</table>
+</main>
+</body>
+</html>

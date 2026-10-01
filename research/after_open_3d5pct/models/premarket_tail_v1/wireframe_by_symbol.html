@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>盘前尾期 round 2 · 分股票验证</title>
+<style>
+  :root {
+    --ink: #111827;
+    --mute: #4b5563;
+    --line: #d1d5db;
+    --wash: #f3f4f6;
+    --paper: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1, h2, h3, p { margin: 0; text-wrap: balance; }
+  h1 { font-size: 28px; line-height: 1.2; font-weight: 650; }
+  h2 { font-size: 20px; line-height: 1.3; font-weight: 650; }
+  h3 { font-size: 16px; line-height: 1.3; font-weight: 650; }
+  p + p, .sub + p, p + .sub { margin-top: 6px; }
+  .kicker { color: var(--mute); font-size: 13px; letter-spacing: 0.02em; }
+  .lead { max-width: 68ch; margin-top: 12px; }
+  .stack { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+  .block { border: 1px solid var(--line); padding: 12px; }
+  .sub { color: var(--mute); font-size: 13px; display: block; }
+  .ticker { font-weight: 650; font-variant-numeric: tabular-nums; }
+  .tag {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 1px 6px;
+    border: 1px solid var(--line);
+    color: var(--mute);
+    font-size: 12px;
+    font-weight: 450;
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 16px;
+    margin: 0;
+  }
+  .facts div { min-width: 0; }
+  .facts dt { color: var(--mute); font-size: 13px; }
+  .facts dd { margin: 2px 0 0; font-variant-numeric: tabular-nums; }
+  .universe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .universe ol { margin: 8px 0 0; padding-left: 1.2em; }
+  .wrap { overflow-wrap: break-word; }
+  .kpi { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .kpi article { border: 1px solid var(--line); background: var(--wash); padding: 10px; min-width: 0; }
+  .figure { font-size: 22px; font-variant-numeric: tabular-nums; font-weight: 650; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tabs button {
+    font: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    min-height: 40px;
+  }
+  .tabs button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+  .tabs button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .scroll { overflow-x: auto; max-width: 100%; border: 1px solid var(--line); }
+  .scroll:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  table { border-collapse: collapse; width: 100%; min-width: 920px; }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 8px;
+    text-align: right;
+    vertical-align: top;
+    font-variant-numeric: tabular-nums;
+    font-weight: 450;
+  }
+  thead th { text-align: right; font-size: 13px; color: var(--mute); font-weight: 650; }
+  tbody th, td:nth-child(2) { text-align: left; }
+  thead th:first-child, thead th:nth-child(2) { text-align: left; }
+  tr.pool { background: var(--wash); }
+  caption {
+    caption-side: top;
+    text-align: left;
+    color: var(--mute);
+    font-size: 13px;
+    padding: 8px;
+  }
+  .lift { list-style: none; margin: 0; padding: 0; }
+  .lift-row {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: 8px 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .bar-track {
+    position: relative;
+    height: 16px;
+    background: var(--wash);
+    border: 1px solid var(--line);
+  }
+  .bar-fill { display: block; height: 100%; background: var(--mute); }
+  .bar-tick {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 2px;
+    margin-left: -1px;
+    background: var(--ink);
+  }
+  .scale {
+    display: flex;
+    justify-content: space-between;
+    color: var(--mute);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .col { border: 1px solid var(--line); padding: 12px; min-width: 0; }
+  .members { list-style: none; margin: 8px 0 0; padding: 0; }
+  .members .tag { margin: 0 0 0 6px; }
+  .members li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 8px;
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+  }
+  .members .sub { grid-column: 1 / -1; }
+  .num { font-variant-numeric: tabular-nums; font-weight: 650; }
+  .review { margin: 0; padding-left: 1.2em; }
+  .review li + li { margin-top: 6px; }
+  @media (max-width: 720px) {
+    h1 { font-size: 24px; }
+    .facts, .universe, .kpi, .groups { grid-template-columns: 1fr; }
+    .lift-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="kicker">premarket_tail_v1 · round 2 · 同一套买入按股票拆开</p>
+  <h1>验证用的是这 21 只，叠了 127 个验证周</h1>
+  <p class="lead">每一行沿用这一轮已经打好的分数。分类器、六个特征和训练分数的第 80 百分位都没有按股票重做。合并验证 precision 是 49.9%，买入 2620 笔。拆开以后，验证 precision 从 CSCO 的 6.5% 到 AAOI 的 67.9%。</p>
+
+  <div class="stack">
+    <section class="block" aria-labelledby="what-head">
+      <h2 id="what-head">这场考试</h2>
+      <dl class="facts">
+        <div><dt>股票</dt><dd>union_symbols() 的 21 只</dd></div>
+        <div><dt>窗口</dt><dd>前 8 个已成熟周拟合，下一周测试，再下一周验证</dd></div>
+        <div><dt>计入</dt><dd>127 / 127 个三元组都计入</dd></div>
+        <div><dt>测试行</dt><dd>13075</dd></div>
+        <div><dt>验证行</dt><dd>13085</dd></div>
+        <div><dt>买入规则</dt><dd>训练分数 ≥ 该窗口第 80 百分位</dd></div>
+        <div><dt>分类器</dt><dd>LGBMClassifier，40 棵，7 叶，深度 3</dd></div>
+        <div><dt>其余超参</dt><dd>min_child_samples 10，learning_rate 0.05，reg_lambda 10，random_state 3566</dd></div>
+        <div><dt>特征</dt><dd>overnight_return、premarket_return、path_impulse、path_fade、path_cleanliness、path_peak</dd></div>
+      </dl>
+      <p class="sub" style="margin-top:10px">入场价是当天 09:30 结束的盘前 K 线收盘价。命中指当日常规盘加其后 2 个交易日的最高价触及入场价的 1.05 倍。precision 是这些买入里后来命中的比例。验证周不改买入规则。</p>
+    </section>
+
+    <section class="block" aria-labelledby="names-head">
+      <h2 id="names-head">这批股票</h2>
+      <p>名单来自 <span class="ticker">pugh_ge5/build_rows.py</span> 的 GROUPS。芯片 8 只、光通信 12 只、存储 4 只，去重后 21 只。ALAB、MRVL、AVGO 同时在芯片和光通信里。</p>
+      <div class="universe">
+        <section>
+          <h3>芯片</h3>
+          <ol><li>ALAB</li><li>AMD</li><li>ARM</li><li>AVGO</li><li>INTC</li><li>MRVL</li><li>NVDA</li><li>QCOM</li></ol>
+        </section>
+        <section>
+          <h3>光通信</h3>
+          <ol><li>LITE</li><li>COHR</li><li>CIEN</li><li>AAOI</li><li>FN</li><li>AXTI</li><li>CRDO</li><li>MRVL</li><li>AVGO</li><li>ALAB</li><li>ANET</li><li>CSCO</li></ol>
+        </section>
+        <section>
+          <h3>存储</h3>
+          <ol><li>MU</li><li>SNDK</li><li>STX</li><li>WDC</li></ol>
+        </section>
+      </div>
+      <p class="sub" style="margin-top:10px">除 ALAB、SNDK 外，测试周和验证周都是 635 行。ALAB 从 2024-03-20 上市日起纳入，这次测试 621 行、验证 626 行。SNDK 从 2025-02-24 普通交易起点纳入，这次测试 389 行、验证 394 行。</p>
+    </section>
+
+    <section aria-label="合并结果">
+      <div class="kpi">
+        <article>
+          <p class="sub">测试周 precision</p>
+          <p class="figure">47.9%</p>
+          <p class="sub">2643 笔 · 每天买 39.9% · 提升 +7.9 个百分点</p>
+        </article>
+        <article>
+          <p class="sub">验证周 precision</p>
+          <p class="figure">49.9%</p>
+          <p class="sub">2620 笔 · 每天买 40.1% · 提升 +9.7 个百分点</p>
+        </article>
+        <article>
+          <p class="sub">验证 precision 的个股范围</p>
+          <p class="figure">6.5%–67.9%</p>
+          <p class="sub">CSCO 到 AAOI。9 只高于合并的 49.9%。</p>
+        </article>
+        <article>
+          <p class="sub">相对本股每天买</p>
+          <p class="figure">14 / 4 / 3</p>
+          <p class="sub">验证提升 ≥0.5 个百分点、绝对值小于 0.5、≤ −0.5。最大提升是 AVGO 的 +16.0 个百分点。</p>
+        </article>
+      </div>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="三种读法">
+      <button type="button" role="tab" id="tab-roster" data-dir="roster" aria-controls="panel-roster" aria-selected="true" tabindex="0">名册</button>
+      <button type="button" role="tab" id="tab-lift" data-dir="lift" aria-controls="panel-lift" aria-selected="false" tabindex="-1">相对本股</button>
+      <button type="button" role="tab" id="tab-groups" data-dir="groups" aria-controls="panel-groups" aria-selected="false" tabindex="-1">三组</button>
+    </nav>
+
+    <section id="panel-roster" role="tabpanel" aria-labelledby="tab-roster">
+      <h2>名册</h2>
+      <p class="lead">按验证 precision 从高到低排，测试周放在右边。这种排法方便点名。AAOI 在最前，它的验证基准已经是 65.4%。</p>
+      <div class="scroll" tabindex="0" aria-label="分股票名册，窄屏时在框内横向滚动">
+        <table>
+          <caption>窄屏时表在这个框里横滑。合并行放在第一行。高于合并指验证 precision 高于 49.9%。</caption>
+          <thead>
+            <tr>
+              <th scope="col">代码</th>
+              <th scope="col">组</th>
+              <th scope="col">验证 precision</th>
+              <th scope="col">验证基准</th>
+              <th scope="col">验证提升</th>
+              <th scope="col">验证买入</th>
+              <th scope="col">测试 precision</th>
+              <th scope="col">测试基准</th>
+              <th scope="col">测试提升</th>
+              <th scope="col">测试买入</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pool"><th scope="row"><span class="ticker">合并</span><span class="sub">21 只 · 不重复</span></th><td>全部</td><td>49.9%</td><td>40.1%</td><td>+9.7 个百分点</td><td>2620</td><td>47.9%</td><td>39.9%</td><td>+7.9 个百分点</td><td>2643</td></tr>
+<tr><th scope="row"><span class="ticker">AAOI</span><span class="sub">各 635 行</span><span class="tag">高于合并</span></th><td>光通信</td><td>67.9%</td><td>65.4%</td><td>+2.5 个百分点</td><td>218</td><td>68.9%</td><td>65.2%</td><td>+3.8 个百分点</td><td>219</td></tr>
+<tr><th scope="row"><span class="ticker">AXTI</span><span class="sub">各 635 行</span><span class="tag">高于合并</span></th><td>光通信</td><td>62.2%</td><td>62.2%</td><td>0.0 个百分点</td><td>222</td><td>60.1%</td><td>62.0%</td><td>-2.0 个百分点</td><td>218</td></tr>
+<tr><th scope="row"><span class="ticker">SNDK</span><span class="sub">测试 389 行 · 验证 394 行</span><span class="tag">高于合并</span></th><td>存储</td><td>62.2%</td><td>62.9%</td><td>-0.8 个百分点</td><td>111</td><td>60.6%</td><td>63.0%</td><td>-2.4 个百分点</td><td>109</td></tr>
+<tr><th scope="row"><span class="ticker">CRDO</span><span class="sub">各 635 行</span><span class="tag">高于合并</span></th><td>光通信</td><td>60.9%</td><td>54.6%</td><td>+6.3 个百分点</td><td>174</td><td>58.0%</td><td>54.5%</td><td>+3.6 个百分点</td><td>174</td></tr>
+<tr><th scope="row"><span class="ticker">LITE</span><span class="sub">各 635 行</span><span class="tag">高于合并</span></th><td>光通信</td><td>59.9%</td><td>50.7%</td><td>+9.2 个百分点</td><td>177</td><td>53.2%</td><td>50.1%</td><td>+3.1 个百分点</td><td>171</td></tr>
+<tr><th scope="row"><span class="ticker">ALAB</span><span class="sub">测试 621 行 · 验证 626 行</span><span class="tag">高于合并</span></th><td>芯片、光通信</td><td>56.6%</td><td>54.6%</td><td>+2.0 个百分点</td><td>159</td><td>56.0%</td><td>54.4%</td><td>+1.5 个百分点</td><td>168</td></tr>
+<tr><th scope="row"><span class="ticker">COHR</span><span class="sub">各 635 行</span><span class="tag">高于合并</span></th><td>光通信</td><td>56.3%</td><td>48.5%</td><td>+7.8 个百分点</td><td>167</td><td>48.5%</td><td>48.2%</td><td>+0.3 个百分点</td><td>171</td></tr>
+<tr><th scope="row"><span class="ticker">ARM</span><span class="sub">各 635 行</span><span class="tag">高于合并</span></th><td>芯片</td><td>51.8%</td><td>44.6%</td><td>+7.2 个百分点</td><td>112</td><td>46.0%</td><td>44.3%</td><td>+1.8 个百分点</td><td>126</td></tr>
+<tr><th scope="row"><span class="ticker">MRVL</span><span class="sub">各 635 行</span><span class="tag">高于合并</span></th><td>芯片、光通信</td><td>50.8%</td><td>39.8%</td><td>+10.9 个百分点</td><td>128</td><td>47.4%</td><td>39.7%</td><td>+7.7 个百分点</td><td>135</td></tr>
+<tr><th scope="row"><span class="ticker">WDC</span><span class="sub">各 635 行</span></th><td>存储</td><td>48.0%</td><td>38.4%</td><td>+9.5 个百分点</td><td>123</td><td>48.0%</td><td>38.1%</td><td>+9.9 个百分点</td><td>125</td></tr>
+<tr><th scope="row"><span class="ticker">AMD</span><span class="sub">各 635 行</span></th><td>芯片</td><td>47.6%</td><td>34.3%</td><td>+13.3 个百分点</td><td>84</td><td>38.7%</td><td>34.2%</td><td>+4.5 个百分点</td><td>93</td></tr>
+<tr><th scope="row"><span class="ticker">AVGO</span><span class="sub">各 635 行</span></th><td>芯片、光通信</td><td>43.0%</td><td>27.1%</td><td>+16.0 个百分点</td><td>79</td><td>37.0%</td><td>26.9%</td><td>+10.1 个百分点</td><td>73</td></tr>
+<tr><th scope="row"><span class="ticker">INTC</span><span class="sub">各 635 行</span></th><td>芯片</td><td>41.1%</td><td>37.8%</td><td>+3.3 个百分点</td><td>95</td><td>39.8%</td><td>37.5%</td><td>+2.3 个百分点</td><td>93</td></tr>
+<tr><th scope="row"><span class="ticker">MU</span><span class="sub">各 635 行</span></th><td>存储</td><td>39.8%</td><td>40.5%</td><td>-0.6 个百分点</td><td>118</td><td>43.1%</td><td>40.3%</td><td>+2.8 个百分点</td><td>116</td></tr>
+<tr><th scope="row"><span class="ticker">FN</span><span class="sub">各 635 行</span></th><td>光通信</td><td>39.7%</td><td>40.9%</td><td>-1.2 个百分点</td><td>141</td><td>36.6%</td><td>40.5%</td><td>-3.9 个百分点</td><td>145</td></tr>
+<tr><th scope="row"><span class="ticker">CIEN</span><span class="sub">各 635 行</span></th><td>光通信</td><td>37.5%</td><td>37.3%</td><td>+0.2 个百分点</td><td>136</td><td>36.2%</td><td>36.7%</td><td>-0.5 个百分点</td><td>130</td></tr>
+<tr><th scope="row"><span class="ticker">ANET</span><span class="sub">各 635 行</span></th><td>光通信</td><td>35.1%</td><td>30.6%</td><td>+4.6 个百分点</td><td>94</td><td>35.4%</td><td>30.2%</td><td>+5.2 个百分点</td><td>96</td></tr>
+<tr><th scope="row"><span class="ticker">STX</span><span class="sub">各 635 行</span></th><td>存储</td><td>33.6%</td><td>33.7%</td><td>-0.1 个百分点</td><td>113</td><td>36.1%</td><td>33.2%</td><td>+2.9 个百分点</td><td>119</td></tr>
+<tr><th scope="row"><span class="ticker">NVDA</span><span class="sub">各 635 行</span></th><td>芯片</td><td>27.8%</td><td>25.5%</td><td>+2.3 个百分点</td><td>72</td><td>34.3%</td><td>26.3%</td><td>+8.0 个百分点</td><td>67</td></tr>
+<tr><th scope="row"><span class="ticker">QCOM</span><span class="sub">各 635 行</span></th><td>芯片</td><td>21.2%</td><td>15.7%</td><td>+5.5 个百分点</td><td>66</td><td>22.1%</td><td>15.9%</td><td>+6.2 个百分点</td><td>68</td></tr>
+<tr><th scope="row"><span class="ticker">CSCO</span><span class="sub">各 635 行</span></th><td>光通信</td><td>6.5%</td><td>6.6%</td><td>-0.2 个百分点</td><td>31</td><td>3.7%</td><td>6.6%</td><td>-2.9 个百分点</td><td>27</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="panel-lift" role="tabpanel" aria-labelledby="tab-lift" hidden>
+      <h2>相对本股</h2>
+      <p class="lead">按验证提升从高到低排。灰条是验证 precision，黑刻度是这只股票每天买的基准。条的右端是 70%。AVGO 排在最前，验证 precision 仍是 43.0%。</p>
+      <div class="lift-row" aria-hidden="true">
+        <div></div>
+        <p class="scale"><span>0%</span><span>右端 70%</span></p>
+      </div>
+      <ol class="lift">
+        <li class="lift-row"><div class="lift-name"><span class="ticker">AVGO</span><span class="sub">芯片、光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="AVGO 验证 precision 43.0%，基准 27.1%"><span class="bar-fill" style="width:61.48%"></span><span class="bar-tick" style="left:38.70%"></span></div><p>验证 precision 43.0%，基准 27.1%，提升 +16.0 个百分点，买入 79。</p><p class="sub">测试 precision 37.0%，基准 26.9%，提升 +10.1 个百分点，买入 73。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">AMD</span><span class="sub">芯片</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="AMD 验证 precision 47.6%，基准 34.3%"><span class="bar-fill" style="width:68.03%"></span><span class="bar-tick" style="left:49.04%"></span></div><p>验证 precision 47.6%，基准 34.3%，提升 +13.3 个百分点，买入 84。</p><p class="sub">测试 precision 38.7%，基准 34.2%，提升 +4.5 个百分点，买入 93。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">MRVL</span><span class="sub">芯片、光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="MRVL 验证 precision 50.8%，基准 39.8%"><span class="bar-fill" style="width:72.54%"></span><span class="bar-tick" style="left:56.92%"></span></div><p>验证 precision 50.8%，基准 39.8%，提升 +10.9 个百分点，买入 128。</p><p class="sub">测试 precision 47.4%，基准 39.7%，提升 +7.7 个百分点，买入 135。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">WDC</span><span class="sub">存储</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="WDC 验证 precision 48.0%，基准 38.4%"><span class="bar-fill" style="width:68.52%"></span><span class="bar-tick" style="left:54.89%"></span></div><p>验证 precision 48.0%，基准 38.4%，提升 +9.5 个百分点，买入 123。</p><p class="sub">测试 precision 48.0%，基准 38.1%，提升 +9.9 个百分点，买入 125。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">LITE</span><span class="sub">光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="LITE 验证 precision 59.9%，基准 50.7%"><span class="bar-fill" style="width:85.55%"></span><span class="bar-tick" style="left:72.44%"></span></div><p>验证 precision 59.9%，基准 50.7%，提升 +9.2 个百分点，买入 177。</p><p class="sub">测试 precision 53.2%，基准 50.1%，提升 +3.1 个百分点，买入 171。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">COHR</span><span class="sub">光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="COHR 验证 precision 56.3%，基准 48.5%"><span class="bar-fill" style="width:80.41%"></span><span class="bar-tick" style="left:69.29%"></span></div><p>验证 precision 56.3%，基准 48.5%，提升 +7.8 个百分点，买入 167。</p><p class="sub">测试 precision 48.5%，基准 48.2%，提升 +0.3 个百分点，买入 171。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">ARM</span><span class="sub">芯片</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="ARM 验证 precision 51.8%，基准 44.6%"><span class="bar-fill" style="width:73.98%"></span><span class="bar-tick" style="left:63.67%"></span></div><p>验证 precision 51.8%，基准 44.6%，提升 +7.2 个百分点，买入 112。</p><p class="sub">测试 precision 46.0%，基准 44.3%，提升 +1.8 个百分点，买入 126。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">CRDO</span><span class="sub">光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="CRDO 验证 precision 60.9%，基准 54.6%"><span class="bar-fill" style="width:87.03%"></span><span class="bar-tick" style="left:78.07%"></span></div><p>验证 precision 60.9%，基准 54.6%，提升 +6.3 个百分点，买入 174。</p><p class="sub">测试 precision 58.0%，基准 54.5%，提升 +3.6 个百分点，买入 174。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">QCOM</span><span class="sub">芯片</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="QCOM 验证 precision 21.2%，基准 15.7%"><span class="bar-fill" style="width:30.30%"></span><span class="bar-tick" style="left:22.50%"></span></div><p>验证 precision 21.2%，基准 15.7%，提升 +5.5 个百分点，买入 66。</p><p class="sub">测试 precision 22.1%，基准 15.9%，提升 +6.2 个百分点，买入 68。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">ANET</span><span class="sub">光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="ANET 验证 precision 35.1%，基准 30.6%"><span class="bar-fill" style="width:50.15%"></span><span class="bar-tick" style="left:43.64%"></span></div><p>验证 precision 35.1%，基准 30.6%，提升 +4.6 个百分点，买入 94。</p><p class="sub">测试 precision 35.4%，基准 30.2%，提升 +5.2 个百分点，买入 96。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">INTC</span><span class="sub">芯片</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="INTC 验证 precision 41.1%，基准 37.8%"><span class="bar-fill" style="width:58.65%"></span><span class="bar-tick" style="left:53.99%"></span></div><p>验证 precision 41.1%，基准 37.8%，提升 +3.3 个百分点，买入 95。</p><p class="sub">测试 precision 39.8%，基准 37.5%，提升 +2.3 个百分点，买入 93。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">AAOI</span><span class="sub">光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="AAOI 验证 precision 67.9%，基准 65.4%"><span class="bar-fill" style="width:96.99%"></span><span class="bar-tick" style="left:93.36%"></span></div><p>验证 precision 67.9%，基准 65.4%，提升 +2.5 个百分点，买入 218。</p><p class="sub">测试 precision 68.9%，基准 65.2%，提升 +3.8 个百分点，买入 219。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">NVDA</span><span class="sub">芯片</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="NVDA 验证 precision 27.8%，基准 25.5%"><span class="bar-fill" style="width:39.68%"></span><span class="bar-tick" style="left:36.45%"></span></div><p>验证 precision 27.8%，基准 25.5%，提升 +2.3 个百分点，买入 72。</p><p class="sub">测试 precision 34.3%，基准 26.3%，提升 +8.0 个百分点，买入 67。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">ALAB</span><span class="sub">芯片、光通信</span><span class="tag">高于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="ALAB 验证 precision 56.6%，基准 54.6%"><span class="bar-fill" style="width:80.86%"></span><span class="bar-tick" style="left:78.05%"></span></div><p>验证 precision 56.6%，基准 54.6%，提升 +2.0 个百分点，买入 159。</p><p class="sub">测试 precision 56.0%，基准 54.4%，提升 +1.5 个百分点，买入 168。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">CIEN</span><span class="sub">光通信</span><span class="tag">持平</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="CIEN 验证 precision 37.5%，基准 37.3%"><span class="bar-fill" style="width:53.57%"></span><span class="bar-tick" style="left:53.32%"></span></div><p>验证 precision 37.5%，基准 37.3%，提升 +0.2 个百分点，买入 136。</p><p class="sub">测试 precision 36.2%，基准 36.7%，提升 -0.5 个百分点，买入 130。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">AXTI</span><span class="sub">光通信</span><span class="tag">持平</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="AXTI 验证 precision 62.2%，基准 62.2%"><span class="bar-fill" style="width:88.80%"></span><span class="bar-tick" style="left:88.86%"></span></div><p>验证 precision 62.2%，基准 62.2%，提升 0.0 个百分点，买入 222。</p><p class="sub">测试 precision 60.1%，基准 62.0%，提升 -2.0 个百分点，买入 218。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">STX</span><span class="sub">存储</span><span class="tag">持平</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="STX 验证 precision 33.6%，基准 33.7%"><span class="bar-fill" style="width:48.04%"></span><span class="bar-tick" style="left:48.14%"></span></div><p>验证 precision 33.6%，基准 33.7%，提升 -0.1 个百分点，买入 113。</p><p class="sub">测试 precision 36.1%，基准 33.2%，提升 +2.9 个百分点，买入 119。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">CSCO</span><span class="sub">光通信</span><span class="tag">持平</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="CSCO 验证 precision 6.5%，基准 6.6%"><span class="bar-fill" style="width:9.22%"></span><span class="bar-tick" style="left:9.45%"></span></div><p>验证 precision 6.5%，基准 6.6%，提升 -0.2 个百分点，买入 31。</p><p class="sub">测试 precision 3.7%，基准 6.6%，提升 -2.9 个百分点，买入 27。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">MU</span><span class="sub">存储</span><span class="tag">低于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="MU 验证 precision 39.8%，基准 40.5%"><span class="bar-fill" style="width:56.90%"></span><span class="bar-tick" style="left:57.82%"></span></div><p>验证 precision 39.8%，基准 40.5%，提升 -0.6 个百分点，买入 118。</p><p class="sub">测试 precision 43.1%，基准 40.3%，提升 +2.8 个百分点，买入 116。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">SNDK</span><span class="sub">存储</span><span class="tag">低于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="SNDK 验证 precision 62.2%，基准 62.9%"><span class="bar-fill" style="width:88.80%"></span><span class="bar-tick" style="left:89.92%"></span></div><p>验证 precision 62.2%，基准 62.9%，提升 -0.8 个百分点，买入 111。</p><p class="sub">测试 precision 60.6%，基准 63.0%，提升 -2.4 个百分点，买入 109。</p></div></li><li class="lift-row"><div class="lift-name"><span class="ticker">FN</span><span class="sub">光通信</span><span class="tag">低于本股</span></div><div class="lift-viz"><div class="bar-track" role="img" aria-label="FN 验证 precision 39.7%，基准 40.9%"><span class="bar-fill" style="width:56.74%"></span><span class="bar-tick" style="left:58.49%"></span></div><p>验证 precision 39.7%，基准 40.9%，提升 -1.2 个百分点，买入 141。</p><p class="sub">测试 precision 36.6%，基准 40.5%，提升 -3.9 个百分点，买入 145。</p></div></li>
+      </ol>
+    </section>
+
+    <section id="panel-groups" role="tabpanel" aria-labelledby="tab-groups" hidden>
+      <h2>三组</h2>
+      <p class="lead">光通信的验证 precision 是 53.5%，行数也最多。芯片的验证提升是 +10.4 个百分点，光通信是 +10.3 个百分点，两者接近。存储的验证提升是 +3.9 个百分点。ALAB、MRVL、AVGO 在芯片和光通信里各出现一次。</p>
+      <div class="groups">
+        <section class="col"><h3>芯片</h3><p class="sub">8 只</p><p class="sub">其中 3 只同时属于另一组。</p><p class="figure">45.3%</p><p>验证 precision。基准 34.9%，提升 +10.4 个百分点。</p><p class="sub">买入 795 · 行 5071</p><ol class="members"><li><span><span class="ticker">ALAB</span><span class="tag">两组都计</span></span><span class="num">56.6%</span><span class="sub">基准 54.6% · 提升 +2.0 个百分点 · 买入 159 · 高于本股</span></li><li><span><span class="ticker">ARM</span></span><span class="num">51.8%</span><span class="sub">基准 44.6% · 提升 +7.2 个百分点 · 买入 112 · 高于本股</span></li><li><span><span class="ticker">MRVL</span><span class="tag">两组都计</span></span><span class="num">50.8%</span><span class="sub">基准 39.8% · 提升 +10.9 个百分点 · 买入 128 · 高于本股</span></li><li><span><span class="ticker">AMD</span></span><span class="num">47.6%</span><span class="sub">基准 34.3% · 提升 +13.3 个百分点 · 买入 84 · 高于本股</span></li><li><span><span class="ticker">AVGO</span><span class="tag">两组都计</span></span><span class="num">43.0%</span><span class="sub">基准 27.1% · 提升 +16.0 个百分点 · 买入 79 · 高于本股</span></li><li><span><span class="ticker">INTC</span></span><span class="num">41.1%</span><span class="sub">基准 37.8% · 提升 +3.3 个百分点 · 买入 95 · 高于本股</span></li><li><span><span class="ticker">NVDA</span></span><span class="num">27.8%</span><span class="sub">基准 25.5% · 提升 +2.3 个百分点 · 买入 72 · 高于本股</span></li><li><span><span class="ticker">QCOM</span></span><span class="num">21.2%</span><span class="sub">基准 15.7% · 提升 +5.5 个百分点 · 买入 66 · 高于本股</span></li></ol></section><section class="col"><h3>光通信</h3><p class="sub">12 只</p><p class="sub">其中 3 只同时属于另一组。</p><p class="figure">53.5%</p><p>验证 precision。基准 43.2%，提升 +10.3 个百分点。</p><p class="sub">买入 1726 · 行 7611</p><ol class="members"><li><span><span class="ticker">AAOI</span></span><span class="num">67.9%</span><span class="sub">基准 65.4% · 提升 +2.5 个百分点 · 买入 218 · 高于本股</span></li><li><span><span class="ticker">AXTI</span></span><span class="num">62.2%</span><span class="sub">基准 62.2% · 提升 0.0 个百分点 · 买入 222 · 持平</span></li><li><span><span class="ticker">CRDO</span></span><span class="num">60.9%</span><span class="sub">基准 54.6% · 提升 +6.3 个百分点 · 买入 174 · 高于本股</span></li><li><span><span class="ticker">LITE</span></span><span class="num">59.9%</span><span class="sub">基准 50.7% · 提升 +9.2 个百分点 · 买入 177 · 高于本股</span></li><li><span><span class="ticker">ALAB</span><span class="tag">两组都计</span></span><span class="num">56.6%</span><span class="sub">基准 54.6% · 提升 +2.0 个百分点 · 买入 159 · 高于本股</span></li><li><span><span class="ticker">COHR</span></span><span class="num">56.3%</span><span class="sub">基准 48.5% · 提升 +7.8 个百分点 · 买入 167 · 高于本股</span></li><li><span><span class="ticker">MRVL</span><span class="tag">两组都计</span></span><span class="num">50.8%</span><span class="sub">基准 39.8% · 提升 +10.9 个百分点 · 买入 128 · 高于本股</span></li><li><span><span class="ticker">AVGO</span><span class="tag">两组都计</span></span><span class="num">43.0%</span><span class="sub">基准 27.1% · 提升 +16.0 个百分点 · 买入 79 · 高于本股</span></li><li><span><span class="ticker">FN</span></span><span class="num">39.7%</span><span class="sub">基准 40.9% · 提升 -1.2 个百分点 · 买入 141 · 低于本股</span></li><li><span><span class="ticker">CIEN</span></span><span class="num">37.5%</span><span class="sub">基准 37.3% · 提升 +0.2 个百分点 · 买入 136 · 持平</span></li><li><span><span class="ticker">ANET</span></span><span class="num">35.1%</span><span class="sub">基准 30.6% · 提升 +4.6 个百分点 · 买入 94 · 高于本股</span></li><li><span><span class="ticker">CSCO</span></span><span class="num">6.5%</span><span class="sub">基准 6.6% · 提升 -0.2 个百分点 · 买入 31 · 持平</span></li></ol></section><section class="col"><h3>存储</h3><p class="sub">4 只</p><p class="sub">这一栏没有和别的组重复的股票。</p><p class="figure">45.8%</p><p>验证 precision。基准 41.9%，提升 +3.9 个百分点。</p><p class="sub">买入 465 · 行 2299</p><ol class="members"><li><span><span class="ticker">SNDK</span></span><span class="num">62.2%</span><span class="sub">基准 62.9% · 提升 -0.8 个百分点 · 买入 111 · 低于本股</span></li><li><span><span class="ticker">WDC</span></span><span class="num">48.0%</span><span class="sub">基准 38.4% · 提升 +9.5 个百分点 · 买入 123 · 高于本股</span></li><li><span><span class="ticker">MU</span></span><span class="num">39.8%</span><span class="sub">基准 40.5% · 提升 -0.6 个百分点 · 买入 118 · 低于本股</span></li><li><span><span class="ticker">STX</span></span><span class="num">33.6%</span><span class="sub">基准 33.7% · 提升 -0.1 个百分点 · 买入 113 · 持平</span></li></ol></section>
+      </div>
+      <div class="block" style="margin-top:12px">
+        <h3>栏内数字不能相加</h3>
+        <p>三组验证行相加是 14981。合并的不重复行是 13085。多出来的 1896 行是 ALAB 626 行 / 买入 159、MRVL 635 行 / 买入 128、AVGO 635 行 / 买入 79。</p>
+        <p>三组验证买入相加是 2986。合并买入是 2620。多出来的 366 笔来自同一三只。</p>
+        <p class="sub">测试周同样多算：三组行比合并多 1891 行，买入多 376 笔。对应 ALAB 621 行 / 买入 168、MRVL 635 行 / 买入 135、AVGO 635 行 / 买入 73。</p>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="bound-head">
+      <h2 id="bound-head">这页到此为止能确定的事</h2>
+      <ul class="review">
+        <li>21 只的验证买入都不少于 15 笔，最少是 CSCO 的 31 笔。验证 precision 都低于 90%。</li>
+        <li>AAOI 的验证 precision 是 67.9%，相对每天买 AAOI 的提升是 +2.5 个百分点。SNDK 的验证 precision 是 62.2%，提升是 -0.8 个百分点。AXTI 的验证 precision 是 62.2%，提升是 0.0 个百分点。</li>
+        <li>合并 precision 的原值：测试 0.4786227771471812，验证 0.4988549618320611。与 round 2 的合并结果一致。</li>
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="review-head">
+      <h2 id="review-head">评审时看这三件事</h2>
+      <ol class="review">
+        <li>点名的时候，基准要不要和 precision 放在同一行。</li>
+        <li>排序用验证 precision，还是用相对本股的提升。</li>
+        <li>分组视图里，重叠的 ALAB、MRVL、AVGO 用重复出现来标，还是改成单独一栏。</li>
+      </ol>
+      <p class="sub" style="margin-top:8px">字号、刻度样式、正负号的颜色、暗色背景都还没定。</p>
+    </section>
+  </div>
+</main>
+<script>
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function select(id) {
+    tabs.forEach(function (tab) {
+      var on = tab.getAttribute("data-dir") === id;
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+      tab.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(tab.getAttribute("aria-controls"));
+      if (on) panel.removeAttribute("hidden");
+      else panel.setAttribute("hidden", "");
+    });
+  }
+  tabs.forEach(function (tab, index) {
+    tab.addEventListener("click", function () {
+      select(tab.getAttribute("data-dir"));
+    });
+    tab.addEventListener("keydown", function (event) {
+      var next = null;
+      if (event.key === "ArrowRight") next = tabs[(index + 1) % tabs.length];
+      else if (event.key === "ArrowLeft") next = tabs[(index + tabs.length - 1) % tabs.length];
+      else if (event.key === "Home") next = tabs[0];
+      else if (event.key === "End") next = tabs[tabs.length - 1];
+      if (!next) return;
+      event.preventDefault();
+      select(next.getAttribute("data-dir"));
+      next.focus();
+    });
+  });
+})();
+</script>
+</body>
+</html>
