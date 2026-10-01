@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Wireframe] 量化研发日报 · 2026-09-29-agy-main (方案 A 任务树审计台)</title>
+  <style>
+    /* ==========================================================================
+       LOW-FIDELITY WIREFRAME STYLES: Grayscale, System Type, Intentional Unfinishedness
+       Standard Architecture: Direction A (Tree & Outcomes Cockpit)
+       ========================================================================== */
+    :root {
+      --bg: #f9fafb;
+      --card: #ffffff;
+      --border: #d1d5db;
+      --border-dark: #111827;
+      --border-dashed: #9ca3af;
+      --text: #111827;
+      --text-muted: #4b5563;
+      --text-light: #6b7280;
+      --subtle: #f3f4f6;
+      --accent-gray: #e5e7eb;
+      --badge-bg: #e5e7eb;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      font-size: 13px;
+      padding-bottom: 60px;
+    }
+
+    /* Top Wireframe Mode Bar */
+    .wf-topbar {
+      background: #111827;
+      color: #f9fafb;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 2px solid #000;
+    }
+
+    .wf-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      background: #374151;
+      border: 1px solid #4b5563;
+      color: #f3f4f6;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Meta & Document Header */
+    .header-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .header-box h1 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    .meta-row strong { color: var(--text); }
+
+    /* Wireframe Standard Annotation */
+    .wf-annotation {
+      background: #fffbeb;
+      border-left: 3px solid #d97706;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #92400e;
+      margin-bottom: 16px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 16px;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-2col, .grid-3col, .grid-4col { grid-template-columns: 1fr; }
+    }
+
+    /* KPI Callouts */
+    .kpi-tile {
+      background: var(--subtle);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 10px 12px;
+    }
+    .kpi-lbl {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    .kpi-num {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 4px 0 2px 0;
+    }
+    .kpi-sub { font-size: 11px; color: var(--text-muted); }
+
+    /* YAML Code Block Display */
+    .yaml-tree {
+      background: #fafafa;
+      border: 1px dashed var(--border-dashed);
+      border-radius: 4px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      line-height: 1.55;
+      overflow-x: auto;
+      max-height: 520px;
+      color: #1f2937;
+    }
+
+    /* Table Styles */
+    .wf-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    table.wf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    table.wf-table th {
+      background: var(--subtle);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 10px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    table.wf-table td {
+      border-bottom: 1px solid var(--border);
+      padding: 8px 10px;
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    table.wf-table tr:hover td { background: #f9fafb; }
+
+    .tag {
+      display: inline-block;
+      padding: 1px 6px;
+      font-size: 10px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--badge-bg);
+      text-transform: uppercase;
+    }
+
+    .tag-done { background: #dcfce7; border-color: #86efac; color: #166534; }
+    .tag-prog { background: #e0f2fe; border-color: #7dd3fc; color: #0369a1; }
+    .tag-pause { background: #fee2e2; border-color: #fca5a5; color: #991b1b; }
+
+    /* Pitfall Deep-Dive Section */
+    .pitfall-block {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .pitfall-header {
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pitfall-step {
+      margin-top: 8px;
+      padding-left: 8px;
+      border-left: 2px solid #cbd5e1;
+      font-size: 12px;
+    }
+
+    .pitfall-step strong { color: #111827; }
+    .quote-box {
+      background: var(--subtle);
+      border-left: 3px solid #4b5563;
+      padding: 6px 10px;
+      font-style: italic;
+      font-size: 12px;
+      margin: 6px 0;
+      color: #374151;
+    }
+
+    .num { font-family: var(--font-mono); text-align: right; }
+    th.num { text-align: right; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Wireframe Header: Fixed Standard Architecture -->
+  <header class="wf-topbar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="wf-badge">WIREFRAME</span>
+      <strong style="font-size: 13px;">Daily Report · 2026-09-29-agy-main</strong>
+      <span style="font-size: 11px; color: #9ca3af; font-family: var(--font-mono);">[Skill: daily-report · 方案 A 任务树审计台]</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="tag tag-done" style="font-size: 11px;">标准结构已固化</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Document Header & Metadata -->
+    <div class="header-box">
+      <h1>
+        <span>📋 量化系统研发日报 · 方案 A 任务树审计台</span>
+        <span class="tag tag-done">已归档</span>
+      </h1>
+      <p style="color: var(--text-muted); font-size: 12px; margin-top: 4px;">
+        微观宏观时序实证收口 ➜ 多因子动态截面打分选股系统 ➜ 剔除未来函数因果重构 ➜ 2026 全年逐周回测落地与规范化建设
+      </p>
+
+      <div class="meta-row">
+        <div>Agent 标识: <strong>agy-main</strong></div>
+        <div>工作流框架: <strong>Google Antigravity CLI (mac)</strong></div>
+        <div>报告日期: <strong>2026-09-29</strong></div>
+        <div>任务总量: <strong>16 项 (13 项完成 / 2 项进行中 / 1 项暂停)</strong></div>
+        <div>底层实测标的: <strong>49 只自选股 · 2026 全年 184 个交易日 (39周)</strong></div>
+      </div>
+    </div>
+
+    <!-- Standard Architecture Annotation -->
+    <div class="wf-annotation">
+      <strong>[固化标准说明 · 方案 A 任务树审计台]</strong>
+      根据规范要求，本报表已固化为<strong>方案 A（任务树审计台）</strong>作为唯一标准架构：顶层 KPI 记分卡 ➜ 左栏机器可读 YAML 任务层级树 ➜ 右栏精确追溯的任务交付成果清单 ➜ 底层三层踩坑剖析与未竟规划。
+    </div>
+
+    <!-- Top KPI Row -->
+    <div class="grid-4col" style="margin-bottom: 16px;">
+      <div class="kpi-tile">
+        <div class="kpi-lbl">今日承接任务总量</div>
+        <div class="kpi-num">6 大父类 / 16 子任务</div>
+        <div class="kpi-sub">结构化分解率 100%</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-lbl">已交付完成任务</div>
+        <div class="kpi-num">13 项 (81.3%)</div>
+        <div class="kpi-sub">完成实证、代码与看板</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-lbl">全年实盘回测净值</div>
+        <div class="kpi-num">+58.5%</div>
+        <div class="kpi-sub">39周 427笔首破因果开仓</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-lbl">踩坑与深度纠偏</div>
+        <div class="kpi-num">3 处重大反思</div>
+        <div class="kpi-sub">彻底铲除未来数据偏误</div>
+      </div>
+    </div>
+
+    <!-- Split Layout: Left YAML Tree | Right Outcomes Table -->
+    <div class="grid-2col">
+
+      <!-- Left: Hierarchical YAML Tree -->
+      <div class="card">
+        <div class="card-title">
+          <span>🌲 任务层级树 (YAML Hierarchy)</span>
+          <span class="tag">MACHINE-READABLE</span>
+        </div>
+
+        <pre class="yaml-tree"><code>tasks:
+  - id: "T-01"
+    name: "微观形态 ➜ 宏观表现实证收口"
+    status: "DONE"
+    subtasks:
+      - id: "T-01-01"
+        name: "5m 真实 mini K线波形绘制"
+        status: "DONE"
+      - id: "T-01-02"
+        name: "微观曲线 MECE 严格推导与证伪"
+        status: "DONE"
+      - id: "T-01-03"
+        name: "基线对齐：以微观末期成交价 P_end 为准"
+        status: "DONE"
+      - id: "T-01-04"
+        name: "相似度阈值定义与漏检误检可视化"
+        status: "DONE"
+      - id: "T-01-05"
+        name: "看板微观代号多选与属性过滤"
+        status: "DONE"
+      - id: "T-01-06"
+        name: "归档 REPORT_MICRO_TO_MACRO.md"
+        status: "DONE"
+
+  - id: "T-02"
+    name: "多因子截面打分选股系统与初测"
+    status: "DONE"
+    subtasks:
+      - id: "T-02-01"
+        name: "四维打分(0~100)与三道硬门禁设计"
+        status: "DONE"
+      - id: "T-02-02"
+        name: "30天 1064次触发 6套策略对比回测"
+        status: "DONE"
+      - id: "T-02-03"
+        name: "低保真 HTML Wireframe 原型交互"
+        status: "DONE"
+      - id: "T-02-04"
+        name: "算法业务目标与数据流水线阐释"
+        status: "DONE"
+
+  - id: "T-03"
+    name: "5m 滚动因果重构与 2026 全年回测"
+    status: "DONE"
+    subtasks:
+      - id: "T-03-01"
+        name: "测算 5m 滚动每日频次(全池2744次/日)"
+        status: "DONE"
+      - id: "T-03-02"
+        name: "重大纠偏：盘中首破即买+持仓冷静期"
+        status: "DONE"
+      - id: "T-03-03"
+        name: "2026 全年逐周回测(39周 427笔 +58.5%)"
+        status: "DONE"
+      - id: "T-03-04"
+        name: "2026 逐周 HTML 报告 strategy_b_weekly"
+        status: "DONE"
+
+  - id: "T-04"
+    name: "日报规范化建设与今日日报交付"
+    status: "DONE"
+    subtasks:
+      - id: "T-04-01"
+        name: "编写 daily-report 技能规范 (SKILL.md)"
+        status: "DONE"
+      - id: "T-04-02"
+        name: "按新规范交付今日日报 2026-09-29"
+        status: "DONE"
+
+  - id: "T-05"
+    name: "盘中 5m 实时监听与动态风控"
+    status: "IN_PROGRESS"
+    subtasks:
+      - id: "T-05-01"
+        name: "个股独立参数定制与相克字典配置化"
+        status: "IN_PROGRESS"
+      - id: "T-05-02"
+        name: "盘中 5m 实盘接入与信号告警推送"
+        status: "IN_PROGRESS"
+
+  - id: "T-06"
+    name: "实盘自动下单与券商网关对接"
+    status: "PAUSED"
+    subtasks:
+      - id: "T-06-01"
+        name: "OpenD 交易通道与自动化执行路由"
+        status: "PAUSED"</code></pre>
+      </div>
+
+      <!-- Right: Deliverables & Outcomes Table -->
+      <div class="card">
+        <div class="card-title">
+          <span>📦 任务交付成果清单 (Task Outcomes)</span>
+          <span style="font-size: 11px; color: var(--text-light);">按任务编号精准追溯</span>
+        </div>
+
+        <div class="wf-table-wrap">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th style="width: 70px;">编号</th>
+                <th style="width: 130px;">任务名称</th>
+                <th>核心量化结果与交付证据</th>
+                <th style="width: 65px;">状态</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>T-01</code></td>
+                <td><strong>微观至宏观实证收口</strong></td>
+                <td>
+                  • 12 种原子在 Pearson 空间非严格 MECE，但覆盖率达 <strong>84.7%</strong>；<br>
+                  • 确立收益追踪基线严格以微观完成价 $P_{end}$ 为准；<br>
+                  • 交付物：<a href="file:///Users/admin/Code/stock/analysis/favorites_30d_macro/REPORT_MICRO_TO_MACRO.md" style="color:#0369a1;">REPORT_MICRO_TO_MACRO.md</a> 与可视化看板。
+                </td>
+                <td><span class="tag tag-done">DONE</span></td>
+              </tr>
+              <tr>
+                <td><code>T-02</code></td>
+                <td><strong>多因子截面打分与初测</strong></td>
+                <td>
+                  • 建立 4 维打分 (0~100分) 与 3 道硬门禁；<br>
+                  • 30 天 1,064 次触发实测：盲目买入胜率 <strong>44.9%</strong>，纯多头形态仅 <strong>49.4%</strong>；打分 &ge; 75 分飞跃至 <strong>81.8%</strong>、均益 +7.4% (8.2倍)！每日 Top-1 胜率 <strong>77.4%</strong>；<br>
+                  • 交付物：<a href="file:///Users/admin/Code/stock/analysis/favorites_30d_macro/wireframe_scoring_backtest.html" style="color:#0369a1;">wireframe_scoring_backtest.html</a>。
+                </td>
+                <td><span class="tag tag-done">DONE</span></td>
+              </tr>
+              <tr>
+                <td><code>T-03</code></td>
+                <td><strong>5m 因果重构与2026全年回测</strong></td>
+                <td>
+                  • <strong>彻底纠偏</strong>：废除事后全天最显著，重构为 5m 实时“首破即买 + 3天冷静期”；<br>
+                  • 2026 全年（39周/184天）：<strong>427 笔</strong>实盘首破开仓（周均 10.9 笔），+5% 胜率 <strong>59.7%</strong>，+3% 胜率 <strong>71.7%</strong>，平均冲高 +9.34%，<strong>全年复利累计净值 +58.5%</strong>！<br>
+                  • 交付物：<a href="file:///Users/admin/Code/stock/analysis/favorites_30d_macro/strategy_b_weekly_report.html" style="color:#0369a1;">strategy_b_weekly_report.html</a>。
+                </td>
+                <td><span class="tag tag-done">DONE</span></td>
+              </tr>
+              <tr>
+                <td><code>T-04</code></td>
+                <td><strong>规范化与日报技能</strong></td>
+                <td>
+                  • 产出通用 <a href="file:///Users/admin/Code/stock/.agents/skills/daily-report/SKILL.md" style="color:#0369a1;">daily-report SKILL.md</a>；<br>
+                  • 归档今日日报 <a href="file:///Users/admin/Code/stock/reports/daily/2026-09-29-agy-main.md" style="color:#0369a1;">2026-09-29-agy-main.md</a>。
+                </td>
+                <td><span class="tag tag-done">DONE</span></td>
+              </tr>
+              <tr>
+                <td><code>T-05</code></td>
+                <td><strong>盘中 5m 实时监听</strong></td>
+                <td>已验证 5m 因果回测，进行中：个股相克字典配置化与 OpenD 实时守护。</td>
+                <td><span class="tag tag-prog">IN_PROG</span></td>
+              </tr>
+              <tr>
+                <td><code>T-06</code></td>
+                <td><strong>实盘自动下单对接</strong></td>
+                <td>根据用户“只做回测报告，不做交易部分”红线，坚决暂停。</td>
+                <td><span class="tag tag-pause">PAUSED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom: In-Depth Pitfall Reflections & Reprimands -->
+    <div class="card" style="margin-top: 16px;">
+      <div class="card-title">
+        <span>🚨 踩坑复盘与用户反馈深度思考 (Pitfalls & Reprimands Reflection)</span>
+        <span style="font-size: 11px; color: var(--text-light);">认知跃迁与系统性规则沉淀</span>
+      </div>
+
+      <div class="grid-3col">
+
+        <!-- Pitfall 1 -->
+        <div class="pitfall-block">
+          <div class="pitfall-header">
+            <span>① 致命未来数据偏误 (Look-Ahead Bias)</span>
+            <span class="tag tag-pause">严重缺陷</span>
+          </div>
+          <div class="quote-box">
+            “我看到一个疑似问题【哪怕一只股票在当天连续 5 个 5 分钟都越线高分，当天也只挑出形态最显著的那 1 次作为建仓点】，你在实时数据里，如果错过了交易，就无法以对应的价格交易了。你的「全天最 x」是错误的。”
+          </div>
+          <div class="pitfall-step">
+            <strong>用户背后的深层思考与真正目的：</strong><br>
+            用户在捍卫量化系统的“生命线——实盘因果不可逆性”。盘中上午 10:35 越线，如果不买，后面可能直接飞上天；如果买了，你的买入价就是 10:35，无法预知下午是否更“显著”。任何后验筛选在实盘中都是废纸。
+          </div>
+          <div class="pitfall-step" style="border-left-color: #111;">
+            <strong>系统性规则沉淀：</strong><br>
+            坚决废除 <code>argmax(salience)</code>，重构为<strong>“实时 5m 首破即买 (Causal First Crossing) + 持仓冷静期”</strong>，开仓后锁定 3 天不重复加仓，完全还原实盘。
+          </div>
+        </div>
+
+        <!-- Pitfall 2 -->
+        <div class="pitfall-block">
+          <div class="pitfall-header">
+            <span>② 业务脱节的算法自嗨</span>
+            <span class="tag">沟通错位</span>
+          </div>
+          <div class="quote-box">
+            “这个看起来不错，但我没有看懂如何应用你的数据。你需跟我讲清楚，你的算法的目标是什么，期望解决什么问题？”
+          </div>
+          <div class="pitfall-step">
+            <strong>用户背后的深层思考与真正目的：</strong><br>
+            用户要的不是孤立的高分或数学名词，而是“交易闭环与实操抓手”。用户需要确认：算法到底帮交易者挡住了哪种亏损（假突破、逆势、相克、选股纠结），盘中每分钟到底怎么应用数据。
+          </div>
+          <div class="pitfall-step" style="border-left-color: #111;">
+            <strong>系统性规则沉淀：</strong><br>
+            任何模型交付必须先写明“四大业务痛点对齐表”，再给出分秒级数据执行流水线，杜绝未解释的技术自嗨。
+          </div>
+        </div>
+
+        <!-- Pitfall 3 -->
+        <div class="pitfall-block">
+          <div class="pitfall-header">
+            <span>③ 收益追踪基线未对齐</span>
+            <span class="tag">基线误差</span>
+          </div>
+          <div class="quote-box">
+            “微观我们假定在微观末期买入，所以跟随的宏观应该以微观末期价格作为基线，计算宏观窗口范围和收益。”
+          </div>
+          <div class="pitfall-step">
+            <strong>用户背后的深层思考与真正目的：</strong><br>
+            真实交易发生在微观 2 小时完成确认的一瞬间，成交价必然是该 5m 柱的收盘价 $P_{end}$。拿大周期的开盘价算收益会有严重滑点与逻辑失真。
+          </div>
+          <div class="pitfall-step" style="border-left-color: #111;">
+            <strong>系统性规则沉淀：</strong><br>
+            所有微观驱动的交易逻辑中，收益计算基线强制且唯一地绑定在信号触发柱的收盘价 $P_{end}$ 上。
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Unfinished Tasks & Roadmap Block -->
+    <div class="card">
+      <div class="card-title">
+        <span>🗺️ 未竟任务规划与边界追踪 (Unfinished Tasks & Roadmap)</span>
+        <span class="tag">IN_PROGRESS & PAUSED</span>
+      </div>
+
+      <div class="grid-2col">
+        <div style="border: 1px solid var(--border); padding: 12px; border-radius: 4px; background: #fff;">
+          <div style="font-weight: 700; margin-bottom: 4px;">
+            <span class="tag tag-prog">进行中</span> T-05: 盘中 5m 实时监听与多标的动态风控
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+            • <strong>T-05-01 个股独立参数定制</strong>：自选股池 49 只标的逐一生成个性化的 <code>stock_traits.json</code> 规则字典，针对高贝塔（AAOZ、NBIS）与权重股（AAPL、NVDA）设定差异化的波动敏感度与开仓阈值；<br>
+            • <strong>T-05-02 盘中 5m 实时监听</strong>：编写守护脚本，每 5 分钟拉取一次 OpenD 最新的 24 根 5m 柱，实时运行打分模型并在出现 &ge; 75 分时触发预警。
+          </div>
+        </div>
+
+        <div style="border: 1px solid var(--border); padding: 12px; border-radius: 4px; background: #fff;">
+          <div style="font-weight: 700; margin-bottom: 4px;">
+            <span class="tag tag-pause">明确暂停</span> T-06: 实盘自动下单与券商网关对接
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+            • <strong>状态说明</strong>：严格暂停 (PAUSED)；<br>
+            • <strong>暂停原因与边界约束</strong>：用户在需求中明确划定红线——“只做到提供回测数据报告，不做交易部分”。当前系统处于策略实证与选股打磨期，尚未达到自动化交易条件。坚决不越权开发下单网关，确保策略纯粹性与资金安全性。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
