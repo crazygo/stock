@@ -1,0 +1,4946 @@
+[
+  {
+    "horizon_days": 1,
+    "target_pct": 0.05,
+    "checkpoint_min": 5,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.08721624850657109,
+    "base_valid_rate": 0.08482676224611709,
+    "roc_auc": 0.722506200533634,
+    "pr_auc": 0.1602911818340237,
+    "brier_score": 0.12394426165318945,
+    "precision_top10": 0.18326693227091634,
+    "touch_top10": 0.19123505976095617,
+    "top10_avg_mfe": 0.03223254056799517,
+    "top10_avg_close_ret": -0.004940483384732083,
+    "precision_top20": 0.17131474103585656,
+    "touch_top20": 0.17928286852589642,
+    "top20_avg_mfe": 0.030318109271305977,
+    "top20_avg_close_ret": -0.0032091387047440143,
+    "lift_factor_top20": 2.0195836372818583,
+    "bot80_precision": 0.06321553011448482,
+    "bot80_avg_mfe": 0.019820331437733287,
+    "bot80_avg_close_ret": -0.00029723207321019873,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 14155.467370274593,
+        "gain_share": 0.2649023988151193,
+        "split_count": 246
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 6036.495514555543,
+        "gain_share": 0.11296569024632999,
+        "split_count": 193
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 4297.60644145828,
+        "gain_share": 0.08042449081520667,
+        "split_count": 214
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 4277.058804273605,
+        "gain_share": 0.08003996671311782,
+        "split_count": 213
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 3047.1446016596456,
+        "gain_share": 0.05702361450892334,
+        "split_count": 166
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 2090.573341589188,
+        "gain_share": 0.039122543862370046,
+        "split_count": 93
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 2050.795204581518,
+        "gain_share": 0.038378144286001704,
+        "split_count": 45
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 1888.0113401412964,
+        "gain_share": 0.0353318417478628,
+        "split_count": 105
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1806.8145405128598,
+        "gain_share": 0.0338123421485171,
+        "split_count": 56
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1521.9947595758158,
+        "gain_share": 0.02848228548372213,
+        "split_count": 98
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 1329.2563284071948,
+        "gain_share": 0.02487541956930902,
+        "split_count": 99
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 1227.2177377939224,
+        "gain_share": 0.022965891136363648,
+        "split_count": 81
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1159.556722014132,
+        "gain_share": 0.021699697310508612,
+        "split_count": 65
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 1071.710017522797,
+        "gain_share": 0.020055752809133513,
+        "split_count": 66
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 980.8710250854492,
+        "gain_share": 0.01835581126900935,
+        "split_count": 60
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 822.2445075744763,
+        "gain_share": 0.015387308435073594,
+        "split_count": 52
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 748.5530523657799,
+        "gain_share": 0.014008262251268085,
+        "split_count": 58
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 728.6750266551971,
+        "gain_share": 0.013636269115562821,
+        "split_count": 43
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 719.8153669161256,
+        "gain_share": 0.013470471331839044,
+        "split_count": 52
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 715.2137935608625,
+        "gain_share": 0.013384358468996192,
+        "split_count": 38
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 665.8206705688208,
+        "gain_share": 0.012460026094564088,
+        "split_count": 55
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 620.4416692256927,
+        "gain_share": 0.01161081313697059,
+        "split_count": 36
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 578.0255496501923,
+        "gain_share": 0.010817046917172434,
+        "split_count": 48
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 398.9206902049482,
+        "gain_share": 0.007465316757692042,
+        "split_count": 26
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 377.36061096191406,
+        "gain_share": 0.007061846030747545,
+        "split_count": 27
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 120.89433097839355,
+        "gain_share": 0.0022623907386184875,
+        "split_count": 6
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 1,
+    "target_pct": 0.05,
+    "checkpoint_min": 10,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.06849860613301474,
+    "base_valid_rate": 0.06690561529271206,
+    "roc_auc": 0.7636373798345628,
+    "pr_auc": 0.17225546927344138,
+    "brier_score": 0.10138819093360521,
+    "precision_top10": 0.17928286852589642,
+    "touch_top10": 0.18326693227091634,
+    "top10_avg_mfe": 0.033583557793608665,
+    "top10_avg_close_ret": -0.005594218764555093,
+    "precision_top20": 0.17330677290836655,
+    "touch_top20": 0.1752988047808765,
+    "top20_avg_mfe": 0.03164541947192175,
+    "top20_avg_close_ret": -0.0022818176740517,
+    "lift_factor_top20": 2.590317302219693,
+    "bot80_precision": 0.04031856645097063,
+    "bot80_avg_mfe": 0.018153033693014888,
+    "bot80_avg_close_ret": -0.00020666177503533194,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 13561.486935167755,
+        "gain_share": 0.2631226868854225,
+        "split_count": 187
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 5686.583138608425,
+        "gain_share": 0.11033222549865465,
+        "split_count": 251
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 3930.1798408300965,
+        "gain_share": 0.07625413677761621,
+        "split_count": 132
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 3761.177381504269,
+        "gain_share": 0.07297511719807878,
+        "split_count": 159
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 3367.467764858331,
+        "gain_share": 0.06533628432674604,
+        "split_count": 113
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 2528.458124729863,
+        "gain_share": 0.04905765117326116,
+        "split_count": 168
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 1646.709299325943,
+        "gain_share": 0.03194978378324072,
+        "split_count": 99
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 1422.1020303294063,
+        "gain_share": 0.027591908544714407,
+        "split_count": 83
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1329.9043330401182,
+        "gain_share": 0.025803070347886828,
+        "split_count": 61
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1301.24202792719,
+        "gain_share": 0.02524695856090525,
+        "split_count": 32
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 1300.1830256786052,
+        "gain_share": 0.025226411587081696,
+        "split_count": 73
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 1104.5032339050667,
+        "gain_share": 0.02142979305795014,
+        "split_count": 77
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 1104.4043013621122,
+        "gain_share": 0.021427873548928226,
+        "split_count": 55
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1086.780667164363,
+        "gain_share": 0.02108593626690553,
+        "split_count": 78
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 1059.0247704982758,
+        "gain_share": 0.02054741079823024,
+        "split_count": 92
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 1037.9427123967325,
+        "gain_share": 0.02013837248264792,
+        "split_count": 66
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 982.5117209553719,
+        "gain_share": 0.019062889279773513,
+        "split_count": 48
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 945.7737241387367,
+        "gain_share": 0.018350091304198013,
+        "split_count": 62
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 806.5227115154266,
+        "gain_share": 0.015648315254999025,
+        "split_count": 52
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 774.1214288757765,
+        "gain_share": 0.01501965907685013,
+        "split_count": 59
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 590.6485506797908,
+        "gain_share": 0.011459881530898275,
+        "split_count": 43
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 507.1398432254791,
+        "gain_share": 0.009839628855896499,
+        "split_count": 51
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 452.18195506744087,
+        "gain_share": 0.008773324897722704,
+        "split_count": 30
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 425.04994936287403,
+        "gain_share": 0.008246904286494359,
+        "split_count": 30
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 296.35497093200684,
+        "gain_share": 0.0057499385278518755,
+        "split_count": 29
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 239.9504859821427,
+        "gain_share": 0.0046555674088627,
+        "split_count": 16
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 232.36802697181702,
+        "gain_share": 0.004508451019816766,
+        "split_count": 14
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 59.77299976348877,
+        "gain_share": 0.0011597277183658873,
+        "split_count": 3
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 1,
+    "target_pct": 0.05,
+    "checkpoint_min": 15,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.06252489048187973,
+    "base_valid_rate": 0.06013540422142573,
+    "roc_auc": 0.6997446402514311,
+    "pr_auc": 0.1427466595997473,
+    "brier_score": 0.08947397256662526,
+    "precision_top10": 0.13147410358565736,
+    "touch_top10": 0.1394422310756972,
+    "top10_avg_mfe": 0.02618227412029569,
+    "top10_avg_close_ret": -0.010431557796257084,
+    "precision_top20": 0.11752988047808766,
+    "touch_top20": 0.1254980079681275,
+    "top20_avg_mfe": 0.02473079517405835,
+    "top20_avg_close_ret": -0.009181334688510394,
+    "lift_factor_top20": 1.9544207276852854,
+    "bot80_precision": 0.045793927327028375,
+    "bot80_avg_mfe": 0.018008003144561007,
+    "bot80_avg_close_ret": 0.0006846557018392946,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 12381.36743622669,
+        "gain_share": 0.2565749753986133,
+        "split_count": 222
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 4818.521187430801,
+        "gain_share": 0.09985261817732868,
+        "split_count": 187
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 3567.691885056789,
+        "gain_share": 0.07393209694754417,
+        "split_count": 112
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2817.301306172507,
+        "gain_share": 0.05838200158786221,
+        "split_count": 119
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 2652.201931476593,
+        "gain_share": 0.05496070194393208,
+        "split_count": 140
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 2436.1945275358885,
+        "gain_share": 0.0504844520759373,
+        "split_count": 160
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1892.5073691917496,
+        "gain_share": 0.0392178032186765,
+        "split_count": 79
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1719.451951481402,
+        "gain_share": 0.03563163313121798,
+        "split_count": 79
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1570.1750597432256,
+        "gain_share": 0.03253821755958735,
+        "split_count": 62
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 1448.846611160785,
+        "gain_share": 0.030023968316074175,
+        "split_count": 85
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 1393.2059168815613,
+        "gain_share": 0.028870944642446383,
+        "split_count": 80
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 1290.0320643561427,
+        "gain_share": 0.02673290707835347,
+        "split_count": 83
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1159.4590996194165,
+        "gain_share": 0.02402708678930958,
+        "split_count": 40
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 979.671213388443,
+        "gain_share": 0.02030140198718413,
+        "split_count": 64
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 840.4117775877821,
+        "gain_share": 0.017415574836134935,
+        "split_count": 55
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 825.2867503166199,
+        "gain_share": 0.017102143906959275,
+        "split_count": 62
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 801.6902389526367,
+        "gain_share": 0.016613161219554907,
+        "split_count": 62
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 779.022155109793,
+        "gain_share": 0.016143418028080423,
+        "split_count": 63
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 749.6702213287354,
+        "gain_share": 0.015535167628714867,
+        "split_count": 57
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 650.7217049364699,
+        "gain_share": 0.013484690305443386,
+        "split_count": 38
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 589.5931339602976,
+        "gain_share": 0.012217943181173916,
+        "split_count": 51
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 579.0740357812028,
+        "gain_share": 0.011999959394615739,
+        "split_count": 41
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 560.1527383327484,
+        "gain_share": 0.011607859616271178,
+        "split_count": 38
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 559.6517839431763,
+        "gain_share": 0.011597478504423692,
+        "split_count": 28
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 399.9700880050659,
+        "gain_share": 0.008288447622499109,
+        "split_count": 39
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 373.1203224470373,
+        "gain_share": 0.00773204882624392,
+        "split_count": 23
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 369.0065369606018,
+        "gain_share": 0.0076468002125173705,
+        "split_count": 26
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 52.333889961242676,
+        "gain_share": 0.0010844978632999621,
+        "split_count": 5
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 1,
+    "target_pct": 0.05,
+    "checkpoint_min": 20,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.054958183990442055,
+    "base_valid_rate": 0.053763440860215055,
+    "roc_auc": 0.741523257263998,
+    "pr_auc": 0.12635701006535716,
+    "brier_score": 0.08136712900032773,
+    "precision_top10": 0.12350597609561753,
+    "touch_top10": 0.13147410358565736,
+    "top10_avg_mfe": 0.025119671008257065,
+    "top10_avg_close_ret": -0.008349142578563456,
+    "precision_top20": 0.1254980079681275,
+    "touch_top20": 0.13147410358565736,
+    "top20_avg_mfe": 0.02535631256470456,
+    "top20_avg_close_ret": -0.005850299215600741,
+    "lift_factor_top20": 2.3342629482071713,
+    "bot80_precision": 0.035838725734196115,
+    "bot80_avg_mfe": 0.016898296726059747,
+    "bot80_avg_close_ret": -0.00012377438121269091,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 10911.201895417624,
+        "gain_share": 0.2206789868675769,
+        "split_count": 213
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 7296.392880276602,
+        "gain_share": 0.14756949821297513,
+        "split_count": 175
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3660.236872944064,
+        "gain_share": 0.07402826678112052,
+        "split_count": 190
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3325.7592967553064,
+        "gain_share": 0.06726345999349646,
+        "split_count": 190
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 2576.219355352223,
+        "gain_share": 0.05210401958802823,
+        "split_count": 127
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2329.834268325125,
+        "gain_share": 0.04712088281670202,
+        "split_count": 128
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 1682.4628435373306,
+        "gain_share": 0.0340277999905848,
+        "split_count": 115
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1391.9648206177226,
+        "gain_share": 0.02815247937976775,
+        "split_count": 56
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1186.6967957983725,
+        "gain_share": 0.02400093492228074,
+        "split_count": 47
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1179.7667524843419,
+        "gain_share": 0.023860774841645536,
+        "split_count": 81
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1149.930463656783,
+        "gain_share": 0.02325733609553277,
+        "split_count": 63
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 1139.0291220757645,
+        "gain_share": 0.023036856533459327,
+        "split_count": 94
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 1109.951663446147,
+        "gain_share": 0.02244876512312966,
+        "split_count": 64
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 1004.3970442023128,
+        "gain_share": 0.02031392364029496,
+        "split_count": 74
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 959.6623275279999,
+        "gain_share": 0.01940916428856475,
+        "split_count": 77
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 889.4019312858582,
+        "gain_share": 0.01798814823476577,
+        "split_count": 49
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 886.711346028198,
+        "gain_share": 0.017933731165552646,
+        "split_count": 50
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 854.1316933631897,
+        "gain_share": 0.01727480790379621,
+        "split_count": 49
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 811.2175174951553,
+        "gain_share": 0.01640686897794863,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 788.7942751441151,
+        "gain_share": 0.01595335904826876,
+        "split_count": 45
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 787.6526825428009,
+        "gain_share": 0.015930270345384495,
+        "split_count": 54
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 742.4991779327393,
+        "gain_share": 0.015017041010396788,
+        "split_count": 62
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 698.3068127855659,
+        "gain_share": 0.014123250714750629,
+        "split_count": 42
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 677.875234246254,
+        "gain_share": 0.013710022172617773,
+        "split_count": 51
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 424.645239548292,
+        "gain_share": 0.008588447188481781,
+        "split_count": 29
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 402.8470401763916,
+        "gain_share": 0.008147578748961049,
+        "split_count": 22
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 402.08660531044006,
+        "gain_share": 0.008132198958777948,
+        "split_count": 21
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 174.09777975082397,
+        "gain_share": 0.0035211264551379537,
+        "split_count": 11
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 1,
+    "target_pct": 0.05,
+    "checkpoint_min": 25,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.056152927120669056,
+    "base_valid_rate": 0.054958183990442055,
+    "roc_auc": 0.7744217861570689,
+    "pr_auc": 0.17985029680525402,
+    "brier_score": 0.07318821906280229,
+    "precision_top10": 0.17928286852589642,
+    "touch_top10": 0.18725099601593626,
+    "top10_avg_mfe": 0.030250388931263052,
+    "top10_avg_close_ret": -0.0022996161573591526,
+    "precision_top20": 0.1454183266932271,
+    "touch_top20": 0.15139442231075698,
+    "top20_avg_mfe": 0.027287802266323068,
+    "top20_avg_close_ret": -0.0030098666948183304,
+    "lift_factor_top20": 2.6459812922224146,
+    "bot80_precision": 0.03235440517670483,
+    "bot80_avg_mfe": 0.01612703524173785,
+    "bot80_avg_close_ret": -0.0003876441359584259,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 8944.249085758347,
+        "gain_share": 0.1789501805062961,
+        "split_count": 159
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 8828.719149235112,
+        "gain_share": 0.17663873962439663,
+        "split_count": 166
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3693.32306838315,
+        "gain_share": 0.07389338371709661,
+        "split_count": 179
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 3585.7013975309965,
+        "gain_share": 0.071740165795645,
+        "split_count": 143
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3210.9770044292673,
+        "gain_share": 0.06424294639324268,
+        "split_count": 161
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2215.1110824923962,
+        "gain_share": 0.04431836862467058,
+        "split_count": 99
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 1968.8232012987137,
+        "gain_share": 0.03939081569389418,
+        "split_count": 115
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1472.2414985895157,
+        "gain_share": 0.02945556182474274,
+        "split_count": 77
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 1366.8080068081617,
+        "gain_share": 0.027346123435361986,
+        "split_count": 106
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 1312.100552417338,
+        "gain_share": 0.02625157555946863,
+        "split_count": 72
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 1236.9660367965698,
+        "gain_share": 0.024748337556627434,
+        "split_count": 61
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 997.4467427442432,
+        "gain_share": 0.01995620570805757,
+        "split_count": 57
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 971.3785703540307,
+        "gain_share": 0.019434652237221704,
+        "split_count": 74
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 936.7921835742891,
+        "gain_share": 0.01874267238536916,
+        "split_count": 60
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 892.2796883583069,
+        "gain_share": 0.017852098008771248,
+        "split_count": 45
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 855.4123595086858,
+        "gain_share": 0.017114482688673608,
+        "split_count": 44
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 850.4923307411373,
+        "gain_share": 0.017016046248944882,
+        "split_count": 55
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 823.7953657349572,
+        "gain_share": 0.016481912342227865,
+        "split_count": 43
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 801.4701418876648,
+        "gain_share": 0.016035245126343,
+        "split_count": 70
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 785.104520550638,
+        "gain_share": 0.01570781340297767,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 785.008881016809,
+        "gain_share": 0.01570589991514005,
+        "split_count": 62
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 746.9226365089417,
+        "gain_share": 0.014943897396634391,
+        "split_count": 48
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 699.1871026457811,
+        "gain_share": 0.013988838752865336,
+        "split_count": 48
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 599.1733164787292,
+        "gain_share": 0.011987833982525292,
+        "split_count": 37
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 544.0855563879013,
+        "gain_share": 0.010885677220406745,
+        "split_count": 44
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 359.10299677727744,
+        "gain_share": 0.007184677604290712,
+        "split_count": 29
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 289.56773006916046,
+        "gain_share": 0.005793465395231805,
+        "split_count": 21
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 209.54276990890503,
+        "gain_share": 0.004192382852876301,
+        "split_count": 16
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 1,
+    "target_pct": 0.05,
+    "checkpoint_min": 30,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.04460374352847471,
+    "base_valid_rate": 0.04261250497809638,
+    "roc_auc": 0.7681978633741272,
+    "pr_auc": 0.11120794806704982,
+    "brier_score": 0.07344851591654311,
+    "precision_top10": 0.13545816733067728,
+    "touch_top10": 0.1553784860557769,
+    "top10_avg_mfe": 0.027558357456580744,
+    "top10_avg_close_ret": -0.004108323477998883,
+    "precision_top20": 0.10756972111553785,
+    "touch_top20": 0.11752988047808766,
+    "top20_avg_mfe": 0.024395896070865945,
+    "top20_avg_close_ret": -0.0047600887779068075,
+    "lift_factor_top20": 2.5243698104777152,
+    "bot80_precision": 0.026381284221005476,
+    "bot80_avg_mfe": 0.015508232421868298,
+    "bot80_avg_close_ret": -0.0007179560404482412,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 10355.90137553867,
+        "gain_share": 0.20134928354122142,
+        "split_count": 160
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 8245.982939208858,
+        "gain_share": 0.16032624266050194,
+        "split_count": 150
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 3736.260424568085,
+        "gain_share": 0.07264392855142197,
+        "split_count": 135
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 3722.8083508946,
+        "gain_share": 0.07238238054144404,
+        "split_count": 194
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 2758.775895833969,
+        "gain_share": 0.05363874470541367,
+        "split_count": 147
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2683.287788568181,
+        "gain_share": 0.05217103313085662,
+        "split_count": 148
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 1857.1561784744263,
+        "gain_share": 0.036108596673510504,
+        "split_count": 125
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 1751.372065719479,
+        "gain_share": 0.03405184134716456,
+        "split_count": 88
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1497.045840933919,
+        "gain_share": 0.02910698900748568,
+        "split_count": 58
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1380.684744760394,
+        "gain_share": 0.026844585910257294,
+        "split_count": 69
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1190.31145985052,
+        "gain_share": 0.023143167450196095,
+        "split_count": 61
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 1115.9246932305396,
+        "gain_share": 0.02169686918790678,
+        "split_count": 63
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 1056.8839737176895,
+        "gain_share": 0.020548943368359066,
+        "split_count": 65
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 1006.5324463844299,
+        "gain_share": 0.019569961087038266,
+        "split_count": 73
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 969.3468301761895,
+        "gain_share": 0.018846962971272745,
+        "split_count": 55
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 932.8509511947632,
+        "gain_share": 0.018137375382646728,
+        "split_count": 75
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 886.3389558792114,
+        "gain_share": 0.017233044934407804,
+        "split_count": 61
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 824.825262062077,
+        "gain_share": 0.016037037196509677,
+        "split_count": 67
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 820.9663791656494,
+        "gain_share": 0.01596200912524005,
+        "split_count": 63
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 804.1588298846036,
+        "gain_share": 0.015635220767269007,
+        "split_count": 53
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 713.9089767932892,
+        "gain_share": 0.013880497291188064,
+        "split_count": 57
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 584.6567497253418,
+        "gain_share": 0.011367452566977876,
+        "split_count": 36
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 524.3246114253998,
+        "gain_share": 0.010194417755165434,
+        "split_count": 29
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 512.6532459971495,
+        "gain_share": 0.00996749196843702,
+        "split_count": 51
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 439.2909133415669,
+        "gain_share": 0.00854111172557323,
+        "split_count": 38
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 414.78178479056805,
+        "gain_share": 0.008064581938835413,
+        "split_count": 30
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 340.8222482204437,
+        "gain_share": 0.006626590289493282,
+        "split_count": 25
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 304.6676869392395,
+        "gain_share": 0.005923638924205777,
+        "split_count": 21
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 3,
+    "target_pct": 0.05,
+    "checkpoint_min": 5,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.35505154639175257,
+    "base_valid_rate": 0.32618556701030926,
+    "roc_auc": 0.595431003935028,
+    "pr_auc": 0.4012138215177035,
+    "brier_score": 0.24306296338785943,
+    "precision_top10": 0.4669421487603306,
+    "touch_top10": 0.5206611570247934,
+    "top10_avg_mfe": 0.06457912932626508,
+    "top10_avg_close_ret": -0.00661894131644232,
+    "precision_top20": 0.4144329896907217,
+    "touch_top20": 0.46804123711340206,
+    "top20_avg_mfe": 0.06357612558096461,
+    "top20_avg_close_ret": -0.004782256326215444,
+    "lift_factor_top20": 1.2705436156763592,
+    "bot80_precision": 0.30412371134020616,
+    "bot80_avg_mfe": 0.046403798776405936,
+    "bot80_avg_close_ret": 0.0023011024033671433,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 7848.116706125438,
+        "gain_share": 0.27315988709905986,
+        "split_count": 247
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2671.6285808086395,
+        "gain_share": 0.09298813827968644,
+        "split_count": 215
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 2586.9629793167114,
+        "gain_share": 0.0900412852943507,
+        "split_count": 227
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2027.4493114948273,
+        "gain_share": 0.07056697113012349,
+        "split_count": 165
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 1270.2376691205427,
+        "gain_share": 0.044211623154778626,
+        "split_count": 83
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1259.593070268631,
+        "gain_share": 0.043841129502673076,
+        "split_count": 99
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1230.7103869915009,
+        "gain_share": 0.04283584494861682,
+        "split_count": 98
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1079.3583072116598,
+        "gain_share": 0.037567916530503356,
+        "split_count": 94
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 887.9254079461098,
+        "gain_share": 0.03090494360228355,
+        "split_count": 87
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 777.7488152980804,
+        "gain_share": 0.02707016046441239,
+        "split_count": 89
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 753.508015692234,
+        "gain_share": 0.02622644032982828,
+        "split_count": 85
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 698.5707603693008,
+        "gain_share": 0.024314305861971554,
+        "split_count": 59
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 694.5121903419495,
+        "gain_share": 0.024173044133589044,
+        "split_count": 69
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 669.7022802829742,
+        "gain_share": 0.023309515661164824,
+        "split_count": 71
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 616.1898684501648,
+        "gain_share": 0.021446973993908557,
+        "split_count": 102
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 471.79666817188263,
+        "gain_share": 0.016421254861176654,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 466.9872440993786,
+        "gain_share": 0.016253859066000555,
+        "split_count": 76
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 459.2366304695606,
+        "gain_share": 0.015984092850315067,
+        "split_count": 51
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 394.3963673710823,
+        "gain_share": 0.013727276392217587,
+        "split_count": 16
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 378.0707882642746,
+        "gain_share": 0.01315905174512974,
+        "split_count": 54
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 325.6619486808777,
+        "gain_share": 0.011334920779745416,
+        "split_count": 46
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 301.0059139877558,
+        "gain_share": 0.010476748060699712,
+        "split_count": 30
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 281.6944428384304,
+        "gain_share": 0.009804597087874695,
+        "split_count": 46
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 267.6718487739563,
+        "gain_share": 0.009316529650179985,
+        "split_count": 31
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 230.95886701345444,
+        "gain_share": 0.008038705386310248,
+        "split_count": 28
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 53.47175931930542,
+        "gain_share": 0.0018611267244852965,
+        "split_count": 4
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 27.686699867248535,
+        "gain_share": 0.000963657408914465,
+        "split_count": 2
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 3,
+    "target_pct": 0.05,
+    "checkpoint_min": 10,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.34789777411376754,
+    "base_valid_rate": 0.320280296784831,
+    "roc_auc": 0.5995747978767991,
+    "pr_auc": 0.3974268529923166,
+    "brier_score": 0.24707938356621417,
+    "precision_top10": 0.4049586776859504,
+    "touch_top10": 0.47520661157024796,
+    "top10_avg_mfe": 0.07128415021834464,
+    "top10_avg_close_ret": -0.0008081103812834466,
+    "precision_top20": 0.41237113402061853,
+    "touch_top20": 0.47835051546391755,
+    "top20_avg_mfe": 0.06780658055636322,
+    "top20_avg_close_ret": -7.22969391060827e-05,
+    "lift_factor_top20": 1.2875320091814937,
+    "bot80_precision": 0.29726944873776406,
+    "bot80_avg_mfe": 0.04490021866651518,
+    "bot80_avg_close_ret": 0.00155821306576665,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 8562.869469363242,
+        "gain_share": 0.28905613213569775,
+        "split_count": 208
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3402.6922859214246,
+        "gain_share": 0.11486442419045348,
+        "split_count": 254
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 2704.41399814561,
+        "gain_share": 0.09129269724296514,
+        "split_count": 230
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 1880.3509986400604,
+        "gain_share": 0.06347486536715952,
+        "split_count": 148
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1534.4794569909573,
+        "gain_share": 0.05179930609317994,
+        "split_count": 98
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 983.5423246845603,
+        "gain_share": 0.0332013633026001,
+        "split_count": 71
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 926.6062264665961,
+        "gain_share": 0.031279375773925706,
+        "split_count": 72
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 762.4242187142372,
+        "gain_share": 0.025737096249875097,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 635.4130594283342,
+        "gain_share": 0.021449590224866845,
+        "split_count": 64
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 627.2664249110967,
+        "gain_share": 0.021174584904290476,
+        "split_count": 54
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 607.7548003196716,
+        "gain_share": 0.020515932479859614,
+        "split_count": 60
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 570.0292844772339,
+        "gain_share": 0.019242435116475193,
+        "split_count": 59
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 566.8958339691162,
+        "gain_share": 0.019136659466460235,
+        "split_count": 69
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 550.0898193120956,
+        "gain_share": 0.018569340110401494,
+        "split_count": 65
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 537.7410563826561,
+        "gain_share": 0.018152483861241606,
+        "split_count": 68
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 501.9015100002289,
+        "gain_share": 0.016942651025196667,
+        "split_count": 47
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 492.7417494058609,
+        "gain_share": 0.01663344568484084,
+        "split_count": 59
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 470.42364805936813,
+        "gain_share": 0.015880055238459385,
+        "split_count": 63
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 451.76317059993744,
+        "gain_share": 0.015250134922900784,
+        "split_count": 68
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 450.5929386615753,
+        "gain_share": 0.015210631492536129,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 427.29700088500977,
+        "gain_share": 0.01442423229630166,
+        "split_count": 43
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 402.2750624399632,
+        "gain_share": 0.013579568627032797,
+        "split_count": 58
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 375.07160794734955,
+        "gain_share": 0.012661263686790714,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 327.14850068092346,
+        "gain_share": 0.011043527006823855,
+        "split_count": 39
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 297.5265386104584,
+        "gain_share": 0.010043580690580907,
+        "split_count": 37
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 286.40014922618866,
+        "gain_share": 0.009667988012033179,
+        "split_count": 32
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 224.61583983898163,
+        "gain_share": 0.0075823397883811846,
+        "split_count": 23
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 63.2253999710083,
+        "gain_share": 0.0021342950086696982,
+        "split_count": 7
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 3,
+    "target_pct": 0.05,
+    "checkpoint_min": 15,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.34295136026380874,
+    "base_valid_rate": 0.3124484748557296,
+    "roc_auc": 0.5919718051416387,
+    "pr_auc": 0.37856274967717624,
+    "brier_score": 0.2500894630389152,
+    "precision_top10": 0.4049586776859504,
+    "touch_top10": 0.45454545454545453,
+    "top10_avg_mfe": 0.06034655789080785,
+    "top10_avg_close_ret": -0.012212804263810623,
+    "precision_top20": 0.38556701030927837,
+    "touch_top20": 0.4268041237113402,
+    "top20_avg_mfe": 0.05862468877338785,
+    "top20_avg_close_ret": -0.011588453849936994,
+    "lift_factor_top20": 1.2340178984304873,
+    "bot80_precision": 0.29417825862957236,
+    "bot80_avg_mfe": 0.04574806971783013,
+    "bot80_avg_close_ret": 0.003533170023290839,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 9600.752325275913,
+        "gain_share": 0.31382844468953414,
+        "split_count": 249
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3226.9437520205975,
+        "gain_share": 0.10548201895918922,
+        "split_count": 254
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2706.996382799931,
+        "gain_share": 0.08848603065800707,
+        "split_count": 210
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 1630.493495941162,
+        "gain_share": 0.05329741051234865,
+        "split_count": 120
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1208.804340097122,
+        "gain_share": 0.039513276994752204,
+        "split_count": 88
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1129.5636770278215,
+        "gain_share": 0.03692306601912522,
+        "split_count": 87
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1014.5075046438724,
+        "gain_share": 0.033162121208985255,
+        "split_count": 96
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 898.4166041314602,
+        "gain_share": 0.029367353307880092,
+        "split_count": 73
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 884.8726856997237,
+        "gain_share": 0.02892463103858005,
+        "split_count": 89
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 841.7980856895447,
+        "gain_share": 0.02751661276367577,
+        "split_count": 74
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 660.0350197553635,
+        "gain_share": 0.021575159599224306,
+        "split_count": 68
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 606.4071033298969,
+        "gain_share": 0.019822175558646963,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 592.5261398553848,
+        "gain_share": 0.01936843599424536,
+        "split_count": 66
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 558.0245226621628,
+        "gain_share": 0.018240650535754074,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 532.1952027380466,
+        "gain_share": 0.01739634427468814,
+        "split_count": 61
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 500.1960425823927,
+        "gain_share": 0.016350358884920098,
+        "split_count": 55
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 491.5711191287264,
+        "gain_share": 0.016068428238099397,
+        "split_count": 55
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 475.40229165554047,
+        "gain_share": 0.015539903201055747,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 457.80789041519165,
+        "gain_share": 0.01496477914937435,
+        "split_count": 49
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 441.54233288764954,
+        "gain_share": 0.014433092209858391,
+        "split_count": 68
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 369.3295332789421,
+        "gain_share": 0.012072607341582574,
+        "split_count": 42
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 353.2016475200653,
+        "gain_share": 0.011545420603256487,
+        "split_count": 41
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 310.7720111608505,
+        "gain_share": 0.010158484836535496,
+        "split_count": 44
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 305.9392668902874,
+        "gain_share": 0.010000512568672676,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 296.5381691455841,
+        "gain_share": 0.009693210413212715,
+        "split_count": 35
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 289.1909125447273,
+        "gain_share": 0.009453044014407554,
+        "split_count": 33
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 187.00003147125244,
+        "gain_share": 0.00611263857718885,
+        "split_count": 21
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 18.634260177612305,
+        "gain_share": 0.0006091148580183928,
+        "split_count": 3
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 2.8962700366973877,
+        "gain_share": 9.467298918072232e-05,
+        "split_count": 1
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 3,
+    "target_pct": 0.05,
+    "checkpoint_min": 20,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.33979381443298967,
+    "base_valid_rate": 0.31051546391752577,
+    "roc_auc": 0.6002608386231788,
+    "pr_auc": 0.38379192352065916,
+    "brier_score": 0.24777806241575162,
+    "precision_top10": 0.44214876033057854,
+    "touch_top10": 0.5082644628099173,
+    "top10_avg_mfe": 0.06939628723469998,
+    "top10_avg_close_ret": 0.002130686615951123,
+    "precision_top20": 0.4,
+    "touch_top20": 0.44742268041237115,
+    "top20_avg_mfe": 0.061895336564444174,
+    "top20_avg_close_ret": -0.00721555040262547,
+    "lift_factor_top20": 1.2881806108897744,
+    "bot80_precision": 0.2881443298969072,
+    "bot80_avg_mfe": 0.04450789099183076,
+    "bot80_avg_close_ret": 0.002484449875812641,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 8801.600657126924,
+        "gain_share": 0.28681191183017424,
+        "split_count": 206
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3118.281129284296,
+        "gain_share": 0.10161335501966826,
+        "split_count": 242
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2455.559891642042,
+        "gain_share": 0.08001769843591681,
+        "split_count": 172
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 1713.8354407548904,
+        "gain_share": 0.05584761664086607,
+        "split_count": 126
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1368.5170627681655,
+        "gain_share": 0.04459495612618225,
+        "split_count": 97
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1334.3226385116577,
+        "gain_share": 0.04348068514559649,
+        "split_count": 95
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1157.1024712817743,
+        "gain_share": 0.03770572932129329,
+        "split_count": 81
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 1141.4649441242218,
+        "gain_share": 0.03719615961516009,
+        "split_count": 110
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1059.06785094738,
+        "gain_share": 0.03451114029379801,
+        "split_count": 92
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 695.2327415943146,
+        "gain_share": 0.022655087358699665,
+        "split_count": 71
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 665.6021701371064,
+        "gain_share": 0.021689535616542282,
+        "split_count": 63
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 653.1908864378929,
+        "gain_share": 0.021285097362103222,
+        "split_count": 72
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 627.5359890460968,
+        "gain_share": 0.020449098268825808,
+        "split_count": 65
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 623.721355676651,
+        "gain_share": 0.020324793346091552,
+        "split_count": 64
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 596.9713336229324,
+        "gain_share": 0.01945310815318134,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 552.2933032191941,
+        "gain_share": 0.017997214865574974,
+        "split_count": 61
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 542.0925830602646,
+        "gain_share": 0.017664810776273545,
+        "split_count": 60
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 463.9184591770172,
+        "gain_share": 0.015117402549061158,
+        "split_count": 53
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 428.51348185539246,
+        "gain_share": 0.013963684080171446,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 423.0684263110161,
+        "gain_share": 0.013786249673460491,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 421.04388868808746,
+        "gain_share": 0.013720277411274965,
+        "split_count": 44
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 394.51015512645245,
+        "gain_share": 0.012855640267729626,
+        "split_count": 40
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 350.8611603975296,
+        "gain_share": 0.011433279481850241,
+        "split_count": 50
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 307.82249850034714,
+        "gain_share": 0.010030807206384294,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 307.6882163435221,
+        "gain_share": 0.01002643144297216,
+        "split_count": 33
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 240.63843154907227,
+        "gain_share": 0.007841524661371448,
+        "split_count": 26
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 237.46145272254944,
+        "gain_share": 0.007737998563497288,
+        "split_count": 28
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 5.7909698486328125,
+        "gain_share": 0.00018870648627899002,
+        "split_count": 1
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 3,
+    "target_pct": 0.05,
+    "checkpoint_min": 25,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.3371853074700784,
+    "base_valid_rate": 0.3153115971935617,
+    "roc_auc": 0.6156664899374822,
+    "pr_auc": 0.40567847231675436,
+    "brier_score": 0.24557838130979562,
+    "precision_top10": 0.47107438016528924,
+    "touch_top10": 0.5165289256198347,
+    "top10_avg_mfe": 0.07295069491924606,
+    "top10_avg_close_ret": 0.011441500593089658,
+    "precision_top20": 0.39462809917355374,
+    "touch_top20": 0.4256198347107438,
+    "top20_avg_mfe": 0.06115877126747765,
+    "top20_avg_close_ret": -0.004476428075699096,
+    "lift_factor_top20": 1.2515495867768596,
+    "bot80_precision": 0.295513151108819,
+    "bot80_avg_mfe": 0.04485506276269107,
+    "bot80_avg_close_ret": 0.0023396703712285608,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 9470.835328204557,
+        "gain_share": 0.30237025897287506,
+        "split_count": 233
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2994.808488845825,
+        "gain_share": 0.09561363775904079,
+        "split_count": 213
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 2616.0632296465337,
+        "gain_share": 0.08352164184313789,
+        "split_count": 111
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 2374.152989837341,
+        "gain_share": 0.07579830389833564,
+        "split_count": 206
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 1969.1848368961364,
+        "gain_share": 0.06286910377636366,
+        "split_count": 181
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 1180.4546049833298,
+        "gain_share": 0.03768773843544364,
+        "split_count": 126
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1013.4504952244461,
+        "gain_share": 0.03235588816380544,
+        "split_count": 85
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 875.7022025585175,
+        "gain_share": 0.027958072608673803,
+        "split_count": 66
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 804.3143000602722,
+        "gain_share": 0.02567890949181103,
+        "split_count": 97
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 660.3652171939611,
+        "gain_share": 0.021083124647408524,
+        "split_count": 61
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 625.5563716227189,
+        "gain_share": 0.01997180138127814,
+        "split_count": 57
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 617.682977437973,
+        "gain_share": 0.019720431765385085,
+        "split_count": 56
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 606.0056410640245,
+        "gain_share": 0.01934761573584342,
+        "split_count": 74
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 604.5212395116687,
+        "gain_share": 0.01930022404691088,
+        "split_count": 53
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 510.90538263320923,
+        "gain_share": 0.016311401001491754,
+        "split_count": 69
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 482.8352383247111,
+        "gain_share": 0.01541522062142642,
+        "split_count": 63
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 437.5722988843918,
+        "gain_share": 0.013970135130425967,
+        "split_count": 49
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 433.40297447144985,
+        "gain_share": 0.013837023355297871,
+        "split_count": 47
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 380.22925794124603,
+        "gain_share": 0.012139374744524697,
+        "split_count": 38
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 379.14056265354156,
+        "gain_share": 0.012104616556394722,
+        "split_count": 40
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 375.3124120524153,
+        "gain_share": 0.011982397253816144,
+        "split_count": 49
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 365.6577595472336,
+        "gain_share": 0.011674158362829288,
+        "split_count": 46
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 332.93336939811707,
+        "gain_share": 0.010629384382370523,
+        "split_count": 46
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 320.84529054164886,
+        "gain_share": 0.010243454798796216,
+        "split_count": 38
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 312.9870586693287,
+        "gain_share": 0.009992569261886262,
+        "split_count": 38
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 281.00816011428833,
+        "gain_share": 0.008971596190064523,
+        "split_count": 28
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 202.96434259414673,
+        "gain_share": 0.006479933258863433,
+        "split_count": 31
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 93.08837938308716,
+        "gain_share": 0.002971982555499181,
+        "split_count": 8
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 3,
+    "target_pct": 0.05,
+    "checkpoint_min": 30,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.33292079207920794,
+    "base_valid_rate": 0.30734323432343236,
+    "roc_auc": 0.581703714659173,
+    "pr_auc": 0.35623376901292625,
+    "brier_score": 0.2545829586373001,
+    "precision_top10": 0.38016528925619836,
+    "touch_top10": 0.4256198347107438,
+    "top10_avg_mfe": 0.05654080668419847,
+    "top10_avg_close_ret": -0.015312791120062362,
+    "precision_top20": 0.3760330578512397,
+    "touch_top20": 0.4152892561983471,
+    "top20_avg_mfe": 0.056880071496025066,
+    "top20_avg_close_ret": -0.014472215096822151,
+    "lift_factor_top20": 1.2234954795052415,
+    "bot80_precision": 0.29020618556701033,
+    "bot80_avg_mfe": 0.044752979890000585,
+    "bot80_avg_close_ret": 0.004022817147342848,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 9741.033290667925,
+        "gain_share": 0.320193858124573,
+        "split_count": 233
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 2344.2588671445847,
+        "gain_share": 0.07705725550007815,
+        "split_count": 205
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 2236.127713141963,
+        "gain_share": 0.0735029168226063,
+        "split_count": 110
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2104.5887172818184,
+        "gain_share": 0.06917914773964448,
+        "split_count": 174
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 1842.3262066841125,
+        "gain_share": 0.06055841494837423,
+        "split_count": 155
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1236.8041928019375,
+        "gain_share": 0.04065452754558305,
+        "split_count": 69
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 825.3819510340691,
+        "gain_share": 0.027130821078414014,
+        "split_count": 74
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 823.7573724389076,
+        "gain_share": 0.027077420163676386,
+        "split_count": 87
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 790.3296483755112,
+        "gain_share": 0.025978629961774857,
+        "split_count": 78
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 764.5888938903809,
+        "gain_share": 0.025132515258776432,
+        "split_count": 79
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 760.4601626396179,
+        "gain_share": 0.02499680127968473,
+        "split_count": 90
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 665.742856502533,
+        "gain_share": 0.021883384173077138,
+        "split_count": 76
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 625.3085519075394,
+        "gain_share": 0.020554283285878817,
+        "split_count": 78
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 536.5208751559258,
+        "gain_share": 0.017635776806668613,
+        "split_count": 62
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 475.32927227020264,
+        "gain_share": 0.015624370539165449,
+        "split_count": 65
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 475.3222281476483,
+        "gain_share": 0.015624138994450377,
+        "split_count": 51
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 465.56458580493927,
+        "gain_share": 0.015303399186394813,
+        "split_count": 46
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 440.5768277645111,
+        "gain_share": 0.014482035947598264,
+        "split_count": 55
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 437.4517831206322,
+        "gain_share": 0.014379313775167775,
+        "split_count": 52
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 412.1881120800972,
+        "gain_share": 0.013548881103450228,
+        "split_count": 43
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 399.90264225006104,
+        "gain_share": 0.013145050024511107,
+        "split_count": 29
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 384.10054314136505,
+        "gain_share": 0.012625625141226131,
+        "split_count": 52
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 381.9334909915924,
+        "gain_share": 0.012554392781384224,
+        "split_count": 41
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 373.6617391258478,
+        "gain_share": 0.012282495122859716,
+        "split_count": 51
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 292.56055867671967,
+        "gain_share": 0.009616648585681632,
+        "split_count": 35
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 262.21996998786926,
+        "gain_share": 0.008619334454812087,
+        "split_count": 35
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 255.4582600593567,
+        "gain_share": 0.008397072819426461,
+        "split_count": 36
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 68.7996895313263,
+        "gain_share": 0.002261488835061527,
+        "split_count": 10
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 5,
+    "target_pct": 0.1,
+    "checkpoint_min": 5,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.21101694915254238,
+    "base_valid_rate": 0.18177966101694915,
+    "roc_auc": 0.6224904906934944,
+    "pr_auc": 0.24305580082500297,
+    "brier_score": 0.233699503913152,
+    "precision_top10": 0.23728813559322035,
+    "touch_top10": 0.2796610169491525,
+    "top10_avg_mfe": 0.0769970216383667,
+    "top10_avg_close_ret": -0.013752744397620602,
+    "precision_top20": 0.22245762711864406,
+    "touch_top20": 0.2860169491525424,
+    "top20_avg_mfe": 0.07882072567821784,
+    "top20_avg_close_ret": -0.019385144436798053,
+    "lift_factor_top20": 1.2237762237762237,
+    "bot80_precision": 0.1716101694915254,
+    "bot80_avg_mfe": 0.06343932338747416,
+    "bot80_avg_close_ret": 0.0065373353311476015,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 11764.506595364772,
+        "gain_share": 0.2635781103784725,
+        "split_count": 262
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 3977.6096992641687,
+        "gain_share": 0.08911643168853413,
+        "split_count": 207
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 3824.826051885466,
+        "gain_share": 0.08569338757305241,
+        "split_count": 146
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3707.040155893832,
+        "gain_share": 0.08305445124001977,
+        "split_count": 223
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3544.017748594284,
+        "gain_share": 0.07940201263436719,
+        "split_count": 176
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1981.8693972652545,
+        "gain_share": 0.04440283037062645,
+        "split_count": 106
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1860.566990940075,
+        "gain_share": 0.04168510831535982,
+        "split_count": 115
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1633.6106162638534,
+        "gain_share": 0.036600259929191505,
+        "split_count": 124
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 1428.0802010390908,
+        "gain_share": 0.031995449856528524,
+        "split_count": 58
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 1347.4479684829712,
+        "gain_share": 0.03018892347818358,
+        "split_count": 115
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1294.8883468125641,
+        "gain_share": 0.029011350441032015,
+        "split_count": 76
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 1003.7938559408867,
+        "gain_share": 0.022489518418278894,
+        "split_count": 85
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 994.9109611853637,
+        "gain_share": 0.022290501434831914,
+        "split_count": 68
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 752.3825905323029,
+        "gain_share": 0.016856769970471978,
+        "split_count": 64
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 730.6197562217712,
+        "gain_share": 0.016369184137819227,
+        "split_count": 70
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 715.4565541744232,
+        "gain_share": 0.016029459890947565,
+        "split_count": 59
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 567.9561615856946,
+        "gain_share": 0.012724784557267372,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 549.0804815590382,
+        "gain_share": 0.012301884027338218,
+        "split_count": 57
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 529.0421417355537,
+        "gain_share": 0.011852934664015432,
+        "split_count": 20
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 526.2190821170807,
+        "gain_share": 0.0117896853714343,
+        "split_count": 48
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 495.55159282684326,
+        "gain_share": 0.011102595027980573,
+        "split_count": 42
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 473.5216967256274,
+        "gain_share": 0.010609025804390663,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 353.5294600725174,
+        "gain_share": 0.007920657470305625,
+        "split_count": 30
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 321.062964130193,
+        "gain_share": 0.007193261248311933,
+        "split_count": 30
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 227.5975778453285,
+        "gain_share": 0.005099214234690046,
+        "split_count": 32
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 25.517040014266968,
+        "gain_share": 0.0005716970053008687,
+        "split_count": 4
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 3.147170066833496,
+        "gain_share": 7.051083124748281e-05,
+        "split_count": 1
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 5,
+    "target_pct": 0.1,
+    "checkpoint_min": 10,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.20847457627118643,
+    "base_valid_rate": 0.1826271186440678,
+    "roc_auc": 0.6326198371660299,
+    "pr_auc": 0.2704154936493498,
+    "brier_score": 0.23565402076669117,
+    "precision_top10": 0.288135593220339,
+    "touch_top10": 0.3728813559322034,
+    "top10_avg_mfe": 0.09529080478985574,
+    "top10_avg_close_ret": 0.009309236223577731,
+    "precision_top20": 0.2478813559322034,
+    "touch_top20": 0.3029661016949153,
+    "top20_avg_mfe": 0.08421062278247846,
+    "top20_avg_close_ret": -0.008287033808415983,
+    "lift_factor_top20": 1.357308584686775,
+    "bot80_precision": 0.1663135593220339,
+    "bot80_avg_mfe": 0.062003372684575515,
+    "bot80_avg_close_ret": 0.004351715410384858,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 11818.784233797342,
+        "gain_share": 0.26975641278994106,
+        "split_count": 227
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 4065.4835756666726,
+        "gain_share": 0.09279213867803228,
+        "split_count": 231
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3128.202634391142,
+        "gain_share": 0.07139928307687451,
+        "split_count": 173
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 3055.549784108065,
+        "gain_share": 0.06974102687356024,
+        "split_count": 116
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2856.7988284421153,
+        "gain_share": 0.06520465969920214,
+        "split_count": 135
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 2170.189965400845,
+        "gain_share": 0.04953323866131394,
+        "split_count": 91
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1904.659427152248,
+        "gain_share": 0.043472668972657426,
+        "split_count": 117
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1858.4093942359323,
+        "gain_share": 0.04241704068432261,
+        "split_count": 139
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1811.0347375329584,
+        "gain_share": 0.0413357435562471,
+        "split_count": 76
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 1071.1242600025726,
+        "gain_share": 0.02444774625839308,
+        "split_count": 86
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 905.5731874071062,
+        "gain_share": 0.02066914580394249,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 841.5049580949126,
+        "gain_share": 0.019206828244777794,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 829.2841124534607,
+        "gain_share": 0.018927895029966203,
+        "split_count": 65
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 757.4489068984985,
+        "gain_share": 0.017288301059960327,
+        "split_count": 71
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 734.6601123735309,
+        "gain_share": 0.016768160972684434,
+        "split_count": 57
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 703.5898948269896,
+        "gain_share": 0.016059002546220367,
+        "split_count": 59
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 654.1854529827833,
+        "gain_share": 0.014931376832428959,
+        "split_count": 61
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 641.5999266197905,
+        "gain_share": 0.014644120006549554,
+        "split_count": 73
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 602.9110499154776,
+        "gain_share": 0.013761070414631036,
+        "split_count": 52
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 568.974716927507,
+        "gain_share": 0.012986494682560279,
+        "split_count": 47
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 565.1475400924683,
+        "gain_share": 0.01289914174729131,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 417.5226321220398,
+        "gain_share": 0.009529694871472254,
+        "split_count": 25
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 415.9376325374469,
+        "gain_share": 0.009493518239954552,
+        "split_count": 38
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 412.14888315089047,
+        "gain_share": 0.009407042387340634,
+        "split_count": 39
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 409.0743019580841,
+        "gain_share": 0.009336866980378628,
+        "split_count": 35
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 329.69110774993896,
+        "gain_share": 0.0075249948553118215,
+        "split_count": 26
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 155.32430982589722,
+        "gain_share": 0.0035451809432217006,
+        "split_count": 12
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 127.98618125915527,
+        "gain_share": 0.0029212051307632757,
+        "split_count": 9
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 5,
+    "target_pct": 0.1,
+    "checkpoint_min": 15,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.20220432386604492,
+    "base_valid_rate": 0.17465027554048326,
+    "roc_auc": 0.6245655501867449,
+    "pr_auc": 0.24182228706467085,
+    "brier_score": 0.2293357992939991,
+    "precision_top10": 0.2425531914893617,
+    "touch_top10": 0.2851063829787234,
+    "top10_avg_mfe": 0.08305815895469941,
+    "top10_avg_close_ret": -0.01249299198872831,
+    "precision_top20": 0.21443736730360935,
+    "touch_top20": 0.25902335456475584,
+    "top20_avg_mfe": 0.07669558850768603,
+    "top20_avg_close_ret": -0.01762405298382035,
+    "lift_factor_top20": 1.2278100715272195,
+    "bot80_precision": 0.16472457627118645,
+    "bot80_avg_mfe": 0.06252824262604544,
+    "bot80_avg_close_ret": 0.005765399961881305,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 11372.314158492023,
+        "gain_share": 0.25897185890597935,
+        "split_count": 222
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 4410.68327387773,
+        "gain_share": 0.100440669380267,
+        "split_count": 269
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 2841.4996168010402,
+        "gain_share": 0.06470700928483407,
+        "split_count": 105
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2569.3043085140816,
+        "gain_share": 0.05850854132218794,
+        "split_count": 182
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2321.773859024048,
+        "gain_share": 0.052871744822647095,
+        "split_count": 123
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 2178.371270033531,
+        "gain_share": 0.04960616188805388,
+        "split_count": 107
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 2146.684967532754,
+        "gain_share": 0.04888459716990407,
+        "split_count": 116
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1967.2584322290495,
+        "gain_share": 0.04479867211216533,
+        "split_count": 65
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1508.6191633171402,
+        "gain_share": 0.03435447734388203,
+        "split_count": 64
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 1154.098412727937,
+        "gain_share": 0.02628128339924665,
+        "split_count": 88
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 1140.2351222676225,
+        "gain_share": 0.025965586694862142,
+        "split_count": 75
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 1057.8608145713806,
+        "gain_share": 0.024089747943585718,
+        "split_count": 61
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 987.216173895169,
+        "gain_share": 0.022481018738369194,
+        "split_count": 77
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 957.8279177690274,
+        "gain_share": 0.021811785439594313,
+        "split_count": 94
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 780.0696631927858,
+        "gain_share": 0.017763850693690686,
+        "split_count": 58
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 776.6373283863068,
+        "gain_share": 0.01768568910645052,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 767.8704597088508,
+        "gain_share": 0.017486048800480776,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 662.8937662138487,
+        "gain_share": 0.015095505497040345,
+        "split_count": 50
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 636.0357706546783,
+        "gain_share": 0.014483891630283678,
+        "split_count": 57
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 608.1874056728557,
+        "gain_share": 0.013849724938586242,
+        "split_count": 46
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 603.5507206916809,
+        "gain_share": 0.013744137728102823,
+        "split_count": 39
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 526.5365303754807,
+        "gain_share": 0.011990360286645832,
+        "split_count": 39
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 518.3378186225891,
+        "gain_share": 0.011803658126145356,
+        "split_count": 39
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 501.7341215610504,
+        "gain_share": 0.011425556516146518,
+        "split_count": 45
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 494.9516948312521,
+        "gain_share": 0.011271106187600338,
+        "split_count": 40
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 234.4252328488801,
+        "gain_share": 0.005338362753548101,
+        "split_count": 18
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 175.8374788761139,
+        "gain_share": 0.0040041945847832895,
+        "split_count": 19
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 12.504700183868408,
+        "gain_share": 0.0002847587049167267,
+        "split_count": 2
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 5,
+    "target_pct": 0.1,
+    "checkpoint_min": 20,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.1996608732513777,
+    "base_valid_rate": 0.175498092412039,
+    "roc_auc": 0.6399488344944922,
+    "pr_auc": 0.2470104457905703,
+    "brier_score": 0.23304787234167887,
+    "precision_top10": 0.3021276595744681,
+    "touch_top10": 0.34893617021276596,
+    "top10_avg_mfe": 0.0909974944732849,
+    "top10_avg_close_ret": -0.0019013777047227577,
+    "precision_top20": 0.2653927813163482,
+    "touch_top20": 0.30148619957537154,
+    "top20_avg_mfe": 0.08522681442162718,
+    "top20_avg_close_ret": -0.008952741155173255,
+    "lift_factor_top20": 1.512226017210786,
+    "bot80_precision": 0.1530720338983051,
+    "bot80_avg_mfe": 0.060012280819014226,
+    "bot80_avg_close_ret": 0.003623274116295479,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 11873.447128400207,
+        "gain_share": 0.24905019673376108,
+        "split_count": 205
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 4394.752815324813,
+        "gain_share": 0.09218165890804508,
+        "split_count": 247
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 3239.3681227694615,
+        "gain_share": 0.06794701315838596,
+        "split_count": 124
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3008.39326171251,
+        "gain_share": 0.06310222512297256,
+        "split_count": 183
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 2663.802818200551,
+        "gain_share": 0.05587430581519605,
+        "split_count": 108
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2616.644119501114,
+        "gain_share": 0.0548851336681529,
+        "split_count": 125
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 2490.05483120773,
+        "gain_share": 0.05222987384234846,
+        "split_count": 136
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 1819.7449323832989,
+        "gain_share": 0.038169861583945024,
+        "split_count": 70
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1756.2638849020004,
+        "gain_share": 0.03683832178820477,
+        "split_count": 81
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 1444.8050335664302,
+        "gain_share": 0.03030535058272753,
+        "split_count": 98
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 1158.6110932826996,
+        "gain_share": 0.02430232076662753,
+        "split_count": 77
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 1117.850212265388,
+        "gain_share": 0.023447345347389643,
+        "split_count": 71
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1106.6353435307974,
+        "gain_share": 0.02321210909000889,
+        "split_count": 60
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1030.8945980787976,
+        "gain_share": 0.021623417335070838,
+        "split_count": 61
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 980.3555823098868,
+        "gain_share": 0.02056334171559286,
+        "split_count": 80
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 969.7042460441589,
+        "gain_share": 0.020339925772120817,
+        "split_count": 71
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 901.0224117562175,
+        "gain_share": 0.01889929743929797,
+        "split_count": 68
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 751.7117488384247,
+        "gain_share": 0.015767447895353868,
+        "split_count": 57
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 644.2536828517914,
+        "gain_share": 0.013513472938865694,
+        "split_count": 43
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 641.3986252667382,
+        "gain_share": 0.01345358698952391,
+        "split_count": 47
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 625.0858718156815,
+        "gain_share": 0.013111420606642782,
+        "split_count": 53
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 598.1594843864441,
+        "gain_share": 0.012546629100514722,
+        "split_count": 53
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 491.3125183582306,
+        "gain_share": 0.010305472204630397,
+        "split_count": 29
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 354.5646834373474,
+        "gain_share": 0.007437132890725473,
+        "split_count": 31
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 343.2523202896118,
+        "gain_share": 0.007199851649902961,
+        "split_count": 24
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 308.50975704193115,
+        "gain_share": 0.0064711127993989925,
+        "split_count": 28
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 256.4477484226227,
+        "gain_share": 0.005379091809304219,
+        "split_count": 30
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 87.86880016326904,
+        "gain_share": 0.0018430824452890157,
+        "split_count": 6
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 5,
+    "target_pct": 0.1,
+    "checkpoint_min": 25,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.20644340822382365,
+    "base_valid_rate": 0.18355235269181858,
+    "roc_auc": 0.6409561392779972,
+    "pr_auc": 0.2569809656932443,
+    "brier_score": 0.22968028230417517,
+    "precision_top10": 0.2978723404255319,
+    "touch_top10": 0.3574468085106383,
+    "top10_avg_mfe": 0.09055794648862016,
+    "top10_avg_close_ret": 0.0026509808491513758,
+    "precision_top20": 0.25902335456475584,
+    "touch_top20": 0.3036093418259023,
+    "top20_avg_mfe": 0.08334831735623299,
+    "top20_avg_close_ret": -0.010743756008433076,
+    "lift_factor_top20": 1.411168806970575,
+    "bot80_precision": 0.16472457627118645,
+    "bot80_avg_mfe": 0.06079431418440752,
+    "bot80_avg_close_ret": 0.004669174610721504,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 12058.497160493862,
+        "gain_share": 0.2522338433078447,
+        "split_count": 187
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 4377.452039169148,
+        "gain_share": 0.09156543614346843,
+        "split_count": 243
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 4024.623517513275,
+        "gain_share": 0.08418513884261962,
+        "split_count": 206
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 3652.4159726627113,
+        "gain_share": 0.07639948045614871,
+        "split_count": 134
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2830.3565917015076,
+        "gain_share": 0.059204037746551565,
+        "split_count": 151
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 2391.47475394691,
+        "gain_share": 0.050023718572323864,
+        "split_count": 85
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 2092.5462693964655,
+        "gain_share": 0.04377087632102128,
+        "split_count": 140
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1736.8618431687355,
+        "gain_share": 0.03633084058206593,
+        "split_count": 79
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 1544.6011476407293,
+        "gain_share": 0.032309223832928495,
+        "split_count": 73
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1439.653670619242,
+        "gain_share": 0.03011398298970659,
+        "split_count": 73
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 1285.327142140828,
+        "gain_share": 0.0268858549000804,
+        "split_count": 85
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 1133.896097958088,
+        "gain_share": 0.02371829315818517,
+        "split_count": 78
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1066.1795786762377,
+        "gain_share": 0.022301831580381782,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 1014.2034020381325,
+        "gain_share": 0.02121461891868889,
+        "split_count": 77
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 1006.8416951982654,
+        "gain_share": 0.02106063027609014,
+        "split_count": 66
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 819.4645015048227,
+        "gain_share": 0.01714116426929964,
+        "split_count": 55
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 720.8820855617523,
+        "gain_share": 0.015079064712038159,
+        "split_count": 52
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 675.2028566038498,
+        "gain_share": 0.014123568573005287,
+        "split_count": 54
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 608.5863018035889,
+        "gain_share": 0.01273011552313043,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 597.6371512413025,
+        "gain_share": 0.012501086458353619,
+        "split_count": 44
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 558.5044002532959,
+        "gain_share": 0.011682526396553223,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 447.20154225826263,
+        "gain_share": 0.009354346751148329,
+        "split_count": 45
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 383.232298374176,
+        "gain_share": 0.00801626887762672,
+        "split_count": 31
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 377.9891815185547,
+        "gain_share": 0.00790659588124884,
+        "split_count": 32
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 348.55796933174133,
+        "gain_share": 0.0072909679415243366,
+        "split_count": 31
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 254.24718916416168,
+        "gain_share": 0.0053182204067017125,
+        "split_count": 20
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 189.69595003128052,
+        "gain_share": 0.003967968636513169,
+        "split_count": 14
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 112.97379970550537,
+        "gain_share": 0.00236313160035966,
+        "split_count": 9
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 57.71078038215637,
+        "gain_share": 0.001207166344391302,
+        "split_count": 6
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 5,
+    "target_pct": 0.1,
+    "checkpoint_min": 30,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.19745762711864406,
+    "base_valid_rate": 0.17457627118644067,
+    "roc_auc": 0.6162058172683959,
+    "pr_auc": 0.23497177685473877,
+    "brier_score": 0.2384328581890589,
+    "precision_top10": 0.2330508474576271,
+    "touch_top10": 0.2627118644067797,
+    "top10_avg_mfe": 0.08230532390559356,
+    "top10_avg_close_ret": -0.014843729612593068,
+    "precision_top20": 0.2288135593220339,
+    "touch_top20": 0.2627118644067797,
+    "top20_avg_mfe": 0.07895921415731083,
+    "top20_avg_close_ret": -0.01815234655319133,
+    "lift_factor_top20": 1.3106796116504855,
+    "bot80_precision": 0.16101694915254236,
+    "bot80_avg_mfe": 0.06084851402844403,
+    "bot80_avg_close_ret": 0.005738170405972031,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 12896.601869842038,
+        "gain_share": 0.2830008062161338,
+        "split_count": 216
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3531.036927142821,
+        "gain_share": 0.07748446507425585,
+        "split_count": 197
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 3448.1211520090546,
+        "gain_share": 0.07566497561123973,
+        "split_count": 158
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3336.0499592605775,
+        "gain_share": 0.07320570469464353,
+        "split_count": 172
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 2626.205162878501,
+        "gain_share": 0.05762899296143753,
+        "split_count": 92
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2193.0695567131042,
+        "gain_share": 0.04812433995417039,
+        "split_count": 132
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 1879.199930212637,
+        "gain_share": 0.041236839026185475,
+        "split_count": 99
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1723.7611764546018,
+        "gain_share": 0.03782591783355554,
+        "split_count": 109
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1585.7152519751617,
+        "gain_share": 0.03479666188560779,
+        "split_count": 138
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1344.1091548204422,
+        "gain_share": 0.029494899377034926,
+        "split_count": 81
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1265.537586592487,
+        "gain_share": 0.027770738440798345,
+        "split_count": 55
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 1172.6483532916754,
+        "gain_share": 0.025732393132612896,
+        "split_count": 86
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 1075.0686340293032,
+        "gain_share": 0.023591120609796498,
+        "split_count": 83
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 897.0771258862987,
+        "gain_share": 0.01968530566625798,
+        "split_count": 72
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 819.4500613212585,
+        "gain_share": 0.01798187075543311,
+        "split_count": 63
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 722.5578347163464,
+        "gain_share": 0.01585568445287011,
+        "split_count": 54
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 660.0121293067932,
+        "gain_share": 0.014483192285173446,
+        "split_count": 40
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 634.576568365097,
+        "gain_share": 0.013925038724591539,
+        "split_count": 56
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 634.3399690582883,
+        "gain_share": 0.013919846830226432,
+        "split_count": 52
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 563.70720911026,
+        "gain_share": 0.012369893733100431,
+        "split_count": 40
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 474.71782875061035,
+        "gain_share": 0.010417126124964328,
+        "split_count": 45
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 425.6996735697612,
+        "gain_share": 0.009341480185405074,
+        "split_count": 34
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 411.87041211128235,
+        "gain_share": 0.009038013258099583,
+        "split_count": 35
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 350.6174600124359,
+        "gain_share": 0.0076938890459978026,
+        "split_count": 28
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 305.6164996623993,
+        "gain_share": 0.006706395736667891,
+        "split_count": 27
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 285.7414984703064,
+        "gain_share": 0.00627026213979678,
+        "split_count": 26
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 265.20173931121826,
+        "gain_share": 0.0058195412087971195,
+        "split_count": 22
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 28.47749369221856,
+        "gain_share": 0.0006249052079958043,
+        "split_count": 16
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 14.113300323486328,
+        "gain_share": 0.00030969982715035724,
+        "split_count": 1
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 10,
+    "target_pct": 0.1,
+    "checkpoint_min": 5,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.3643581826202029,
+    "base_valid_rate": 0.3070136744596383,
+    "roc_auc": 0.5565685887164629,
+    "pr_auc": 0.33635843904549845,
+    "brier_score": 0.2626896911038615,
+    "precision_top10": 0.3274336283185841,
+    "touch_top10": 0.39823008849557523,
+    "top10_avg_mfe": 0.09862475844144365,
+    "top10_avg_close_ret": -0.029558897450207147,
+    "precision_top20": 0.3355408388520971,
+    "touch_top20": 0.4282560706401766,
+    "top20_avg_mfe": 0.10300701292025817,
+    "top20_avg_close_ret": -0.019203994248088618,
+    "lift_factor_top20": 1.092918220801299,
+    "bot80_precision": 0.29988974641675853,
+    "bot80_avg_mfe": 0.09405807900725593,
+    "bot80_avg_close_ret": 0.013919898984663358,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 7417.042892175727,
+        "gain_share": 0.23541310174464883,
+        "split_count": 232
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3509.5590845942497,
+        "gain_share": 0.11139158851730532,
+        "split_count": 254
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 3211.136991262436,
+        "gain_share": 0.10191982576203219,
+        "split_count": 215
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 2034.5560880755074,
+        "gain_share": 0.06457575698700253,
+        "split_count": 112
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 1901.909027814865,
+        "gain_share": 0.0603656079630285,
+        "split_count": 126
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1352.9494454860687,
+        "gain_share": 0.04294191500517914,
+        "split_count": 118
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1316.1692461036146,
+        "gain_share": 0.041774530517144956,
+        "split_count": 71
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1220.816656063078,
+        "gain_share": 0.03874808867136456,
+        "split_count": 107
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1190.582158255158,
+        "gain_share": 0.03778846136272885,
+        "split_count": 72
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 1029.341233894229,
+        "gain_share": 0.03267075789467652,
+        "split_count": 103
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 797.7143048644066,
+        "gain_share": 0.02531903907584375,
+        "split_count": 90
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 710.6223193407059,
+        "gain_share": 0.02255478454107994,
+        "split_count": 86
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 708.458462882787,
+        "gain_share": 0.022486104857290294,
+        "split_count": 71
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 650.2937798090279,
+        "gain_share": 0.020639987927208545,
+        "split_count": 75
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 634.3754873871803,
+        "gain_share": 0.020134749566316956,
+        "split_count": 63
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 603.3181862831116,
+        "gain_share": 0.0191490069070101,
+        "split_count": 75
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 497.63571178913116,
+        "gain_share": 0.01579469987624954,
+        "split_count": 64
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 446.3956903219223,
+        "gain_share": 0.014168368120802514,
+        "split_count": 64
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 444.33328542113304,
+        "gain_share": 0.014102908456916745,
+        "split_count": 54
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 428.0442914068699,
+        "gain_share": 0.013585904219386597,
+        "split_count": 63
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 403.52422070503235,
+        "gain_share": 0.012807649868854671,
+        "split_count": 45
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 289.497228463646,
+        "gain_share": 0.00918849216457942,
+        "split_count": 44
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 268.4852374792099,
+        "gain_share": 0.008521582448215936,
+        "split_count": 47
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 206.98162722587585,
+        "gain_share": 0.006569489697949512,
+        "split_count": 16
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 161.148601770401,
+        "gain_share": 0.005114773196822508,
+        "split_count": 20
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 53.947189807891846,
+        "gain_share": 0.0017122558771340373,
+        "split_count": 6
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 17.66156005859375,
+        "gain_share": 0.0005605687732275352,
+        "split_count": 2
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 10,
+    "target_pct": 0.1,
+    "checkpoint_min": 10,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.36130742049469966,
+    "base_valid_rate": 0.30918727915194344,
+    "roc_auc": 0.5926717208622578,
+    "pr_auc": 0.38270707343611177,
+    "brier_score": 0.2566190614037825,
+    "precision_top10": 0.38495575221238937,
+    "touch_top10": 0.4778761061946903,
+    "top10_avg_mfe": 0.1312293373987538,
+    "top10_avg_close_ret": 0.003387326933890912,
+    "precision_top20": 0.37389380530973454,
+    "touch_top20": 0.4756637168141593,
+    "top20_avg_mfe": 0.12709168656230577,
+    "top20_avg_close_ret": 0.0071342981889933495,
+    "lift_factor_top20": 1.2092793931731987,
+    "bot80_precision": 0.29304635761589404,
+    "bot80_avg_mfe": 0.08838637346624835,
+    "bot80_avg_close_ret": 0.007830030111847483,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 6743.810229621828,
+        "gain_share": 0.22507515532364678,
+        "split_count": 189
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3434.0666568279266,
+        "gain_share": 0.11461222363320345,
+        "split_count": 228
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 2972.5682505369186,
+        "gain_share": 0.09920968086571681,
+        "split_count": 204
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1898.5232292404398,
+        "gain_share": 0.06336335041426658,
+        "split_count": 106
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 1888.4793410301208,
+        "gain_share": 0.06302813491708945,
+        "split_count": 128
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1544.3348553851247,
+        "gain_share": 0.05154228775904039,
+        "split_count": 95
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1517.101555891335,
+        "gain_share": 0.05063337441408646,
+        "split_count": 120
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 1249.9525485858321,
+        "gain_share": 0.041717256927604945,
+        "split_count": 108
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1224.9629818201065,
+        "gain_share": 0.04088322832511538,
+        "split_count": 78
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1193.0713376998901,
+        "gain_share": 0.03981884239053568,
+        "split_count": 119
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 586.4808022081852,
+        "gain_share": 0.019573839292145463,
+        "split_count": 84
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 561.665580034256,
+        "gain_share": 0.018745629453046666,
+        "split_count": 62
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 551.1849801540375,
+        "gain_share": 0.018395838672226092,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 534.014481138438,
+        "gain_share": 0.01782277202276059,
+        "split_count": 57
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 461.4962828159332,
+        "gain_share": 0.015402471896352068,
+        "split_count": 60
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 417.57618939876556,
+        "gain_share": 0.013936635594452983,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 414.47565795481205,
+        "gain_share": 0.013833155132729962,
+        "split_count": 52
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 363.90617978572845,
+        "gain_share": 0.012145395132671283,
+        "split_count": 39
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 351.38627406582236,
+        "gain_share": 0.011727542371606371,
+        "split_count": 42
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 342.2412940263748,
+        "gain_share": 0.011422327999800757,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 307.5100391805172,
+        "gain_share": 0.010263169851387834,
+        "split_count": 41
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 274.7965496778488,
+        "gain_share": 0.009171354767586987,
+        "split_count": 50
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 234.5089110136032,
+        "gain_share": 0.007826751906410905,
+        "split_count": 31
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 228.00509470701218,
+        "gain_share": 0.007609686565667393,
+        "split_count": 29
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 222.9102811962366,
+        "gain_share": 0.007439646795383535,
+        "split_count": 29
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 201.862468957901,
+        "gain_share": 0.006737174536013331,
+        "split_count": 23
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 172.42652881145477,
+        "gain_share": 0.00575474789959084,
+        "split_count": 15
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 69.1631498336792,
+        "gain_share": 0.0023083251398610225,
+        "split_count": 9
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 10,
+    "target_pct": 0.1,
+    "checkpoint_min": 15,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.3541114058355438,
+    "base_valid_rate": 0.2988505747126437,
+    "roc_auc": 0.5777923696247491,
+    "pr_auc": 0.3471435668356705,
+    "brier_score": 0.2586077686321339,
+    "precision_top10": 0.3407079646017699,
+    "touch_top10": 0.4424778761061947,
+    "top10_avg_mfe": 0.11869462056430011,
+    "top10_avg_close_ret": -0.011953195960718074,
+    "precision_top20": 0.3252212389380531,
+    "touch_top20": 0.43805309734513276,
+    "top20_avg_mfe": 0.11621283067464079,
+    "top20_avg_close_ret": -0.011608962394611812,
+    "lift_factor_top20": 1.0882402995234852,
+    "bot80_precision": 0.29226519337016577,
+    "bot80_avg_mfe": 0.0898529969620009,
+    "bot80_avg_close_ret": 0.011584769892470313,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 7019.175709605217,
+        "gain_share": 0.23491225678199296,
+        "split_count": 193
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3445.393593519926,
+        "gain_share": 0.11530772530005633,
+        "split_count": 244
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2515.3208433389664,
+        "gain_share": 0.08418078137450921,
+        "split_count": 170
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1876.385367155075,
+        "gain_share": 0.06279739095118028,
+        "split_count": 101
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 1806.0289334058762,
+        "gain_share": 0.06044275711454042,
+        "split_count": 130
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1547.9350646436214,
+        "gain_share": 0.05180507433227726,
+        "split_count": 85
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1538.7648358233273,
+        "gain_share": 0.05149817232034519,
+        "split_count": 139
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1358.3059282880276,
+        "gain_share": 0.0454587154126744,
+        "split_count": 109
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1063.6256162645295,
+        "gain_share": 0.03559658629800729,
+        "split_count": 53
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 815.8713566660881,
+        "gain_share": 0.027304941430080908,
+        "split_count": 87
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 673.7827704437077,
+        "gain_share": 0.022549632283625665,
+        "split_count": 72
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 641.0871689654887,
+        "gain_share": 0.021455401586482296,
+        "split_count": 72
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 635.6929615586996,
+        "gain_share": 0.02127487249191284,
+        "split_count": 85
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 608.8174550533295,
+        "gain_share": 0.02037542415972531,
+        "split_count": 64
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 497.63257229328156,
+        "gain_share": 0.016654375875741954,
+        "split_count": 67
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 426.87057787179947,
+        "gain_share": 0.014286169053223175,
+        "split_count": 48
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 337.67710465192795,
+        "gain_share": 0.01130111198225797,
+        "split_count": 44
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 335.5593530032784,
+        "gain_share": 0.011230236734270191,
+        "split_count": 48
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 332.64041674137115,
+        "gain_share": 0.011132548069239467,
+        "split_count": 32
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 332.55437207221985,
+        "gain_share": 0.01112966839386865,
+        "split_count": 38
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 330.66498374938965,
+        "gain_share": 0.011066435830215025,
+        "split_count": 36
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 324.83071732521057,
+        "gain_share": 0.010871179186262398,
+        "split_count": 41
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 310.46725142002106,
+        "gain_share": 0.010390473996565836,
+        "split_count": 28
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 308.8440802693367,
+        "gain_share": 0.010336150980028594,
+        "split_count": 45
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 264.06059812009335,
+        "gain_share": 0.008837372591586378,
+        "split_count": 34
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 263.20450311899185,
+        "gain_share": 0.008808721476833212,
+        "split_count": 33
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 237.59236405789852,
+        "gain_share": 0.00795155453348082,
+        "split_count": 30
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 31.202760219573975,
+        "gain_share": 0.0010442694590159756,
+        "split_count": 4
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 10,
+    "target_pct": 0.1,
+    "checkpoint_min": 20,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.35294117647058826,
+    "base_valid_rate": 0.29765590446705,
+    "roc_auc": 0.5840310501120963,
+    "pr_auc": 0.3422769366491487,
+    "brier_score": 0.2600516361705099,
+    "precision_top10": 0.37168141592920356,
+    "touch_top10": 0.4557522123893805,
+    "top10_avg_mfe": 0.12608946810518953,
+    "top10_avg_close_ret": -0.0011099813117588168,
+    "precision_top20": 0.37168141592920356,
+    "touch_top20": 0.46017699115044247,
+    "top20_avg_mfe": 0.12048965132268774,
+    "top20_avg_close_ret": -0.002131793855861047,
+    "lift_factor_top20": 1.2486949203802813,
+    "bot80_precision": 0.2791597567716971,
+    "bot80_avg_mfe": 0.08851758917341969,
+    "bot80_avg_close_ret": 0.009152239483301081,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 7088.422204464674,
+        "gain_share": 0.21326483869919977,
+        "split_count": 194
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3693.2370432857424,
+        "gain_share": 0.11111606780676048,
+        "split_count": 250
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3680.267021536827,
+        "gain_share": 0.1107258470331636,
+        "split_count": 220
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2348.0755240917206,
+        "gain_share": 0.07064505096543948,
+        "split_count": 140
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1673.7206251788884,
+        "gain_share": 0.05035616514652239,
+        "split_count": 139
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1624.8869794011116,
+        "gain_share": 0.048886938386393484,
+        "split_count": 87
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1518.419029374607,
+        "gain_share": 0.0456837050667507,
+        "split_count": 85
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1472.4134087627754,
+        "gain_share": 0.04429956329640594,
+        "split_count": 102
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 963.6028463197872,
+        "gain_share": 0.02899130436404345,
+        "split_count": 49
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 911.9809000492096,
+        "gain_share": 0.027438187785039547,
+        "split_count": 90
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 834.2423650622368,
+        "gain_share": 0.025099318055430808,
+        "split_count": 74
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 789.1979379951954,
+        "gain_share": 0.02374409510233134,
+        "split_count": 81
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 741.3476284276694,
+        "gain_share": 0.022304453351703443,
+        "split_count": 84
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 733.0741397738457,
+        "gain_share": 0.022055534174439135,
+        "split_count": 78
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 671.788158416748,
+        "gain_share": 0.02021166193437825,
+        "split_count": 65
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 609.7262320555747,
+        "gain_share": 0.0183444443317867,
+        "split_count": 60
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 530.2725419998169,
+        "gain_share": 0.015953971825348707,
+        "split_count": 56
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 484.9694032073021,
+        "gain_share": 0.014590965177540998,
+        "split_count": 55
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 458.4928106069565,
+        "gain_share": 0.013794380819648117,
+        "split_count": 64
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 414.1339004635811,
+        "gain_share": 0.012459782577088482,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 347.7888580709696,
+        "gain_share": 0.010463701593729446,
+        "split_count": 48
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 324.79390251636505,
+        "gain_share": 0.009771867029450926,
+        "split_count": 30
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 317.12033796310425,
+        "gain_share": 0.009540997386038842,
+        "split_count": 27
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 280.15236975997686,
+        "gain_share": 0.00842876570055722,
+        "split_count": 44
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 275.63210022449493,
+        "gain_share": 0.008292767233542334,
+        "split_count": 34
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 190.8554905653,
+        "gain_share": 0.005742147439331213,
+        "split_count": 30
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 161.9420205950737,
+        "gain_share": 0.00487224630596607,
+        "split_count": 24
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 56.558499336242676,
+        "gain_share": 0.001701639503134467,
+        "split_count": 4
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 40.53636980056763,
+        "gain_share": 0.0012195919088346752,
+        "split_count": 4
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 10,
+    "target_pct": 0.1,
+    "checkpoint_min": 25,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.3561643835616438,
+    "base_valid_rate": 0.30181175430844015,
+    "roc_auc": 0.6115545712326483,
+    "pr_auc": 0.37461993023692414,
+    "brier_score": 0.24956128192470053,
+    "precision_top10": 0.3805309734513274,
+    "touch_top10": 0.4424778761061947,
+    "top10_avg_mfe": 0.11728426726581867,
+    "top10_avg_close_ret": -0.00409753947821403,
+    "precision_top20": 0.4225663716814159,
+    "touch_top20": 0.5,
+    "top20_avg_mfe": 0.12930354836745647,
+    "top20_avg_close_ret": 0.01586203418633678,
+    "lift_factor_top20": 1.4000991202270046,
+    "bot80_precision": 0.27167310877967976,
+    "bot80_avg_mfe": 0.08691826182877341,
+    "bot80_avg_close_ret": 0.005350833987016817,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 6601.789231233299,
+        "gain_share": 0.20343206821534388,
+        "split_count": 153
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 4016.073518037796,
+        "gain_share": 0.12375404807140068,
+        "split_count": 234
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3462.6939485818148,
+        "gain_share": 0.1067018298954629,
+        "split_count": 228
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 2848.52105999738,
+        "gain_share": 0.08777628462427847,
+        "split_count": 192
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1849.5342923817225,
+        "gain_share": 0.05699282015159505,
+        "split_count": 98
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1528.0581193398684,
+        "gain_share": 0.04708663252984317,
+        "split_count": 110
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1354.6218645600602,
+        "gain_share": 0.04174224863972185,
+        "split_count": 62
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1317.3244729787111,
+        "gain_share": 0.040592941195531605,
+        "split_count": 121
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1298.0393311977386,
+        "gain_share": 0.03999867558950945,
+        "split_count": 69
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 958.9909757999703,
+        "gain_share": 0.029551006670110482,
+        "split_count": 85
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 875.698588848114,
+        "gain_share": 0.026984377844087897,
+        "split_count": 83
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 777.7744955243543,
+        "gain_share": 0.023966877567235933,
+        "split_count": 95
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 616.5347814438865,
+        "gain_share": 0.018998326260166627,
+        "split_count": 65
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 603.2528773192316,
+        "gain_share": 0.018589048542978485,
+        "split_count": 66
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 561.7569627761841,
+        "gain_share": 0.017310364928233284,
+        "split_count": 64
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 545.3957498073578,
+        "gain_share": 0.016806199273108568,
+        "split_count": 64
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 442.96837370842695,
+        "gain_share": 0.013649931747466317,
+        "split_count": 58
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 384.22398853302,
+        "gain_share": 0.011839741910484909,
+        "split_count": 39
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 371.4024655818939,
+        "gain_share": 0.011444650695018944,
+        "split_count": 43
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 362.38408291339874,
+        "gain_share": 0.01116675205664229,
+        "split_count": 40
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 329.1022217338905,
+        "gain_share": 0.010141181924567883,
+        "split_count": 47
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 317.5146586894989,
+        "gain_share": 0.009784114797289134,
+        "split_count": 39
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 302.3295178413391,
+        "gain_share": 0.009316189436347952,
+        "split_count": 37
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 261.1617152392864,
+        "gain_share": 0.008047616488336393,
+        "split_count": 39
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 145.83120167255402,
+        "gain_share": 0.004493742821449398,
+        "split_count": 19
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 138.92102667689323,
+        "gain_share": 0.004280807942455296,
+        "split_count": 19
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 106.08572292327881,
+        "gain_share": 0.0032689983376477582,
+        "split_count": 17
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 57.38394069671631,
+        "gain_share": 0.001768268166310247,
+        "split_count": 8
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 16.688590049743652,
+        "gain_share": 0.0005142536773751457,
+        "split_count": 2
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  },
+  {
+    "horizon_days": 10,
+    "target_pct": 0.1,
+    "checkpoint_min": 30,
+    "train_samples": 4298,
+    "test_samples": 2511,
+    "base_touch_rate": 0.3498452012383901,
+    "base_valid_rate": 0.29588677576293676,
+    "roc_auc": 0.5529403369613388,
+    "pr_auc": 0.3220200806847797,
+    "brier_score": 0.26807895241036706,
+    "precision_top10": 0.28761061946902655,
+    "touch_top10": 0.3584070796460177,
+    "top10_avg_mfe": 0.1031932956751416,
+    "top10_avg_close_ret": -0.02997548168536465,
+    "precision_top20": 0.30973451327433627,
+    "touch_top20": 0.3893805309734513,
+    "top20_avg_mfe": 0.11154533520935422,
+    "top20_avg_close_ret": -0.024324591446250564,
+    "lift_factor_top20": 1.0468007989735042,
+    "bot80_precision": 0.2924267551133223,
+    "bot80_avg_mfe": 0.09032375766462174,
+    "bot80_avg_close_ret": 0.014613914727367781,
+    "feature_importance": [
+      {
+        "feature": "atr_20d_pct",
+        "gain": 7490.649896755815,
+        "gain_share": 0.24083980261729684,
+        "split_count": 194
+      },
+      {
+        "feature": "qqq_gap",
+        "gain": 3371.3363219611347,
+        "gain_share": 0.10839539766626897,
+        "split_count": 221
+      },
+      {
+        "feature": "qqq_vwap_dev",
+        "gain": 3308.5313005447388,
+        "gain_share": 0.10637608703637945,
+        "split_count": 235
+      },
+      {
+        "feature": "qqq_intra_ret",
+        "gain": 1883.4551994800568,
+        "gain_share": 0.060556958973313695,
+        "split_count": 113
+      },
+      {
+        "feature": "pm_volume",
+        "gain": 1514.6266360506415,
+        "gain_share": 0.0486983619703443,
+        "split_count": 69
+      },
+      {
+        "feature": "intra_curr_bar_range",
+        "gain": 1479.4415906909853,
+        "gain_share": 0.04756709038559565,
+        "split_count": 102
+      },
+      {
+        "feature": "pm_rvol",
+        "gain": 1390.575634777546,
+        "gain_share": 0.044709867103693304,
+        "split_count": 134
+      },
+      {
+        "feature": "intra_range_pct",
+        "gain": 1255.489463865757,
+        "gain_share": 0.04036656883356428,
+        "split_count": 107
+      },
+      {
+        "feature": "pm_turnover",
+        "gain": 1218.5753807085566,
+        "gain_share": 0.03917970512695465,
+        "split_count": 85
+      },
+      {
+        "feature": "intra_rvol",
+        "gain": 1134.008321031928,
+        "gain_share": 0.036460700201992755,
+        "split_count": 69
+      },
+      {
+        "feature": "intra_turnover",
+        "gain": 775.3306101560593,
+        "gain_share": 0.024928473989153627,
+        "split_count": 94
+      },
+      {
+        "feature": "intra_low_from_open",
+        "gain": 621.224866271019,
+        "gain_share": 0.01997365732424193,
+        "split_count": 65
+      },
+      {
+        "feature": "pm_intra_gain",
+        "gain": 581.1624628305435,
+        "gain_share": 0.018685568644358837,
+        "split_count": 73
+      },
+      {
+        "feature": "intra_vwap_dev",
+        "gain": 570.7705245912075,
+        "gain_share": 0.018351446453511715,
+        "split_count": 62
+      },
+      {
+        "feature": "intra_volume",
+        "gain": 553.4653186798096,
+        "gain_share": 0.017795048486259527,
+        "split_count": 46
+      },
+      {
+        "feature": "pm_vwap_dev",
+        "gain": 505.2790403366089,
+        "gain_share": 0.016245760517259032,
+        "split_count": 62
+      },
+      {
+        "feature": "intra_dist_to_pm_high",
+        "gain": 487.74877816438675,
+        "gain_share": 0.015682126528275515,
+        "split_count": 50
+      },
+      {
+        "feature": "intra_curr_bar_ret",
+        "gain": 418.8646296719089,
+        "gain_share": 0.01346735945798779,
+        "split_count": 63
+      },
+      {
+        "feature": "intra_high_from_open",
+        "gain": 388.56746912002563,
+        "gain_share": 0.012493243424298866,
+        "split_count": 48
+      },
+      {
+        "feature": "pm_surge_retention",
+        "gain": 375.9195215702057,
+        "gain_share": 0.012086585893457406,
+        "split_count": 53
+      },
+      {
+        "feature": "alpha_vs_qqq",
+        "gain": 358.20746970176697,
+        "gain_share": 0.011517106991795001,
+        "split_count": 37
+      },
+      {
+        "feature": "pm_gap",
+        "gain": 299.5356913805008,
+        "gain_share": 0.009630688629588614,
+        "split_count": 47
+      },
+      {
+        "feature": "pm_peak_to_open_mins",
+        "gain": 281.03371956944466,
+        "gain_share": 0.009035812176887837,
+        "split_count": 40
+      },
+      {
+        "feature": "intra_vol_acceleration",
+        "gain": 257.95922017097473,
+        "gain_share": 0.00829391955645883,
+        "split_count": 36
+      },
+      {
+        "feature": "pm_final_velocity_10m",
+        "gain": 189.6559708416462,
+        "gain_share": 0.0060978295891890985,
+        "split_count": 31
+      },
+      {
+        "feature": "intra_return_from_open",
+        "gain": 187.5936199426651,
+        "gain_share": 0.006031520765484319,
+        "split_count": 24
+      },
+      {
+        "feature": "intra_range_retention",
+        "gain": 181.24544477462769,
+        "gain_share": 0.005827413875491727,
+        "split_count": 24
+      },
+      {
+        "feature": "intra_upbar_ratio",
+        "gain": 15.84807014465332,
+        "gain_share": 0.0005095480549900549,
+        "split_count": 2
+      },
+      {
+        "feature": "intra_breakout_pm_high",
+        "gain": 6.106910228729248,
+        "gain_share": 0.00019634972590638604,
+        "split_count": 1
+      },
+      {
+        "feature": "pm_gain",
+        "gain": 0.0,
+        "gain_share": 0.0,
+        "split_count": 0
+      }
+    ]
+  }
+]
