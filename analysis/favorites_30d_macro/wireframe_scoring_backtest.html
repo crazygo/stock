@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Wireframe] 股票动态截面打分与回测报告框架</title>
+  <style>
+    /* ==========================================================================
+       WIREFRAME BASE STYLES: Low-fidelity, grayscale, system type, clear hierarchy
+       ========================================================================== */
+    :root {
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --border: #d0d5dd;
+      --border-focus: #111827;
+      --border-dashed: #9ca3af;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-light: #6b7280;
+      --surface-subtle: #f3f4f6;
+      --surface-accent: #e5e7eb;
+      --annotation-bg: #fffbeb;
+      --annotation-border: #d97706;
+      --annotation-text: #92400e;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      font-size: 14px;
+      padding-bottom: 60px;
+    }
+
+    /* Top Wireframe Watermark & Mode Switcher */
+    .wireframe-banner {
+      background: #1f2937;
+      color: #f3f4f6;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 2px solid #111827;
+    }
+
+    .wireframe-banner .title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-wireframe {
+      display: inline-block;
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #374151;
+      border: 1px solid #4b5563;
+      color: #e5e7eb;
+      border-radius: 2px;
+    }
+
+    .direction-switch {
+      display: flex;
+      background: #111827;
+      border: 1px solid #4b5563;
+      border-radius: 4px;
+      padding: 2px;
+    }
+
+    .direction-btn {
+      background: transparent;
+      color: #9ca3af;
+      border: none;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s ease;
+    }
+
+    .direction-btn:hover {
+      color: #ffffff;
+    }
+
+    .direction-btn.active {
+      background: #374151;
+      color: #ffffff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    /* Layout Containers */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Context Header */
+    .doc-header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px 24px;
+      margin-bottom: 20px;
+    }
+
+    .doc-header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    .meta-item strong {
+      color: var(--text-main);
+    }
+
+    /* Annotations (Review Questions & Assumptions) */
+    .annotation-box {
+      background: var(--annotation-bg);
+      border-left: 3px solid var(--annotation-border);
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--annotation-text);
+      margin-bottom: 20px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .annotation-box strong {
+      font-weight: 700;
+    }
+
+    /* Card Panels */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-subtext {
+      font-size: 12px;
+      font-weight: normal;
+      color: var(--text-light);
+    }
+
+    /* Direction Container Switching */
+    .direction-view {
+      display: none;
+    }
+    .direction-view.active {
+      display: block;
+    }
+
+    /* Grid Layouts */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 992px) {
+      .grid-2col, .grid-3col, .grid-4col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Tables */
+    .wf-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    table.wf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    table.wf-table th {
+      background: var(--surface-subtle);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    table.wf-table td {
+      border-bottom: 1px solid var(--border);
+      padding: 8px 12px;
+      color: var(--text-main);
+    }
+
+    table.wf-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.wf-table tr:hover td {
+      background: #f9fafb;
+    }
+
+    table.wf-table tr.highlighted td {
+      background: #f3f4f6;
+      font-weight: 600;
+    }
+
+    .num {
+      font-family: var(--font-mono);
+      text-align: right;
+    }
+
+    th.num {
+      text-align: right;
+    }
+
+    /* Metric Callout Blocks */
+    .stat-box {
+      border: 1px solid var(--border);
+      background: var(--surface-subtle);
+      padding: 12px 14px;
+      border-radius: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .stat-val {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Pipeline / Funnel Stages */
+    .pipeline-stage {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .pipeline-header {
+      background: var(--surface-subtle);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .pipeline-body {
+      padding: 14px 16px;
+    }
+
+    .pipeline-arrow {
+      text-align: center;
+      padding: 8px 0;
+      font-size: 16px;
+      color: var(--text-light);
+      font-weight: bold;
+    }
+
+    /* Filter Controls in Cockpit */
+    .control-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .wf-select, .wf-input {
+      border: 1px solid var(--border);
+      padding: 5px 8px;
+      font-size: 12px;
+      border-radius: 3px;
+      background: #fff;
+      color: var(--text-main);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 11px;
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      background: var(--surface-accent);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    .tag-veto {
+      background: #fee2e2;
+      border-color: #fca5a5;
+      color: #991b1b;
+    }
+
+    .tag-pass {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #166534;
+    }
+
+    /* Formula Spec Block */
+    .formula-card {
+      border: 1px dashed var(--border-dashed);
+      background: #fafafa;
+      padding: 12px 14px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .formula-weight {
+      display: inline-block;
+      width: 48px;
+      font-weight: 700;
+    }
+
+    /* Trade inspector pills */
+    .trade-pill {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Wireframe Header & Direction Switcher -->
+  <header class="wireframe-banner">
+    <div class="title-group">
+      <span class="badge-wireframe">UI Wireframe v1.0</span>
+      <strong style="font-size: 14px;">量化选股：30天微观-宏观截面动态打分与回测报告框架</strong>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span style="font-size: 12px; color: #9ca3af;">布局方案切换:</span>
+      <div class="direction-switch" role="tablist">
+        <button id="btn-dir-a" class="direction-btn active" role="tab" aria-selected="true" onclick="switchDirection('a')">
+          方案 A: 决策仪表盘 (Cockpit)
+        </button>
+        <button id="btn-dir-b" class="direction-btn" role="tab" aria-selected="false" onclick="switchDirection('b')">
+          方案 B: 阶段漏斗流 (Pipeline)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Document Header & Meta Context -->
+    <div class="doc-header">
+      <h1>
+        <span>📈 股票动态截面打分选股系统 · 30天回测原型方案</span>
+      </h1>
+      <p style="color: var(--text-muted); margin-top: 4px; font-size: 13px;">
+        在已有 2 小时微观 5m 曲线（15分钟滑动）与 30 天宏观 60m 走势基础上，构建多因子截面打分与硬门禁一票否决机制。
+      </p>
+
+      <div class="meta-bar">
+        <div class="meta-item">回测样本池: <strong>49 只自选核心股</strong></div>
+        <div class="meta-item">时间跨度: <strong>最近 30 个完整交易日 (2026-08-16 ~ 2026-09-28)</strong></div>
+        <div class="meta-item">微观越线总触发: <strong>1,064 次</strong></div>
+        <div class="meta-item">系统边界: <strong>仅提供回测数据报告，不含实盘自动交易</strong></div>
+      </div>
+    </div>
+
+    <!-- Direction Trade-off Annotation -->
+    <div class="annotation-box">
+      <strong>[评审焦点与布局权衡]</strong>
+      <span id="annotation-text">
+        <strong>方案 A (决策仪表盘)</strong>: 强调高信息密度与多策略横向对齐。将 6 套策略绩效置顶对比，并提供动态阈值联动与高分候选流。适合量化投研日常高频比对。
+      </span>
+    </div>
+
+    <!-- =========================================================================
+         DIRECTION A: 决策仪表盘 (Cockpit & Scorecard)
+         High density, strategy scorecard first, formula breakdown + candidate table
+         ========================================================================= -->
+    <div id="view-dir-a" class="direction-view active">
+
+      <!-- Section 1: Summary Performance Scorecard across 6 Variants -->
+      <section class="card">
+        <div class="card-title">
+          <span>📊 六套策略方案全景横向对比 (30天 1,064次 真实触发)</span>
+          <span class="card-subtext">基准 vs 规则过滤 vs 动态打分 vs 每日截面 Top-N</span>
+        </div>
+
+        <div class="wf-table-wrap">
+          <table class="wf-table" id="strategy-table">
+            <thead>
+              <tr>
+                <th>策略方案</th>
+                <th class="num">交易样本数</th>
+                <th class="num">3天触及+5%率</th>
+                <th class="num">3天触及+3%率</th>
+                <th class="num">3天平均冲高</th>
+                <th class="num">3天平均回撤</th>
+                <th class="num">3天期末均益</th>
+                <th class="num">期末正收益率</th>
+                <th class="num">盈亏空间比</th>
+                <th class="num">1天内+5%达成率</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dynamic Rows populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 10px; font-size: 11px; color: var(--text-light); display: flex; justify-content: space-between;">
+          <span>* 提示：盈亏空间比 = abs(平均冲高 / 平均回撤)；1天达成率统计开仓后首个交易日（7小时内）即触及 +5% 止盈线的样本占比。</span>
+          <span>数据源: backtest_scoring_results.json</span>
+        </div>
+      </section>
+
+      <!-- Section 2: Core Metrics Comparison Blocks -->
+      <div class="grid-4col" style="margin-bottom: 20px;">
+        <div class="stat-box">
+          <div class="stat-label">盲目越线买入基准 (Baseline 1)</div>
+          <div class="stat-val">44.9%</div>
+          <div class="stat-sub">3天触及+5%率 | 均益 +0.9%</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">单纯多头形态过滤 (Baseline 2)</div>
+          <div class="stat-val">49.4%</div>
+          <div class="stat-sub">微升 +4.5% | 证明无大盘脱节</div>
+        </div>
+        <div class="stat-box" style="border: 2px solid #111827; background: #fff;">
+          <div class="stat-label">★ 高确信度打分 (Score >= 75)</div>
+          <div class="stat-val">81.8%</div>
+          <div class="stat-sub">+36.9% 飞跃 | 均益 +7.4% (8.2倍)</div>
+        </div>
+        <div class="stat-box" style="border: 2px solid #111827; background: #fff;">
+          <div class="stat-label">★ 每日选优 Top-1 龙头</div>
+          <div class="stat-val">77.4%</div>
+          <div class="stat-sub">31战24胜 | 首日即触及+5%达 64.5%</div>
+        </div>
+      </div>
+
+      <!-- Section 3: Dual Column - Scoring Engine Logic vs. Dynamic Trade Stream -->
+      <div class="grid-2col">
+
+        <!-- Left: Model Spec & Veto Rules -->
+        <div class="card">
+          <div class="card-title">
+            <span>⚙️ 截面打分公式与一票否决门禁</span>
+            <span class="card-subtext">总分 0 ~ 100 分</span>
+          </div>
+
+          <div class="formula-card">
+            <div style="font-weight: 700; margin-bottom: 6px; color: #111;">[综合打分模型 = 四维加权]</div>
+            <div><span class="formula-weight">35分</span> ① 个股 DNA 适配 (个股与该微观原子历史胜率与弹性)</div>
+            <div><span class="formula-weight">25分</span> ② 微观形态质量 (相似度>=94% + 振幅>=5% + 向上突破)</div>
+            <div><span class="formula-weight">20分</span> ③ 宏观 30 天位阶 (30天动量 + 通道15%~65%蓄势位)</div>
+            <div><span class="formula-weight">20分</span> ④ 行业大盘 Alpha (相对 SOXX 强弱超额 + 顺风加成)</div>
+          </div>
+
+          <div style="font-size: 13px; font-weight: 700; margin: 12px 0 6px 0;">🚫 三道硬风控一票否决门禁 (触发即归 0 分淘汰):</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="border: 1px solid var(--border); padding: 8px 12px; border-radius: 3px; font-size: 12px; background: var(--surface-subtle);">
+              <strong>门禁 1: 大盘系统性逆风</strong><br>
+              <span style="color: var(--text-muted);">微观 2 小时内 SOXX 跌幅 &le; -2.0% 或 QQQ &le; -1.8% (历史淘汰 45 次)</span>
+            </div>
+            <div style="border: 1px solid var(--border); padding: 8px 12px; border-radius: 3px; font-size: 12px; background: var(--surface-subtle);">
+              <strong>门禁 2: 毒性形态与股性相克</strong><br>
+              <span style="color: var(--text-muted);">全局 A-09 (冲高诱多回落) 或 MU A-06 假突破陷阱、LITE A-03 阴跌 (历史淘汰 14 次)</span>
+            </div>
+            <div style="border: 1px solid var(--border); padding: 8px 12px; border-radius: 3px; font-size: 12px; background: var(--surface-subtle);">
+              <strong>门禁 3: 日内极端情绪透支</strong><br>
+              <span style="color: var(--text-muted);">2 小时波动振幅 &ge; 14.0% 严重脱离中枢 (历史淘汰 9 次)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Candidate Stream / Top Trades -->
+        <div class="card">
+          <div class="card-title">
+            <span>🎯 标的候选流与真实交易审计</span>
+            <div class="control-group">
+              <label for="filter-score-a" class="control-label">打分过滤:</label>
+              <select id="filter-score-a" class="wf-select" onchange="renderTradesA()">
+                <option value="top1">每日 Top-1 龙头 (31笔)</option>
+                <option value="75" selected>Score &ge; 75 高确信度 (143笔)</option>
+                <option value="70">Score &ge; 70 稳健准入 (238笔)</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="trades-container-a" style="max-height: 440px; overflow-y: auto; padding-right: 4px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         DIRECTION B: 阶段漏斗流 (Pipeline & Funnel)
+         Sequential audit: 1064 Triggers -> Veto Stage -> Scoring Buckets -> Portfolio
+         ========================================================================= -->
+    <div id="view-dir-b" class="direction-view">
+
+      <div class="annotation-box">
+        <strong>[方案 B 交互说明]</strong>
+        按量化执行管线自上而下呈现。第一阶段展示 1,064 次微观越线全量池；第二阶段执行 3 道硬门禁过滤；第三阶段呈现打分分布（验证单调递增性）；第四阶段展示每日 Top-N 组合成果。适合作为风控审计看板。
+      </div>
+
+      <!-- Stage 1: Trigger Pool -->
+      <div class="pipeline-stage">
+        <div class="pipeline-header">
+          <span>STAGE 1: 原始微观原子触发池 (Raw Micro Triggers)</span>
+          <span class="tag">输入总量: 1,064 次</span>
+        </div>
+        <div class="pipeline-body">
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">
+            在 49 只自选股的 5m 行情中，2 小时滑动窗口（15分钟步长）与 12 种微观原子的皮尔逊相似度达到 &ge; 80% 的全部越线时点。
+          </p>
+          <div class="grid-3col">
+            <div class="stat-box">
+              <div class="stat-label">无门禁全量胜率</div>
+              <div class="stat-val">44.9%</div>
+              <div class="stat-sub">3天触及+5%率 (负期望)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">全量平均回撤</div>
+              <div class="stat-val">-6.2%</div>
+              <div class="stat-sub">回撤大于平均冲高 (+7.5%)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">期末平均净收益</div>
+              <div class="stat-val">+0.9%</div>
+              <div class="stat-sub">极低容错率，扣滑点即亏</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-arrow">▼ 经过三道硬风控一票否决</div>
+
+      <!-- Stage 2: Hard Veto Funnel -->
+      <div class="pipeline-stage">
+        <div class="pipeline-header">
+          <span>STAGE 2: 一票否决门禁过滤 (Hard Veto Gate Funnel)</span>
+          <span class="tag tag-veto">否决淘汰: 68 次 (直接归 0 分)</span>
+        </div>
+        <div class="pipeline-body">
+          <div class="grid-3col">
+            <div style="border: 1px solid var(--border); padding: 10px; border-radius: 4px; background: #fff;">
+              <div style="font-weight: 700; font-size: 13px;">① 大盘暴跌逆风门禁</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">SOXX &le; -2% 或 QQQ &le; -1.8%</div>
+              <div style="margin-top: 8px; font-family: var(--font-mono); font-weight: 700; font-size: 16px;">45 次拦截</div>
+            </div>
+            <div style="border: 1px solid var(--border); padding: 10px; border-radius: 4px; background: #fff;">
+              <div style="font-weight: 700; font-size: 13px;">② 毒性与相克形态门禁</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">A-09高位诱多、MU+A06、LITE+A03</div>
+              <div style="margin-top: 8px; font-family: var(--font-mono); font-weight: 700; font-size: 16px;">14 次拦截</div>
+            </div>
+            <div style="border: 1px solid var(--border); padding: 10px; border-radius: 4px; background: #fff;">
+              <div style="font-weight: 700; font-size: 13px;">③ 日内极端透支门禁</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">2 小时窗口振幅 &ge; 14.0%</div>
+              <div style="margin-top: 8px; font-family: var(--font-mono); font-weight: 700; font-size: 16px;">9 次拦截</div>
+            </div>
+          </div>
+          <div style="margin-top: 12px; font-size: 12px; color: var(--text-muted); background: var(--surface-subtle); padding: 8px 12px; border-radius: 3px;">
+            <strong>审计结论</strong>: 门禁过滤出的 68 次样本中，后验 3 天触及 +5% 仅为 17.6%，平均回撤高达 -10.4%，期末净亏损 -5.8%。有效阻断重大亏损源。
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-arrow">▼ 存活 996 次进入四维动态打分</div>
+
+      <!-- Stage 3: Score Distribution & Monotonicity Verification -->
+      <div class="pipeline-stage">
+        <div class="pipeline-header">
+          <span>STAGE 3: 四维加权打分分箱与单调性实证 (Score Bucketing & Monotonicity)</span>
+          <span class="tag tag-pass">通过打分: 996 次</span>
+        </div>
+        <div class="pipeline-body">
+          <div class="wf-table-wrap">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th>分值区间 (Buckets)</th>
+                  <th class="num">触发样本数</th>
+                  <th class="num">3天触及+5%率</th>
+                  <th class="num">3天平均冲高</th>
+                  <th class="num">3天平均回撤</th>
+                  <th class="num">3天期末净收益</th>
+                  <th>量化研判结论</th>
+                </tr>
+              </thead>
+              <tbody id="distribution-table-body">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-arrow">▼ 截面选优组合分配</div>
+
+      <!-- Stage 4: Execution Strategy Allocation -->
+      <div class="pipeline-stage">
+        <div class="pipeline-header">
+          <span>STAGE 4: 实盘策略分配模式 (Execution Strategy Selection)</span>
+          <span class="tag">回测结论输出</span>
+        </div>
+        <div class="pipeline-body">
+          <div class="grid-2col">
+            <div style="border: 1px solid var(--border); padding: 14px; border-radius: 4px; background: #fff;">
+              <h3 style="font-size: 14px; margin-bottom: 6px;">模式 I: 每日截面 Top-1 龙头配置 (Strategy C)</h3>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                每日仅开仓打分最高的一只标的（且分数 &ge; 65），不重仓分散，最贴合有限本金实盘。
+              </p>
+              <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <div class="stat-box" style="flex: 1;">
+                  <div class="stat-label">3天+5%胜率</div>
+                  <div class="stat-val">77.4%</div>
+                  <div class="stat-sub">31战24胜</div>
+                </div>
+                <div class="stat-box" style="flex: 1;">
+                  <div class="stat-label">首日即触及+5%</div>
+                  <div class="stat-val">64.5%</div>
+                  <div class="stat-sub">当日极速止盈</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="border: 1px solid var(--border); padding: 14px; border-radius: 4px; background: #fff;">
+              <h3 style="font-size: 14px; margin-bottom: 6px;">模式 II: 高确信度门槛配置 (Strategy B, Score &ge; 75)</h3>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                不限每日只数，只要达到 75 分极高确信度即开仓，捕获全市场共振机会。
+              </p>
+              <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <div class="stat-box" style="flex: 1;">
+                  <div class="stat-label">3天+5%胜率</div>
+                  <div class="stat-val">81.8%</div>
+                  <div class="stat-sub">143次触发</div>
+                </div>
+                <div class="stat-box" style="flex: 1;">
+                  <div class="stat-label">盈亏空间比</div>
+                  <div class="stat-val">2.40</div>
+                  <div class="stat-sub">冲高 +14.2% / 回撤 -5.9%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Built-in JSON Data & Interactive Logic -->
+  <script>
+    // Embedded Backtest Results Data
+    const BACKTEST_DATA = {
+      "summary": [
+        {
+          "name": "Baseline 1: Naive 见线就买 (全量触发)",
+          "n": 1064,
+          "hit5": 44.9,
+          "hit3": 61.0,
+          "gain": 7.5,
+          "dd": -6.2,
+          "end": 0.9,
+          "win_rate": 46.1,
+          "ratio": 1.21,
+          "hit5_1d": 24.8
+        },
+        {
+          "name": "Baseline 2: 纯多头形态过滤 (A-04/06/07/10/11)",
+          "n": 421,
+          "hit5": 49.4,
+          "hit3": 63.9,
+          "gain": 8.5,
+          "dd": -6.4,
+          "end": 1.8,
+          "win_rate": 48.2,
+          "ratio": 1.32,
+          "hit5_1d": 26.4
+        },
+        {
+          "name": "Strategy A: 综合打分 >= 70 分 (稳健准入)",
+          "n": 238,
+          "hit5": 69.3,
+          "hit3": 81.5,
+          "gain": 11.3,
+          "dd": -6.3,
+          "end": 4.3,
+          "win_rate": 60.1,
+          "ratio": 1.80,
+          "hit5_1d": 41.6
+        },
+        {
+          "name": "Strategy B: 综合打分 >= 75 分 (高确信度)",
+          "n": 143,
+          "hit5": 81.8,
+          "hit3": 88.8,
+          "gain": 14.2,
+          "dd": -5.9,
+          "end": 7.4,
+          "win_rate": 69.2,
+          "ratio": 2.40,
+          "hit5_1d": 51.0
+        },
+        {
+          "name": "Strategy C: 每日截面选优 Top-1 龙头",
+          "n": 31,
+          "hit5": 77.4,
+          "hit3": 83.9,
+          "gain": 13.4,
+          "dd": -6.8,
+          "end": 6.0,
+          "win_rate": 58.1,
+          "ratio": 1.97,
+          "hit5_1d": 64.5
+        },
+        {
+          "name": "Strategy D: 每日截面选优 Top-2 组合",
+          "n": 60,
+          "hit5": 78.3,
+          "hit3": 85.0,
+          "gain": 11.9,
+          "dd": -6.5,
+          "end": 5.0,
+          "win_rate": 58.3,
+          "ratio": 1.82,
+          "hit5_1d": 56.7
+        }
+      ],
+      "distribution": [
+        { "bucket": "< 50 分", "count": 267, "hit5": 19.1, "gain": 3.7, "dd": -5.8, "end": -2.0, "note": "严重弱势，坚决不参与" },
+        { "bucket": "50 ~ 60 分", "count": 249, "hit5": 39.0, "gain": 6.6, "dd": -6.3, "end": 0.2, "note": "平庸杂波，盈亏平衡" },
+        { "bucket": "60 ~ 70 分", "count": 242, "hit5": 58.7, "gain": 8.9, "dd": -6.4, "end": 1.9, "note": "中性观察，胜率过半" },
+        { "bucket": "70 ~ 75 分", "count": 95, "hit5": 50.5, "gain": 6.9, "dd": -6.7, "end": -0.3, "note": "临界过渡区，受个股分化影响" },
+        { "bucket": "75 ~ 80 分", "count": 66, "hit5": 81.8, "gain": 15.2, "dd": -5.3, "end": 8.9, "note": "爆发区间，弹性与胜率极高" },
+        { "bucket": ">= 80 分", "count": 77, "hit5": 81.8, "gain": 13.4, "dd": -6.5, "end": 6.1, "note": "高确信度起爆龙头" }
+      ],
+      "sample_top1": [
+        { "date": "2026-09-22", "ticker": "AAOZ", "name": "2倍做空AAOI ETF", "atom": "A-03", "atom_name": "稳步单边攀升", "score": 97.5, "gain": 13.65, "dd": -6.01, "end": 4.93, "hit5": true, "hit5_1d": true },
+        { "date": "2026-09-09", "ticker": "AAOZ", "name": "2倍做空AAOI ETF", "atom": "A-04", "atom_name": "深V探底回升", "score": 82.2, "gain": 23.87, "dd": -3.03, "end": 23.48, "hit5": true, "hit5_1d": true },
+        { "date": "2026-09-10", "ticker": "AAOZ", "name": "2倍做空AAOI ETF", "atom": "A-06", "atom_name": "脉冲爆量强攻", "score": 81.6, "gain": 14.77, "dd": -9.22, "end": 12.82, "hit5": true, "hit5_1d": true },
+        { "date": "2026-09-03", "ticker": "NBIS", "name": "NEBIUS", "atom": "A-06", "atom_name": "脉冲爆量强攻", "score": 76.5, "gain": 21.80, "dd": -2.87, "end": 16.73, "hit5": true, "hit5_1d": true },
+        { "date": "2026-08-27", "ticker": "AAOZ", "name": "2倍做空AAOI ETF", "atom": "A-12", "atom_name": "尾盘脉冲突袭", "score": 80.8, "gain": 20.21, "dd": -3.62, "end": 15.30, "hit5": true, "hit5_1d": true },
+        { "date": "2026-08-17", "ticker": "AAOZ", "name": "2倍做空AAOI ETF", "atom": "A-04", "atom_name": "深V探底回升", "score": 77.2, "gain": 55.47, "dd": -5.99, "end": 28.65, "hit5": true, "hit5_1d": true },
+        { "date": "2026-08-21", "ticker": "COHR", "name": "Coherent Corp", "atom": "A-07", "atom_name": "经典平底双底", "score": 72.8, "gain": 8.42, "dd": -1.82, "end": 6.84, "hit5": true, "hit5_1d": false },
+        { "date": "2026-08-28", "ticker": "ALAB", "name": "Astera Labs", "atom": "A-06", "atom_name": "脉冲爆量强攻", "score": 74.1, "gain": 11.20, "dd": -3.40, "end": 7.90, "hit5": true, "hit5_1d": true },
+        { "date": "2026-09-14", "ticker": "CRDO", "name": "Credo Tech", "atom": "A-04", "atom_name": "深V探底回升", "score": 73.5, "gain": 9.80, "dd": -4.20, "end": 5.10, "hit5": true, "hit5_1d": false }
+      ]
+    };
+
+    // Render Strategy Table in Direction A
+    function renderStrategyTable() {
+      const tbody = document.querySelector("#strategy-table tbody");
+      tbody.innerHTML = "";
+      BACKTEST_DATA.summary.forEach((s, idx) => {
+        const tr = document.createElement("tr");
+        if (s.hit5 >= 75.0) {
+          tr.className = "highlighted";
+        }
+        tr.innerHTML = `
+          <td><strong>${s.name}</strong></td>
+          <td class="num">${s.n}</td>
+          <td class="num" style="font-weight: 700; color: ${s.hit5 >= 70 ? '#111827' : '#6b7280'};">${s.hit5.toFixed(1)}%</td>
+          <td class="num">${s.hit3.toFixed(1)}%</td>
+          <td class="num" style="color: #111;">+${s.gain.toFixed(1)}%</td>
+          <td class="num">${s.dd.toFixed(1)}%</td>
+          <td class="num" style="font-weight: 600;">+${s.end.toFixed(1)}%</td>
+          <td class="num">${s.win_rate.toFixed(1)}%</td>
+          <td class="num" style="font-weight: 700;">${s.ratio.toFixed(2)}</td>
+          <td class="num" style="font-weight: 700;">${s.hit5_1d.toFixed(1)}%</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render Distribution Table in Direction B
+    function renderDistributionTable() {
+      const tbody = document.getElementById("distribution-table-body");
+      tbody.innerHTML = "";
+      BACKTEST_DATA.distribution.forEach(d => {
+        const tr = document.createElement("tr");
+        if (d.hit5 >= 75) tr.className = "highlighted";
+        tr.innerHTML = `
+          <td><strong>${d.bucket}</strong></td>
+          <td class="num">${d.count}</td>
+          <td class="num" style="font-weight: 700;">${d.hit5.toFixed(1)}%</td>
+          <td class="num">+${d.gain.toFixed(1)}%</td>
+          <td class="num">${d.dd.toFixed(1)}%</td>
+          <td class="num" style="font-weight: 600;">${d.end > 0 ? '+' : ''}${d.end.toFixed(1)}%</td>
+          <td style="font-size: 12px; color: var(--text-muted);">${d.note}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render Trade Candidate Stream in Direction A
+    function renderTradesA() {
+      const filter = document.getElementById("filter-score-a").value;
+      const container = document.getElementById("trades-container-a");
+      container.innerHTML = "";
+
+      let items = BACKTEST_DATA.sample_top1;
+      if (filter === "75") {
+        items = items.filter(x => x.score >= 75.0);
+      } else if (filter === "70") {
+        items = items.filter(x => x.score >= 70.0);
+      }
+
+      items.forEach(t => {
+        const div = document.createElement("div");
+        div.className = "trade-pill";
+        div.innerHTML = `
+          <div>
+            <span style="font-weight: 700; font-family: var(--font-mono);">${t.ticker}</span>
+            <span style="color: var(--text-muted); margin-left: 4px;">${t.name}</span>
+            <span class="tag" style="margin-left: 6px;">${t.atom} ${t.atom_name}</span>
+            <div style="font-size: 11px; color: var(--text-light); margin-top: 2px;">
+              触发日期: ${t.date} | ${t.hit5_1d ? '⚡ 首日(7h)即达+5%' : '3日内达+5%'}
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-family: var(--font-mono); font-weight: 700; font-size: 14px;">
+              打分: ${t.score.toFixed(1)}
+            </div>
+            <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">
+              冲高: +${t.gain.toFixed(1)}% | 回撤: ${t.dd.toFixed(1)}%
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Switch between Direction A and Direction B
+    function switchDirection(dir) {
+      document.getElementById("btn-dir-a").classList.toggle("active", dir === 'a');
+      document.getElementById("btn-dir-b").classList.toggle("active", dir === 'b');
+      document.getElementById("btn-dir-a").setAttribute("aria-selected", dir === 'a');
+      document.getElementById("btn-dir-b").setAttribute("aria-selected", dir === 'b');
+      document.getElementById("view-dir-a").classList.toggle("active", dir === 'a');
+      document.getElementById("view-dir-b").classList.toggle("active", dir === 'b');
+
+      const annot = document.getElementById("annotation-text");
+      if (dir === 'a') {
+        annot.innerHTML = "<strong>方案 A (决策仪表盘)</strong>: 强调高信息密度与多策略横向对齐。将 6 套策略绩效置顶对比，并提供动态阈值联动与高分候选流。适合量化投研日常高频比对。";
+      } else {
+        annot.innerHTML = "<strong>方案 B (阶段漏斗流)</strong>: 强调审查逻辑的因果闭环。自上而下分为：微观越线触发池 ➜ 硬门禁一票否决 ➜ 分箱单调性实证 ➜ 实盘组合分配。适合风控合规审查与门禁有效性检验。";
+      }
+    }
+
+    // Keyboard support: Press 'A' or '1' for Dir A, 'B' or '2' for Dir B
+    window.addEventListener("keydown", (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (e.key === 'a' || e.key === 'A' || e.key === '1') switchDirection('a');
+      if (e.key === 'b' || e.key === 'B' || e.key === '2') switchDirection('b');
+    });
+
+    // Initialize on load
+    window.onload = function() {
+      renderStrategyTable();
+      renderDistributionTable();
+      renderTradesA();
+    };
+  </script>
+</body>
+</html>

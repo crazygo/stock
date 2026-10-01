@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>量化策略与期望周期多维矩阵评估看板 (Wireframe)</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --border-dark: #94a3b8;
+            --header-bg: #f1f5f9;
+            --highlight-bg: #e0f2fe;
+            --highlight-text: #0369a1;
+            --success-bg: #dcfce7;
+            --success-text: #15803d;
+            --warning-bg: #fef9c3;
+            --warning-text: #a16207;
+            --danger-bg: #fee2e2;
+            --danger-text: #b91c1c;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 24px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1680px;
+            margin: 0 auto;
+        }
+        .header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .meta-strip {
+            display: flex;
+            gap: 24px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 13px;
+        }
+        .meta-item b {
+            color: var(--text-main);
+        }
+        .table-wrapper {
+            background: var(--card-bg);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            overflow-x: auto;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        th, td {
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+        }
+        th {
+            font-weight: 600;
+            background-color: var(--header-bg);
+        }
+        /* Multi-tier Header Colors */
+        .grp-5pct {
+            background-color: #ecfdf5 !important;
+            color: #065f46;
+            border-bottom: 2px solid #059669;
+        }
+        .grp-10pct {
+            background-color: #eff6ff !important;
+            color: #1e40af;
+            border-bottom: 2px solid #2563eb;
+        }
+        .subgrp-title {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #334155;
+        }
+        .col-sticky {
+            position: sticky;
+            left: 0;
+            background: #ffffff;
+            z-index: 2;
+            text-align: left;
+            border-right: 2px solid var(--border-dark);
+        }
+        th.col-sticky {
+            background: var(--header-bg);
+            z-index: 3;
+        }
+        .stock-ticker {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .stock-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+        }
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+        tr:hover td.col-sticky {
+            background-color: #f1f5f9;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-success { background: var(--success-bg); color: var(--success-text); }
+        .badge-danger { background: var(--danger-bg); color: var(--danger-text); }
+        .badge-warning { background: var(--warning-bg); color: var(--warning-text); }
+        .badge-info { background: var(--highlight-bg); color: var(--highlight-text); }
+        .legend {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-box {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>量化策略与期望收益周期多维矩阵评估看板 (Wireframe)</h1>
+            <p>面向行/列结构化对齐：行维度为重点监控标的，列维度为按期望收益（5% / 10%）与持有周期（3天/5天/14天）严格分组的各策略历史胜率与回测样本分布。</p>
+            <div class="meta-strip">
+                <div class="meta-item"><b>分析基准</b>: 2026 全年高频实盘行情 (5m / 60m 未复权)</div>
+                <div class="meta-item"><b>核心标的</b>: SNPS (EDA蓝筹), AAOI (光通信高弹), IONQ (量子计算), NVDA, AMD, QQQ</div>
+                <div class="meta-item"><b>数据口径</b>: 常规时段 09:30~16:00 ET · 最高触达概率检验</div>
+                <div class="meta-item"><b>看板端口</b>: http://127.0.0.1:8768/analysis/strategy_matrix_wireframe.html</div>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <!-- Top Level Header: Symbol vs Return Expectations -->
+                    <tr>
+                        <th rowspan="3" class="col-sticky" style="min-width: 180px;">标的资产 / 基本信息</th>
+                        <th colspan="7" class="grp-5pct">🎯 期望收益目标：最高触达 +5.0%</th>
+                        <th colspan="6" class="grp-10pct">🚀 期望收益目标：最高触达 +10.0%</th>
+                    </tr>
+                    <!-- Second Level Header: Time Horizons -->
+                    <tr>
+                        <th colspan="3" class="subgrp-title">3 天窗口 (234根 5m / 21h)</th>
+                        <th colspan="2" class="subgrp-title">5 天窗口 (390根 5m / 35h)</th>
+                        <th colspan="2" class="subgrp-title">14 天窗口 (1092根 5m / 98h)</th>
+                        <th colspan="2" class="subgrp-title">3 天窗口 (234根 5m)</th>
+                        <th colspan="2" class="subgrp-title">5 天窗口 (390根 5m)</th>
+                        <th colspan="2" class="subgrp-title">14 天窗口 (1092根 5m / 98h)</th>
+                    </tr>
+                    <!-- Third Level Header: Strategy Names -->
+                    <tr>
+                        <!-- 5% - 3d -->
+                        <th>① 开盘父模型<br><span style="font-size:11px;color:#64748b;font-weight:normal">3根5m+趋势</span></th>
+                        <th>② 2h动量突破<br><span style="font-size:11px;color:#64748b;font-weight:normal">24根5m冲高</span></th>
+                        <th>③ 双V连接<br><span style="font-size:11px;color:#64748b;font-weight:normal">W底颈线突破</span></th>
+                        <!-- 5% - 5d -->
+                        <th>② 2h动量突破<br><span style="font-size:11px;color:#64748b;font-weight:normal">24根5m冲高</span></th>
+                        <th>③ 双V连接<br><span style="font-size:11px;color:#64748b;font-weight:normal">W底颈线突破</span></th>
+                        <!-- 5% - 14d -->
+                        <th>③ 双V连接<br><span style="font-size:11px;color:#64748b;font-weight:normal">W底颈线突破</span></th>
+                        <th>④ 小时时序动量<br><span style="font-size:11px;color:#64748b;font-weight:normal">60m时序连续</span></th>
+                        <!-- 10% - 3d -->
+                        <th>② 2h动量突破<br><span style="font-size:11px;color:#64748b;font-weight:normal">24根5m冲高</span></th>
+                        <th>③ 双V连接<br><span style="font-size:11px;color:#64748b;font-weight:normal">W底颈线突破</span></th>
+                        <!-- 10% - 5d -->
+                        <th>② 2h动量突破<br><span style="font-size:11px;color:#64748b;font-weight:normal">24根5m冲高</span></th>
+                        <th>③ 双V连接<br><span style="font-size:11px;color:#64748b;font-weight:normal">W底颈线突破</span></th>
+                        <!-- 10% - 14d -->
+                        <th>③ 双V连接<br><span style="font-size:11px;color:#64748b;font-weight:normal">W底颈线突破</span></th>
+                        <th>④ 小时时序动量<br><span style="font-size:11px;color:#64748b;font-weight:normal">60m时序连续</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-sticky">
+                            <span class="stock-ticker">SNPS</span> <span class="badge badge-success">正常完成</span>
+                            <span class="stock-sub">新思科技 (Synopsys)</span>
+                            <span class="stock-sub">EDA / 芯片设计工业软件</span>
+                        </td>
+                        <td><b>28.4% (52/183)</b></td>
+                        <td>5.6% (18)</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td>5.6%</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td><span class="badge badge-success">-</span></td>
+                        <td>51.6%</td>
+                        <td>0.0%</td>
+                        <td>-</td>
+                        <td>5.6%</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td><span class="badge badge-success">-</span></td>
+                        <td><b>22.7%</b></td>
+                    </tr>
+                    <tr>
+                        <td class="col-sticky">
+                            <span class="stock-ticker">AAOI</span> <span class="badge badge-success">正常完成</span>
+                            <span class="stock-sub">应用光电 (Applied Opto)</span>
+                            <span class="stock-sub">AI高速光模块 / 光通信</span>
+                        </td>
+                        <td><b>71.3% (129/181)</b></td>
+                        <td>76.6% (265)</td>
+                        <td><span class="badge badge-info">79.7% (64)</span></td>
+                        <td>83.0%</td>
+                        <td><span class="badge badge-info">89.1%</span></td>
+                        <td><span class="badge badge-success">95.3%</span></td>
+                        <td>86.3%</td>
+                        <td>50.6%</td>
+                        <td>67.2%</td>
+                        <td>61.5%</td>
+                        <td><span class="badge badge-info">78.1%</span></td>
+                        <td><span class="badge badge-success">87.5%</span></td>
+                        <td><b>77.4%</b></td>
+                    </tr>
+                    <tr>
+                        <td class="col-sticky">
+                            <span class="stock-ticker">IONQ</span> <span class="badge badge-warning">待补行情</span>
+                            <span class="stock-sub">IONQ (IonQ Inc)</span>
+                            <span class="stock-sub">量子计算软硬件系统</span>
+                        </td>
+                        <td><b>-</b></td>
+                        <td>-</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td>-</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td><span class="badge badge-success">-</span></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td><span class="badge badge-success">-</span></td>
+                        <td><b>-</b></td>
+                    </tr>
+                    <tr>
+                        <td class="col-sticky">
+                            <span class="stock-ticker">NVDA</span> <span class="badge badge-success">正常完成</span>
+                            <span class="stock-sub">英伟达 (NVIDIA)</span>
+                            <span class="stock-sub">AI GPU / 加速计算龙头</span>
+                        </td>
+                        <td><b>21.7% (40/184)</b></td>
+                        <td>33.3% (6)</td>
+                        <td><span class="badge badge-info">100.0% (1)</span></td>
+                        <td>33.3%</td>
+                        <td><span class="badge badge-info">100.0%</span></td>
+                        <td><span class="badge badge-success">100.0%</span></td>
+                        <td>59.3%</td>
+                        <td>0.0%</td>
+                        <td>0.0%</td>
+                        <td>0.0%</td>
+                        <td><span class="badge badge-info">100.0%</span></td>
+                        <td><span class="badge badge-success">100.0%</span></td>
+                        <td><b>22.8%</b></td>
+                    </tr>
+                    <tr>
+                        <td class="col-sticky">
+                            <span class="stock-ticker">AMD</span> <span class="badge badge-success">正常完成</span>
+                            <span class="stock-sub">超威半导体 (AMD)</span>
+                            <span class="stock-sub">CPU / GPU算力芯片</span>
+                        </td>
+                        <td><b>51.9% (95/183)</b></td>
+                        <td>53.2% (77)</td>
+                        <td><span class="badge badge-info">50.0% (8)</span></td>
+                        <td>59.7%</td>
+                        <td><span class="badge badge-info">75.0%</span></td>
+                        <td><span class="badge badge-success">100.0%</span></td>
+                        <td>80.9%</td>
+                        <td>11.7%</td>
+                        <td>12.5%</td>
+                        <td>31.2%</td>
+                        <td><span class="badge badge-info">37.5%</span></td>
+                        <td><span class="badge badge-success">87.5%</span></td>
+                        <td><b>56.7%</b></td>
+                    </tr>
+                    <tr>
+                        <td class="col-sticky">
+                            <span class="stock-ticker">QQQ</span> <span class="badge badge-success">正常完成</span>
+                            <span class="stock-sub">纳斯达克100 ETF</span>
+                            <span class="stock-sub">科技大盘基准宽基</span>
+                        </td>
+                        <td><b>3.3% (6/183)</b></td>
+                        <td>-</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td>-</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td><span class="badge badge-success">-</span></td>
+                        <td>27.6%</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="badge badge-info">-</span></td>
+                        <td><span class="badge badge-success">-</span></td>
+                        <td><b>5.1%</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="legend-box" style="background:#ecfdf5;border:1px solid #059669"></div> <b>期望 +5% 目标组</b>：短中期稳健兑现，时间换空间胜率递增</div>
+            <div class="legend-item"><div class="legend-box" style="background:#eff6ff;border:1px solid #2563eb"></div> <b>期望 +10% 目标组</b>：主升爆发挑战，双底与高弹性品种优势显著</div>
+            <div class="legend-item"><span class="badge badge-success">> 80%</span> 超高胜率确定性</div>
+            <div class="legend-item"><span class="badge badge-info">60% ~ 80%</span> 良好波段胜率</div>
+            <div class="legend-item"><span class="badge badge-warning">待补行情</span> 需运行数据增量拉取脚本同步</div>
+        </div>
+    </div>
+</body>
+</html>
