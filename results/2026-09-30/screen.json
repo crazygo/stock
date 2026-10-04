@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-01T01:11:50.469894+00:00",
-  "as_of": "2026-09-29",
+  "generated_at_utc": "2026-10-01T05:39:32.897770+00:00",
+  "as_of": "2026-09-30",
   "execution": {
     "github_repository": "crazygo/stock",
-    "github_run_id": "36799917155",
+    "github_run_id": "36820765796",
     "github_run_attempt": "1"
   },
   "purpose": "candidate_generation_not_investment_advice",
@@ -38,7 +38,7 @@
   },
   "counts": {
     "universe": 5320,
-    "complete_bar_history": 4916,
+    "complete_bar_history": 4915,
     "matched": 1
   },
   "diagnostics": {
@@ -51,21 +51,21 @@
     "funnel": [
       {
         "step": "price_50_200",
-        "passed": 952,
-        "rejected_at_step": 3964,
-        "survival_from_previous_pct": 19.4
+        "passed": 948,
+        "rejected_at_step": 3967,
+        "survival_from_previous_pct": 19.3
       },
       {
         "step": "drop_18_45_pct",
-        "passed": 6,
-        "rejected_at_step": 946,
-        "survival_from_previous_pct": 0.6
+        "passed": 3,
+        "rejected_at_step": 945,
+        "survival_from_previous_pct": 0.3
       },
       {
         "step": "flat_range_le_7_pct",
         "passed": 1,
-        "rejected_at_step": 5,
-        "survival_from_previous_pct": 16.7
+        "rejected_at_step": 2,
+        "survival_from_previous_pct": 33.3
       },
       {
         "step": "abs_flat_slope_le_3_5_pct",
@@ -94,96 +94,81 @@
     ],
     "distributions": {
       "price_pool_drop_pct": {
-        "count": 952,
-        "p10": -6.58,
-        "p25": -3.88,
-        "p50": -1.45,
-        "p75": 1.05,
-        "p90": 4.43
+        "count": 948,
+        "p10": -5.47,
+        "p25": -3.18,
+        "p50": -0.78,
+        "p75": 2.01,
+        "p90": 6.42
       },
       "drop_pool_flat_range_pct": {
-        "count": 6,
-        "p10": 7.54,
-        "p25": 9.31,
-        "p50": 11.97,
-        "p75": 15.15,
-        "p90": 15.79
+        "count": 3,
+        "p10": 6.97,
+        "p25": 9.04,
+        "p50": 12.51,
+        "p75": 14.15,
+        "p90": 15.13
       },
       "drop_pool_abs_flat_slope_pct": {
-        "count": 6,
-        "p10": 2.39,
-        "p25": 3.34,
-        "p50": 4.73,
-        "p75": 5.97,
-        "p90": 7.44
+        "count": 3,
+        "p10": 2.6,
+        "p25": 4.39,
+        "p50": 7.39,
+        "p75": 7.7,
+        "p90": 7.89
       },
       "drop_pool_flat_realized_vol_pct": {
-        "count": 6,
-        "p10": 1.55,
-        "p25": 1.75,
-        "p50": 2.71,
-        "p75": 3.57,
-        "p90": 3.93
+        "count": 3,
+        "p10": 1.46,
+        "p25": 1.67,
+        "p50": 2.02,
+        "p75": 3.14,
+        "p90": 3.82
       },
       "drop_pool_max_abs_daily_return_pct": {
-        "count": 6,
-        "p10": 2.74,
-        "p25": 3.5,
-        "p50": 5.25,
-        "p75": 6.77,
-        "p90": 7.13
+        "count": 3,
+        "p10": 2.35,
+        "p25": 2.74,
+        "p50": 3.37,
+        "p75": 5.41,
+        "p90": 6.63
       },
       "drop_pool_avg_dollar_volume_m": {
-        "count": 6,
-        "p10": 35.99,
-        "p25": 53.56,
-        "p50": 74.48,
-        "p75": 88.71,
-        "p90": 120.53
+        "count": 3,
+        "p10": 54.29,
+        "p25": 56.28,
+        "p50": 59.59,
+        "p75": 76.14,
+        "p90": 86.07
       }
     },
     "independent_passes_after_price_and_drop": {
-      "drop_pool": 6,
+      "drop_pool": 3,
       "flat_range": 1,
-      "flat_slope": 2,
-      "flat_vol": 3,
+      "flat_slope": 1,
+      "flat_vol": 2,
       "max_daily_move": 2,
-      "liquidity": 6
+      "liquidity": 3
     },
     "drop_pool_details": [
       {
-        "ticker": "AMR",
-        "drop_pct": -23.23,
-        "flat_range_pct": 15.79,
-        "abs_flat_slope_pct": 5.02,
-        "flat_realized_vol_pct": 4.24,
-        "max_abs_flat_daily_return_pct": 7.45,
-        "avg_dollar_volume_m": 51.07,
-        "failed_conditions": [
-          "flat_range",
-          "flat_slope",
-          "flat_vol",
-          "max_daily_move"
-        ]
-      },
-      {
         "ticker": "ENVA",
-        "drop_pct": -22.01,
-        "flat_range_pct": 6.23,
-        "abs_flat_slope_pct": 1.8,
-        "flat_realized_vol_pct": 1.43,
+        "drop_pct": -23.18,
+        "flat_range_pct": 5.58,
+        "abs_flat_slope_pct": 1.4,
+        "flat_realized_vol_pct": 1.32,
         "max_abs_flat_daily_return_pct": 2.1,
-        "avg_dollar_volume_m": 61.03,
+        "avg_dollar_volume_m": 59.59,
         "failed_conditions": []
       },
       {
-        "ticker": "LEU",
-        "drop_pct": -19.98,
-        "flat_range_pct": 15.78,
-        "abs_flat_slope_pct": 8.59,
-        "flat_realized_vol_pct": 3.62,
-        "max_abs_flat_daily_return_pct": 6.62,
-        "avg_dollar_volume_m": 87.93,
+        "ticker": "AMR",
+        "drop_pct": -19.4,
+        "flat_range_pct": 15.79,
+        "abs_flat_slope_pct": 8.01,
+        "flat_realized_vol_pct": 4.27,
+        "max_abs_flat_daily_return_pct": 7.45,
+        "avg_dollar_volume_m": 52.96,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
@@ -193,43 +178,15 @@
       },
       {
         "ticker": "AN",
-        "drop_pct": -19.55,
-        "flat_range_pct": 10.66,
-        "abs_flat_slope_pct": 6.29,
-        "flat_realized_vol_pct": 2.0,
+        "drop_pct": -18.56,
+        "flat_range_pct": 12.51,
+        "abs_flat_slope_pct": 7.39,
+        "flat_realized_vol_pct": 2.02,
         "max_abs_flat_daily_return_pct": 3.37,
-        "avg_dollar_volume_m": 88.96,
+        "avg_dollar_volume_m": 92.69,
         "failed_conditions": [
           "flat_range",
           "flat_slope"
-        ]
-      },
-      {
-        "ticker": "ARWR",
-        "drop_pct": -19.54,
-        "flat_range_pct": 13.28,
-        "abs_flat_slope_pct": 4.44,
-        "flat_realized_vol_pct": 3.43,
-        "max_abs_flat_daily_return_pct": 6.82,
-        "avg_dollar_volume_m": 152.1,
-        "failed_conditions": [
-          "flat_range",
-          "flat_slope",
-          "flat_vol",
-          "max_daily_move"
-        ]
-      },
-      {
-        "ticker": "VRTS",
-        "drop_pct": -18.12,
-        "flat_range_pct": 8.86,
-        "abs_flat_slope_pct": 2.97,
-        "flat_realized_vol_pct": 1.67,
-        "max_abs_flat_daily_return_pct": 3.88,
-        "avg_dollar_volume_m": 20.91,
-        "failed_conditions": [
-          "flat_range",
-          "max_daily_move"
         ]
       }
     ],
@@ -311,12 +268,10 @@
       },
       {
         "scenario": "balanced",
-        "matched": 3,
-        "delta_vs_current": 2,
+        "matched": 1,
+        "delta_vs_current": 0,
         "top_tickers": [
-          "ENVA",
-          "HCC",
-          "VRTS"
+          "ENVA"
         ],
         "overrides": {
           "min_drop_pct": 0.15,
@@ -329,21 +284,14 @@
       },
       {
         "scenario": "broad_recall",
-        "matched": 13,
-        "delta_vs_current": 12,
+        "matched": 5,
+        "delta_vs_current": 4,
         "top_tickers": [
           "ENVA",
-          "COO",
-          "ULS",
-          "ATRO",
-          "PJT",
-          "HCC",
-          "BOOT",
-          "SHAK",
           "VRTS",
-          "BBIO",
-          "AN",
-          "ABG"
+          "TPB",
+          "MTDR",
+          "HCC"
         ],
         "overrides": {
           "min_drop_pct": 0.12,
@@ -360,20 +308,20 @@
     {
       "ticker": "ENVA",
       "name": "Enova International, Inc.",
-      "as_of": "2026-09-29",
-      "latest_price": 167.92,
-      "drop_pct": -22.01,
-      "flat_range_pct": 6.23,
-      "flat_slope_pct": -1.8,
-      "flat_realized_vol_pct": 1.43,
+      "as_of": "2026-09-30",
+      "latest_price": 167.11,
+      "drop_pct": -23.18,
+      "flat_range_pct": 5.58,
+      "flat_slope_pct": -1.4,
+      "flat_realized_vol_pct": 1.32,
       "max_abs_flat_daily_return_pct": 2.1,
-      "volatility_contraction_ratio": 0.17,
-      "volume_contraction_ratio": 0.96,
-      "avg_dollar_volume": 61031182.0,
-      "latest_close_position": 0.14,
-      "shape_score": 41.42,
+      "volatility_contraction_ratio": 0.16,
+      "volume_contraction_ratio": 0.73,
+      "avg_dollar_volume": 59594402.0,
+      "latest_close_position": 0.13,
+      "shape_score": 51.12,
       "bear_flag_risk": "high",
-      "flags": "plateau_down_slope;close_near_range_low;fresh_flattening_low"
+      "flags": "slight_down_slope;close_near_range_low;fresh_flattening_low"
     }
   ]
 }
