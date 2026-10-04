@@ -1,0 +1,5300 @@
+{
+  "version": "old_3pct_signals_followup_v1",
+  "outcome_cutoff": "2026-09-30",
+  "routes": [
+    {
+      "route": "hazard_linear",
+      "name": "剩余时间与单股基础风险",
+      "algorithm": "LogisticRegression",
+      "signals": 12,
+      "targets": {
+        "5d5pct": {
+          "metrics": {
+            "n": 12,
+            "mature": 12,
+            "tp": 10,
+            "fp": 2,
+            "pending": 0,
+            "precision": 0.8333333333333334,
+            "conservative_precision": 0.8333333333333334,
+            "baseline": null,
+            "lift": null,
+            "ci": [
+              0.5519691377470266,
+              0.9530348578161463
+            ],
+            "date_count": 8,
+            "ticks": 14490,
+            "abstentions": 14478,
+            "coverage": 0.0008281573498964803,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALAB",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALNY",
+                "n": 1,
+                "mature": 1,
+                "tp": 0,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 4,
+                "mature": 4,
+                "tp": 4,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.5101091635454027,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "KLAC",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 1,
+                "mature": 1,
+                "tp": 0,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SNDK",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "VRT",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              }
+            ],
+            "definition": "Follow-up outcomes of old +3% signals; old probabilities/thresholds are not calibrated for this target"
+          },
+          "labels": [
+            {
+              "day": "2026-05-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 90.19009999999999,
+              "target": 94.69960499999999,
+              "label_end": "2026-05-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-13",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 118.36324499999999,
+              "target": 124.28140725,
+              "label_end": "2026-05-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-01",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 249.74949999999998,
+              "target": 262.236975,
+              "label_end": "2026-07-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 56.55649999999999,
+              "target": 59.384325,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 109.91980999999998,
+              "target": 115.41580049999999,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 368.49812999999995,
+              "target": 386.92303649999997,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 42.532489999999996,
+              "target": 44.659114499999994,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1311.6773669999998,
+              "target": 1377.2612353499999,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1224.1929699999998,
+              "target": 1285.4026184999998,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-29",
+              "symbol": "KLAC",
+              "hit": 1,
+              "entry": 172.85268,
+              "target": 181.495314,
+              "label_end": "2026-08-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-29",
+              "symbol": "VRT",
+              "hit": 1,
+              "entry": 233.23299999999998,
+              "target": 244.89464999999998,
+              "label_end": "2026-08-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-30",
+              "symbol": "ALNY",
+              "hit": 0,
+              "entry": 237.23699999999997,
+              "target": 249.09884999999997,
+              "label_end": "2026-08-05 16:00:00",
+              "future_status": "mature"
+            }
+          ]
+        },
+        "10d10pct": {
+          "metrics": {
+            "n": 12,
+            "mature": 12,
+            "tp": 10,
+            "fp": 2,
+            "pending": 0,
+            "precision": 0.8333333333333334,
+            "conservative_precision": 0.8333333333333334,
+            "baseline": null,
+            "lift": null,
+            "ci": [
+              0.5519691377470266,
+              0.9530348578161463
+            ],
+            "date_count": 8,
+            "ticks": 14490,
+            "abstentions": 14478,
+            "coverage": 0.0008281573498964803,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALAB",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALNY",
+                "n": 1,
+                "mature": 1,
+                "tp": 0,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 4,
+                "mature": 4,
+                "tp": 4,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.5101091635454027,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "KLAC",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 1,
+                "mature": 1,
+                "tp": 0,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SNDK",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "VRT",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              }
+            ],
+            "definition": "Follow-up outcomes of old +3% signals; old probabilities/thresholds are not calibrated for this target"
+          },
+          "labels": [
+            {
+              "day": "2026-05-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 90.19009999999999,
+              "target": 99.20911,
+              "label_end": "2026-05-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-13",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 118.36324499999999,
+              "target": 130.1995695,
+              "label_end": "2026-05-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-01",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 249.74949999999998,
+              "target": 274.72445,
+              "label_end": "2026-07-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 56.55649999999999,
+              "target": 62.212149999999994,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 109.91980999999998,
+              "target": 120.911791,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 368.49812999999995,
+              "target": 405.347943,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 42.532489999999996,
+              "target": 46.785739,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1311.6773669999998,
+              "target": 1442.8451037,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1224.1929699999998,
+              "target": 1346.612267,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-29",
+              "symbol": "KLAC",
+              "hit": 1,
+              "entry": 172.85268,
+              "target": 190.137948,
+              "label_end": "2026-08-11 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-29",
+              "symbol": "VRT",
+              "hit": 1,
+              "entry": 233.23299999999998,
+              "target": 256.5563,
+              "label_end": "2026-08-11 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-30",
+              "symbol": "ALNY",
+              "hit": 0,
+              "entry": 237.23699999999997,
+              "target": 260.9607,
+              "label_end": "2026-08-12 16:00:00",
+              "future_status": "mature"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "route": "relative_flow",
+      "name": "相关股分钟量价",
+      "algorithm": "LightGBM",
+      "signals": 95,
+      "targets": {
+        "5d5pct": {
+          "metrics": {
+            "n": 95,
+            "mature": 95,
+            "tp": 84,
+            "fp": 11,
+            "pending": 0,
+            "precision": 0.8842105263157894,
+            "conservative_precision": 0.8842105263157894,
+            "baseline": null,
+            "lift": null,
+            "ci": [
+              0.8044550567755693,
+              0.9341014241888357
+            ],
+            "date_count": 16,
+            "ticks": 14490,
+            "abstentions": 14395,
+            "coverage": 0.006556245686680469,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 11,
+                "mature": 11,
+                "tp": 8,
+                "fp": 3,
+                "pending": 0,
+                "precision": 0.7272727272727273,
+                "ci": [
+                  0.43435469882387084,
+                  0.902539407099751
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALAB",
+                "n": 6,
+                "mature": 6,
+                "tp": 5,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.8333333333333334,
+                "ci": [
+                  0.43649717781352987,
+                  0.9699466302516935
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ARM",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 14,
+                "mature": 14,
+                "tp": 12,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.8571428571428571,
+                "ci": [
+                  0.6005862050302965,
+                  0.9599060787285351
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CIEN",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "COHR",
+                "n": 4,
+                "mature": 4,
+                "tp": 3,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.75,
+                "ci": [
+                  0.30064184258240184,
+                  0.9544127391902995
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRDO",
+                "n": 4,
+                "mature": 4,
+                "tp": 4,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.5101091635454027,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRWV",
+                "n": 2,
+                "mature": 2,
+                "tp": 1,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "FN",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "INTC",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "IONQ",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "KLAC",
+                "n": 2,
+                "mature": 2,
+                "tp": 1,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "LITE",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "LRCX",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "MRVL",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "MSTR",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "MU",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 5,
+                "mature": 5,
+                "tp": 4,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.8,
+                "ci": [
+                  0.37553462976252533,
+                  0.9637758913675698
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NOK",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "QBTS",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RGTI",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RKLB",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RMBS",
+                "n": 4,
+                "mature": 4,
+                "tp": 4,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.5101091635454027,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SMTC",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SNDK",
+                "n": 7,
+                "mature": 7,
+                "tp": 6,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.8571428571428571,
+                "ci": [
+                  0.4868721707256811,
+                  0.9743203756552565
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "STX",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "TER",
+                "n": 4,
+                "mature": 4,
+                "tp": 4,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.5101091635454027,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "WDC",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              }
+            ],
+            "definition": "Follow-up outcomes of old +3% signals; old probabilities/thresholds are not calibrated for this target"
+          },
+          "labels": [
+            {
+              "day": "2026-07-01",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 237.79755999999998,
+              "target": 249.687438,
+              "label_end": "2026-07-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-01",
+              "symbol": "KLAC",
+              "hit": 0,
+              "entry": 279.14887,
+              "target": 293.1063135,
+              "label_end": "2026-07-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-01",
+              "symbol": "CRWV",
+              "hit": 0,
+              "entry": 88.5585701,
+              "target": 92.986498605,
+              "label_end": "2026-07-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-02",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 132.32218999999998,
+              "target": 138.93829949999997,
+              "label_end": "2026-07-09 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-02",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 61.93186999999999,
+              "target": 65.02846349999999,
+              "label_end": "2026-07-09 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 119.32920999999997,
+              "target": 125.29567049999999,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 255.75549999999998,
+              "target": 268.543275,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "TER",
+              "hit": 1,
+              "entry": 362.36199999999997,
+              "target": 380.4801,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 408.50809999999996,
+              "target": 428.93350499999997,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "RMBS",
+              "hit": 1,
+              "entry": 109.109,
+              "target": 114.56445,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "SMTC",
+              "hit": 1,
+              "entry": 131.02088999999998,
+              "target": 137.5719345,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 64.71965499999999,
+              "target": 67.95563775,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 56.55649999999999,
+              "target": 59.384325,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 236.90106439999997,
+              "target": 248.74611761999998,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 108.40829999999998,
+              "target": 113.82871499999999,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 186.71652999999998,
+              "target": 196.05235649999997,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 368.49812999999995,
+              "target": 386.92303649999997,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "RKLB",
+              "hit": 1,
+              "entry": 82.04195999999999,
+              "target": 86.14405799999999,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "RMBS",
+              "hit": 1,
+              "entry": 100.1,
+              "target": 105.105,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 15.72571,
+              "target": 16.5119955,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "TER",
+              "hit": 1,
+              "entry": 330.33,
+              "target": 346.8465,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "MSTR",
+              "hit": 1,
+              "entry": 93.91532149999999,
+              "target": 98.611087575,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "QBTS",
+              "hit": 1,
+              "entry": 20.1201,
+              "target": 21.126105000000003,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "IONQ",
+              "hit": 1,
+              "entry": 43.38334,
+              "target": 45.552507,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "COHR",
+              "hit": 1,
+              "entry": 300.80049999999994,
+              "target": 315.84052499999996,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "LITE",
+              "hit": 1,
+              "entry": 673.4327599999999,
+              "target": 707.104398,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ARM",
+              "hit": 1,
+              "entry": 289.02873999999997,
+              "target": 303.48017699999997,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1526.5249999999999,
+              "target": 1602.85125,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "INTC",
+              "hit": 1,
+              "entry": 105.71560999999998,
+              "target": 111.00139049999999,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "CIEN",
+              "hit": 1,
+              "entry": 403.38298,
+              "target": 423.552129,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 54.5545,
+              "target": 57.282225,
+              "label_end": "2026-07-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 115.39527999999999,
+              "target": 121.165044,
+              "label_end": "2026-07-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "SNDK",
+              "hit": 0,
+              "entry": 1732.0203900999998,
+              "target": 1818.6214096049998,
+              "label_end": "2026-07-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 239.99975999999995,
+              "target": 251.99974799999995,
+              "label_end": "2026-07-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 51.09103999999999,
+              "target": 53.64559199999999,
+              "label_end": "2026-07-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1489.17769,
+              "target": 1563.6365745,
+              "label_end": "2026-07-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 104.38427999999999,
+              "target": 109.603494,
+              "label_end": "2026-07-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "WDC",
+              "hit": 1,
+              "entry": 480.82033999999993,
+              "target": 504.86135699999994,
+              "label_end": "2026-07-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1330.329,
+              "target": 1396.84545,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 43.08304,
+              "target": 45.237192,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 93.41331999999998,
+              "target": 98.08398599999998,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "RMBS",
+              "hit": 1,
+              "entry": 96.12602999999999,
+              "target": 100.93233149999999,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "QBTS",
+              "hit": 1,
+              "entry": 16.37636,
+              "target": 17.195178,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "SMTC",
+              "hit": 1,
+              "entry": 120.11999999999999,
+              "target": 126.12599999999999,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 162.50233999999998,
+              "target": 170.627457,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "LITE",
+              "hit": 1,
+              "entry": 670.67,
+              "target": 704.2035,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "CRWV",
+              "hit": 1,
+              "entry": 70.18010999999998,
+              "target": 73.68911549999999,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "CIEN",
+              "hit": 1,
+              "entry": 366.83646999999996,
+              "target": 385.1782935,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "KLAC",
+              "hit": 1,
+              "entry": 209.65944999999996,
+              "target": 220.14242249999998,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "WDC",
+              "hit": 1,
+              "entry": 443.88343999999995,
+              "target": 466.077612,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 306.14824239999996,
+              "target": 321.45565452,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "COHR",
+              "hit": 1,
+              "entry": 263.24298,
+              "target": 276.405129,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "NOK",
+              "hit": 1,
+              "entry": 10.090079999999999,
+              "target": 10.594584,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "TER",
+              "hit": 1,
+              "entry": 309.91961,
+              "target": 325.4155905,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "STX",
+              "hit": 1,
+              "entry": 720.8200999999999,
+              "target": 756.861105,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "MRVL",
+              "hit": 1,
+              "entry": 182.89271,
+              "target": 192.03734550000001,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "MU",
+              "hit": 1,
+              "entry": 834.834,
+              "target": 876.5757,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 200.71050999999997,
+              "target": 210.74603549999998,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "ARM",
+              "hit": 1,
+              "entry": 253.75349999999997,
+              "target": 266.441175,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "RKLB",
+              "hit": 1,
+              "entry": 66.37630999999999,
+              "target": 69.69512549999999,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "LRCX",
+              "hit": 1,
+              "entry": 308.98868,
+              "target": 324.438114,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 13.448434999999998,
+              "target": 14.120856749999998,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "FN",
+              "hit": 1,
+              "entry": 447.2267799999999,
+              "target": 469.5881189999999,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "IONQ",
+              "hit": 1,
+              "entry": 33.91388,
+              "target": 35.609574,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-22",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 54.2542,
+              "target": 56.96691,
+              "label_end": "2026-07-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-22",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 114.41429999999998,
+              "target": 120.13501499999998,
+              "label_end": "2026-07-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-23",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 51.72076909999999,
+              "target": 54.30680755499999,
+              "label_end": "2026-07-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-23",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 114.94482999999998,
+              "target": 120.69207149999998,
+              "label_end": "2026-07-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 45.285239999999995,
+              "target": 47.549502,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1207.83663,
+              "target": 1268.2284615,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "MRVL",
+              "hit": 1,
+              "entry": 183.14296,
+              "target": 192.300108,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 94.95485999999998,
+              "target": 99.70260299999998,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "STX",
+              "hit": 1,
+              "entry": 766.766,
+              "target": 805.1043,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "TER",
+              "hit": 1,
+              "entry": 318.318,
+              "target": 334.2339,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 179.52934999999997,
+              "target": 188.50581749999998,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "SMTC",
+              "hit": 1,
+              "entry": 114.61449999999999,
+              "target": 120.345225,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "WDC",
+              "hit": 1,
+              "entry": 462.93246999999997,
+              "target": 486.0790935,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "RMBS",
+              "hit": 1,
+              "entry": 87.73765,
+              "target": 92.1245325,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "LITE",
+              "hit": 1,
+              "entry": 626.7944683,
+              "target": 658.1341917149999,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "COHR",
+              "hit": 1,
+              "entry": 237.44720999999998,
+              "target": 249.3195705,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 253.49324,
+              "target": 266.16790199999997,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "IONQ",
+              "hit": 1,
+              "entry": 32.2257936,
+              "target": 33.83708328,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-29",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1065.48442,
+              "target": 1118.7586410000001,
+              "label_end": "2026-08-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 59.699639999999995,
+              "target": 62.684622,
+              "label_end": "2026-08-06 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 190.11992999999998,
+              "target": 199.6259265,
+              "label_end": "2026-08-06 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1257.3160599999999,
+              "target": 1320.181863,
+              "label_end": "2026-08-06 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 313.32300999999995,
+              "target": 328.98916049999997,
+              "label_end": "2026-08-06 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 94.3841899,
+              "target": 99.103399395,
+              "label_end": "2026-08-06 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 59.2592,
+              "target": 62.22216,
+              "label_end": "2026-08-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 89.19910999999999,
+              "target": 93.6590655,
+              "label_end": "2026-08-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "COHR",
+              "hit": 0,
+              "entry": 331.33099999999996,
+              "target": 347.89754999999997,
+              "label_end": "2026-08-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 145.61547,
+              "target": 152.8962435,
+              "label_end": "2026-08-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "ALAB",
+              "hit": 0,
+              "entry": 303.22292,
+              "target": 318.384066,
+              "label_end": "2026-08-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-20",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 72.86279,
+              "target": 76.50592950000001,
+              "label_end": "2026-08-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-24",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 66.64657999999999,
+              "target": 69.97890899999999,
+              "label_end": "2026-08-28 16:00:00",
+              "future_status": "mature"
+            }
+          ]
+        },
+        "10d10pct": {
+          "metrics": {
+            "n": 95,
+            "mature": 94,
+            "tp": 68,
+            "fp": 26,
+            "pending": 1,
+            "precision": 0.723404255319149,
+            "conservative_precision": 0.7157894736842105,
+            "baseline": null,
+            "lift": null,
+            "ci": [
+              0.6255660780959044,
+              0.8036998027100012
+            ],
+            "date_count": 16,
+            "ticks": 14490,
+            "abstentions": 14395,
+            "coverage": 0.006556245686680469,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 11,
+                "mature": 11,
+                "tp": 8,
+                "fp": 3,
+                "pending": 0,
+                "precision": 0.7272727272727273,
+                "ci": [
+                  0.43435469882387084,
+                  0.902539407099751
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALAB",
+                "n": 6,
+                "mature": 6,
+                "tp": 4,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.6666666666666666,
+                "ci": [
+                  0.299993315138392,
+                  0.9032285888942195
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ARM",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 14,
+                "mature": 14,
+                "tp": 9,
+                "fp": 5,
+                "pending": 0,
+                "precision": 0.6428571428571429,
+                "ci": [
+                  0.38764423103907397,
+                  0.8365526824644587
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CIEN",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "COHR",
+                "n": 4,
+                "mature": 4,
+                "tp": 3,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.75,
+                "ci": [
+                  0.30064184258240184,
+                  0.9544127391902995
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRDO",
+                "n": 4,
+                "mature": 4,
+                "tp": 2,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.15003898915214947,
+                  0.8499610108478506
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRWV",
+                "n": 2,
+                "mature": 2,
+                "tp": 1,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "FN",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "INTC",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "IONQ",
+                "n": 3,
+                "mature": 3,
+                "tp": 1,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.3333333333333333,
+                "ci": [
+                  0.06149194472039621,
+                  0.7923403991979522
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "KLAC",
+                "n": 2,
+                "mature": 2,
+                "tp": 0,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.6576197724933469
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "LITE",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "LRCX",
+                "n": 1,
+                "mature": 1,
+                "tp": 0,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "MRVL",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "MSTR",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "MU",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 5,
+                "mature": 5,
+                "tp": 4,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.8,
+                "ci": [
+                  0.37553462976252533,
+                  0.9637758913675698
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NOK",
+                "n": 1,
+                "mature": 0,
+                "tp": 0,
+                "fp": 0,
+                "pending": 1,
+                "precision": null,
+                "ci": [
+                  null,
+                  null
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "QBTS",
+                "n": 2,
+                "mature": 2,
+                "tp": 1,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RGTI",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RKLB",
+                "n": 2,
+                "mature": 2,
+                "tp": 0,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.6576197724933469
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RMBS",
+                "n": 4,
+                "mature": 4,
+                "tp": 3,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.75,
+                "ci": [
+                  0.30064184258240184,
+                  0.9544127391902995
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SMTC",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SNDK",
+                "n": 7,
+                "mature": 7,
+                "tp": 6,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.8571428571428571,
+                "ci": [
+                  0.4868721707256811,
+                  0.9743203756552565
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "STX",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "TER",
+                "n": 4,
+                "mature": 4,
+                "tp": 3,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.75,
+                "ci": [
+                  0.30064184258240184,
+                  0.9544127391902995
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "WDC",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              }
+            ],
+            "definition": "Follow-up outcomes of old +3% signals; old probabilities/thresholds are not calibrated for this target"
+          },
+          "labels": [
+            {
+              "day": "2026-07-01",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 237.79755999999998,
+              "target": 261.577316,
+              "label_end": "2026-07-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-01",
+              "symbol": "KLAC",
+              "hit": 0,
+              "entry": 279.14887,
+              "target": 307.063757,
+              "label_end": "2026-07-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-01",
+              "symbol": "CRWV",
+              "hit": 0,
+              "entry": 88.5585701,
+              "target": 97.41442711,
+              "label_end": "2026-07-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-02",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 132.32218999999998,
+              "target": 145.554409,
+              "label_end": "2026-07-16 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-02",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 61.93186999999999,
+              "target": 68.125057,
+              "label_end": "2026-07-16 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 119.32920999999997,
+              "target": 131.26213099999998,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "CRDO",
+              "hit": 0,
+              "entry": 255.75549999999998,
+              "target": 281.33105,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "TER",
+              "hit": 0,
+              "entry": 362.36199999999997,
+              "target": 398.5982,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "ALAB",
+              "hit": 0,
+              "entry": 408.50809999999996,
+              "target": 449.35891,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "RMBS",
+              "hit": 0,
+              "entry": 109.109,
+              "target": 120.0199,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "SMTC",
+              "hit": 1,
+              "entry": 131.02088999999998,
+              "target": 144.122979,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 64.71965499999999,
+              "target": 71.1916205,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 56.55649999999999,
+              "target": 62.212149999999994,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 236.90106439999997,
+              "target": 260.59117083999996,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 108.40829999999998,
+              "target": 119.24913,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 186.71652999999998,
+              "target": 205.388183,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 368.49812999999995,
+              "target": 405.347943,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "RKLB",
+              "hit": 0,
+              "entry": 82.04195999999999,
+              "target": 90.246156,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "RMBS",
+              "hit": 1,
+              "entry": 100.1,
+              "target": 110.11,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 15.72571,
+              "target": 17.298281,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "TER",
+              "hit": 1,
+              "entry": 330.33,
+              "target": 363.363,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "MSTR",
+              "hit": 1,
+              "entry": 93.91532149999999,
+              "target": 103.30685365,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "QBTS",
+              "hit": 0,
+              "entry": 20.1201,
+              "target": 22.132110000000004,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "IONQ",
+              "hit": 0,
+              "entry": 43.38334,
+              "target": 47.721674,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "COHR",
+              "hit": 1,
+              "entry": 300.80049999999994,
+              "target": 330.88054999999997,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "LITE",
+              "hit": 1,
+              "entry": 673.4327599999999,
+              "target": 740.776036,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ARM",
+              "hit": 1,
+              "entry": 289.02873999999997,
+              "target": 317.93161399999997,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1526.5249999999999,
+              "target": 1679.1775,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "INTC",
+              "hit": 1,
+              "entry": 105.71560999999998,
+              "target": 116.28717099999999,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "CIEN",
+              "hit": 1,
+              "entry": 403.38298,
+              "target": 443.721278,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 54.5545,
+              "target": 60.00995,
+              "label_end": "2026-07-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 115.39527999999999,
+              "target": 126.93480799999999,
+              "label_end": "2026-07-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "SNDK",
+              "hit": 0,
+              "entry": 1732.0203900999998,
+              "target": 1905.22242911,
+              "label_end": "2026-07-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-13",
+              "symbol": "CRDO",
+              "hit": 0,
+              "entry": 239.99975999999995,
+              "target": 263.999736,
+              "label_end": "2026-07-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 51.09103999999999,
+              "target": 56.200143999999995,
+              "label_end": "2026-07-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1489.17769,
+              "target": 1638.0954590000001,
+              "label_end": "2026-07-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 104.38427999999999,
+              "target": 114.82270799999999,
+              "label_end": "2026-07-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-16",
+              "symbol": "WDC",
+              "hit": 1,
+              "entry": 480.82033999999993,
+              "target": 528.902374,
+              "label_end": "2026-07-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1330.329,
+              "target": 1463.3619,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 43.08304,
+              "target": 47.391344000000004,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 93.41331999999998,
+              "target": 102.754652,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "RMBS",
+              "hit": 1,
+              "entry": 96.12602999999999,
+              "target": 105.738633,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "QBTS",
+              "hit": 1,
+              "entry": 16.37636,
+              "target": 18.013996,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "SMTC",
+              "hit": 1,
+              "entry": 120.11999999999999,
+              "target": 132.132,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 162.50233999999998,
+              "target": 178.75257399999998,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "LITE",
+              "hit": 1,
+              "entry": 670.67,
+              "target": 737.737,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "CRWV",
+              "hit": 1,
+              "entry": 70.18010999999998,
+              "target": 77.19812099999999,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "CIEN",
+              "hit": 1,
+              "entry": 366.83646999999996,
+              "target": 403.52011699999997,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "KLAC",
+              "hit": 0,
+              "entry": 209.65944999999996,
+              "target": 230.62539499999997,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "WDC",
+              "hit": 1,
+              "entry": 443.88343999999995,
+              "target": 488.27178399999997,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 306.14824239999996,
+              "target": 336.76306664,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "COHR",
+              "hit": 1,
+              "entry": 263.24298,
+              "target": 289.567278,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "NOK",
+              "hit": null,
+              "entry": 10.090079999999999,
+              "target": 11.099088,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "corporate_action_window"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "TER",
+              "hit": 1,
+              "entry": 309.91961,
+              "target": 340.911571,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "STX",
+              "hit": 1,
+              "entry": 720.8200999999999,
+              "target": 792.90211,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "MRVL",
+              "hit": 1,
+              "entry": 182.89271,
+              "target": 201.181981,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "MU",
+              "hit": 1,
+              "entry": 834.834,
+              "target": 918.3174,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 200.71050999999997,
+              "target": 220.78156099999998,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "ARM",
+              "hit": 1,
+              "entry": 253.75349999999997,
+              "target": 279.12885,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "RKLB",
+              "hit": 0,
+              "entry": 66.37630999999999,
+              "target": 73.01394099999999,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "LRCX",
+              "hit": 0,
+              "entry": 308.98868,
+              "target": 339.88754800000004,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 13.448434999999998,
+              "target": 14.7932785,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "FN",
+              "hit": 1,
+              "entry": 447.2267799999999,
+              "target": 491.94945799999994,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "IONQ",
+              "hit": 0,
+              "entry": 33.91388,
+              "target": 37.305268000000005,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-22",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 54.2542,
+              "target": 59.67962,
+              "label_end": "2026-08-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-22",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 114.41429999999998,
+              "target": 125.85573,
+              "label_end": "2026-08-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-23",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 51.72076909999999,
+              "target": 56.89284600999999,
+              "label_end": "2026-08-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-23",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 114.94482999999998,
+              "target": 126.43931299999998,
+              "label_end": "2026-08-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 45.285239999999995,
+              "target": 49.813764,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1207.83663,
+              "target": 1328.6202930000002,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "MRVL",
+              "hit": 1,
+              "entry": 183.14296,
+              "target": 201.457256,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 94.95485999999998,
+              "target": 104.45034599999998,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "STX",
+              "hit": 1,
+              "entry": 766.766,
+              "target": 843.4426,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "TER",
+              "hit": 1,
+              "entry": 318.318,
+              "target": 350.1498,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 179.52934999999997,
+              "target": 197.482285,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "SMTC",
+              "hit": 1,
+              "entry": 114.61449999999999,
+              "target": 126.07595,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "WDC",
+              "hit": 1,
+              "entry": 462.93246999999997,
+              "target": 509.22571700000003,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "RMBS",
+              "hit": 1,
+              "entry": 87.73765,
+              "target": 96.51141500000001,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "LITE",
+              "hit": 1,
+              "entry": 626.7944683,
+              "target": 689.47391513,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "COHR",
+              "hit": 1,
+              "entry": 237.44720999999998,
+              "target": 261.191931,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 253.49324,
+              "target": 278.842564,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "IONQ",
+              "hit": 1,
+              "entry": 32.2257936,
+              "target": 35.44837296000001,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-29",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1065.48442,
+              "target": 1172.032862,
+              "label_end": "2026-08-11 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 59.699639999999995,
+              "target": 65.669604,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 190.11992999999998,
+              "target": 209.131923,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1257.3160599999999,
+              "target": 1383.047666,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 313.32300999999995,
+              "target": 344.655311,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 94.3841899,
+              "target": 103.82260889,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 59.2592,
+              "target": 65.18512000000001,
+              "label_end": "2026-08-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 89.19910999999999,
+              "target": 98.119021,
+              "label_end": "2026-08-31 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "COHR",
+              "hit": 0,
+              "entry": 331.33099999999996,
+              "target": 364.4641,
+              "label_end": "2026-08-31 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 145.61547,
+              "target": 160.177017,
+              "label_end": "2026-08-31 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "ALAB",
+              "hit": 0,
+              "entry": 303.22292,
+              "target": 333.545212,
+              "label_end": "2026-08-31 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-20",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 72.86279,
+              "target": 80.14906900000001,
+              "label_end": "2026-09-02 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-24",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 66.64657999999999,
+              "target": 73.31123799999999,
+              "label_end": "2026-09-04 16:00:00",
+              "future_status": "mature"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "route": "recovery_forest",
+      "name": "回撤恢复与量价效率",
+      "algorithm": "ExtraTrees",
+      "signals": 90,
+      "targets": {
+        "5d5pct": {
+          "metrics": {
+            "n": 90,
+            "mature": 90,
+            "tp": 73,
+            "fp": 17,
+            "pending": 0,
+            "precision": 0.8111111111111111,
+            "conservative_precision": 0.8111111111111111,
+            "baseline": null,
+            "lift": null,
+            "ci": [
+              0.7181637647568584,
+              0.8785874015586717
+            ],
+            "date_count": 54,
+            "ticks": 14490,
+            "abstentions": 14400,
+            "coverage": 0.006211180124223602,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 20,
+                "mature": 20,
+                "tp": 17,
+                "fp": 3,
+                "pending": 0,
+                "precision": 0.85,
+                "ci": [
+                  0.6395811352592431,
+                  0.9476312541037835
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALAB",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 48,
+                "mature": 48,
+                "tp": 37,
+                "fp": 11,
+                "pending": 0,
+                "precision": 0.7708333333333334,
+                "ci": [
+                  0.6346073590999655,
+                  0.8669217373308877
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "COHR",
+                "n": 1,
+                "mature": 1,
+                "tp": 0,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRDO",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRWV",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "IONQ",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "LIFE",
+                "n": 5,
+                "mature": 5,
+                "tp": 5,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.5655175352168251,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 4,
+                "mature": 4,
+                "tp": 2,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.15003898915214947,
+                  0.8499610108478506
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "QBTS",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RGTI",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SDGR",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SNDK",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              }
+            ],
+            "definition": "Follow-up outcomes of old +3% signals; old probabilities/thresholds are not calibrated for this target"
+          },
+          "labels": [
+            {
+              "day": "2026-05-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 90.19009999999999,
+              "target": 94.69960499999999,
+              "label_end": "2026-05-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-04",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 98.22812999999998,
+              "target": 103.13953649999998,
+              "label_end": "2026-05-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-05",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 109.34923999999998,
+              "target": 114.81670199999998,
+              "label_end": "2026-05-11 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-06",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 103.244141,
+              "target": 108.40634805,
+              "label_end": "2026-05-12 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-07",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 101.26115999999999,
+              "target": 106.32421799999999,
+              "label_end": "2026-05-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 124.43430999999998,
+              "target": 130.6560255,
+              "label_end": "2026-05-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-11",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 167.87791019999997,
+              "target": 176.27180570999997,
+              "label_end": "2026-05-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-12",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 197.76756999999998,
+              "target": 207.6559485,
+              "label_end": "2026-05-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-12",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 123.14301999999998,
+              "target": 129.30017099999998,
+              "label_end": "2026-05-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-13",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 118.36324499999999,
+              "target": 124.28140725,
+              "label_end": "2026-05-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-13",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 196.31611999999998,
+              "target": 206.131926,
+              "label_end": "2026-05-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-14",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 114.42430999999999,
+              "target": 120.14552549999999,
+              "label_end": "2026-05-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-14",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 210.91069999999996,
+              "target": 221.45623499999996,
+              "label_end": "2026-05-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-15",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 121.82169999999999,
+              "target": 127.912785,
+              "label_end": "2026-05-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-18",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 172.90272999999996,
+              "target": 181.54786649999997,
+              "label_end": "2026-05-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-18",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 113.41329999999998,
+              "target": 119.08396499999998,
+              "label_end": "2026-05-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-19",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 111.91179999999999,
+              "target": 117.50738999999999,
+              "label_end": "2026-05-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-20",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 109.34923999999998,
+              "target": 114.81670199999998,
+              "label_end": "2026-05-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-21",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 20.25023,
+              "target": 21.2627415,
+              "label_end": "2026-05-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 25.045520499999995,
+              "target": 26.297796524999995,
+              "label_end": "2026-05-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "QBTS",
+              "hit": 1,
+              "entry": 28.438409999999998,
+              "target": 29.8603305,
+              "label_end": "2026-05-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "IONQ",
+              "hit": 1,
+              "entry": 62.18071859999999,
+              "target": 65.28975453,
+              "label_end": "2026-05-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 126.54641999999998,
+              "target": 132.873741,
+              "label_end": "2026-05-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-26",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 138.42828999999998,
+              "target": 145.34970449999997,
+              "label_end": "2026-06-01 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-26",
+              "symbol": "QBTS",
+              "hit": 1,
+              "entry": 27.266739499999996,
+              "target": 28.630076474999996,
+              "label_end": "2026-06-01 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-26",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 24.514489999999995,
+              "target": 25.740214499999997,
+              "label_end": "2026-06-01 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-27",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 123.62349999999999,
+              "target": 129.804675,
+              "label_end": "2026-06-02 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-28",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 119.64452499999999,
+              "target": 125.62675125,
+              "label_end": "2026-06-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 101.28117999999999,
+              "target": 106.34523899999999,
+              "label_end": "2026-06-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-01",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 170.68551499999998,
+              "target": 179.21979075,
+              "label_end": "2026-06-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-02",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 116.83171499999999,
+              "target": 122.67330075,
+              "label_end": "2026-06-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-03",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 198.16746949999998,
+              "target": 208.075842975,
+              "label_end": "2026-06-09 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-10",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 88.67859,
+              "target": 93.1125195,
+              "label_end": "2026-06-16 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-10",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 250.75049999999996,
+              "target": 263.28802499999995,
+              "label_end": "2026-06-16 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-11",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 170.48030999999997,
+              "target": 179.0043255,
+              "label_end": "2026-06-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-15",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 107.79768999999999,
+              "target": 113.1875745,
+              "label_end": "2026-06-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-23",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 84.88479999999998,
+              "target": 89.12903999999999,
+              "label_end": "2026-06-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 415.41499999999996,
+              "target": 436.18575,
+              "label_end": "2026-07-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 368.34797999999995,
+              "target": 386.76537899999994,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 56.086029999999994,
+              "target": 58.890331499999995,
+              "label_end": "2026-07-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 42.532489999999996,
+              "target": 44.659114499999994,
+              "label_end": "2026-07-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 45.15510999999999,
+              "target": 47.412865499999995,
+              "label_end": "2026-08-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 65.40534,
+              "target": 68.675607,
+              "label_end": "2026-08-06 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 58.58852999999999,
+              "target": 61.5179565,
+              "label_end": "2026-08-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 92.98789499999998,
+              "target": 97.63728974999998,
+              "label_end": "2026-08-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 192.78759499999998,
+              "target": 202.42697475,
+              "label_end": "2026-08-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "CRWV",
+              "hit": 1,
+              "entry": 80.59051,
+              "target": 84.6200355,
+              "label_end": "2026-08-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-04",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 63.175011899999994,
+              "target": 66.333762495,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-04",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 125.94581999999998,
+              "target": 132.243111,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-04",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 27.427399999999995,
+              "target": 28.798769999999998,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-05",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 70.9709,
+              "target": 74.519445,
+              "label_end": "2026-08-11 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-05",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 25.280254999999997,
+              "target": 26.54426775,
+              "label_end": "2026-08-11 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-05",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 135.370235,
+              "target": 142.13874675000002,
+              "label_end": "2026-08-11 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 27.657629999999997,
+              "target": 29.040511499999997,
+              "label_end": "2026-08-12 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 69.564495,
+              "target": 73.04271975,
+              "label_end": "2026-08-12 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1258.695438,
+              "target": 1321.6302099,
+              "label_end": "2026-08-12 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 126.86673999999998,
+              "target": 133.21007699999998,
+              "label_end": "2026-08-12 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-07",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 83.73365,
+              "target": 87.9203325,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-07",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 144.87472999999997,
+              "target": 152.11846649999998,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-07",
+              "symbol": "COHR",
+              "hit": 0,
+              "entry": 377.02664999999996,
+              "target": 395.8779825,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-10",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 83.45336999999999,
+              "target": 87.62603849999999,
+              "label_end": "2026-08-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-10",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 140.39024999999998,
+              "target": 147.4097625,
+              "label_end": "2026-08-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-11",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 73.73365999999999,
+              "target": 77.42034299999999,
+              "label_end": "2026-08-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-11",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 129.304175,
+              "target": 135.76938375,
+              "label_end": "2026-08-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-12",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 75.44537,
+              "target": 79.2176385,
+              "label_end": "2026-08-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-12",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 131.4313,
+              "target": 138.00286499999999,
+              "label_end": "2026-08-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-12",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 225.250025,
+              "target": 236.51252625,
+              "label_end": "2026-08-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-13",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 77.78770999999999,
+              "target": 81.6770955,
+              "label_end": "2026-08-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-13",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 269.63937,
+              "target": 283.1213385,
+              "label_end": "2026-08-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-14",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 269.032399636,
+              "target": 282.4840196178,
+              "label_end": "2026-08-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-14",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 144.77963499999998,
+              "target": 152.01861674999998,
+              "label_end": "2026-08-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-14",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 83.21813499999999,
+              "target": 87.37904175,
+              "label_end": "2026-08-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 85.83574999999999,
+              "target": 90.12753749999999,
+              "label_end": "2026-08-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 91.73163999999998,
+              "target": 96.31822199999999,
+              "label_end": "2026-08-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-19",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 78.65857999999999,
+              "target": 82.59150899999999,
+              "label_end": "2026-08-25 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-19",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 133.67353999999997,
+              "target": 140.357217,
+              "label_end": "2026-08-25 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-20",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 73.37329999999999,
+              "target": 77.04196499999999,
+              "label_end": "2026-08-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-20",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 123.63350999999999,
+              "target": 129.81518549999998,
+              "label_end": "2026-08-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-21",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 73.18310999999999,
+              "target": 76.84226549999998,
+              "label_end": "2026-08-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-24",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 63.21314999999999,
+              "target": 66.3738075,
+              "label_end": "2026-08-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-24",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 102.88278,
+              "target": 108.026919,
+              "label_end": "2026-08-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-01",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 35.82579,
+              "target": 37.6170795,
+              "label_end": "2026-09-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 55.28522999999999,
+              "target": 58.049491499999995,
+              "label_end": "2026-09-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-02",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 58.918859999999995,
+              "target": 61.864802999999995,
+              "label_end": "2026-09-09 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 64.81474999999999,
+              "target": 68.0554875,
+              "label_end": "2026-09-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-09",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 72.36229,
+              "target": 75.9804045,
+              "label_end": "2026-09-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-10",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 67.5675,
+              "target": 70.945875,
+              "label_end": "2026-09-16 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-18",
+              "symbol": "SDGR",
+              "hit": 1,
+              "entry": 29.599569999999996,
+              "target": 31.079548499999998,
+              "label_end": "2026-09-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-24",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 34.45442,
+              "target": 36.177141,
+              "label_end": "2026-09-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-24",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 75.24506989999999,
+              "target": 79.00732339499999,
+              "label_end": "2026-09-30 16:00:00",
+              "future_status": "mature"
+            }
+          ]
+        },
+        "10d10pct": {
+          "metrics": {
+            "n": 90,
+            "mature": 87,
+            "tp": 68,
+            "fp": 19,
+            "pending": 3,
+            "precision": 0.7816091954022989,
+            "conservative_precision": 0.7555555555555555,
+            "baseline": null,
+            "lift": null,
+            "ci": [
+              0.6839094276365468,
+              0.8554918615558452
+            ],
+            "date_count": 54,
+            "ticks": 14490,
+            "abstentions": 14400,
+            "coverage": 0.006211180124223602,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 20,
+                "mature": 20,
+                "tp": 16,
+                "fp": 4,
+                "pending": 0,
+                "precision": 0.8,
+                "ci": [
+                  0.5839825677481064,
+                  0.919342337420202
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "ALAB",
+                "n": 2,
+                "mature": 2,
+                "tp": 1,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 48,
+                "mature": 47,
+                "tp": 36,
+                "fp": 11,
+                "pending": 1,
+                "precision": 0.7659574468085106,
+                "ci": [
+                  0.6277574244984441,
+                  0.8639672541377281
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "COHR",
+                "n": 1,
+                "mature": 1,
+                "tp": 0,
+                "fp": 1,
+                "pending": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRDO",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "CRWV",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "IONQ",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "LIFE",
+                "n": 5,
+                "mature": 4,
+                "tp": 4,
+                "fp": 0,
+                "pending": 1,
+                "precision": 1.0,
+                "ci": [
+                  0.5101091635454027,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 4,
+                "mature": 4,
+                "tp": 2,
+                "fp": 2,
+                "pending": 0,
+                "precision": 0.5,
+                "ci": [
+                  0.15003898915214947,
+                  0.8499610108478506
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "QBTS",
+                "n": 2,
+                "mature": 2,
+                "tp": 2,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.34238022750665303,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "RGTI",
+                "n": 3,
+                "mature": 3,
+                "tp": 3,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.4385029682449546,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SDGR",
+                "n": 1,
+                "mature": 0,
+                "tp": 0,
+                "fp": 0,
+                "pending": 1,
+                "precision": null,
+                "ci": [
+                  null,
+                  null
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              },
+              {
+                "symbol": "SNDK",
+                "n": 1,
+                "mature": 1,
+                "tp": 1,
+                "fp": 0,
+                "pending": 0,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": null,
+                "lift": null,
+                "passed": false
+              }
+            ],
+            "definition": "Follow-up outcomes of old +3% signals; old probabilities/thresholds are not calibrated for this target"
+          },
+          "labels": [
+            {
+              "day": "2026-05-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 90.19009999999999,
+              "target": 99.20911,
+              "label_end": "2026-05-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-04",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 98.22812999999998,
+              "target": 108.05094299999999,
+              "label_end": "2026-05-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-05",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 109.34923999999998,
+              "target": 120.28416399999999,
+              "label_end": "2026-05-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-06",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 103.244141,
+              "target": 113.56855510000001,
+              "label_end": "2026-05-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-07",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 101.26115999999999,
+              "target": 111.387276,
+              "label_end": "2026-05-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-08",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 124.43430999999998,
+              "target": 136.877741,
+              "label_end": "2026-05-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-11",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 167.87791019999997,
+              "target": 184.66570122,
+              "label_end": "2026-05-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-12",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 197.76756999999998,
+              "target": 217.54432699999998,
+              "label_end": "2026-05-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-12",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 123.14301999999998,
+              "target": 135.45732199999998,
+              "label_end": "2026-05-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-13",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 118.36324499999999,
+              "target": 130.1995695,
+              "label_end": "2026-05-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-13",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 196.31611999999998,
+              "target": 215.947732,
+              "label_end": "2026-05-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-14",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 114.42430999999999,
+              "target": 125.866741,
+              "label_end": "2026-05-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-14",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 210.91069999999996,
+              "target": 232.00176999999996,
+              "label_end": "2026-05-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-15",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 121.82169999999999,
+              "target": 134.00387,
+              "label_end": "2026-05-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-18",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 172.90272999999996,
+              "target": 190.19300299999998,
+              "label_end": "2026-06-01 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-18",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 113.41329999999998,
+              "target": 124.75462999999999,
+              "label_end": "2026-06-01 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-19",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 111.91179999999999,
+              "target": 123.10297999999999,
+              "label_end": "2026-06-02 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-20",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 109.34923999999998,
+              "target": 120.28416399999999,
+              "label_end": "2026-06-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-21",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 20.25023,
+              "target": 22.275253,
+              "label_end": "2026-06-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 25.045520499999995,
+              "target": 27.550072549999996,
+              "label_end": "2026-06-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "QBTS",
+              "hit": 1,
+              "entry": 28.438409999999998,
+              "target": 31.282251,
+              "label_end": "2026-06-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "IONQ",
+              "hit": 1,
+              "entry": 62.18071859999999,
+              "target": 68.39879046,
+              "label_end": "2026-06-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-22",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 126.54641999999998,
+              "target": 139.20106199999998,
+              "label_end": "2026-06-05 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-26",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 138.42828999999998,
+              "target": 152.271119,
+              "label_end": "2026-06-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-26",
+              "symbol": "QBTS",
+              "hit": 1,
+              "entry": 27.266739499999996,
+              "target": 29.99341345,
+              "label_end": "2026-06-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-26",
+              "symbol": "RGTI",
+              "hit": 1,
+              "entry": 24.514489999999995,
+              "target": 26.965938999999995,
+              "label_end": "2026-06-08 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-27",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 123.62349999999999,
+              "target": 135.98585,
+              "label_end": "2026-06-09 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-05-28",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 119.64452499999999,
+              "target": 131.6089775,
+              "label_end": "2026-06-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 101.28117999999999,
+              "target": 111.409298,
+              "label_end": "2026-06-12 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-01",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 170.68551499999998,
+              "target": 187.7540665,
+              "label_end": "2026-06-12 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-02",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 116.83171499999999,
+              "target": 128.5148865,
+              "label_end": "2026-06-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-03",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 198.16746949999998,
+              "target": 217.98421645,
+              "label_end": "2026-06-16 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-10",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 88.67859,
+              "target": 97.54644900000001,
+              "label_end": "2026-06-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-10",
+              "symbol": "CRDO",
+              "hit": 1,
+              "entry": 250.75049999999996,
+              "target": 275.82554999999996,
+              "label_end": "2026-06-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-11",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 170.48030999999997,
+              "target": 187.52834099999998,
+              "label_end": "2026-06-25 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-15",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 107.79768999999999,
+              "target": 118.57745899999999,
+              "label_end": "2026-06-29 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-06-23",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 84.88479999999998,
+              "target": 93.37328,
+              "label_end": "2026-07-07 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-07",
+              "symbol": "ALAB",
+              "hit": 0,
+              "entry": 415.41499999999996,
+              "target": 456.9565,
+              "label_end": "2026-07-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "ALAB",
+              "hit": 1,
+              "entry": 368.34797999999995,
+              "target": 405.182778,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 56.086029999999994,
+              "target": 61.694632999999996,
+              "label_end": "2026-07-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 42.532489999999996,
+              "target": 46.785739,
+              "label_end": "2026-07-30 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-28",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 45.15510999999999,
+              "target": 49.670621,
+              "label_end": "2026-08-10 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-07-31",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 65.40534,
+              "target": 71.945874,
+              "label_end": "2026-08-13 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 58.58852999999999,
+              "target": 64.447383,
+              "label_end": "2026-08-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 92.98789499999998,
+              "target": 102.28668449999999,
+              "label_end": "2026-08-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 192.78759499999998,
+              "target": 212.0663545,
+              "label_end": "2026-08-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-03",
+              "symbol": "CRWV",
+              "hit": 1,
+              "entry": 80.59051,
+              "target": 88.649561,
+              "label_end": "2026-08-14 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-04",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 63.175011899999994,
+              "target": 69.49251309,
+              "label_end": "2026-08-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-04",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 125.94581999999998,
+              "target": 138.540402,
+              "label_end": "2026-08-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-04",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 27.427399999999995,
+              "target": 30.170139999999996,
+              "label_end": "2026-08-17 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-05",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 70.9709,
+              "target": 78.06799000000001,
+              "label_end": "2026-08-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-05",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 25.280254999999997,
+              "target": 27.8082805,
+              "label_end": "2026-08-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-05",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 135.370235,
+              "target": 148.9072585,
+              "label_end": "2026-08-18 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 27.657629999999997,
+              "target": 30.423393,
+              "label_end": "2026-08-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 69.564495,
+              "target": 76.5209445,
+              "label_end": "2026-08-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "SNDK",
+              "hit": 1,
+              "entry": 1258.695438,
+              "target": 1384.5649818000002,
+              "label_end": "2026-08-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-06",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 126.86673999999998,
+              "target": 139.55341399999998,
+              "label_end": "2026-08-19 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-07",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 83.73365,
+              "target": 92.107015,
+              "label_end": "2026-08-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-07",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 144.87472999999997,
+              "target": 159.362203,
+              "label_end": "2026-08-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-07",
+              "symbol": "COHR",
+              "hit": 0,
+              "entry": 377.02664999999996,
+              "target": 414.729315,
+              "label_end": "2026-08-20 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-10",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 83.45336999999999,
+              "target": 91.798707,
+              "label_end": "2026-08-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-10",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 140.39024999999998,
+              "target": 154.429275,
+              "label_end": "2026-08-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-11",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 73.73365999999999,
+              "target": 81.10702599999999,
+              "label_end": "2026-08-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-11",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 129.304175,
+              "target": 142.2345925,
+              "label_end": "2026-08-24 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-12",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 75.44537,
+              "target": 82.989907,
+              "label_end": "2026-08-25 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-12",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 131.4313,
+              "target": 144.57443,
+              "label_end": "2026-08-25 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-12",
+              "symbol": "NBIS",
+              "hit": 1,
+              "entry": 225.250025,
+              "target": 247.77502750000002,
+              "label_end": "2026-08-25 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-13",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 77.78770999999999,
+              "target": 85.566481,
+              "label_end": "2026-08-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-13",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 269.63937,
+              "target": 296.60330700000003,
+              "label_end": "2026-08-26 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-14",
+              "symbol": "NBIS",
+              "hit": 0,
+              "entry": 269.032399636,
+              "target": 295.9356395996,
+              "label_end": "2026-08-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-14",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 144.77963499999998,
+              "target": 159.2575985,
+              "label_end": "2026-08-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-14",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 83.21813499999999,
+              "target": 91.5399485,
+              "label_end": "2026-08-27 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-17",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 85.83574999999999,
+              "target": 94.419325,
+              "label_end": "2026-08-28 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-18",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 91.73163999999998,
+              "target": 100.90480399999998,
+              "label_end": "2026-08-31 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-19",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 78.65857999999999,
+              "target": 86.52443799999999,
+              "label_end": "2026-09-01 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-19",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 133.67353999999997,
+              "target": 147.04089399999998,
+              "label_end": "2026-09-01 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-20",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 73.37329999999999,
+              "target": 80.71063,
+              "label_end": "2026-09-02 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-20",
+              "symbol": "AAOI",
+              "hit": 0,
+              "entry": 123.63350999999999,
+              "target": 135.996861,
+              "label_end": "2026-09-02 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-21",
+              "symbol": "AXTI",
+              "hit": 0,
+              "entry": 73.18310999999999,
+              "target": 80.501421,
+              "label_end": "2026-09-03 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-24",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 63.21314999999999,
+              "target": 69.534465,
+              "label_end": "2026-09-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-08-24",
+              "symbol": "AAOI",
+              "hit": 1,
+              "entry": 102.88278,
+              "target": 113.171058,
+              "label_end": "2026-09-04 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-01",
+              "symbol": "LIFE",
+              "hit": 1,
+              "entry": 35.82579,
+              "target": 39.408369,
+              "label_end": "2026-09-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-01",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 55.28522999999999,
+              "target": 60.813753,
+              "label_end": "2026-09-15 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-02",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 58.918859999999995,
+              "target": 64.810746,
+              "label_end": "2026-09-16 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-08",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 64.81474999999999,
+              "target": 71.29622499999999,
+              "label_end": "2026-09-21 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-09",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 72.36229,
+              "target": 79.59851900000001,
+              "label_end": "2026-09-22 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-10",
+              "symbol": "AXTI",
+              "hit": 1,
+              "entry": 67.5675,
+              "target": 74.32425,
+              "label_end": "2026-09-23 16:00:00",
+              "future_status": "mature"
+            },
+            {
+              "day": "2026-09-18",
+              "symbol": "SDGR",
+              "hit": null,
+              "entry": 29.599569999999996,
+              "target": 32.559526999999996,
+              "label_end": "2026-10-01 16:00:00",
+              "future_status": "pending_window"
+            },
+            {
+              "day": "2026-09-24",
+              "symbol": "LIFE",
+              "hit": null,
+              "entry": 34.45442,
+              "target": 37.899862,
+              "label_end": "2026-10-07 16:00:00",
+              "future_status": "pending_window"
+            },
+            {
+              "day": "2026-09-24",
+              "symbol": "AXTI",
+              "hit": null,
+              "entry": 75.24506989999999,
+              "target": 82.76957689,
+              "label_end": "2026-10-07 16:00:00",
+              "future_status": "pending_window"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,5897 @@
+{
+  "route": "hazard_linear",
+  "name": "剩余时间与单股基础风险",
+  "algorithm": "LogisticRegression",
+  "target_id": "5d5pct",
+  "month": "2026-06",
+  "thresholds": {
+    "pre": null,
+    "regular": null
+  },
+  "choices": {
+    "pre": [
+      {
+        "threshold": 0.6,
+        "metrics": {
+          "n": 371,
+          "mature": 370,
+          "tp": 249,
+          "fp": 121,
+          "pending": 1,
+          "precision": 0.672972972972973,
+          "conservative_precision": 0.6711590296495957,
+          "baseline": 0.5984912825202562,
+          "lift": 0.0744816904527168,
+          "ci": [
+            0.6236074915947718,
+            0.718783639671899
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 949,
+          "coverage": 0.28106060606060607,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7112278735632185,
+              "lift": 0.08877212643678156,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.6831529885057472,
+              "lift": 0.16684701149425274,
+              "passed": true
+            },
+            {
+              "symbol": "ALNY",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.30796666666666667,
+              "lift": -0.30796666666666667,
+              "passed": false
+            },
+            {
+              "symbol": "APP",
+              "n": 12,
+              "mature": 12,
+              "tp": 7,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.5833333333333334,
+              "ci": [
+                0.31951131254954973,
+                0.8067396863412435
+              ],
+              "baseline": 0.5436399425287357,
+              "lift": 0.03969339080459766,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 7,
+              "mature": 7,
+              "tp": 5,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7142857142857143,
+              "ci": [
+                0.35893445183261935,
+                0.9177810759959433
+              ],
+              "baseline": 0.45916486042692933,
+              "lift": 0.25512085385878497,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7860744827586206,
+              "lift": 0.11392551724137945,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 3,
+              "fp": 17,
+              "pending": 0,
+              "precision": 0.15,
+              "ci": [
+                0.052368745896216595,
+                0.36041886474075696
+              ],
+              "baseline": 0.12979548589341694,
+              "lift": 0.020204514106583055,
+              "passed": false
+            },
+            {
+              "symbol": "CEG",
+              "n": 1,
+              "mature": 0,
+              "tp": 0,
+              "fp": 0,
+              "pending": 1,
+              "precision": null,
+              "ci": [
+                null,
+                null
+              ],
+              "baseline": null,
+              "lift": null,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 20,
+              "mature": 20,
+              "tp": 12,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.3865815007622531,
+                0.781193467627183
+              ],
+              "baseline": 0.6098279310344827,
+              "lift": -0.009827931034482762,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 20,
+              "mature": 20,
+              "tp": 12,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.3865815007622531,
+                0.781193467627183
+              ],
+              "baseline": 0.641462183908046,
+              "lift": -0.04146218390804601,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.6317036206896552,
+              "lift": 0.1682963793103448,
+              "passed": true
+            },
+            {
+              "symbol": "CRWV",
+              "n": 4,
+              "mature": 4,
+              "tp": 2,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.15003898915214947,
+                0.8499610108478506
+              ],
+              "baseline": 0.6794218390804597,
+              "lift": -0.17942183908045972,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.35834367816091955,
+              "lift": 0.6416563218390805,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.5666981034482759,
+              "lift": 0.1333018965517241,
+              "passed": true
+            },
+            {
+              "symbol": "GEHC",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.23551505695116243,
+              "lift": -0.23551505695116243,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 5,
+              "mature": 5,
+              "tp": 1,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.2,
+              "ci": [
+                0.03622410863243014,
+                0.6244653702374747
+              ],
+              "baseline": 0.5159641379310346,
+              "lift": -0.31596413793103456,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 12,
+              "mature": 12,
+              "tp": 9,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.46769466506643426,
+                0.9110583316059453
+              ],
+              "baseline": 0.5838077586206897,
+              "lift": 0.16619224137931032,
+              "passed": true
+            },
+            {
+              "symbol": "KLAC",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.447492789968652,
+              "lift": 0.052507210031348006,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 13,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.65,
+              "ci": [
+                0.43285427668523624,
+                0.818808175898918
+              ],
+              "baseline": 0.7168788505747127,
+              "lift": -0.06687885057471266,
+              "passed": false
+            },
+            {
+              "symbol": "LRCX",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.5112937931034482,
+              "lift": -0.17796045977011493,
+              "passed": false
+            },
+            {
+              "symbol": "MRVL",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.484327969348659,
+              "lift": 0.5156720306513409,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.591606144200627,
+              "lift": 0.258393855799373,
+              "passed": true
+            },
+            {
+              "symbol": "NBIS",
+              "n": 19,
+              "mature": 19,
+              "tp": 16,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8421052631578947,
+              "ci": [
+                0.6243452472967093,
+                0.9447952836146585
+              ],
+              "baseline": 0.6774213551119178,
+              "lift": 0.16468390804597688,
+              "passed": true
+            },
+            {
+              "symbol": "QBTS",
+              "n": 4,
+              "mature": 4,
+              "tp": 1,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.25,
+              "ci": [
+                0.04558726080970055,
+                0.6993581574175981
+              ],
+              "baseline": 0.5698318965517242,
+              "lift": -0.31983189655172417,
+              "passed": false
+            },
+            {
+              "symbol": "RGTI",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5954666666666667,
+              "lift": -0.5954666666666667,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 15,
+              "mature": 15,
+              "tp": 9,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.357468301206246,
+                0.8017550385865841
+              ],
+              "baseline": 0.5363130268199233,
+              "lift": 0.06368697318007666,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 11,
+              "mature": 11,
+              "tp": 8,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.7272727272727273,
+              "ci": [
+                0.43435469882387084,
+                0.902539407099751
+              ],
+              "baseline": 0.5076901776384535,
+              "lift": 0.21958254963427382,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.733133448275862,
+              "lift": 0.06686655172413802,
+              "passed": true
+            },
+            {
+              "symbol": "STX",
+              "n": 10,
+              "mature": 10,
+              "tp": 8,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.49016247153664183,
+                0.9433178485456247
+              ],
+              "baseline": 0.6187233855799373,
+              "lift": 0.1812766144200627,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 9,
+              "mature": 9,
+              "tp": 3,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.1205838183869109,
+                0.6457978644196036
+              ],
+              "baseline": 0.5162063392546151,
+              "lift": -0.1828730059212818,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 5,
+              "mature": 5,
+              "tp": 2,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.11762077423264783,
+                0.769275718723987
+              ],
+              "baseline": 0.5600645977011494,
+              "lift": -0.16006459770114934,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 7,
+              "mature": 7,
+              "tp": 3,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.42857142857142855,
+              "ci": [
+                0.15821985525146975,
+                0.7495416354723428
+              ],
+              "baseline": 0.5605702791461412,
+              "lift": -0.13199885057471267,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5321003134796238,
+              "lift": 0.46789968652037617,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 19,
+              "mature": 19,
+              "tp": 16,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8421052631578947,
+              "ci": [
+                0.6243452472967093,
+                0.9447952836146585
+              ],
+              "baseline": 0.636310733730879,
+              "lift": 0.2057945294270157,
+              "passed": true
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.65,
+        "metrics": {
+          "n": 303,
+          "mature": 302,
+          "tp": 208,
+          "fp": 94,
+          "pending": 1,
+          "precision": 0.6887417218543046,
+          "conservative_precision": 0.6864686468646864,
+          "baseline": 0.6039109591089893,
+          "lift": 0.08483076274531531,
+          "ci": [
+            0.634426361482129,
+            0.7383157789705648
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 1017,
+          "coverage": 0.22954545454545455,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7112278735632185,
+              "lift": 0.08877212643678156,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 17,
+              "mature": 17,
+              "tp": 14,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8235294117647058,
+              "ci": [
+                0.5897054143116588,
+                0.9380887336237901
+              ],
+              "baseline": 0.6788298850574713,
+              "lift": 0.14469952670723452,
+              "passed": true
+            },
+            {
+              "symbol": "ALNY",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.3121379310344828,
+              "lift": -0.3121379310344828,
+              "passed": false
+            },
+            {
+              "symbol": "APP",
+              "n": 5,
+              "mature": 5,
+              "tp": 3,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.2307242812760128,
+                0.882379225767352
+              ],
+              "baseline": 0.5418131034482758,
+              "lift": 0.058186896551724154,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 6,
+              "mature": 6,
+              "tp": 4,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.299993315138392,
+                0.9032285888942195
+              ],
+              "baseline": 0.4585666666666666,
+              "lift": 0.2081,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7860744827586206,
+              "lift": 0.11392551724137945,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 3,
+              "fp": 17,
+              "pending": 0,
+              "precision": 0.15,
+              "ci": [
+                0.052368745896216595,
+                0.36041886474075696
+              ],
+              "baseline": 0.12979548589341694,
+              "lift": 0.020204514106583055,
+              "passed": false
+            },
+            {
+              "symbol": "CEG",
+              "n": 1,
+              "mature": 0,
+              "tp": 0,
+              "fp": 0,
+              "pending": 1,
+              "precision": null,
+              "ci": [
+                null,
+                null
+              ],
+              "baseline": null,
+              "lift": null,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 19,
+              "mature": 19,
+              "tp": 13,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.6842105263157895,
+              "ci": [
+                0.46010407675327475,
+                0.8463562091220773
+              ],
+              "baseline": 0.6094313974591651,
+              "lift": 0.07477912885662441,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 20,
+              "mature": 20,
+              "tp": 12,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.3865815007622531,
+                0.781193467627183
+              ],
+              "baseline": 0.641462183908046,
+              "lift": -0.04146218390804601,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 18,
+              "mature": 18,
+              "tp": 13,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.7222222222222222,
+              "ci": [
+                0.4912734343970254,
+                0.8750024662044601
+              ],
+              "baseline": 0.6312280970625799,
+              "lift": 0.09099412515964234,
+              "passed": true
+            },
+            {
+              "symbol": "CRWV",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.6765463601532566,
+              "lift": -0.009879693486590013,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.35834367816091955,
+              "lift": 0.6416563218390805,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 15,
+              "mature": 15,
+              "tp": 12,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5481455128483065,
+                0.9295245065301844
+              ],
+              "baseline": 0.569044214559387,
+              "lift": 0.23095578544061302,
+              "passed": true
+            },
+            {
+              "symbol": "GEHC",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.23998002808550475,
+              "lift": -0.23998002808550475,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.5152911877394636,
+              "lift": -0.18195785440613027,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 7,
+              "mature": 7,
+              "tp": 4,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.5714285714285714,
+              "ci": [
+                0.2504583645276572,
+                0.8417801447485302
+              ],
+              "baseline": 0.5829868637110016,
+              "lift": -0.011558292282430216,
+              "passed": false
+            },
+            {
+              "symbol": "KLAC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.4729442006269592,
+              "lift": 0.5270557993730408,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 13,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.65,
+              "ci": [
+                0.43285427668523624,
+                0.818808175898918
+              ],
+              "baseline": 0.7168788505747127,
+              "lift": -0.06687885057471266,
+              "passed": false
+            },
+            {
+              "symbol": "LRCX",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.4842200766283525,
+              "lift": -0.4842200766283525,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 13,
+              "mature": 13,
+              "tp": 11,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8461538461538461,
+              "ci": [
+                0.5776536898051745,
+                0.9567418216419186
+              ],
+              "baseline": 0.5908145647455991,
+              "lift": 0.255339281408247,
+              "passed": true
+            },
+            {
+              "symbol": "NBIS",
+              "n": 17,
+              "mature": 17,
+              "tp": 15,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8823529411764706,
+              "ci": [
+                0.6566364940511412,
+                0.9671202262362074
+              ],
+              "baseline": 0.6771523326572009,
+              "lift": 0.2052006085192697,
+              "passed": true
+            },
+            {
+              "symbol": "QBTS",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5709471264367816,
+              "lift": -0.07094712643678158,
+              "passed": false
+            },
+            {
+              "symbol": "RGTI",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5955126436781609,
+              "lift": -0.5955126436781609,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 13,
+              "mature": 13,
+              "tp": 9,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.6923076923076923,
+              "ci": [
+                0.42369343180549035,
+                0.8731929634428948
+              ],
+              "baseline": 0.533452961980548,
+              "lift": 0.15885473032714426,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 7,
+              "mature": 7,
+              "tp": 4,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.5714285714285714,
+              "ci": [
+                0.2504583645276572,
+                0.8417801447485302
+              ],
+              "baseline": 0.5079027914614122,
+              "lift": 0.06352577996715925,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.733133448275862,
+              "lift": 0.06686655172413802,
+              "passed": true
+            },
+            {
+              "symbol": "STX",
+              "n": 6,
+              "mature": 6,
+              "tp": 5,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8333333333333334,
+              "ci": [
+                0.43649717781352987,
+                0.9699466302516935
+              ],
+              "baseline": 0.6182457680250784,
+              "lift": 0.215087565308255,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 5,
+              "mature": 5,
+              "tp": 2,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.11762077423264783,
+                0.769275718723987
+              ],
+              "baseline": 0.5201828213166143,
+              "lift": -0.12018282131661429,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.5584095785440614,
+              "lift": -0.22507624521072805,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5625310344827585,
+              "lift": -0.06253103448275854,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5321003134796238,
+              "lift": 0.46789968652037617,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 14,
+              "mature": 14,
+              "tp": 12,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8571428571428571,
+              "ci": [
+                0.6005862050302965,
+                0.9599060787285351
+              ],
+              "baseline": 0.6389645496129487,
+              "lift": 0.2181783075299084,
+              "passed": true
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.7,
+        "metrics": {
+          "n": 213,
+          "mature": 213,
+          "tp": 144,
+          "fp": 69,
+          "pending": 0,
+          "precision": 0.676056338028169,
+          "conservative_precision": 0.676056338028169,
+          "baseline": 0.6098635980284354,
+          "lift": 0.06619273999973363,
+          "ci": [
+            0.610571552586481,
+            0.735303264931775
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 1107,
+          "coverage": 0.16136363636363638,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7112278735632185,
+              "lift": 0.08877212643678156,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 11,
+              "mature": 11,
+              "tp": 7,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.6363636363636364,
+              "ci": [
+                0.35380117450784887,
+                0.8483352890463243
+              ],
+              "baseline": 0.6747431556948796,
+              "lift": -0.038379519331243284,
+              "passed": false
+            },
+            {
+              "symbol": "APP",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5371333333333334,
+              "lift": 0.46286666666666665,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.45712490421455937,
+              "lift": -0.12379157088122605,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7860744827586206,
+              "lift": 0.11392551724137945,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 3,
+              "fp": 17,
+              "pending": 0,
+              "precision": 0.15,
+              "ci": [
+                0.052368745896216595,
+                0.36041886474075696
+              ],
+              "baseline": 0.12979548589341694,
+              "lift": 0.020204514106583055,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 11,
+              "mature": 11,
+              "tp": 9,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8181818181818182,
+              "ci": [
+                0.523019438039156,
+                0.9486323102539149
+              ],
+              "baseline": 0.6065249738766981,
+              "lift": 0.2116568443051201,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 19,
+              "mature": 19,
+              "tp": 11,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.5789473684210527,
+              "ci": [
+                0.3627590353425504,
+                0.7685810871754576
+              ],
+              "baseline": 0.6431948578342407,
+              "lift": -0.06424748941318803,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 7,
+              "mature": 7,
+              "tp": 5,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7142857142857143,
+              "ci": [
+                0.35893445183261935,
+                0.9177810759959433
+              ],
+              "baseline": 0.6293773399014778,
+              "lift": 0.08490837438423648,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.35834367816091955,
+              "lift": 0.6416563218390805,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 8,
+              "mature": 8,
+              "tp": 6,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.40927543031016883,
+                0.9285207872478909
+              ],
+              "baseline": 0.5662349137931035,
+              "lift": 0.18376508620689647,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5043885057471265,
+              "lift": 0.49561149425287354,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 4,
+              "mature": 4,
+              "tp": 2,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.15003898915214947,
+                0.8499610108478506
+              ],
+              "baseline": 0.5794022988505747,
+              "lift": -0.0794022988505747,
+              "passed": false
+            },
+            {
+              "symbol": "KLAC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.4729442006269592,
+              "lift": 0.5270557993730408,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 13,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.65,
+              "ci": [
+                0.43285427668523624,
+                0.818808175898918
+              ],
+              "baseline": 0.7168788505747127,
+              "lift": -0.06687885057471266,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.5875163009404388,
+              "lift": 0.16248369905956117,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 15,
+              "mature": 15,
+              "tp": 14,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.9333333333333333,
+              "ci": [
+                0.7018347012621998,
+                0.9881331045067315
+              ],
+              "baseline": 0.6793989272030652,
+              "lift": 0.2539344061302682,
+              "passed": true
+            },
+            {
+              "symbol": "QBTS",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5708298850574712,
+              "lift": -0.5708298850574712,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 7,
+              "mature": 7,
+              "tp": 5,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7142857142857143,
+              "ci": [
+                0.35893445183261935,
+                0.9177810759959433
+              ],
+              "baseline": 0.5364354679802956,
+              "lift": 0.17785024630541868,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 5,
+              "mature": 5,
+              "tp": 2,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.11762077423264783,
+                0.769275718723987
+              ],
+              "baseline": 0.5101924137931035,
+              "lift": -0.11019241379310352,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 19,
+              "mature": 19,
+              "tp": 15,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.7894736842105263,
+              "ci": [
+                0.5666572155618583,
+                0.9149232336708375
+              ],
+              "baseline": 0.7342118572292801,
+              "lift": 0.055261826981246265,
+              "passed": true
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6229090909090909,
+              "lift": 0.37709090909090914,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.5153968652037617,
+              "lift": -0.1820635318704284,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5540850574712644,
+              "lift": -0.5540850574712644,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5625310344827585,
+              "lift": -0.06253103448275854,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5321003134796238,
+              "lift": 0.46789968652037617,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 7,
+              "mature": 7,
+              "tp": 6,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8571428571428571,
+              "ci": [
+                0.4868721707256811,
+                0.9743203756552565
+              ],
+              "baseline": 0.6373121041520056,
+              "lift": 0.21983075299085153,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "n": 147,
+          "mature": 147,
+          "tp": 95,
+          "fp": 52,
+          "pending": 0,
+          "precision": 0.6462585034013606,
+          "conservative_precision": 0.6462585034013606,
+          "baseline": 0.600014434939523,
+          "lift": 0.046244068461837595,
+          "ci": [
+            0.5661412591598672,
+            0.7189262570003571
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 1173,
+          "coverage": 0.11136363636363636,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7112278735632185,
+              "lift": 0.08877212643678156,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.6814764367816092,
+              "lift": 0.06852356321839081,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.46271264367816095,
+              "lift": -0.46271264367816095,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7860744827586206,
+              "lift": 0.11392551724137945,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 3,
+              "fp": 17,
+              "pending": 0,
+              "precision": 0.15,
+              "ci": [
+                0.052368745896216595,
+                0.36041886474075696
+              ],
+              "baseline": 0.12979548589341694,
+              "lift": 0.020204514106583055,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6040850574712644,
+              "lift": 0.3959149425287356,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 14,
+              "mature": 14,
+              "tp": 7,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.26799202452413634,
+                0.7320079754758637
+              ],
+              "baseline": 0.6447983579638752,
+              "lift": -0.1447983579638752,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 4,
+              "mature": 4,
+              "tp": 2,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.15003898915214947,
+                0.8499610108478506
+              ],
+              "baseline": 0.6293919540229884,
+              "lift": -0.12939195402298842,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.35834367816091955,
+              "lift": 0.6416563218390805,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 4,
+              "mature": 4,
+              "tp": 4,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.5101091635454027,
+                1.0
+              ],
+              "baseline": 0.5645775862068966,
+              "lift": 0.4354224137931034,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5043885057471265,
+              "lift": 0.49561149425287354,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.5835628352490421,
+              "lift": -0.25022950191570875,
+              "passed": false
+            },
+            {
+              "symbol": "KLAC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.4729442006269592,
+              "lift": 0.5270557993730408,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 13,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.65,
+              "ci": [
+                0.43285427668523624,
+                0.818808175898918
+              ],
+              "baseline": 0.7168788505747127,
+              "lift": -0.06687885057471266,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5911210031347963,
+              "lift": -0.5911210031347963,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 5,
+              "mature": 5,
+              "tp": 5,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.5655175352168251,
+                1.0
+              ],
+              "baseline": 0.6825131034482759,
+              "lift": 0.31748689655172413,
+              "passed": false
+            },
+            {
+              "symbol": "QBTS",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5708298850574712,
+              "lift": -0.5708298850574712,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 5,
+              "mature": 5,
+              "tp": 4,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.37553462976252533,
+                0.9637758913675698
+              ],
+              "baseline": 0.5342597701149425,
+              "lift": 0.2657402298850575,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.5041724137931035,
+              "lift": 0.16249425287356312,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 9,
+              "mature": 9,
+              "tp": 7,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7777777777777778,
+              "ci": [
+                0.45258896910698887,
+                0.9367748928821533
+              ],
+              "baseline": 0.7344795657726693,
+              "lift": 0.04329821200510853,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6229090909090909,
+              "lift": 0.37709090909090914,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5138532915360501,
+              "lift": -0.5138532915360501,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5664885057471264,
+              "lift": -0.5664885057471264,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5625310344827585,
+              "lift": -0.06253103448275854,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5321003134796238,
+              "lift": 0.46789968652037617,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 3,
+              "mature": 3,
+              "tp": 3,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.4385029682449546,
+                1.0
+              ],
+              "baseline": 0.637134236453202,
+              "lift": 0.362865763546798,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.8,
+        "metrics": {
+          "n": 108,
+          "mature": 108,
+          "tp": 68,
+          "fp": 40,
+          "pending": 0,
+          "precision": 0.6296296296296297,
+          "conservative_precision": 0.6296296296296297,
+          "baseline": 0.5864609144952536,
+          "lift": 0.043168715134376034,
+          "ci": [
+            0.5355697359856005,
+            0.7147846522282552
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 1212,
+          "coverage": 0.08181818181818182,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7112278735632185,
+              "lift": 0.08877212643678156,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6793655172413793,
+              "lift": 0.3206344827586207,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.4668471264367816,
+              "lift": -0.4668471264367816,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7860744827586206,
+              "lift": 0.11392551724137945,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 3,
+              "fp": 17,
+              "pending": 0,
+              "precision": 0.15,
+              "ci": [
+                0.052368745896216595,
+                0.36041886474075696
+              ],
+              "baseline": 0.12979548589341694,
+              "lift": 0.020204514106583055,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.6432666666666668,
+              "lift": 0.023399999999999865,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.35834367816091955,
+              "lift": 0.6416563218390805,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.5729591954022988,
+              "lift": 0.4270408045977012,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5043885057471265,
+              "lift": 0.49561149425287354,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.579264367816092,
+              "lift": -0.07926436781609203,
+              "passed": false
+            },
+            {
+              "symbol": "KLAC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.4729442006269592,
+              "lift": 0.5270557993730408,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 19,
+              "mature": 19,
+              "tp": 12,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.631578947368421,
+              "ci": [
+                0.41039533164803066,
+                0.8085048725486492
+              ],
+              "baseline": 0.7155361766485179,
+              "lift": -0.08395722928009686,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 3,
+              "mature": 3,
+              "tp": 3,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.4385029682449546,
+                1.0
+              ],
+              "baseline": 0.6765295019157088,
+              "lift": 0.3234704980842912,
+              "passed": false
+            },
+            {
+              "symbol": "QBTS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5873126436781609,
+              "lift": 0.41268735632183906,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.5397637931034482,
+              "lift": -0.5397637931034482,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.508132183908046,
+              "lift": -0.508132183908046,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.7321616858237547,
+              "lift": -0.06549501915708811,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6229090909090909,
+              "lift": 0.37709090909090914,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5138532915360501,
+              "lift": -0.5138532915360501,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5785379310344827,
+              "lift": -0.5785379310344827,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5544298850574713,
+              "lift": -0.5544298850574713,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5321003134796238,
+              "lift": 0.46789968652037617,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.640810960591133,
+              "lift": 0.35918903940886704,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.85,
+        "metrics": {
+          "n": 84,
+          "mature": 84,
+          "tp": 54,
+          "fp": 30,
+          "pending": 0,
+          "precision": 0.6428571428571429,
+          "conservative_precision": 0.6428571428571429,
+          "baseline": 0.5671750283446713,
+          "lift": 0.07568211451247164,
+          "ci": [
+            0.5362131509036315,
+            0.7370063552636087
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 1236,
+          "coverage": 0.06363636363636363,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 18,
+              "mature": 18,
+              "tp": 14,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.7777777777777778,
+              "ci": [
+                0.5478541568378739,
+                0.9099907189139831
+              ],
+              "baseline": 0.7115243295019158,
+              "lift": 0.06625344827586199,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6665574712643678,
+              "lift": 0.3334425287356322,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7860744827586206,
+              "lift": 0.11392551724137945,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 3,
+              "fp": 17,
+              "pending": 0,
+              "precision": 0.15,
+              "ci": [
+                0.052368745896216595,
+                0.36041886474075696
+              ],
+              "baseline": 0.12979548589341694,
+              "lift": 0.020204514106583055,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6501666666666667,
+              "lift": 0.34983333333333333,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.35834367816091955,
+              "lift": 0.6416563218390805,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5668333333333333,
+              "lift": 0.4331666666666667,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5043885057471265,
+              "lift": 0.49561149425287354,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 12,
+              "mature": 12,
+              "tp": 7,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.5833333333333334,
+              "ci": [
+                0.31951131254954973,
+                0.8067396863412435
+              ],
+              "baseline": 0.7140681992337164,
+              "lift": -0.13073486590038308,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6750011494252874,
+              "lift": 0.32499885057471256,
+              "passed": false
+            },
+            {
+              "symbol": "QBTS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5873126436781609,
+              "lift": 0.41268735632183906,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5291701149425287,
+              "lift": -0.029170114942528746,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6229090909090909,
+              "lift": 0.37709090909090914,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5138532915360501,
+              "lift": -0.5138532915360501,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5702045977011494,
+              "lift": 0.4297954022988506,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5321003134796238,
+              "lift": 0.46789968652037617,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6430357142857143,
+              "lift": 0.35696428571428573,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.9,
+        "metrics": {
+          "n": 59,
+          "mature": 59,
+          "tp": 35,
+          "fp": 24,
+          "pending": 0,
+          "precision": 0.5932203389830508,
+          "conservative_precision": 0.5932203389830508,
+          "baseline": 0.5171820165418061,
+          "lift": 0.07603832244124475,
+          "ci": [
+            0.4659340125533739,
+            0.7091096641280723
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 1261,
+          "coverage": 0.0446969696969697,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 11,
+              "mature": 11,
+              "tp": 8,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.7272727272727273,
+              "ci": [
+                0.43435469882387084,
+                0.902539407099751
+              ],
+              "baseline": 0.7107990595611284,
+              "lift": 0.01647366771159886,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7860744827586206,
+              "lift": 0.11392551724137945,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 3,
+              "fp": 17,
+              "pending": 0,
+              "precision": 0.15,
+              "ci": [
+                0.052368745896216595,
+                0.36041886474075696
+              ],
+              "baseline": 0.12979548589341694,
+              "lift": 0.020204514106583055,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.35834367816091955,
+              "lift": 0.6416563218390805,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5668333333333333,
+              "lift": 0.4331666666666667,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5043885057471265,
+              "lift": 0.49561149425287354,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.7168793103448275,
+              "lift": -0.7168793103448275,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5202045977011494,
+              "lift": -0.5202045977011494,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6229090909090909,
+              "lift": 0.37709090909090914,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5177868338557994,
+              "lift": 0.4822131661442006,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5702045977011494,
+              "lift": 0.4297954022988506,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      }
+    ],
+    "regular": [
+      {
+        "threshold": 0.6,
+        "metrics": {
+          "n": 352,
+          "mature": 351,
+          "tp": 249,
+          "fp": 102,
+          "pending": 1,
+          "precision": 0.7094017094017094,
+          "conservative_precision": 0.7073863636363636,
+          "baseline": 0.5874727297590553,
+          "lift": 0.12192897964265415,
+          "ci": [
+            0.6598389120378652,
+            0.7544306056463155
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1088,
+          "coverage": 0.24444444444444444,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.7033005172413793,
+              "lift": 0.14669948275862066,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.628558448275862,
+              "lift": 0.22144155172413793,
+              "passed": true
+            },
+            {
+              "symbol": "APP",
+              "n": 9,
+              "mature": 9,
+              "tp": 6,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.3542021355803963,
+                0.879416181613089
+              ],
+              "baseline": 0.49762094508301413,
+              "lift": 0.1690457215836525,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 6,
+              "mature": 6,
+              "tp": 3,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.1876163064826506,
+                0.8123836935173494
+              ],
+              "baseline": 0.43924080459770115,
+              "lift": 0.06075919540229885,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7871827011494251,
+              "lift": 0.1128172988505749,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 1,
+              "fp": 19,
+              "pending": 0,
+              "precision": 0.05,
+              "ci": [
+                0.008881448800795402,
+                0.23613119344674205
+              ],
+              "baseline": 0.11500783699059558,
+              "lift": -0.06500783699059558,
+              "passed": false
+            },
+            {
+              "symbol": "CEG",
+              "n": 1,
+              "mature": 0,
+              "tp": 0,
+              "fp": 0,
+              "pending": 1,
+              "precision": null,
+              "ci": [
+                null,
+                null
+              ],
+              "baseline": null,
+              "lift": null,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 20,
+              "mature": 20,
+              "tp": 12,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.3865815007622531,
+                0.781193467627183
+              ],
+              "baseline": 0.5976543103448276,
+              "lift": 0.002345689655172345,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.6252547126436782,
+              "lift": 0.0747452873563218,
+              "passed": true
+            },
+            {
+              "symbol": "CRDO",
+              "n": 20,
+              "mature": 20,
+              "tp": 15,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.531299122381256,
+                0.8881382985923343
+              ],
+              "baseline": 0.6283257471264369,
+              "lift": 0.12167425287356315,
+              "passed": true
+            },
+            {
+              "symbol": "CRWV",
+              "n": 6,
+              "mature": 6,
+              "tp": 6,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.6096657120978346,
+                1.0
+              ],
+              "baseline": 0.6758363984674328,
+              "lift": 0.3241636015325672,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.34893448275862066,
+              "lift": 0.6510655172413793,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 20,
+              "mature": 20,
+              "tp": 12,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.3865815007622531,
+                0.781193467627183
+              ],
+              "baseline": 0.5651910919540231,
+              "lift": 0.034808908045976916,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 7,
+              "mature": 7,
+              "tp": 4,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.5714285714285714,
+              "ci": [
+                0.2504583645276572,
+                0.8417801447485302
+              ],
+              "baseline": 0.4919282250885167,
+              "lift": 0.0795003463400547,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 15,
+              "mature": 15,
+              "tp": 12,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5481455128483065,
+                0.9295245065301844
+              ],
+              "baseline": 0.5882380842911877,
+              "lift": 0.2117619157088123,
+              "passed": true
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.681507183908046,
+              "lift": 0.018492816091953967,
+              "passed": false
+            },
+            {
+              "symbol": "LRCX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.4601587739463602,
+              "lift": 0.5398412260536398,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 19,
+              "mature": 19,
+              "tp": 17,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8947368421052632,
+              "ci": [
+                0.6860591728889099,
+                0.9706414397011299
+              ],
+              "baseline": 0.5701353280494843,
+              "lift": 0.32460151405577886,
+              "passed": true
+            },
+            {
+              "symbol": "NBIS",
+              "n": 19,
+              "mature": 19,
+              "tp": 16,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8421052631578947,
+              "ci": [
+                0.6243452472967093,
+                0.9447952836146585
+              ],
+              "baseline": 0.6662158499697519,
+              "lift": 0.17588941318814277,
+              "passed": true
+            },
+            {
+              "symbol": "QBTS",
+              "n": 5,
+              "mature": 5,
+              "tp": 2,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.11762077423264783,
+                0.769275718723987
+              ],
+              "baseline": 0.6233009195402299,
+              "lift": -0.2233009195402299,
+              "passed": false
+            },
+            {
+              "symbol": "RGTI",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.6079072796934866,
+              "lift": -0.27457394636015325,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 15,
+              "mature": 15,
+              "tp": 8,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.5333333333333333,
+              "ci": [
+                0.30116980025498397,
+                0.7519046463426261
+              ],
+              "baseline": 0.5092054930687763,
+              "lift": 0.024127840264557054,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 9,
+              "mature": 9,
+              "tp": 8,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8888888888888888,
+              "ci": [
+                0.5650002944233439,
+                0.9801091123614551
+              ],
+              "baseline": 0.4986112388250319,
+              "lift": 0.39027765006385695,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7276335632183908,
+              "lift": 0.07236643678160926,
+              "passed": true
+            },
+            {
+              "symbol": "STX",
+              "n": 5,
+              "mature": 5,
+              "tp": 5,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.5655175352168251,
+                1.0
+              ],
+              "baseline": 0.5963322884012539,
+              "lift": 0.40366771159874615,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 7,
+              "mature": 7,
+              "tp": 5,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7142857142857143,
+              "ci": [
+                0.35893445183261935,
+                0.9177810759959433
+              ],
+              "baseline": 0.4981533363188536,
+              "lift": 0.2161323779668607,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.5553425287356322,
+              "lift": -0.22200919540229885,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 4,
+              "mature": 4,
+              "tp": 2,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.15003898915214947,
+                0.8499610108478506
+              ],
+              "baseline": 0.5535002873563218,
+              "lift": -0.05350028735632184,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5343235109717868,
+              "lift": 0.46567648902821324,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 16,
+              "mature": 16,
+              "tp": 14,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.875,
+              "ci": [
+                0.639771727342413,
+                0.9650225122567595
+              ],
+              "baseline": 0.5828639162561577,
+              "lift": 0.29213608374384226,
+              "passed": true
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.65,
+        "metrics": {
+          "n": 282,
+          "mature": 281,
+          "tp": 201,
+          "fp": 80,
+          "pending": 1,
+          "precision": 0.7153024911032029,
+          "conservative_precision": 0.7127659574468085,
+          "baseline": 0.5950623066585109,
+          "lift": 0.12024018444469198,
+          "ci": [
+            0.6599122148006408,
+            0.7648854972352631
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1158,
+          "coverage": 0.19583333333333333,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.7033005172413793,
+              "lift": 0.14669948275862066,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 18,
+              "mature": 18,
+              "tp": 15,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8333333333333334,
+              "ci": [
+                0.6077796189608428,
+                0.9416342319413856
+              ],
+              "baseline": 0.6295627905744741,
+              "lift": 0.2037705427588593,
+              "passed": true
+            },
+            {
+              "symbol": "APP",
+              "n": 3,
+              "mature": 3,
+              "tp": 3,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.4385029682449546,
+                1.0
+              ],
+              "baseline": 0.4981758620689655,
+              "lift": 0.5018241379310344,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.4430882183908046,
+              "lift": 0.3069117816091954,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7871827011494251,
+              "lift": 0.1128172988505749,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 1,
+              "fp": 19,
+              "pending": 0,
+              "precision": 0.05,
+              "ci": [
+                0.008881448800795402,
+                0.23613119344674205
+              ],
+              "baseline": 0.11500783699059558,
+              "lift": -0.06500783699059558,
+              "passed": false
+            },
+            {
+              "symbol": "CEG",
+              "n": 1,
+              "mature": 0,
+              "tp": 0,
+              "fp": 0,
+              "pending": 1,
+              "precision": null,
+              "ci": [
+                null,
+                null
+              ],
+              "baseline": null,
+              "lift": null,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 17,
+              "mature": 17,
+              "tp": 11,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.6470588235294118,
+              "ci": [
+                0.41300363485218694,
+                0.8269027960275627
+              ],
+              "baseline": 0.5990385395537524,
+              "lift": 0.048020283975659384,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.6252547126436782,
+              "lift": 0.0747452873563218,
+              "passed": true
+            },
+            {
+              "symbol": "CRDO",
+              "n": 18,
+              "mature": 18,
+              "tp": 13,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.7222222222222222,
+              "ci": [
+                0.4912734343970254,
+                0.8750024662044601
+              ],
+              "baseline": 0.630463805010997,
+              "lift": 0.09175841721122524,
+              "passed": true
+            },
+            {
+              "symbol": "CRWV",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.6603471264367815,
+              "lift": 0.3396528735632185,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.34893448275862066,
+              "lift": 0.6510655172413793,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 12,
+              "mature": 12,
+              "tp": 8,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.39062208887279953,
+                0.8618799089087867
+              ],
+              "baseline": 0.5657867816091953,
+              "lift": 0.10087988505747136,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 5,
+              "mature": 5,
+              "tp": 1,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.2,
+              "ci": [
+                0.03622410863243014,
+                0.6244653702374747
+              ],
+              "baseline": 0.49361933240543776,
+              "lift": -0.29361933240543775,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 9,
+              "mature": 9,
+              "tp": 7,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7777777777777778,
+              "ci": [
+                0.45258896910698887,
+                0.9367748928821533
+              ],
+              "baseline": 0.5890667943805874,
+              "lift": 0.1887109833971904,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.681507183908046,
+              "lift": 0.018492816091953967,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 11,
+              "mature": 11,
+              "tp": 9,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8181818181818182,
+              "ci": [
+                0.523019438039156,
+                0.9486323102539149
+              ],
+              "baseline": 0.5703911085779424,
+              "lift": 0.24779070960387584,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 19,
+              "mature": 19,
+              "tp": 16,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8421052631578947,
+              "ci": [
+                0.6243452472967093,
+                0.9447952836146585
+              ],
+              "baseline": 0.6662158499697519,
+              "lift": 0.17588941318814277,
+              "passed": true
+            },
+            {
+              "symbol": "QBTS",
+              "n": 5,
+              "mature": 5,
+              "tp": 2,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.11762077423264783,
+                0.769275718723987
+              ],
+              "baseline": 0.61158,
+              "lift": -0.21158,
+              "passed": false
+            },
+            {
+              "symbol": "RGTI",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.6066494252873562,
+              "lift": -0.10664942528735621,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 10,
+              "mature": 10,
+              "tp": 7,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.39677814746114537,
+                0.8922087325936989
+              ],
+              "baseline": 0.5091383908045976,
+              "lift": 0.1908616091954024,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 5,
+              "mature": 5,
+              "tp": 5,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.5655175352168251,
+                1.0
+              ],
+              "baseline": 0.49731862068965516,
+              "lift": 0.5026813793103448,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7276335632183908,
+              "lift": 0.07236643678160926,
+              "passed": true
+            },
+            {
+              "symbol": "STX",
+              "n": 3,
+              "mature": 3,
+              "tp": 3,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.4385029682449546,
+                1.0
+              ],
+              "baseline": 0.5860961337513061,
+              "lift": 0.4139038662486939,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.49848652037617563,
+              "lift": 0.168180146290491,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.552967816091954,
+              "lift": -0.552967816091954,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5613241379310345,
+              "lift": 0.43867586206896547,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5343235109717868,
+              "lift": 0.46567648902821324,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 11,
+              "mature": 11,
+              "tp": 10,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.9090909090909091,
+              "ci": [
+                0.6226415635484043,
+                0.9837678271141151
+              ],
+              "baseline": 0.5791866323331841,
+              "lift": 0.32990427675772493,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.7,
+        "metrics": {
+          "n": 222,
+          "mature": 221,
+          "tp": 153,
+          "fp": 68,
+          "pending": 1,
+          "precision": 0.6923076923076923,
+          "conservative_precision": 0.6891891891891891,
+          "baseline": 0.6010347807041395,
+          "lift": 0.09127291160355278,
+          "ci": [
+            0.628604831494927,
+            0.7494393265790763
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1218,
+          "coverage": 0.15416666666666667,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.7033005172413793,
+              "lift": 0.14669948275862066,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 12,
+              "mature": 12,
+              "tp": 10,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.8333333333333334,
+              "ci": [
+                0.5519691377470266,
+                0.9530348578161463
+              ],
+              "baseline": 0.6307433908045977,
+              "lift": 0.20258994252873563,
+              "passed": true
+            },
+            {
+              "symbol": "APP",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.4961477011494253,
+              "lift": 0.5038522988505747,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.44840574712643677,
+              "lift": 0.05159425287356323,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7871827011494251,
+              "lift": 0.1128172988505749,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 1,
+              "fp": 19,
+              "pending": 0,
+              "precision": 0.05,
+              "ci": [
+                0.008881448800795402,
+                0.23613119344674205
+              ],
+              "baseline": 0.11500783699059558,
+              "lift": -0.06500783699059558,
+              "passed": false
+            },
+            {
+              "symbol": "CEG",
+              "n": 1,
+              "mature": 0,
+              "tp": 0,
+              "fp": 0,
+              "pending": 1,
+              "precision": null,
+              "ci": [
+                null,
+                null
+              ],
+              "baseline": null,
+              "lift": null,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 9,
+              "mature": 9,
+              "tp": 7,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7777777777777778,
+              "ci": [
+                0.45258896910698887,
+                0.9367748928821533
+              ],
+              "baseline": 0.6006730523627076,
+              "lift": 0.17710472541507016,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.6239771264367817,
+              "lift": 0.07602287356321824,
+              "passed": true
+            },
+            {
+              "symbol": "CRDO",
+              "n": 13,
+              "mature": 13,
+              "tp": 8,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.6153846153846154,
+              "ci": [
+                0.355228915126657,
+                0.8229029220223743
+              ],
+              "baseline": 0.628481255526083,
+              "lift": -0.013096640141467608,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.34893448275862066,
+              "lift": 0.6510655172413793,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 8,
+              "mature": 8,
+              "tp": 4,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.21521606221387757,
+                0.7847839377861224
+              ],
+              "baseline": 0.5677610632183907,
+              "lift": -0.0677610632183907,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 4,
+              "mature": 4,
+              "tp": 2,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.15003898915214947,
+                0.8499610108478506
+              ],
+              "baseline": 0.4967073048576611,
+              "lift": 0.003292695142338875,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 8,
+              "mature": 8,
+              "tp": 6,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.40927543031016883,
+                0.9285207872478909
+              ],
+              "baseline": 0.5868893678160919,
+              "lift": 0.1631106321839081,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.681507183908046,
+              "lift": 0.018492816091953967,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 6,
+              "mature": 6,
+              "tp": 4,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.299993315138392,
+                0.9032285888942195
+              ],
+              "baseline": 0.5666134169275153,
+              "lift": 0.1000532497391513,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 18,
+              "mature": 18,
+              "tp": 15,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.8333333333333334,
+              "ci": [
+                0.6077796189608428,
+                0.9416342319413856
+              ],
+              "baseline": 0.6673879636325509,
+              "lift": 0.16594536970078244,
+              "passed": true
+            },
+            {
+              "symbol": "QBTS",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.6235183908045977,
+              "lift": -0.1235183908045977,
+              "passed": false
+            },
+            {
+              "symbol": "RGTI",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.6190275862068966,
+              "lift": -0.11902758620689657,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 4,
+              "mature": 4,
+              "tp": 2,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.15003898915214947,
+                0.8499610108478506
+              ],
+              "baseline": 0.5111137931034483,
+              "lift": -0.011113793103448288,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.49823563218390804,
+              "lift": 0.5017643678160919,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 20,
+              "mature": 20,
+              "tp": 16,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.5839825677481064,
+                0.919342337420202
+              ],
+              "baseline": 0.7263385266487012,
+              "lift": 0.0736614733512988,
+              "passed": true
+            },
+            {
+              "symbol": "STX",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.584564263322884,
+              "lift": 0.415435736677116,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.503250156739812,
+              "lift": 0.496749843260188,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.552967816091954,
+              "lift": -0.552967816091954,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5613241379310345,
+              "lift": 0.43867586206896547,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 3,
+              "mature": 3,
+              "tp": 3,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.4385029682449546,
+                1.0
+              ],
+              "baseline": 0.5815775862068966,
+              "lift": 0.4184224137931034,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "n": 162,
+          "mature": 161,
+          "tp": 110,
+          "fp": 51,
+          "pending": 1,
+          "precision": 0.6832298136645962,
+          "conservative_precision": 0.6790123456790124,
+          "baseline": 0.5956609046242934,
+          "lift": 0.08756890904030279,
+          "ci": [
+            0.6078132584324228,
+            0.7501064082709462
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1278,
+          "coverage": 0.1125,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.7033005172413793,
+              "lift": 0.14669948275862066,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.6319850574712643,
+              "lift": 0.11801494252873568,
+              "passed": false
+            },
+            {
+              "symbol": "APP",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.4961477011494253,
+              "lift": 0.5038522988505747,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.45266436781609193,
+              "lift": -0.45266436781609193,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7871827011494251,
+              "lift": 0.1128172988505749,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 1,
+              "fp": 19,
+              "pending": 0,
+              "precision": 0.05,
+              "ci": [
+                0.008881448800795402,
+                0.23613119344674205
+              ],
+              "baseline": 0.11500783699059558,
+              "lift": -0.06500783699059558,
+              "passed": false
+            },
+            {
+              "symbol": "CEG",
+              "n": 1,
+              "mature": 0,
+              "tp": 0,
+              "fp": 0,
+              "pending": 1,
+              "precision": null,
+              "ci": [
+                null,
+                null
+              ],
+              "baseline": null,
+              "lift": null,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.599526724137931,
+              "lift": 0.15047327586206904,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 14,
+              "mature": 14,
+              "tp": 9,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.6428571428571429,
+              "ci": [
+                0.38764423103907397,
+                0.8365526824644587
+              ],
+              "baseline": 0.6265064909749942,
+              "lift": 0.01635065188214868,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 8,
+              "mature": 8,
+              "tp": 6,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.40927543031016883,
+                0.9285207872478909
+              ],
+              "baseline": 0.6249331896551724,
+              "lift": 0.12506681034482758,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.34893448275862066,
+              "lift": 0.6510655172413793,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 5,
+              "mature": 5,
+              "tp": 3,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.2307242812760128,
+                0.882379225767352
+              ],
+              "baseline": 0.5668190804597701,
+              "lift": 0.033180919540229836,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5029908045977012,
+              "lift": 0.4970091954022988,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 5,
+              "mature": 5,
+              "tp": 4,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.37553462976252533,
+                0.9637758913675698
+              ],
+              "baseline": 0.5882935632183907,
+              "lift": 0.2117064367816094,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 20,
+              "mature": 20,
+              "tp": 14,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.7,
+              "ci": [
+                0.4810271816464765,
+                0.8545227551323956
+              ],
+              "baseline": 0.681507183908046,
+              "lift": 0.018492816091953967,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.566648275862069,
+              "lift": -0.566648275862069,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 11,
+              "mature": 11,
+              "tp": 10,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.9090909090909091,
+              "ci": [
+                0.6226415635484043,
+                0.9837678271141151
+              ],
+              "baseline": 0.6750166144200628,
+              "lift": 0.23407429467084628,
+              "passed": false
+            },
+            {
+              "symbol": "QBTS",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6238011494252873,
+              "lift": -0.6238011494252873,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.5084620689655172,
+              "lift": 0.15820459770114947,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.49812988505747124,
+              "lift": 0.5018701149425288,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 13,
+              "mature": 13,
+              "tp": 10,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.7692307692307693,
+              "ci": [
+                0.49743624053272495,
+                0.9182047128150143
+              ],
+              "baseline": 0.7269840848806365,
+              "lift": 0.04224668435013279,
+              "passed": true
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5938758620689656,
+              "lift": 0.4061241379310344,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.503250156739812,
+              "lift": 0.496749843260188,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.552967816091954,
+              "lift": -0.552967816091954,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5613241379310345,
+              "lift": 0.43867586206896547,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5877795566502463,
+              "lift": 0.4122204433497537,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.8,
+        "metrics": {
+          "n": 112,
+          "mature": 112,
+          "tp": 71,
+          "fp": 41,
+          "pending": 0,
+          "precision": 0.6339285714285714,
+          "conservative_precision": 0.6339285714285714,
+          "baseline": 0.5794650165669716,
+          "lift": 0.05446355486159982,
+          "ci": [
+            0.5416508182333701,
+            0.7173238209451269
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1328,
+          "coverage": 0.07777777777777778,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.7033005172413793,
+              "lift": 0.14669948275862066,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.6319850574712643,
+              "lift": 0.11801494252873568,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7871827011494251,
+              "lift": 0.1128172988505749,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 1,
+              "fp": 19,
+              "pending": 0,
+              "precision": 0.05,
+              "ci": [
+                0.008881448800795402,
+                0.23613119344674205
+              ],
+              "baseline": 0.11500783699059558,
+              "lift": -0.06500783699059558,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5902195402298851,
+              "lift": 0.4097804597701149,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 7,
+              "mature": 7,
+              "tp": 5,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7142857142857143,
+              "ci": [
+                0.35893445183261935,
+                0.9177810759959433
+              ],
+              "baseline": 0.623484564860427,
+              "lift": 0.09080114942528728,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6276643678160919,
+              "lift": -0.6276643678160919,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.34893448275862066,
+              "lift": 0.6510655172413793,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.5608260536398467,
+              "lift": 0.10584061302681991,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5029908045977012,
+              "lift": 0.4970091954022988,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6027609195402299,
+              "lift": -0.6027609195402299,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 19,
+              "mature": 19,
+              "tp": 13,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.6842105263157895,
+              "ci": [
+                0.46010407675327475,
+                0.8463562091220773
+              ],
+              "baseline": 0.6819127646702965,
+              "lift": 0.0022977616454930017,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.6715028735632184,
+              "lift": 0.07849712643678164,
+              "passed": false
+            },
+            {
+              "symbol": "QBTS",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6238011494252873,
+              "lift": -0.6238011494252873,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5175626436781608,
+              "lift": -0.01756264367816085,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.7235528735632184,
+              "lift": -0.2235528735632184,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5891598746081504,
+              "lift": 0.41084012539184955,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5032626959247649,
+              "lift": 0.4967373040752351,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.552967816091954,
+              "lift": -0.552967816091954,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5613241379310345,
+              "lift": 0.43867586206896547,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5877795566502463,
+              "lift": 0.4122204433497537,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.85,
+        "metrics": {
+          "n": 85,
+          "mature": 85,
+          "tp": 54,
+          "fp": 31,
+          "pending": 0,
+          "precision": 0.6352941176470588,
+          "conservative_precision": 0.6352941176470588,
+          "baseline": 0.5620376052615403,
+          "lift": 0.07325651238551845,
+          "ci": [
+            0.5291813302163223,
+            0.7297068094575224
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1355,
+          "coverage": 0.059027777777777776,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 20,
+              "mature": 20,
+              "tp": 17,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.85,
+              "ci": [
+                0.6395811352592431,
+                0.9476312541037835
+              ],
+              "baseline": 0.7037008620689654,
+              "lift": 0.14629913793103455,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.6362091954022988,
+              "lift": -0.1362091954022988,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7871827011494251,
+              "lift": 0.1128172988505749,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 1,
+              "fp": 19,
+              "pending": 0,
+              "precision": 0.05,
+              "ci": [
+                0.008881448800795402,
+                0.23613119344674205
+              ],
+              "baseline": 0.11500783699059558,
+              "lift": -0.06500783699059558,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.640467816091954,
+              "lift": -0.640467816091954,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.34893448275862066,
+              "lift": 0.6510655172413793,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5529908045977012,
+              "lift": -0.5529908045977012,
+              "passed": false
+            },
+            {
+              "symbol": "IONQ",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5562195402298851,
+              "lift": 0.44378045977011493,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 14,
+              "mature": 14,
+              "tp": 11,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.7857142857142857,
+              "ci": [
+                0.524107694133997,
+                0.9242861328730683
+              ],
+              "baseline": 0.6787493431855501,
+              "lift": 0.10696494252873556,
+              "passed": true
+            },
+            {
+              "symbol": "NBIS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6821344827586207,
+              "lift": 0.31786551724137935,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5175626436781608,
+              "lift": -0.01756264367816085,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5032626959247649,
+              "lift": 0.4967373040752351,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5613241379310345,
+              "lift": 0.43867586206896547,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.9,
+        "metrics": {
+          "n": 62,
+          "mature": 62,
+          "tp": 38,
+          "fp": 24,
+          "pending": 0,
+          "precision": 0.6129032258064516,
+          "conservative_precision": 0.6129032258064516,
+          "baseline": 0.5289331621541883,
+          "lift": 0.08397006365226334,
+          "ci": [
+            0.48847843539018354,
+            0.7241535483288614
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1378,
+          "coverage": 0.043055555555555555,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 16,
+              "mature": 16,
+              "tp": 14,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.875,
+              "ci": [
+                0.639771727342413,
+                0.9650225122567595
+              ],
+              "baseline": 0.7046253881437177,
+              "lift": 0.17037461185628233,
+              "passed": true
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 18,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.6989663547715128,
+                0.9721335187862319
+              ],
+              "baseline": 0.7871827011494251,
+              "lift": 0.1128172988505749,
+              "passed": true
+            },
+            {
+              "symbol": "BKNG",
+              "n": 20,
+              "mature": 20,
+              "tp": 1,
+              "fp": 19,
+              "pending": 0,
+              "precision": 0.05,
+              "ci": [
+                0.008881448800795402,
+                0.23613119344674205
+              ],
+              "baseline": 0.11500783699059558,
+              "lift": -0.06500783699059558,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.34893448275862066,
+              "lift": 0.6510655172413793,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.67991091954023,
+              "lift": -0.17991091954022997,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6821344827586207,
+              "lift": 0.31786551724137935,
+              "passed": false
+            },
+            {
+              "symbol": "RMBS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5238241379310344,
+              "lift": 0.47617586206896556,
+              "passed": false
+            },
+            {
+              "symbol": "TXG",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5613241379310345,
+              "lift": 0.43867586206896547,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      }
+    ]
+  },
+  "registered": [
+    "AAOI",
+    "AAPL",
+    "ABNB",
+    "ADBE",
+    "ADI",
+    "ADP",
+    "ADSK",
+    "AEP",
+    "ALAB",
+    "ALNY",
+    "AMAT",
+    "AMD",
+    "AMGN",
+    "AMZN",
+    "ANET",
+    "APP",
+    "ARM",
+    "ASML",
+    "AVGO",
+    "AXON",
+    "AXTI",
+    "BKNG",
+    "BKR",
+    "CCEP",
+    "CDNS",
+    "CEG",
+    "CIEN",
+    "CMCSA",
+    "COHR",
+    "COST",
+    "CPRT",
+    "CRDO",
+    "CRWD",
+    "CRWV",
+    "CSCO",
+    "CSX",
+    "CTAS",
+    "DASH",
+    "DDOG",
+    "DXCM",
+    "EXC",
+    "FANG",
+    "FAST",
+    "FER",
+    "FN",
+    "FTNT",
+    "GEHC",
+    "GILD",
+    "GOOG",
+    "GOOGL",
+    "HON",
+    "IDXX",
+    "IGV",
+    "INTC",
+    "INTU",
+    "IONQ",
+    "ISRG",
+    "KDP",
+    "KLAC",
+    "LIN",
+    "LITE",
+    "LRCX",
+    "MAR",
+    "MRVL",
+    "MU",
+    "NBIS",
+    "NOK",
+    "NVDA",
+    "ORCL",
+    "PLTR",
+    "QBTS",
+    "QCOM",
+    "QQQ",
+    "RGTI",
+    "RMBS",
+    "SDGR",
+    "SMTC",
+    "SNDK",
+    "SNPS",
+    "SOXX",
+    "STX",
+    "TER",
+    "TWST",
+    "TXG",
+    "VRT",
+    "WDC"
+  ],
+  "train_first": "2025-05-02",
+  "train_end": "2026-02-18",
+  "train_days": 200,
+  "calibration_start": "2026-03-05",
+  "calibration_end": "2026-04-01",
+  "selection_start": "2026-04-17",
+  "selection_end": "2026-05-14",
+  "train_rows": 755588,
+  "train_max_label_end": "2026-02-24 16:00:00",
+  "calibration_max_label_end": "2026-04-08 16:00:00",
+  "selection_max_label_end": "2026-05-20 16:00:00",
+  "purge_sessions": 10,
+  "features": [
+    "h_span_3",
+    "h_span_20",
+    "h_base_20",
+    "h_return_30",
+    "h_rv_30",
+    "h_previous_ret",
+    "h_previous_mfe",
+    "pre_gap",
+    "pre_range",
+    "pre_rvol",
+    "night_ret",
+    "night_missing",
+    "pre_trade_age",
+    "w30_ret",
+    "w30_eff",
+    "w30_signed_volume",
+    "w60_ret",
+    "slide30_min",
+    "slide30_max",
+    "is_pre",
+    "rth_missing",
+    "remaining",
+    "elapsed",
+    "pre_elapsed",
+    "rth_ret",
+    "rth_gap",
+    "rth_range",
+    "rth_rvol",
+    "i15_rv",
+    "i60_rv",
+    "symbol"
+  ],
+  "model_sha256": "eadf56e9cdc7ad8aa202a3815ee349caba316d329bde0335accb81fbeec15f4c",
+  "protocol_sha256": "c90a6b53c86687c6f87db7980e08ddcb60e4ec29c6a92997f84e001852108918",
+  "outer": {
+    "n": 0,
+    "mature": 0,
+    "tp": 0,
+    "fp": 0,
+    "pending": 0,
+    "precision": null,
+    "conservative_precision": null,
+    "baseline": null,
+    "lift": null,
+    "ci": [
+      null,
+      null
+    ],
+    "date_count": 0,
+    "ticks": 2898,
+    "abstentions": 2898,
+    "coverage": 0.0,
+    "stocks": [],
+    "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+  },
+  "probability_evaluation": {
+    "rows": 234186,
+    "stock_days": 1697,
+    "brier": 0.21262371131084187,
+    "baseline_brier": 0.2162951019706767,
+    "predicted": 0.3957824076601188,
+    "observed": 0.4175399041787297,
+    "bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "stock_day_weight": 328.39130434782606,
+        "predicted": 0.06300322296919608,
+        "observed": 0.16935875369610312
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "stock_day_weight": 301.34782608695645,
+        "predicted": 0.14298574460691943,
+        "observed": 0.2437118260953206
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "stock_day_weight": 194.66666666666669,
+        "predicted": 0.24296118367490802,
+        "observed": 0.2713668850506254
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "stock_day_weight": 135.92753623188406,
+        "predicted": 0.3510008140639022,
+        "observed": 0.46273589934961074
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "stock_day_weight": 127.05072463768116,
+        "predicted": 0.4478651440379771,
+        "observed": 0.46717618205669303
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "stock_day_weight": 95.81884057971018,
+        "predicted": 0.549736419343933,
+        "observed": 0.6377524011192617
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "stock_day_weight": 121.27536231884059,
+        "predicted": 0.6504516426889235,
+        "observed": 0.6347992351816443
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "stock_day_weight": 163.62318840579712,
+        "predicted": 0.7509345608096203,
+        "observed": 0.6562444641275464
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "stock_day_weight": 152.54347826086956,
+        "predicted": 0.8459729362995507,
+        "observed": 0.6977815780723007
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "stock_day_weight": 76.35507246376812,
+        "predicted": 0.9492369343769815,
+        "observed": 0.6877669165796716
+      }
+    ]
+  },
+  "selection_probability": {
+    "rows": 228390,
+    "stock_days": 1655,
+    "brier": 0.23358667938162864,
+    "baseline_brier": 0.21577708901184142,
+    "predicted": 0.33147834487720623,
+    "observed": 0.4491834143351285,
+    "bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "stock_day_weight": 352.1304347826088,
+        "predicted": 0.060829732625804774,
+        "observed": 0.17648269333662586
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "stock_day_weight": 371.2028985507247,
+        "predicted": 0.14682098327007995,
+        "observed": 0.3142740014836216
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "stock_day_weight": 164.2246376811594,
+        "predicted": 0.24457653095863127,
+        "observed": 0.45241141949433006
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "stock_day_weight": 158.4202898550725,
+        "predicted": 0.35076646188866745,
+        "observed": 0.5344890677888573
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "stock_day_weight": 160.50724637681162,
+        "predicted": 0.4478914567762025,
+        "observed": 0.6233860045146725
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "stock_day_weight": 146.28260869565221,
+        "predicted": 0.5518628215153359,
+        "observed": 0.6518551543072273
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "stock_day_weight": 149.4782608695652,
+        "predicted": 0.6461717808033751,
+        "observed": 0.7218828776420401
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "stock_day_weight": 68.18115942028984,
+        "predicted": 0.7431078710070345,
+        "observed": 0.7296205760442132
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "stock_day_weight": 34.33333333333333,
+        "predicted": 0.8437123019144049,
+        "observed": 0.7182355424229633
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "stock_day_weight": 50.23913043478262,
+        "predicted": 0.9574701102924448,
+        "observed": 0.5553151593826626
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "command": "python3 analysis/preopen_ranked_policy_v5/recommend.py --target all --top 3 --offline",
+  "targets": [
+    {
+      "target": "intraday3pct",
+      "models": 3,
+      "option_counts": [
+        3,
+        3,
+        3
+      ],
+      "current_probability": false,
+      "admitted": false,
+      "window_end": "2026-10-02T16:00:00-04:00",
+      "algorithm_labels": [
+        "LogisticRegression",
+        "LightGBM",
+        "ExtraTrees"
+      ]
+    },
+    {
+      "target": "5d5pct",
+      "models": 3,
+      "option_counts": [
+        3,
+        3,
+        3
+      ],
+      "current_probability": false,
+      "admitted": false,
+      "window_end": "2026-10-08T16:00:00-04:00",
+      "algorithm_labels": [
+        "LogisticRegression",
+        "LightGBM",
+        "ExtraTrees"
+      ]
+    },
+    {
+      "target": "10d10pct",
+      "models": 3,
+      "option_counts": [
+        3,
+        3,
+        3
+      ],
+      "current_probability": false,
+      "admitted": false,
+      "window_end": "2026-10-15T16:00:00-04:00",
+      "algorithm_labels": [
+        "LogisticRegression",
+        "LightGBM",
+        "ExtraTrees"
+      ]
+    }
+  ],
+  "issued_signals": false,
+  "orders_sent": false
+}

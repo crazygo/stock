@@ -1,0 +1,964 @@
+{
+  "route": "recovery_forest",
+  "name": "回撤恢复与量价效率",
+  "algorithm": "ExtraTrees",
+  "target_id": "10d10pct",
+  "month": "2026-09",
+  "thresholds": {
+    "pre": 0.6,
+    "regular": 0.65
+  },
+  "choices": {
+    "pre": [
+      {
+        "threshold": 0.6,
+        "metrics": {
+          "n": 20,
+          "mature": 20,
+          "tp": 19,
+          "fp": 1,
+          "pending": 0,
+          "precision": 0.95,
+          "conservative_precision": 0.95,
+          "baseline": 0.7997142928088994,
+          "lift": 0.15028570719110057,
+          "ci": [
+            0.763868806553258,
+            0.9911185511992047
+          ],
+          "date_count": 17,
+          "ticks": 1320,
+          "abstentions": 1300,
+          "coverage": 0.015151515151515152,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 3,
+              "mature": 3,
+              "tp": 3,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.4385029682449546,
+                1.0
+              ],
+              "baseline": 0.7355396636207124,
+              "lift": 0.26446033637928756,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 17,
+              "mature": 17,
+              "tp": 16,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.9411764705882353,
+              "ci": [
+                0.7301796936242461,
+                0.9895395990150025
+              ],
+              "baseline": 0.8110392273715208,
+              "lift": 0.1301372432167145,
+              "passed": true
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": true
+      },
+      {
+        "threshold": 0.65,
+        "metrics": {
+          "n": 6,
+          "mature": 6,
+          "tp": 5,
+          "fp": 1,
+          "pending": 0,
+          "precision": 0.8333333333333334,
+          "conservative_precision": 0.8333333333333334,
+          "baseline": 0.811317540723083,
+          "lift": 0.02201579261025033,
+          "ci": [
+            0.43649717781352987,
+            0.9699466302516935
+          ],
+          "date_count": 6,
+          "ticks": 1320,
+          "abstentions": 1314,
+          "coverage": 0.004545454545454545,
+          "stocks": [
+            {
+              "symbol": "AXTI",
+              "n": 6,
+              "mature": 6,
+              "tp": 5,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8333333333333334,
+              "ci": [
+                0.43649717781352987,
+                0.9699466302516935
+              ],
+              "baseline": 0.811317540723083,
+              "lift": 0.02201579261025033,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.7,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1320,
+          "abstentions": 1320,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1320,
+          "abstentions": 1320,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.8,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1320,
+          "abstentions": 1320,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.85,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1320,
+          "abstentions": 1320,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.9,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1320,
+          "abstentions": 1320,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      }
+    ],
+    "regular": [
+      {
+        "threshold": 0.6,
+        "metrics": {
+          "n": 49,
+          "mature": 49,
+          "tp": 44,
+          "fp": 5,
+          "pending": 0,
+          "precision": 0.8979591836734694,
+          "conservative_precision": 0.8979591836734694,
+          "baseline": 0.7386021219856612,
+          "lift": 0.15935706168780817,
+          "ci": [
+            0.7824363845080409,
+            0.9556204532552373
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1391,
+          "coverage": 0.034027777777777775,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 16,
+              "mature": 16,
+              "tp": 15,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.9375,
+              "ci": [
+                0.7167126242970107,
+                0.9888806552353576
+              ],
+              "baseline": 0.727641413388955,
+              "lift": 0.20985858661104495,
+              "passed": true
+            },
+            {
+              "symbol": "ALAB",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.6076059840441144,
+              "lift": 0.39239401595588563,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 20,
+              "mature": 20,
+              "tp": 20,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.8388748419471806,
+                1.0
+              ],
+              "baseline": 0.8071621473976958,
+              "lift": 0.19283785260230424,
+              "passed": true
+            },
+            {
+              "symbol": "COHR",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.582155343663091,
+              "lift": -0.582155343663091,
+              "passed": false
+            },
+            {
+              "symbol": "LIFE",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.5961024011083605,
+              "lift": 0.40389759889163945,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 4,
+              "mature": 4,
+              "tp": 1,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.25,
+              "ci": [
+                0.04558726080970055,
+                0.6993581574175981
+              ],
+              "baseline": 0.5875563667063965,
+              "lift": -0.33755636670639655,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 4,
+              "mature": 4,
+              "tp": 4,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.5101091635454027,
+                1.0
+              ],
+              "baseline": 0.7665502085816449,
+              "lift": 0.2334497914183551,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": true
+      },
+      {
+        "threshold": 0.65,
+        "metrics": {
+          "n": 24,
+          "mature": 24,
+          "tp": 24,
+          "fp": 0,
+          "pending": 0,
+          "precision": 1.0,
+          "conservative_precision": 1.0,
+          "baseline": 0.7869117362565058,
+          "lift": 0.2130882637434942,
+          "ci": [
+            0.8620237953250198,
+            1.0
+          ],
+          "date_count": 17,
+          "ticks": 1440,
+          "abstentions": 1416,
+          "coverage": 0.016666666666666666,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 6,
+              "mature": 6,
+              "tp": 6,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.6096657120978346,
+                1.0
+              ],
+              "baseline": 0.7343194609985432,
+              "lift": 0.26568053900145683,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 17,
+              "mature": 17,
+              "tp": 17,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.8156818649911483,
+                1.0
+              ],
+              "baseline": 0.8064838898731684,
+              "lift": 0.19351611012683156,
+              "passed": true
+            },
+            {
+              "symbol": "SNDK",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.7697387763210171,
+              "lift": 0.23026122367898294,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": true
+      },
+      {
+        "threshold": 0.7,
+        "metrics": {
+          "n": 10,
+          "mature": 10,
+          "tp": 9,
+          "fp": 1,
+          "pending": 0,
+          "precision": 0.9,
+          "conservative_precision": 0.9,
+          "baseline": 0.8048603496225665,
+          "lift": 0.09513965037743355,
+          "ci": [
+            0.5958499732047615,
+            0.9821237869049271
+          ],
+          "date_count": 10,
+          "ticks": 1440,
+          "abstentions": 1430,
+          "coverage": 0.006944444444444444,
+          "stocks": [
+            {
+              "symbol": "AXTI",
+              "n": 10,
+              "mature": 10,
+              "tp": 9,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.9,
+              "ci": [
+                0.5958499732047615,
+                0.9821237869049271
+              ],
+              "baseline": 0.8048603496225665,
+              "lift": 0.09513965037743355,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": true
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "n": 2,
+          "mature": 2,
+          "tp": 2,
+          "fp": 0,
+          "pending": 0,
+          "precision": 1.0,
+          "conservative_precision": 1.0,
+          "baseline": 0.7967565554231228,
+          "lift": 0.20324344457687715,
+          "ci": [
+            0.34238022750665303,
+            1.0
+          ],
+          "date_count": 2,
+          "ticks": 1440,
+          "abstentions": 1438,
+          "coverage": 0.001388888888888889,
+          "stocks": [
+            {
+              "symbol": "AXTI",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.7967565554231228,
+              "lift": 0.20324344457687715,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.8,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1440,
+          "abstentions": 1440,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.85,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1440,
+          "abstentions": 1440,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.9,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1440,
+          "abstentions": 1440,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      }
+    ]
+  },
+  "registered": [
+    "AAOI",
+    "AAPL",
+    "ABNB",
+    "ADBE",
+    "ADI",
+    "ADP",
+    "ADSK",
+    "AEP",
+    "ALAB",
+    "ALNY",
+    "AMAT",
+    "AMD",
+    "AMGN",
+    "AMZN",
+    "ANET",
+    "APP",
+    "ARM",
+    "ASML",
+    "AVGO",
+    "AXON",
+    "AXTI",
+    "BKNG",
+    "BKR",
+    "CCEP",
+    "CDNS",
+    "CEG",
+    "CIEN",
+    "CMCSA",
+    "COHR",
+    "COST",
+    "CPRT",
+    "CRDO",
+    "CRWD",
+    "CRWV",
+    "CSCO",
+    "CSX",
+    "CTAS",
+    "DASH",
+    "DDOG",
+    "DXCM",
+    "EXC",
+    "FANG",
+    "FAST",
+    "FER",
+    "FN",
+    "FTNT",
+    "GEHC",
+    "GILD",
+    "GOOG",
+    "GOOGL",
+    "HON",
+    "IDXX",
+    "IGV",
+    "INTC",
+    "INTU",
+    "IONQ",
+    "ISRG",
+    "KDP",
+    "KLAC",
+    "LIFE",
+    "LIN",
+    "LITE",
+    "LRCX",
+    "MAR",
+    "MCHP",
+    "MDLZ",
+    "MELI",
+    "META",
+    "MNST",
+    "MPWR",
+    "MRVL",
+    "MSFT",
+    "MSTR",
+    "MU",
+    "NBIS",
+    "NFLX",
+    "NOK",
+    "NVDA",
+    "NXPI",
+    "ODFL",
+    "ORCL",
+    "ORLY",
+    "PANW",
+    "PAYX",
+    "PCAR",
+    "PDD",
+    "PEP",
+    "PLTR",
+    "PYPL",
+    "QBTS",
+    "QCOM",
+    "QQQ",
+    "REGN",
+    "RGTI",
+    "RKLB",
+    "RMBS",
+    "ROP",
+    "ROST",
+    "SBUX",
+    "SDGR",
+    "SHOP",
+    "SMTC",
+    "SNDK",
+    "SNPS",
+    "SOXX",
+    "STX",
+    "TER",
+    "TMUS",
+    "TRI",
+    "TSLA",
+    "TTWO",
+    "TWST",
+    "TXG",
+    "TXN",
+    "VRT",
+    "VRTX",
+    "WBD",
+    "WDAY",
+    "WDC",
+    "WMT",
+    "XEL"
+  ],
+  "train_first": "2025-08-05",
+  "train_end": "2026-05-20",
+  "train_days": 200,
+  "calibration_start": "2026-06-05",
+  "calibration_end": "2026-07-06",
+  "selection_start": "2026-07-21",
+  "selection_end": "2026-08-17",
+  "train_rows": 861778,
+  "train_max_label_end": "2026-06-03 16:00:00",
+  "calibration_max_label_end": "2026-07-17 16:00:00",
+  "selection_max_label_end": "2026-08-28 16:00:00",
+  "purge_sessions": 10,
+  "features": [
+    "h_span_3",
+    "h_span_20",
+    "h_base_20",
+    "h_return_30",
+    "h_rv_30",
+    "h_previous_ret",
+    "h_previous_mfe",
+    "pre_gap",
+    "pre_range",
+    "pre_rvol",
+    "night_ret",
+    "night_missing",
+    "pre_trade_age",
+    "w30_ret",
+    "w30_eff",
+    "w30_signed_volume",
+    "w60_ret",
+    "slide30_min",
+    "slide30_max",
+    "is_pre",
+    "rth_missing",
+    "remaining",
+    "elapsed",
+    "pre_elapsed",
+    "rth_ret",
+    "rth_gap",
+    "rth_range",
+    "rth_fade",
+    "rth_recovery",
+    "rth_position",
+    "rth_rvol",
+    "i5_ret",
+    "i5_rv",
+    "i5_eff",
+    "i5_signedvol",
+    "i15_ret",
+    "i15_rv",
+    "i15_eff",
+    "i15_signedvol",
+    "i30_ret",
+    "i30_rv",
+    "i30_eff",
+    "i30_signedvol",
+    "i60_ret",
+    "i60_rv",
+    "i60_eff",
+    "i60_signedvol",
+    "bar_vwap_gap",
+    "stock_id"
+  ],
+  "model_sha256": "91e671b1a13b49506b4c80f7a1d1c073898a99b706417b895fa2fbcdfa4e81a1",
+  "protocol_sha256": "c90a6b53c86687c6f87db7980e08ddcb60e4ec29c6a92997f84e001852108918",
+  "outer": {
+    "n": 1,
+    "mature": 1,
+    "tp": 1,
+    "fp": 0,
+    "pending": 0,
+    "precision": 1.0,
+    "conservative_precision": 1.0,
+    "baseline": 0.8073698847834724,
+    "lift": 0.19263011521652762,
+    "ci": [
+      0.20654931437723745,
+      1.0
+    ],
+    "date_count": 1,
+    "ticks": 2898,
+    "abstentions": 2897,
+    "coverage": 0.0003450655624568668,
+    "stocks": [
+      {
+        "symbol": "AXTI",
+        "n": 1,
+        "mature": 1,
+        "tp": 1,
+        "fp": 0,
+        "pending": 0,
+        "precision": 1.0,
+        "ci": [
+          0.20654931437723745,
+          1.0
+        ],
+        "baseline": 0.8073698847834724,
+        "lift": 0.19263011521652762,
+        "passed": false
+      }
+    ],
+    "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+  },
+  "probability_evaluation": {
+    "rows": 179676,
+    "stock_days": 1302,
+    "brier": 0.16577620676501317,
+    "baseline_brier": 0.1416100675421898,
+    "predicted": 0.23548523308475103,
+    "observed": 0.2978194082682161,
+    "bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "stock_day_weight": 17.65942028985507,
+        "predicted": 0.09535174224985217,
+        "observed": 0.10874025441116127
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "stock_day_weight": 643.0652173913045,
+        "predicted": 0.1447647905922928,
+        "observed": 0.06869274196274634
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "stock_day_weight": 276.3478260869565,
+        "predicted": 0.2448034041961979,
+        "observed": 0.3173903922802601
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "stock_day_weight": 206.26086956521743,
+        "predicted": 0.35003231621054626,
+        "observed": 0.684057054525014
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "stock_day_weight": 138.81884057971016,
+        "predicted": 0.44221066100117173,
+        "observed": 0.7118024742913817
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "stock_day_weight": 19.18840579710145,
+        "predicted": 0.5307348187669588,
+        "observed": 0.6978851963746223
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "stock_day_weight": 0.6594202898550726,
+        "predicted": 0.6137673450927755,
+        "observed": 1.0
+      }
+    ]
+  },
+  "selection_probability": {
+    "rows": 305532,
+    "stock_days": 2214,
+    "brier": 0.2017336313312672,
+    "baseline_brier": 0.20465404684848912,
+    "predicted": 0.27740209569733415,
+    "observed": 0.3679221816372753,
+    "bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "stock_day_weight": 7.0942028985507255,
+        "predicted": 0.09784749988468121,
+        "observed": 0.0
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "stock_day_weight": 881.2826086956525,
+        "predicted": 0.15336583734166365,
+        "observed": 0.1672792455002179
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "stock_day_weight": 511.13768115942025,
+        "predicted": 0.24622572924129862,
+        "observed": 0.3490792066574989
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "stock_day_weight": 285.7826086956522,
+        "predicted": 0.3466398780216656,
+        "observed": 0.4719813377960343
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "stock_day_weight": 385.28260869565224,
+        "predicted": 0.45230714608360884,
+        "observed": 0.6181797664052362
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "stock_day_weight": 121.01449275362322,
+        "predicted": 0.5340421573254839,
+        "observed": 0.7819760479041916
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "stock_day_weight": 19.326086956521742,
+        "predicted": 0.6354056218230217,
+        "observed": 0.930633670791151
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "stock_day_weight": 3.079710144927537,
+        "predicted": 0.7220567446135553,
+        "observed": 0.9929411764705881
+      }
+    ]
+  }
+}

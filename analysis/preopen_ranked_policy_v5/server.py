@@ -199,13 +199,31 @@ class Handler(BaseHTTPRequestHandler):
   p=urlparse(self.path);q={k:v[0] for k,v in parse_qs(p.query).items()}
   try:
    if p.path in ['/','/index.html','/hazard_linear.html','/relative_flow.html','/recovery_forest.html']:return self.send((OUT/'index.html').read_text(),mime='text/html')
+   if p.path in ['/horizon_v1/REPORT.md','/horizon_v1/weekly.csv']:return self.send((OUT/p.path[1:]).read_text(),mime='text/plain')
    if p.path=='/api/options':
     from recommend import run
-    options=run(argparse.Namespace(data_dir=None,offline=True,futu_host=None,futu_port=11111,as_of=None,top=3,save_features=None,output=str(OUT/'recommendation_latest.json'),record=None));return self.send(options)
+    target=q.get('target','intraday3pct')
+    if target not in ['intraday3pct','5d5pct','10d10pct']:raise ValueError('Unknown target')
+    options=run(argparse.Namespace(target=target,data_dir=None,offline=True,futu_host=None,futu_port=11111,as_of=None,top=3,save_features=None,output=str(OUT/'recommendation_latest.json') if target=='intraday3pct' else None,record=None));return self.send(options)
+   if p.path=='/api/horizons':return self.send(json.loads((OUT/'horizon_v1/results.json').read_text()) if (OUT/'horizon_v1/results.json').exists() else None)
    if p.path=='/api/status':return self.send(dict(job=JOB,schedule=SCHEDULE,latest=LAST or (json.loads((OUT/'latest.json').read_text()) if (OUT/'latest.json').exists() else None),weekly_results=json.loads((OUT/'weekly_v1/results.json').read_text()) if (OUT/'weekly_v1/results.json').exists() else None,recommendation=json.loads((OUT/'recommendation_latest.json' if (OUT/'recommendation_latest.json').exists() else OUT/'reference_recommendation.json').read_text()) if (OUT/'reference_recommendation.json').exists() else None,deployment=deployment(),signal_deployment=signal_deployment(),signal_results=json.loads((OUT/'signals_results.json').read_text()),results=json.loads((OUT/'phase_results.json').read_text()),capacity_results=json.loads((OUT/'capacity_results.json').read_text()),shared_phase_results=json.loads((OUT/'results.json').read_text()),coverage=json.loads((OUT/'coverage.json').read_text()),raw_coverage=json.loads((OUT/'raw_coverage_audit.json').read_text()),universe_coverage=json.loads((OUT/'universe_coverage.json').read_text())))
    if p.path=='/api/chart':return self.send(chart(q['symbol'],q.get('start','2026-08-01'),q.get('end','2026-09-30')))
    con=connect()
    try:
+    if p.path in ['/api/horizon-events','/api/horizon-inspect']:
+     target=q.get('target');route=q.get('route')
+     if target not in ['5d5pct','10d10pct'] or route not in ROUTES:raise ValueError('Unknown horizon target/route')
+     run=f'horizon_v1:{target}:{route}:2026-05_09';rows=[dict(r) for r in con.execute('SELECT e.*,l.hit,l.status,l.payload AS label_payload FROM horizon_events e LEFT JOIN horizon_labels l ON l.run_id=e.run_id AND l.day=e.day AND l.symbol=e.symbol WHERE e.run_id=? AND e.day>=? AND e.day<=? ORDER BY e.day,e.minute',(run,q.get('start','2026-05-01'),q.get('end','2026-09-30')))]
+     for row in rows:row.update(json.loads(row.pop('label_payload')))
+     if p.path=='/api/horizon-events':return self.send(rows)
+     event=next((r for r in rows if r['day']==q.get('day') and r['symbol']==q.get('symbol')),None)
+     if event is None:raise ValueError('Unknown horizon event')
+     dest=OUT/'horizon_v1'/target;meta=json.loads((dest/f"{route}_{event['day'][:7]}_meta.json").read_text());cols=list(dict.fromkeys(['symbol','day','minute']+meta['features']));features=pd.read_parquet(OUT/'weekly_v1/panel.parquet',columns=cols,filters=[('symbol','==',event['symbol']),('day','==',event['day']),('minute','==',event['minute'])]);frame=pd.read_parquet(dest/f"{route}_{event['day'][:7]}.parquet",filters=[('day','==',event['day']),('minute','==',event['minute'])]);frame['symbol']=frame.symbol.astype(str)
+     issued={r[0] for r in con.execute('SELECT symbol FROM horizon_events WHERE run_id=? AND day=? AND minute<?',(run,event['day'],event['minute']))};frame=frame.sort_values(['score','symbol'],ascending=[False,True]);frame['eligible']=(frame.score>=event['threshold'])&(frame.ex_action==0)&~frame.symbol.isin(issued);candidates=frame[['symbol','score','eligible']].head(20).to_dict('records');first_touch=None
+     if event['hit']==1:
+      raw=cached_raw(event['symbol'],full=True);start=pd.Timestamp(event['day'])+pd.Timedelta(minutes=event['minute']+5);finish=pd.Timestamp(event['label_end']);mask=(raw.start>=start)&(raw.end<=finish)&(raw.day<= '2026-09-30')&(raw.minute>=570)&(raw.minute<raw.day.map(lambda d:570+SESSIONS[d]['duration_minutes'] if d in SESSIONS else 0));hits=raw[mask&(raw.high>=event['target'])]
+      if len(hits):first_touch=str(hits.end.iloc[0])
+     return self.send(dict(event=event,algorithm=ALGORITHMS[route],features=features.iloc[0].to_dict(),candidates=candidates,first_touch=first_touch))
     if p.path=='/api/runs':return self.send([dict(r) for r in con.execute('SELECT * FROM runs ORDER BY id')])
     if p.path=='/api/signals':
      if q.get('route') not in ROUTES:raise ValueError('Unknown signal route')

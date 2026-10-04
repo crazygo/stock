@@ -1,0 +1,2434 @@
+{
+  "route": "hazard_linear",
+  "name": "剩余时间与单股基础风险",
+  "algorithm": "LogisticRegression",
+  "target_id": "5d5pct",
+  "month": "2026-10",
+  "thresholds": {
+    "pre": null,
+    "regular": null
+  },
+  "choices": {
+    "pre": [
+      {
+        "threshold": 0.6,
+        "metrics": {
+          "n": 224,
+          "mature": 220,
+          "tp": 112,
+          "fp": 108,
+          "pending": 4,
+          "precision": 0.509090909090909,
+          "conservative_precision": 0.5,
+          "baseline": 0.6943519551010516,
+          "lift": -0.1852610460101426,
+          "ci": [
+            0.44344455188203774,
+            0.5744252387325961
+          ],
+          "date_count": 20,
+          "ticks": 1320,
+          "abstentions": 1096,
+          "coverage": 0.1696969696969697,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 10,
+              "mature": 10,
+              "tp": 5,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.236593090512564,
+                0.7634069094874361
+              ],
+              "baseline": 0.7592400869731293,
+              "lift": -0.2592400869731293,
+              "passed": false
+            },
+            {
+              "symbol": "ALAB",
+              "n": 10,
+              "mature": 10,
+              "tp": 5,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.236593090512564,
+                0.7634069094874361
+              ],
+              "baseline": 0.6866989510335404,
+              "lift": -0.1866989510335404,
+              "passed": false
+            },
+            {
+              "symbol": "ARM",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.5471064355708346,
+              "lift": -0.047106435570834604,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 19,
+              "mature": 19,
+              "tp": 10,
+              "fp": 9,
+              "pending": 0,
+              "precision": 0.5263157894736842,
+              "ci": [
+                0.3170780924511316,
+                0.7267019483882042
+              ],
+              "baseline": 0.8258362020238574,
+              "lift": -0.29952041255017325,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 17,
+              "mature": 17,
+              "tp": 9,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.5294117647058824,
+              "ci": [
+                0.30963235060004424,
+                0.7383489355759056
+              ],
+              "baseline": 0.6778567332878764,
+              "lift": -0.14844496858199407,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 18,
+              "mature": 18,
+              "tp": 11,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.6111111111111112,
+              "ci": [
+                0.3861904160223791,
+                0.7969475342783638
+              ],
+              "baseline": 0.6906678040264249,
+              "lift": -0.07955669291531375,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 6,
+              "mature": 6,
+              "tp": 2,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.09677141110578041,
+                0.700006684861608
+              ],
+              "baseline": 0.6199606637577681,
+              "lift": -0.28662733042443483,
+              "passed": false
+            },
+            {
+              "symbol": "CRWV",
+              "n": 3,
+              "mature": 3,
+              "tp": 0,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                5.551115123125783e-17,
+                0.5614970317550454
+              ],
+              "baseline": 0.6478106742866098,
+              "lift": -0.6478106742866098,
+              "passed": false
+            },
+            {
+              "symbol": "DDOG",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.4742154788664111,
+              "lift": -0.4742154788664111,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 4,
+              "mature": 4,
+              "tp": 1,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.25,
+              "ci": [
+                0.04558726080970055,
+                0.6993581574175981
+              ],
+              "baseline": 0.5905873991802194,
+              "lift": -0.3405873991802194,
+              "passed": false
+            },
+            {
+              "symbol": "INTC",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.6074018981297838,
+              "lift": -0.6074018981297838,
+              "passed": false
+            },
+            {
+              "symbol": "LIFE",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.6700008974533403,
+              "lift": 0.07999910254665965,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 16,
+              "mature": 16,
+              "tp": 10,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.625,
+              "ci": [
+                0.38641040545502714,
+                0.8151876744113636
+              ],
+              "baseline": 0.7224024329888199,
+              "lift": -0.0974024329888199,
+              "passed": false
+            },
+            {
+              "symbol": "LRCX",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.5763868354308657,
+              "lift": -0.5763868354308657,
+              "passed": false
+            },
+            {
+              "symbol": "MRVL",
+              "n": 5,
+              "mature": 5,
+              "tp": 4,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8,
+              "ci": [
+                0.37553462976252533,
+                0.9637758913675698
+              ],
+              "baseline": 0.5838357595993455,
+              "lift": 0.21616424040065452,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 7,
+              "mature": 7,
+              "tp": 1,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.14285714285714285,
+              "ci": [
+                0.02567962434474355,
+                0.5131278292743189
+              ],
+              "baseline": 0.6772690493330451,
+              "lift": -0.5344119064759023,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 7,
+              "mature": 7,
+              "tp": 1,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.14285714285714285,
+              "ci": [
+                0.02567962434474355,
+                0.5131278292743189
+              ],
+              "baseline": 0.6717983226610756,
+              "lift": -0.5289411798039327,
+              "passed": false
+            },
+            {
+              "symbol": "SDGR",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.46146572494747823,
+              "lift": 0.5385342750525217,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 14,
+              "mature": 14,
+              "tp": 11,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.7857142857142857,
+              "ci": [
+                0.524107694133997,
+                0.9242861328730683
+              ],
+              "baseline": 0.585479092029072,
+              "lift": 0.2002351936852137,
+              "passed": true
+            },
+            {
+              "symbol": "SNDK",
+              "n": 20,
+              "mature": 20,
+              "tp": 10,
+              "fp": 10,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.2992980081982123,
+                0.7007019918017877
+              ],
+              "baseline": 0.7994577860784227,
+              "lift": -0.29945778607842266,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 19,
+              "mature": 19,
+              "tp": 11,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.5789473684210527,
+              "ci": [
+                0.3627590353425504,
+                0.7685810871754576
+              ],
+              "baseline": 0.68287904180094,
+              "lift": -0.10393167337988729,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 6,
+              "mature": 6,
+              "tp": 1,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.16666666666666666,
+              "ci": [
+                0.030053369748306635,
+                0.5635028221864702
+              ],
+              "baseline": 0.5767874385966715,
+              "lift": -0.41012077193000485,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 12,
+              "mature": 12,
+              "tp": 9,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.46769466506643426,
+                0.9110583316059453
+              ],
+              "baseline": 0.6477647636397471,
+              "lift": 0.10223523636025289,
+              "passed": true
+            },
+            {
+              "symbol": "WDC",
+              "n": 19,
+              "mature": 15,
+              "tp": 6,
+              "fp": 9,
+              "pending": 4,
+              "precision": 0.4,
+              "ci": [
+                0.1982449614134158,
+                0.6425316987937539
+              ],
+              "baseline": 0.7488660201398202,
+              "lift": -0.34886602013982015,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.65,
+        "metrics": {
+          "n": 96,
+          "mature": 95,
+          "tp": 48,
+          "fp": 47,
+          "pending": 1,
+          "precision": 0.5052631578947369,
+          "conservative_precision": 0.5,
+          "baseline": 0.7280013164628886,
+          "lift": -0.2227381585681517,
+          "ci": [
+            0.4064930002803157,
+            0.6036242117876898
+          ],
+          "date_count": 18,
+          "ticks": 1320,
+          "abstentions": 1224,
+          "coverage": 0.07272727272727272,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 7,
+              "mature": 7,
+              "tp": 4,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.5714285714285714,
+              "ci": [
+                0.2504583645276572,
+                0.8417801447485302
+              ],
+              "baseline": 0.7593576129821666,
+              "lift": -0.18792904155359524,
+              "passed": false
+            },
+            {
+              "symbol": "ALAB",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.6796841102639067,
+              "lift": -0.3463507769305734,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 17,
+              "mature": 17,
+              "tp": 9,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.5294117647058824,
+              "ci": [
+                0.30963235060004424,
+                0.7383489355759056
+              ],
+              "baseline": 0.8247335454081144,
+              "lift": -0.29532178070223203,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 4,
+              "mature": 4,
+              "tp": 1,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.25,
+              "ci": [
+                0.04558726080970055,
+                0.6993581574175981
+              ],
+              "baseline": 0.6741264122114975,
+              "lift": -0.4241264122114975,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 8,
+              "mature": 8,
+              "tp": 4,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.21521606221387757,
+                0.7847839377861224
+              ],
+              "baseline": 0.6908972960465424,
+              "lift": -0.19089729604654238,
+              "passed": false
+            },
+            {
+              "symbol": "CRWV",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6406360644658939,
+              "lift": 0.35936393553410606,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 6,
+              "mature": 6,
+              "tp": 4,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.299993315138392,
+                0.9032285888942195
+              ],
+              "baseline": 0.7193715077301287,
+              "lift": -0.05270484106346207,
+              "passed": false
+            },
+            {
+              "symbol": "MRVL",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5708546706166698,
+              "lift": -0.5708546706166698,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6791553420404406,
+              "lift": -0.6791553420404406,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 5,
+              "mature": 5,
+              "tp": 1,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.2,
+              "ci": [
+                0.03622410863243014,
+                0.6244653702374747
+              ],
+              "baseline": 0.6725649727474401,
+              "lift": -0.4725649727474401,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 7,
+              "mature": 7,
+              "tp": 6,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.8571428571428571,
+              "ci": [
+                0.4868721707256811,
+                0.9743203756552565
+              ],
+              "baseline": 0.5805831281783285,
+              "lift": 0.27655972896452863,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 15,
+              "mature": 15,
+              "tp": 8,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.5333333333333333,
+              "ci": [
+                0.30116980025498397,
+                0.7519046463426261
+              ],
+              "baseline": 0.7978706641985103,
+              "lift": -0.26453733086517695,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 7,
+              "mature": 7,
+              "tp": 3,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.42857142857142855,
+              "ci": [
+                0.15821985525146975,
+                0.7495416354723428
+              ],
+              "baseline": 0.6819207999295267,
+              "lift": -0.25334937135809815,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.5704954317959336,
+              "lift": -0.5704954317959336,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.64461908854511,
+              "lift": 0.35538091145489004,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 10,
+              "mature": 9,
+              "tp": 4,
+              "fp": 5,
+              "pending": 1,
+              "precision": 0.4444444444444444,
+              "ci": [
+                0.18877852109766452,
+                0.733348706504507
+              ],
+              "baseline": 0.7506554072772835,
+              "lift": -0.3062109628328391,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.7,
+        "metrics": {
+          "n": 34,
+          "mature": 34,
+          "tp": 11,
+          "fp": 23,
+          "pending": 0,
+          "precision": 0.3235294117647059,
+          "conservative_precision": 0.3235294117647059,
+          "baseline": 0.7626613627959673,
+          "lift": -0.4391319510312614,
+          "ci": [
+            0.1913164356402551,
+            0.49157105406091794
+          ],
+          "date_count": 11,
+          "ticks": 1320,
+          "abstentions": 1286,
+          "coverage": 0.025757575757575757,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 5,
+              "mature": 5,
+              "tp": 3,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.6,
+              "ci": [
+                0.2307242812760128,
+                0.882379225767352
+              ],
+              "baseline": 0.7584262197540659,
+              "lift": -0.1584262197540659,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 10,
+              "mature": 10,
+              "tp": 4,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.16818032970623614,
+                0.6873262302663417
+              ],
+              "baseline": 0.8280191025019465,
+              "lift": -0.4280191025019465,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 3,
+              "mature": 3,
+              "tp": 0,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                5.551115123125783e-17,
+                0.5614970317550454
+              ],
+              "baseline": 0.6908931640883247,
+              "lift": -0.6908931640883247,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.7213520012144897,
+              "lift": -0.054685334547823095,
+              "passed": false
+            },
+            {
+              "symbol": "MRVL",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5753829990244111,
+              "lift": -0.5753829990244111,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.6721596919211953,
+              "lift": -0.6721596919211953,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 6,
+              "mature": 6,
+              "tp": 1,
+              "fp": 5,
+              "pending": 0,
+              "precision": 0.16666666666666666,
+              "ci": [
+                0.030053369748306635,
+                0.5635028221864702
+              ],
+              "baseline": 0.795047587915828,
+              "lift": -0.6283809212491613,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6838365537294534,
+              "lift": -0.6838365537294534,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.7492014170911433,
+              "lift": -0.41586808375781,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "n": 11,
+          "mature": 11,
+          "tp": 2,
+          "fp": 9,
+          "pending": 0,
+          "precision": 0.18181818181818182,
+          "conservative_precision": 0.18181818181818182,
+          "baseline": 0.7701926806002569,
+          "lift": -0.5883744987820752,
+          "ci": [
+            0.05136768974608513,
+            0.4769805619608442
+          ],
+          "date_count": 5,
+          "ticks": 1320,
+          "abstentions": 1309,
+          "coverage": 0.008333333333333333,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.7575928864207325,
+              "lift": -0.2575928864207325,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 5,
+              "mature": 5,
+              "tp": 1,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.2,
+              "ci": [
+                0.03622410863243014,
+                0.6244653702374747
+              ],
+              "baseline": 0.8284996767890462,
+              "lift": -0.6284996767890463,
+              "passed": false
+            },
+            {
+              "symbol": "MRVL",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5753829990244111,
+              "lift": -0.5753829990244111,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6655919902449058,
+              "lift": -0.6655919902449058,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.7867301702734071,
+              "lift": -0.7867301702734071,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.8,
+        "metrics": {
+          "n": 5,
+          "mature": 5,
+          "tp": 1,
+          "fp": 4,
+          "pending": 0,
+          "precision": 0.2,
+          "conservative_precision": 0.2,
+          "baseline": 0.8150142873933037,
+          "lift": -0.6150142873933038,
+          "ci": [
+            0.03622410863243014,
+            0.6244653702374747
+          ],
+          "date_count": 4,
+          "ticks": 1320,
+          "abstentions": 1315,
+          "coverage": 0.003787878787878788,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.7656177002071488,
+              "lift": -0.7656177002071488,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 4,
+              "mature": 4,
+              "tp": 1,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.25,
+              "ci": [
+                0.04558726080970055,
+                0.6993581574175981
+              ],
+              "baseline": 0.8273634341898424,
+              "lift": -0.5773634341898424,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.85,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1320,
+          "abstentions": 1320,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.9,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1320,
+          "abstentions": 1320,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      }
+    ],
+    "regular": [
+      {
+        "threshold": 0.6,
+        "metrics": {
+          "n": 122,
+          "mature": 119,
+          "tp": 62,
+          "fp": 57,
+          "pending": 3,
+          "precision": 0.5210084033613446,
+          "conservative_precision": 0.5081967213114754,
+          "baseline": 0.709390055168513,
+          "lift": -0.18838165180716837,
+          "ci": [
+            0.43200807211287834,
+            0.6086947984651916
+          ],
+          "date_count": 20,
+          "ticks": 1440,
+          "abstentions": 1318,
+          "coverage": 0.08472222222222223,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 7,
+              "mature": 7,
+              "tp": 3,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.42857142857142855,
+              "ci": [
+                0.15821985525146975,
+                0.7495416354723428
+              ],
+              "baseline": 0.7561798878835769,
+              "lift": -0.3276084593121484,
+              "passed": false
+            },
+            {
+              "symbol": "ALAB",
+              "n": 5,
+              "mature": 5,
+              "tp": 2,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.11762077423264783,
+                0.769275718723987
+              ],
+              "baseline": 0.6541272569673998,
+              "lift": -0.2541272569673998,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 18,
+              "mature": 18,
+              "tp": 8,
+              "fp": 10,
+              "pending": 0,
+              "precision": 0.4444444444444444,
+              "ci": [
+                0.24559518127005633,
+                0.6628358435795723
+              ],
+              "baseline": 0.8141164526618382,
+              "lift": -0.36967200821739377,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 8,
+              "mature": 8,
+              "tp": 5,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.625,
+              "ci": [
+                0.30574239460262737,
+                0.8631557141764026
+              ],
+              "baseline": 0.6607097614540246,
+              "lift": -0.0357097614540246,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 10,
+              "mature": 10,
+              "tp": 4,
+              "fp": 6,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.16818032970623614,
+                0.6873262302663417
+              ],
+              "baseline": 0.712417085371766,
+              "lift": -0.31241708537176593,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 4,
+              "mature": 4,
+              "tp": 1,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.25,
+              "ci": [
+                0.04558726080970055,
+                0.6993581574175981
+              ],
+              "baseline": 0.6123113072413945,
+              "lift": -0.3623113072413945,
+              "passed": false
+            },
+            {
+              "symbol": "CRWV",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6390236825480777,
+              "lift": -0.6390236825480777,
+              "passed": false
+            },
+            {
+              "symbol": "FN",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5805213980342897,
+              "lift": -0.5805213980342897,
+              "passed": false
+            },
+            {
+              "symbol": "LIFE",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6624917520524853,
+              "lift": 0.33750824794751466,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 8,
+              "mature": 8,
+              "tp": 7,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.875,
+              "ci": [
+                0.5291118177871464,
+                0.9775825085499433
+              ],
+              "baseline": 0.7044028539894516,
+              "lift": 0.17059714601054843,
+              "passed": false
+            },
+            {
+              "symbol": "MRVL",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.5751612381917817,
+              "lift": 0.09150542847488496,
+              "passed": false
+            },
+            {
+              "symbol": "MU",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.6880940837704027,
+              "lift": -0.1880940837704027,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.6767743546799476,
+              "lift": 0.07322564532005238,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 7,
+              "mature": 7,
+              "tp": 5,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.7142857142857143,
+              "ci": [
+                0.35893445183261935,
+                0.9177810759959433
+              ],
+              "baseline": 0.5605692605395104,
+              "lift": 0.1537164537462039,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 17,
+              "mature": 17,
+              "tp": 10,
+              "fp": 7,
+              "pending": 0,
+              "precision": 0.5882352941176471,
+              "ci": [
+                0.3600544264299978,
+                0.7838894320978518
+              ],
+              "baseline": 0.788371373274948,
+              "lift": -0.20013607915730092,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 7,
+              "mature": 7,
+              "tp": 3,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.42857142857142855,
+              "ci": [
+                0.15821985525146975,
+                0.7495416354723428
+              ],
+              "baseline": 0.6859952829806063,
+              "lift": -0.25742385440917775,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.5800677399035941,
+              "lift": -0.5800677399035941,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 4,
+              "mature": 4,
+              "tp": 4,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.5101091635454027,
+                1.0
+              ],
+              "baseline": 0.6171275636505208,
+              "lift": 0.3828724363494792,
+              "passed": false
+            },
+            {
+              "symbol": "VRT",
+              "n": 1,
+              "mature": 0,
+              "tp": 0,
+              "fp": 0,
+              "pending": 1,
+              "precision": null,
+              "ci": [
+                null,
+                null
+              ],
+              "baseline": null,
+              "lift": null,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 12,
+              "mature": 10,
+              "tp": 3,
+              "fp": 7,
+              "pending": 2,
+              "precision": 0.3,
+              "ci": [
+                0.10779126740630099,
+                0.6032218525388546
+              ],
+              "baseline": 0.7257390892691864,
+              "lift": -0.4257390892691864,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.65,
+        "metrics": {
+          "n": 59,
+          "mature": 59,
+          "tp": 30,
+          "fp": 29,
+          "pending": 0,
+          "precision": 0.5084745762711864,
+          "conservative_precision": 0.5084745762711864,
+          "baseline": 0.7287862199600152,
+          "lift": -0.22031164368882883,
+          "ci": [
+            0.3843514305938966,
+            0.6315616309225984
+          ],
+          "date_count": 16,
+          "ticks": 1440,
+          "abstentions": 1381,
+          "coverage": 0.04097222222222222,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 5,
+              "mature": 5,
+              "tp": 2,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.4,
+              "ci": [
+                0.11762077423264783,
+                0.769275718723987
+              ],
+              "baseline": 0.7530702836910691,
+              "lift": -0.3530702836910691,
+              "passed": false
+            },
+            {
+              "symbol": "ALAB",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.6495211519532226,
+              "lift": -0.6495211519532226,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 15,
+              "mature": 15,
+              "tp": 7,
+              "fp": 8,
+              "pending": 0,
+              "precision": 0.4666666666666667,
+              "ci": [
+                0.24809535365737387,
+                0.698830199745016
+              ],
+              "baseline": 0.8141091620511162,
+              "lift": -0.3474424953844495,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 3,
+              "mature": 3,
+              "tp": 2,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.6666666666666666,
+              "ci": [
+                0.2076596008020477,
+                0.9385080552796037
+              ],
+              "baseline": 0.6547061928007589,
+              "lift": 0.011960473865907706,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 4,
+              "mature": 4,
+              "tp": 3,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.75,
+              "ci": [
+                0.30064184258240184,
+                0.9544127391902995
+              ],
+              "baseline": 0.7122020399018614,
+              "lift": 0.03779796009813863,
+              "passed": false
+            },
+            {
+              "symbol": "CRDO",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.6145182932502778,
+              "lift": -0.28118495991694453,
+              "passed": false
+            },
+            {
+              "symbol": "CRWV",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6390236825480777,
+              "lift": -0.6390236825480777,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 4,
+              "mature": 4,
+              "tp": 4,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.5101091635454027,
+                1.0
+              ],
+              "baseline": 0.7049057821705085,
+              "lift": 0.2950942178294915,
+              "passed": false
+            },
+            {
+              "symbol": "MRVL",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.5825615381347234,
+              "lift": 0.41743846186527656,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.6852426653150572,
+              "lift": 0.3147573346849428,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 2,
+              "mature": 2,
+              "tp": 2,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.34238022750665303,
+                1.0
+              ],
+              "baseline": 0.5665385759619199,
+              "lift": 0.4334614240380801,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 8,
+              "mature": 8,
+              "tp": 4,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.21521606221387757,
+                0.7847839377861224
+              ],
+              "baseline": 0.7916414158108922,
+              "lift": -0.2916414158108922,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.6798193473124057,
+              "lift": -0.6798193473124057,
+              "passed": false
+            },
+            {
+              "symbol": "TER",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.5800677399035941,
+              "lift": -0.5800677399035941,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6309768316511672,
+              "lift": 0.36902316834883275,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 5,
+              "mature": 5,
+              "tp": 1,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.2,
+              "ci": [
+                0.03622410863243014,
+                0.6244653702374747
+              ],
+              "baseline": 0.7234577564332622,
+              "lift": -0.5234577564332621,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.7,
+        "metrics": {
+          "n": 21,
+          "mature": 21,
+          "tp": 10,
+          "fp": 11,
+          "pending": 0,
+          "precision": 0.47619047619047616,
+          "conservative_precision": 0.47619047619047616,
+          "baseline": 0.7364764924502414,
+          "lift": -0.2602860162597652,
+          "ci": [
+            0.2834400610153417,
+            0.6763046541715557
+          ],
+          "date_count": 7,
+          "ticks": 1440,
+          "abstentions": 1419,
+          "coverage": 0.014583333333333334,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 4,
+              "mature": 4,
+              "tp": 2,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.15003898915214947,
+                0.8499610108478506
+              ],
+              "baseline": 0.7552712309195352,
+              "lift": -0.2552712309195352,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 5,
+              "mature": 5,
+              "tp": 1,
+              "fp": 4,
+              "pending": 0,
+              "precision": 0.2,
+              "ci": [
+                0.03622410863243014,
+                0.6244653702374747
+              ],
+              "baseline": 0.814009395154774,
+              "lift": -0.614009395154774,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6523574198951034,
+              "lift": 0.34764258010489657,
+              "passed": false
+            },
+            {
+              "symbol": "COHR",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.7164926653150572,
+              "lift": -0.21649266531505718,
+              "passed": false
+            },
+            {
+              "symbol": "LITE",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6975994240968457,
+              "lift": 0.3024005759031543,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6810943629071355,
+              "lift": 0.31890563709286446,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.58152408656177,
+              "lift": 0.41847591343823,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.7853822336815196,
+              "lift": -0.7853822336815196,
+              "passed": false
+            },
+            {
+              "symbol": "STX",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.6818591697607961,
+              "lift": -0.6818591697607961,
+              "passed": false
+            },
+            {
+              "symbol": "TWST",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6309768316511672,
+              "lift": 0.36902316834883275,
+              "passed": false
+            },
+            {
+              "symbol": "WDC",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.7228566745685449,
+              "lift": -0.22285667456854485,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.75,
+        "metrics": {
+          "n": 11,
+          "mature": 11,
+          "tp": 5,
+          "fp": 6,
+          "pending": 0,
+          "precision": 0.45454545454545453,
+          "conservative_precision": 0.45454545454545453,
+          "baseline": 0.7522131769900512,
+          "lift": -0.29766772244459666,
+          "ci": [
+            0.21271271622459764,
+            0.719908462590678
+          ],
+          "date_count": 6,
+          "ticks": 1440,
+          "abstentions": 1429,
+          "coverage": 0.007638888888888889,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 2,
+              "mature": 2,
+              "tp": 1,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.5,
+              "ci": [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              "baseline": 0.7542497649374881,
+              "lift": -0.2542497649374881,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 4,
+              "mature": 4,
+              "tp": 1,
+              "fp": 3,
+              "pending": 0,
+              "precision": 0.25,
+              "ci": [
+                0.04558726080970055,
+                0.6993581574175981
+              ],
+              "baseline": 0.8148574198951034,
+              "lift": -0.5648574198951034,
+              "passed": false
+            },
+            {
+              "symbol": "CIEN",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6523574198951034,
+              "lift": 0.34764258010489657,
+              "passed": false
+            },
+            {
+              "symbol": "NBIS",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.6893909677229788,
+              "lift": 0.3106090322770212,
+              "passed": false
+            },
+            {
+              "symbol": "SMTC",
+              "n": 1,
+              "mature": 1,
+              "tp": 1,
+              "fp": 0,
+              "pending": 0,
+              "precision": 1.0,
+              "ci": [
+                0.20654931437723745,
+                1.0
+              ],
+              "baseline": 0.58152408656177,
+              "lift": 0.41847591343823,
+              "passed": false
+            },
+            {
+              "symbol": "SNDK",
+              "n": 2,
+              "mature": 2,
+              "tp": 0,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.6576197724933469
+              ],
+              "baseline": 0.7915716316276609,
+              "lift": -0.7915716316276609,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.8,
+        "metrics": {
+          "n": 4,
+          "mature": 4,
+          "tp": 1,
+          "fp": 3,
+          "pending": 0,
+          "precision": 0.25,
+          "conservative_precision": 0.25,
+          "baseline": 0.7980833223147782,
+          "lift": -0.5480833223147782,
+          "ci": [
+            0.04558726080970055,
+            0.6993581574175981
+          ],
+          "date_count": 3,
+          "ticks": 1440,
+          "abstentions": 1436,
+          "coverage": 0.002777777777777778,
+          "stocks": [
+            {
+              "symbol": "AAOI",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.7477610295738022,
+              "lift": -0.7477610295738022,
+              "passed": false
+            },
+            {
+              "symbol": "AXTI",
+              "n": 3,
+              "mature": 3,
+              "tp": 1,
+              "fp": 2,
+              "pending": 0,
+              "precision": 0.3333333333333333,
+              "ci": [
+                0.06149194472039621,
+                0.7923403991979522
+              ],
+              "baseline": 0.8148574198951034,
+              "lift": -0.4815240865617701,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.85,
+        "metrics": {
+          "n": 1,
+          "mature": 1,
+          "tp": 0,
+          "fp": 1,
+          "pending": 0,
+          "precision": 0.0,
+          "conservative_precision": 0.0,
+          "baseline": 0.8106172961934565,
+          "lift": -0.8106172961934565,
+          "ci": [
+            0.0,
+            0.7934506856227626
+          ],
+          "date_count": 1,
+          "ticks": 1440,
+          "abstentions": 1439,
+          "coverage": 0.0006944444444444445,
+          "stocks": [
+            {
+              "symbol": "AXTI",
+              "n": 1,
+              "mature": 1,
+              "tp": 0,
+              "fp": 1,
+              "pending": 0,
+              "precision": 0.0,
+              "ci": [
+                0.0,
+                0.7934506856227626
+              ],
+              "baseline": 0.8106172961934565,
+              "lift": -0.8106172961934565,
+              "passed": false
+            }
+          ],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      },
+      {
+        "threshold": 0.9,
+        "metrics": {
+          "n": 0,
+          "mature": 0,
+          "tp": 0,
+          "fp": 0,
+          "pending": 0,
+          "precision": null,
+          "conservative_precision": null,
+          "baseline": null,
+          "lift": null,
+          "ci": [
+            null,
+            null
+          ],
+          "date_count": 0,
+          "ticks": 1440,
+          "abstentions": 1440,
+          "coverage": 0.0,
+          "stocks": [],
+          "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+        },
+        "passed": false
+      }
+    ]
+  },
+  "registered": [
+    "AAOI",
+    "AAPL",
+    "ABNB",
+    "ADBE",
+    "ADI",
+    "ADP",
+    "ADSK",
+    "AEP",
+    "ALAB",
+    "ALNY",
+    "AMAT",
+    "AMD",
+    "AMGN",
+    "AMZN",
+    "ANET",
+    "APP",
+    "ARM",
+    "ASML",
+    "AVGO",
+    "AXON",
+    "AXTI",
+    "BKNG",
+    "BKR",
+    "CCEP",
+    "CDNS",
+    "CEG",
+    "CIEN",
+    "CMCSA",
+    "COHR",
+    "COST",
+    "CPRT",
+    "CRDO",
+    "CRWD",
+    "CRWV",
+    "CSCO",
+    "CSX",
+    "CTAS",
+    "DASH",
+    "DDOG",
+    "DXCM",
+    "EXC",
+    "FANG",
+    "FAST",
+    "FER",
+    "FN",
+    "FTNT",
+    "GEHC",
+    "GILD",
+    "GOOG",
+    "GOOGL",
+    "HON",
+    "IDXX",
+    "IGV",
+    "INTC",
+    "INTU",
+    "IONQ",
+    "ISRG",
+    "KDP",
+    "KLAC",
+    "LIFE",
+    "LIN",
+    "LITE",
+    "LRCX",
+    "MAR",
+    "MCHP",
+    "MDLZ",
+    "MELI",
+    "META",
+    "MNST",
+    "MPWR",
+    "MRVL",
+    "MSFT",
+    "MSTR",
+    "MU",
+    "NBIS",
+    "NFLX",
+    "NOK",
+    "NVDA",
+    "NXPI",
+    "ODFL",
+    "ORCL",
+    "ORLY",
+    "PANW",
+    "PAYX",
+    "PCAR",
+    "PDD",
+    "PEP",
+    "PLTR",
+    "PYPL",
+    "QBTS",
+    "QCOM",
+    "QQQ",
+    "REGN",
+    "RGTI",
+    "RKLB",
+    "RMBS",
+    "ROP",
+    "ROST",
+    "SBUX",
+    "SDGR",
+    "SHOP",
+    "SMTC",
+    "SNDK",
+    "SNPS",
+    "SOXX",
+    "STX",
+    "TER",
+    "TMUS",
+    "TRI",
+    "TSLA",
+    "TTWO",
+    "TWST",
+    "TXG",
+    "TXN",
+    "VRT",
+    "VRTX",
+    "WBD",
+    "WDAY",
+    "WDC",
+    "WMT",
+    "XEL"
+  ],
+  "train_first": "2025-09-04",
+  "train_end": "2026-06-22",
+  "train_days": 200,
+  "calibration_start": "2026-07-08",
+  "calibration_end": "2026-08-04",
+  "selection_start": "2026-08-19",
+  "selection_end": "2026-09-16",
+  "train_rows": 932614,
+  "train_max_label_end": "2026-06-26 16:00:00",
+  "calibration_max_label_end": "2026-08-10 16:00:00",
+  "selection_max_label_end": "2026-09-22 16:00:00",
+  "purge_sessions": 10,
+  "features": [
+    "h_span_3",
+    "h_span_20",
+    "h_base_20",
+    "h_return_30",
+    "h_rv_30",
+    "h_previous_ret",
+    "h_previous_mfe",
+    "pre_gap",
+    "pre_range",
+    "pre_rvol",
+    "night_ret",
+    "night_missing",
+    "pre_trade_age",
+    "w30_ret",
+    "w30_eff",
+    "w30_signed_volume",
+    "w60_ret",
+    "slide30_min",
+    "slide30_max",
+    "is_pre",
+    "rth_missing",
+    "remaining",
+    "elapsed",
+    "pre_elapsed",
+    "rth_ret",
+    "rth_gap",
+    "rth_range",
+    "rth_rvol",
+    "i15_rv",
+    "i60_rv",
+    "symbol"
+  ],
+  "model_sha256": "75fa68eaeb81c9a57c92446b53e5860da094ade1c75d051baf5f90ab5ae75431",
+  "protocol_sha256": "c90a6b53c86687c6f87db7980e08ddcb60e4ec29c6a92997f84e001852108918",
+  "outer": {
+    "n": 0,
+    "mature": 0,
+    "tp": 0,
+    "fp": 0,
+    "pending": 0,
+    "precision": null,
+    "conservative_precision": null,
+    "baseline": null,
+    "lift": null,
+    "ci": [
+      null,
+      null
+    ],
+    "date_count": 0,
+    "ticks": 0,
+    "abstentions": 0,
+    "coverage": null,
+    "stocks": [],
+    "definition": "TP/(TP+FP) over issued and matured threshold-valid signals; cash/positions/fills excluded"
+  },
+  "probability_evaluation": {
+    "rows": 0,
+    "stock_days": 0,
+    "brier": null,
+    "baseline_brier": null,
+    "bins": []
+  },
+  "selection_probability": {
+    "rows": 315606,
+    "stock_days": 2287,
+    "brier": 0.18788744083341216,
+    "baseline_brier": 0.17782307341524214,
+    "predicted": 0.38710504373046384,
+    "observed": 0.2885052882391336,
+    "bins": [
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "stock_day_weight": 57.43478260869567,
+        "predicted": 0.18673847988636907,
+        "observed": 0.018168054504163502
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "stock_day_weight": 604.2753623188405,
+        "predicted": 0.26033401243299054,
+        "observed": 0.05899988008154455
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "stock_day_weight": 665.550724637681,
+        "predicted": 0.34669162002497,
+        "observed": 0.24641247305271874
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "stock_day_weight": 506.89855072463763,
+        "predicted": 0.44813236410225815,
+        "observed": 0.4473353156450137
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "stock_day_weight": 332.3550724637681,
+        "predicted": 0.5447525117906329,
+        "observed": 0.5093644391147935
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "stock_day_weight": 105.84057971014494,
+        "predicted": 0.6363211764026605,
+        "observed": 0.5414897987128577
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "stock_day_weight": 12.768115942028988,
+        "predicted": 0.7371449367434768,
+        "observed": 0.4256526674233824
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "stock_day_weight": 1.8768115942028984,
+        "predicted": 0.831304410730182,
+        "observed": 0.17374517374517376
+      }
+    ]
+  }
+}

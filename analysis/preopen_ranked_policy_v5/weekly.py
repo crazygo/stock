@@ -80,7 +80,7 @@ def aggregate():
    source=WK if month<'2026-08' else OUT;prefix='' if source==WK else 'phase_';f=pd.read_parquet(source/f'{prefix}{route}_{month}.parquet',columns=['symbol','day','y']);sim['metrics']['potential_win_stock_days']+=len(f[f.y==1][['symbol','day']].drop_duplicates())
   possible=sim['metrics']['potential_win_stock_days'];sim['metrics']['recall_unique_stock_day']=sim['metrics']['tp']/possible if possible else None
   m=sim['metrics'];favorite_set={r['code'][3:] for r in json.loads((OUT/'universe.json').read_text())['favorites'] if r['code'].startswith('US.')};m['favorite_passed']=[s for s in m['stocks'] if s['symbol'] in favorite_set and s['passed']]
-  report['routes'].append(dict(route=route,name=NAMES[route],metrics=m,months=metas,passed=gate(m)))
+  report['routes'].append(dict(route=route,name=NAMES[route],algorithm=ALGORITHMS[route],metrics=m,months=metas,passed=gate(m)))
   write(WK/f'{route}_replay.json',sim);persist(f'weekly_signal_v1:{route}:2026-05_09',route,dict(version='weekly_signal_v1',months=[{k:x.get(k) for k in ['month','thresholds','model_sha256','train_end','selection_end']} for x in metas],protocol_sha256=report['protocol_sha256']),sim)
  days=[d for d in SESSIONS if report['start']<=d<=report['end']];weeks=sorted({str((pd.Timestamp(d)-pd.Timedelta(days=pd.Timestamp(d).weekday())).date()) for d in days})
  for week in weeks:
@@ -90,16 +90,16 @@ def aggregate():
   report['weeks'].append(row)
  write(WK/'results.json',report)
  with (WK/'weekly.csv').open('w',newline='') as file:
-  writer=csv.DictWriter(file,lineterminator='\n',fieldnames=['week_start','first_session','last_session','sessions','route','signals','tp','fp','pending','precision','ci_lower','ci_upper','abstentions','baseline','lift']);writer.writeheader()
+  writer=csv.DictWriter(file,lineterminator='\n',fieldnames=['week_start','first_session','last_session','sessions','route','algorithm','signals','tp','fp','pending','precision','ci_lower','ci_upper','abstentions','baseline','lift']);writer.writeheader()
   for w in report['weeks']:
-   for route,m in w['routes'].items():writer.writerow(dict(week_start=w['week_start'],first_session=w['first_session'],last_session=w['last_session'],sessions=w['sessions'],route=route,signals=m['n'],tp=m['tp'],fp=m['fp'],pending=m['pending'],precision=m['precision'],ci_lower=m['ci'][0],ci_upper=m['ci'][1],abstentions=m['abstentions'],baseline=m['baseline'],lift=m['lift']))
+   for route,m in w['routes'].items():writer.writerow(dict(week_start=w['week_start'],first_session=w['first_session'],last_session=w['last_session'],sessions=w['sessions'],route=route,algorithm=ALGORITHMS[route],signals=m['n'],tp=m['tp'],fp=m['fp'],pending=m['pending'],precision=m['precision'],ci_lower=m['ci'][0],ci_upper=m['ci'][1],abstentions=m['abstentions'],baseline=m['baseline'],lift=m['lift']))
  lines=['# 2026 年五月至九月 · 周粒度有效信号回测','', '表格为「命中 / 成熟有效信号数（达成率）」；— 表示未发出有效信号。每个模型分别统计，不合并跨模型重复股票日。五月首周与九月末周是截断周。','', '| ET 周（交易日） | 交易日数 | 逻辑回归 | LightGBM | ExtraTrees |','|---|---:|---:|---:|---:|']
  for w in report['weeks']:
   cells=[f"{m['tp']}/{m['mature']}（{m['precision']:.1%}）" if m['mature'] else '—' for m in w['routes'].values()];lines.append('| '+w['first_session'][5:]+'–'+w['last_session'][5:]+' | '+str(w['sessions'])+' | '+' | '.join(cells)+' |')
  lines+=['','## 合计','', '| 模型 | 有效信号 | 命中 | 失败 | 待成熟 | 达成率 | 95% Wilson | 基准 | 增量 |','|---|---:|---:|---:|---:|---:|---:|---:|---:|']
  def pct(x):return '—' if x is None else f'{x:.2%}'
  for r in report['routes']:
-  m=r['metrics'];lines.append(f"| {r['name']} | {m['n']} | {m['tp']} | {m['fp']} | {m['pending']} | {pct(m['precision'])} | {pct(m['ci'][0])}–{pct(m['ci'][1])} | {pct(m['baseline'])} | {pct(m['lift'])} |")
+  m=r['metrics'];lines.append(f"| {r['name']} / {ALGORITHMS[r['route']]} | {m['n']} | {m['tp']} | {m['fp']} | {m['pending']} | {pct(m['precision'])} | {pct(m['ci'][0])}–{pct(m['ci'][1])} | {pct(m['baseline'])} | {pct(m['lift'])} |")
  lines+=['','逐周置信区间、弃权、基准、增量与逐股结果见 results.json / weekly.csv。样本可能集中且相关，Wilson 不等于日期块独立置信界。已暴露历史不是未来独立验证；十月部署资格未改变。']
  (WK/'REPORT.md').write_text('\n'.join(lines)+'\n')
  print(json.dumps({'summary':[{ 'route':r['route'],'n':r['metrics']['n'],'tp':r['metrics']['tp'],'precision':r['metrics']['precision']} for r in report['routes']],'weeks':len(report['weeks'])}),flush=True)

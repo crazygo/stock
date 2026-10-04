@@ -1,5 +1,40 @@
 # 盘前 + 盘中五分钟统一入口
 
+## 新增：5 个交易日 +5% / 10 个交易日 +10%
+
+一次给出全部目标、每个目标的三条路线各前三名：
+
+```bash
+python3 analysis/preopen_ranked_policy_v5/recommend.py --target all --top 3
+```
+
+每份报表明确写出路线与算法：① 基础风险 / **LogisticRegression**，② 相关股量价 / **LightGBM**，③ 回撤恢复 / **ExtraTrees**。三个目标各自有模型与校准器；不能把当天 +3% 概率当作跨日概率。`all` 共输出 27 个参考选项，先补齐三个目标需要的行情，后续计算复用本地；也可单独使用 `--target 5d5pct` 或 `--target 10d10pct`。默认不带 target 仍是原当天 +3%。
+
+五月至九月的完整两个 **23 周表**、逐月/逐股/概率检查见 [`horizon_v1/REPORT.md`](horizon_v1/REPORT.md)、[`horizon_v1/weekly.csv`](horizon_v1/weekly.csv) 和 [`horizon_v1/results.json`](horizon_v1/results.json)。统一首页及三条独立页面增加了目标切换、成功/失败/待成熟筛选、跨日窗口阴影、真实 5m 路径和当时特征。
+
+| 路线 / 算法 | 5 日 +5%：命中 / 成熟有效 | 达成率 | 待成熟/不可评分 | 10 日 +10%：命中 / 成熟有效 | 达成率 | 待成熟/不可评分 |
+|---|---:|---:|---:|---:|---:|---:|
+| 基础风险 / LogisticRegression | 193/283 | 68.20% | 2 | 269/488 | 55.12% | 8 |
+| 相关股 / LightGBM | 594/854 | 69.56% | 33 | 292/446 | 65.47% | 17 |
+| 恢复 / ExtraTrees | 578/865 | 66.82% | 25 | 160/240 | 66.67% | 1 |
+
+共 3,262 个路线/目标内有效信号，86 个未知全部保留，六组整体都没有达到 70%。结果截止 2026-09-30；买入当日计第 1 个交易日，以决定后下一根 5m Open×1.001 评价，只看其后常规盘 High。完整窗口才计分，跨公司行动日期标为未知。周末/假日不计，半日市按官方实际收盘。窗口重叠、不同模型重复不能合并当独立样本，也未模拟有限资金跨日持仓。
+
+三模型 × 两目标 × 五个月各自重训；训练/校准/门槛/评价之间均留 10 个交易日空档，并验证上一块所有标签在下一块开始前已成熟。训练最多200日（五月实际181日），盘前/盘中分别20日校准、20日选门槛；70%、样本数、日期和基准增量要求仍用月前数据确定。独立原始行情核对、第一名、去重、周表及 SQLite 记录见 `horizon_v1/verification.json`。
+
+十月新目标六份冻结模型见 `horizon_v1/<target>/portable_models/`，仅研究参考，所有十月分时门槛均未通过；不改变原自动观察与 +3% 准入。每份 native 在20,092行（覆盖盘前/盘中）与原模型比较，最大差小于1e-10，这只证明移植一致。训练登记与云端补充登记分别见 [`HORIZON_PROTOCOL.md`](HORIZON_PROTOCOL.md)、[`HORIZON_CLOUD_PROTOCOL.md`](HORIZON_CLOUD_PROTOCOL.md)。原始行情、pickle 和 SQLite 均不进 Git。
+
+复跑历史研究（需完整本地 raw、weekly_v1/panel.parquet 和训练依赖 scikit-learn/scipy）：
+
+```bash
+python3 analysis/preopen_ranked_policy_v5/horizon.py --prepare --fit --aggregate --old-signals --workers 2
+python3 analysis/preopen_ranked_policy_v5/verify_horizon.py
+python3 analysis/preopen_ranked_policy_v5/horizon.py --fit --october --workers 2
+python3 analysis/preopen_ranked_policy_v5/export_horizon_models.py
+```
+
+云端日常推理仍只需下文 `requirements-cloud.txt`；不足数据、旧参考、实际窗口、门槛与状态会分别写明。
+
 ## 云端每天主动运行一次：每个模型各给前三名
 
 在仓库根目录运行：

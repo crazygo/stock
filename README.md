@@ -11,6 +11,14 @@ python3 analysis/preopen_ranked_policy_v5/recommend.py --top 3
 
 命令只运行一次，主动检查 Local → R2 → 可访问 OpenD，列出每个选项的概率、置信度门槛、行情截止、延迟入场和剩余常规盘 +3% 达标条件。行情不足或闭市时明确显示旧参考，不制造当前有效信号。可移植十月模型随代码提供，原始行情不进 Git、不自动上传 R2。完整云端行情配置、输出字段与本地调试服务见 [研究 README](analysis/preopen_ranked_policy_v5/README.md)，五月至九月 23 周表见 [周度报告](analysis/preopen_ranked_policy_v5/weekly_v1/REPORT.md)。
 
+新增两个跨日目标：**5 个交易日 +5%、10 个交易日 +10%**。每份报表同时写出路线及算法（LogisticRegression / LightGBM / ExtraTrees），目标分别训练与校准。一次输出全部目标、每条路线各前三名：
+
+```bash
+python3 analysis/preopen_ranked_policy_v5/recommend.py --target all --top 3
+```
+
+完整两个23周表见 [跨日报告](analysis/preopen_ranked_policy_v5/horizon_v1/REPORT.md)。六组新回测整体55.12%–69.56%，未通过70%；尚未成熟和不可评分的有效信号保留。新目标十月仅提供研究参考概率，未获准自动发出有效信号。
+
 
 ## 新工程：开盘后 3 日 +5% 概率模型
 

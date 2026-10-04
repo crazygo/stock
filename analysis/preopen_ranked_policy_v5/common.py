@@ -15,6 +15,7 @@ SESSIONS={x['session_date']:x for x in CALENDAR['sessions']}
 ET=ZoneInfo('America/New_York')
 ROUTES=['hazard_linear','relative_flow','recovery_forest']
 NAMES=dict(hazard_linear='剩余时间与单股基础风险',relative_flow='相关股分钟量价',recovery_forest='回撤恢复与量价效率')
+ALGORITHMS=dict(hazard_linear='LogisticRegression',relative_flow='LightGBM',recovery_forest='ExtraTrees')
 THRESHOLDS=[.60,.65,.70,.75,.80,.85,.90]
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def clean(x):

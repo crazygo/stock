@@ -28,6 +28,13 @@ class Recommendation(unittest.TestCase):
    r=run(args(data_dir=td),datetime(2026,10,4,12,tzinfo=ET));o=r['routes'][0]['options'][0];self.assertEqual(o['target_formula'],'actual_next_5m_open * 1.001 * 1.03');self.assertAlmostEqual(o['indicative_target_price'],o['reference_price']*1.001*1.03);self.assertIn('15:35',o['evaluation_entry_at']);self.assertIn('16:00',o['window_end'])
  def test_decision_offset_and_short_window(self):
   self.assertEqual(schedule(datetime(2026,10,5,9,40,29,tzinfo=ET))['cut'],575);self.assertEqual(schedule(datetime(2026,10,5,9,40,30,tzinfo=ET))['cut'],580);self.assertFalse(schedule(datetime(2026,10,5,15,31,tzinfo=ET))['in_window']);self.assertFalse(schedule(datetime(2026,10,4,12,tzinfo=ET))['in_window'])
+ def test_horizon_reports_use_separate_models_and_windows(self):
+  for target,gain,end in [('5d5pct',.05,'2026-10-08'),('10d10pct',.10,'2026-10-15')]:
+   with tempfile.TemporaryDirectory() as td:
+    report=run(args(data_dir=td,target=target),datetime(2026,10,4,12,tzinfo=ET));self.assertEqual(report['target_id'],target);self.assertTrue(report['window_end'].startswith(end));self.assertFalse(report['signal_admitted']);self.assertEqual([r['algorithm'] for r in report['routes']],['LogisticRegression','LightGBM','ExtraTrees'])
+    for route in report['routes']:
+     self.assertEqual(len(route['options']),3)
+     for o in route['options']:self.assertAlmostEqual(o['indicative_target_price'],o['reference_price']*1.001*(1+gain));self.assertFalse(o['issued_signal']);self.assertFalse(o['current_qualified_candidate'])
  def test_custom_empty_directory_does_not_read_other_local_wip(self):
   with tempfile.TemporaryDirectory() as td:
    m=MarketData(td)
