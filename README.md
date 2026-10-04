@@ -1,5 +1,17 @@
 # U.S. Stock Drop → Flat Screener
 
+## 盘前 / 盘中当天 +3%：云端主动问一次
+
+在仓库根目录运行，**三个冻结模型各返回概率最高的三个参考选项**：
+
+```bash
+python3 -m pip install -r analysis/preopen_ranked_policy_v5/requirements-cloud.txt
+python3 analysis/preopen_ranked_policy_v5/recommend.py --top 3
+```
+
+命令只运行一次，主动检查 Local → R2 → 可访问 OpenD，列出每个选项的概率、置信度门槛、行情截止、延迟入场和剩余常规盘 +3% 达标条件。行情不足或闭市时明确显示旧参考，不制造当前有效信号。可移植十月模型随代码提供，原始行情不进 Git、不自动上传 R2。完整云端行情配置、输出字段与本地调试服务见 [研究 README](analysis/preopen_ranked_policy_v5/README.md)，五月至九月 23 周表见 [周度报告](analysis/preopen_ranked_policy_v5/weekly_v1/REPORT.md)。
+
+
 ## 新工程：开盘后 3 日 +5% 概率模型
 
 入口：[`research/after_open_3d5pct/README.md`](research/after_open_3d5pct/README.md)。面向手动交易，在 11:30 ET 及后续可决策时点，研究从延迟后入场价起算的剩余上涨空间。已建立 coder 必读契约、时间/标签/切分骨架、边界测试与离线合成 smoke；真实数据适配和模型训练尚待后续里程碑完成。

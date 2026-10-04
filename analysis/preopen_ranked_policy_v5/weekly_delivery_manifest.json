@@ -1,0 +1,659 @@
+{
+  "version": "weekly_signal_v1_recommendation_v1",
+  "checked_at": "2026-10-04T09:44:24.961491+00:00",
+  "evaluation": "2026-05-01/2026-09-30",
+  "sessions": 105,
+  "weeks": 23,
+  "unit_tests": 37,
+  "raw_signal_audit": {
+    "status": "passed",
+    "checked_at": "2026-10-04T05:22:17.241020-04:00",
+    "audits": [
+      {
+        "route": "hazard_linear",
+        "signals": 12,
+        "raw_labels": 12,
+        "causal_features": 12,
+        "frozen_probability": 12,
+        "top_one_ticks": 14490,
+        "premarket_signals": 10,
+        "weekly_counts_match": true,
+        "sqlite_counts_match": true
+      },
+      {
+        "route": "relative_flow",
+        "signals": 95,
+        "raw_labels": 95,
+        "causal_features": 95,
+        "frozen_probability": 95,
+        "top_one_ticks": 14490,
+        "premarket_signals": 71,
+        "weekly_counts_match": true,
+        "sqlite_counts_match": true
+      },
+      {
+        "route": "recovery_forest",
+        "signals": 90,
+        "raw_labels": 90,
+        "causal_features": 90,
+        "frozen_probability": 90,
+        "top_one_ticks": 14490,
+        "premarket_signals": 12,
+        "weekly_counts_match": true,
+        "sqlite_counts_match": true
+      }
+    ],
+    "protocol_sha256": "bea9614083963aed4371ad62fbaedf3609b1b90a4172603bc583a2de6a49bf55",
+    "results_sha256": "f4a2fbb457debba4a8562b30bf1929dd079d61668ad44106cce5cb1b8a10deca",
+    "not_independent_effectiveness": true
+  },
+  "cloud": {
+    "status": "passed",
+    "clean_directory": true,
+    "local_research_dependencies": false,
+    "market_access": "actual read-only R2 download, inaccessible OpenD fallback",
+    "downloaded_objects": 105,
+    "options_per_model": [
+      3,
+      3,
+      3
+    ],
+    "current_probability": false,
+    "fresh_features": 0,
+    "missing_requested_features": 122,
+    "reference_cutoff": "2026-10-02T15:30:00-04:00",
+    "orders_sent": false,
+    "latest_source_code_checked": true,
+    "actual_r2_etag_refresh": true,
+    "cache_receipt_preserved": true
+  },
+  "ui": {
+    "status": "passed",
+    "pages": 4
+  },
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "06abb7f099c2f4d1213840fbf33ca9d9dfa68572a35353d21d1b7286c3997648",
+      "bytes": 25361
+    },
+    {
+      "path": "README.md",
+      "sha256": "53ca7bd4d91db33e7afe4aa15e3780b6cba24d4643a1fa9a770a2b1bff98ef50",
+      "bytes": 8787
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/acquire.py",
+      "sha256": "a5a94a7e53171d7563bbd5dbc9285dc111492e3bc6af85a9aeb52c14ebf8a728",
+      "bytes": 9342
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity.py",
+      "sha256": "9b8c9346c76b78f93e1622af148995e340beb378a824222ad54713f47b4fc784",
+      "bytes": 3672
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capture_qqq.py",
+      "sha256": "a3dd1934b8006be5446082f6bcf0d522c098516925065511353d89a233b0238b",
+      "bytes": 3068
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/cloud_data.py",
+      "sha256": "155700754921eb28e35c88d1553ea5af77d3f024abbb3f0b877337a6664656b7",
+      "bytes": 7477
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/common.py",
+      "sha256": "8e4191a8704d5b2ac450d14378e555601962fa99923cedd457a5084e6ea255ee",
+      "bytes": 1674
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/data.py",
+      "sha256": "1bda8dce007bae9ea20cb8aebf67ce993c14cdbb77a7a42742ed45c225548a95",
+      "bytes": 12830
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/export_models.py",
+      "sha256": "802fb23235d7f284bea3fd07af21233aa23b05cbabe6e1a52c4e9f81a397565e",
+      "bytes": 3722
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/feature_primitives.py",
+      "sha256": "4909d042b8a757fc1ab1035bedbab766746e8e35291656c3ba5816371851aaef",
+      "bytes": 2181
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/maturity.py",
+      "sha256": "210d89600ee6f5481d9a53a6424b3568fc1720e320c9837e8c53576fa2d3b19b",
+      "bytes": 4181
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase.py",
+      "sha256": "cfa56a45341cf6c322d1ad023b9df9fe728412e85f8ce12b3e1dbacc6a4e0d90",
+      "bytes": 6173
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/policy.py",
+      "sha256": "e06ae78953e6f316a280888f0918fc769edad2b87f51ef9ecff0746d58aeb4f7",
+      "bytes": 6686
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/portable.py",
+      "sha256": "1e521e1774471ada55d54f4ad415e2a3df8211dcd0d0441f7f820461f23dca95",
+      "bytes": 2529
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/recommend.py",
+      "sha256": "65c53f3687b30acc3907194bedbc15278fa26f24e15ecba9e4767e8d3f40b6f4",
+      "bytes": 11828
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/server.py",
+      "sha256": "f95abbd2e97ffaade403da89afe3b878dbccfa9cce85c08715e25e5e43736dac",
+      "bytes": 21810
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_runtime.py",
+      "sha256": "07a8be13963c0b3bd389fef2f6a4c306dd267cd2edf21845c6b938e005895338",
+      "bytes": 2401
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signals.py",
+      "sha256": "0136ea726d87c281b8ed72e4628ae15a79bcae8599dbebde35ec89bfd06e171a",
+      "bytes": 10910
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/store.py",
+      "sha256": "3c87d74f23ab5a6123fa617fb44ee6a83a63b736249f3924529508186852e5f2",
+      "bytes": 5582
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/test_contract.py",
+      "sha256": "ba4c5d7108a2b4aea04f4f0435c438641dbe3b938edd49600e2561ba4f6bb0f7",
+      "bytes": 7120
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/test_maturity.py",
+      "sha256": "00a6bd8c0cdd14fb18195eea0e5093fe4eb885cc82a7f0f7305b1bf2927518de",
+      "bytes": 2831
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/test_recommend.py",
+      "sha256": "9814b543ea0e21c475d468da0e75f12a2ce93602baa40b3175a655984e994019",
+      "bytes": 5369
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/test_signals.py",
+      "sha256": "b9b88d17058292ed33708f8f9c4b5ead944dbea6d87e00c790dac32033bad8a6",
+      "bytes": 4513
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/train.py",
+      "sha256": "2ff00f5a51cdaf7f66e789fb37e6e9c30e4fafa9df24b276d735b1bf282f356d",
+      "bytes": 10377
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/verify_artifacts.py",
+      "sha256": "553595fb7c458aa10a12cc9142409683c36d9a02ca1d161a62542b0e88a91242",
+      "bytes": 9385
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/verify_signals.py",
+      "sha256": "06232cf06f71f45d98c432fc19d13b673e6b96965ee78d577ef8922b5ca59244",
+      "bytes": 4316
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/verify_ui.py",
+      "sha256": "a04e921347cd7c5bfcbb5bb16571a738166ecedbea1ed0e74351f3b19e7620b2",
+      "bytes": 10406
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/verify_weekly.py",
+      "sha256": "7a28890f1062bc1948bc68685cb3ef4b9ebd2fe21f66abb5a0c6fe45ec1dc1fe",
+      "bytes": 5295
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly.py",
+      "sha256": "d1310d11a1a757f10f461fffc4e98e3cb0b2f38b0e5b5465d52cfc1cd0d0c2e0",
+      "bytes": 10660
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/hazard_linear.html",
+      "sha256": "e8f5fad4f43dc68bb231c3f282255f2e47118869742075baa76808ddfa030214",
+      "bytes": 48716
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/index.html",
+      "sha256": "e8f5fad4f43dc68bb231c3f282255f2e47118869742075baa76808ddfa030214",
+      "bytes": 48716
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/recovery_forest.html",
+      "sha256": "e8f5fad4f43dc68bb231c3f282255f2e47118869742075baa76808ddfa030214",
+      "bytes": 48716
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/relative_flow.html",
+      "sha256": "e8f5fad4f43dc68bb231c3f282255f2e47118869742075baa76808ddfa030214",
+      "bytes": 48716
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/CAPACITY_PROTOCOL.md",
+      "sha256": "b871c587f001cd01511dbb0c43a5c82ec1472eb037908c08d0c61153d60583d6",
+      "bytes": 1754
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/PHASE_PROTOCOL.md",
+      "sha256": "7233abe3939efa9923a3e9ec31a37e1df6a061cdb796e41c7f4e9bf848d209b6",
+      "bytes": 1705
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/PROTOCOL.md",
+      "sha256": "ecfd7f1c2e51ad3329a79390e618f96dcbc7aa5da9b697dc2f9c58cb984c4add",
+      "bytes": 5509
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/README.md",
+      "sha256": "ad3eeb69412c267972e34c36098982e0a3ca6eed8cfe97b08f0a86f384851afe",
+      "bytes": 17061
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/REPORT.md",
+      "sha256": "fe0e2b60fa980ee22c7b702656bfa50dc592934aa8e8b06278572af92ce765d8",
+      "bytes": 9858
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/SIGNAL_PROTOCOL.md",
+      "sha256": "d0d26381a8532b98d49fc05ea796e9563ce98c8dc2ee79267fc6cd1704980f57",
+      "bytes": 2777
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/SIGNAL_REVIEW.md",
+      "sha256": "247d7c228403db2c531044951b10608ac9de9333148ff7e8b0d1336f484381a6",
+      "bytes": 3938
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/STATE.md",
+      "sha256": "b7a9024a9afba69e9f84dedb40ed72204b14e1d08f5c6fcae6325f40d1ab506d",
+      "bytes": 3244
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/WEEKLY_PROTOCOL.md",
+      "sha256": "bea9614083963aed4371ad62fbaedf3609b1b90a4172603bc583a2de6a49bf55",
+      "bytes": 2691
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/.gitignore",
+      "sha256": "6ad96d08010c5e41f075f7d68b78f4cd42c242ae85cce4cde7ce48f9e06c56ca",
+      "bytes": 165
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/requirements-cloud.txt",
+      "sha256": "2fe37ded9f64c75ab56c59d19508b06431bf0b4acddcea0692a1f202a05db0db",
+      "bytes": 145
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/calendar.json",
+      "sha256": "471a97949f2d6885727f5fba506d11e61ebbb52854bbfd6ce01d900f03eed48a",
+      "bytes": 184000
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/coverage.json",
+      "sha256": "bc00ac4485814cb9bfe563ede23c7b7b0a593e58c6a4b601ca5156f5c7d9f7db",
+      "bytes": 56621
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/raw_coverage_audit.json",
+      "sha256": "b0393c1ef72ff2a4e5fc77b5ceb0430bd50bb48bea08291c7864d52815f89815",
+      "bytes": 16524
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/universe.json",
+      "sha256": "cebda96cba65a6a948c77a2ec96d8b678830fdc13f6a69a04bc4ecebb3bfe875",
+      "bytes": 423930
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/universe_coverage.json",
+      "sha256": "47b3e5d1e754ee2a294f9463e9f9d0c31890d95325804cd3fcaf3bf78174b47e",
+      "bytes": 74578
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/frozen_universe_before_qqq_source.json",
+      "sha256": "9fed81d73ce040306e8bb0df168f77ff279a603a37975edc3b327c1df8d1be40",
+      "bytes": 415356
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/results.json",
+      "sha256": "36c71cece535e883647d2a5cef1b0d294050e8e64d76320b23b9dbb81915ed90",
+      "bytes": 132318
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/deployment.json",
+      "sha256": "427bf429cdd64cc431a08cd43ab80594ce8993a05089c6ffc508da2b0d8b19e1",
+      "bytes": 37611
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_results.json",
+      "sha256": "40ce15028a387a7efb850b5a698aa0c615dd79a1b71417c0be48b3b12ba6762e",
+      "bytes": 344873
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_deployment.json",
+      "sha256": "6cfb7563ee36445feb85b91fa124984574a4441b716ad218e99e4c241b0aeaa6",
+      "bytes": 86292
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity_results.json",
+      "sha256": "d2f1ebc71a506885f0412ec563e8c034414db2b8c30c758d5c6ad9da2662c855",
+      "bytes": 342464
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signals_results.json",
+      "sha256": "d40b3d507438719a45f180641dc6589e64c720ff4e1aee120a162c80c2362013",
+      "bytes": 384633
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signals_deployment.json",
+      "sha256": "f6424a49f329b9966c1a3c385460e463e27a334ef26a5f8bf224f1ca2753acb7",
+      "bytes": 51783
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/artifact_verification.json",
+      "sha256": "7711f8e76d30fe26370e9b402497ab0e044ff32cb362e71bc0d1ef36b7b9c235",
+      "bytes": 9646
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signals_verification.json",
+      "sha256": "160679cf16239a1e8c0b00071a3734a136f84e7f2c51609bfd04fe57a5d0e875",
+      "bytes": 795
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/ui_verification.json",
+      "sha256": "f38f3fa5806d9cb902828d68565e167d76d499a8a7ffab9eb0c62e4477baf8d5",
+      "bytes": 6976
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/reference_recommendation.json",
+      "sha256": "8a77605b2a31248fb8106a9d13f69971bd3c2c773187040b330d4f52d164f37a",
+      "bytes": 10622
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/cloud_verification.json",
+      "sha256": "0e8ecd96d71b7a531583309195113c1450f86333e3c506731c58140400483a44",
+      "bytes": 524
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity_hazard_linear_2026-08_meta.json",
+      "sha256": "0895f544205717806886523f061dc00a6aa60db91ff7b2dd8850809011c74523",
+      "bytes": 61838
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity_hazard_linear_2026-09_meta.json",
+      "sha256": "a885ee13a284792dd2886c667ff7791c9439bd007b25eea777e78fa7e6c406b9",
+      "bytes": 67146
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity_recovery_forest_2026-08_meta.json",
+      "sha256": "0e66b7237e5249104378378212e0935e7cbbdac5a557456318e973f777242730",
+      "bytes": 34886
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity_recovery_forest_2026-09_meta.json",
+      "sha256": "77266af0ab0981636534064b4a69d4afe8094eefb8bd50e39757baa74c44256b",
+      "bytes": 34660
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity_relative_flow_2026-08_meta.json",
+      "sha256": "6d871a1ae5e4ab49103f92edd15bb1826281aa73610af7f06133fa3fa81b4739",
+      "bytes": 32737
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/capacity_relative_flow_2026-09_meta.json",
+      "sha256": "2321a9d304af90e670971f4e99a6f8ecf02aa3e9433a3f8ea40362c748ccfb2d",
+      "bytes": 29859
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/hazard_linear_2026-08_meta.json",
+      "sha256": "ec865a74583c007fc4445d6b82265b683ac8543fc33f8b072810380a55e5ff3f",
+      "bytes": 22406
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/hazard_linear_2026-09_meta.json",
+      "sha256": "edc25ee5c68479d1e203027effe94e963ca9ee58babec5e92e21038807cf53f2",
+      "bytes": 24698
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/hazard_linear_2026-10_meta.json",
+      "sha256": "e68921c463b3c476567dd1819100777cb1528cacd4cb063f0eb5ed263e460f11",
+      "bytes": 12963
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_hazard_linear_2026-08_meta.json",
+      "sha256": "e43b57c6945121f34784cd49aa8e821fe9d78b818c3df26dd04fe2b661331a3e",
+      "bytes": 62324
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_hazard_linear_2026-09_meta.json",
+      "sha256": "e68c45b23032fb2afd852993449a8b318ecdd933133687d1443adc71e24c41ce",
+      "bytes": 69042
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_hazard_linear_2026-10_meta.json",
+      "sha256": "cc9d86e7b053ec50e56f9ff28d1bfefcf48c86bffabf232a0e64823ed3417032",
+      "bytes": 27123
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_recovery_forest_2026-08_meta.json",
+      "sha256": "8d34a86ecfaca2c3c0c4c47246d1e26006ce4c2a6b86a93d65a5ddd16108cee6",
+      "bytes": 34540
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_recovery_forest_2026-09_meta.json",
+      "sha256": "2f82a0015b3da8d184c5671ecf4f706b94c58343d6b9d6b16cbcac24d778e45a",
+      "bytes": 34529
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_recovery_forest_2026-10_meta.json",
+      "sha256": "2f8bb98fe0287f9e5f89cd543d6e76d1384dca170d9563698be487a22f1d8e99",
+      "bytes": 23291
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_relative_flow_2026-08_meta.json",
+      "sha256": "664c1676bc4f9ba3cf5614ba130bba8c11a714cb0df35f172baf2edcf43951fd",
+      "bytes": 32312
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_relative_flow_2026-09_meta.json",
+      "sha256": "0521741588a648267c23d8fe70391d19d411c6007ea2beb1b4c951794985caab",
+      "bytes": 29680
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/phase_relative_flow_2026-10_meta.json",
+      "sha256": "cb24cf45d2437e5d4507029c17bd7f0e6e3595dc7787a7eef69e8439ce2e5d71",
+      "bytes": 24168
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/recovery_forest_2026-08_meta.json",
+      "sha256": "2979db32f5675003aea1f36a83c270724b42af951b905f6ef71ec8050db559a1",
+      "bytes": 12749
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/recovery_forest_2026-09_meta.json",
+      "sha256": "3ce6f8283b3a1ffb5440f575cd6e2754360e4f7b8bbabecb237bb395856f7f7a",
+      "bytes": 12291
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/recovery_forest_2026-10_meta.json",
+      "sha256": "6d6296a3fe57157b1604ffb0ca986125c15d2581def13ce59951be61f836a237",
+      "bytes": 9133
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/relative_flow_2026-08_meta.json",
+      "sha256": "3ed883d11c6a3794444daf8b2ae0fe09c7d47c84b5e338405c590cf31fcc1bb7",
+      "bytes": 13200
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/relative_flow_2026-09_meta.json",
+      "sha256": "207695262618f839d8db3d5294438fd9f4470c0b58ec4e2c0c0fb6cf178e0fac",
+      "bytes": 11326
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/relative_flow_2026-10_meta.json",
+      "sha256": "dde065539f1ec1aea7a0279324332e03d41578e2dd600afec848814a38a76e30",
+      "bytes": 9489
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_hazard_linear_2026-08_meta.json",
+      "sha256": "88fe2d9feeab8243f13fb2483ba4b28584a91d979fdd56e7327f690c2d097d37",
+      "bytes": 86760
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_hazard_linear_2026-09_meta.json",
+      "sha256": "4c9de625524083503d41e6dd04632fe3f9d9c08476496d9725930fbb6b4aa329",
+      "bytes": 84689
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_hazard_linear_2026-10_meta.json",
+      "sha256": "f6d28ce2e1c85acc2f1a6b289ab2a8cd31c25ad923e6115bf2a5e8b2f1c62e11",
+      "bytes": 16939
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_recovery_forest_2026-08_meta.json",
+      "sha256": "ea9cde3fda7a43a3db010bc7f615c3cb7a0e9e439ede39270be1aaeb3dd455d9",
+      "bytes": 28292
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_recovery_forest_2026-09_meta.json",
+      "sha256": "a4c487d3a801b12442b3c1cd559863d854e9f75083c96333691deaa719ee0cc8",
+      "bytes": 27051
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_recovery_forest_2026-10_meta.json",
+      "sha256": "fcc38c6bc3ba62ce85d5e0808c3902d169609005bec4022bbfa9749838d813a3",
+      "bytes": 13438
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_relative_flow_2026-08_meta.json",
+      "sha256": "4a1b348586d5be7d948048708488f295bf628cc9dfad8e0bbef200bc5d6de848",
+      "bytes": 43556
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_relative_flow_2026-09_meta.json",
+      "sha256": "7a82963c759b6f29a5e5963aee6da042674517ba9898da0a29a55737505d1572",
+      "bytes": 22216
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/signal_relative_flow_2026-10_meta.json",
+      "sha256": "3a47ff4de17783b1f16c2fcb90fd808a98a8e208333b4ff3660f29c2f9efcea5",
+      "bytes": 13871
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/universe_sources/QQQ_20261004_010209.json",
+      "sha256": "ccba7e2161b90586f8cdfb2de5d59a304cf070eaef03d586f0522b778680129f",
+      "bytes": 27106
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/portable_models/hazard_linear_2026-10.json.gz",
+      "sha256": "d20e53dbb4903a76715782d9e11b8351d5cc171a5a893b264c75f6f814cd34a8",
+      "bytes": 177378
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/portable_models/manifest.json",
+      "sha256": "756380ac9076f604af2b9b9c08c3e3e03c7e855edf2859c0f77c83ecd2265427",
+      "bytes": 8044
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/portable_models/recovery_forest_2026-10.json.gz",
+      "sha256": "d5d42f42d7e97fdf049c03ed75e555cb0dacbd72167eff2e8a41d765b8512812",
+      "bytes": 954796
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/portable_models/reference_snapshot.json",
+      "sha256": "6bb454fcf6c9b14c30ca920bcbae1f83a86438036b0267b69ec40ed0c2128543",
+      "bytes": 352735
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/portable_models/relative_flow_2026-10.json.gz",
+      "sha256": "d5a48f0c64f360b6ab3ba0dc5d66e6b00aae5f050033bfbed3d23087b122fd2d",
+      "bytes": 304355
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/REPORT.md",
+      "sha256": "1c907117a6ef9a40d5c2c3f71dc25dae25dfe0bc56456ae4c24c4ea48adef926",
+      "bytes": 2604
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/weekly.csv",
+      "sha256": "d136e81924f5c510a266e313ee92124ff99074f08ef73c5675cdb836056c2db4",
+      "bytes": 7190
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/results.json",
+      "sha256": "f4a2fbb457debba4a8562b30bf1929dd079d61668ad44106cce5cb1b8a10deca",
+      "bytes": 1324004
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/coverage.json",
+      "sha256": "071e2c935613518b61f3bd7cfb3d36ba03843f08428a83e2b4b8c70b0febb9e0",
+      "bytes": 421
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/verification.json",
+      "sha256": "801e55fbad726c98f61754bf00835446b205c6d5bb96ab6132ce76059ab68faf",
+      "bytes": 1157
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/signals.json",
+      "sha256": "a4c53ae54dd6f06c31a677f970190d9967055864c0d704c127f3b5bedbca69ab",
+      "bytes": 829651
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/hazard_linear_2026-05_meta.json",
+      "sha256": "de5db2536782f9afd93007a73ddf1b736e9ed0d67c2e9ff107104452f000134c",
+      "bytes": 73236
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/hazard_linear_2026-06_meta.json",
+      "sha256": "3a4f92dd60c72f722e5fed2c25e70ee1ed0cd46241ae06a4439654ebe19bcd3a",
+      "bytes": 70625
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/hazard_linear_2026-07_meta.json",
+      "sha256": "de51a4a21d0cda61938c669e87f2986928c1e331dc14ab9a4e26bfd1848c8d80",
+      "bytes": 132892
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/recovery_forest_2026-05_meta.json",
+      "sha256": "7cb43c5104a522d1fdf33a33d37b7e9c9c648ed35a73bc3092ec4a3bf14f99c5",
+      "bytes": 39854
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/recovery_forest_2026-06_meta.json",
+      "sha256": "fddd53e7d10296faf52b165f67b8a30b33dbdb00eb0a3cb150a7f28bd094c82d",
+      "bytes": 52694
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/recovery_forest_2026-07_meta.json",
+      "sha256": "8aed4cd82363a118562d65deb477f1af5c2f149934acbdce3cc96dfce7ff0bb7",
+      "bytes": 58415
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/relative_flow_2026-05_meta.json",
+      "sha256": "a6d2dc3475e678053894b41db29c122f305051e2a9ffd8ce27c329e0a430ed64",
+      "bytes": 50104
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/relative_flow_2026-06_meta.json",
+      "sha256": "964e8455763dd558f18584b9060edc56087b21927780fe503d59a1493ce0b1c4",
+      "bytes": 66681
+    },
+    {
+      "path": "analysis/preopen_ranked_policy_v5/weekly_v1/relative_flow_2026-07_meta.json",
+      "sha256": "9f0f4cf9d6fe1d2a09b7f55acbde8b60e3d8019bb18970707ed38278a99e5324",
+      "bytes": 86808
+    }
+  ],
+  "no_r2_upload": true,
+  "october_deployment_changed": false,
+  "no_raw_price_archives_in_git": true
+}

@@ -1,0 +1,1244 @@
+{
+  "route": "recovery_forest",
+  "name": "回撤恢复与量价效率",
+  "month": "2026-09",
+  "train_first": "2025-09-17",
+  "train_end": "2026-07-06",
+  "calibration_start": "2026-07-07",
+  "calibration_end": "2026-08-03",
+  "selection_start": "2026-08-04",
+  "selection_end": "2026-08-31",
+  "train_rows": 989549,
+  "train_days": 200,
+  "registered": [
+    "AAOI",
+    "AAPL",
+    "ABNB",
+    "ADBE",
+    "ADI",
+    "ADP",
+    "ADSK",
+    "AEP",
+    "ALAB",
+    "ALNY",
+    "AMAT",
+    "AMD",
+    "AMGN",
+    "AMZN",
+    "ANET",
+    "APP",
+    "ARM",
+    "ASML",
+    "AVGO",
+    "AXON",
+    "AXTI",
+    "BKNG",
+    "BKR",
+    "CCEP",
+    "CDNS",
+    "CEG",
+    "CIEN",
+    "CMCSA",
+    "COHR",
+    "COST",
+    "CPRT",
+    "CRDO",
+    "CRWD",
+    "CRWV",
+    "CSCO",
+    "CSX",
+    "CTAS",
+    "DASH",
+    "DDOG",
+    "DXCM",
+    "EXC",
+    "FANG",
+    "FAST",
+    "FER",
+    "FN",
+    "FTNT",
+    "GEHC",
+    "GILD",
+    "GOOG",
+    "GOOGL",
+    "HON",
+    "IDXX",
+    "IGV",
+    "INTC",
+    "INTU",
+    "IONQ",
+    "ISRG",
+    "KDP",
+    "KLAC",
+    "LIFE",
+    "LIN",
+    "LITE",
+    "LRCX",
+    "MAR",
+    "MCHP",
+    "MDLZ",
+    "MELI",
+    "META",
+    "MNST",
+    "MPWR",
+    "MRVL",
+    "MSFT",
+    "MSTR",
+    "MU",
+    "NBIS",
+    "NFLX",
+    "NOK",
+    "NVDA",
+    "NXPI",
+    "ODFL",
+    "ORCL",
+    "ORLY",
+    "PANW",
+    "PAYX",
+    "PCAR",
+    "PDD",
+    "PEP",
+    "PLTR",
+    "PYPL",
+    "QBTS",
+    "QCOM",
+    "QQQ",
+    "REGN",
+    "RGTI",
+    "RKLB",
+    "RMBS",
+    "ROP",
+    "ROST",
+    "SBUX",
+    "SDGR",
+    "SHOP",
+    "SMTC",
+    "SNDK",
+    "SNPS",
+    "SOXX",
+    "STX",
+    "TER",
+    "TMUS",
+    "TRI",
+    "TSLA",
+    "TTWO",
+    "TWST",
+    "TXG",
+    "TXN",
+    "VRT",
+    "VRTX",
+    "WBD",
+    "WDAY",
+    "WDC",
+    "WMT",
+    "XEL"
+  ],
+  "features": [
+    "h_span_3",
+    "h_span_20",
+    "h_base_20",
+    "h_return_30",
+    "h_rv_30",
+    "h_previous_ret",
+    "h_previous_mfe",
+    "pre_gap",
+    "pre_range",
+    "pre_rvol",
+    "night_ret",
+    "night_missing",
+    "pre_trade_age",
+    "w30_ret",
+    "w30_eff",
+    "w30_signed_volume",
+    "w60_ret",
+    "slide30_min",
+    "slide30_max",
+    "is_pre",
+    "rth_missing",
+    "remaining",
+    "elapsed",
+    "pre_elapsed",
+    "rth_ret",
+    "rth_gap",
+    "rth_range",
+    "rth_fade",
+    "rth_recovery",
+    "rth_position",
+    "rth_rvol",
+    "i5_ret",
+    "i5_rv",
+    "i5_eff",
+    "i5_signedvol",
+    "i15_ret",
+    "i15_rv",
+    "i15_eff",
+    "i15_signedvol",
+    "i30_ret",
+    "i30_rv",
+    "i30_eff",
+    "i30_signedvol",
+    "i60_ret",
+    "i60_rv",
+    "i60_eff",
+    "i60_signedvol",
+    "bar_vwap_gap",
+    "stock_id"
+  ],
+  "threshold": 0.0,
+  "prior_gate_pass": true,
+  "brier": 0.07777092724266843,
+  "choices": [
+    {
+      "threshold": 0.6,
+      "metrics": {
+        "n": 15,
+        "tp": 7,
+        "fp": 8,
+        "unknown": 0,
+        "precision": 0.4666666666666667,
+        "ci": [
+          0.24809535365737387,
+          0.698830199745016
+        ],
+        "date_count": 15,
+        "baseline": 0.6035993962652153,
+        "lift": -0.13693272959854863,
+        "net_mean": -0.019421891371409098,
+        "total_return": -0.057427117767334,
+        "max_drawdown": -0.08416214265373545,
+        "worst_trade": -0.19897207617759705,
+        "worst_mae": -0.20447103679180145,
+        "buy_decisions": 15,
+        "total_decisions": 2760,
+        "no_action": 2745,
+        "holding_minutes_mean": 472.3333333333333,
+        "stocks": [
+          {
+            "symbol": "AAOI",
+            "n": 3,
+            "tp": 2,
+            "precision": 0.6666666666666666,
+            "ci": [
+              0.2076596008020477,
+              0.9385080552796037
+            ],
+            "baseline": 0.5485736861824989,
+            "lift": 0.11809298048416772,
+            "passed": false
+          },
+          {
+            "symbol": "AXTI",
+            "n": 10,
+            "tp": 4,
+            "precision": 0.4,
+            "ci": [
+              0.16818032970623614,
+              0.6873262302663417
+            ],
+            "baseline": 0.6353595732152462,
+            "lift": -0.23535957321524614,
+            "passed": false
+          },
+          {
+            "symbol": "NBIS",
+            "n": 1,
+            "tp": 0,
+            "precision": 0.0,
+            "ci": [
+              0.0,
+              0.7934506856227626
+            ],
+            "baseline": 0.5017634856204192,
+            "lift": -0.5017634856204192,
+            "passed": false
+          },
+          {
+            "symbol": "SNDK",
+            "n": 1,
+            "tp": 1,
+            "precision": 1.0,
+            "ci": [
+              0.20654931437723745,
+              1.0
+            ],
+            "baseline": 0.5529106676578521,
+            "lift": 0.44708933234214787,
+            "passed": false
+          }
+        ],
+        "potential_win_stock_days": 835,
+        "recall_unique_stock_day": 0.008383233532934131,
+        "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+      },
+      "passed": false
+    },
+    {
+      "threshold": 0.65,
+      "metrics": {
+        "n": 11,
+        "tp": 8,
+        "fp": 3,
+        "unknown": 0,
+        "precision": 0.7272727272727273,
+        "ci": [
+          0.43435469882387084,
+          0.902539407099751
+        ],
+        "date_count": 11,
+        "baseline": 0.6053867652560726,
+        "lift": 0.12188596201665469,
+        "net_mean": -0.010408212346109476,
+        "total_return": -0.023871230926513665,
+        "max_drawdown": -0.04876649724634896,
+        "worst_trade": -0.17056043446063995,
+        "worst_mae": -0.22298483550548553,
+        "buy_decisions": 11,
+        "total_decisions": 2760,
+        "no_action": 2749,
+        "holding_minutes_mean": 307.72727272727275,
+        "stocks": [
+          {
+            "symbol": "AAOI",
+            "n": 3,
+            "tp": 3,
+            "precision": 1.0,
+            "ci": [
+              0.4385029682449546,
+              1.0
+            ],
+            "baseline": 0.547019981758462,
+            "lift": 0.452980018241538,
+            "passed": false
+          },
+          {
+            "symbol": "AXTI",
+            "n": 8,
+            "tp": 5,
+            "precision": 0.625,
+            "ci": [
+              0.30574239460262737,
+              0.8631557141764026
+            ],
+            "baseline": 0.6272743090676764,
+            "lift": -0.00227430906767645,
+            "passed": false
+          }
+        ],
+        "potential_win_stock_days": 835,
+        "recall_unique_stock_day": 0.009580838323353293,
+        "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+      },
+      "passed": false
+    },
+    {
+      "threshold": 0.7,
+      "metrics": {
+        "n": 3,
+        "tp": 1,
+        "fp": 2,
+        "unknown": 0,
+        "precision": 0.3333333333333333,
+        "ci": [
+          0.06149194472039621,
+          0.7923403991979522
+        ],
+        "date_count": 3,
+        "baseline": 0.6204997010529042,
+        "lift": -0.2871663677195709,
+        "net_mean": -0.06609537824988365,
+        "total_return": -0.038503939743042004,
+        "max_drawdown": -0.03991941030441992,
+        "worst_trade": -0.11758886277675629,
+        "worst_mae": -0.18761812150478363,
+        "buy_decisions": 3,
+        "total_decisions": 2760,
+        "no_action": 2757,
+        "holding_minutes_mean": 393.3333333333333,
+        "stocks": [
+          {
+            "symbol": "AXTI",
+            "n": 3,
+            "tp": 1,
+            "precision": 0.3333333333333333,
+            "ci": [
+              0.06149194472039621,
+              0.7923403991979522
+            ],
+            "baseline": 0.6204997010529042,
+            "lift": -0.2871663677195709,
+            "passed": false
+          }
+        ],
+        "potential_win_stock_days": 835,
+        "recall_unique_stock_day": 0.0011976047904191617,
+        "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+      },
+      "passed": false
+    },
+    {
+      "threshold": 0.75,
+      "metrics": {
+        "n": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "ci": [
+          null,
+          null
+        ],
+        "date_count": 0,
+        "baseline": null,
+        "lift": null,
+        "net_mean": null,
+        "total_return": 0.0,
+        "max_drawdown": 0.0,
+        "worst_trade": null,
+        "worst_mae": null,
+        "buy_decisions": 0,
+        "total_decisions": 2760,
+        "no_action": 2760,
+        "holding_minutes_mean": null,
+        "stocks": [],
+        "potential_win_stock_days": 835,
+        "recall_unique_stock_day": 0.0,
+        "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+      },
+      "passed": false
+    },
+    {
+      "threshold": 0.8,
+      "metrics": {
+        "n": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "ci": [
+          null,
+          null
+        ],
+        "date_count": 0,
+        "baseline": null,
+        "lift": null,
+        "net_mean": null,
+        "total_return": 0.0,
+        "max_drawdown": 0.0,
+        "worst_trade": null,
+        "worst_mae": null,
+        "buy_decisions": 0,
+        "total_decisions": 2760,
+        "no_action": 2760,
+        "holding_minutes_mean": null,
+        "stocks": [],
+        "potential_win_stock_days": 835,
+        "recall_unique_stock_day": 0.0,
+        "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+      },
+      "passed": false
+    },
+    {
+      "threshold": 0.85,
+      "metrics": {
+        "n": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "ci": [
+          null,
+          null
+        ],
+        "date_count": 0,
+        "baseline": null,
+        "lift": null,
+        "net_mean": null,
+        "total_return": 0.0,
+        "max_drawdown": 0.0,
+        "worst_trade": null,
+        "worst_mae": null,
+        "buy_decisions": 0,
+        "total_decisions": 2760,
+        "no_action": 2760,
+        "holding_minutes_mean": null,
+        "stocks": [],
+        "potential_win_stock_days": 835,
+        "recall_unique_stock_day": 0.0,
+        "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+      },
+      "passed": false
+    },
+    {
+      "threshold": 0.9,
+      "metrics": {
+        "n": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "ci": [
+          null,
+          null
+        ],
+        "date_count": 0,
+        "baseline": null,
+        "lift": null,
+        "net_mean": null,
+        "total_return": 0.0,
+        "max_drawdown": 0.0,
+        "worst_trade": null,
+        "worst_mae": null,
+        "buy_decisions": 0,
+        "total_decisions": 2760,
+        "no_action": 2760,
+        "holding_minutes_mean": null,
+        "stocks": [],
+        "potential_win_stock_days": 835,
+        "recall_unique_stock_day": 0.0,
+        "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+      },
+      "passed": false
+    }
+  ],
+  "artifact": "capacity_recovery_forest_2026-09.pkl",
+  "artifact_sha256": "e38311b292059ff652a0d5dda4f7bdb96b3d47ac0c7efb0e75dea6dbb6ff204c",
+  "protocol_sha256": "ecfd7f1c2e51ad3329a79390e618f96dcbc7aa5da9b697dc2f9c58cb984c4add",
+  "outer": {
+    "n": 7,
+    "tp": 2,
+    "fp": 5,
+    "unknown": 0,
+    "precision": 0.2857142857142857,
+    "ci": [
+      0.08221892400405678,
+      0.6410655481673808
+    ],
+    "date_count": 7,
+    "baseline": 0.48975980424595456,
+    "lift": -0.20404551853166886,
+    "net_mean": -0.01615546164768083,
+    "total_return": -0.023718865280151324,
+    "max_drawdown": -0.02997643009185791,
+    "worst_trade": -0.048660703003406525,
+    "worst_mae": -0.05779654160141945,
+    "buy_decisions": 7,
+    "total_decisions": 2898,
+    "no_action": 2891,
+    "holding_minutes_mean": 296.42857142857144,
+    "stocks": [
+      {
+        "symbol": "AXTI",
+        "n": 4,
+        "tp": 1,
+        "precision": 0.25,
+        "ci": [
+          0.04558726080970055,
+          0.6993581574175981
+        ],
+        "baseline": 0.5638336127925063,
+        "lift": -0.3138336127925063,
+        "passed": false
+      },
+      {
+        "symbol": "LIFE",
+        "n": 2,
+        "tp": 1,
+        "precision": 0.5,
+        "ci": [
+          0.09453120573423074,
+          0.9054687942657693
+        ],
+        "baseline": 0.4548224139356328,
+        "lift": 0.045177586064367226,
+        "passed": false
+      },
+      {
+        "symbol": "SDGR",
+        "n": 1,
+        "tp": 0,
+        "precision": 0.0,
+        "ci": [
+          0.0,
+          0.7934506856227626
+        ],
+        "baseline": 0.2633393506803912,
+        "lift": -0.2633393506803912,
+        "passed": false
+      }
+    ],
+    "potential_win_stock_days": 820,
+    "recall_unique_stock_day": 0.0024390243902439024,
+    "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+  },
+  "outer_gate_pass": false,
+  "base_artifact_sha256": "56e56013f6d1b8eaa2bd4ef07cd3d800723f94f85c99b10d511a5ed6aca2cf85",
+  "phase_thresholds": {
+    "pre": null,
+    "regular": 0.6
+  },
+  "phase_details": {
+    "pre": {
+      "threshold": null,
+      "brier": 0.13238619086447748,
+      "choices": [
+        {
+          "threshold": 0.6,
+          "metrics": {
+            "n": 12,
+            "tp": 7,
+            "fp": 5,
+            "unknown": 0,
+            "precision": 0.5833333333333334,
+            "ci": [
+              0.31951131254954973,
+              0.8067396863412435
+            ],
+            "date_count": 12,
+            "baseline": 0.6131026086945189,
+            "lift": -0.029769275361185565,
+            "net_mean": -0.019630893754462402,
+            "total_return": -0.010313089523315444,
+            "max_drawdown": -0.016863337819950086,
+            "worst_trade": -0.17961323261260986,
+            "worst_mae": -0.1852450966835022,
+            "buy_decisions": 12,
+            "total_decisions": 1320,
+            "no_action": 1308,
+            "holding_minutes_mean": 422.0833333333333,
+            "stocks": [
+              {
+                "symbol": "AXTI",
+                "n": 12,
+                "tp": 7,
+                "precision": 0.5833333333333334,
+                "ci": [
+                  0.31951131254954973,
+                  0.8067396863412435
+                ],
+                "baseline": 0.6131026086945189,
+                "lift": -0.029769275361185565,
+                "passed": false
+              }
+            ],
+            "potential_win_stock_days": 740,
+            "recall_unique_stock_day": 0.00945945945945946,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.65,
+          "metrics": {
+            "n": 3,
+            "tp": 2,
+            "fp": 1,
+            "unknown": 0,
+            "precision": 0.6666666666666666,
+            "ci": [
+              0.2076596008020477,
+              0.9385080552796037
+            ],
+            "date_count": 3,
+            "baseline": 0.6068515542839236,
+            "lift": 0.05981511238274306,
+            "net_mean": -0.020598421494166057,
+            "total_return": -0.015444695892333993,
+            "max_drawdown": -0.028687370451643712,
+            "worst_trade": -0.11973526328802109,
+            "worst_mae": -0.18959419429302216,
+            "buy_decisions": 3,
+            "total_decisions": 1320,
+            "no_action": 1317,
+            "holding_minutes_mean": 331.6666666666667,
+            "stocks": [
+              {
+                "symbol": "AXTI",
+                "n": 3,
+                "tp": 2,
+                "precision": 0.6666666666666666,
+                "ci": [
+                  0.2076596008020477,
+                  0.9385080552796037
+                ],
+                "baseline": 0.6068515542839236,
+                "lift": 0.05981511238274306,
+                "passed": false
+              }
+            ],
+            "potential_win_stock_days": 740,
+            "recall_unique_stock_day": 0.002702702702702703,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.7,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1320,
+            "no_action": 1320,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 740,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.75,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1320,
+            "no_action": 1320,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 740,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.8,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1320,
+            "no_action": 1320,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 740,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.85,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1320,
+            "no_action": 1320,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 740,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.9,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1320,
+            "no_action": 1320,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 740,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        }
+      ]
+    },
+    "regular": {
+      "threshold": 0.6,
+      "brier": 0.02882885359478393,
+      "choices": [
+        {
+          "threshold": 0.6,
+          "metrics": {
+            "n": 30,
+            "tp": 21,
+            "fp": 9,
+            "unknown": 0,
+            "precision": 0.7,
+            "ci": [
+              0.5212421254128504,
+              0.8333525173175619
+            ],
+            "date_count": 18,
+            "baseline": 0.5103388387829678,
+            "lift": 0.18966116121703214,
+            "net_mean": 0.009051132919072795,
+            "total_return": 0.05427955108642579,
+            "max_drawdown": -0.03641862661597506,
+            "worst_trade": -0.10360601544380188,
+            "worst_mae": -0.12385737150907516,
+            "buy_decisions": 30,
+            "total_decisions": 1440,
+            "no_action": 1410,
+            "holding_minutes_mean": 137.16666666666666,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 7,
+                "tp": 5,
+                "precision": 0.7142857142857143,
+                "ci": [
+                  0.35893445183261935,
+                  0.9177810759959433
+                ],
+                "baseline": 0.4821618594046177,
+                "lift": 0.2321238548810966,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 16,
+                "tp": 12,
+                "precision": 0.75,
+                "ci": [
+                  0.5050168346449122,
+                  0.8981793250878696
+                ],
+                "baseline": 0.5687438110542145,
+                "lift": 0.18125618894578555,
+                "passed": true
+              },
+              {
+                "symbol": "LIFE",
+                "n": 4,
+                "tp": 2,
+                "precision": 0.5,
+                "ci": [
+                  0.15003898915214947,
+                  0.8499610108478506
+                ],
+                "baseline": 0.43452607972078583,
+                "lift": 0.06547392027921417,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 2,
+                "tp": 1,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": 0.41160134781318103,
+                "lift": 0.08839865218681897,
+                "passed": false
+              },
+              {
+                "symbol": "SMTC",
+                "n": 1,
+                "tp": 1,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": 0.2738241562797765,
+                "lift": 0.7261758437202235,
+                "passed": false
+              }
+            ],
+            "potential_win_stock_days": 514,
+            "recall_unique_stock_day": 0.04085603112840467,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": true
+        },
+        {
+          "threshold": 0.65,
+          "metrics": {
+            "n": 23,
+            "tp": 15,
+            "fp": 8,
+            "unknown": 0,
+            "precision": 0.6521739130434783,
+            "ci": [
+              0.44890335377263,
+              0.8118872406120227
+            ],
+            "date_count": 17,
+            "baseline": 0.52322002719254,
+            "lift": 0.12895388585093825,
+            "net_mean": 0.004997870610247407,
+            "total_return": 0.022048053970336934,
+            "max_drawdown": -0.046324410630464774,
+            "worst_trade": -0.10360601544380188,
+            "worst_mae": -0.12385737150907516,
+            "buy_decisions": 23,
+            "total_decisions": 1440,
+            "no_action": 1417,
+            "holding_minutes_mean": 148.2608695652174,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 4,
+                "tp": 3,
+                "precision": 0.75,
+                "ci": [
+                  0.30064184258240184,
+                  0.9544127391902995
+                ],
+                "baseline": 0.48764032908495825,
+                "lift": 0.26235967091504175,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 15,
+                "tp": 10,
+                "precision": 0.6666666666666666,
+                "ci": [
+                  0.41713547738519774,
+                  0.8482367556028526
+                ],
+                "baseline": 0.5677350674085555,
+                "lift": 0.09893159925811112,
+                "passed": false
+              },
+              {
+                "symbol": "LIFE",
+                "n": 2,
+                "tp": 1,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": 0.432644855307073,
+                "lift": 0.06735514469292703,
+                "passed": false
+              },
+              {
+                "symbol": "NBIS",
+                "n": 1,
+                "tp": 1,
+                "precision": 1.0,
+                "ci": [
+                  0.20654931437723745,
+                  1.0
+                ],
+                "baseline": 0.4298751116937892,
+                "lift": 0.5701248883062108,
+                "passed": false
+              },
+              {
+                "symbol": "SMTC",
+                "n": 1,
+                "tp": 0,
+                "precision": 0.0,
+                "ci": [
+                  0.0,
+                  0.7934506856227626
+                ],
+                "baseline": 0.2723084756523181,
+                "lift": -0.2723084756523181,
+                "passed": false
+              }
+            ],
+            "potential_win_stock_days": 514,
+            "recall_unique_stock_day": 0.029182879377431907,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.7,
+          "metrics": {
+            "n": 16,
+            "tp": 11,
+            "fp": 5,
+            "unknown": 0,
+            "precision": 0.6875,
+            "ci": [
+              0.44404355834740666,
+              0.8583535614521796
+            ],
+            "date_count": 12,
+            "baseline": 0.5406665460977848,
+            "lift": 0.14683345390221525,
+            "net_mean": 0.007022888528808835,
+            "total_return": 0.021452855529785264,
+            "max_drawdown": -0.03241877439323593,
+            "worst_trade": -0.10360601544380188,
+            "worst_mae": -0.12385737150907516,
+            "buy_decisions": 16,
+            "total_decisions": 1440,
+            "no_action": 1424,
+            "holding_minutes_mean": 128.125,
+            "stocks": [
+              {
+                "symbol": "AAOI",
+                "n": 2,
+                "tp": 1,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": 0.48274202549913126,
+                "lift": 0.017257974500868745,
+                "passed": false
+              },
+              {
+                "symbol": "AXTI",
+                "n": 12,
+                "tp": 9,
+                "precision": 0.75,
+                "ci": [
+                  0.46769466506643426,
+                  0.9110583316059453
+                ],
+                "baseline": 0.5683242479960122,
+                "lift": 0.18167575200398778,
+                "passed": true
+              },
+              {
+                "symbol": "LIFE",
+                "n": 2,
+                "tp": 1,
+                "precision": 0.5,
+                "ci": [
+                  0.09453120573423074,
+                  0.9054687942657693
+                ],
+                "baseline": 0.432644855307073,
+                "lift": 0.06735514469292703,
+                "passed": false
+              }
+            ],
+            "potential_win_stock_days": 514,
+            "recall_unique_stock_day": 0.021400778210116732,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.75,
+          "metrics": {
+            "n": 7,
+            "tp": 5,
+            "fp": 2,
+            "unknown": 0,
+            "precision": 0.7142857142857143,
+            "ci": [
+              0.35893445183261935,
+              0.9177810759959433
+            ],
+            "date_count": 7,
+            "baseline": 0.5651437156139665,
+            "lift": 0.14914199867174782,
+            "net_mean": 0.0066473605776471755,
+            "total_return": 0.00881196006774898,
+            "max_drawdown": -0.027660813438762366,
+            "worst_trade": -0.09386971592903137,
+            "worst_mae": -0.09815069288015366,
+            "buy_decisions": 7,
+            "total_decisions": 1440,
+            "no_action": 1433,
+            "holding_minutes_mean": 113.57142857142857,
+            "stocks": [
+              {
+                "symbol": "AXTI",
+                "n": 7,
+                "tp": 5,
+                "precision": 0.7142857142857143,
+                "ci": [
+                  0.35893445183261935,
+                  0.9177810759959433
+                ],
+                "baseline": 0.5651437156139665,
+                "lift": 0.14914199867174782,
+                "passed": false
+              }
+            ],
+            "potential_win_stock_days": 514,
+            "recall_unique_stock_day": 0.009727626459143969,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.8,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1440,
+            "no_action": 1440,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 514,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.85,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1440,
+            "no_action": 1440,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 514,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        },
+        {
+          "threshold": 0.9,
+          "metrics": {
+            "n": 0,
+            "tp": 0,
+            "fp": 0,
+            "unknown": 0,
+            "precision": null,
+            "ci": [
+              null,
+              null
+            ],
+            "date_count": 0,
+            "baseline": null,
+            "lift": null,
+            "net_mean": null,
+            "total_return": 0.0,
+            "max_drawdown": 0.0,
+            "worst_trade": null,
+            "worst_mae": null,
+            "buy_decisions": 0,
+            "total_decisions": 1440,
+            "no_action": 1440,
+            "holding_minutes_mean": null,
+            "stocks": [],
+            "potential_win_stock_days": 514,
+            "recall_unique_stock_day": 0.0,
+            "recall_definition": "distinct winning bought stock-days / distinct stock-days with any delayed-entry +3% opportunity"
+          },
+          "passed": false
+        }
+      ]
+    }
+  },
+  "phase_protocol_sha256": "7233abe3939efa9923a3e9ec31a37e1df6a061cdb796e41c7f4e9bf848d209b6",
+  "parent_phase_artifact_sha256": "c46ff2524cc165d6477b042d2e0d5854ea121e32cc293071673a64e01aa44faf",
+  "capacity_policy_sha256": "b871c587f001cd01511dbb0c43a5c82ec1472eb037908c08d0c61153d60583d6"
+}
