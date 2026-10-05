@@ -34,7 +34,7 @@ def universe():
     def priority(r):
         g=r['groups'];return (0 if '特别关注' in g else 1 if '全部' in g else 2 if 'QQQ' in g else 3,r['symbol'])
     rows=sorted(rows.values(),key=priority)
-    write(OUT/'universe.json',dict(observed_at=now(),members=rows,membership='current_snapshot_retrospective_not_PIT',legacy_funds=old['funds']))
+    write(OUT/'universe.json',dict(observed_at=watch.get('observed_at'),assembled_at=now(),members=rows,membership='current_snapshot_retrospective_not_PIT',legacy_funds=old['funds'],legacy_universe_sha256=sha(OLD/'universe.json')))
     return rows
 
 def main():
@@ -66,7 +66,7 @@ def main():
                 try:frames.append(normalize_archive(pd.read_parquet(local)));sources.append('R2:'+key)
                 except ValueError:pass
             f=pd.concat(frames,ignore_index=True).drop_duplicates('start').sort_values('start') if frames else pd.DataFrame()
-            if len(f) and str(f.end.max())[:10]>=a.end:
+            if len(f) and str(f.start.min())[:10]<=a.start and str(f.end.max())[:10]>=a.end:
                 save(f,path);item=dict(**r,status='r2_available',sources=sources,first=str(f.start.min()),last=str(f.end.max()),bars=len(f),requested=[a.start,a.end],received_at=now());write(meta,item);report.append(item);continue
             if history_requests>=a.limit:report.append(dict(**r,status='queued_free_history',reason='per-run conservative new-symbol cap'));continue
             if q is None:q=ft.OpenQuoteContext(host='127.0.0.1',port=11111)
@@ -74,7 +74,10 @@ def main():
             # Each new symbol consumes existing history quota; no paid quota purchase.
             history_requests+=1
             start=a.start
-            if len(f):start=max(a.start,str(f.end.max())[:10])
+            # A recent R2 tail cannot satisfy the requested historical prefix.
+            # Fetch the full range when the first bound is missing; keep the
+            # original archive's rows on overlap when merging the new history.
+            if len(f) and str(f.start.min())[:10]<=a.start:start=max(a.start,str(f.end.max())[:10])
             while True:
                 ret,bars,page=q.request_history_kline('US.'+symbol,start=start,end=a.end,ktype=ft.KLType.K_5M,autype=ft.AuType.NONE,max_count=1000,page_req_key=page,extended_time=True,session=ft.Session.ALL)
                 if ret!=ft.RET_OK:failed=str(bars)[:180];break
@@ -83,7 +86,7 @@ def main():
                 if not page:break
                 time.sleep(.4)
             if pages:
-                merged=pd.concat(([f] if len(f) else [])+pages,ignore_index=True).drop_duplicates('start',keep='last').sort_values('start');save(merged,path)
+                merged=pd.concat(pages+([f] if len(f) else []),ignore_index=True).drop_duplicates('start',keep='last').sort_values('start');save(merged,path)
                 item=dict(**r,status='futu_available' if failed is None else 'partial',sources=sources+['OpenD_ALL_NONE_5m'],first=str(merged.start.min()),last=str(merged.end.max()),bars=len(merged),pages=pagecount,requested=[a.start,a.end],received_at=now(),sha256=sha(path),error=failed)
             else:item=dict(**r,status='unavailable',requested=[a.start,a.end],received_at=now(),error=failed)
             write(meta,item);report.append(item);journal('new_minute_history',item);print(json.dumps(dict(symbol=symbol,status=item['status'],pages=pagecount)),flush=True)

@@ -43,7 +43,8 @@ def main():
     for c in panel.select_dtypes('float'):
         if c not in ['entry','target']:panel[c]=panel[c].astype('float32')
     panel.symbol=panel.symbol.astype('category');panel.day=panel.day.astype('category');save(panel,dest/'cache/panel.parquet')
-    old=pd.read_parquet(OUT/'cache/panel.parquet');old,old_actions=repair_action_labels(old);save(old,dest/'cache/H0_panel.parquet')
+    old=pd.read_parquet(OUT/'cache/panel.parquet');old.symbol=old.symbol.astype(str);old.day=old.day.astype(str)
+    old,old_actions=repair_action_labels(old);old.symbol=old.symbol.astype('category');old.day=old.day.astype('category');save(old,dest/'cache/H0_panel.parquet')
     save(pd.concat(mature,ignore_index=True),dest/'cache/anchors.parquet')
     write(dest/'coverage.json',dict(at=now(),requested=['2024-10-04','2026-09-30'],actual_features=[min(panel.day.astype(str)),max(panel.day.astype(str))],rows=len(panel),symbols=panel.symbol.nunique(),panel_sha256=sha(dest/'cache/panel.parquet'),H0_panel_sha256=sha(dest/'cache/H0_panel.parquet'),base_features=base_cols,actions=actions,H0_actions=old_actions,sources=sources,protocol_sha256=sha(dest/'PROTOCOL.md'),membership='current_snapshot_retrospective_not_PIT',mature_rule='fixed 09:35 cutoff, 09:40 entry; known label_end strictly earlier than signal day'))
     print(json.dumps(dict(stage='R03_prepared',rows=len(panel))),flush=True)

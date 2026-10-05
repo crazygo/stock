@@ -5,7 +5,7 @@ from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from urllib.parse import urlparse,parse_qs
 import numpy as np
 import pandas as pd
-from common import OUT,OLD,SESSIONS,clean
+from common import OUT,OLD,DATES,SESSIONS,clean
 
 def raw_path(symbol):
     if not symbol or not all(c.isalnum() or c in '.-' for c in symbol):raise ValueError('invalid symbol')
@@ -43,6 +43,7 @@ def route(arm):
     if arm in ['P0','P1','E0','E1']:return OUT/'R02'
     if arm in ['F0','F1']:return OUT/'R04'
     if arm in ['H0','H1','H2','H3']:return OUT/'R03'
+    if arm in ['D0','D1']:return OUT/'R05'
     raise ValueError('unknown registered arm')
 
 def events(arm,variant):
@@ -54,13 +55,23 @@ def events(arm,variant):
 def inspect_event(q):
     ev=next((e for e in events(q['arm'],q['variant']) if e['symbol']==q['symbol'] and e['day']==q['day']),None)
     if ev is None:raise ValueError('signal unavailable')
+    ev=dict(ev)
+    if not ev.get('label_end'):
+        endday=DATES[DATES.index(ev['day'])+4];endminute=570+SESSIONS[endday]['duration_minutes']
+        ev['label_end']=endday+f' {endminute//60:02d}:{endminute%60:02d}:00';ev['display_deadline_from_calendar']=True
     dest=route(q['arm']);meta=json.loads((dest/'cache/runs'/f"{q['arm']}_{ev['day'][:7]}"/'meta.json').read_text())
     f=pd.read_parquet(dest/'cache'/meta.get('panel_file','panel.parquet'),columns=['symbol','day','minute']+meta['features'],filters=[('symbol','==',ev['symbol']),('day','==',ev['day']),('minute','==',ev['minute'])])
     p=raw_path(ev['symbol']);r=raw(ev['symbol'],p.stat().st_mtime);entry=pd.Timestamp(ev['day'])+pd.Timedelta(minutes=ev['minute']+5)
     mask=(r.start>=entry)&(r.end<=pd.Timestamp(ev['label_end']))&(r.minute>=570)&(r.minute<r.day.map({d:570+s['duration_minutes'] for d,s in SESSIONS.items()}))
-    touches=r[mask&(r.high>=ev['target'])]
+    target=ev.get('target');touches=r[mask&(r.high>=target)] if target is not None and np.isfinite(target) else r.iloc[:0]
+    phase='pre' if ev['minute']<=570 else 'regular'
+    # An emitted signal's selection gate required a fitted candidate calibrator.
+    # Use this signal month's metadata, never the newest exported month's fit.
+    calibration_status=dict(candidate_calibrated=True,
+        extra_first_calibrated=q['variant']=='top_one' and meta['top_calibration_counts'][phase]['calibrator_fitted'],
+        model_month=meta['month'],interpretation='research estimate; calibration fit does not prove reliability')
     return dict(event=ev,features=f.iloc[0].to_dict(),first_touch=str(touches.end.iloc[0]) if ev['y']==1 and len(touches) else None,
-         algorithm=meta['algorithm'],training=meta['training'],candidate_calibration=meta['candidate_calibration'],top_calibration=meta['top_calibration'],selection=meta['selection'])
+         algorithm=meta['algorithm'],training=meta['training'],candidate_calibration=meta['candidate_calibration'],top_calibration=meta['top_calibration'],selection=meta['selection'],calibration_status=calibration_status)
 
 class Handler(BaseHTTPRequestHandler):
     def send(self,value,status=200,mime='application/json'):
@@ -73,7 +84,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send((OUT/('index.html' if p.path=='/' else p.path[1:])).read_text(),mime='text/html')
             if p.path=='/api/results':
                 reports=[]
-                for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04')]:
+                for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05')]:
                     path=base/'results.json'
                     if path.exists():
                         r=json.loads(path.read_text());reports.extend(dict(**arm,round=rid) for arm in r['arms'])

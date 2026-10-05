@@ -24,7 +24,7 @@ def estimator(model):
 
 def main():
  dest=OUT/'portable_models';dest.mkdir(exist_ok=True);models=[];checks=[]
- for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04')]:
+ for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05')]:
   results=base/'results.json'
   if not results.exists():continue
   for arm in json.loads(results.read_text())['arms']:
@@ -32,6 +32,10 @@ def main():
    if not paths:continue
    p=paths[-1];m=pickle.loads(p.read_bytes());b=m['baseline']
    a=dict(schema='stock-v6-native-1',round=rid,arm=m['arm'],month=m['month'],features=m['features'],registered=m['registered'],estimator=estimator(m['model']),candidate_calibrators={k:calibration(v) for k,v in m['candidate_calibrators'].items()},top_calibrators={k:calibration(v) for k,v in m['top_calibrators'].items()},variants=m['variants'],baseline=dict(vol_edges=b['vol_edges'],minute=b['minute'],stock_minute=[[s,int(t),v] for (s,t),v in b['stock_minute'].items()],matched=[[s,int(t),int(v),p] for (s,t,v),p in b['matched'].items()]),source_pickle_sha256=sha(p),independently_admitted=False)
+   metadata=json.loads((base/'cache/runs'/f"{m['arm']}_{m['month']}"/'meta.json').read_text())
+   a['training_protocol']={key:metadata.get(key) for key in ['training','train_days','candidate_calibration','top_calibration','selection','target','panel_sha256','protocol_sha256']}
+   a['training_protocol']['top_calibration_dedup']=metadata.get('top_calibration_dedup','phase_local_stock_day')
+   a['training_protocol']['baseline_vol_edges']=metadata.get('baseline_vol_edges','training_candidate_and_top_blocks')
    file=dest/f"{rid}_{m['arm']}_{m['month']}.json.gz";file.write_bytes(gzip.compress(json.dumps(clean(a),separators=(',',':'),allow_nan=False).encode(),compresslevel=9,mtime=0))
    reloaded=json.loads(gzip.decompress(file.read_bytes()));cols=['symbol','day','minute']+m['features']
    panel_file='H0_panel.parquet' if rid=='R03' and m['arm']=='H0' else 'panel.parquet'

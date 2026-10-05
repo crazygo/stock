@@ -16,7 +16,7 @@ def source_snapshot(dest,name):
 
 def unavailable_report(reason):
     report=dict(version='v6_research_reference',calculated_at=now(),current_probability=False,issued_signal=False,orders_sent=False,target='5d5pct',abstention=reason,routes=[])
-    for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04')]:
+    for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05')]:
         path=base/'results.json'
         if path.exists():
             for arm in json.loads(path.read_text())['arms']:
@@ -24,7 +24,7 @@ def unavailable_report(reason):
     return report
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--top',type=int,default=3);ap.add_argument('--refresh',action='store_true');ap.add_argument('--round',choices=['all','R00','R01','R02','R03','R04'],default='all');ap.add_argument('--format',choices=['json','markdown'],default='markdown');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--top',type=int,default=3);ap.add_argument('--refresh',action='store_true');ap.add_argument('--round',choices=['all','R00','R01','R02','R03','R04','R05'],default='all');ap.add_argument('--format',choices=['json','markdown'],default='markdown');a=ap.parse_args()
     if not 1<=a.top<=20:ap.error('top must be 1–20')
     path=OUT/'cache/latest_features.parquet'
     if a.refresh or not path.exists():
@@ -38,23 +38,28 @@ def main():
     endday=DATES[DATES.index(day)+4];deadline=endday+' '+('13:00' if SESSIONS[endday]['duration_minutes']==210 else '16:00')+' America/New_York'
     report=dict(version='v6_research_reference',calculated_at=now(),feature_cutoff=f'{day} {minute//60:02d}:{minute%60:02d} America/New_York',current_probability=False,issued_signal=False,orders_sent=False,
         target='5d5pct',window_end=deadline,abstention='research models not independently admitted; past session is not a current signal',routes=[])
-    rounds=['R00','R01','R02','R03','R04'] if a.round=='all' else [a.round]
+    rounds=['R00','R01','R02','R03','R04','R05'] if a.round=='all' else [a.round]
     for round_id in rounds:
       dest=OUT if round_id=='R00' else OUT/round_id
       if not (dest/'results.json').exists():continue
       registered_arms=json.loads((dest/'results.json').read_text())['arms']
       roundframe=frame.copy();upstream_meta=None
-      if round_id=='R03':
+      if round_id in ['R03','R05']:
         from history_prepare import mature_features
-        path=dest/'cache/anchors.parquet'
+        path=OUT/'R03/cache/anchors.parquet'
         if path.exists():anchors=pd.read_parquet(path)
         else:
-            manifest=json.loads((dest/'mature_anchor_manifest.json').read_text());source=OUT/manifest['file'];assert sha(source)==manifest['sha256']
+            manifest=json.loads((OUT/'R03/mature_anchor_manifest.json').read_text());source=OUT/manifest['file'];assert sha(source)==manifest['sha256']
             anchors=pd.DataFrame(json.loads(gzip.decompress(source.read_bytes()))['records'])
         additions=[]
         for symbol in roundframe.symbol.unique():
             f=mature_features(anchors[anchors.symbol==symbol],[day]);f['symbol']=symbol;additions.append(f)
         roundframe=roundframe.merge(pd.concat(additions,ignore_index=True),on=['symbol','day'],how='left',validate='one_to_one')
+      if round_id=='R05':
+        from sector_daily import peer_daily
+        daily=pd.read_parquet(OUT/'cache/latest_daily.parquet',columns=['symbol','day','d_return_5','d_return_20'])
+        context=peer_daily(daily[daily.day<=day]);context=context[context.day==day]
+        roundframe=roundframe.merge(context,on=['symbol','day'],how='left',validate='one_to_one')
       if round_id=='R01':
         native=load_upstream()
         if native:
@@ -91,13 +96,16 @@ def main():
                  evaluation_price=price,target_price=price*1.05,price_status='historical_next_Open_known' if len(actual)==1 else 'indicative_close_only',
                  evaluation_entry=f'{day} {(minute+5)//60:02d}:{(minute+5)%60:02d} America/New_York',window_end=deadline,issued_signal=False,
                  reason='no current frozen admission; probabilities are research estimates, not proven precision'))
-        report['routes'].append(dict(round=round_id,arm=arm,name=name,algorithm=algorithm,model_month=model['month'],model_sha256=model_sha,artifact_format='data_only_native' if native else 'local_training_pickle',upstream=upstream_meta,options=options,scored=len(f)))
+        cals=model['candidate_calibrators'];tops=model['top_calibrators']
+        cal_status=dict(candidate_calibrated=cals[phase] is not None,extra_first_calibrated=tops[phase] is not None,probability_interpretation='temporally calibrated research estimate' if cals[phase] is not None else 'uncalibrated raw research score')
+        report['routes'].append(dict(round=round_id,arm=arm,name=name,algorithm=algorithm,model_month=model['month'],training_protocol=model.get('training_protocol'),calibration_status=cal_status,model_sha256=model_sha,artifact_format='data_only_native' if native else 'local_training_pickle',upstream=upstream_meta,options=options,scored=len(f)))
     write(OUT/'reference_latest.json',report)
     if a.format=='json':print(json.dumps(clean(report),ensure_ascii=False,indent=2,allow_nan=False))
     else:
         print(f"五日+5%研究参考；行情截止 {report['feature_cutoff']}；截止 {deadline}。当前有效信号：弃权。")
         for route in report['routes']:
             print('\n'+route['round']+' '+route['arm']+' '+route['name']+' / '+route['algorithm'])
+            if route.get('training_protocol'):print('训练窗口 '+str(route['training_protocol']['training'])+'；校准 '+str(route.get('calibration_status')))
             for r in route['options']:print(f"{r['symbol']}: 概率估计{r['probability']:.2%}，目标${r['target_price']:.4f}，有效门槛未获准，未发信号。")
             if not route['options']:print(route['reason'])
 if __name__=='__main__':main()

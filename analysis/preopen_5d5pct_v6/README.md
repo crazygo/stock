@@ -1,6 +1,6 @@
 # 五日 +5% 免费数据研究 v6
 
-独立实验，保留v5模型、结果与十月冻结配置。R00只称已暴露历史开发回测，没有通过未来独立验收。
+独立实验，保留v5模型、结果与十月冻结配置。全部轮次只称已暴露历史开发回测，没有通过未来独立验收。
 
 研究协议见 PROTOCOL.md；当前结果 REPORT.md / results.json；持续工作状态 PROGRESS.md。三思路调试页面：opportunity.html、sector.html、events.html，统一首页 index.html。真实行情通过本地只读API读取，原始分钟数据不嵌入Git。
 
@@ -33,10 +33,18 @@ R02：先读R02/PROTOCOL.md，再运行event_prepare.py、events_research.py --f
 
 R04季度实际同比对照：facts_prepare.py、facts_research.py --fit、verify.py --round R04、calibration_audit.py --round R04。原文抽查见SEC_FACTS_SAMPLE.md；没有历史共识，不称超预期。favorite_report.py补充当前全部33只特别关注美股股票，含零信号/未注册。
 
-portable_models/仅含最新月原生数据模型，SHA核验；export_models.py生成并对16模型及日级上游分别复算。统一命令优先原生加载，已用禁止pickle.loads的运行检验。数值移植不证明效果；原始行情/事件缓存仍需本地或数据准备，不附带伪造的当前行情。
+portable_models/仅含最新月原生数据模型，SHA核验；export_models.py生成并对全部最新月模型及日级上游分别复算。统一命令优先原生加载，已用禁止pickle.loads的运行检验。数值移植不证明效果；原始行情/事件缓存仍需本地或数据准备，不附带伪造的当前行情。
 
 R03完整历史/成熟状态：先读R03/PROTOCOL.md。backfill_history.py --wait逐股补过去行情，continue_history.py在完成的符号上准备特征，随后顺序运行history_prepare.py、history_research.py --fit、校准、特别关注、独立复算及原生导出。deadline前无法完成的历史明确保留部分覆盖，不把新取得股票自动授予模型资格。原始价格逐项保持，不覆盖旧raw。
 
 旧+3%固定信号另作五日对照：old_control.py / OLD_CONTROL.md。它重新核对新行动与匹配五日基准，不重选旧信号，也不把当天+3%旧概率当五日概率。免费当前快照与盘口能力见execution_audit.json / book_probe.json；当前报价不证明历史成交。
 
 本轮复核发现原第一名校准分时去重及波动分层边界与文字契约的差异；R03四臂统一修正，原结果保留。历史覆盖变化、规则修复和新增市场信息分别解释。第一批提交e3504fa只含本目录。
+
+交付入口：[DELIVERY.md](DELIVERY.md)；卡点与未达约束在delivery_manifest.json，跨轮多次比较在INPUT_STABILITY.md。
+
+R05前日多日板块：先读R05/PROTOCOL.md，然后sector_daily.py --prepare、sector_daily.py --fit --workers 2、finish_r05.py。对照D0重训须与R03 H3逐项等价，不计作新市场证据。全部尝试含工程失败日志保留；每轮复算以verification.json为准。
+
+免费新成员审计见membership_addendum.json：实际自选ETF分类59只，旧来源57只，其中21只取得完整发行人美股持仓，36只仍未解决或属特殊资产/分类。新增XLE完整文件有21美股、现金/货币基金与衍生品另列；LUMA完整文件在本地403。新来源仅下一版准备，不改已冻结组。
+
+latest_features.py只生成最近已完成交易日的历史参考前缀，不自动盘中刷新；统一命令明确current_probability=false。未取得未来资格，所以本次没有部署五分钟有效信号服务。独立观察需另冻结新数据与模型。

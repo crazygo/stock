@@ -19,3 +19,5 @@ Futu时间核对：AAPL 2026-10-02常规盘首根time_key=09:35，其Open等于�
 当前盘口追加探测：book_probe.py在新连接临时订阅五只预登记股票的免费已有权限盘口，五股均获得最佳买卖价，订阅满一分钟后已成功取消，不改其他连接。三股服务器时间戳为空，深度仅一档；另两股提供服务器时间字符串，时区单列未确认。只证明当前接口能力，不能用于证明历史入场可成交。
 
 全自选/ETF当前成员汇总1860证券，完成的历史仅其中部分；35个既有主要股票过去前缀优先补齐。当前快照回溯仍非历史成员PIT。12小时和免费额度都不保证1860证券全覆盖，未取得对象继续显示排队/不可用。
+
+补充：当前59只ETF分类证券与旧57只来源差异为XLE/LUMA。XLE发行人完整文件已取得21美股持仓，现金/货币基金/能源期货另分类；LUMA完整文件本地HTTP403，不能用网页部分持仓假装完整。详见membership_addendum.json和[State Street原页](https://www.ssga.com/us/en/individual/etfs/state-street-energy-select-sector-spdr-etf-xle)、[KraneShares原页](https://kraneshares.com/etf/luma/)。新成员快照不参与本次固定124注册/分组或旧十月配置。

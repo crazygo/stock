@@ -1,0 +1,6341 @@
+{
+  "at": "2026-10-05T04:50:57.974620+00:00",
+  "window_status": "final_snapshot",
+  "window_deadline": "2026-10-05T12:59:58+08:00",
+  "independent_pass": false,
+  "rounds": [
+    {
+      "round": "R00",
+      "monthly_models": 30,
+      "variants": [
+        {
+          "arm": "A0",
+          "name": "基础分钟量价",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 634,
+            "mature": 614,
+            "tp": 466,
+            "fp": 148,
+            "pending": 20,
+            "precision": 0.758957654723127,
+            "conservative_precision": 0.7350157728706624,
+            "date_count": 45,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 27.565217391304348,
+            "abstentions": 13856,
+            "abstention_ratio": 0.9562456866804693,
+            "baseline": 0.6062315616837228,
+            "lift": 0.1527260930394042,
+            "mean_signal_probability": 0.6948981231422985,
+            "brier": 0.19421610714050397,
+            "baseline_brier": 0.22337812251378783,
+            "block_ci": [
+              0.6678059528755416,
+              0.8583662280701754
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "A0",
+          "name": "基础分钟量价",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 454,
+            "mature": 447,
+            "tp": 341,
+            "fp": 106,
+            "pending": 7,
+            "precision": 0.7628635346756152,
+            "conservative_precision": 0.751101321585903,
+            "date_count": 33,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 19.73913043478261,
+            "abstentions": 14036,
+            "abstention_ratio": 0.9686680469289165,
+            "baseline": 0.6251180193274272,
+            "lift": 0.13774551534818802,
+            "mean_signal_probability": 0.6716707440040578,
+            "brier": 0.1960224291340702,
+            "baseline_brier": 0.21253651329211892,
+            "block_ci": [
+              0.6785694488438391,
+              0.887970432057569
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "A1",
+          "name": "多日日线机会与分钟入场",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 211,
+            "mature": 208,
+            "tp": 142,
+            "fp": 66,
+            "pending": 3,
+            "precision": 0.6826923076923077,
+            "conservative_precision": 0.6729857819905213,
+            "date_count": 37,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 9.173913043478262,
+            "abstentions": 14279,
+            "abstention_ratio": 0.9854382332643202,
+            "baseline": 0.663174418799038,
+            "lift": 0.019517888893269664,
+            "mean_signal_probability": 0.7930026006728349,
+            "brier": 0.22709198434002686,
+            "baseline_brier": 0.22936099305139893,
+            "block_ci": [
+              0.5266397470759755,
+              0.8333588957055215
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "A1",
+          "name": "多日日线机会与分钟入场",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 251,
+            "mature": 247,
+            "tp": 178,
+            "fp": 69,
+            "pending": 4,
+            "precision": 0.7206477732793523,
+            "conservative_precision": 0.7091633466135459,
+            "date_count": 57,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 10.91304347826087,
+            "abstentions": 14239,
+            "abstention_ratio": 0.9826777087646653,
+            "baseline": 0.6401074356454919,
+            "lift": 0.08054033763386037,
+            "mean_signal_probability": 0.8571742703179919,
+            "brier": 0.2240590417898793,
+            "baseline_brier": 0.21613105647024028,
+            "block_ci": [
+              0.6071389582033686,
+              0.8259933552336867
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "B1",
+          "name": "相关股与QQQ",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 592,
+            "mature": 571,
+            "tp": 435,
+            "fp": 136,
+            "pending": 21,
+            "precision": 0.7618213660245184,
+            "conservative_precision": 0.7347972972972973,
+            "date_count": 43,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 25.73913043478261,
+            "abstentions": 13898,
+            "abstention_ratio": 0.959144237405107,
+            "baseline": 0.6054844720670411,
+            "lift": 0.1563368939574773,
+            "mean_signal_probability": 0.7010257207383168,
+            "brier": 0.19666401314808954,
+            "baseline_brier": 0.2262148885173215,
+            "block_ci": [
+              0.632891716403227,
+              0.8796924962072586
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "B1",
+          "name": "相关股与QQQ",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 57,
+            "mature": 39,
+            "tp": 25,
+            "fp": 14,
+            "pending": 18,
+            "precision": 0.6410256410256411,
+            "conservative_precision": 0.43859649122807015,
+            "date_count": 17,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 2.4782608695652173,
+            "abstentions": 14433,
+            "abstention_ratio": 0.9960662525879918,
+            "baseline": 0.7008325792609913,
+            "lift": -0.059806938235350215,
+            "mean_signal_probability": 0.6587932553404178,
+            "brier": 0.2338560512739655,
+            "baseline_brier": 0.25699576424302323,
+            "block_ci": [
+              0.4090909090909091,
+              1.0
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "mature_signals_100",
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "average_signals_per_week_3",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "B2",
+          "name": "板块广度与领涨持续性",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 507,
+            "mature": 485,
+            "tp": 328,
+            "fp": 157,
+            "pending": 22,
+            "precision": 0.6762886597938145,
+            "conservative_precision": 0.6469428007889546,
+            "date_count": 60,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 22.043478260869566,
+            "abstentions": 13983,
+            "abstention_ratio": 0.9650103519668737,
+            "baseline": 0.64957513370502,
+            "lift": 0.026713526088794515,
+            "mean_signal_probability": 0.7892423231843313,
+            "brier": 0.23373158276899197,
+            "baseline_brier": 0.22314728390485003,
+            "block_ci": [
+              0.5528198142008338,
+              0.7897628230435179
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "B2",
+          "name": "板块广度与领涨持续性",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 176,
+            "mature": 154,
+            "tp": 106,
+            "fp": 48,
+            "pending": 22,
+            "precision": 0.6883116883116883,
+            "conservative_precision": 0.6022727272727273,
+            "date_count": 37,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 7.6521739130434785,
+            "abstentions": 14314,
+            "abstention_ratio": 0.9878536922015183,
+            "baseline": 0.6850715667596489,
+            "lift": 0.0032401215520394544,
+            "mean_signal_probability": 0.7269129996413856,
+            "brier": 0.21649761504780038,
+            "baseline_brier": 0.2212643186139551,
+            "block_ci": [
+              0.5733229166666667,
+              0.8823529411764706
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "C1",
+          "name": "已公布事件与量价确认",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 0,
+            "mature": 0,
+            "tp": 0,
+            "fp": 0,
+            "pending": 0,
+            "precision": null,
+            "conservative_precision": null,
+            "date_count": 0,
+            "days": 0,
+            "weeks": 0,
+            "signals_per_week": 0,
+            "abstentions": 0,
+            "abstention_ratio": null,
+            "baseline": null,
+            "lift": null,
+            "mean_signal_probability": null,
+            "brier": null,
+            "baseline_brier": null,
+            "block_ci": [
+              null,
+              null
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "mature_signals_100",
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "evaluation_weeks_12",
+            "average_signals_per_week_3",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage"
+          ]
+        },
+        {
+          "arm": "C1",
+          "name": "已公布事件与量价确认",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 0,
+            "mature": 0,
+            "tp": 0,
+            "fp": 0,
+            "pending": 0,
+            "precision": null,
+            "conservative_precision": null,
+            "date_count": 0,
+            "days": 0,
+            "weeks": 0,
+            "signals_per_week": 0,
+            "abstentions": 0,
+            "abstention_ratio": null,
+            "baseline": null,
+            "lift": null,
+            "mean_signal_probability": null,
+            "brier": null,
+            "baseline_brier": null,
+            "block_ci": [
+              null,
+              null
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "mature_signals_100",
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "evaluation_weeks_12",
+            "average_signals_per_week_3",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage",
+            "blocked_free_event_PIT_coverage"
+          ]
+        },
+        {
+          "arm": "ALG_LR",
+          "name": "基础输入算法对照",
+          "algorithm": "LogisticRegression",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 322,
+            "mature": 318,
+            "tp": 206,
+            "fp": 112,
+            "pending": 4,
+            "precision": 0.6477987421383647,
+            "conservative_precision": 0.639751552795031,
+            "date_count": 42,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 14.0,
+            "abstentions": 14168,
+            "abstention_ratio": 0.9777777777777777,
+            "baseline": 0.6561803924750612,
+            "lift": -0.008381650336696467,
+            "mean_signal_probability": 0.8945151835164509,
+            "brier": 0.2894546703472426,
+            "baseline_brier": 0.20347821228286087,
+            "block_ci": [
+              0.5211097439656526,
+              0.781297063253012
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "ALG_LR",
+          "name": "基础输入算法对照",
+          "algorithm": "LogisticRegression",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 352,
+            "mature": 348,
+            "tp": 223,
+            "fp": 125,
+            "pending": 4,
+            "precision": 0.6408045977011494,
+            "conservative_precision": 0.6335227272727273,
+            "date_count": 42,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 15.304347826086957,
+            "abstentions": 14138,
+            "abstention_ratio": 0.9757073844030366,
+            "baseline": 0.6512038066250261,
+            "lift": -0.01039920892387669,
+            "mean_signal_probability": 0.8253256318889484,
+            "brier": 0.2677065820681415,
+            "baseline_brier": 0.21831057239094756,
+            "block_ci": [
+              0.5244101273319515,
+              0.7692434210526317
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "ALG_ET",
+          "name": "基础输入算法对照",
+          "algorithm": "ExtraTrees",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 367,
+            "mature": 356,
+            "tp": 245,
+            "fp": 111,
+            "pending": 11,
+            "precision": 0.6882022471910112,
+            "conservative_precision": 0.667574931880109,
+            "date_count": 80,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 15.956521739130435,
+            "abstentions": 14123,
+            "abstention_ratio": 0.974672187715666,
+            "baseline": 0.7051676097502407,
+            "lift": -0.016965362559229535,
+            "mean_signal_probability": 0.8046652694823312,
+            "brier": 0.22529347174680128,
+            "baseline_brier": 0.22474746674910323,
+            "block_ci": [
+              0.575909419523205,
+              0.8015926640926642
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "ALG_ET",
+          "name": "基础输入算法对照",
+          "algorithm": "ExtraTrees",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 265,
+            "mature": 265,
+            "tp": 186,
+            "fp": 79,
+            "pending": 0,
+            "precision": 0.7018867924528301,
+            "conservative_precision": 0.7018867924528301,
+            "date_count": 62,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 11.521739130434783,
+            "abstentions": 14225,
+            "abstention_ratio": 0.9817115251897861,
+            "baseline": 0.7150120423735283,
+            "lift": -0.01312524992069819,
+            "mean_signal_probability": 0.8598324727300254,
+            "brier": 0.24158453001085214,
+            "baseline_brier": 0.21541269156851822,
+            "block_ci": [
+              0.5837262262262263,
+              0.8082729690078856
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        }
+      ],
+      "independent_pass": false
+    },
+    {
+      "round": "R01",
+      "monthly_models": 20,
+      "variants": [
+        {
+          "arm": "S0",
+          "name": "基础分钟共同样本",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 181,
+            "mature": 167,
+            "tp": 113,
+            "fp": 54,
+            "pending": 14,
+            "precision": 0.6766467065868264,
+            "conservative_precision": 0.6243093922651933,
+            "date_count": 41,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 7.869565217391305,
+            "abstentions": 14309,
+            "abstention_ratio": 0.9875086266390615,
+            "baseline": 0.649524670621361,
+            "lift": 0.027122035965465363,
+            "mean_signal_probability": 0.8233807101056718,
+            "brier": 0.24180807264325627,
+            "baseline_brier": 0.2341578101334033,
+            "block_ci": [
+              0.5740505734160557,
+              0.8125416666666666
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "S0",
+          "name": "基础分钟共同样本",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 117,
+            "mature": 117,
+            "tp": 87,
+            "fp": 30,
+            "pending": 0,
+            "precision": 0.7435897435897436,
+            "conservative_precision": 0.7435897435897436,
+            "date_count": 31,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 5.086956521739131,
+            "abstentions": 14373,
+            "abstention_ratio": 0.9919254658385093,
+            "baseline": 0.6685991981241101,
+            "lift": 0.07499054546563355,
+            "mean_signal_probability": 0.8889568000256678,
+            "brier": 0.2202152160602728,
+            "baseline_brier": 0.19841675393197647,
+            "block_ci": [
+              0.6378526645768026,
+              0.872473404255319
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "S1",
+          "name": "日线与分钟联合",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 190,
+            "mature": 186,
+            "tp": 108,
+            "fp": 78,
+            "pending": 4,
+            "precision": 0.5806451612903226,
+            "conservative_precision": 0.5684210526315789,
+            "date_count": 28,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 8.26086956521739,
+            "abstentions": 14300,
+            "abstention_ratio": 0.9868875086266391,
+            "baseline": 0.6487039086413643,
+            "lift": -0.06805874735104167,
+            "mean_signal_probability": 0.853722407388154,
+            "brier": 0.3172301846223131,
+            "baseline_brier": 0.2579845792970521,
+            "block_ci": [
+              0.36169394435351887,
+              0.820412745936698
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "S1",
+          "name": "日线与分钟联合",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 247,
+            "mature": 243,
+            "tp": 136,
+            "fp": 107,
+            "pending": 4,
+            "precision": 0.5596707818930041,
+            "conservative_precision": 0.5506072874493927,
+            "date_count": 25,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 10.73913043478261,
+            "abstentions": 14243,
+            "abstention_ratio": 0.9829537612146307,
+            "baseline": 0.6343468912180226,
+            "lift": -0.07467610932501845,
+            "mean_signal_probability": 0.8853687248360611,
+            "brier": 0.3497206333113604,
+            "baseline_brier": 0.2659673370982681,
+            "block_ci": [
+              0.24659090909090928,
+              0.8710701484895033
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "S2",
+          "name": "日线机会OOF + 分钟入场",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 162,
+            "mature": 146,
+            "tp": 100,
+            "fp": 46,
+            "pending": 16,
+            "precision": 0.684931506849315,
+            "conservative_precision": 0.6172839506172839,
+            "date_count": 42,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 7.043478260869565,
+            "abstentions": 14328,
+            "abstention_ratio": 0.9888198757763975,
+            "baseline": 0.6418486308611341,
+            "lift": 0.043082875988180946,
+            "mean_signal_probability": 0.8055765864237489,
+            "brier": 0.2353656337193876,
+            "baseline_brier": 0.24063236134872895,
+            "block_ci": [
+              0.5640792540792541,
+              0.8412698412698413
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "S2",
+          "name": "日线机会OOF + 分钟入场",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 218,
+            "mature": 210,
+            "tp": 123,
+            "fp": 87,
+            "pending": 8,
+            "precision": 0.5857142857142857,
+            "conservative_precision": 0.5642201834862385,
+            "date_count": 35,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 9.478260869565217,
+            "abstentions": 14272,
+            "abstention_ratio": 0.9849551414768806,
+            "baseline": 0.6321911195059938,
+            "lift": -0.04647683379170808,
+            "mean_signal_probability": 0.8536421320374971,
+            "brier": 0.3236745422198867,
+            "baseline_brier": 0.2520622594747326,
+            "block_ci": [
+              0.4479880597014925,
+              0.852977044476327
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "S3",
+          "name": "联合输入 + 日线机会OOF",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 113,
+            "mature": 109,
+            "tp": 55,
+            "fp": 54,
+            "pending": 4,
+            "precision": 0.5045871559633027,
+            "conservative_precision": 0.48672566371681414,
+            "date_count": 24,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 4.913043478260869,
+            "abstentions": 14377,
+            "abstention_ratio": 0.9922015182884748,
+            "baseline": 0.6202706866392124,
+            "lift": -0.11568353067590964,
+            "mean_signal_probability": 0.8579753684337149,
+            "brier": 0.37349061400478956,
+            "baseline_brier": 0.2500257718326532,
+            "block_ci": [
+              0.29411764705882354,
+              0.6666666666666666
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "S3",
+          "name": "联合输入 + 日线机会OOF",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 203,
+            "mature": 199,
+            "tp": 107,
+            "fp": 92,
+            "pending": 4,
+            "precision": 0.5376884422110553,
+            "conservative_precision": 0.5270935960591133,
+            "date_count": 29,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 8.826086956521738,
+            "abstentions": 14287,
+            "abstention_ratio": 0.9859903381642512,
+            "baseline": 0.6357411507672309,
+            "lift": -0.09805270855617565,
+            "mean_signal_probability": 0.8720891817165262,
+            "brier": 0.36651383625939854,
+            "baseline_brier": 0.250110057687292,
+            "block_ci": [
+              0.3585987074030552,
+              0.8
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        }
+      ],
+      "independent_pass": false
+    },
+    {
+      "round": "R02",
+      "monthly_models": 20,
+      "variants": [
+        {
+          "arm": "P0",
+          "name": "相关股/QQQ共同输入",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 592,
+            "mature": 571,
+            "tp": 435,
+            "fp": 136,
+            "pending": 21,
+            "precision": 0.7618213660245184,
+            "conservative_precision": 0.7347972972972973,
+            "date_count": 43,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 25.73913043478261,
+            "abstentions": 13898,
+            "abstention_ratio": 0.959144237405107,
+            "baseline": 0.6054844720670411,
+            "lift": 0.1563368939574773,
+            "mean_signal_probability": 0.7010257207383168,
+            "brier": 0.19666401314808954,
+            "baseline_brier": 0.2262148885173215,
+            "block_ci": [
+              0.632891716403227,
+              0.8796924962072586
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "P0",
+          "name": "相关股/QQQ共同输入",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 57,
+            "mature": 39,
+            "tp": 25,
+            "fp": 14,
+            "pending": 18,
+            "precision": 0.6410256410256411,
+            "conservative_precision": 0.43859649122807015,
+            "date_count": 17,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 2.4782608695652173,
+            "abstentions": 14433,
+            "abstention_ratio": 0.9960662525879918,
+            "baseline": 0.7008325792609913,
+            "lift": -0.059806938235350215,
+            "mean_signal_probability": 0.6587932553404178,
+            "brier": 0.2338560512739655,
+            "baseline_brier": 0.25699576424302323,
+            "block_ci": [
+              0.4090909090909091,
+              1.0
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "mature_signals_100",
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "average_signals_per_week_3",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "P1",
+          "name": "精确30分钟板块持续性",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 507,
+            "mature": 485,
+            "tp": 328,
+            "fp": 157,
+            "pending": 22,
+            "precision": 0.6762886597938145,
+            "conservative_precision": 0.6469428007889546,
+            "date_count": 60,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 22.043478260869566,
+            "abstentions": 13983,
+            "abstention_ratio": 0.9650103519668737,
+            "baseline": 0.64957513370502,
+            "lift": 0.026713526088794515,
+            "mean_signal_probability": 0.7892423231843313,
+            "brier": 0.23373158276899197,
+            "baseline_brier": 0.22314728390485003,
+            "block_ci": [
+              0.5528198142008338,
+              0.7897628230435179
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "P1",
+          "name": "精确30分钟板块持续性",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 176,
+            "mature": 154,
+            "tp": 106,
+            "fp": 48,
+            "pending": 22,
+            "precision": 0.6883116883116883,
+            "conservative_precision": 0.6022727272727273,
+            "date_count": 37,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 7.6521739130434785,
+            "abstentions": 14314,
+            "abstention_ratio": 0.9878536922015183,
+            "baseline": 0.6850715667596489,
+            "lift": 0.0032401215520394544,
+            "mean_signal_probability": 0.7269129996413856,
+            "brier": 0.21649761504780038,
+            "baseline_brier": 0.2212643186139551,
+            "block_ci": [
+              0.5733229166666667,
+              0.8823529411764706
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "E0",
+          "name": "分钟 + SEC覆盖控制",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 825,
+            "mature": 803,
+            "tp": 583,
+            "fp": 220,
+            "pending": 22,
+            "precision": 0.726027397260274,
+            "conservative_precision": 0.7066666666666667,
+            "date_count": 63,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 35.869565217391305,
+            "abstentions": 13665,
+            "abstention_ratio": 0.943064182194617,
+            "baseline": 0.6167285075994156,
+            "lift": 0.10929888966085843,
+            "mean_signal_probability": 0.7148744114018378,
+            "brier": 0.21272671922767772,
+            "baseline_brier": 0.23174382056190287,
+            "block_ci": [
+              0.6047016447787836,
+              0.8212258471062237
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "E0",
+          "name": "分钟 + SEC覆盖控制",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 217,
+            "mature": 212,
+            "tp": 149,
+            "fp": 63,
+            "pending": 5,
+            "precision": 0.7028301886792453,
+            "conservative_precision": 0.6866359447004609,
+            "date_count": 31,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 9.434782608695652,
+            "abstentions": 14273,
+            "abstention_ratio": 0.985024154589372,
+            "baseline": 0.6578194886160789,
+            "lift": 0.04501070006316643,
+            "mean_signal_probability": 0.7167574577905615,
+            "brier": 0.2125809652183997,
+            "baseline_brier": 0.22515003507134224,
+            "block_ci": [
+              0.5983606557377049,
+              0.8732834507042253
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "E1",
+          "name": "已公布原始申报 + 量价确认",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 143,
+            "mature": 143,
+            "tp": 97,
+            "fp": 46,
+            "pending": 0,
+            "precision": 0.6783216783216783,
+            "conservative_precision": 0.6783216783216783,
+            "date_count": 24,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 6.217391304347826,
+            "abstentions": 14347,
+            "abstention_ratio": 0.9901311249137336,
+            "baseline": 0.6648318312419954,
+            "lift": 0.013489847079682926,
+            "mean_signal_probability": 0.7732922385451844,
+            "brier": 0.22475755591630756,
+            "baseline_brier": 0.21851991314017424,
+            "block_ci": [
+              0.5672413793103449,
+              0.9378472222222219
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "E1",
+          "name": "已公布原始申报 + 量价确认",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 215,
+            "mature": 208,
+            "tp": 147,
+            "fp": 61,
+            "pending": 7,
+            "precision": 0.7067307692307693,
+            "conservative_precision": 0.6837209302325581,
+            "date_count": 38,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 9.347826086956522,
+            "abstentions": 14275,
+            "abstention_ratio": 0.9851621808143547,
+            "baseline": 0.6580542084357461,
+            "lift": 0.04867656079502314,
+            "mean_signal_probability": 0.7211437972992882,
+            "brier": 0.20960803336915992,
+            "baseline_brier": 0.22260476099546458,
+            "block_ci": [
+              0.6075543712316968,
+              0.8857936507936507
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        }
+      ],
+      "independent_pass": false
+    },
+    {
+      "round": "R03",
+      "monthly_models": 20,
+      "variants": [
+        {
+          "arm": "H0",
+          "name": "旧历史 + 新行动审计",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 634,
+            "mature": 614,
+            "tp": 466,
+            "fp": 148,
+            "pending": 20,
+            "precision": 0.758957654723127,
+            "conservative_precision": 0.7350157728706624,
+            "date_count": 45,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 27.565217391304348,
+            "abstentions": 13856,
+            "abstention_ratio": 0.9562456866804693,
+            "baseline": 0.6037242358523097,
+            "lift": 0.15523341887081732,
+            "mean_signal_probability": 0.6948981231422985,
+            "brier": 0.19421610714050397,
+            "baseline_brier": 0.22411788948507727,
+            "block_ci": [
+              0.6678059528755416,
+              0.8583662280701754
+            ],
+            "lift_ci": [
+              0.03086180446716179,
+              0.25587470491185366
+            ],
+            "mature_date_count": 41
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "H0",
+          "name": "旧历史 + 新行动审计",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 386,
+            "mature": 376,
+            "tp": 252,
+            "fp": 124,
+            "pending": 10,
+            "precision": 0.6702127659574468,
+            "conservative_precision": 0.6528497409326425,
+            "date_count": 55,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 16.782608695652176,
+            "abstentions": 14104,
+            "abstention_ratio": 0.9733609385783298,
+            "baseline": 0.6618106922956544,
+            "lift": 0.008402073661792464,
+            "mean_signal_probability": 0.7643989297810106,
+            "brier": 0.23671002879887024,
+            "baseline_brier": 0.22960253932317445,
+            "block_ci": [
+              0.5668275577557755,
+              0.8000146627565983
+            ],
+            "lift_ci": [
+              -0.10029851057383485,
+              0.1292137623085121
+            ],
+            "mature_date_count": 52
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "H1",
+          "name": "扩展历史相同分钟输入",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 514,
+            "mature": 507,
+            "tp": 388,
+            "fp": 119,
+            "pending": 7,
+            "precision": 0.7652859960552268,
+            "conservative_precision": 0.754863813229572,
+            "date_count": 60,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 22.347826086956523,
+            "abstentions": 13976,
+            "abstention_ratio": 0.9645272601794341,
+            "baseline": 0.630920627241074,
+            "lift": 0.13436536881415284,
+            "mean_signal_probability": 0.7417943030333523,
+            "brier": 0.19456306271501575,
+            "baseline_brier": 0.20552594473251218,
+            "block_ci": [
+              0.6666666666666666,
+              0.8550600961538461
+            ],
+            "lift_ci": [
+              0.00018035743759491207,
+              0.227566523890539
+            ],
+            "mature_date_count": 58
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "H1",
+          "name": "扩展历史相同分钟输入",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 281,
+            "mature": 275,
+            "tp": 179,
+            "fp": 96,
+            "pending": 6,
+            "precision": 0.6509090909090909,
+            "conservative_precision": 0.6370106761565836,
+            "date_count": 34,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 12.217391304347826,
+            "abstentions": 14209,
+            "abstention_ratio": 0.9806073153899241,
+            "baseline": 0.6741400535804408,
+            "lift": -0.023230962671349942,
+            "mean_signal_probability": 0.7554917067974347,
+            "brier": 0.23774938641543805,
+            "baseline_brier": 0.23379314941940926,
+            "block_ci": [
+              0.4970930449375349,
+              0.8572964669738862
+            ],
+            "lift_ci": [
+              -0.1824134602726149,
+              0.1793409240678521
+            ],
+            "mature_date_count": 33
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "H2",
+          "name": "扩展历史 + 已成熟五日状态",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 157,
+            "mature": 156,
+            "tp": 109,
+            "fp": 47,
+            "pending": 1,
+            "precision": 0.6987179487179487,
+            "conservative_precision": 0.6942675159235668,
+            "date_count": 31,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 6.826086956521739,
+            "abstentions": 14333,
+            "abstention_ratio": 0.9891649413388544,
+            "baseline": 0.6729086877304389,
+            "lift": 0.025809260987509797,
+            "mean_signal_probability": 0.7897699681923941,
+            "brier": 0.21306558310784196,
+            "baseline_brier": 0.21742941441952524,
+            "block_ci": [
+              0.5651255358236374,
+              0.8823529411764706
+            ],
+            "lift_ci": [
+              -0.11511926829095169,
+              0.18943188585995172
+            ],
+            "mature_date_count": 30
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "H2",
+          "name": "扩展历史 + 已成熟五日状态",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 238,
+            "mature": 228,
+            "tp": 151,
+            "fp": 77,
+            "pending": 10,
+            "precision": 0.6622807017543859,
+            "conservative_precision": 0.634453781512605,
+            "date_count": 38,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 10.347826086956522,
+            "abstentions": 14252,
+            "abstention_ratio": 0.9835748792270531,
+            "baseline": 0.6630292096921508,
+            "lift": -0.0007485079377649306,
+            "mean_signal_probability": 0.8757423648454363,
+            "brier": 0.2829220300099671,
+            "baseline_brier": 0.23613204869150928,
+            "block_ci": [
+              0.5167592694465838,
+              0.854315476190476
+            ],
+            "lift_ci": [
+              -0.14463790249609396,
+              0.1917333270885159
+            ],
+            "mature_date_count": 34
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "mature_signal_dates_40",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "H3",
+          "name": "成熟状态 + 前日日线",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 396,
+            "mature": 392,
+            "tp": 289,
+            "fp": 103,
+            "pending": 4,
+            "precision": 0.7372448979591837,
+            "conservative_precision": 0.7297979797979798,
+            "date_count": 72,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 17.217391304347824,
+            "abstentions": 14094,
+            "abstention_ratio": 0.9726708074534162,
+            "baseline": 0.641615749289135,
+            "lift": 0.09562914867004868,
+            "mean_signal_probability": 0.7497067776556808,
+            "brier": 0.19844868479828198,
+            "baseline_brier": 0.20336303731255614,
+            "block_ci": [
+              0.6481797279172254,
+              0.8096922684213511
+            ],
+            "lift_ci": [
+              0.005032886373050455,
+              0.17001125959085264
+            ],
+            "mature_date_count": 70
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "H3",
+          "name": "成熟状态 + 前日日线",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 332,
+            "mature": 329,
+            "tp": 220,
+            "fp": 109,
+            "pending": 3,
+            "precision": 0.668693009118541,
+            "conservative_precision": 0.6626506024096386,
+            "date_count": 54,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 14.434782608695652,
+            "abstentions": 14158,
+            "abstention_ratio": 0.9770876466528641,
+            "baseline": 0.6558919425754642,
+            "lift": 0.012801066543076778,
+            "mean_signal_probability": 0.8286727470613643,
+            "brier": 0.25660210840228914,
+            "baseline_brier": 0.2292303583882995,
+            "block_ci": [
+              0.5414669115579962,
+              0.8
+            ],
+            "lift_ci": [
+              -0.10755214613761477,
+              0.13757958005470408
+            ],
+            "mature_date_count": 52
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        }
+      ],
+      "independent_pass": false
+    },
+    {
+      "round": "R04",
+      "monthly_models": 10,
+      "variants": [
+        {
+          "arm": "F0",
+          "name": "公开申报延续共同输入",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 763,
+            "mature": 751,
+            "tp": 551,
+            "fp": 200,
+            "pending": 12,
+            "precision": 0.7336884154460719,
+            "conservative_precision": 0.7221494102228048,
+            "date_count": 54,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 33.17391304347826,
+            "abstentions": 13727,
+            "abstention_ratio": 0.9473429951690822,
+            "baseline": 0.61756237708347,
+            "lift": 0.11612603836260194,
+            "mean_signal_probability": 0.7243902203684619,
+            "brier": 0.21375079274722333,
+            "baseline_brier": 0.2242631613596553,
+            "block_ci": [
+              0.5843116259207858,
+              0.8435274036571664
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "F0",
+          "name": "公开申报延续共同输入",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 606,
+            "mature": 598,
+            "tp": 437,
+            "fp": 161,
+            "pending": 8,
+            "precision": 0.7307692307692307,
+            "conservative_precision": 0.7211221122112211,
+            "date_count": 54,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 26.347826086956523,
+            "abstentions": 13884,
+            "abstention_ratio": 0.9581780538302277,
+            "baseline": 0.626071064251494,
+            "lift": 0.10469816651773678,
+            "mean_signal_probability": 0.7311227465642649,
+            "brier": 0.2259773144266849,
+            "baseline_brier": 0.21953924101081287,
+            "block_ci": [
+              0.6040725391407985,
+              0.8397634652872645
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "F1",
+          "name": "原季度实际同比 + 申报延续",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 692,
+            "mature": 681,
+            "tp": 503,
+            "fp": 178,
+            "pending": 11,
+            "precision": 0.7386196769456681,
+            "conservative_precision": 0.726878612716763,
+            "date_count": 54,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 30.08695652173913,
+            "abstentions": 13798,
+            "abstention_ratio": 0.9522429261559696,
+            "baseline": 0.6219337686123622,
+            "lift": 0.11668590833330594,
+            "mean_signal_probability": 0.7057926182657903,
+            "brier": 0.20280838062422332,
+            "baseline_brier": 0.22878734259056638,
+            "block_ci": [
+              0.6231586956521739,
+              0.8279396019016922
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "F1",
+          "name": "原季度实际同比 + 申报延续",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 704,
+            "mature": 693,
+            "tp": 490,
+            "fp": 203,
+            "pending": 11,
+            "precision": 0.7070707070707071,
+            "conservative_precision": 0.6960227272727273,
+            "date_count": 55,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 30.608695652173914,
+            "abstentions": 13786,
+            "abstention_ratio": 0.9514147688060731,
+            "baseline": 0.6303740429386316,
+            "lift": 0.07669666413207543,
+            "mean_signal_probability": 0.7511831924967636,
+            "brier": 0.23771518223501314,
+            "baseline_brier": 0.22511882736591327,
+            "block_ci": [
+              0.5812157914201184,
+              0.8122344195310702
+            ]
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        }
+      ],
+      "independent_pass": false
+    },
+    {
+      "round": "R05",
+      "monthly_models": 10,
+      "variants": [
+        {
+          "arm": "D0",
+          "name": "完整历史成熟状态与单股日线对照",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 396,
+            "mature": 392,
+            "tp": 289,
+            "fp": 103,
+            "pending": 4,
+            "precision": 0.7372448979591837,
+            "conservative_precision": 0.7297979797979798,
+            "date_count": 72,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 17.217391304347824,
+            "abstentions": 14094,
+            "abstention_ratio": 0.9726708074534162,
+            "baseline": 0.641615749289135,
+            "lift": 0.09562914867004868,
+            "mean_signal_probability": 0.7497067776556808,
+            "brier": 0.19844868479828198,
+            "baseline_brier": 0.20336303731255614,
+            "block_ci": [
+              0.6481797279172254,
+              0.8096922684213511
+            ],
+            "lift_ci": [
+              0.005032886373050455,
+              0.17001125959085264
+            ],
+            "mature_date_count": 70
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "D0",
+          "name": "完整历史成熟状态与单股日线对照",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 332,
+            "mature": 329,
+            "tp": 220,
+            "fp": 109,
+            "pending": 3,
+            "precision": 0.668693009118541,
+            "conservative_precision": 0.6626506024096386,
+            "date_count": 54,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 14.434782608695652,
+            "abstentions": 14158,
+            "abstention_ratio": 0.9770876466528641,
+            "baseline": 0.6558919425754642,
+            "lift": 0.012801066543076778,
+            "mean_signal_probability": 0.8286727470613643,
+            "brier": 0.25660210840228914,
+            "baseline_brier": 0.2292303583882995,
+            "block_ci": [
+              0.5414669115579962,
+              0.8
+            ],
+            "lift_ci": [
+              -0.10755214613761477,
+              0.13757958005470408
+            ],
+            "mature_date_count": 52
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "D1",
+          "name": "加入前日多日板块广度与领涨持续性",
+          "algorithm": "LightGBM",
+          "variant": "candidate_only",
+          "metrics": {
+            "signals": 592,
+            "mature": 582,
+            "tp": 415,
+            "fp": 167,
+            "pending": 10,
+            "precision": 0.7130584192439863,
+            "conservative_precision": 0.7010135135135135,
+            "date_count": 67,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 25.73913043478261,
+            "abstentions": 13898,
+            "abstention_ratio": 0.959144237405107,
+            "baseline": 0.6348418122681629,
+            "lift": 0.07821660697582333,
+            "mean_signal_probability": 0.7562980501441685,
+            "brier": 0.20376057063927533,
+            "baseline_brier": 0.20980727454469136,
+            "block_ci": [
+              0.6455287812850383,
+              0.801285046728972
+            ],
+            "lift_ci": [
+              0.005505382070183959,
+              0.1631538954797947
+            ],
+            "mature_date_count": 67
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "predeclared_focus_five"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        },
+        {
+          "arm": "D1",
+          "name": "加入前日多日板块广度与领涨持续性",
+          "algorithm": "LightGBM",
+          "variant": "top_one",
+          "metrics": {
+            "signals": 674,
+            "mature": 663,
+            "tp": 440,
+            "fp": 223,
+            "pending": 11,
+            "precision": 0.6636500754147813,
+            "conservative_precision": 0.6528189910979229,
+            "date_count": 71,
+            "days": 105,
+            "weeks": 23,
+            "signals_per_week": 29.304347826086957,
+            "abstentions": 13816,
+            "abstention_ratio": 0.9534851621808144,
+            "baseline": 0.6284065135723954,
+            "lift": 0.03524356184238586,
+            "mean_signal_probability": 0.854121437252489,
+            "brier": 0.2731244780321006,
+            "baseline_brier": 0.2261897939434264,
+            "block_ci": [
+              0.5760719546282228,
+              0.777790096082779
+            ],
+            "lift_ci": [
+              -0.057109521100663536,
+              0.14871383782764774
+            ],
+            "mature_date_count": 71
+          },
+          "historical_all_constraints_met": false,
+          "unmet_requirements": [
+            "precision_80pct",
+            "date_block_lower_70pct",
+            "matched_lift_5pp",
+            "predeclared_focus_five",
+            "issued_high_probability_audit"
+          ],
+          "statuses": [
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development",
+            "completed_development"
+          ]
+        }
+      ],
+      "independent_pass": false
+    }
+  ],
+  "input_comparisons": [
+    {
+      "round": "R00",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "A1",
+      "reference": "A0",
+      "rows": 1220610,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8845,
+      "dates": 101,
+      "brier_delta": -0.000695016150194697,
+      "brier_delta_ci": [
+        -0.003504227122617472,
+        0.0021657546049818573
+      ]
+    },
+    {
+      "round": "R00",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "B1",
+      "reference": "A0",
+      "rows": 1220610,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8845,
+      "dates": 101,
+      "brier_delta": -0.001358778694117459,
+      "brier_delta_ci": [
+        -0.0031517738666386463,
+        0.0004630665544698641
+      ]
+    },
+    {
+      "round": "R00",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "B2",
+      "reference": "B1",
+      "rows": 1220610,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8845,
+      "dates": 101,
+      "brier_delta": -5.4572499645196675e-05,
+      "brier_delta_ci": [
+        -0.0006101162701438225,
+        0.0005266440655794772
+      ]
+    },
+    {
+      "round": "R00",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "ALG_LR",
+      "reference": "A0",
+      "rows": 1220610,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8845,
+      "dates": 101,
+      "brier_delta": 0.00272802811799525,
+      "brier_delta_ci": [
+        -0.0006069394636474218,
+        0.006051630932449204
+      ]
+    },
+    {
+      "round": "R00",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "ALG_ET",
+      "reference": "A0",
+      "rows": 1220610,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8845,
+      "dates": 101,
+      "brier_delta": -0.002743225464020951,
+      "brier_delta_ci": [
+        -0.005820198938444087,
+        0.0003069174913798604
+      ]
+    },
+    {
+      "round": "R01",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "S1",
+      "reference": "S0",
+      "rows": 1144986,
+      "newer_rows": 1246140,
+      "reference_rows": 1246140,
+      "stock_days": 8297,
+      "dates": 101,
+      "brier_delta": -0.0007189109352113127,
+      "brier_delta_ci": [
+        -0.004682657586769891,
+        0.0030253869912726526
+      ]
+    },
+    {
+      "round": "R01",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "S2",
+      "reference": "S0",
+      "rows": 1144986,
+      "newer_rows": 1246140,
+      "reference_rows": 1246140,
+      "stock_days": 8297,
+      "dates": 101,
+      "brier_delta": -7.944661084203452e-05,
+      "brier_delta_ci": [
+        -0.0010282906195519291,
+        0.0009470418649919553
+      ]
+    },
+    {
+      "round": "R01",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "S3",
+      "reference": "S1",
+      "rows": 1144986,
+      "newer_rows": 1246140,
+      "reference_rows": 1246140,
+      "stock_days": 8297,
+      "dates": 101,
+      "brier_delta": 0.00020326839850640815,
+      "brier_delta_ci": [
+        -0.000521200069438755,
+        0.0009884824657893506
+      ]
+    },
+    {
+      "round": "R02",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "P1",
+      "reference": "P0",
+      "rows": 1220610,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8845,
+      "dates": 101,
+      "brier_delta": -5.4572499645196675e-05,
+      "brier_delta_ci": [
+        -0.0006101162701438225,
+        0.0005266440655794772
+      ]
+    },
+    {
+      "round": "R02",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "E1",
+      "reference": "E0",
+      "rows": 1220610,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8845,
+      "dates": 101,
+      "brier_delta": -0.00024921049294393213,
+      "brier_delta_ci": [
+        -0.0007685915899076268,
+        0.0003059496305810848
+      ]
+    },
+    {
+      "round": "R03",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "H1",
+      "reference": "H0",
+      "rows": 1219920,
+      "newer_rows": 1738800,
+      "reference_rows": 1344672,
+      "stock_days": 8840,
+      "dates": 101,
+      "brier_delta": 4.648946310136694e-06,
+      "brier_delta_ci": [
+        -0.001399587077624667,
+        0.0014847491029289115
+      ]
+    },
+    {
+      "round": "R03",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "H2",
+      "reference": "H1",
+      "rows": 1591968,
+      "newer_rows": 1738800,
+      "reference_rows": 1738800,
+      "stock_days": 11536,
+      "dates": 101,
+      "brier_delta": 0.0006146892626185436,
+      "brier_delta_ci": [
+        -0.0008670652721991498,
+        0.002058499686207688
+      ]
+    },
+    {
+      "round": "R03",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "H3",
+      "reference": "H2",
+      "rows": 1591968,
+      "newer_rows": 1738800,
+      "reference_rows": 1738800,
+      "stock_days": 11536,
+      "dates": 101,
+      "brier_delta": -0.0021620179218376353,
+      "brier_delta_ci": [
+        -0.003544974059196123,
+        -0.000662614019797204
+      ]
+    },
+    {
+      "round": "R04",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "F1",
+      "reference": "F0",
+      "rows": 1219920,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8840,
+      "dates": 101,
+      "brier_delta": 0.0006175921746216402,
+      "brier_delta_ci": [
+        -0.00098186598675612,
+        0.002455185412644756
+      ]
+    },
+    {
+      "round": "R05",
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "D1",
+      "reference": "D0",
+      "rows": 1591968,
+      "newer_rows": 1738800,
+      "reference_rows": 1738800,
+      "stock_days": 11536,
+      "dates": 101,
+      "brier_delta": -0.0005349726899593663,
+      "brier_delta_ci": [
+        -0.002346150550527932,
+        0.0011258142491623235
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "round": "R00",
+      "at": "2026-10-04T18:02:37.030058+00:00",
+      "status": "passed",
+      "events_checked": 4188,
+      "ranking_ticks_checked": 173880,
+      "predictions": [
+        {
+          "arm": "A0",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A0",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A0",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A0",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A0",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "A1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B2",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B2",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B2",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B2",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "B2",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        }
+      ],
+      "upstream": [],
+      "purges": [
+        {
+          "arm": "A0",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A0",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A0",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A0",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A0",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "A1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_ET",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "ALG_LR",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B2",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B2",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B2",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B2",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "B2",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        }
+      ],
+      "errors": [],
+      "reporting_float32_price_rows": 0,
+      "reporting_price_note": "Exact original float64 label evaluation prices; reporting repair does not change emissions or outcomes."
+    },
+    {
+      "round": "R01",
+      "at": "2026-10-04T17:52:28.282264+00:00",
+      "status": "passed",
+      "events_checked": 1431,
+      "ranking_ticks_checked": 115920,
+      "predictions": [
+        {
+          "arm": "S0",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S0",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S0",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S0",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S0",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S2",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S2",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S2",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S2",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S2",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S3",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S3",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S3",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S3",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "S3",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        }
+      ],
+      "upstream": [
+        {
+          "block": 4,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 5,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 6,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 7,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 8,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 9,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 10,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 11,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 12,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 13,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 14,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 15,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 16,
+          "rows": 150,
+          "max_error": 0.0
+        },
+        {
+          "block": 17,
+          "rows": 150,
+          "max_error": 0.0
+        }
+      ],
+      "purges": [
+        {
+          "arm": "S0",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S0",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S0",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S0",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S0",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S2",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S2",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S2",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S2",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S2",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S3",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S3",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S3",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S3",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "S3",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-08-26",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        }
+      ],
+      "errors": [],
+      "reporting_float32_price_rows": 0,
+      "reporting_price_note": "Exact original float64 label evaluation prices; reporting repair does not change emissions or outcomes."
+    },
+    {
+      "round": "R02",
+      "at": "2026-10-04T18:09:26.042772+00:00",
+      "status": "passed",
+      "events_checked": 2732,
+      "ranking_ticks_checked": 115920,
+      "predictions": [
+        {
+          "arm": "E0",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E0",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E0",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E0",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E0",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "E1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P0",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P0",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P0",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P0",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P0",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "P1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        }
+      ],
+      "upstream": [],
+      "purges": [
+        {
+          "arm": "E0",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E0",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E0",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E0",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E0",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "E1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P0",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P0",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P0",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P0",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P0",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "P1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        }
+      ],
+      "errors": [],
+      "reporting_float32_price_rows": 0,
+      "reporting_price_note": "Exact original float64 label evaluation prices; reporting repair does not change emissions or outcomes."
+    },
+    {
+      "round": "R03",
+      "at": "2026-10-05T04:06:25.093754+00:00",
+      "status": "passed",
+      "events_checked": 2938,
+      "ranking_ticks_checked": 115920,
+      "predictions": [
+        {
+          "arm": "H0",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H0",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H0",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H0",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H0",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H2",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H2",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H2",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H2",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H2",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H3",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H3",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H3",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H3",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "H3",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        }
+      ],
+      "upstream": [],
+      "purges": [
+        {
+          "arm": "H0",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H0",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H0",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H0",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H0",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-02-20",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-03-20",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-04-21",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H2",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-02-20",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H2",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-03-20",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H2",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-04-21",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H2",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H2",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H3",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-02-20",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H3",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-03-20",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H3",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-04-21",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H3",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "H3",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        }
+      ],
+      "errors": [],
+      "reporting_float32_price_rows": 0,
+      "reporting_price_note": "Exact original float64 label evaluation prices; reporting repair does not change emissions or outcomes."
+    },
+    {
+      "round": "R04",
+      "at": "2026-10-04T18:39:09.338719+00:00",
+      "status": "passed",
+      "events_checked": 2765,
+      "ranking_ticks_checked": 57960,
+      "predictions": [
+        {
+          "arm": "F0",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F0",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F0",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F0",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F0",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "F1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        }
+      ],
+      "upstream": [],
+      "purges": [
+        {
+          "arm": "F0",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F0",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F0",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F0",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F0",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-05-01",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "F1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        }
+      ],
+      "errors": [],
+      "reporting_float32_price_rows": 0,
+      "reporting_price_note": "Exact original float64 label evaluation prices; reporting repair does not change emissions or outcomes."
+    },
+    {
+      "round": "R05",
+      "at": "2026-10-05T04:19:35.719060+00:00",
+      "status": "passed",
+      "events_checked": 1994,
+      "ranking_ticks_checked": 57960,
+      "predictions": [
+        {
+          "arm": "D0",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D0",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D0",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D0",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D0",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D1",
+          "month": "2026-05",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D1",
+          "month": "2026-06",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D1",
+          "month": "2026-07",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D1",
+          "month": "2026-08",
+          "rows": 250,
+          "max_error": 0.0
+        },
+        {
+          "arm": "D1",
+          "month": "2026-09",
+          "rows": 250,
+          "max_error": 0.0
+        }
+      ],
+      "upstream": [],
+      "purges": [
+        {
+          "arm": "D0",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-02-20",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D0",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-03-20",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D0",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-04-21",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D0",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D0",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D1",
+          "month": "2026-05",
+          "ranges": [
+            [
+              "2025-02-20",
+              "2025-12-04"
+            ],
+            [
+              "2025-12-19",
+              "2026-01-20"
+            ],
+            [
+              "2026-02-04",
+              "2026-03-04"
+            ],
+            [
+              "2026-03-19",
+              "2026-04-16"
+            ],
+            [
+              "2026-05-01",
+              "2026-05-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D1",
+          "month": "2026-06",
+          "ranges": [
+            [
+              "2025-03-20",
+              "2026-01-05"
+            ],
+            [
+              "2026-01-21",
+              "2026-02-18"
+            ],
+            [
+              "2026-03-05",
+              "2026-04-01"
+            ],
+            [
+              "2026-04-17",
+              "2026-05-14"
+            ],
+            [
+              "2026-06-01",
+              "2026-06-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D1",
+          "month": "2026-07",
+          "ranges": [
+            [
+              "2025-04-21",
+              "2026-02-04"
+            ],
+            [
+              "2026-02-20",
+              "2026-03-19"
+            ],
+            [
+              "2026-04-06",
+              "2026-05-01"
+            ],
+            [
+              "2026-05-18",
+              "2026-06-15"
+            ],
+            [
+              "2026-07-01",
+              "2026-07-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D1",
+          "month": "2026-08",
+          "ranges": [
+            [
+              "2025-05-21",
+              "2026-03-09"
+            ],
+            [
+              "2026-03-24",
+              "2026-04-21"
+            ],
+            [
+              "2026-05-06",
+              "2026-06-03"
+            ],
+            [
+              "2026-06-18",
+              "2026-07-17"
+            ],
+            [
+              "2026-08-01",
+              "2026-08-28"
+            ]
+          ]
+        },
+        {
+          "arm": "D1",
+          "month": "2026-09",
+          "ranges": [
+            [
+              "2025-06-23",
+              "2026-04-08"
+            ],
+            [
+              "2026-04-23",
+              "2026-05-20"
+            ],
+            [
+              "2026-06-05",
+              "2026-07-06"
+            ],
+            [
+              "2026-07-21",
+              "2026-08-17"
+            ],
+            [
+              "2026-09-01",
+              "2026-09-28"
+            ]
+          ]
+        }
+      ],
+      "errors": [],
+      "reporting_float32_price_rows": 0,
+      "reporting_price_note": "Exact original float64 label evaluation prices; reporting repair does not change emissions or outcomes."
+    }
+  ],
+  "engineering": {
+    "portable_verification.json": {
+      "status": "passed",
+      "checks": 23,
+      "sha256": "782677b9ff3fdd16bfdd06cbc2818a27689c202354c7a1b4939304d33abcc6f7"
+    },
+    "ui_verification.json": {
+      "status": "passed",
+      "checks": 8,
+      "sha256": "a5f2ac95faf25e388725f40a781ca4f2b675273f8ea2c4d70acd2e5afc9c63bd"
+    },
+    "service_verification.json": {
+      "status": "passed",
+      "checks": 18,
+      "sha256": "a394715df2e7ed5d2e4785b11c8b7ff179b08c5651f5b78b36522cef46d627a5"
+    },
+    "inference_verification.json": {
+      "status": "passed",
+      "checks": 2,
+      "sha256": "945de28eb9eaf1ecf207ef26a4e5ba5e0b5d162caf22dfd5641b64a39cd6a32a"
+    },
+    "tests_verification.json": {
+      "status": "passed",
+      "checks": 1,
+      "sha256": "655ebf9db050fcd757c5d69168aa0c955b6eb27cf6858483b81cbbbe4fb5c581"
+    }
+  },
+  "source_artifacts": [
+    {
+      "file": "results.json",
+      "sha256": "3cbee518e51a028183fefa5e7801c0675705c2b0fcb433318acf9a90007a4ff0"
+    },
+    {
+      "file": "PROTOCOL.md",
+      "sha256": "943804db02d3586bc48585de069c9fd14f0c55f3cdde12a374cb25db788b27ae"
+    },
+    {
+      "file": "coverage.json",
+      "sha256": "4c4875ac49e3152e68e8b8ead377ef1277dc15fe085bc1ffc6728ef806307b79"
+    },
+    {
+      "file": "verification.json",
+      "sha256": "fbf3d9c8d16f610a0835997890d437a7cf1f2d597ef9562b5d044de1982c88a4"
+    },
+    {
+      "file": "calibration_audit.json",
+      "sha256": "507b50145a8ff721047e6f89b43dc2ba151eca10de111491fab785d090cc90fe"
+    },
+    {
+      "file": "R01/results.json",
+      "sha256": "3d79a9e486b3d5636b76b819fdbd961daecfa9c5427f3df3381ce232c03d2097"
+    },
+    {
+      "file": "R01/PROTOCOL.md",
+      "sha256": "e344088b34764f032f3202ec9b664bef994cc7d6b439e9af7cc295dc5a198a37"
+    },
+    {
+      "file": "R01/coverage.json",
+      "sha256": "f21bbca134fe1165aca3317bbeaecdf682f310460b0aa44802c3840334b851c8"
+    },
+    {
+      "file": "R01/verification.json",
+      "sha256": "08893c3a1665cedb122027c56197f32069fbbba498895360504fc64429a36f94"
+    },
+    {
+      "file": "R01/calibration_audit.json",
+      "sha256": "d812f9d00a316b7c7b63db84cc9074cbcc3934aedc2dcdeedca407850f200b63"
+    },
+    {
+      "file": "R02/results.json",
+      "sha256": "140bb8643739b1462eabda1a4dcc1f4481fc3da0b69a2f6a4397c11c4edb99c3"
+    },
+    {
+      "file": "R02/PROTOCOL.md",
+      "sha256": "54100fd77014023157677dab0c1f1425e30721766af7622bddb0f810e422860a"
+    },
+    {
+      "file": "R02/coverage.json",
+      "sha256": "e2566101ef93b352eb6d40473fbd4f4e26a553494aab6d499e55033f0434de39"
+    },
+    {
+      "file": "R02/verification.json",
+      "sha256": "28888772f2cac33c4418374f6f12a581c91fac55e17784a18113797727850dda"
+    },
+    {
+      "file": "R02/calibration_audit.json",
+      "sha256": "f9b7fce5134267a1306d4bfffff34b2e84ac7169ce7ea7899343765e9b04210a"
+    },
+    {
+      "file": "R03/results.json",
+      "sha256": "9407d43c3fdf0cb7195d257cd0a02ca79f9e675afaf477c6496b6e1613df8c8d"
+    },
+    {
+      "file": "R03/PROTOCOL.md",
+      "sha256": "6c6608322afdd33d244762eb864e39cbae74bf7c727a386ae9bced1eb936ee07"
+    },
+    {
+      "file": "R03/coverage.json",
+      "sha256": "908ba3793c0304da7b8b68d9073f02ae16b08590f7a211ba7489e386ca2c3dbe"
+    },
+    {
+      "file": "R03/verification.json",
+      "sha256": "cce3f0abc6c9c0c8cb67069c22779e41f7a4ae24381d0f914dc9685fb2fc604c"
+    },
+    {
+      "file": "R03/calibration_audit.json",
+      "sha256": "23012352ccf39716ad391c458481c986b69001ff3ee74b7552a721939c6cfd69"
+    },
+    {
+      "file": "R04/results.json",
+      "sha256": "0cf351c872da226712922007c1b61bab9ebb24abc6d22dce41d8894ec066d595"
+    },
+    {
+      "file": "R04/PROTOCOL.md",
+      "sha256": "8f11ad0721229d7614e40aeb3f8e97059230cbff8a5d3cc62576deb160aba8fe"
+    },
+    {
+      "file": "R04/coverage.json",
+      "sha256": "dcd6e2b9ac80e5695f1c111c4bfd614871c23d5e073c86382b9c1bf91864c1e0"
+    },
+    {
+      "file": "R04/verification.json",
+      "sha256": "ef75ee6e21204d79f37614a2e877d7979bdf9c0e61edf0eb88db38162ae42618"
+    },
+    {
+      "file": "R04/calibration_audit.json",
+      "sha256": "7631028bc8c360e9d5af90c31702ec7f69c32b7d54679e11d80419c4b6997a83"
+    },
+    {
+      "file": "R05/results.json",
+      "sha256": "a75748eb63093cdfa4705e503f164600e97e7729f8bf5730c419845ec457d1e3"
+    },
+    {
+      "file": "R05/PROTOCOL.md",
+      "sha256": "48922702323b4804f6c64067570c32fb6cfef4aabf1fdb4d6543cfb09199acba"
+    },
+    {
+      "file": "R05/coverage.json",
+      "sha256": "3c3700bf1d3aa47d4a180fdd21b8c5f19c02551f27739a02b10064cd74d8bd4f"
+    },
+    {
+      "file": "R05/verification.json",
+      "sha256": "42d476ae46d388f5777f6d9e225a284d94cd40152ca6ba261025080c98f42075"
+    },
+    {
+      "file": "R05/calibration_audit.json",
+      "sha256": "49d9eccd004fcf07c494116fe482f71fa520ea638a21516d46eaa62968ef6f5b"
+    },
+    {
+      "file": "portable_verification.json",
+      "sha256": "782677b9ff3fdd16bfdd06cbc2818a27689c202354c7a1b4939304d33abcc6f7"
+    },
+    {
+      "file": "ui_verification.json",
+      "sha256": "a5f2ac95faf25e388725f40a781ca4f2b675273f8ea2c4d70acd2e5afc9c63bd"
+    },
+    {
+      "file": "service_verification.json",
+      "sha256": "a394715df2e7ed5d2e4785b11c8b7ff179b08c5651f5b78b36522cef46d627a5"
+    },
+    {
+      "file": "inference_verification.json",
+      "sha256": "945de28eb9eaf1ecf207ef26a4e5ba5e0b5d162caf22dfd5641b64a39cd6a32a"
+    },
+    {
+      "file": "tests_verification.json",
+      "sha256": "655ebf9db050fcd757c5d69168aa0c955b6eb27cf6858483b81cbbbe4fb5c581"
+    },
+    {
+      "file": "input_stability_audit.json",
+      "sha256": "a5f0168a30c156b6f88565bae62154b8173f2bbea6720281d91689f15a87d6d7"
+    },
+    {
+      "file": "acquisition_pause.json",
+      "sha256": "7384c8df1d91da5b5161aaee3b7f41d203b16fbf3b031e380f3853553d86ecbc"
+    },
+    {
+      "file": "history_acquisition.json",
+      "sha256": "384c055c81f30c35494309162603592724656dda754f8ad63d53bc303f9d63ba"
+    },
+    {
+      "file": "data_quality.json",
+      "sha256": "812e2400a71a2829aae2e1d52463e105276c4fb776b68c47444b5304da63e4d5"
+    },
+    {
+      "file": "runtime_evidence.json",
+      "sha256": "e507b004afbabf23c560451805c9d41b836b3e5984608570bffe9b736feecae5"
+    },
+    {
+      "file": "scope_verification.json",
+      "sha256": "c11d0e4a1cb63974d9c12d1ea59bd42f5ea3197f44fbce3f6ce827300df3fcb2"
+    },
+    {
+      "file": "BLOCKERS.md",
+      "sha256": "395dba77be558f9dd04628a18a8a0c65c5cd8b06b30f3d5a49b9461069bb7efc"
+    }
+  ],
+  "current_membership_universe": 1860,
+  "historical_acquisition_counts": {
+    "local_available": 39,
+    "futu_available": 52,
+    "unavailable": 8,
+    "partial": 1
+  },
+  "priority_prefix_symbols": 124,
+  "prefix_bars_added": 3045316,
+  "paid_data_purchased": false,
+  "orders_sent": false,
+  "r2_uploaded": false,
+  "legacy_modified": false,
+  "current_intraday_probability_service_deployed": false,
+  "all_future_effective_thresholds_empty": true,
+  "data_quality": {
+    "symbol_files": 301,
+    "invalid_bars": 2577,
+    "quality_errors": 0
+  },
+  "acquisition_pause": {
+    "at": "2026-10-05T04:46:06.506711+00:00",
+    "status": "interrupted_after_atomic_symbol_metadata",
+    "pid": 79693,
+    "completed_metadata_count": 100,
+    "note": "Only this task downloader was targeted; completed atomic files preserved, other OpenD clients untouched. Refresh manifest separately."
+  },
+  "caveat": "Different arms/calibration/months overlap; fitted model count and summed engineering events are not independent statistical samples. Final independent evaluation requires frozen new data for at least twelve weeks."
+}

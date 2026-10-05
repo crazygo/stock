@@ -5,6 +5,7 @@ import pandas as pd
 OLD=Path(__file__).resolve().parents[1]/'preopen_ranked_policy_v5'
 sys.path.insert(0,str(OLD))
 from data import prior_context,intraday,peers
+from horizon import valid_bars
 from common import SESSIONS
 
 def main():
@@ -12,6 +13,7 @@ def main():
     cut=570+SESSIONS[a.day]['duration_minutes']-30
     for p in sorted((OLD/'raw').glob('*.parquet')):
         f=pd.read_parquet(p);f=f[(f.day<=a.day)&(f.day>=str((pd.Timestamp(a.day)-pd.Timedelta(days=130)).date()))]
+        f=f[valid_bars(f)].copy()
         if f.empty:continue
         ctx,_=prior_context(f,p.stem);n=intraday(f,ctx,p.stem,labels=False,first=a.day,last=a.day,only_minutes=range(cut-60,cut+1,5))
         if len(n):parts.append(n)

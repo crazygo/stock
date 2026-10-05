@@ -6,7 +6,7 @@ from research import metrics,FIVE
 def main():
  snapshot=json.loads((OUT/'watchlist_snapshot.json').read_text());group=next(s for s in snapshot['snapshots'] if s['group']=='特别关注')
  members=[r for r in group['members'] if r['code'].startswith('US.') and r['stock_type']=='STOCK']
- for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04')]:
+ for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05')]:
   file=base/'results.json'
   if not file.exists():continue
   result=json.loads(file.read_text())

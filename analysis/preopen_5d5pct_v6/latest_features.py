@@ -12,8 +12,9 @@ def main():
     subprocess.run([sys.executable,str(OUT/'legacy_features_adapter.py'),'--day',day,'--output',str(path)],check=True)
     frame=pd.read_parquet(path);parts=[]
     for symbol in sorted(frame.symbol.unique()):
-        raw=pd.read_parquet(OLD/'raw'/f'{symbol}.parquet');d=daily_features(raw);d['symbol']=symbol;parts.append(d[d.day==day])
-    frame=frame.merge(pd.concat(parts,ignore_index=True),on=['symbol','day'],how='left',validate='many_to_one')
+        raw=pd.read_parquet(OLD/'raw'/f'{symbol}.parquet');d=daily_features(raw);d['symbol']=symbol;parts.append(d)
+    daily_history=pd.concat(parts,ignore_index=True);save(daily_history,OUT/'cache/latest_daily.parquet')
+    frame=frame.merge(daily_history[daily_history.day==day],on=['symbol','day'],how='left',validate='many_to_one')
     frame=extend_peers(frame)
     for c in ['e_filing_age_hours','e_earnings_filing','e_quarterly_filing','e_post_return','e_post_volume_ratio']:frame[c]=float('nan')
     frame['e_missing']=1.

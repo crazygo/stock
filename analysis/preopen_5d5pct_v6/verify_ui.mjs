@@ -21,6 +21,14 @@ for(const page of ['index.html','opportunity.html','sector.html','events.html'])
    if(count>1){await evaluate(`$('signal').selectedIndex=1;$('signal').dispatchEvent(new Event('change'))`);await sleep(600);let inspect=await evaluate(`$('inspect').textContent`);if(!inspect.includes('features')||!inspect.includes('label_end'))throw Error('inspect failed')}
   }
   const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});fs.mkdirSync(root+'screenshots',{recursive:true});fs.writeFileSync(root+`screenshots/${page.replace('.html','')}_${width}.png`,Buffer.from(shot.data,'base64'));
+  if(page!=='index.html'){
+   await evaluate(`(async()=>{let failed=evs.find(e=>e.y===0);if(!failed)throw Error('No actual failed signal to inspect');$('symbol').value=failed.symbol;await load();$('signal').value=failed.day;await $('signal').onchange();if(chosen?.y!==0)throw Error('Failed signal did not remain selected')})()`);
+   let rect=await evaluate(`(()=>{$('chart').scrollIntoView({block:'center'});let r=$('chart').getBoundingClientRect();return {x:r.left+52,y:r.top+120}})()`);
+   await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:rect.x,y:rect.y});
+   let detail=await evaluate(`$('bar-details').textContent`);if(!detail.includes('Open')||!detail.includes('成交量'))throw Error('real minute price/volume inspection failed '+page);
+   const pathShot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});fs.writeFileSync(root+`screenshots/${page.replace('.html','')}_path_${width}.png`,Buffer.from(pathShot.data,'base64'));
+   interactions.minutePriceVolumeInspection=true;
+  }
   checks.push({page,width,...state,interactions});
  }
 }

@@ -1,6 +1,6 @@
 """Separate acquisition bounds, valid sessions and actually scoreable 5-day windows."""
 from collections import Counter
-import json
+import argparse,hashlib,inspect as py_inspect,json
 import numpy as np
 import pandas as pd
 from common import OUT,OLD,DATES,SESSIONS,sha,write,now
@@ -22,13 +22,21 @@ def inspect(path):
   sessions=dict(sessions),company_action_adjustment='not applied; raw NONE. Label eligibility additionally requires action audit.',gap_examples=gaps[:3])
 
 def main():
- rows=[]
+ ap=argparse.ArgumentParser();ap.add_argument('--reuse-unchanged',action='store_true');a=ap.parse_args()
+ fingerprint=hashlib.sha256((py_inspect.getsource(inspect)+json.dumps(SESSIONS,sort_keys=True)+pd.__version__+np.__version__).encode()).hexdigest()
+ old=json.loads((OUT/'data_quality.json').read_text()) if a.reuse_unchanged and (OUT/'data_quality.json').exists() else {}
+ previous={r['path']:r for r in old.get('records',[])} if old.get('inspector_sha256')==fingerprint else {}
+ rows=[];reused=0
  for folder in [OLD/'raw',OUT/'cache/acquired',OUT/'cache/backfill']:
   for path in sorted(folder.glob('*.parquet')):
-   try:rows.append(dict(symbol=path.stem,**inspect(path)))
+   try:
+    key=str(path.relative_to(OUT)) if path.is_relative_to(OUT) else str(path.relative_to(OUT.parents[1]))
+    prior=previous.get(key)
+    if prior and not prior.get('error') and sha(path)==prior['sha256']:rows.append(prior);reused+=1
+    else:rows.append(dict(symbol=path.stem,**inspect(path)))
    except Exception as e:rows.append(dict(symbol=path.stem,path=str(path),error=repr(e),status='quality_unavailable'))
- write(OUT/'data_quality.json',dict(at=now(),requested=['2024-10-04','2026-09-30'],status='partial_history_not_universe_complete',records=rows,
+ write(OUT/'data_quality.json',dict(at=now(),inspector_sha256=fingerprint,unchanged_files_reused=reused,requested=['2024-10-04','2026-09-30'],status='partial_history_not_universe_complete',records=rows,
   note='Date bounds never imply complete sessions. Five-day scoreability is complete RTH-price coverage only; actions and exact entry must also pass. Sparse zero placeholders are invalid, never candles.',
   provider_timestamp_probe=dict(symbol='AAPL',day='2026-10-02',regular_first_time_key='09:35',daily_open_equals_first_5m_open=True,regular_last_time_key='16:00',normalization='time_key is bar end; start=end−5m',source='read-only OpenD K_DAY/K_5M Session.RTH; cache/provider_timestamp_probe.json')))
- print(json.dumps(dict(symbol_files=len(rows),invalid_bars=sum(r.get('invalid_bars',0) for r in rows),quality_errors=sum('error'in r for r in rows))),flush=True)
+ print(json.dumps(dict(symbol_files=len(rows),unchanged_files_reused=reused,invalid_bars=sum(r.get('invalid_bars',0) for r in rows),quality_errors=sum('error'in r for r in rows))),flush=True)
 if __name__=='__main__':main()
