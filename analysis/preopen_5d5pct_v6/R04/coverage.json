@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-04T18:31:11.318852+00:00",
+  "requested": [
+    "2024-10-04",
+    "2026-09-30"
+  ],
+  "actual_features": [
+    "2025-05-01",
+    "2026-09-30"
+  ],
+  "rows": 5145675,
+  "symbols": 124,
+  "events": {
+    "covered_symbols": 57,
+    "events": 872,
+    "eligible_rows": 248029,
+    "latency_seconds": 300,
+    "timestamp": "original acceptance UTC + explicit delay assumption",
+    "scope": "filing confirmation; no consensus or earliest announcement"
+  },
+  "facts": {
+    "events": 325,
+    "stock_sources": 56,
+    "eligible_rows": 2022725,
+    "latency_seconds": 300,
+    "fields": [
+      "f_revenue_value",
+      "f_revenue_yoy",
+      "f_eps_value",
+      "f_eps_yoy",
+      "f_income_value",
+      "f_income_yoy",
+      "f_profit_margin",
+      "f_turn_to_profit",
+      "f_dual_yoy_growth"
+    ],
+    "known_not_consensus": true
+  },
+  "actions": {
+    "known_rows_newly_unknown": 690,
+    "rule": "fresh get_rehab actions invalidate unadjusted mature-window labels; all rows and signals retained"
+  },
+  "panel_sha256": "aa79d8a24fac08a3b83b6dbf7f9966f314f01dd8c838303221b7bb184bc32207",
+  "source_sha256": "c568f7f5fe86d41f64854d99f34a09797241e0389fae2a90fb841f603e9b4222",
+  "sec_events_sha256": "38f2f3c1c9e1caec45a855b41913e034a4581f8fd3055227864c722df8e654f4",
+  "sec_facts_sha256": "f333c745ca4e238cc0105c727b06705082a3fb300e9d3a1127ffd450417df9fe",
+  "protocol_sha256": "8f11ad0721229d7614e40aeb3f8e97059230cbff8a5d3cc62576deb160aba8fe",
+  "membership": "current_snapshot_retrospective_not_PIT"
+}

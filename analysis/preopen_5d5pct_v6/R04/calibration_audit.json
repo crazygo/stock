@@ -1,0 +1,1922 @@
+{
+  "at": "2026-10-04T18:39:13.772113+00:00",
+  "status": "exposed_development_diagnostic",
+  "weighting": "each stock-day equal within reported cohort; two-week moving date blocks",
+  "caveat": "Brier combines discrimination and calibration; high bins and overestimation are also reported. Different issued cohorts do not prove a calibration increment.",
+  "audits": [
+    {
+      "arm": "F0",
+      "variant": "candidate_only",
+      "all_candidates": {
+        "stock_days": 8840,
+        "brier": 0.20914473797261776,
+        "baseline_brier": 0.20973620042752394,
+        "predicted": 0.44175571701167704,
+        "observed": 0.3997319496360417,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 46114,
+            "stock_days": 524,
+            "predicted": 0.06752686700103831,
+            "observed": 0.1134145812551503
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 152648,
+            "stock_days": 1806,
+            "predicted": 0.15555471409362048,
+            "observed": 0.1743815837744353
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 173195,
+            "stock_days": 2491,
+            "predicted": 0.24977555466951998,
+            "observed": 0.20107393400502324
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 166018,
+            "stock_days": 2496,
+            "predicted": 0.34918908102755664,
+            "observed": 0.27383175318338976
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 160954,
+            "stock_days": 2356,
+            "predicted": 0.4499100146082378,
+            "observed": 0.3967034059420704
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 174181,
+            "stock_days": 2502,
+            "predicted": 0.5499383464511646,
+            "observed": 0.5446058984619448
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 197799,
+            "stock_days": 2534,
+            "predicted": 0.6499748526311295,
+            "observed": 0.6332286816414645
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 113167,
+            "stock_days": 1654,
+            "predicted": 0.7422490773175817,
+            "observed": 0.6003163466381543
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 34471,
+            "stock_days": 524,
+            "predicted": 0.8353682870894903,
+            "observed": 0.6530416872153406
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 1373,
+            "stock_days": 34,
+            "predicted": 0.9132915243304858,
+            "observed": 0.7982520029133284
+          }
+        ],
+        "dates": 101,
+        "rows": 1219920,
+        "pending_rows": 124752,
+        "brier_delta_ci": [
+          -0.014368472181455896,
+          0.01252451490760414
+        ],
+        "overestimate_ci": [
+          -0.012210937622778443,
+          0.10271889381262529
+        ],
+        "high_probability": {
+          "stock_days": 524,
+          "brier": 0.26353755319180744,
+          "baseline_brier": 0.23832231688619326,
+          "predicted": 0.8271725285771044,
+          "observed": 0.6412874977484223,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 34471,
+              "stock_days": 524,
+              "predicted": 0.8255042883325924,
+              "observed": 0.6382435382487156
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 1373,
+              "stock_days": 34,
+              "predicted": 0.913290957679849,
+              "observed": 0.7984237442989303
+            }
+          ],
+          "dates": 60,
+          "overestimate": 0.18588503082868213,
+          "overestimate_ci": [
+            0.033725631468325724,
+            0.33592404315305385
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 18,
+            "dates": 5,
+            "predicted": 0.8060196186477293,
+            "observed": 0.7138888888888889,
+            "overestimate_ci": [
+              -0.19600745751816576,
+              0.1386046309325511
+            ]
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 245,
+            "dates": 22,
+            "predicted": 0.8292674455895306,
+            "observed": 0.6227089583203858,
+            "overestimate_ci": [
+              0.10653946501469505,
+              0.3089738914501113
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 244,
+            "dates": 21,
+            "predicted": 0.8278861709413798,
+            "observed": 0.6533845383529833,
+            "overestimate_ci": [
+              -0.042753254237935294,
+              0.4124929330377678
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 17,
+            "dates": 12,
+            "predicted": 0.8091354093889338,
+            "observed": 0.6585368631500457,
+            "overestimate_ci": [
+              -0.044603216051389075,
+              0.2872397798420822
+            ]
+          }
+        ]
+      },
+      "first_candidates": {
+        "stock_days": 8840,
+        "brier": 0.20790799560046758,
+        "baseline_brier": 0.20910667580025025,
+        "predicted": 0.44859138168869184,
+        "observed": 0.4080316742081448,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 390,
+            "stock_days": 390,
+            "predicted": 0.0666119920065654,
+            "observed": 0.06666666666666667
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 1034,
+            "stock_days": 1034,
+            "predicted": 0.15254988994552454,
+            "observed": 0.1576402321083172
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 1162,
+            "stock_days": 1162,
+            "predicted": 0.2459240167666765,
+            "observed": 0.22289156626506024
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 977,
+            "stock_days": 977,
+            "predicted": 0.3556396606138271,
+            "observed": 0.2804503582395087
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 1321,
+            "stock_days": 1321,
+            "predicted": 0.4492697803001645,
+            "observed": 0.3716881150643452
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 1417,
+            "stock_days": 1417,
+            "predicted": 0.5485423566399766,
+            "observed": 0.5553987297106563
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 1440,
+            "stock_days": 1440,
+            "predicted": 0.6513707899560774,
+            "observed": 0.6416666666666667
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 833,
+            "stock_days": 833,
+            "predicted": 0.7419406477685789,
+            "observed": 0.5990396158463386
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 263,
+            "stock_days": 263,
+            "predicted": 0.8330658035177736,
+            "observed": 0.6920152091254753
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 3,
+            "stock_days": 3,
+            "predicted": 0.9107308502331378,
+            "observed": 0.6666666666666666
+          }
+        ],
+        "dates": 101,
+        "rows": 8840,
+        "pending_rows": 904,
+        "brier_delta_ci": [
+          -0.015527568801585939,
+          0.011360794981017502
+        ],
+        "overestimate_ci": [
+          -0.008840261863256411,
+          0.09949550919458784
+        ],
+        "high_probability": {
+          "stock_days": 266,
+          "brier": 0.23150419706795866,
+          "baseline_brier": 0.22001629057860686,
+          "predicted": 0.83394172509727,
+          "observed": 0.6917293233082706,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 263,
+              "stock_days": 263,
+              "predicted": 0.8330658035177736,
+              "observed": 0.6920152091254753
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 3,
+              "stock_days": 3,
+              "predicted": 0.9107308502331378,
+              "observed": 0.6666666666666666
+            }
+          ],
+          "dates": 44,
+          "overestimate": 0.1422124017889994,
+          "overestimate_ci": [
+            -0.014513589117407017,
+            0.30784189984579235
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 4,
+            "dates": 1,
+            "predicted": 0.8044282376833539,
+            "observed": 0.75,
+            "overestimate_ci": [
+              0.05442823768335389,
+              0.05442823768335389
+            ]
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 140,
+            "dates": 21,
+            "predicted": 0.8371739375335561,
+            "observed": 0.7642857142857142,
+            "overestimate_ci": [
+              0.007895415276099832,
+              0.14288238342396775
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 121,
+            "dates": 21,
+            "predicted": 0.8314099512710779,
+            "observed": 0.6033057851239669,
+            "overestimate_ci": [
+              -0.07993182011652869,
+              0.4579362420417574
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 1,
+            "dates": 1,
+            "predicted": 0.8058305666421509,
+            "observed": 1.0,
+            "overestimate_ci": [
+              -0.19416943335784909,
+              -0.19416943335784909
+            ]
+          }
+        ]
+      },
+      "issued_signals": {
+        "stock_days": 751,
+        "brier": 0.21375079274722333,
+        "baseline_brier": 0.2242631613596553,
+        "predicted": 0.7243902203684619,
+        "observed": 0.7336884154460719,
+        "bins": [
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 372,
+            "stock_days": 372,
+            "predicted": 0.6511416697469445,
+            "observed": 0.8306451612903226
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 242,
+            "stock_days": 242,
+            "predicted": 0.7579815976617633,
+            "observed": 0.5826446280991735
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 124,
+            "stock_days": 124,
+            "predicted": 0.8589193300971927,
+            "observed": 0.75
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 13,
+            "stock_days": 13,
+            "predicted": 0.9119085218963849,
+            "observed": 0.6153846153846154
+          }
+        ],
+        "dates": 51,
+        "rows": 751,
+        "pending_rows": 12,
+        "brier_delta_ci": [
+          -0.03952643608252231,
+          0.032477861951900194
+        ],
+        "overestimate_ci": [
+          -0.13639727136625923,
+          0.1793347918997561
+        ],
+        "high_probability": {
+          "stock_days": 137,
+          "brier": 0.21314365585836612,
+          "baseline_brier": 0.2020059865859955,
+          "predicted": 0.8639475015817876,
+          "observed": 0.7372262773722628,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 124,
+              "stock_days": 124,
+              "predicted": 0.8589193300971927,
+              "observed": 0.75
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 13,
+              "stock_days": 13,
+              "predicted": 0.9119085218963849,
+              "observed": 0.6153846153846154
+            }
+          ],
+          "dates": 31,
+          "overestimate": 0.1267212242095248,
+          "overestimate_ci": [
+            0.007435934647423057,
+            0.2813291708822564
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 4,
+            "dates": 1,
+            "predicted": 0.8044282376833539,
+            "observed": 0.75,
+            "overestimate_ci": [
+              0.05442823768335389,
+              0.05442823768335389
+            ]
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 116,
+            "dates": 21,
+            "predicted": 0.8644423932032472,
+            "observed": 0.7413793103448276,
+            "overestimate_ci": [
+              0.04756332124665435,
+              0.23002107847508724
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 11,
+            "dates": 5,
+            "predicted": 0.9125663982252287,
+            "observed": 0.6363636363636364,
+            "overestimate_ci": [
+              -0.08571296774758831,
+              0.6381184914707728
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 6,
+            "dates": 4,
+            "predicted": 0.8049244623195474,
+            "observed": 0.8333333333333334,
+            "overestimate_ci": [
+              -0.19587355261486197,
+              0.3065204921883664
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "arm": "F0",
+      "variant": "top_one",
+      "all_candidates": {
+        "stock_days": 8840,
+        "brier": 0.21126124928775614,
+        "baseline_brier": 0.20973620042752394,
+        "predicted": 0.43600689893966693,
+        "observed": 0.3997319496360417,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 56374,
+            "stock_days": 655,
+            "predicted": 0.06854021277229302,
+            "observed": 0.11764288501791605
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 146455,
+            "stock_days": 1728,
+            "predicted": 0.15282129490223184,
+            "observed": 0.12803250145095763
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 186143,
+            "stock_days": 2461,
+            "predicted": 0.24996292572843037,
+            "observed": 0.18769977920201134
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 193796,
+            "stock_days": 2591,
+            "predicted": 0.3497125674917511,
+            "observed": 0.34485231893331125
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 165947,
+            "stock_days": 2432,
+            "predicted": 0.4483923222709108,
+            "observed": 0.47739941065520924
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 156653,
+            "stock_days": 2294,
+            "predicted": 0.5489399090458126,
+            "observed": 0.5729095516842959
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 139112,
+            "stock_days": 2016,
+            "predicted": 0.6473118857797674,
+            "observed": 0.6306141813790327
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 90118,
+            "stock_days": 1428,
+            "predicted": 0.7471167880108115,
+            "observed": 0.5819703055993253
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 68600,
+            "stock_days": 903,
+            "predicted": 0.8482981675724249,
+            "observed": 0.5673323615160349
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 16722,
+            "stock_days": 230,
+            "predicted": 0.9193422744637048,
+            "observed": 0.7430929314675276
+          }
+        ],
+        "dates": 101,
+        "rows": 1219920,
+        "pending_rows": 124752,
+        "brier_delta_ci": [
+          -0.013922039038568416,
+          0.0168708672902908
+        ],
+        "overestimate_ci": [
+          -0.023730075096799863,
+          0.09778943686000455
+        ],
+        "high_probability": {
+          "stock_days": 933,
+          "brier": 0.29409990503526595,
+          "baseline_brier": 0.2460244337357705,
+          "predicted": 0.8488871141967845,
+          "observed": 0.6096021595002199,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 68600,
+              "stock_days": 903,
+              "predicted": 0.8382706868369576,
+              "observed": 0.5894614032160148
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 16722,
+              "stock_days": 230,
+              "predicted": 0.9192411542209252,
+              "observed": 0.7430730085635683
+            }
+          ],
+          "dates": 60,
+          "overestimate": 0.23928495469656463,
+          "overestimate_ci": [
+            0.08365546144716395,
+            0.335061669497593
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 9,
+            "dates": 4,
+            "predicted": 0.8072255314539825,
+            "observed": 0.5925925925925927,
+            "overestimate_ci": [
+              0.21463293886138976,
+              0.21463293886138976
+            ]
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 231,
+            "dates": 21,
+            "predicted": 0.8352904043431008,
+            "observed": 0.7147895292142217,
+            "overestimate_ci": [
+              0.01621253975241889,
+              0.2391133807554178
+            ]
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 653,
+            "dates": 22,
+            "predicted": 0.8560315206537812,
+            "observed": 0.5593835369340429,
+            "overestimate_ci": [
+              0.18969141598799288,
+              0.3967234701833814
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 40,
+            "dates": 13,
+            "predicted": 0.8201495343084624,
+            "observed": 0.8257912653489174,
+            "overestimate_ci": [
+              -0.17119334442734294,
+              0.2939411222557096
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 0,
+            "dates": 0
+          }
+        ]
+      },
+      "first_candidates": {
+        "stock_days": 8840,
+        "brier": 0.21031632965123445,
+        "baseline_brier": 0.20910667580025025,
+        "predicted": 0.446065289332886,
+        "observed": 0.4080316742081448,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 388,
+            "stock_days": 388,
+            "predicted": 0.06785971178910861,
+            "observed": 0.09278350515463918
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 977,
+            "stock_days": 977,
+            "predicted": 0.151180632848734,
+            "observed": 0.10644831115660185
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 1135,
+            "stock_days": 1135,
+            "predicted": 0.2494854667446155,
+            "observed": 0.16740088105726872
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 1495,
+            "stock_days": 1495,
+            "predicted": 0.35154076727013644,
+            "observed": 0.34448160535117056
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 1317,
+            "stock_days": 1317,
+            "predicted": 0.44668825989427474,
+            "observed": 0.4844343204252088
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 1138,
+            "stock_days": 1138,
+            "predicted": 0.5482108639326043,
+            "observed": 0.5764499121265377
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 1061,
+            "stock_days": 1061,
+            "predicted": 0.6463915315003834,
+            "observed": 0.6361922714420358
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 712,
+            "stock_days": 712,
+            "predicted": 0.7464712918695707,
+            "observed": 0.5786516853932584
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 504,
+            "stock_days": 504,
+            "predicted": 0.8475520547963631,
+            "observed": 0.5773809523809523
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 113,
+            "stock_days": 113,
+            "predicted": 0.9189119258837195,
+            "observed": 0.7964601769911505
+          }
+        ],
+        "dates": 101,
+        "rows": 8840,
+        "pending_rows": 904,
+        "brier_delta_ci": [
+          -0.013420301795342695,
+          0.015491755412899103
+        ],
+        "overestimate_ci": [
+          -0.01605220060532516,
+          0.09537226175315164
+        ],
+        "high_probability": {
+          "stock_days": 617,
+          "brier": 0.2920312985997383,
+          "baseline_brier": 0.2421828431566076,
+          "predicted": 0.8606212046065272,
+          "observed": 0.6175040518638574,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 504,
+              "stock_days": 504,
+              "predicted": 0.8475520547963631,
+              "observed": 0.5773809523809523
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 113,
+              "stock_days": 113,
+              "predicted": 0.9189119258837195,
+              "observed": 0.7964601769911505
+            }
+          ],
+          "dates": 48,
+          "overestimate": 0.24311715274266987,
+          "overestimate_ci": [
+            0.0925719624312591,
+            0.3332655792165518
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 131,
+            "dates": 20,
+            "predicted": 0.8437252601389182,
+            "observed": 0.7175572519083969,
+            "overestimate_ci": [
+              0.05551066451971647,
+              0.2047891229073428
+            ]
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 474,
+            "dates": 22,
+            "predicted": 0.8662632867538266,
+            "observed": 0.5843881856540084,
+            "overestimate_ci": [
+              0.18300439272942254,
+              0.381718156790102
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 12,
+            "dates": 6,
+            "predicted": 0.8222063535596056,
+            "observed": 0.8333333333333334,
+            "overestimate_ci": [
+              -0.07266593328320875,
+              0.17348988075471486
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 0,
+            "dates": 0
+          }
+        ]
+      },
+      "issued_signals": {
+        "stock_days": 598,
+        "brier": 0.2259773144266849,
+        "baseline_brier": 0.21953924101081287,
+        "predicted": 0.7311227465642649,
+        "observed": 0.7307692307692307,
+        "bins": [
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 341,
+            "stock_days": 341,
+            "predicted": 0.6471145064487659,
+            "observed": 0.7917888563049853
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 99,
+            "stock_days": 99,
+            "predicted": 0.7276915672193608,
+            "observed": 0.696969696969697
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 158,
+            "stock_days": 158,
+            "predicted": 0.9145815860233197,
+            "observed": 0.620253164556962
+          }
+        ],
+        "dates": 51,
+        "rows": 598,
+        "pending_rows": 8,
+        "brier_delta_ci": [
+          -0.02548300921796324,
+          0.06478638337831394
+        ],
+        "overestimate_ci": [
+          -0.13442041075138428,
+          0.22871235765236553
+        ],
+        "high_probability": {
+          "stock_days": 158,
+          "brier": 0.31882448755876003,
+          "baseline_brier": 0.24258187237585915,
+          "predicted": 0.9145815860233197,
+          "observed": 0.620253164556962,
+          "bins": [
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 158,
+              "stock_days": 158,
+              "predicted": 0.9145815860233197,
+              "observed": 0.620253164556962
+            }
+          ],
+          "dates": 22,
+          "overestimate": 0.29432842146635774,
+          "overestimate_ci": [
+            0.17819060359004651,
+            0.4508949580642383
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 158,
+            "dates": 22,
+            "predicted": 0.9145815860233197,
+            "observed": 0.620253164556962,
+            "overestimate_ci": [
+              0.17819060359004651,
+              0.4508949580642383
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 0,
+            "dates": 0
+          }
+        ]
+      }
+    },
+    {
+      "arm": "F0",
+      "comparison": "top_calibration_on_identical_candidate_first_cohort",
+      "stock_days": 8840,
+      "brier_candidate": 0.20790799560046758,
+      "brier_top": 0.21031632965123445,
+      "brier_delta": 0.002408334050766871,
+      "brier_delta_ci": [
+        -0.00911470871795626,
+        0.014173783003579014
+      ]
+    },
+    {
+      "arm": "F1",
+      "variant": "candidate_only",
+      "all_candidates": {
+        "stock_days": 8840,
+        "brier": 0.20976233014723938,
+        "baseline_brier": 0.20973620042752394,
+        "predicted": 0.43775232091715416,
+        "observed": 0.3997319496360417,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 47528,
+            "stock_days": 573,
+            "predicted": 0.0685912253284518,
+            "observed": 0.11649974751725296
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 149694,
+            "stock_days": 1804,
+            "predicted": 0.15438282072335177,
+            "observed": 0.1606143198792203
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 181576,
+            "stock_days": 2538,
+            "predicted": 0.2502179719878119,
+            "observed": 0.2163116270872803
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 172223,
+            "stock_days": 2466,
+            "predicted": 0.34829162247289736,
+            "observed": 0.27621165581832857
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 156671,
+            "stock_days": 2231,
+            "predicted": 0.45024920524883316,
+            "observed": 0.4328241984796165
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 181366,
+            "stock_days": 2462,
+            "predicted": 0.5515062254090634,
+            "observed": 0.5397814364324075
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 187542,
+            "stock_days": 2382,
+            "predicted": 0.6488889866438198,
+            "observed": 0.6260144394322339
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 106320,
+            "stock_days": 1511,
+            "predicted": 0.7429168753363682,
+            "observed": 0.5940933032355153
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 35713,
+            "stock_days": 502,
+            "predicted": 0.8348000894029389,
+            "observed": 0.665499957998488
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 1287,
+            "stock_days": 24,
+            "predicted": 0.9134977520036048,
+            "observed": 0.9090909090909093
+          }
+        ],
+        "dates": 101,
+        "rows": 1219920,
+        "pending_rows": 124752,
+        "brier_delta_ci": [
+          -0.012992581245230036,
+          0.012824729805558608
+        ],
+        "overestimate_ci": [
+          -0.016392067198091574,
+          0.09723790473744091
+        ],
+        "high_probability": {
+          "stock_days": 502,
+          "brier": 0.26667003095907393,
+          "baseline_brier": 0.2427284096882989,
+          "predicted": 0.826673343479782,
+          "observed": 0.6347147425842081,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 35713,
+              "stock_days": 502,
+              "predicted": 0.8250292069050715,
+              "observed": 0.6295190823798008
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 1287,
+              "stock_days": 24,
+              "predicted": 0.9134934836767554,
+              "observed": 0.9090763462982291
+            }
+          ],
+          "dates": 58,
+          "overestimate": 0.19195860089557393,
+          "overestimate_ci": [
+            0.04486840660376152,
+            0.3523593602635408
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 217,
+            "dates": 22,
+            "predicted": 0.8242200414968142,
+            "observed": 0.6361596540906456,
+            "overestimate_ci": [
+              0.07824626505944639,
+              0.3095640827694209
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 262,
+            "dates": 21,
+            "predicted": 0.8301081758165649,
+            "observed": 0.6276627637865849,
+            "overestimate_ci": [
+              -0.004784852001404824,
+              0.4215501770223898
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 23,
+            "dates": 15,
+            "predicted": 0.810692493830519,
+            "observed": 0.7014135533703095,
+            "overestimate_ci": [
+              -0.07723885627869968,
+              0.2527541687209088
+            ]
+          }
+        ]
+      },
+      "first_candidates": {
+        "stock_days": 8840,
+        "brier": 0.2074987765739678,
+        "baseline_brier": 0.20778670423976375,
+        "predicted": 0.44466630248245226,
+        "observed": 0.40429864253393666,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 391,
+            "stock_days": 391,
+            "predicted": 0.06763556617991065,
+            "observed": 0.0741687979539642
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 1036,
+            "stock_days": 1036,
+            "predicted": 0.15188489949424652,
+            "observed": 0.13320463320463322
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 1157,
+            "stock_days": 1157,
+            "predicted": 0.246358389947934,
+            "observed": 0.23509075194468454
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 1095,
+            "stock_days": 1095,
+            "predicted": 0.35611882017345065,
+            "observed": 0.2639269406392694
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 1295,
+            "stock_days": 1295,
+            "predicted": 0.4495704519859314,
+            "observed": 0.4193050193050193
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 1446,
+            "stock_days": 1446,
+            "predicted": 0.5504782613246223,
+            "observed": 0.5401106500691563
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 1362,
+            "stock_days": 1362,
+            "predicted": 0.6494922230827783,
+            "observed": 0.6270190895741556
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 801,
+            "stock_days": 801,
+            "predicted": 0.7424207092410268,
+            "observed": 0.6179775280898876
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 256,
+            "stock_days": 256,
+            "predicted": 0.8347212669427171,
+            "observed": 0.671875
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 1,
+            "stock_days": 1,
+            "predicted": 0.9037449574784848,
+            "observed": 1.0
+          }
+        ],
+        "dates": 101,
+        "rows": 8840,
+        "pending_rows": 904,
+        "brier_delta_ci": [
+          -0.013760544931451069,
+          0.011713460329775455
+        ],
+        "overestimate_ci": [
+          -0.010390880293283703,
+          0.09866045428400634
+        ],
+        "high_probability": {
+          "stock_days": 257,
+          "brier": 0.24384390635478503,
+          "baseline_brier": 0.23226511787463364,
+          "predicted": 0.8349898416140624,
+          "observed": 0.6731517509727627,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 256,
+              "stock_days": 256,
+              "predicted": 0.8347212669427171,
+              "observed": 0.671875
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 1,
+              "stock_days": 1,
+              "predicted": 0.9037449574784848,
+              "observed": 1.0
+            }
+          ],
+          "dates": 45,
+          "overestimate": 0.16183809064129973,
+          "overestimate_ci": [
+            -0.017557512397665793,
+            0.3612917705016806
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 105,
+            "dates": 21,
+            "predicted": 0.8373794324162585,
+            "observed": 0.7619047619047619,
+            "overestimate_ci": [
+              -0.06516174564480046,
+              0.17991238794522554
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 148,
+            "dates": 21,
+            "predicted": 0.8339284934118372,
+            "observed": 0.6013513513513513,
+            "overestimate_ci": [
+              -0.03037979132566094,
+              0.4618531010174713
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 4,
+            "dates": 3,
+            "predicted": 0.8115329665387456,
+            "observed": 1.0,
+            "overestimate_ci": [
+              -0.19204666324555375,
+              -0.1825009838207554
+            ]
+          }
+        ]
+      },
+      "issued_signals": {
+        "stock_days": 681,
+        "brier": 0.20280838062422332,
+        "baseline_brier": 0.22878734259056638,
+        "predicted": 0.7057926182657903,
+        "observed": 0.7386196769456681,
+        "bins": [
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 250,
+            "stock_days": 250,
+            "predicted": 0.6310320282710227,
+            "observed": 0.796
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 349,
+            "stock_days": 349,
+            "predicted": 0.7322182803573827,
+            "observed": 0.6790830945558739
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 82,
+            "stock_days": 82,
+            "predicted": 0.8212510503234268,
+            "observed": 0.8170731707317073
+          }
+        ],
+        "dates": 51,
+        "rows": 681,
+        "pending_rows": 11,
+        "brier_delta_ci": [
+          -0.046621393332904326,
+          -0.0007071456787091634
+        ],
+        "overestimate_ci": [
+          -0.1270326327312168,
+          0.11069138098872734
+        ],
+        "high_probability": {
+          "stock_days": 82,
+          "brier": 0.14836161051211208,
+          "baseline_brier": 0.18201420102598562,
+          "predicted": 0.8212510503234268,
+          "observed": 0.8170731707317073,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 82,
+              "stock_days": 82,
+              "predicted": 0.8212510503234268,
+              "observed": 0.8170731707317073
+            }
+          ],
+          "dates": 26,
+          "overestimate": 0.004177879591719558,
+          "overestimate_ci": [
+            -0.10348789241505481,
+            0.13927705485430875
+          ]
+        },
+        "reliable_high_probability": true,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 68,
+            "dates": 17,
+            "predicted": 0.8242180754074573,
+            "observed": 0.8382352941176471,
+            "overestimate_ci": [
+              -0.1399965913043277,
+              0.15464122654010257
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 14,
+            "dates": 9,
+            "predicted": 0.8068397856295644,
+            "observed": 0.7142857142857143,
+            "overestimate_ci": [
+              -0.0252703578452597,
+              0.18092239323568232
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "arm": "F1",
+      "variant": "top_one",
+      "all_candidates": {
+        "stock_days": 8840,
+        "brier": 0.21211979566786954,
+        "baseline_brier": 0.20973620042752394,
+        "predicted": 0.4271280026472421,
+        "observed": 0.3997319496360417,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 50295,
+            "stock_days": 605,
+            "predicted": 0.06888764638980242,
+            "observed": 0.10609404513371112
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 160229,
+            "stock_days": 1887,
+            "predicted": 0.1545045490541761,
+            "observed": 0.11821205899056976
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 201305,
+            "stock_days": 2555,
+            "predicted": 0.250084910054717,
+            "observed": 0.22345197585752954
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 186236,
+            "stock_days": 2499,
+            "predicted": 0.3497835236558452,
+            "observed": 0.3602579522756073
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 166492,
+            "stock_days": 2326,
+            "predicted": 0.44908015208534874,
+            "observed": 0.5049131489801312
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 157849,
+            "stock_days": 2206,
+            "predicted": 0.5503486026372314,
+            "observed": 0.5609284822837014
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 139432,
+            "stock_days": 1896,
+            "predicted": 0.6470660745790232,
+            "observed": 0.6263698433645075
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 88050,
+            "stock_days": 1254,
+            "predicted": 0.7470577249879716,
+            "observed": 0.5500056785917091
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 62085,
+            "stock_days": 680,
+            "predicted": 0.8446734078175883,
+            "observed": 0.5916243859225256
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 7947,
+            "stock_days": 135,
+            "predicted": 0.9152667566107433,
+            "observed": 0.7786586133132
+          }
+        ],
+        "dates": 101,
+        "rows": 1219920,
+        "pending_rows": 124752,
+        "brier_delta_ci": [
+          -0.012734462671063759,
+          0.016933222913658005
+        ],
+        "overestimate_ci": [
+          -0.034665979546052425,
+          0.09360663539493681
+        ],
+        "high_probability": {
+          "stock_days": 688,
+          "brier": 0.2966616725466368,
+          "baseline_brier": 0.24472039992977893,
+          "predicted": 0.8422833456374313,
+          "observed": 0.5986185975645223,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 62085,
+              "stock_days": 680,
+              "predicted": 0.8356100110616925,
+              "observed": 0.5822114357924039
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 7947,
+              "stock_days": 135,
+              "predicted": 0.9152664657797255,
+              "observed": 0.778056005537736
+            }
+          ],
+          "dates": 54,
+          "overestimate": 0.24366474807290905,
+          "overestimate_ci": [
+            0.04464005035296241,
+            0.34764419291084997
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 36,
+            "dates": 15,
+            "predicted": 0.8157700396782902,
+            "observed": 0.7087234937399194,
+            "overestimate_ci": [
+              -0.019848672110995377,
+              0.17337672526227274
+            ]
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 593,
+            "dates": 22,
+            "predicted": 0.8463045780636581,
+            "observed": 0.5745851254495323,
+            "overestimate_ci": [
+              0.17623282125912595,
+              0.37436687302542676
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 59,
+            "dates": 17,
+            "predicted": 0.818044162345508,
+            "observed": 0.7729927111556205,
+            "overestimate_ci": [
+              -0.16392019449197467,
+              0.32925288931722035
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 0,
+            "dates": 0
+          }
+        ]
+      },
+      "first_candidates": {
+        "stock_days": 8840,
+        "brier": 0.20917838622781096,
+        "baseline_brier": 0.20778670423976375,
+        "predicted": 0.4350601539705085,
+        "observed": 0.40429864253393666,
+        "bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "rows": 377,
+            "stock_days": 377,
+            "predicted": 0.0664154423016605,
+            "observed": 0.08488063660477453
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "rows": 1055,
+            "stock_days": 1055,
+            "predicted": 0.15161938687812515,
+            "observed": 0.08436018957345971
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.30000000000000004,
+            "rows": 1212,
+            "stock_days": 1212,
+            "predicted": 0.24983528021037493,
+            "observed": 0.19884488448844884
+          },
+          {
+            "lower": 0.30000000000000004,
+            "upper": 0.4,
+            "rows": 1466,
+            "stock_days": 1466,
+            "predicted": 0.3519207536988053,
+            "observed": 0.3553888130968622
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "rows": 1387,
+            "stock_days": 1387,
+            "predicted": 0.44842975054363504,
+            "observed": 0.5162220620043259
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "rows": 1143,
+            "stock_days": 1143,
+            "predicted": 0.550340138325039,
+            "observed": 0.5625546806649169
+          },
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 1040,
+            "stock_days": 1040,
+            "predicted": 0.6467588912446485,
+            "observed": 0.6269230769230769
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 682,
+            "stock_days": 682,
+            "predicted": 0.7468938958042601,
+            "observed": 0.5571847507331378
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 417,
+            "stock_days": 417,
+            "predicted": 0.8472588015381611,
+            "observed": 0.5899280575539568
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 61,
+            "stock_days": 61,
+            "predicted": 0.9162271389152438,
+            "observed": 0.8852459016393442
+          }
+        ],
+        "dates": 101,
+        "rows": 8840,
+        "pending_rows": 904,
+        "brier_delta_ci": [
+          -0.012597963096468455,
+          0.015061668736429194
+        ],
+        "overestimate_ci": [
+          -0.027233357122131274,
+          0.09224916514984019
+        ],
+        "high_probability": {
+          "stock_days": 478,
+          "brier": 0.28279158774198615,
+          "baseline_brier": 0.23529050833345694,
+          "predicted": 0.8560602002410943,
+          "observed": 0.6276150627615062,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 417,
+              "stock_days": 417,
+              "predicted": 0.8472588015381611,
+              "observed": 0.5899280575539568
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 61,
+              "stock_days": 61,
+              "predicted": 0.9162271389152438,
+              "observed": 0.8852459016393442
+            }
+          ],
+          "dates": 37,
+          "overestimate": 0.22844513747958806,
+          "overestimate_ci": [
+            0.0010308441527157087,
+            0.3456222106050661
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-06",
+            "stock_days": 11,
+            "dates": 8,
+            "predicted": 0.8232270701883365,
+            "observed": 0.7272727272727273,
+            "overestimate_ci": [
+              -0.16644005692691283,
+              0.24589399996847888
+            ]
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 449,
+            "dates": 22,
+            "predicted": 0.8581252896004783,
+            "observed": 0.6169265033407573,
+            "overestimate_ci": [
+              0.15009823186434987,
+              0.33960466232017394
+            ]
+          },
+          {
+            "month": "2026-08",
+            "stock_days": 18,
+            "dates": 7,
+            "predicted": 0.8246123840309233,
+            "observed": 0.8333333333333334,
+            "overestimate_ci": [
+              -0.10029232393902023,
+              0.22936462475277636
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 0,
+            "dates": 0
+          }
+        ]
+      },
+      "issued_signals": {
+        "stock_days": 693,
+        "brier": 0.23771518223501314,
+        "baseline_brier": 0.22511882736591327,
+        "predicted": 0.7511831924967636,
+        "observed": 0.7070707070707071,
+        "bins": [
+          {
+            "lower": 0.6000000000000001,
+            "upper": 0.7000000000000001,
+            "rows": 251,
+            "stock_days": 251,
+            "predicted": 0.629625415074166,
+            "observed": 0.7808764940239044
+          },
+          {
+            "lower": 0.7000000000000001,
+            "upper": 0.8,
+            "rows": 169,
+            "stock_days": 169,
+            "predicted": 0.7167436669315573,
+            "observed": 0.757396449704142
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "rows": 141,
+            "stock_days": 141,
+            "predicted": 0.8595067198645089,
+            "observed": 0.48226950354609927
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "rows": 132,
+            "stock_days": 132,
+            "predicted": 0.9107109545781257,
+            "observed": 0.7424242424242424
+          }
+        ],
+        "dates": 52,
+        "rows": 693,
+        "pending_rows": 11,
+        "brier_delta_ci": [
+          -0.025537117527685987,
+          0.06821769288176362
+        ],
+        "overestimate_ci": [
+          -0.09962242746724087,
+          0.23984414195593978
+        ],
+        "high_probability": {
+          "stock_days": 273,
+          "brier": 0.30826435177244255,
+          "baseline_brier": 0.24442551481599373,
+          "predicted": 0.8842648113743895,
+          "observed": 0.608058608058608,
+          "bins": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "rows": 141,
+              "stock_days": 141,
+              "predicted": 0.8595067198645089,
+              "observed": 0.48226950354609927
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "rows": 132,
+              "stock_days": 132,
+              "predicted": 0.9107109545781257,
+              "observed": 0.7424242424242424
+            }
+          ],
+          "dates": 22,
+          "overestimate": 0.2762062033157815,
+          "overestimate_ci": [
+            0.16414722800613624,
+            0.40463907443298697
+          ]
+        },
+        "reliable_high_probability": false,
+        "monthly_high_probability": [
+          {
+            "month": "2026-05",
+            "stock_days": 0,
+            "dates": 0
+          },
+          {
+            "month": "2026-07",
+            "stock_days": 273,
+            "dates": 22,
+            "predicted": 0.8842648113743895,
+            "observed": 0.608058608058608,
+            "overestimate_ci": [
+              0.16414722800613624,
+              0.40463907443298697
+            ]
+          },
+          {
+            "month": "2026-09",
+            "stock_days": 0,
+            "dates": 0
+          }
+        ]
+      }
+    },
+    {
+      "arm": "F1",
+      "comparison": "top_calibration_on_identical_candidate_first_cohort",
+      "stock_days": 8840,
+      "brier_candidate": 0.2074987765739678,
+      "brier_top": 0.20917838622781096,
+      "brier_delta": 0.0016796096538431774,
+      "brier_delta_ci": [
+        -0.008237008083290908,
+        0.012216163858121798
+      ]
+    },
+    {
+      "comparison": "input_on_identical_all_candidate_rows",
+      "newer": "F1",
+      "reference": "F0",
+      "rows": 1219920,
+      "newer_rows": 1344672,
+      "reference_rows": 1344672,
+      "stock_days": 8840,
+      "dates": 101,
+      "brier_delta": 0.0006175921746216402,
+      "brier_delta_ci": [
+        -0.00098186598675612,
+        0.002455185412644756
+      ]
+    }
+  ]
+}
