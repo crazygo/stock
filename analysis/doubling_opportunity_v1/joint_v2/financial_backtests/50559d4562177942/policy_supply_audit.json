@@ -1,0 +1,30 @@
+{
+  "scope": "historical development; all stock-day rows are dependent observations, not independent signals",
+  "evaluation_months": [
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08"
+  ],
+  "quality_heat_eligible_stock_days_per_algorithm": 660,
+  "quality_heat_eligible_stocks": 183,
+  "mature_stock_days": 525,
+  "positive_stock_day_labels": 13,
+  "algorithms": {
+    "hist_gbdt": {
+      "all_price_prediction_rows": 312133,
+      "all_price_rows_above_80": 13,
+      "eligible_rows_above_80": 0,
+      "eligible_max_p60": 0.2029117202144804,
+      "eligible_mean_p60": 0.011107821202632456
+    },
+    "logistic": {
+      "all_price_prediction_rows": 312133,
+      "all_price_rows_above_80": 320,
+      "eligible_rows_above_80": 0,
+      "eligible_max_p60": 0.6851916574001129,
+      "eligible_mean_p60": 0.21404949705422546
+    }
+  },
+  "conclusion": "No eligible >80% signal. Precision unscorable and opportunity supply insufficient; necessary company/heat checks do not prove probability reliability."
+}

@@ -1,0 +1,290 @@
+[
+  {
+    "month": "2026-05",
+    "horizon": 30,
+    "train_rows": 92484,
+    "train_positives": 639,
+    "calibration_rows": 93630,
+    "calibration_positives": 601,
+    "selection_rows": 46964,
+    "selection_positives": 326,
+    "calibration_start": "2026-01-01",
+    "calibration_fit_end_exclusive": "2026-02-10",
+    "selection_end_exclusive": "2026-03-02",
+    "evaluation_start": "2026-05-01",
+    "train_latest_label_maturity": "2025-12-31 00:00:00",
+    "cal_latest_label_maturity": "2026-03-27 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.006782495698738267,
+        "selection_baseline_brier": 0.006893575968600943,
+        "calibration_base_rate": 0.00641888283669764,
+        "selection_base_rate": 0.006941487096499446,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.006763747129762048,
+        "selection_baseline_brier": 0.006893575968600943,
+        "calibration_base_rate": 0.00641888283669764,
+        "selection_base_rate": 0.006941487096499446,
+        "selection_p_gt80_count": 0
+      }
+    },
+    "champion": "hist_gbdt",
+    "status": "development_calibrated"
+  },
+  {
+    "month": "2026-05",
+    "horizon": 60,
+    "train_rows": 17957,
+    "train_positives": 235,
+    "calibration_rows": 93486,
+    "calibration_positives": 1200,
+    "selection_rows": 46874,
+    "selection_positives": 870,
+    "calibration_start": "2026-01-01",
+    "calibration_fit_end_exclusive": "2026-02-10",
+    "selection_end_exclusive": "2026-03-02",
+    "evaluation_start": "2026-05-01",
+    "train_latest_label_maturity": "2025-12-30 00:00:00",
+    "cal_latest_label_maturity": "2026-04-28 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.01744732972280001,
+        "selection_baseline_brier": 0.01824867468791092,
+        "calibration_base_rate": 0.012836146588794044,
+        "selection_base_rate": 0.01856039595511371,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.017714768838564775,
+        "selection_baseline_brier": 0.01824867468791092,
+        "calibration_base_rate": 0.012836146588794044,
+        "selection_base_rate": 0.01856039595511371,
+        "selection_p_gt80_count": 0
+      }
+    },
+    "champion": "logistic",
+    "status": "development_calibrated"
+  },
+  {
+    "month": "2026-06",
+    "horizon": 30,
+    "train_rows": 167306,
+    "train_positives": 1248,
+    "calibration_rows": 100870,
+    "calibration_positives": 626,
+    "selection_rows": 50251,
+    "selection_positives": 555,
+    "calibration_start": "2026-02-01",
+    "calibration_fit_end_exclusive": "2026-03-13",
+    "selection_end_exclusive": "2026-04-02",
+    "evaluation_start": "2026-06-01",
+    "train_latest_label_maturity": "2026-01-30 00:00:00",
+    "cal_latest_label_maturity": "2026-05-01 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.010482803748257346,
+        "selection_baseline_brier": 0.010945985655273207,
+        "calibration_base_rate": 0.00620600773272529,
+        "selection_base_rate": 0.011044556327237269,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.010592781629263918,
+        "selection_baseline_brier": 0.010945985655273207,
+        "calibration_base_rate": 0.00620600773272529,
+        "selection_base_rate": 0.011044556327237269,
+        "selection_p_gt80_count": 1
+      }
+    },
+    "champion": "logistic",
+    "status": "development_calibrated"
+  },
+  {
+    "month": "2026-06",
+    "horizon": 60,
+    "train_rows": 95842,
+    "train_positives": 1711,
+    "calibration_rows": 100691,
+    "calibration_positives": 1845,
+    "selection_rows": 50169,
+    "selection_positives": 2052,
+    "calibration_start": "2026-02-01",
+    "calibration_fit_end_exclusive": "2026-03-13",
+    "selection_end_exclusive": "2026-04-02",
+    "evaluation_start": "2026-06-01",
+    "train_latest_label_maturity": "2026-01-30 00:00:00",
+    "cal_latest_label_maturity": "2026-05-29 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.037817812246791975,
+        "selection_baseline_brier": 0.03973858139646453,
+        "calibration_base_rate": 0.018323385406838744,
+        "selection_base_rate": 0.04090175207797644,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.03812047309826,
+        "selection_baseline_brier": 0.03973858139646453,
+        "calibration_base_rate": 0.018323385406838744,
+        "selection_base_rate": 0.04090175207797644,
+        "selection_p_gt80_count": 0
+      }
+    },
+    "champion": "logistic",
+    "status": "development_calibrated"
+  },
+  {
+    "month": "2026-07",
+    "horizon": 30,
+    "train_rows": 235606,
+    "train_positives": 1671,
+    "calibration_rows": 100442,
+    "calibration_positives": 1058,
+    "selection_rows": 54328,
+    "selection_positives": 762,
+    "calibration_start": "2026-03-03",
+    "calibration_fit_end_exclusive": "2026-04-12",
+    "selection_end_exclusive": "2026-05-02",
+    "evaluation_start": "2026-07-01",
+    "train_latest_label_maturity": "2026-02-27 00:00:00",
+    "cal_latest_label_maturity": "2026-05-29 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.01324484726399259,
+        "selection_baseline_brier": 0.013841387694315083,
+        "calibration_base_rate": 0.010533442185539914,
+        "selection_base_rate": 0.014025916654395523,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.013307338723344529,
+        "selection_baseline_brier": 0.013841387694315083,
+        "calibration_base_rate": 0.010533442185539914,
+        "selection_base_rate": 0.014025916654395523,
+        "selection_p_gt80_count": 0
+      }
+    },
+    "champion": "logistic",
+    "status": "development_calibrated"
+  },
+  {
+    "month": "2026-07",
+    "horizon": 60,
+    "train_rows": 163446,
+    "train_positives": 2864,
+    "calibration_rows": 100248,
+    "calibration_positives": 3745,
+    "selection_rows": 54147,
+    "selection_positives": 1766,
+    "calibration_start": "2026-03-03",
+    "calibration_fit_end_exclusive": "2026-04-12",
+    "selection_end_exclusive": "2026-05-02",
+    "evaluation_start": "2026-07-01",
+    "train_latest_label_maturity": "2026-02-27 00:00:00",
+    "cal_latest_label_maturity": "2026-06-30 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.029362274245510366,
+        "selection_baseline_brier": 0.03157367641983289,
+        "calibration_base_rate": 0.037357353762668584,
+        "selection_base_rate": 0.03261491864738582,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.029349888809440772,
+        "selection_baseline_brier": 0.03157367641983289,
+        "calibration_base_rate": 0.037357353762668584,
+        "selection_base_rate": 0.03261491864738582,
+        "selection_p_gt80_count": 2
+      }
+    },
+    "champion": "hist_gbdt",
+    "status": "development_calibrated"
+  },
+  {
+    "month": "2026-08",
+    "horizon": 30,
+    "train_rows": 322195,
+    "train_positives": 2213,
+    "calibration_rows": 97884,
+    "calibration_positives": 1426,
+    "selection_rows": 47680,
+    "selection_positives": 476,
+    "calibration_start": "2026-04-03",
+    "calibration_fit_end_exclusive": "2026-05-13",
+    "selection_end_exclusive": "2026-06-02",
+    "evaluation_start": "2026-08-01",
+    "train_latest_label_maturity": "2026-04-02 00:00:00",
+    "cal_latest_label_maturity": "2026-07-01 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.009131167985111746,
+        "selection_baseline_brier": 0.009904579384771111,
+        "calibration_base_rate": 0.014568264476318909,
+        "selection_base_rate": 0.009983221476510068,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.009247943934859672,
+        "selection_baseline_brier": 0.009904579384771111,
+        "calibration_base_rate": 0.014568264476318909,
+        "selection_base_rate": 0.009983221476510068,
+        "selection_p_gt80_count": 0
+      }
+    },
+    "champion": "logistic",
+    "status": "development_calibrated"
+  },
+  {
+    "month": "2026-08",
+    "horizon": 60,
+    "train_rows": 246072,
+    "train_positives": 3921,
+    "calibration_rows": 97605,
+    "calibration_positives": 3242,
+    "selection_rows": 47571,
+    "selection_positives": 743,
+    "calibration_start": "2026-04-03",
+    "calibration_fit_end_exclusive": "2026-05-13",
+    "selection_end_exclusive": "2026-06-02",
+    "evaluation_start": "2026-08-01",
+    "train_latest_label_maturity": "2026-04-02 00:00:00",
+    "cal_latest_label_maturity": "2026-07-31 00:00:00",
+    "algorithms": {
+      "logistic": {
+        "algorithm": "LogisticRegression",
+        "selection_brier": 0.014919100030114641,
+        "selection_baseline_brier": 0.01568445937222347,
+        "calibration_base_rate": 0.033215511500435425,
+        "selection_base_rate": 0.015618759328162115,
+        "selection_p_gt80_count": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "HistGradientBoostingClassifier",
+        "selection_brier": 0.015613199894375413,
+        "selection_baseline_brier": 0.01568445937222347,
+        "calibration_base_rate": 0.033215511500435425,
+        "selection_base_rate": 0.015618759328162115,
+        "selection_p_gt80_count": 8
+      }
+    },
+    "champion": "logistic",
+    "status": "development_calibrated"
+  }
+]

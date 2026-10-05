@@ -1,0 +1,330 @@
+{
+  "recorded_at": "2026-10-05T06:31:08.867792+00:00",
+  "status": "complete_development_experiment_reports_and_UI_verified_goal_unmet",
+  "goal_achieved": false,
+  "no_v3_backtest_or_effect_claim": false,
+  "actual_states": {
+    "futu_daily_v3_acquisition": {
+      "started_at": "2026-10-05T03:10:07.898304+00:00",
+      "updated_at": "2026-10-05T05:33:49.037553+00:00",
+      "terminal": true,
+      "registered_count": 5262,
+      "completed": 5262,
+      "available": 5262,
+      "unavailable": 0,
+      "asof": "2026-10-02",
+      "cohort_sha256": "a14cca021580f352e03f03ef9cdb9ee3210a93663227617911bc8e4ad410812b",
+      "full_registered_pool": true,
+      "source_files_immutable": true,
+      "r2_checked_at": "2026-10-05T03:10:09.300245+00:00",
+      "r2_matching_namespace_objects": 0,
+      "history_quota_before": {
+        "used": 373,
+        "remaining": 627
+      },
+      "subscription_quota_before": {
+        "total_used": 0,
+        "own_used": 0,
+        "remain": 1000
+      },
+      "history_quota_after": {
+        "used": 374,
+        "remaining": 626
+      },
+      "own_subscription_quota_after": {
+        "own_used": 0,
+        "remain": 1000
+      },
+      "path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z"
+    },
+    "corporate_actions_v3_acquisition": {
+      "started_at": "2026-10-05T04:04:40.105911+00:00",
+      "updated_at": "2026-10-05T04:58:11.548701+00:00",
+      "registered_count": 2838,
+      "completed": 2838,
+      "available": 2837,
+      "terminal": true,
+      "source": "actual registered Nasdaq public corporate-action articles"
+    },
+    "raw_daily_v3_training_status": {
+      "status": "complete_development_experiment_reused",
+      "updated_at": "2026-10-05T06:24:57.105930+00:00",
+      "path": "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/backtests/dff47d4fd14e7a37",
+      "dataset_key": "afd4a2665845cdf4f8686188de72b56eeae6ba7747910635590417c122bc4c6b",
+      "training_key": "dff47d4fd14e7a374fb22ff7fbd47144a1d16fd930a3dfd5f1d9230ce2b12223",
+      "dataset_path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z/derived/afd4a2665845cdf4/dataset.parquet",
+      "panel_path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z/derived/afd4a2665845cdf4/panel.parquet",
+      "asof": "2026-10-02",
+      "model_path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z/derived/afd4a2665845cdf4/current_models_dff47d4fd14e7a37.joblib",
+      "model_month": "2026-10",
+      "prediction_path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/raw_daily_split_financial_heat_v3_1_dff47d4fd14e7a37_forward_predictions.parquet",
+      "source_path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z/derived/afd4a2665845cdf4",
+      "regular_hours_label_verified": false,
+      "deployment_qualified": false
+    },
+    "raw_daily_v3_action_audit_status": {
+      "status": "complete_source_audit",
+      "path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z/action_audits/c6320fd03376ee54/audit.json",
+      "key": "c6320fd03376ee54253778d04c9536257c3247d115d6029711e63f2ee8e29234",
+      "registered_count": 5262,
+      "unknown_gap_count": 1757
+    },
+    "futu_daily_v3_recovery_status": {
+      "asof": "2026-10-02",
+      "source_snapshot_path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z",
+      "registered_recovery_candidates": [
+        "AEIS",
+        "AIRE",
+        "AKR",
+        "ASC",
+        "BHB",
+        "BMI",
+        "BRC",
+        "BXP",
+        "CWEN",
+        "DPZ",
+        "EFTY",
+        "ERC",
+        "ERIE",
+        "ESNT",
+        "GWH",
+        "HCHL",
+        "HMH",
+        "JAGX",
+        "KRNT",
+        "MAGH",
+        "MAMK",
+        "MCTA",
+        "MOD",
+        "MTRX",
+        "NVCR",
+        "OBE",
+        "ONDS",
+        "OST",
+        "PC",
+        "RNST",
+        "SVA",
+        "UCFI",
+        "XTNT"
+      ],
+      "original_sources_preserved": true,
+      "terminal": true,
+      "updated_at": "2026-10-05T05:36:27.168400+00:00",
+      "completed": 33,
+      "registered_count": 33
+    }
+  },
+  "tests": {
+    "scope": "v3 source mathematics, primary action parser, official-calendar minute prefix",
+    "passed": 24,
+    "real_model_effect_verified": false
+  },
+  "source_hashes": {
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/build.py": "fcffe3086fb57f14374aab77a7799f9c5fe07cbe71d6e297cb61662586753ec8",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/train.py": "a72579556d5771b6faaccfee658a5aa3cc4f5c0bb3f59af7af530c7fd4d24b6e",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/run.py": "74dc580db24a3dda8dae4225d560043a0e8a222a4d42a186184be0615c468a05",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/verify.py": "08d431303e8e784c278f9426316ab35d67a85125e57f1045da606fb6d5901c55",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/market.py": "9d124b5a063679119371152538aaf005d7c6489d694c728932f0bc80b61dc55f",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/actions.py": "1a25064248347c438888c8aeaf0fc5e6776ab55b153ac4ec3ab3fb034243e2cc",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/prepare_actions.py": "d0a11b87dc3e76f553ae9537566e487b1d0ddf21521102b703a87fef6ffc8c2b",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/scan.py": "6c034bf047be438bd0e9daeb1c1073f10f7bc598a8ace3b5feb3614757be4ff8",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/compare_native_minutes.py": "6d302217143ca33a43840ef8143b51a3c2bbcfffa9d6f85e10d4b75e48264e15",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/ACTION_RULES_ADDENDUM.md": "76aaaa6bab6e47acf18f40d3aa6ac4ef7025f141923bd045ae30c05242f88f49",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/ARCHIVE_LINK_CORRECTIONS.json": "cd56d61d0d4a9ce278772ed2361c8d21945c181bb503233e4db26803b0be884c",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/build_debug.py": "fd8936e9fbe869cbf95778c9f1340a2dd4968610638e5213b23207e3b3281fb9",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/minute_paths.py": "284ef214fdcfa0ef4387184e9e75b2db94c212f293462a03d6cf750126824014",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/debug_template.html": "9afa9a374599bf4cbb1bf68675f4072cdab0783d592ad7a0eee281580938f929",
+    "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/scan.py": "5ece4c894ce196d5225d86895229aee786673aef083c1c6a5afa59a473ed2021"
+  },
+  "next_required": [
+    "complete_corporate_action_and_historical_identity_coverage",
+    "RTH_only_label_verification",
+    "PIT_and_delisted_securities",
+    "business_catalyst_history",
+    "new_independent_effect_observation",
+    "live_entry_reference_probability_validation"
+  ],
+  "source_quality_findings": [
+    "native_get_rehab_QFQ_HFQ_omit_confirmed_splits",
+    "subscription_success_can_return_empty_rows",
+    "current_ticker_can_refer_to_different_historical_company",
+    "SPAC_derivative_shorthand_is_not_unrelated_W_U_stocks",
+    "one_numeric_link_compression_omitted_leading_zeros_corrected_from_visible_actual_link",
+    "native_MU_daily_High_444_27_differs_from_complete_RTH_NONE_5m_High_430_0699_on_2026_03_23"
+  ],
+  "RTH_audit_scope": "all existing registered NONE 5m local caches only; no label change or full-market claim",
+  "article_actual_corpus": {
+    "registered": 2838,
+    "parsed_actual_articles_including_one_original_link_correction": 2838,
+    "source_complete": true,
+    "model_effect_evidence": false
+  },
+  "minute_debug": {
+    "code_prepared": true,
+    "actual_ui_render_verified": true,
+    "native_raw_5m_asynchronous_loading": true,
+    "raw_prices_preserved": true,
+    "barrier_split_unit_unknown_and_config_cost_algebra_verified": true,
+    "whole_market_minute_coverage": false
+  },
+  "repeat_entry": {
+    "command": "python3 analysis/doubling_opportunity_v1/scan.py --version raw-v3 --top 30 --debug",
+    "status_entry_executed_without_duplicate_source_jobs": true,
+    "current_default": "raw-v3",
+    "full_default_entry_executed_successfully": true,
+    "unchanged_model_reuse_verified": true
+  },
+  "additional_integrity": {
+    "official_calendar_in_frozen_rules_and_dataset": true,
+    "financial_raw_and_derived_event_and_all_SIC_sources_in_fingerprint_and_verification": true,
+    "quote_cache_age_and_stale_update_retained": true,
+    "daily_and_snapshot_peak_ratios_separate": true
+  },
+  "full_stock_report_checks_prepared": [
+    "every registered candidate retained",
+    "source / original rows / recovery / current-session outcomes exported",
+    "actual report source outcomes match frozen coverage",
+    "actual current forecasts must reproduce from frozen model",
+    "daily and snapshot peak ratio distinct"
+  ],
+  "source_date_repair": {
+    "original_ready_withdrawn_before_first_model_fit": true,
+    "whole_original_corpus_reviewed": 2838,
+    "inconsistent_date_articles": 11,
+    "combined_action_retained_unknown": 15,
+    "parameters_thresholds_unchanged": true,
+    "new_source_audit_key": "c6320fd03376ee54253778d04c9536257c3247d115d6029711e63f2ee8e29234"
+  },
+  "minute_source_audit": {
+    "path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/futu_daily_v3/20261005T031007Z/native_minute_audits/04aebbe24ec02614",
+    "summary": {
+      "completed_at": "2026-10-05T05:50:15.327124+00:00",
+      "registered_existing_minute_stocks": 116,
+      "audited_stocks": 104,
+      "unavailable_or_unverified_stocks": 12,
+      "stock_days": 18199,
+      "complete_rth_5m_and_native_daily_days": 18098,
+      "ohlc_difference_within_0_1_percent": 18085,
+      "daily_high_above_complete_rth_at_least_0_5_percent": 3,
+      "max_ohlc_relative_difference": 0.34975,
+      "asof": "2026-10-02",
+      "full_registered_market_rth_label_verified": false,
+      "no_label_change": true,
+      "no_independent_effect_evidence": true,
+      "scope": "all existing local registered NONE 5m sources; neither full market nor independent source"
+    }
+  },
+  "quote_report": {
+    "default_refreshes_full_registered_quote_scope": true,
+    "immutable_quote_snapshot_and_SHA": true,
+    "offline_reuse_requires_explicit_flag": true,
+    "actual_v3_report_not_yet_verified": false
+  },
+  "v3_backtest_completed": true,
+  "v3_effect_gate_passed": false,
+  "actual_current_evidence": {
+    "verified_at": "2026-10-05T06:24:56.922081+00:00",
+    "version": "raw_daily_split_financial_heat_v3_1",
+    "engineering_checks_passed": true,
+    "goal_achieved": false,
+    "qualified_count": 0,
+    "source_and_artifact_sha_checks": 21608,
+    "registered_count": 5262,
+    "equity_candidates": 5261,
+    "source_available_count": 5262,
+    "signal_labels_recomputed_including_strategy_duplicates": 0,
+    "model_reference_asof": "2026-10-02",
+    "probability_order_violations": 0,
+    "six_month_evaluation_months": [
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08",
+      "2026-09"
+    ],
+    "current_forecasts_recomputed": 3663,
+    "all_stock_source_outcomes_verified": true,
+    "backtest": [
+      {
+        "horizon": 30,
+        "algorithm": "logistic",
+        "signals": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "historical_numeric_gate": false
+      },
+      {
+        "horizon": 30,
+        "algorithm": "hist_gbdt",
+        "signals": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "historical_numeric_gate": false
+      },
+      {
+        "horizon": 30,
+        "algorithm": "monthly_selected",
+        "signals": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "historical_numeric_gate": false
+      },
+      {
+        "horizon": 60,
+        "algorithm": "logistic",
+        "signals": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "historical_numeric_gate": false
+      },
+      {
+        "horizon": 60,
+        "algorithm": "hist_gbdt",
+        "signals": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "historical_numeric_gate": false
+      },
+      {
+        "horizon": 60,
+        "algorithm": "monthly_selected",
+        "signals": 0,
+        "tp": 0,
+        "fp": 0,
+        "unknown": 0,
+        "precision": null,
+        "historical_numeric_gate": false
+      }
+    ],
+    "pending": [
+      "complete_corporate_action_and_historical_identity_coverage",
+      "RTH_only_label_verification",
+      "PIT_and_delisted_securities",
+      "business_catalyst_history",
+      "new_independent_effect_observation",
+      "live_entry_reference_probability_validation"
+    ],
+    "report_path": "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/runs/20261005T062450Z",
+    "training_key": "dff47d4fd14e7a374fb22ff7fbd47144a1d16fd930a3dfd5f1d9230ce2b12223",
+    "report_files_sha256": {
+      "report.json": "870e3960160805c0e59614d7893de645972fb96f9539fa34dc7e5ba29fd08590",
+      "report.md": "0c06719909aec9e0f8e8e3229f8d58d5b7a27a65bdd55389f6b83a28c4ffe159",
+      "quote_snapshot.json": "0fb1e5a4b6d366e367b4d51665e193ec11ae40d430211e6a9734efd2c3bf0911",
+      "universe_exclusions.csv": "376b94fbd3669e8127924bcefcdebf505ee48efc0292e2ad9ba2fe9d4bf6f122",
+      "all_stocks.csv": "8287e2ab5a48a7e8912a2a553c8242fe5910c87eaf667b635008284e940cdf59"
+    },
+    "verification_code_sha256": "08d431303e8e784c278f9426316ab35d67a85125e57f1045da606fb6d5901c55"
+  },
+  "UI_verification_path": "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/raw_daily_v3/UI_VERIFICATION.json"
+}

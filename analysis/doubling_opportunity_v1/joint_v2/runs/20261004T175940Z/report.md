@@ -1,0 +1,59 @@
+# 首次翻倍时间模型 v2 · 单次运行报告
+
+运行 2026-10-04T17:59:40.354311+00:00；全市场日线截止 **2026-09-29**，最近应有完整交易日 2026-10-02，状态 **stale_not_current**。
+完整证券目录 13295；普通股 / ADR 候选 5261；价格可评分 3763。30日≤60日概率矛盾：**0**。
+当前 SEC 财报已覆盖 920 个候选；其中增长且经营健康必要条件通过 77 个。全池获取仍未完成，未覆盖保留待证。
+**没有通过完整“60 日翻倍概率 >80%”证据门禁的股票。**
+
+算法：同一个 multinomial LogisticRegression / multiclass HistGradientBoostingClassifier 预测首次触及时间，联合 temperature scaling 校准，P30=q(前30日)，P60=q(前30日)+q(31–60日)。
+这是价格对照模型加当前财务核验报告。财务尚未作为训练输入，当前经营健康条件没有事后回填到价格对照的历史分母；公司质量 × 热点的联合模型回测仍未完成。
+概率为模型估计，高置信度尾部尚未通过可靠性检验。当前目录、跨批次公司行动和行情过期问题仍限制解释，不能将极高输出当成已证实的80%机会。
+
+## 增长且经营健康、量价热度候选（探索）
+
+|股票|现价 / 日期|上次确认高峰 / 日期|现价占高峰|阶段|30日模型估计|60日模型估计|最近营收同比|经营证据|量价热度 / 业务催化|
+|---|---|---|---|---|---|---|---|---|---|
+|MXL|$92.72 / 2026-09-29|$89.00 / 2026-08-17|104.18%|回升趋势|1.06%|2.73%|55.17%|经营利润率 -2.48%；TTM现金流率 2.89%|个股量价热度通过 / issuer_evidence_verified|
+|CEVA|$34.48 / 2026-09-29|$39.47 / 2026-08-07|87.36%|震荡过渡|0.16%|0.86%|13.07%|经营利润率 -7.15%；TTM现金流率 3.29%|个股量价热度通过 / 待核验|
+
+## 全池最高价格模型估计（未证明为好公司）
+
+|股票|30日模型估计|60日模型估计|财务质量|量价热度|证券类别核查|
+|---|---|---|---|---|---|
+|FCUV|9.06%|79.47%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|GMEX|6.22%|60.40%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|NCT|38.46%|46.56%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|CD|9.52%|43.45%|growing_but_operating_health_unproven|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|TANH|35.12%|42.19%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|CDT|21.05%|42.03%|financial_statement_missing_or_unsupported|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|CTNT|12.23%|40.43%|not_passed_or_incomplete|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|IPST|3.19%|39.17%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|LGHL|31.13%|38.91%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|GTBP|15.70%|38.29%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|IMCC|32.55%|37.34%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|VERI|4.24%|36.99%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|KITT|19.59%|36.13%|not_passed_or_incomplete|个股量价热度通过|Nasdaq名称规则，尚待精确类型核验|
+|CMPX|2.41%|34.36%|not_passed_or_incomplete|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|JAGX|27.22%|33.56%|financial_cache_missing|个股量价热度通过|Nasdaq名称规则，尚待精确类型核验|
+|DCX|30.87%|33.17%|financial_cache_missing|个股量价热度通过|Nasdaq名称规则，尚待精确类型核验|
+|APUS|30.88%|33.06%|financial_statement_missing_or_unsupported|个股量价热度通过|SEC当前ticker已确认|
+|CPOP|10.47%|32.41%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|RENT|11.75%|31.01%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+|INDP|10.53%|30.91%|financial_cache_missing|量价热度未通过|Nasdaq名称规则，尚待精确类型核验|
+
+## 保留的历史前向开发回测
+
+|目标|算法 / 策略|发出>80%信号|TP / FP|未知|precision|TP/全部信号|门禁|
+|---|---|---|---|---|---|---|---|
+|30日|multinomial LogisticRegression|27|4 / 15|8|21.05%|14.81%|未通过|
+|30日|multiclass HistGradientBoostingClassifier|2|0 / 2|0|0.00%|0.00%|未通过|
+|30日|monthly joint-model selection|24|3 / 14|7|17.65%|12.50%|未通过|
+|60日|multinomial LogisticRegression|157|23 / 104|30|18.11%|14.65%|未通过|
+|60日|multiclass HistGradientBoostingClassifier|8|1 / 7|0|12.50%|12.50%|未通过|
+|60日|monthly joint-model selection|36|2 / 14|20|12.50%|5.56%|未通过|
+
+## MXL 已暴露案例
+
+MXL：截至 2026-09-29，参考收盘 $92.72，P30=1.06%，P60=2.73%；经营质量层为 growth_and_operating_health_checks_pass。这不是独立验证样本。
+
+财报按决定日前 filed 的记录读取；季度累计差分、TTM 连续季度与来源 accession 全部保留。业务催化出处与行情、目录、模型切分、财报覆盖见 report.json。全部候选及未覆盖 / 未评分行在 all_stocks.csv；没有事后删除失败。

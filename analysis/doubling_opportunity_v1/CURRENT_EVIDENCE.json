@@ -1,0 +1,336 @@
+{
+  "verified_at": "2026-10-05T02:51:09.175810+00:00",
+  "report_path": "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/joint_v2/runs/20261005T025009Z",
+  "version": "joint_v2_financial_market_heat",
+  "dataset_key": "0b7b8810f04c05b2f691d54ac925e6e5936e704a60918e621a1f6784493d0713",
+  "financial_dataset_key": "50559d4562177942bfdde70d5026ba209e4180d7a5acd40d100c4a1c6715bc78",
+  "data_asof": "2026-09-29",
+  "expected_latest_session": "2026-10-02",
+  "candidate_count": 5261,
+  "scored_count": 3763,
+  "qualified_count": 0,
+  "order_violations": 0,
+  "financial_cache_tickers": 3715,
+  "operating_health_tickers": 303,
+  "healthy_market_heat_count": 9,
+  "financial_joint_backtest_completed": true,
+  "current_probability_verified": false,
+  "regular_hours_label_verified": false,
+  "max_estimated_price_control_p60": 0.7946596629235947,
+  "max_estimated_financial_joint_p60": 0.6084944176673736,
+  "price_control_monthly_selected_60": {
+    "horizon": 60,
+    "algorithm": "monthly_selected",
+    "algorithm_name": "monthly joint-model selection",
+    "signals": 36,
+    "mature_signals": 16,
+    "tp": 2,
+    "fp": 14,
+    "unknown": 20,
+    "precision": 0.125,
+    "conservative_lower_bound": 0.05555555555555555,
+    "wilson95": [
+      0.03497748774324158,
+      0.3602282726575794
+    ],
+    "stock_cluster95": [
+      0.0,
+      0.3125
+    ],
+    "week_cluster95": [
+      0.0,
+      0.33392857142857085
+    ],
+    "stock_count": 35,
+    "decision_dates": 22,
+    "same_stock_base_rate": 0.30022304842144043,
+    "increment": -0.17522304842144043,
+    "recall_of_daily_positive_cases": 0.0005603810591202018,
+    "daily_rows_not_independent": 312133,
+    "brier": 0.016040126947808698,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 203260,
+        "predicted": 0.009870339271176148,
+        "observed": 0.008304634458329234
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 15548,
+        "predicted": 0.06975636647986191,
+        "observed": 0.039297658862876256
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 8534,
+        "predicted": 0.13954871146144007,
+        "observed": 0.07171314741035857
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 4487,
+        "predicted": 0.27221051413374237,
+        "observed": 0.122799197682193
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 731,
+        "predicted": 0.47716640399059396,
+        "observed": 0.12038303693570451
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 122,
+        "predicted": 0.6618466865641922,
+        "observed": 0.13934426229508196
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 60,
+        "predicted": 0.9132632081734069,
+        "observed": 0.03333333333333333
+      }
+    ],
+    "historical_numeric_gate": false,
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested"
+    ],
+    "model_version": "joint_v2_price_control",
+    "calibration": "joint temperature scaling"
+  },
+  "financial_monthly_selected_60": {
+    "horizon": 60,
+    "algorithm": "monthly_selected",
+    "algorithm_name": "monthly joint-model selection",
+    "signals": 0,
+    "mature_signals": 0,
+    "tp": 0,
+    "fp": 0,
+    "unknown": 0,
+    "precision": null,
+    "conservative_lower_bound": null,
+    "wilson95": [
+      null,
+      null
+    ],
+    "stock_cluster95": [
+      null,
+      null
+    ],
+    "week_cluster95": [
+      null,
+      null
+    ],
+    "stock_count": 0,
+    "decision_dates": 0,
+    "same_stock_base_rate": null,
+    "increment": null,
+    "recall_of_daily_positive_cases": 0.0,
+    "daily_rows_not_independent": 660,
+    "brier": 0.024264326912161474,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 509,
+        "predicted": 0.00986035024794628,
+        "observed": 0.025540275049115914
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 14,
+        "predicted": 0.062190680991563066,
+        "observed": 0.0
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 1,
+        "predicted": 0.13552746357769888,
+        "observed": 0.0
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 1,
+        "predicted": 0.2029117202144804,
+        "observed": 0.0
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 0,
+        "predicted": null,
+        "observed": null
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 0,
+        "predicted": null,
+        "observed": null
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 0,
+        "predicted": null,
+        "observed": null
+      }
+    ],
+    "historical_numeric_gate": false,
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested",
+      "RTH_only_daily_label_unverified"
+    ],
+    "model_version": "joint_v2_financial_market_heat",
+    "calibration": "joint temperature scaling",
+    "signal_gate": "joint_signal_eligible",
+    "all_price_eligible_prediction_rows": 624266
+  },
+  "financial_policy_supply": {
+    "scope": "historical development; all stock-day rows are dependent observations, not independent signals",
+    "evaluation_months": [
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08"
+    ],
+    "quality_heat_eligible_stock_days_per_algorithm": 660,
+    "quality_heat_eligible_stocks": 183,
+    "mature_stock_days": 525,
+    "positive_stock_day_labels": 13,
+    "algorithms": {
+      "hist_gbdt": {
+        "all_price_prediction_rows": 312133,
+        "all_price_rows_above_80": 13,
+        "eligible_rows_above_80": 0,
+        "eligible_max_p60": 0.2029117202144804,
+        "eligible_mean_p60": 0.011107821202632456
+      },
+      "logistic": {
+        "all_price_prediction_rows": 312133,
+        "all_price_rows_above_80": 320,
+        "eligible_rows_above_80": 0,
+        "eligible_max_p60": 0.6851916574001129,
+        "eligible_mean_p60": 0.21404949705422546
+      }
+    },
+    "conclusion": "No eligible >80% signal. Precision unscorable and opportunity supply insufficient; necessary company/heat checks do not prove probability reliability."
+  },
+  "financial_cohort": {
+    "available_issuer_count": 3688,
+    "invalid_cached_issuer_count": 1,
+    "registered_issuers_without_facts": [
+      1790169,
+      1802156
+    ],
+    "price_eligible_rows": 846939,
+    "joint_policy_eligible_rows": 1177,
+    "financial_missing_ticker_count": 2082
+  },
+  "unconfirmed_current_ticker_count": 34,
+  "source_hash_checks": {
+    "financials.py": true,
+    "prepare_joint.py": true,
+    "model.py": true,
+    "PROTOCOL.md": true,
+    "train_financial.py": true,
+    "../model.py": true
+  },
+  "quotes": {
+    "source": "Futu OpenD get_market_snapshot",
+    "requested_at": "2026-10-05T02:36:32.014465+00:00",
+    "received_at": "2026-10-05T02:36:47.337040+00:00",
+    "requested_count": 5261,
+    "returned_count": 5261,
+    "unavailable_count": 0,
+    "calls": 14,
+    "quote_timestamp_zone": "America/New_York for US update_time",
+    "historical_probability_refresh": false,
+    "warning": "Latest quotes do not supply the missing intermediate daily bars; old-anchor model probabilities remain old-anchor estimates."
+  },
+  "acquisition": {
+    "fundamentals_acquisition": {
+      "started_at": "2026-10-04T17:29:47.938357+00:00",
+      "updated_at": "2026-10-05T02:35:19.275070+00:00",
+      "terminal": true,
+      "registered_issuers": 3690,
+      "completed": 3690,
+      "available": 3688,
+      "unavailable": 2
+    },
+    "submissions_acquisition": {
+      "started_at": "2026-10-04T17:48:32.078405+00:00",
+      "updated_at": "2026-10-04T18:46:59.845102+00:00",
+      "terminal": true,
+      "registered_issuers": 3690,
+      "completed": 3690,
+      "available": 3690,
+      "unavailable": 0
+    }
+  },
+  "cross_source_overlap": {
+    "run_at": "2026-10-04T18:42:26.429187+00:00",
+    "hourly_symbols": 170,
+    "overlap_stock_days": 30634,
+    "close_within_0_1pct_stock_days": 20033,
+    "close_difference_over_0_1pct": 10601,
+    "aligned_close_but_massive_high_over_futu_rth_by_0_5pct": 3,
+    "aligned_close_but_futu_rth_high_over_massive_by_0_5pct": 0,
+    "close_abs_difference_quantiles": {
+      "0.5": 0.0,
+      "0.9": 0.010123597000983964,
+      "0.99": 0.02773247944851352,
+      "1.0": 0.09697099001354093
+    },
+    "scope": "existing locally cached current-member subset; neither complete broad pool nor independent PIT sample",
+    "basis": "Futu QFQ vs Massive split adjusted mixed vintages; same close is not proof of matching corporate actions or session scope",
+    "result": "audit only; no rescaling, splicing, original-label replacement, or qualification upgrade",
+    "raw_comparison_path": "/Users/admin/Code/stock/.cache/doubling_opportunity_v1/cross_source_overlap.parquet"
+  },
+  "tests": {
+    "original_causal_tests": 7,
+    "joint_financial_report_tests": 16,
+    "all_passed": true
+  },
+  "debug": {
+    "price_path": "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/joint_v2/debug.html",
+    "financial_path": "/Users/admin/Code/stock/analysis/doubling_opportunity_v1/joint_v2/financial_debug.html",
+    "generated_OHLC_ignored_by_git": true,
+    "price_desktop_and_320px_verified": true,
+    "financial_desktop_and_320px_verified": true,
+    "minute_paths_fully_covered": false,
+    "price_detail_tickers": 189,
+    "financial_detail_tickers": 39,
+    "hourly_tickers_per_page": 4,
+    "price_cross_strategy_signal_rows": 254,
+    "financial_signal_rows": 0
+  },
+  "goal_status": "active_not_achieved",
+  "pending": [
+    "fresh_full_market_daily",
+    "RTH_only_label_verification",
+    "PIT_membership_and_security_types",
+    "corporate_action_reconciliation",
+    "business_catalyst_history",
+    "new_independent_observation"
+  ]
+}

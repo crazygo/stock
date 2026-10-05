@@ -1,0 +1,554 @@
+[
+  {
+    "version": "coverage_financial_split_heat_v4",
+    "month": "2026-04",
+    "evaluation_start": "2026-04-01",
+    "train_rows": 1801990,
+    "calibration_rows": 96947,
+    "selection_rows": 50787,
+    "calibration_start": "2025-12-02",
+    "calibration_fit_end_exclusive": "2026-01-11",
+    "selection_end_exclusive": "2026-01-31",
+    "train_latest_label_maturity": "2025-12-01 00:00:00",
+    "cal_latest_label_maturity": "2026-03-31 00:00:00",
+    "class_counts": {
+      "train": [
+        1775576,
+        16148,
+        10266
+      ],
+      "calibrate": [
+        95511,
+        768,
+        668
+      ],
+      "select": [
+        50299,
+        277,
+        211
+      ]
+    },
+    "algorithms": {
+      "logistic": {
+        "algorithm": "multinomial LogisticRegression",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.004133138833004844,
+        "selection_brier60": 0.009908371667204957,
+        "selection_objective": 0.0070207552501049,
+        "selection_p60_gt80_count": 2,
+        "selection_order_violations": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "multiclass HistGradientBoostingClassifier",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.004196656736133009,
+        "selection_brier60": 0.010051808125092975,
+        "selection_objective": 0.007124232430612992,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      }
+    },
+    "features": [
+      "ret5",
+      "ret20",
+      "ret60",
+      "vol20",
+      "downvol20",
+      "range20",
+      "volume_ratio",
+      "peak_ratio",
+      "trough_ratio",
+      "position183",
+      "ma20_ratio",
+      "ma60_ratio",
+      "dollar_volume20",
+      "price",
+      "coverage183",
+      "rs20",
+      "rs60",
+      "fin_revenue_yoy",
+      "fin_revenue_qoq",
+      "fin_gross_margin",
+      "fin_operating_margin",
+      "fin_net_margin",
+      "fin_ocf_margin_ttm",
+      "fin_revenue_ttm_log",
+      "fin_current_ratio",
+      "fin_equity_assets_ratio",
+      "fin_cash_assets_ratio",
+      "fin_report_age_days",
+      "fin_statement_missing",
+      "fin_growth_missing",
+      "fin_ttm_missing",
+      "fin_liquidity_missing",
+      "fin_fresh",
+      "industry_ret20",
+      "industry_rs20",
+      "industry_volume_ratio",
+      "industry_members",
+      "industry_missing"
+    ],
+    "champion": "logistic",
+    "status": "development_joint_calibrated"
+  },
+  {
+    "version": "coverage_financial_split_heat_v4",
+    "month": "2026-05",
+    "evaluation_start": "2026-05-01",
+    "train_rows": 1878159,
+    "calibration_rows": 94400,
+    "selection_rows": 47165,
+    "calibration_start": "2026-01-01",
+    "calibration_fit_end_exclusive": "2026-02-10",
+    "selection_end_exclusive": "2026-03-02",
+    "train_latest_label_maturity": "2025-12-30 00:00:00",
+    "cal_latest_label_maturity": "2026-04-28 00:00:00",
+    "class_counts": {
+      "train": [
+        1850910,
+        16670,
+        10579
+      ],
+      "calibrate": [
+        93391,
+        534,
+        475
+      ],
+      "select": [
+        46513,
+        414,
+        238
+      ]
+    },
+    "algorithms": {
+      "logistic": {
+        "algorithm": "multinomial LogisticRegression",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.004898134257181806,
+        "selection_brier60": 0.013361053556722815,
+        "selection_objective": 0.00912959390695231,
+        "selection_p60_gt80_count": 2,
+        "selection_order_violations": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "multiclass HistGradientBoostingClassifier",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.004929715174128386,
+        "selection_brier60": 0.013291774998420965,
+        "selection_objective": 0.009110745086274675,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      }
+    },
+    "features": [
+      "ret5",
+      "ret20",
+      "ret60",
+      "vol20",
+      "downvol20",
+      "range20",
+      "volume_ratio",
+      "peak_ratio",
+      "trough_ratio",
+      "position183",
+      "ma20_ratio",
+      "ma60_ratio",
+      "dollar_volume20",
+      "price",
+      "coverage183",
+      "rs20",
+      "rs60",
+      "fin_revenue_yoy",
+      "fin_revenue_qoq",
+      "fin_gross_margin",
+      "fin_operating_margin",
+      "fin_net_margin",
+      "fin_ocf_margin_ttm",
+      "fin_revenue_ttm_log",
+      "fin_current_ratio",
+      "fin_equity_assets_ratio",
+      "fin_cash_assets_ratio",
+      "fin_report_age_days",
+      "fin_statement_missing",
+      "fin_growth_missing",
+      "fin_ttm_missing",
+      "fin_liquidity_missing",
+      "fin_fresh",
+      "industry_ret20",
+      "industry_rs20",
+      "industry_volume_ratio",
+      "industry_members",
+      "industry_missing"
+    ],
+    "champion": "hist_gbdt",
+    "status": "development_joint_calibrated"
+  },
+  {
+    "version": "coverage_financial_split_heat_v4",
+    "month": "2026-06",
+    "evaluation_start": "2026-06-01",
+    "train_rows": 1956435,
+    "calibration_rows": 101375,
+    "selection_rows": 50594,
+    "calibration_start": "2026-02-01",
+    "calibration_fit_end_exclusive": "2026-03-13",
+    "selection_end_exclusive": "2026-04-02",
+    "train_latest_label_maturity": "2026-01-30 00:00:00",
+    "cal_latest_label_maturity": "2026-05-29 00:00:00",
+    "class_counts": {
+      "train": [
+        1927997,
+        17440,
+        10998
+      ],
+      "calibrate": [
+        99943,
+        990,
+        442
+      ],
+      "select": [
+        48792,
+        1465,
+        337
+      ]
+    },
+    "algorithms": {
+      "logistic": {
+        "algorithm": "multinomial LogisticRegression",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.006576769568920875,
+        "selection_brier60": 0.033827199069433087,
+        "selection_objective": 0.020201984319176983,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "multiclass HistGradientBoostingClassifier",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.006536833952445705,
+        "selection_brier60": 0.033580843893639314,
+        "selection_objective": 0.02005883892304251,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      }
+    },
+    "features": [
+      "ret5",
+      "ret20",
+      "ret60",
+      "vol20",
+      "downvol20",
+      "range20",
+      "volume_ratio",
+      "peak_ratio",
+      "trough_ratio",
+      "position183",
+      "ma20_ratio",
+      "ma60_ratio",
+      "dollar_volume20",
+      "price",
+      "coverage183",
+      "rs20",
+      "rs60",
+      "fin_revenue_yoy",
+      "fin_revenue_qoq",
+      "fin_gross_margin",
+      "fin_operating_margin",
+      "fin_net_margin",
+      "fin_ocf_margin_ttm",
+      "fin_revenue_ttm_log",
+      "fin_current_ratio",
+      "fin_equity_assets_ratio",
+      "fin_cash_assets_ratio",
+      "fin_report_age_days",
+      "fin_statement_missing",
+      "fin_growth_missing",
+      "fin_ttm_missing",
+      "fin_liquidity_missing",
+      "fin_fresh",
+      "industry_ret20",
+      "industry_rs20",
+      "industry_volume_ratio",
+      "industry_members",
+      "industry_missing"
+    ],
+    "champion": "hist_gbdt",
+    "status": "development_joint_calibrated"
+  },
+  {
+    "version": "coverage_financial_split_heat_v4",
+    "month": "2026-07",
+    "evaluation_start": "2026-07-01",
+    "train_rows": 2024566,
+    "calibration_rows": 101062,
+    "selection_rows": 54534,
+    "calibration_start": "2026-03-03",
+    "calibration_fit_end_exclusive": "2026-04-12",
+    "selection_end_exclusive": "2026-05-02",
+    "train_latest_label_maturity": "2026-02-27 00:00:00",
+    "cal_latest_label_maturity": "2026-06-30 00:00:00",
+    "class_counts": {
+      "train": [
+        1995128,
+        17996,
+        11442
+      ],
+      "calibrate": [
+        97796,
+        2574,
+        692
+      ],
+      "select": [
+        53055,
+        889,
+        590
+      ]
+    },
+    "algorithms": {
+      "logistic": {
+        "algorithm": "multinomial LogisticRegression",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.010559366469682502,
+        "selection_brier60": 0.025922752980017078,
+        "selection_objective": 0.01824105972484979,
+        "selection_p60_gt80_count": 3,
+        "selection_order_violations": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "multiclass HistGradientBoostingClassifier",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.010709858254456273,
+        "selection_brier60": 0.026386382523937244,
+        "selection_objective": 0.01854812038919676,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      }
+    },
+    "features": [
+      "ret5",
+      "ret20",
+      "ret60",
+      "vol20",
+      "downvol20",
+      "range20",
+      "volume_ratio",
+      "peak_ratio",
+      "trough_ratio",
+      "position183",
+      "ma20_ratio",
+      "ma60_ratio",
+      "dollar_volume20",
+      "price",
+      "coverage183",
+      "rs20",
+      "rs60",
+      "fin_revenue_yoy",
+      "fin_revenue_qoq",
+      "fin_gross_margin",
+      "fin_operating_margin",
+      "fin_net_margin",
+      "fin_ocf_margin_ttm",
+      "fin_revenue_ttm_log",
+      "fin_current_ratio",
+      "fin_equity_assets_ratio",
+      "fin_cash_assets_ratio",
+      "fin_report_age_days",
+      "fin_statement_missing",
+      "fin_growth_missing",
+      "fin_ttm_missing",
+      "fin_liquidity_missing",
+      "fin_fresh",
+      "industry_ret20",
+      "industry_rs20",
+      "industry_volume_ratio",
+      "industry_members",
+      "industry_missing"
+    ],
+    "champion": "logistic",
+    "status": "development_joint_calibrated"
+  },
+  {
+    "version": "coverage_financial_split_heat_v4",
+    "month": "2026-08",
+    "evaluation_start": "2026-08-01",
+    "train_rows": 2108060,
+    "calibration_rows": 98315,
+    "selection_rows": 47957,
+    "calibration_start": "2026-04-03",
+    "calibration_fit_end_exclusive": "2026-05-13",
+    "selection_end_exclusive": "2026-06-02",
+    "train_latest_label_maturity": "2026-04-02 00:00:00",
+    "cal_latest_label_maturity": "2026-07-31 00:00:00",
+    "class_counts": {
+      "train": [
+        2077727,
+        18465,
+        11868
+      ],
+      "calibrate": [
+        95541,
+        1674,
+        1100
+      ],
+      "select": [
+        47437,
+        243,
+        277
+      ]
+    },
+    "algorithms": {
+      "logistic": {
+        "algorithm": "multinomial LogisticRegression",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.005516304403303147,
+        "selection_brier60": 0.011322570799183229,
+        "selection_objective": 0.008419437601243187,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "multiclass HistGradientBoostingClassifier",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.00564607913931017,
+        "selection_brier60": 0.011767736387117936,
+        "selection_objective": 0.008706907763214053,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      }
+    },
+    "features": [
+      "ret5",
+      "ret20",
+      "ret60",
+      "vol20",
+      "downvol20",
+      "range20",
+      "volume_ratio",
+      "peak_ratio",
+      "trough_ratio",
+      "position183",
+      "ma20_ratio",
+      "ma60_ratio",
+      "dollar_volume20",
+      "price",
+      "coverage183",
+      "rs20",
+      "rs60",
+      "fin_revenue_yoy",
+      "fin_revenue_qoq",
+      "fin_gross_margin",
+      "fin_operating_margin",
+      "fin_net_margin",
+      "fin_ocf_margin_ttm",
+      "fin_revenue_ttm_log",
+      "fin_current_ratio",
+      "fin_equity_assets_ratio",
+      "fin_cash_assets_ratio",
+      "fin_report_age_days",
+      "fin_statement_missing",
+      "fin_growth_missing",
+      "fin_ttm_missing",
+      "fin_liquidity_missing",
+      "fin_fresh",
+      "industry_ret20",
+      "industry_rs20",
+      "industry_volume_ratio",
+      "industry_members",
+      "industry_missing"
+    ],
+    "champion": "logistic",
+    "status": "development_joint_calibrated"
+  },
+  {
+    "version": "coverage_financial_split_heat_v4",
+    "month": "2026-09",
+    "evaluation_start": "2026-09-01",
+    "train_rows": 2176932,
+    "calibration_rows": 107211,
+    "selection_rows": 49140,
+    "calibration_start": "2026-05-04",
+    "calibration_fit_end_exclusive": "2026-06-13",
+    "selection_end_exclusive": "2026-07-03",
+    "train_latest_label_maturity": "2026-05-01 00:00:00",
+    "cal_latest_label_maturity": "2026-08-31 00:00:00",
+    "class_counts": {
+      "train": [
+        2145680,
+        19060,
+        12192
+      ],
+      "calibrate": [
+        105937,
+        567,
+        707
+      ],
+      "select": [
+        48756,
+        276,
+        108
+      ]
+    },
+    "algorithms": {
+      "logistic": {
+        "algorithm": "multinomial LogisticRegression",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.002346594297083747,
+        "selection_brier60": 0.008109295743184903,
+        "selection_objective": 0.005227945020134325,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      },
+      "hist_gbdt": {
+        "algorithm": "multiclass HistGradientBoostingClassifier",
+        "calibration": "joint temperature scaling",
+        "selection_brier30": 0.0023089170079472836,
+        "selection_brier60": 0.007975643810454637,
+        "selection_objective": 0.00514228040920096,
+        "selection_p60_gt80_count": 0,
+        "selection_order_violations": 0
+      }
+    },
+    "features": [
+      "ret5",
+      "ret20",
+      "ret60",
+      "vol20",
+      "downvol20",
+      "range20",
+      "volume_ratio",
+      "peak_ratio",
+      "trough_ratio",
+      "position183",
+      "ma20_ratio",
+      "ma60_ratio",
+      "dollar_volume20",
+      "price",
+      "coverage183",
+      "rs20",
+      "rs60",
+      "fin_revenue_yoy",
+      "fin_revenue_qoq",
+      "fin_gross_margin",
+      "fin_operating_margin",
+      "fin_net_margin",
+      "fin_ocf_margin_ttm",
+      "fin_revenue_ttm_log",
+      "fin_current_ratio",
+      "fin_equity_assets_ratio",
+      "fin_cash_assets_ratio",
+      "fin_report_age_days",
+      "fin_statement_missing",
+      "fin_growth_missing",
+      "fin_ttm_missing",
+      "fin_liquidity_missing",
+      "fin_fresh",
+      "industry_ret20",
+      "industry_rs20",
+      "industry_volume_ratio",
+      "industry_members",
+      "industry_missing"
+    ],
+    "champion": "hist_gbdt",
+    "status": "development_joint_calibrated"
+  }
+]

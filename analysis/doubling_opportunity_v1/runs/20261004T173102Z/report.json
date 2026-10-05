@@ -1,0 +1,2191 @@
+{
+  "metadata": {
+    "received_at": "2026-10-04T17:31:02.548937+00:00",
+    "nasdaq_footer": "File Creation Time: 1002202621:33|||||",
+    "directory_count": 13295,
+    "accepted_count": 5261,
+    "excluded_count": 8034,
+    "sources": [
+      "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt",
+      "https://www.sec.gov/files/company_tickers.json"
+    ],
+    "sec_mapping_status": "frames_exact_name_fallback:3717",
+    "membership_mode": "current_retrospective",
+    "raw_sha256": "c098098638bd36a642070fb2cfa6349f48b4d0fc4c3557b76bbf9209c1c3a8a5",
+    "data_asof": "2026-09-29",
+    "expected_latest_session": "2026-10-02",
+    "freshness": "stale_not_current",
+    "scored_count": 3763,
+    "unscored_count": 1498,
+    "qualified_count": 0,
+    "refresh": {
+      "refresh": "skipped"
+    },
+    "mxl_case": {
+      "case_mode": "user_exposed_example_not_validation",
+      "sep2_close": 60.1,
+      "latest_rth_date": "2026-10-02",
+      "latest_rth_close": 105.93,
+      "source": "Futu OpenD QFQ hourly 16:00 bar; separate from Massive archive",
+      "return_from_sep2": 0.7625623960066557
+    },
+    "lineage": {
+      "cache_key": "be35dee841dcb9061d55bed60a8360afea455f475ee0977d1325d4bff8ab1e79",
+      "first_session": "2025-08-01",
+      "last_session": "2026-09-29",
+      "archive_days": 292,
+      "rows": 1403910,
+      "stock_count": 5251,
+      "adjustment": "Massive split-adjusted; archive vintages mixed, corporate-action reconciliation outstanding"
+    },
+    "model_audits": [
+      {
+        "month": "2026-09",
+        "horizon": 30,
+        "train_rows": 390330,
+        "train_positives": 2905,
+        "calibration_rows": 106624,
+        "calibration_positives": 1117,
+        "selection_rows": 48871,
+        "selection_positives": 234,
+        "calibration_start": "2026-05-04",
+        "calibration_fit_end_exclusive": "2026-06-13",
+        "selection_end_exclusive": "2026-07-03",
+        "evaluation_start": "2026-09-01",
+        "train_latest_label_maturity": "2026-05-01 00:00:00",
+        "cal_latest_label_maturity": "2026-07-31 00:00:00",
+        "algorithms": {
+          "logistic": {
+            "algorithm": "LogisticRegression",
+            "selection_brier": 0.004889953526283883,
+            "selection_baseline_brier": 0.0047975423725577565,
+            "calibration_base_rate": 0.010476065426170468,
+            "selection_base_rate": 0.004788115651408811,
+            "selection_p_gt80_count": 0
+          },
+          "hist_gbdt": {
+            "algorithm": "HistGradientBoostingClassifier",
+            "selection_brier": 0.004803035860412255,
+            "selection_baseline_brier": 0.0047975423725577565,
+            "calibration_base_rate": 0.010476065426170468,
+            "selection_base_rate": 0.004788115651408811,
+            "selection_p_gt80_count": 0
+          }
+        },
+        "champion": "hist_gbdt",
+        "status": "development_calibrated"
+      },
+      {
+        "month": "2026-09",
+        "horizon": 60,
+        "train_rows": 314525,
+        "train_positives": 5141,
+        "calibration_rows": 106315,
+        "calibration_positives": 1765,
+        "selection_rows": 48636,
+        "selection_positives": 592,
+        "calibration_start": "2026-05-04",
+        "calibration_fit_end_exclusive": "2026-06-13",
+        "selection_end_exclusive": "2026-07-03",
+        "evaluation_start": "2026-09-01",
+        "train_latest_label_maturity": "2026-05-01 00:00:00",
+        "cal_latest_label_maturity": "2026-08-31 00:00:00",
+        "algorithms": {
+          "logistic": {
+            "algorithm": "LogisticRegression",
+            "selection_brier": 0.011726961016143369,
+            "selection_baseline_brier": 0.012043515689203848,
+            "calibration_base_rate": 0.016601608427785356,
+            "selection_base_rate": 0.012172053622830825,
+            "selection_p_gt80_count": 0
+          },
+          "hist_gbdt": {
+            "algorithm": "HistGradientBoostingClassifier",
+            "selection_brier": 0.011731178641904715,
+            "selection_baseline_brier": 0.012043515689203848,
+            "calibration_base_rate": 0.016601608427785356,
+            "selection_base_rate": 0.012172053622830825,
+            "selection_p_gt80_count": 0
+          }
+        },
+        "champion": "logistic",
+        "status": "development_calibrated"
+      }
+    ],
+    "dataset_key": "0b7b8810f04c05b2f691d54ac925e6e5936e704a60918e621a1f6784493d0713",
+    "protocol_sha256": "129ef636fcad1c8c47d25fc43778bd519b6a3a91b8c1aef0333932ef5f94c1a5",
+    "completion": "incomplete: no verified >80% candidate; PIT, freshness, corporate actions, joint quality and independent validation pending"
+  },
+  "qualified_stocks": [],
+  "exploratory_stocks": [
+    {
+      "ticker": "AEHL",
+      "name": "Antelope Enterprise Holdings Limited - Class A Ordinary Shares",
+      "current_close": 8.59,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-17",
+      "previous_peak_price": 16.79,
+      "current_to_previous_peak": 0.5116140559857058,
+      "six_month_peak_date": "2026-05-14",
+      "six_month_peak_price": 94.24,
+      "current_to_six_month_peak": 0.0911502546689304,
+      "stage": "震荡过渡",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 0.3235747303543912,
+      "dollar_volume20": 16652504.411409976,
+      "volume_ratio": 0.0559980212382714,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "ARTL",
+      "name": "Artelo Biosciences, Inc. - Common Stock",
+      "current_close": 4.07,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-03",
+      "previous_peak_price": 6.805,
+      "current_to_previous_peak": 0.5980896399706099,
+      "six_month_peak_date": "2026-09-23",
+      "six_month_peak_price": 15.73,
+      "current_to_six_month_peak": 0.25874125874125875,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.360062893081761,
+      "dollar_volume20": 9865048.705570014,
+      "volume_ratio": 3.8160629357523472,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "AVAT",
+      "name": "Avalanche Treasury Corporation - Class A Common Stock",
+      "current_close": 1.9,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-08-05",
+      "previous_peak_price": 0.37,
+      "current_to_previous_peak": 5.135135135135135,
+      "six_month_peak_date": "2026-06-11",
+      "six_month_peak_price": 3.0,
+      "current_to_six_month_peak": 0.6333333333333333,
+      "stage": "回升趋势",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 0.6031746031746031,
+      "ret20": 1.6246719160104988,
+      "dollar_volume20": 4109291.976548409,
+      "volume_ratio": 0.7914025842597311,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "BIAF",
+      "name": "bioAffinity Technologies, Inc. - Common Stock",
+      "current_close": 6.88,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-18",
+      "previous_peak_price": 12.48,
+      "current_to_previous_peak": 0.5512820512820512,
+      "six_month_peak_date": "2026-09-04",
+      "six_month_peak_price": 20.3499,
+      "current_to_six_month_peak": 0.33808519943586945,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 0.5087719298245614,
+      "dollar_volume20": 90110640.11685947,
+      "volume_ratio": 0.025591629167404616,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "CDT",
+      "name": "CDT Equity Inc. - Common Stock",
+      "current_close": 1.45,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-08-21",
+      "previous_peak_price": 3.4,
+      "current_to_previous_peak": 0.4264705882352941,
+      "six_month_peak_date": "2026-03-31",
+      "six_month_peak_price": 67.25,
+      "current_to_six_month_peak": 0.021561338289962824,
+      "stage": "震荡过渡",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.13690476190476186,
+      "dollar_volume20": 2097104.2142696083,
+      "volume_ratio": 1.1635493362071783,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "CPOP",
+      "name": "Pop Culture Group Co., Ltd - Class A Ordinary Shares",
+      "current_close": 4.38,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-21",
+      "previous_peak_price": 6.71,
+      "current_to_previous_peak": 0.6527570789865872,
+      "six_month_peak_date": "2026-06-10",
+      "six_month_peak_price": 25.5,
+      "current_to_six_month_peak": 0.17176470588235293,
+      "stage": "回升趋势",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 12.790931989924433,
+      "dollar_volume20": 2444262.5932454593,
+      "volume_ratio": 0.09662585958381216,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "CRMT",
+      "name": "America's Car-Mart, Inc. - Common Stock",
+      "current_close": 1.02,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-08",
+      "previous_peak_price": 2.63,
+      "current_to_previous_peak": 0.3878326996197719,
+      "six_month_peak_date": "2026-04-21",
+      "six_month_peak_price": 14.62,
+      "current_to_six_month_peak": 0.06976744186046512,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.5565217391304347,
+      "dollar_volume20": 1038027.1245300267,
+      "volume_ratio": 0.7619424711002444,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "DAIC",
+      "name": "CID HoldCo, Inc. - Common Stock",
+      "current_close": 2.82,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-17",
+      "previous_peak_price": 7.1495,
+      "current_to_previous_peak": 0.3944331771452549,
+      "six_month_peak_date": "2026-09-17",
+      "six_month_peak_price": 7.1495,
+      "current_to_six_month_peak": 0.3944331771452549,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.18965517241379315,
+      "dollar_volume20": 36922227.7795632,
+      "volume_ratio": 0.14058765389031433,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "DCX",
+      "name": "Digital Currency X Technology Inc. - Class A Ordinary Shares",
+      "current_close": 3.61,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-08-14",
+      "previous_peak_price": 1.04,
+      "current_to_previous_peak": 3.471153846153846,
+      "six_month_peak_date": "2026-09-28",
+      "six_month_peak_price": 7.4544,
+      "current_to_six_month_peak": 0.48427774200472207,
+      "stage": "震荡过渡",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 4.188876543547035,
+      "dollar_volume20": 5700540.6468738755,
+      "volume_ratio": 2.8518599747388564,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "GCTK",
+      "name": "GlucoTrack, Inc. - Common Stock",
+      "current_close": 1.74,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-08-31",
+      "previous_peak_price": 4.36,
+      "current_to_previous_peak": 0.39908256880733944,
+      "six_month_peak_date": "2026-08-31",
+      "six_month_peak_price": 4.36,
+      "current_to_six_month_peak": 0.39908256880733944,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.5905882352941176,
+      "dollar_volume20": 9968890.678741619,
+      "volume_ratio": 3.9039567753629227,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "GMEX",
+      "name": "GMEX ROBOTICS CORPORATION - Class A Ordinary Shares",
+      "current_close": 3.17,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-16",
+      "previous_peak_price": 0.88,
+      "current_to_previous_peak": 3.602272727272727,
+      "six_month_peak_date": "2026-04-20",
+      "six_month_peak_price": 47.1681,
+      "current_to_six_month_peak": 0.06720643824957968,
+      "stage": "震荡过渡",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 2.3165934295877797,
+      "dollar_volume20": 2170835.3643415715,
+      "volume_ratio": 0.13379582521867364,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "GRML",
+      "name": "Greenland Mines Ltd - Common Stock",
+      "current_close": 10.375,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-22",
+      "previous_peak_price": 18.2099,
+      "current_to_previous_peak": 0.5697450288030137,
+      "six_month_peak_date": "2026-09-22",
+      "six_month_peak_price": 18.2099,
+      "current_to_six_month_peak": 0.5697450288030137,
+      "stage": "回升趋势",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 1.1391752577319587,
+      "dollar_volume20": 264190255.56387088,
+      "volume_ratio": 1.165794487620443,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "IMCC",
+      "name": "IM Cannabis Corp. - Common Shares",
+      "current_close": 2.45,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-18",
+      "previous_peak_price": 8.65,
+      "current_to_previous_peak": 0.2832369942196532,
+      "six_month_peak_date": "2026-09-18",
+      "six_month_peak_price": 8.65,
+      "current_to_six_month_peak": 0.2832369942196532,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.19934640522875813,
+      "dollar_volume20": 33158626.574290425,
+      "volume_ratio": 0.8531838966096665,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "INLF",
+      "name": "INLIF LIMITED - Class A Ordinary shares",
+      "current_close": 4.66,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-08-19",
+      "previous_peak_price": 5.25,
+      "current_to_previous_peak": 0.8876190476190476,
+      "six_month_peak_date": "2026-03-31",
+      "six_month_peak_price": 1049.28,
+      "current_to_six_month_peak": 0.004441140591643794,
+      "stage": "震荡过渡",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 0.16500000000000004,
+      "dollar_volume20": 14480397.901222851,
+      "volume_ratio": 3.953522552509065,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "IPST",
+      "name": "IP Strategy Holdings, Inc. - Common Stock",
+      "current_close": 3.03,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-08-18",
+      "previous_peak_price": 25.34,
+      "current_to_previous_peak": 0.11957379636937647,
+      "six_month_peak_date": "2026-08-18",
+      "six_month_peak_price": 25.34,
+      "current_to_six_month_peak": 0.11957379636937647,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.23096446700507622,
+      "dollar_volume20": 1069803.6412704214,
+      "volume_ratio": 3.4310843988968025,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "KITT",
+      "name": "Nauticus Robotics, Inc. - Common stock",
+      "current_close": 1.86,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-08-11",
+      "previous_peak_price": 1.27,
+      "current_to_previous_peak": 1.4645669291338583,
+      "six_month_peak_date": "2026-04-15",
+      "six_month_peak_price": 4.6448,
+      "current_to_six_month_peak": 0.4004478126076473,
+      "stage": "回升趋势",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 1.2931820983849094,
+      "dollar_volume20": 2683690.0654339166,
+      "volume_ratio": 1.2688169911703404,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "LGVN",
+      "name": "Longeveron Inc. - Class A Common stock",
+      "current_close": 2.72,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "not_passed_or_incomplete",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-14",
+      "previous_peak_price": 7.6,
+      "current_to_previous_peak": 0.3578947368421053,
+      "six_month_peak_date": "2026-09-14",
+      "six_month_peak_price": 7.6,
+      "current_to_six_month_peak": 0.3578947368421053,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.6057971014492753,
+      "dollar_volume20": 640553.0995346721,
+      "volume_ratio": 0.49171184901333104,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "MSGY",
+      "name": "Masonglory Limited - Class A Ordinary Shares",
+      "current_close": 4.44,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-16",
+      "previous_peak_price": 2.26,
+      "current_to_previous_peak": 1.9646017699115048,
+      "six_month_peak_date": "2026-09-25",
+      "six_month_peak_price": 11.42,
+      "current_to_six_month_peak": 0.3887915936952715,
+      "stage": "震荡过渡",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 1.336842105263158,
+      "dollar_volume20": 30884088.8804427,
+      "volume_ratio": 3.9772287112270717,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "MTEN",
+      "name": "Mingteng International Corporation Inc. - Class A Ordinary Shares",
+      "current_close": 1.01,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-15",
+      "previous_peak_price": 1.19,
+      "current_to_previous_peak": 0.8487394957983194,
+      "six_month_peak_date": "2026-06-09",
+      "six_month_peak_price": 9.52,
+      "current_to_six_month_peak": 0.10609243697478993,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.01941747572815533,
+      "dollar_volume20": 737327.6036204055,
+      "volume_ratio": 0.23223854325325574,
+      "probability_order_consistent": true
+    },
+    {
+      "ticker": "NCI",
+      "name": "Neo-Concept International Group Holdings Limited - Class A Ordinary Shares",
+      "current_close": 1.26,
+      "p30": 0.1474710542352224,
+      "p60": 0.1920374707259953,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "cik_mapping_missing",
+      "catalyst_status": "待核验",
+      "previous_peak_date": "2026-09-08",
+      "previous_peak_price": 14.78,
+      "current_to_previous_peak": 0.08525033829499323,
+      "six_month_peak_date": "2026-03-31",
+      "six_month_peak_price": 47.6,
+      "current_to_six_month_peak": 0.026470588235294117,
+      "stage": "深度回撤，尚未恢复",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": -0.900709219858156,
+      "dollar_volume20": 11209578.926997403,
+      "volume_ratio": 2.2415861306881357,
+      "probability_order_consistent": true
+    }
+  ],
+  "company_reviews": {
+    "AEHL": {
+      "status": "cik_mapping_missing",
+      "ticker": "AEHL"
+    },
+    "ARTL": {
+      "entity_name": "ARTELO BIOSCIENCES, INC.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "current_ratio": 3.004123711340206,
+        "cash": 4198000,
+        "net_income": -2427000,
+        "operating_cashflow": -1191000,
+        "equity": 4997000
+      },
+      "checks": {
+        "recent_filing_period": false,
+        "growing_revenue": false,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": true,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "net_income": {
+          "val": -2427000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001640334-26-001323",
+          "form": "10-Q",
+          "tag": "ProfitLoss"
+        },
+        "cash": {
+          "val": 4198000,
+          "start": null,
+          "end": "2026-03-31",
+          "filed": "2026-08-12",
+          "accn": "0001640334-26-001323",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 4371000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001640334-26-001323",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 1455000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001640334-26-001323",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 4997000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001640334-26-001323",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -1191000,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-05-14",
+          "accn": "0001640334-26-000869",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "ARTL",
+      "cik": 1621221,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001621221.json"
+    },
+    "AVAT": {
+      "entity_name": "Avalanche Treasury Corp",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "cash": 0,
+        "net_income": -44657790,
+        "operating_cashflow": null,
+        "equity": 83766235
+      },
+      "checks": {
+        "recent_filing_period": true,
+        "growing_revenue": false,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": false,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 1545470,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-19",
+          "accn": "0001104659-26-098819",
+          "form": "10-Q",
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+        },
+        "net_income": {
+          "val": -44657790,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-19",
+          "accn": "0001104659-26-098819",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 0,
+          "start": null,
+          "end": "2026-03-31",
+          "filed": "2026-06-29",
+          "accn": "0001104659-26-078841",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 28063700,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-19",
+          "accn": "0001104659-26-098819",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 2509220,
+          "start": null,
+          "end": "2026-03-31",
+          "filed": "2026-06-29",
+          "accn": "0001104659-26-078841",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 83766235,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-19",
+          "accn": "0001104659-26-098819",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "AVAT",
+      "cik": 2092446,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0002092446.json"
+    },
+    "BIAF": {
+      "entity_name": "bioAffinity Technologies, Inc.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "revenue_yoy": 0.18991668261804207,
+        "current_ratio": 1.441781248577906,
+        "cash": 2429719,
+        "net_income": -3366082,
+        "operating_cashflow": -3227240,
+        "equity": 3768797
+      },
+      "checks": {
+        "recent_filing_period": true,
+        "growing_revenue": true,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": true,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 1510579,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-07",
+          "accn": "0001493152-26-036619",
+          "form": "10-Q",
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+        },
+        "gross_profit": {
+          "val": 223780,
+          "start": "2023-07-01",
+          "end": "2023-09-30",
+          "filed": "2023-11-14",
+          "accn": "0001493152-23-040986",
+          "form": "10-Q",
+          "tag": "GrossProfit"
+        },
+        "net_income": {
+          "val": -3366082,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-07",
+          "accn": "0001493152-26-036619",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 2429719,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-07",
+          "accn": "0001493152-26-036619",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 3865280,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-07",
+          "accn": "0001493152-26-036619",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 2680906,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-07",
+          "accn": "0001493152-26-036619",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 3768797,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-07",
+          "accn": "0001493152-26-036619",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -3227240,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-05-11",
+          "accn": "0001493152-26-022044",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "BIAF",
+      "cik": 1712762,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001712762.json"
+    },
+    "CDT": {
+      "entity_name": "CDT EQUITY INC.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "current_ratio": 0.12581902273992548,
+        "cash": 747000,
+        "net_income": -4641000,
+        "operating_cashflow": -1894000,
+        "equity": 103093000
+      },
+      "checks": {
+        "recent_filing_period": false,
+        "growing_revenue": false,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": false,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "net_income": {
+          "val": -4641000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001493152-26-037458",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 747000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001493152-26-037458",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 2938000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001493152-26-037458",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 23351000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001493152-26-037458",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 103093000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001493152-26-037458",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -1894000,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-07-15",
+          "accn": "0001493152-26-033380",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "CDT",
+      "cik": 1896212,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001896212.json"
+    },
+    "CPOP": {
+      "status": "cik_mapping_missing",
+      "ticker": "CPOP"
+    },
+    "CRMT": {
+      "entity_name": "AMERICA’S CAR-MART, INC.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "revenue_yoy": -0.5729684277142322,
+        "cash": 27532000,
+        "net_income": -68980000,
+        "operating_cashflow": 80069000,
+        "equity": 376380000
+      },
+      "checks": {
+        "recent_filing_period": true,
+        "growing_revenue": false,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": false,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": true
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 145751000,
+          "start": "2026-05-01",
+          "end": "2026-07-31",
+          "filed": "2026-09-09",
+          "accn": "0001628280-26-061105",
+          "form": "10-Q",
+          "tag": "Revenues"
+        },
+        "gross_profit": {
+          "val": 69662000,
+          "start": "2020-02-01",
+          "end": "2020-04-30",
+          "filed": "2020-06-24",
+          "accn": "0001171843-20-004544",
+          "form": "10-K",
+          "tag": "GrossProfit"
+        },
+        "net_income": {
+          "val": -68980000,
+          "start": "2026-05-01",
+          "end": "2026-07-31",
+          "filed": "2026-09-09",
+          "accn": "0001628280-26-061105",
+          "form": "10-Q",
+          "tag": "ProfitLoss"
+        },
+        "cash": {
+          "val": 27532000,
+          "start": null,
+          "end": "2026-07-31",
+          "filed": "2026-09-09",
+          "accn": "0001628280-26-061105",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "equity": {
+          "val": 376380000,
+          "start": null,
+          "end": "2026-07-31",
+          "filed": "2026-09-09",
+          "accn": "0001628280-26-061105",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": 80069000,
+          "start": "2026-05-01",
+          "end": "2026-07-31",
+          "filed": "2026-09-09",
+          "accn": "0001628280-26-061105",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "CRMT",
+      "cik": 799850,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000799850.json"
+    },
+    "DAIC": {
+      "entity_name": "CID HOLDCO, INC.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "revenue_yoy": -0.9022494145845324,
+        "gross_margin": 0.46459106307468945,
+        "current_ratio": 0.2740893206061222,
+        "cash": null,
+        "net_income": -3770873,
+        "operating_cashflow": 93806,
+        "equity": -6047701
+      },
+      "checks": {
+        "recent_filing_period": true,
+        "growing_revenue": false,
+        "positive_gross_margin": true,
+        "current_ratio_at_least_one": false,
+        "positive_equity": false,
+        "positive_profit_or_operating_cashflow": true
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 12398,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-09-25",
+          "accn": "0001213900-26-103514",
+          "form": "10-Q",
+          "tag": "RevenueFromContractWithCustomerIncludingAssessedTax"
+        },
+        "gross_profit": {
+          "val": 5760,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-09-25",
+          "accn": "0001213900-26-103514",
+          "form": "10-Q",
+          "tag": "GrossProfit"
+        },
+        "net_income": {
+          "val": -3770873,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-09-25",
+          "accn": "0001213900-26-103514",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "current_assets": {
+          "val": 3577854,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-09-25",
+          "accn": "0001213900-26-103514",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 13053606,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-09-25",
+          "accn": "0001213900-26-103514",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": -6047701,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-09-25",
+          "accn": "0001213900-26-103514",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": 93806,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-05-12",
+          "accn": "0001213900-26-055091",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "DAIC",
+      "cik": 2033770,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0002033770.json"
+    },
+    "DCX": {
+      "status": "cik_mapping_missing",
+      "ticker": "DCX"
+    },
+    "GCTK": {
+      "entity_name": "Glucotrack, Inc.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "revenue_yoy": -0.9991223149170271,
+        "current_ratio": 0.4621820615796519,
+        "cash": 1124000,
+        "net_income": -3814000,
+        "operating_cashflow": -4048000,
+        "equity": -1741000
+      },
+      "checks": {
+        "recent_filing_period": false,
+        "growing_revenue": false,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": false,
+        "positive_equity": false,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 97,
+          "start": "2020-04-01",
+          "end": "2020-06-30",
+          "filed": "2020-08-14",
+          "accn": "0001493152-20-015906",
+          "form": "10-Q",
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+        },
+        "net_income": {
+          "val": -3814000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-14",
+          "accn": "0001493152-26-038317",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 1124000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-14",
+          "accn": "0001493152-26-038317",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 1381000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-14",
+          "accn": "0001493152-26-038317",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 2988000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-14",
+          "accn": "0001493152-26-038317",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": -1741000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-14",
+          "accn": "0001493152-26-038317",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -4048000,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-05-14",
+          "accn": "0001493152-26-023205",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "GCTK",
+      "cik": 1506983,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001506983.json"
+    },
+    "GMEX": {
+      "status": "cik_mapping_missing",
+      "ticker": "GMEX"
+    },
+    "GRML": {
+      "entity_name": "GREENLAND     MINES LTD",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "current_ratio": 10.09166371123947,
+        "cash": 9300000,
+        "net_income": -3685060,
+        "operating_cashflow": -4971143,
+        "equity": 57903852
+      },
+      "checks": {
+        "recent_filing_period": false,
+        "growing_revenue": false,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": true,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "net_income": {
+          "val": -3685060,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-17",
+          "accn": "0001213900-26-090821",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 9300000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-17",
+          "accn": "0001213900-26-090821",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 12207270,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-17",
+          "accn": "0001213900-26-090821",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 1209639,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-17",
+          "accn": "0001213900-26-090821",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 57903852,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-17",
+          "accn": "0001213900-26-090821",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -4971143,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-05-20",
+          "accn": "0001213900-26-059581",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "GRML",
+      "cik": 1907223,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001907223.json"
+    },
+    "IMCC": {
+      "status": "cik_mapping_missing",
+      "ticker": "IMCC"
+    },
+    "INLF": {
+      "status": "cik_mapping_missing",
+      "ticker": "INLF"
+    },
+    "IPST": {
+      "status": "cik_mapping_missing",
+      "ticker": "IPST"
+    },
+    "KITT": {
+      "entity_name": "NAUTICUS ROBOTICS, INC.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "revenue_yoy": -0.5731540216018185,
+        "current_ratio": 0.13337612534455381,
+        "cash": 1372758,
+        "net_income": -11115971,
+        "operating_cashflow": -7005769,
+        "equity": 5181766
+      },
+      "checks": {
+        "recent_filing_period": true,
+        "growing_revenue": false,
+        "positive_gross_margin": false,
+        "current_ratio_at_least_one": false,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 885947,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001849820-26-000125",
+          "form": "10-Q",
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+        },
+        "net_income": {
+          "val": -11115971,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001849820-26-000125",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 1372758,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001849820-26-000125",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 4066030,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001849820-26-000125",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 30485441,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001849820-26-000125",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 5181766,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001849820-26-000125",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -7005769,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-05-14",
+          "accn": "0001849820-26-000090",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "KITT",
+      "cik": 1849820,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001849820.json"
+    },
+    "LGVN": {
+      "entity_name": "LONGEVERON INC.",
+      "asof": "2026-09-29",
+      "status": "not_passed_or_incomplete",
+      "metrics": {
+        "revenue_yoy": -0.09177215189873422,
+        "gross_margin": 0.6341463414634146,
+        "current_ratio": 2.628976085442303,
+        "cash": 10077000,
+        "net_income": -6073000,
+        "operating_cashflow": -4370000,
+        "equity": 10402000
+      },
+      "checks": {
+        "recent_filing_period": true,
+        "growing_revenue": false,
+        "positive_gross_margin": true,
+        "current_ratio_at_least_one": true,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": false
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 287000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001193125-26-346794",
+          "form": "10-Q",
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+        },
+        "gross_profit": {
+          "val": 182000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001193125-26-346794",
+          "form": "10-Q",
+          "tag": "GrossProfit"
+        },
+        "net_income": {
+          "val": -6073000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001193125-26-346794",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 10077000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001193125-26-346794",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 11323000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001193125-26-346794",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 4307000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001193125-26-346794",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 10402000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-08-12",
+          "accn": "0001193125-26-346794",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -4370000,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-05-13",
+          "accn": "0001193125-26-221559",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "LGVN",
+      "cik": 1721484,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001721484.json"
+    },
+    "MSGY": {
+      "status": "cik_mapping_missing",
+      "ticker": "MSGY"
+    },
+    "MTEN": {
+      "status": "cik_mapping_missing",
+      "ticker": "MTEN"
+    },
+    "NCI": {
+      "status": "cik_mapping_missing",
+      "ticker": "NCI"
+    },
+    "MXL": {
+      "entity_name": "MaxLinear, Inc.",
+      "asof": "2026-09-29",
+      "status": "quantitative_check_pass",
+      "metrics": {
+        "revenue_yoy": 0.5517171661474272,
+        "gross_margin": 0.5784112243628847,
+        "current_ratio": 1.7764388189669529,
+        "cash": 64814000,
+        "net_income": 1760000,
+        "operating_cashflow": -8872000,
+        "equity": 484840000
+      },
+      "checks": {
+        "recent_filing_period": true,
+        "growing_revenue": true,
+        "positive_gross_margin": true,
+        "current_ratio_at_least_one": true,
+        "positive_equity": true,
+        "positive_profit_or_operating_cashflow": true
+      },
+      "source_facts": {
+        "revenue": {
+          "val": 168847000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-07-23",
+          "accn": "0001288469-26-000051",
+          "form": "10-Q",
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+        },
+        "gross_profit": {
+          "val": 97663000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-07-23",
+          "accn": "0001288469-26-000051",
+          "form": "10-Q",
+          "tag": "GrossProfit"
+        },
+        "net_income": {
+          "val": 1760000,
+          "start": "2026-04-01",
+          "end": "2026-06-30",
+          "filed": "2026-07-23",
+          "accn": "0001288469-26-000051",
+          "form": "10-Q",
+          "tag": "NetIncomeLoss"
+        },
+        "cash": {
+          "val": 64814000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-07-23",
+          "accn": "0001288469-26-000051",
+          "form": "10-Q",
+          "tag": "CashAndCashEquivalentsAtCarryingValue"
+        },
+        "current_assets": {
+          "val": 298662000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-07-23",
+          "accn": "0001288469-26-000051",
+          "form": "10-Q",
+          "tag": "AssetsCurrent"
+        },
+        "current_liabilities": {
+          "val": 168124000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-07-23",
+          "accn": "0001288469-26-000051",
+          "form": "10-Q",
+          "tag": "LiabilitiesCurrent"
+        },
+        "equity": {
+          "val": 484840000,
+          "start": null,
+          "end": "2026-06-30",
+          "filed": "2026-07-23",
+          "accn": "0001288469-26-000051",
+          "form": "10-Q",
+          "tag": "StockholdersEquity"
+        },
+        "operating_cashflow": {
+          "val": -8872000,
+          "start": "2026-01-01",
+          "end": "2026-03-31",
+          "filed": "2026-04-23",
+          "accn": "0001288469-26-000029",
+          "form": "10-Q",
+          "tag": "NetCashProvidedByUsedInOperatingActivities"
+        }
+      },
+      "scope": "current review; business catalyst and historical joint-filter backtest remain separate",
+      "ticker": "MXL",
+      "cik": 1288469,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001288469.json"
+    }
+  },
+  "case_stocks": [
+    {
+      "ticker": "MXL",
+      "name": "MaxLinear, Inc - Common Stock",
+      "current_close": 92.72,
+      "p30": 0.01530168666318901,
+      "p60": 0.013186813186813187,
+      "score_status": "scored",
+      "qualified": false,
+      "company_quality_status": "quantitative_check_pass",
+      "catalyst_status": "issuer_evidence_verified",
+      "previous_peak_date": "2026-08-17",
+      "previous_peak_price": 89.0,
+      "current_to_previous_peak": 1.0417977528089888,
+      "six_month_peak_date": "2026-06-30",
+      "six_month_peak_price": 128.3,
+      "current_to_six_month_peak": 0.7226812159002337,
+      "stage": "回升趋势",
+      "actual_price_date": "2026-09-29",
+      "coverage183": 1.0,
+      "ret20": 0.5476548155566685,
+      "dollar_volume20": 229001600.68622372,
+      "volume_ratio": 1.1446214865213589,
+      "probability_order_consistent": false
+    }
+  ],
+  "catalysts": {
+    "MXL": {
+      "published_at": "2026-07-23",
+      "expires_after_days": 183,
+      "source_url": "https://investors.maxlinear.com/press-releases/detail/617/maxlinear-inc-announces-second-quarter-2026-financial",
+      "summary": "Q2 2026 revenue $168.847m, +55% YoY; infrastructure +145% YoY linked to optical AI data-center adoption. GAAP operating margin remains -2.5%. This establishes business momentum, not a future share-price doubling probability.",
+      "cik_source": "https://investors.maxlinear.com/all-sec-filings/content/0001288469-26-000009/0001288469-26-000009.pdf",
+      "review_status": "issuer_evidence_verified"
+    }
+  },
+  "backtest": [
+    {
+      "horizon": 30,
+      "algorithm": "logistic",
+      "algorithm_name": "LogisticRegression",
+      "signals": 0,
+      "mature_signals": 0,
+      "tp": 0,
+      "fp": 0,
+      "unknown": 0,
+      "precision": null,
+      "conservative_lower_bound": null,
+      "wilson95": [
+        null,
+        null
+      ],
+      "stock_cluster95": [
+        null,
+        null
+      ],
+      "week_cluster95": [
+        null,
+        null
+      ],
+      "stock_count": 0,
+      "decision_dates": 0,
+      "same_stock_base_rate": null,
+      "increment": null,
+      "recall_of_daily_positive_cases": 0.0,
+      "daily_rows_not_independent": 312133,
+      "brier": 0.00738615345755804,
+      "reliability": [
+        {
+          "low": 0,
+          "high": 0.05,
+          "rows": 294229,
+          "predicted": 0.005384487023706394,
+          "observed": 0.004445516927291327
+        },
+        {
+          "low": 0.05,
+          "high": 0.1,
+          "rows": 7155,
+          "predicted": 0.06677775203436637,
+          "observed": 0.058560447239692524
+        },
+        {
+          "low": 0.1,
+          "high": 0.2,
+          "rows": 5927,
+          "predicted": 0.12604265991189287,
+          "observed": 0.108149147966931
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "rows": 154,
+          "predicted": 0.2514006469132334,
+          "observed": 0.05844155844155844
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        },
+        {
+          "low": 0.8,
+          "high": 1.000001,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        }
+      ],
+      "historical_numeric_gate": false,
+      "deployment_qualified": false,
+      "blocking_evidence": [
+        "current_survivor_directory_not_PIT",
+        "no_new_independent_observation",
+        "corporate_action_vintages_not_reconciled",
+        "joint_quality_and_catalyst_not_backtested"
+      ]
+    },
+    {
+      "horizon": 30,
+      "algorithm": "hist_gbdt",
+      "algorithm_name": "HistGradientBoostingClassifier",
+      "signals": 2,
+      "mature_signals": 2,
+      "tp": 0,
+      "fp": 2,
+      "unknown": 0,
+      "precision": 0.0,
+      "conservative_lower_bound": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576197724933345
+      ],
+      "stock_cluster95": [
+        null,
+        null
+      ],
+      "week_cluster95": [
+        null,
+        null
+      ],
+      "stock_count": 2,
+      "decision_dates": 2,
+      "same_stock_base_rate": 0.0,
+      "increment": 0.0,
+      "recall_of_daily_positive_cases": 0.0,
+      "daily_rows_not_independent": 312133,
+      "brier": 0.007459979370031836,
+      "reliability": [
+        {
+          "low": 0,
+          "high": 0.05,
+          "rows": 290134,
+          "predicted": 0.005673696298769583,
+          "observed": 0.004391074469038444
+        },
+        {
+          "low": 0.05,
+          "high": 0.1,
+          "rows": 14519,
+          "predicted": 0.062434189675567325,
+          "observed": 0.05682209518561884
+        },
+        {
+          "low": 0.1,
+          "high": 0.2,
+          "rows": 2701,
+          "predicted": 0.13253356328383067,
+          "observed": 0.0958904109589041
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "rows": 105,
+          "predicted": 0.22168748854142115,
+          "observed": 0.18095238095238095
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "rows": 1,
+          "predicted": 0.7398030881963564,
+          "observed": 0.0
+        },
+        {
+          "low": 0.8,
+          "high": 1.000001,
+          "rows": 5,
+          "predicted": 1.0,
+          "observed": 0.0
+        }
+      ],
+      "historical_numeric_gate": false,
+      "deployment_qualified": false,
+      "blocking_evidence": [
+        "current_survivor_directory_not_PIT",
+        "no_new_independent_observation",
+        "corporate_action_vintages_not_reconciled",
+        "joint_quality_and_catalyst_not_backtested"
+      ]
+    },
+    {
+      "horizon": 30,
+      "algorithm": "monthly_selected",
+      "algorithm_name": "monthly calibration-selected policy",
+      "signals": 0,
+      "mature_signals": 0,
+      "tp": 0,
+      "fp": 0,
+      "unknown": 0,
+      "precision": null,
+      "conservative_lower_bound": null,
+      "wilson95": [
+        null,
+        null
+      ],
+      "stock_cluster95": [
+        null,
+        null
+      ],
+      "week_cluster95": [
+        null,
+        null
+      ],
+      "stock_count": 0,
+      "decision_dates": 0,
+      "same_stock_base_rate": null,
+      "increment": null,
+      "recall_of_daily_positive_cases": 0.0,
+      "daily_rows_not_independent": 312133,
+      "brier": 0.007395799409958364,
+      "reliability": [
+        {
+          "low": 0,
+          "high": 0.05,
+          "rows": 293683,
+          "predicted": 0.005716047969087759,
+          "observed": 0.0044299465750486065
+        },
+        {
+          "low": 0.05,
+          "high": 0.1,
+          "rows": 7711,
+          "predicted": 0.06116202939437173,
+          "observed": 0.05550512255219816
+        },
+        {
+          "low": 0.1,
+          "high": 0.2,
+          "rows": 5937,
+          "predicted": 0.12528986592395436,
+          "observed": 0.1076301162203133
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "rows": 134,
+          "predicted": 0.25160969869132793,
+          "observed": 0.06716417910447761
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        },
+        {
+          "low": 0.8,
+          "high": 1.000001,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        }
+      ],
+      "historical_numeric_gate": false,
+      "deployment_qualified": false,
+      "blocking_evidence": [
+        "current_survivor_directory_not_PIT",
+        "no_new_independent_observation",
+        "corporate_action_vintages_not_reconciled",
+        "joint_quality_and_catalyst_not_backtested"
+      ]
+    },
+    {
+      "horizon": 60,
+      "algorithm": "logistic",
+      "algorithm_name": "LogisticRegression",
+      "signals": 0,
+      "mature_signals": 0,
+      "tp": 0,
+      "fp": 0,
+      "unknown": 0,
+      "precision": null,
+      "conservative_lower_bound": null,
+      "wilson95": [
+        null,
+        null
+      ],
+      "stock_cluster95": [
+        null,
+        null
+      ],
+      "week_cluster95": [
+        null,
+        null
+      ],
+      "stock_count": 0,
+      "decision_dates": 0,
+      "same_stock_base_rate": null,
+      "increment": null,
+      "recall_of_daily_positive_cases": 0.0,
+      "daily_rows_not_independent": 312133,
+      "brier": 0.01461632053636509,
+      "reliability": [
+        {
+          "low": 0,
+          "high": 0.05,
+          "rows": 200394,
+          "predicted": 0.011318250259540915,
+          "observed": 0.006517161192450872
+        },
+        {
+          "low": 0.05,
+          "high": 0.1,
+          "rows": 22655,
+          "predicted": 0.07359861482608376,
+          "observed": 0.04943721032884573
+        },
+        {
+          "low": 0.1,
+          "high": 0.2,
+          "rows": 7076,
+          "predicted": 0.13617430087334306,
+          "observed": 0.10245901639344263
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "rows": 2614,
+          "predicted": 0.21747613019545903,
+          "observed": 0.15914307574598316
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "rows": 3,
+          "predicted": 0.4755612636733759,
+          "observed": 0.6666666666666666
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        },
+        {
+          "low": 0.8,
+          "high": 1.000001,
+          "rows": 0,
+          "predicted": null,
+          "observed": null
+        }
+      ],
+      "historical_numeric_gate": false,
+      "deployment_qualified": false,
+      "blocking_evidence": [
+        "current_survivor_directory_not_PIT",
+        "no_new_independent_observation",
+        "corporate_action_vintages_not_reconciled",
+        "joint_quality_and_catalyst_not_backtested"
+      ]
+    },
+    {
+      "horizon": 60,
+      "algorithm": "hist_gbdt",
+      "algorithm_name": "HistGradientBoostingClassifier",
+      "signals": 6,
+      "mature_signals": 4,
+      "tp": 1,
+      "fp": 3,
+      "unknown": 2,
+      "precision": 0.25,
+      "conservative_lower_bound": 0.16666666666666666,
+      "wilson95": [
+        0.04558726080970238,
+        0.6993581574175893
+      ],
+      "stock_cluster95": [
+        null,
+        null
+      ],
+      "week_cluster95": [
+        null,
+        null
+      ],
+      "stock_count": 6,
+      "decision_dates": 5,
+      "same_stock_base_rate": 0.15071138211382112,
+      "increment": 0.09928861788617888,
+      "recall_of_daily_positive_cases": 0.0002801905295601009,
+      "daily_rows_not_independent": 312133,
+      "brier": 0.01490958103310812,
+      "reliability": [
+        {
+          "low": 0,
+          "high": 0.05,
+          "rows": 193600,
+          "predicted": 0.01076138058855825,
+          "observed": 0.008186983471074381
+        },
+        {
+          "low": 0.05,
+          "high": 0.1,
+          "rows": 28864,
+          "predicted": 0.0669529770904364,
+          "observed": 0.03682788248337029
+        },
+        {
+          "low": 0.1,
+          "high": 0.2,
+          "rows": 9572,
+          "predicted": 0.12945924520084043,
+          "observed": 0.08566652737150021
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "rows": 674,
+          "predicted": 0.221067391550494,
+          "observed": 0.142433234421365
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "rows": 21,
+          "predicted": 0.48362340474227394,
+          "observed": 0.14285714285714285
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "rows": 4,
+          "predicted": 0.7207010095140002,
+          "observed": 0.25
+        },
+        {
+          "low": 0.8,
+          "high": 1.000001,
+          "rows": 7,
+          "predicted": 0.8663676483126638,
+          "observed": 0.14285714285714285
+        }
+      ],
+      "historical_numeric_gate": false,
+      "deployment_qualified": false,
+      "blocking_evidence": [
+        "current_survivor_directory_not_PIT",
+        "no_new_independent_observation",
+        "corporate_action_vintages_not_reconciled",
+        "joint_quality_and_catalyst_not_backtested"
+      ]
+    },
+    {
+      "horizon": 60,
+      "algorithm": "monthly_selected",
+      "algorithm_name": "monthly calibration-selected policy",
+      "signals": 4,
+      "mature_signals": 4,
+      "tp": 1,
+      "fp": 3,
+      "unknown": 0,
+      "precision": 0.25,
+      "conservative_lower_bound": 0.25,
+      "wilson95": [
+        0.04558726080970238,
+        0.6993581574175893
+      ],
+      "stock_cluster95": [
+        null,
+        null
+      ],
+      "week_cluster95": [
+        null,
+        null
+      ],
+      "stock_count": 4,
+      "decision_dates": 3,
+      "same_stock_base_rate": 0.15071138211382112,
+      "increment": 0.09928861788617888,
+      "recall_of_daily_positive_cases": 0.0002801905295601009,
+      "daily_rows_not_independent": 312133,
+      "brier": 0.014728550717049073,
+      "reliability": [
+        {
+          "low": 0,
+          "high": 0.05,
+          "rows": 194826,
+          "predicted": 0.009316181038008044,
+          "observed": 0.006380051943785737
+        },
+        {
+          "low": 0.05,
+          "high": 0.1,
+          "rows": 25662,
+          "predicted": 0.0718213722262942,
+          "observed": 0.04274803210973424
+        },
+        {
+          "low": 0.1,
+          "high": 0.2,
+          "rows": 11427,
+          "predicted": 0.13424300041593348,
+          "observed": 0.09626323619497681
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "rows": 792,
+          "predicted": 0.22969855144687007,
+          "observed": 0.15404040404040403
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "rows": 24,
+          "predicted": 0.4826156371086617,
+          "observed": 0.20833333333333334
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "rows": 4,
+          "predicted": 0.7207010095140002,
+          "observed": 0.25
+        },
+        {
+          "low": 0.8,
+          "high": 1.000001,
+          "rows": 7,
+          "predicted": 0.8663676483126638,
+          "observed": 0.14285714285714285
+        }
+      ],
+      "historical_numeric_gate": false,
+      "deployment_qualified": false,
+      "blocking_evidence": [
+        "current_survivor_directory_not_PIT",
+        "no_new_independent_observation",
+        "corporate_action_vintages_not_reconciled",
+        "joint_quality_and_catalyst_not_backtested"
+      ]
+    }
+  ]
+}

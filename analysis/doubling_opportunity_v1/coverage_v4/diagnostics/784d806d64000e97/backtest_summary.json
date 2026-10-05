@@ -1,0 +1,560 @@
+[
+  {
+    "horizon": 30,
+    "algorithm": "logistic",
+    "algorithm_name": "LogisticRegression",
+    "signals": 6,
+    "mature_signals": 3,
+    "tp": 0,
+    "fp": 3,
+    "unknown": 3,
+    "precision": 0.0,
+    "conservative_lower_bound": 0.0,
+    "wilson95": [
+      0.0,
+      0.561497031755032
+    ],
+    "stock_cluster95": [
+      null,
+      null
+    ],
+    "week_cluster95": [
+      null,
+      null
+    ],
+    "stock_count": 6,
+    "decision_dates": 5,
+    "same_stock_base_rate": 0.20090271775665033,
+    "increment": -0.20090271775665033,
+    "recall_of_daily_positive_cases": 0.0,
+    "daily_rows_not_independent": 476204,
+    "brier": 0.005742745356227092,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 395633,
+        "predicted": 0.005323618025454522,
+        "observed": 0.003948103419077782
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 7735,
+        "predicted": 0.06855893488021249,
+        "observed": 0.050161603102779576
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 3537,
+        "predicted": 0.13848546084224653,
+        "observed": 0.090754877014419
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 795,
+        "predicted": 0.24983607065631838,
+        "observed": 0.12327044025157233
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 42,
+        "predicted": 0.4692781389064207,
+        "observed": 0.2619047619047619
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 3,
+        "predicted": 0.7125719371145266,
+        "observed": 0.3333333333333333
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 8,
+        "predicted": 0.9270509769349938,
+        "observed": 0.0
+      }
+    ],
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested",
+      "price_eligible_diagnostic_not_joint_valid_signal"
+    ],
+    "diagnostic_only": true,
+    "joint_quality_and_heat_gate_applied": false,
+    "historical_numeric_gate_in_price_diagnostic": false
+  },
+  {
+    "horizon": 30,
+    "algorithm": "hist_gbdt",
+    "algorithm_name": "HistGradientBoostingClassifier",
+    "signals": 0,
+    "mature_signals": 0,
+    "tp": 0,
+    "fp": 0,
+    "unknown": 0,
+    "precision": null,
+    "conservative_lower_bound": null,
+    "wilson95": [
+      null,
+      null
+    ],
+    "stock_cluster95": [
+      null,
+      null
+    ],
+    "week_cluster95": [
+      null,
+      null
+    ],
+    "stock_count": 0,
+    "decision_dates": 0,
+    "same_stock_base_rate": null,
+    "increment": null,
+    "recall_of_daily_positive_cases": 0.0,
+    "daily_rows_not_independent": 476204,
+    "brier": 0.005805782076481304,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 391513,
+        "predicted": 0.004850814223921706,
+        "observed": 0.003999867181932656
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 11364,
+        "predicted": 0.06844580214711016,
+        "observed": 0.03695881731784583
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 4187,
+        "predicted": 0.13349721495914993,
+        "observed": 0.07690470503940769
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 653,
+        "predicted": 0.24791145231793224,
+        "observed": 0.11026033690658499
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 36,
+        "predicted": 0.4644527990813295,
+        "observed": 0.027777777777777776
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 0,
+        "predicted": null,
+        "observed": null
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 0,
+        "predicted": null,
+        "observed": null
+      }
+    ],
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested",
+      "price_eligible_diagnostic_not_joint_valid_signal"
+    ],
+    "diagnostic_only": true,
+    "joint_quality_and_heat_gate_applied": false,
+    "historical_numeric_gate_in_price_diagnostic": false
+  },
+  {
+    "horizon": 30,
+    "algorithm": "monthly_selected",
+    "algorithm_name": "monthly calibration-selected policy",
+    "signals": 3,
+    "mature_signals": 2,
+    "tp": 0,
+    "fp": 2,
+    "unknown": 1,
+    "precision": 0.0,
+    "conservative_lower_bound": 0.0,
+    "wilson95": [
+      0.0,
+      0.6576197724933345
+    ],
+    "stock_cluster95": [
+      null,
+      null
+    ],
+    "week_cluster95": [
+      null,
+      null
+    ],
+    "stock_count": 3,
+    "decision_dates": 3,
+    "same_stock_base_rate": 0.0449438202247191,
+    "increment": -0.0449438202247191,
+    "recall_of_daily_positive_cases": 0.0,
+    "daily_rows_not_independent": 476204,
+    "brier": 0.005762228036156122,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 395125,
+        "predicted": 0.005240215115348611,
+        "observed": 0.004021512179689972
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 8494,
+        "predicted": 0.06786844370115849,
+        "observed": 0.050270779373675537
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 3422,
+        "predicted": 0.13791229316917017,
+        "observed": 0.08386908240794856
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 676,
+        "predicted": 0.24744935261523918,
+        "observed": 0.10355029585798817
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 30,
+        "predicted": 0.46083252468293384,
+        "observed": 0.23333333333333334
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 1,
+        "predicted": 0.7636657282079122,
+        "observed": 1.0
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 5,
+        "predicted": 0.9841005477602105,
+        "observed": 0.0
+      }
+    ],
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested",
+      "price_eligible_diagnostic_not_joint_valid_signal"
+    ],
+    "diagnostic_only": true,
+    "joint_quality_and_heat_gate_applied": false,
+    "historical_numeric_gate_in_price_diagnostic": false
+  },
+  {
+    "horizon": 60,
+    "algorithm": "logistic",
+    "algorithm_name": "LogisticRegression",
+    "signals": 9,
+    "mature_signals": 2,
+    "tp": 1,
+    "fp": 1,
+    "unknown": 7,
+    "precision": 0.5,
+    "conservative_lower_bound": 0.1111111111111111,
+    "wilson95": [
+      0.09453120573423457,
+      0.9054687942657654
+    ],
+    "stock_cluster95": [
+      null,
+      null
+    ],
+    "week_cluster95": [
+      null,
+      null
+    ],
+    "stock_count": 9,
+    "decision_dates": 8,
+    "same_stock_base_rate": 0.05970149253731343,
+    "increment": 0.44029850746268656,
+    "recall_of_daily_positive_cases": 0.00019650225977598743,
+    "daily_rows_not_independent": 476204,
+    "brier": 0.015578712471046157,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 291691,
+        "predicted": 0.009658074529915366,
+        "observed": 0.010271143093204796
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 18576,
+        "predicted": 0.06917030272648113,
+        "observed": 0.04748062015503876
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 8967,
+        "predicted": 0.13560384337095355,
+        "observed": 0.0858704137392662
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 3129,
+        "predicted": 0.2710988925998542,
+        "observed": 0.11728986896772131
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 396,
+        "predicted": 0.4651754897692807,
+        "observed": 0.17929292929292928
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 17,
+        "predicted": 0.6438999704856168,
+        "observed": 0.11764705882352941
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 4,
+        "predicted": 0.8644566996444757,
+        "observed": 0.25
+      }
+    ],
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested",
+      "price_eligible_diagnostic_not_joint_valid_signal"
+    ],
+    "diagnostic_only": true,
+    "joint_quality_and_heat_gate_applied": false,
+    "historical_numeric_gate_in_price_diagnostic": false
+  },
+  {
+    "horizon": 60,
+    "algorithm": "hist_gbdt",
+    "algorithm_name": "HistGradientBoostingClassifier",
+    "signals": 0,
+    "mature_signals": 0,
+    "tp": 0,
+    "fp": 0,
+    "unknown": 0,
+    "precision": null,
+    "conservative_lower_bound": null,
+    "wilson95": [
+      null,
+      null
+    ],
+    "stock_cluster95": [
+      null,
+      null
+    ],
+    "week_cluster95": [
+      null,
+      null
+    ],
+    "stock_count": 0,
+    "decision_dates": 0,
+    "same_stock_base_rate": null,
+    "increment": null,
+    "recall_of_daily_positive_cases": 0.0,
+    "daily_rows_not_independent": 476204,
+    "brier": 0.015898746058686006,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 277414,
+        "predicted": 0.006818728842629916,
+        "observed": 0.009098315153525056
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 25708,
+        "predicted": 0.07223583134228015,
+        "observed": 0.04776723199004201
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 15959,
+        "predicted": 0.13665027190936777,
+        "observed": 0.06328717338179084
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 3526,
+        "predicted": 0.2527610033552692,
+        "observed": 0.09132161089052751
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 167,
+        "predicted": 0.46124614158749927,
+        "observed": 0.029940119760479042
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 6,
+        "predicted": 0.6122350595202987,
+        "observed": 0.0
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 0,
+        "predicted": null,
+        "observed": null
+      }
+    ],
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested",
+      "price_eligible_diagnostic_not_joint_valid_signal"
+    ],
+    "diagnostic_only": true,
+    "joint_quality_and_heat_gate_applied": false,
+    "historical_numeric_gate_in_price_diagnostic": false
+  },
+  {
+    "horizon": 60,
+    "algorithm": "monthly_selected",
+    "algorithm_name": "monthly calibration-selected policy",
+    "signals": 4,
+    "mature_signals": 2,
+    "tp": 1,
+    "fp": 1,
+    "unknown": 2,
+    "precision": 0.5,
+    "conservative_lower_bound": 0.25,
+    "wilson95": [
+      0.09453120573423457,
+      0.9054687942657654
+    ],
+    "stock_cluster95": [
+      null,
+      null
+    ],
+    "week_cluster95": [
+      null,
+      null
+    ],
+    "stock_count": 4,
+    "decision_dates": 4,
+    "same_stock_base_rate": 0.05970149253731343,
+    "increment": 0.44029850746268656,
+    "recall_of_daily_positive_cases": 0.00019650225977598743,
+    "daily_rows_not_independent": 476204,
+    "brier": 0.015626411033447092,
+    "reliability": [
+      {
+        "low": 0,
+        "high": 0.05,
+        "rows": 287169,
+        "predicted": 0.009207523193783866,
+        "observed": 0.009917505023174508
+      },
+      {
+        "low": 0.05,
+        "high": 0.1,
+        "rows": 21986,
+        "predicted": 0.06998981588805082,
+        "observed": 0.04616574183571363
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "rows": 10447,
+        "predicted": 0.1342114966433784,
+        "observed": 0.08490475734660669
+      },
+      {
+        "low": 0.2,
+        "high": 0.4,
+        "rows": 2855,
+        "predicted": 0.2654548573536192,
+        "observed": 0.10472854640980736
+      },
+      {
+        "low": 0.4,
+        "high": 0.6,
+        "rows": 310,
+        "predicted": 0.4649018122309318,
+        "observed": 0.11935483870967742
+      },
+      {
+        "low": 0.6,
+        "high": 0.8,
+        "rows": 10,
+        "predicted": 0.6225473207811585,
+        "observed": 0.2
+      },
+      {
+        "low": 0.8,
+        "high": 1.000001,
+        "rows": 3,
+        "predicted": 0.8591891810995698,
+        "observed": 0.3333333333333333
+      }
+    ],
+    "deployment_qualified": false,
+    "blocking_evidence": [
+      "current_survivor_directory_not_PIT",
+      "no_new_independent_observation",
+      "corporate_action_vintages_not_reconciled",
+      "joint_quality_and_catalyst_not_backtested",
+      "price_eligible_diagnostic_not_joint_valid_signal"
+    ],
+    "diagnostic_only": true,
+    "joint_quality_and_heat_gate_applied": false,
+    "historical_numeric_gate_in_price_diagnostic": false
+  }
+]
