@@ -101,42 +101,52 @@ def quality(payload, cutoff):
 SECTORS={'73':'软件与商业服务','38':'医疗/精密设备','36':'电子与半导体','35':'工业设备','28':'医药与化工','58':'餐饮','56':'服装零售','59':'零售','80':'医疗服务','48':'通信','67':'金融/地产','49':'能源公用事业','50':'分销','20':'食品饮料','10':'矿业','33':'金属'}
 def main():
     registration=json.loads((HERE/'source_registration.json').read_text());latest=registration['backtest_registration'];lineage=json.loads((Path(latest['path'])/'lineage.json').read_text());asof=registration['daily_asof'];cutoff=registration['financial_cutoff_exclusive']
-    universe=lineage['registration']['universe']['stocks']
-    reportdir=Path(registration['source_report_path'])
+    catalog=lineage['registration']['universe'];universe=catalog['stocks'];reportdir=Path(registration['source_report_path'])
     pool=pd.read_csv(reportdir/'all_stocks.csv',keep_default_na=False).set_index('ticker')
     panel=pd.read_parquet(latest['panel_path'],columns=['ticker','date','open','high','low','close','volume']).sort_values('date')
     pricecols=['open','high','low','close','volume']
     valid=np.isfinite(panel[pricecols]).all(axis=1)&panel[['open','high','low','close']].gt(0).all(axis=1)&panel.volume.ge(0)&panel.high.ge(panel[['open','close','low']].max(axis=1))&panel.low.le(panel[['open','close','high']].min(axis=1))
+    invalid_counts=panel.loc[~valid].groupby('ticker').size().to_dict()
+    duplicates=panel.loc[panel.duplicated(['ticker','date'],keep=False)].groupby('ticker').size().to_dict()
     all_sessions=calendar('2023-01-01',asof);valid_session_dates={s['session_date'] for s in all_sessions['sessions']}
     panel=panel.loc[valid&panel.date.le(asof)&panel.date.dt.strftime('%Y-%m-%d').isin(valid_session_dates)]
     grouped={t:g for t,g in panel.groupby('ticker',sort=False)}
     qpath=CACHE/'latest_market_snapshots.json';quotes=json.loads(qpath.read_text()) if qpath.exists() else {'stocks':{},'received_at':None}
     notes=json.loads((HERE/'business_reviews.json').read_text()) if (HERE/'business_reviews.json').exists() else {}
-    cache=ROOT/'.cache/potential_recovery_v1';cache.mkdir(exist_ok=True)
     expected=calendar('2024-10-02',asof);sessions=[r['session_date'] for r in expected['sessions']]
-    result=[];outcomes=[];rawhashes={};matched_core=0;notquote=0
+    year_expected={d for d in valid_session_dates if d>='2026-01-01'}
+    q2_expected={d for d in year_expected if '2026-04-01'<=d<='2026-06-30'}
+    windows={'YTD':sorted(year_expected),'AprJun':sorted(q2_expected),**{f'M{m:02d}':sorted(d for d in year_expected if d[5:7]==f'{m:02d}') for m in [4,5,6]}}
+    def audit(g):
+        days=set(g.date.dt.strftime('%Y-%m-%d')) if g is not None else set();first=min(days) if days else None;out={}
+        for name,ds in windows.items():
+            missing=sorted(set(ds)-days);leading=[d for d in missing if first and d<first];internal=[d for d in missing if first and d>=first]
+            status='完整' if not missing else '完全缺失' if len(missing)==len(ds) else '起点不足且区间缺日' if leading and internal else '起点不足' if leading else '区间缺日'
+            out.update({f'{name}_expected':len(ds),f'{name}_observed':len(ds)-len(missing),f'{name}_missing':len(missing),f'{name}_status':status,f'{name}_missing_dates':missing,f'{name}_before_first':len(leading),f'{name}_after_first':len(internal)})
+        return out
+    result=[];outcomes=[];rawhashes={};matched_core=0;notquote=0;fresh=0
     for t,meta in universe.items():
-        row=pool.loc[t].to_dict() if t in pool.index else {};g=grouped.get(t)
-        base={'ticker':t,'name':meta.get('name'),'cik':meta.get('cik'),'price_date':row.get('price_date'),'ratio_source':'completed_daily_reference','reason':[]}
+        row=pool.loc[t].to_dict() if t in pool.index else {};g=grouped.get(t);coverage=audit(g)
+        base={'ticker':t,'name':meta.get('name'),'cik':meta.get('cik'),'price_date':row.get('price_date'),'ratio_source':'completed_daily_reference','reason':[],**coverage,'first_daily_date':g.date.min().date().isoformat() if g is not None else None,'latest_daily_date':g.date.max().date().isoformat() if g is not None else None,'invalid_panel_rows':int(invalid_counts.get(t,0)),'duplicate_panel_rows':int(duplicates.get(t,0)),'source_unknown_events':int(number(row.get('source_unknown_events')) or 0),'source_whole_history_unknown':str(row.get('source_whole_history_unknown')).lower()=='true','security_description_confirmed':bool(meta.get('security_description_confirmed',False))}
         if g is None or g.empty:base['reason'].append('missing_valid_daily');outcomes.append(base);continue
         year=g.loc[g.date.ge('2026-01-01')];last=g.iloc[-1]
         if year.empty:base['reason'].append('missing_2026_daily');outcomes.append(base);continue
         peak=year.loc[year.high.idxmax()];after=year.loc[year.date.ge(peak.date)];trough=after.loc[after.low.idxmin()]
-        ref=number(row.get('current_close'));quote=quotes['stocks'].get(t,{});qp=number(quote.get('last_price'))
-        current=qp if qp and str(quote.get('update_time','')).startswith(registration['quote_session_date']) else ref
-        if current is None or current<=0:base['reason'].append('missing_reference_price');outcomes.append(base);continue
-        base.update(reference_price=current,daily_close=ref,year_peak=float(peak.high),year_peak_date=peak.date.date().isoformat(),year_ratio=float(peak.high)/current,ratio_source='current_snapshot' if current==qp and qp is not None else 'completed_daily_reference')
-        # Pre-screen is explicit and fixed to the completed daily reference, not future quote winners.
+        ref=float(last.close);quote=quotes['stocks'].get(t,{});qp=number(quote.get('last_price'))
+        current_quote=qp is not None and qp>0 and str(quote.get('update_time','')).startswith(registration['quote_session_date'])
+        current=qp if current_quote else ref;fresh+=int(current_quote)
+        base.update(reference_price=current,daily_close=ref,year_peak=float(peak.high),year_peak_date=peak.date.date().isoformat(),year_ratio=float(peak.high)/current,daily_year_ratio=float(peak.high)/ref,ratio_source='current_snapshot' if current_quote else 'completed_daily_reference',quote_time_et=quote.get('update_time'),quote_received_at=quote.get('snapshot_received_at',quotes.get('received_at')),year_peak_is_complete=coverage['YTD_missing']==0)
         numeric={k:number(row.get(k)) for k in ['operating_margin','net_margin','ocf_margin_ttm','revenue_yoy','report_age_days','dollar_volume_actual']}
-        gates={'day_ratio_ge1_45':ref is not None and peak.high/ref>=1.45,'operating_margin_ge8':numeric['operating_margin'] is not None and numeric['operating_margin']>=.08,'net_margin_ge4':numeric['net_margin'] is not None and numeric['net_margin']>=.04,'OCF_margin_ge6':numeric['ocf_margin_ttm'] is not None and numeric['ocf_margin_ttm']>=.06,'revenue_yoy_ge_minus10':numeric['revenue_yoy'] is not None and numeric['revenue_yoy']>=-.10,'recent_period':numeric['report_age_days'] is not None and numeric['report_age_days']<=150,'liquid_10m':numeric['dollar_volume_actual'] is not None and numeric['dollar_volume_actual']>=1e7,'price_ge5':ref is not None and ref>=5,'confirmed_security':meta.get('security_description_confirmed',False)}
-        base['reason']=[k for k,v in gates.items() if not v]
+        gates={'operating_margin_ge8':numeric['operating_margin'] is not None and numeric['operating_margin']>=.08,'net_margin_ge4':numeric['net_margin'] is not None and numeric['net_margin']>=.04,'OCF_margin_ge6':numeric['ocf_margin_ttm'] is not None and numeric['ocf_margin_ttm']>=.06,'revenue_yoy_ge_minus10':numeric['revenue_yoy'] is not None and numeric['revenue_yoy']>=-.10,'recent_period':numeric['report_age_days'] is not None and numeric['report_age_days']<=150,'liquid_10m':numeric['dollar_volume_actual'] is not None and numeric['dollar_volume_actual']>=1e7,'price_ge5':ref>=5,'confirmed_security':meta.get('security_description_confirmed',False)}
+        base.update(numeric);base.update({k:row.get(k) for k in ['financial_source_support','financial_source_support_note','financial_reporting_units','financial_source_taxonomies']});base['unparsed_financial_fields']=[k for k,v in numeric.items() if v is None and k!='dollar_volume_actual'];base['core_pass']=all(gates.values());base['core_checks']=gates;base['reason']=[k for k,v in gates.items() if not v]
+        # No ratio pre-screen. Every basic-operating candidate is re-evaluated, including R<1.2.
         if not all(gates.values()) and t!='MXL':outcomes.append(base);continue
-        matched_core+=int(all(gates.values()));cik=meta.get('cik');fpath=ROOT/f'.cache/doubling_opportunity_v1/coverage_v4/companyfacts/CIK{cik:010d}.json'
+        matched_core+=int(all(gates.values()));cik=meta.get('cik');fpath=ROOT/f'.cache/doubling_opportunity_v1/coverage_v4/companyfacts/CIK{cik:010d}.json' if cik else None
+        if not fpath or not fpath.exists():base['reason'].append('missing_companyfacts');outcomes.append(base);continue
         financial=quality(json.loads(fpath.read_text()),cutoff);rawhashes[str(fpath)]=sha(fpath)
-        support=int((year.close>=.88*peak.high).sum())
-        year_expected={d for d in valid_session_dates if d>='2026-01-01'};year_complete={d.date().isoformat() for d in year.date}==year_expected
-        price_clean=int(number(row.get('source_unknown_events')) or 0)==0 and str(row.get('source_whole_history_unknown')).lower()!='true' and str(row.get('source_latest_official_session_covered')).lower()=='true' and support>=3 and year_complete
-        cap=number(quote.get('total_market_val'));large=cap is not None and cap>=2e9;ratio=base['year_ratio']
+        support=int((year.close>=.88*peak.high).sum());year_complete=coverage['YTD_missing']==0
+        price_clean=base['source_unknown_events']==0 and not base['source_whole_history_unknown'] and str(row.get('source_latest_official_session_covered')).lower()=='true' and support>=3 and year_complete and not base['invalid_panel_rows'] and not base['duplicate_panel_rows']
+        cap=number(quote.get('total_market_val')) if current_quote else None;large=cap is not None and cap>=2e9
         recovery=(current-trough.low)/(peak.high-trough.low) if peak.high>trough.low else None
         ret20=float(last.close/g.iloc[-21].close-1) if len(g)>=21 else None
         if current<trough.low or (recovery is not None and recovery<.10 and ret20 is not None and ret20<-.03):stage='仍处低点 / 下行'
@@ -146,34 +156,52 @@ def main():
         else:stage='明显恢复'
         tier='A 财务证据较扎实' if all(financial['checks'].values()) and large and price_clean else 'B 仍有质量或口径疑点'
         risks=[k for k,v in financial['checks'].items() if not v]
-        if not large:risks.append('市值不足20亿美元或未取得本次市值')
-        if not price_clean:risks.append('价格事件、最新覆盖或高点多日支持待核验')
-        if not quote:notquote+=1
+        if not large:risks.append('市值不足20亿美元或未取得同日市值')
+        if not price_clean:risks.append('价格事件、今年覆盖或高点多日支持待核验')
+        if not current_quote:notquote+=1
         annual=financial['annual'];annual_last=annual[-1] if annual else {}
-        shares=annual_last.get('diluted_shares');earning_yield=annual_last.get('net_income')/cap if cap and annual_last.get('net_income') is not None else None
+        earning_yield=annual_last.get('net_income')/cap if cap and annual_last.get('net_income') is not None else None
         fcf_yield=annual_last.get('fcf')/cap if cap and annual_last.get('fcf') is not None else None
-        sources={'companyfacts_sha256':rawhashes[str(fpath)],'companyfacts_url':f'https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json','SEC_filings_url':f'https://www.sec.gov/edgar/browse/?CIK={cik}&owner=exclude','financial_period_end':financial['metrics'].get('report_period_end'),'financial_snapshot_cutoff':cutoff,'financial_source_received_no_later_than':'2026-10-05T14:55:42Z'}
+        sources={'companyfacts_sha256':rawhashes[str(fpath)],'companyfacts_url':f'https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json','SEC_filings_url':f'https://www.sec.gov/edgar/browse/?CIK={cik}&owner=exclude','financial_period_end':financial['metrics'].get('report_period_end'),'financial_snapshot_cutoff':cutoff,'financial_source_received_no_later_than':registration['financial_source_received_no_later_than']}
         bars=g.loc[g.date.ge('2024-10-02'),['date',*pricecols]].copy();bars['date']=bars.date.dt.strftime('%Y-%m-%d')
-        rec={**base,'comparison_only':t=='MXL','core_checks':gates,'quality_tier':tier,'quality_score':financial['score'],'quality_risks':risks,'financial':financial,'sector':SECTORS.get(str(row.get('industry_code'))[:2],'其他/待核验'),'quote_time_et':quote.get('update_time'),'quote_received_at':quotes.get('received_at'),'market_cap':cap,'snapshot_pe_ttm':number(quote.get('pe_ttm_ratio')),'annual_earning_yield':earning_yield,'annual_FCF_yield':fcf_yield,'liquidity_dollars20':numeric['dollar_volume_actual'],'year_peak_close_support_days':support,'price_basis_clean':price_clean,'peak_after_low':float(trough.low),'peak_after_low_date':trough.date.date().isoformat(),'recovery_fraction':recovery,'rebound_from_peak_after_low':float(current/trough.low-1),'ret20':ret20,'stage':stage,'sessions_since_peak':len(after),'observed_2026_sessions':len(year),'first_daily_date':g.date.min().date().isoformat(),'latest_daily_date':last.date.date().isoformat(),'financial_sources':sources,'review':notes.get(t),'bars':bars.values.tolist()}
-        rec['price_year_complete']=year_complete;rec['expected_2026_sessions']=len(year_expected)
+        rec={**base,'comparison_only':t=='MXL','core_checks':gates,'quality_tier':tier,'quality_score':financial['score'],'quality_risks':risks,'financial':financial,'sector':SECTORS.get(str(row.get('industry_code'))[:2],'其他/待核验'),'market_cap':cap,'snapshot_pe_ttm':number(quote.get('pe_ttm_ratio')) if current_quote else None,'annual_earning_yield':earning_yield,'annual_FCF_yield':fcf_yield,'liquidity_dollars20':numeric['dollar_volume_actual'],'year_peak_close_support_days':support,'price_basis_clean':price_clean,'peak_after_low':float(trough.low),'peak_after_low_date':trough.date.date().isoformat(),'recovery_fraction':recovery,'rebound_from_peak_after_low':float(current/trough.low-1),'ret20':ret20,'stage':stage,'sessions_since_peak':len(after),'observed_2026_sessions':len(year),'financial_sources':sources,'review':notes.get(t),'bars':bars.values.tolist(),'outside_prior_1_45_prescreen':peak.high/ref<1.45,'price_year_complete':year_complete,'expected_2026_sessions':len(year_expected)}
         rec['reason']=[];result.append(rec);outcomes.append({k:v for k,v in rec.items() if k not in ['bars','financial','financial_sources','review']})
     result.sort(key=lambda r:(r['comparison_only'],not r['quality_tier'].startswith('A'),-r['quality_score'],-r['year_ratio']))
-    summary={'generated_at':datetime.now(timezone.utc).isoformat(),'client_date':'2026-10-06','date_timezone':'America/New_York','daily_asof':asof,'price_reference_note':'Daily chart is completed 2026-10-02; current reference uses explicitly timestamped Oct-05 snapshot when available. No partial Oct-05 candle.','registered_pool':len(universe),'preliminary_core_candidates':matched_core,'display_stocks_including_comparison':len(result),'quotes_requested':quotes.get('requested_count'),'quotes_returned':quotes.get('returned_count'),'quotes_received_at':quotes.get('received_at'),'unquoted_display_stocks':notquote,'tiers':{tier:sum(r['quality_tier'].startswith(tier) and not r['comparison_only'] for r in result) for tier in ['A','B']},'ratio_counts':{str(v):sum(r['year_ratio']>=v and not r['comparison_only'] for r in result) for v in [1.5,1.8,1.9,2.,2.5]},'navigation_start':'2024-10-02','navigation_end':asof,'source_dataset_key':latest['dataset_key'],'source_report_path':str(reportdir),'current_members_not_PIT':True,'probabilities_or_signals_created':False,'independent_effect_verified':False}
-    summary['A_ratio_counts']={str(v):sum(r['year_ratio']>=v and r['quality_tier'].startswith('A') and not r['comparison_only'] for r in result) for v in [1.5,1.8,1.9,2.,2.5]}
-    summary['price_comparable_ratio_counts']={str(v):sum(r['year_ratio']>=v and r['price_basis_clean'] and not r['comparison_only'] for r in result) for v in [1.5,1.8,1.9,2.,2.5]}
+    candidates=[r for r in result if not r['comparison_only']];ratios=[1.2,1.5,1.8,1.9,2.,2.5]
+    coverage_summary={key:{'expected_sessions':len(ds),'complete':sum(r[f'{key}_missing']==0 for r in outcomes),'partial':sum(0<r[f'{key}_observed']<len(ds) for r in outcomes),'zero':sum(r[f'{key}_observed']==0 for r in outcomes),'before_first_total_missing_days':sum(r[f'{key}_before_first'] for r in outcomes),'after_first_total_missing_days':sum(r[f'{key}_after_first'] for r in outcomes)} for key,ds in windows.items()}
+    summary={'revision':'whole_pool_1_2_v2','generated_at':datetime.now(timezone.utc).isoformat(),'client_date':'2026-10-06','date_timezone':'America/New_York','daily_asof':asof,'price_reference_note':'Daily chart uses completed Oct-02. Same-session timestamped Oct-05 snapshots are descriptive references; missing quotes explicitly retain completed daily Close.','registered_pool':len(universe),'preliminary_core_candidates':matched_core,'display_stocks_including_comparison':len(result),'quotes_requested':quotes.get('requested_count'),'quotes_returned':quotes.get('returned_count'),'same_session_quotes':fresh,'quotes_received_at':quotes.get('received_at'),'quote_request_interval_start':quotes.get('request_interval_start',quotes.get('requested_at')),'unquoted_display_stocks':notquote,'tiers':{tier:sum(r['quality_tier'].startswith(tier) for r in candidates) for tier in ['A','B']},'ratio_counts':{str(v):sum(r['year_ratio']>=v for r in candidates) for v in ratios},'navigation_start':'2024-10-02','navigation_end':asof,'source_dataset_key':latest['dataset_key'],'source_report_path':str(reportdir),'current_members_not_PIT':True,'probabilities_or_signals_created':False,'independent_effect_verified':False,'ratio_prescreen_removed':True,'coverage':coverage_summary,'registered_tickers_sha256':hashlib.sha256('\n'.join(sorted(universe)).encode()).hexdigest(),'all_pool_daily_ratio_counts':{str(v):sum(r.get('daily_year_ratio',0)>=v and r['YTD_missing']==0 for r in outcomes) for v in ratios},'all_pool_snapshot_ratio_counts':{str(v):sum(r.get('year_ratio',0)>=v and r['YTD_missing']==0 and r.get('ratio_source')=='current_snapshot' for r in outcomes) for v in ratios}}
+    summary['A_ratio_counts']={str(v):sum(r['year_ratio']>=v and r['quality_tier'].startswith('A') for r in candidates) for v in ratios}
+    summary['price_comparable_ratio_counts']={str(v):sum(r['year_ratio']>=v and r['price_basis_clean'] for r in candidates) for v in ratios}
+    summary['A_early_ratio_counts']={str(v):sum(r['year_ratio']>=v and r['quality_tier'].startswith('A') and r['recovery_fraction']<.35 for r in candidates) for v in ratios}
+    summary['new_1_2_to_1_5']={'base':sum(1.2<=r['year_ratio']<1.5 for r in candidates),'A':sum(1.2<=r['year_ratio']<1.5 and r['quality_tier'].startswith('A') for r in candidates),'outside_prior_prescreen':sum(r['year_ratio']>=1.2 and r['outside_prior_1_45_prescreen'] for r in candidates)}
+    summary['A_candidates_with_peak_AprJun']=[r['ticker'] for r in candidates if r['quality_tier'].startswith('A') and r['year_ratio']>=1.2 and '2026-04-01'<=r['year_peak_date']<='2026-06-30']
+    summary['complete_year_peak_month_counts']={f'{m:02d}':sum(r['YTD_missing']==0 and str(r.get('year_peak_date',''))[5:7]==f'{m:02d}' for r in outcomes) for m in range(1,11)}
+    summary['exclusion_reason_counts']={k:sum(k in r['reason'] for r in outcomes) for k in sorted({k for r in outcomes for k in r['reason']})}
     summary['official_business_reviews']=len(notes);summary['calendar_sources']=expected['sources'];summary['calendar_sessions_sha256']=expected['sessions_sha256']
+    summary['catalog']={'directory_count':catalog['metadata']['directory_count'],'registered':len(universe),'outside_registered':len(catalog['exclusions']),'outside_reason_counts':{k:sum(r.get('classification_reason')==k for r in catalog['exclusions']) for k in sorted({r.get('classification_reason') for r in catalog['exclusions']})},'security_review_pending':len(catalog['review']),'catalog_received_footer':catalog['metadata']['nasdaq_footer']}
+    summary['daily_core_ratio_counts']={str(v):sum(r['daily_year_ratio']>=v for r in candidates) for v in ratios}
+    summary['daily_A_ratio_counts']={str(v):sum(r['daily_year_ratio']>=v and r['quality_tier'].startswith('A') for r in candidates) for v in ratios}
+    summary['basic_candidates_with_same_session_quotes']=sum(r['ratio_source']=='current_snapshot' for r in candidates)
+    summary['basic_candidates_with_complete_AprJun']=sum(r['AprJun_missing']==0 for r in candidates)
+    summary['basic_candidates_with_complete_YTD']=sum(r['YTD_missing']==0 for r in candidates)
+    summary['registered_with_unparsed_basic_financial_fields']=sum(bool(r.get('unparsed_financial_fields')) for r in outcomes)
+    catalog_rows=[{'ticker':t,'name':m.get('name'),'catalog_status':'registered','reason':m.get('classification_reason'),'cik':m.get('cik')} for t,m in universe.items()]+[{'ticker':r['ticker'],'name':r.get('name'),'catalog_status':'outside_registered','reason':r.get('classification_reason'),'cik':r.get('cik')} for r in catalog['exclusions']]
+    pd.DataFrame(catalog_rows).to_csv(HERE/'catalog_outcomes.csv',index=False)
     summaries=[{k:v for k,v in r.items() if k!='bars'} for r in result]
     (HERE/'screen_results.json').write_text(json.dumps(clean({'metadata':summary,'stocks':summaries}),ensure_ascii=False,indent=2,allow_nan=False)+'\n')
-    pd.DataFrame(clean(outcomes)).to_csv(HERE/'all_pool_outcomes.csv',index=False)
-    local_sources=[HERE/'PROTOCOL.md',HERE/'source_registration.json',HERE/'business_reviews.json',Path(__file__).resolve()]
-    receipt={'generated_at':summary['generated_at'],'source_paths_and_sha256':{latest['panel_path']:sha(latest['panel_path']),str(reportdir/'all_stocks.csv'):sha(reportdir/'all_stocks.csv'),str(qpath):sha(qpath),**{str(p):sha(p) for p in local_sources},**rawhashes},'no_legacy_source_mutation':True,'registered_source_cache_reused':True,'raw_OHLC_and_quotes_not_in_git':True}
+    csv_out=[{k:json.dumps(clean(v),ensure_ascii=False) if isinstance(v,(list,dict)) else v for k,v in r.items()} for r in clean(outcomes)]
+    pd.DataFrame(csv_out).to_csv(HERE/'all_pool_outcomes.csv',index=False)
+    coverage_keys=['ticker','name','first_daily_date','latest_daily_date','year_peak_date','year_peak_is_complete','daily_year_ratio','year_ratio','ratio_source','quote_time_et','quote_received_at','core_pass','quality_tier','price_basis_clean','reason','unparsed_financial_fields','financial_source_support','financial_source_support_note','financial_reporting_units','source_unknown_events','source_whole_history_unknown','invalid_panel_rows','duplicate_panel_rows']+[k for k in outcomes[0] if any(k.startswith(w+'_') for w in windows)]
+    audit_rows=[{k:r.get(k) for k in coverage_keys} for r in outcomes]
+    (HERE/'coverage_audit.json').write_text(json.dumps(clean({'metadata':summary,'stocks':audit_rows}),ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+    local_sources=[HERE/'PROTOCOL.md',HERE/'source_registration.json',HERE/'business_reviews.json',Path(__file__).resolve(),HERE/'acquire_quotes.py']
+    receipt={'generated_at':summary['generated_at'],'source_paths_and_sha256':{latest['panel_path']:sha(latest['panel_path']),str(Path(latest['path'])/'lineage.json'):sha(Path(latest['path'])/'lineage.json'),str(reportdir/'all_stocks.csv'):sha(reportdir/'all_stocks.csv'),str(qpath):sha(qpath),**{str(p):sha(p) for p in local_sources},**rawhashes},'no_legacy_source_mutation':True,'registered_source_cache_reused':True,'raw_OHLC_and_quotes_not_in_git':True}
     (HERE/'SOURCE_EVIDENCE.json').write_text(json.dumps(receipt,indent=2)+'\n')
-    data=clean({'metadata':summary,'stocks':result,'sessions':sessions})
-    template=(HERE/'template.html').read_text() if (HERE/'template.html').exists() else None
-    if template:
-        html=template.replace('__DATA__',json.dumps(data,ensure_ascii=False,allow_nan=False).replace('</','<\\/'))
-        (HERE/'index.html').write_text(html)
-        (HERE/'HTML_MANIFEST.json').write_text(json.dumps({'generated_at':summary['generated_at'],'html_sha256':sha(HERE/'index.html'),'template_sha256':sha(HERE/'template.html'),'data_summary_sha256':sha(HERE/'screen_results.json'),'stocks':len(result),'bytes':len(html.encode()),'source_dataset_key':latest['dataset_key']},indent=2)+'\n')
-    print(json.dumps(summary,ensure_ascii=False,indent=2))
-    print('A candidates',[(r['ticker'],round(r['year_ratio'],2),r['stage']) for r in result if r['quality_tier'].startswith('A')])
+    data=clean({'metadata':summary,'stocks':result,'sessions':sessions,'audit':audit_rows})
+    template=(HERE/'template.html').read_text()
+    html=template.replace('__DATA__',json.dumps(data,ensure_ascii=False,allow_nan=False).replace('</','<\\/'))
+    (HERE/'index.html').write_text(html)
+    (HERE/'HTML_MANIFEST.json').write_text(json.dumps({'generated_at':summary['generated_at'],'html_sha256':sha(HERE/'index.html'),'template_sha256':sha(HERE/'template.html'),'data_summary_sha256':sha(HERE/'screen_results.json'),'stocks':len(result),'bytes':len(html.encode()),'source_dataset_key':latest['dataset_key']},indent=2)+'\n')
+    print(json.dumps(clean(summary),ensure_ascii=False,indent=2))
+    print('A >=1.2',[(r['ticker'],round(r['year_ratio'],3),r['year_peak_date'],r['stage']) for r in candidates if r['quality_tier'].startswith('A') and r['year_ratio']>=1.2])
 if __name__=='__main__':main()

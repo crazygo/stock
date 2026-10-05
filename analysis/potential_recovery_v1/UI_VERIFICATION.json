@@ -1,61 +1,47 @@
 {
-  "status": "required_interactions_verified",
-  "html_sha256": "a8bb0eb2a2d93bebc4642a8d5d4b1b11acc7c19009f42436c8cd055c6c5d4e34",
-  "browser": "Codex in-app browser",
-  "desktop_viewport_test": {
-    "width": 1280,
-    "height": 900,
-    "columns": 2,
-    "document_horizontal_overflow": false
+  "verified_at": "2026-10-05T19:13:53.085192+00:00",
+  "revision": "whole_pool_1_2_v2",
+  "html_sha256": "c18ab9330770910fb5df7153b01aa7c4010503dc0651e8cc6e228d6e670c6040",
+  "browser": "Codex IAB tab 5 via CUA",
+  "checks_passed": true,
+  "observations": {
+    "default_snapshot_A_ge1_2": 47,
+    "snapshot_A_1_2_to_1_5": 34,
+    "snapshot_A_1_2_to_1_5_peak_AprJun": 15,
+    "daily_A_ge1_2": 48,
+    "daily_all_core_ge1_2": 387,
+    "snapshot_A_early_ge1_2": 35,
+    "audit_AprJun_incomplete": 390,
+    "audit_AprJun_zero": 108,
+    "audit_YTD_incomplete": 489,
+    "AVGO_AprJun_month_sessions": [
+      21,
+      20,
+      21
+    ],
+    "desktop_1280_Q2_visible_bars": 62,
+    "desktop_1280_main_candle_gap_px": 8.4,
+    "mobile_320_scroll_width": 320,
+    "mobile_320_canvas_width": 274,
+    "mobile_320_Q2_visible_bars": 37,
+    "mobile_320_main_candle_gap_px": 6.1,
+    "mini_Home_range": "2024-10-02–2024-12-30; 62 trading sessions preserved",
+    "mini_ArrowRight_range": "2024-10-03–2024-12-31",
+    "main_Home_readout_date": "2026-04-01",
+    "main_End_readout_date": "2026-06-30",
+    "console_errors_or_warnings": [],
+    "viewport_reset": true,
+    "filters_reset_to_snapshot_A_ge1_2": true
   },
-  "mobile_viewport_test": {
-    "width": 320,
-    "height": 850,
-    "document_horizontal_overflow": false,
-    "visible_candle_spacing_px": 6.1
-  },
-  "viewport_override_restored": true,
-  "default_A_count_ge1_5": 13,
-  "A_counts_by_threshold": {
-    "1.8": 5,
-    "1.9": 5,
-    "2.0": 4,
-    "2.5": 1
-  },
-  "UI_checks": [
-    "Multiple simultaneous real daily candle charts",
-    "Threshold filters including 1.8/1.9/2.0/2.5",
-    "Ratio sort descending and ascending",
-    "A+B and all-stage filter: 122 at >=1.5 with source warning filter off",
-    "Official business association: AGX/NXT/POWL",
-    "Deferred business cases: TTD/EPAM",
-    "Next-page chart rendering",
-    "60 calendar day shortcut",
-    "Invalid date range rejected",
-    "Explicit pan changes visible data",
-    "Mini click jump",
-    "Mini Home and ArrowRight shift one official trading session",
-    "Candle click and ArrowRight change exact OHLC readout",
-    "Locate peak-after-trough exact date",
-    "No console errors"
+  "screenshots": [
+    ".cache/potential_recovery_v1/evidence/desktop-1_2-q2-v2.png",
+    ".cache/potential_recovery_v1/evidence/mobile-1_2-v2.png"
   ],
-  "zoom_contract_evidence": "No zoom handlers; canvas touch-action pan-y; explicit input/button/slider navigation. Native pinch was not separately exercised.",
-  "attempts_retained": [
-    {
-      "feature": "optional filtered CSV export",
-      "outcome": "IAB download event timed out and expected Downloads file not found",
-      "resolution": "Removed optional export button; it was outside user-required scope. Source CSV remains linked."
-    }
+  "limits": [
+    "Native pinch gesture not exercised; no zoom handlers were added",
+    "Whole-pool CSV file is linked; no browser download flow asserted",
+    "Verification is UI and source fidelity, not predictive effectiveness"
   ],
-  "screenshots": {
-    "desktop": {
-      "path": "/Users/admin/Code/stock/.cache/potential_recovery_v1/evidence/desktop-charts.png",
-      "sha256": "992e5e4a9543f7afc97e5cb51ada6633cd9dfb39d939d1afd2278b050182ef7f"
-    },
-    "mobile": {
-      "path": "/Users/admin/Code/stock/.cache/potential_recovery_v1/evidence/mobile-320.png",
-      "sha256": "84f581a28e67ef9d79ad73ce4164b9a17991a6000248fbffccf0f2750d5936dd"
-    }
-  },
-  "screenshots_cover_chart_layout": "Taken before removal of optional export button above chart section; chart contents and controls unchanged."
+  "timestamp_label_uses_acquisition_bounds_not_instantaneous_quote_time": true,
+  "coverage_scope_exposes_unparsed_basic_financial_fields_count": 3033
 }

@@ -1,0 +1,61 @@
+{
+  "status": "required_interactions_verified",
+  "html_sha256": "a8bb0eb2a2d93bebc4642a8d5d4b1b11acc7c19009f42436c8cd055c6c5d4e34",
+  "browser": "Codex in-app browser",
+  "desktop_viewport_test": {
+    "width": 1280,
+    "height": 900,
+    "columns": 2,
+    "document_horizontal_overflow": false
+  },
+  "mobile_viewport_test": {
+    "width": 320,
+    "height": 850,
+    "document_horizontal_overflow": false,
+    "visible_candle_spacing_px": 6.1
+  },
+  "viewport_override_restored": true,
+  "default_A_count_ge1_5": 13,
+  "A_counts_by_threshold": {
+    "1.8": 5,
+    "1.9": 5,
+    "2.0": 4,
+    "2.5": 1
+  },
+  "UI_checks": [
+    "Multiple simultaneous real daily candle charts",
+    "Threshold filters including 1.8/1.9/2.0/2.5",
+    "Ratio sort descending and ascending",
+    "A+B and all-stage filter: 122 at >=1.5 with source warning filter off",
+    "Official business association: AGX/NXT/POWL",
+    "Deferred business cases: TTD/EPAM",
+    "Next-page chart rendering",
+    "60 calendar day shortcut",
+    "Invalid date range rejected",
+    "Explicit pan changes visible data",
+    "Mini click jump",
+    "Mini Home and ArrowRight shift one official trading session",
+    "Candle click and ArrowRight change exact OHLC readout",
+    "Locate peak-after-trough exact date",
+    "No console errors"
+  ],
+  "zoom_contract_evidence": "No zoom handlers; canvas touch-action pan-y; explicit input/button/slider navigation. Native pinch was not separately exercised.",
+  "attempts_retained": [
+    {
+      "feature": "optional filtered CSV export",
+      "outcome": "IAB download event timed out and expected Downloads file not found",
+      "resolution": "Removed optional export button; it was outside user-required scope. Source CSV remains linked."
+    }
+  ],
+  "screenshots": {
+    "desktop": {
+      "path": "/Users/admin/Code/stock/.cache/potential_recovery_v1/evidence/desktop-charts.png",
+      "sha256": "992e5e4a9543f7afc97e5cb51ada6633cd9dfb39d939d1afd2278b050182ef7f"
+    },
+    "mobile": {
+      "path": "/Users/admin/Code/stock/.cache/potential_recovery_v1/evidence/mobile-320.png",
+      "sha256": "84f581a28e67ef9d79ad73ce4164b9a17991a6000248fbffccf0f2750d5936dd"
+    }
+  },
+  "screenshots_cover_chart_layout": "Taken before removal of optional export button above chart section; chart contents and controls unchanged."
+}
