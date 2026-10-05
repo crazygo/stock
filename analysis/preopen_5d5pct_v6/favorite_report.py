@@ -1,14 +1,20 @@
 """Every current Special Focus stock, including zero-signal/unregistered cases."""
-import json
+import json,argparse
 from common import OUT,write,now
 from research import metrics,FIVE
 
 def main():
- snapshot=json.loads((OUT/'watchlist_snapshot.json').read_text());group=next(s for s in snapshot['snapshots'] if s['group']=='特别关注')
+ ap=argparse.ArgumentParser();ap.add_argument('--round',choices=['R00','R01','R02','R03','R04','R05','R06']);a=ap.parse_args()
+ snapshot_path=OUT/'R06/favorites_snapshot.json' if a.round=='R06' else OUT/'watchlist_snapshot.json'
+ snapshot=json.loads(snapshot_path.read_text());group=next(s for s in snapshot['snapshots'] if s['group']=='特别关注')
  members=[r for r in group['members'] if r['code'].startswith('US.') and r['stock_type']=='STOCK']
- for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05')]:
+ for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05'),('R06',OUT/'R06')]:
+  if a.round and rid!=a.round:continue
   file=base/'results.json'
   if not file.exists():continue
+  if rid=='R06':
+   latest=json.loads((base/'favorites_snapshot.json').read_text());latest_group=next(s for s in latest['snapshots'] if s['group']=='特别关注')
+   members=[r for r in latest_group['members'] if r['code'].startswith('US.') and r['stock_type']=='STOCK']
   result=json.loads(file.read_text())
   for arm in result['arms']:
    metas=[json.loads(p.read_text()) for p in (base/'cache/runs').glob(f"{arm['arm']}_*/meta.json")]

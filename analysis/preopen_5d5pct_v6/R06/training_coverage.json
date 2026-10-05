@@ -1,0 +1,1881 @@
+{
+  "at": "2026-10-05T13:04:28.489958+00:00",
+  "weighting": "each registered stock-day equal; unavailable values retained; no coverage filtering",
+  "blocks": [
+    {
+      "month": "2026-05",
+      "block": "training",
+      "days": [
+        "2025-02-20",
+        "2025-12-04"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.117875,
+          "all_features_fraction": 0.092,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.117875,
+            "f2_c_super_in_flow": 0.117875,
+            "f2_c_big_in_flow": 0.117875,
+            "f2_c_mid_in_flow": 0.117875,
+            "f2_c_sml_in_flow": 0.117875,
+            "f2_c_main_in_flow": 0.117875,
+            "f2_c_in_flow_mean_5": 0.112125,
+            "f2_c_in_flow_positive_5": 0.112125,
+            "f2_c_main_in_flow_mean_5": 0.112125,
+            "f2_c_main_in_flow_positive_5": 0.112125,
+            "f2_c_in_flow_mean_20": 0.092,
+            "f2_c_in_flow_positive_20": 0.092,
+            "f2_c_main_in_flow_mean_20": 0.092,
+            "f2_c_main_in_flow_positive_20": 0.092
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.9984583333333333,
+          "all_features_fraction": 0.9929583333333334,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 0.9984583333333333,
+            "f2_o_log_put_volume": 0.9984583333333333,
+            "f2_o_log_call_open_interest": 0.9984583333333333,
+            "f2_o_log_put_open_interest": 0.9984583333333333,
+            "f2_o_put_call_volume_ratio": 0.994,
+            "f2_o_put_call_open_interest_ratio": 0.99825,
+            "f2_o_volume_relative_20": 0.997375,
+            "f2_o_oi_change_5": 0.997625
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.9975416666666667,
+          "all_features_fraction": 0.9964166666666666,
+          "field_nonmissing": {
+            "f2_v_iv": 0.9975416666666667,
+            "f2_v_hv": 0.9975416666666667,
+            "f2_v_iv_hv_spread": 0.9975416666666667,
+            "f2_v_iv_change_5": 0.9969166666666667,
+            "f2_v_hv_change_5": 0.9969166666666667,
+            "f2_v_iv_percentile_20": 0.9964166666666666
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.9988333333333334,
+          "all_features_fraction": 0.9980833333333333,
+          "field_nonmissing": {
+            "f2_s_short_percent": 0.9988333333333334,
+            "f2_s_quantity_relative_20": 0.9980833333333333,
+            "f2_s_short_percent_mean_5": 0.99875,
+            "f2_s_short_percent_mean_20": 0.9981666666666666
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-05",
+      "block": "candidate_calibration",
+      "days": [
+        "2025-12-19",
+        "2026-01-20"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.7458333333333333,
+          "all_features_fraction": 0.5920833333333333,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.7458333333333333,
+            "f2_c_super_in_flow": 0.7458333333333333,
+            "f2_c_big_in_flow": 0.7458333333333333,
+            "f2_c_mid_in_flow": 0.7458333333333333,
+            "f2_c_sml_in_flow": 0.7458333333333333,
+            "f2_c_main_in_flow": 0.7458333333333333,
+            "f2_c_in_flow_mean_5": 0.7116666666666667,
+            "f2_c_in_flow_positive_5": 0.7116666666666667,
+            "f2_c_main_in_flow_mean_5": 0.7116666666666667,
+            "f2_c_main_in_flow_positive_5": 0.7116666666666667,
+            "f2_c_in_flow_mean_20": 0.5920833333333333,
+            "f2_c_in_flow_positive_20": 0.5920833333333333,
+            "f2_c_main_in_flow_mean_20": 0.5920833333333333,
+            "f2_c_main_in_flow_positive_20": 0.5920833333333333
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.99625,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9970833333333333,
+            "f2_o_put_call_open_interest_ratio": 0.9995833333333334,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9995833333333334
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-05",
+      "block": "top_calibration",
+      "days": [
+        "2026-02-04",
+        "2026-03-04"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 1.0,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-05",
+      "block": "selection",
+      "days": [
+        "2026-03-19",
+        "2026-04-16"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9975,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9975,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-05",
+      "block": "evaluation",
+      "days": [
+        "2026-05-01",
+        "2026-05-29"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9975,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9983333333333333,
+            "f2_o_put_call_open_interest_ratio": 0.9995833333333334,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9995833333333334
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-06",
+      "block": "training",
+      "days": [
+        "2025-03-20",
+        "2026-01-05"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.175375,
+          "all_features_fraction": 0.1495,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.175375,
+            "f2_c_super_in_flow": 0.175375,
+            "f2_c_big_in_flow": 0.175375,
+            "f2_c_mid_in_flow": 0.175375,
+            "f2_c_sml_in_flow": 0.175375,
+            "f2_c_main_in_flow": 0.175375,
+            "f2_c_in_flow_mean_5": 0.169625,
+            "f2_c_in_flow_positive_5": 0.169625,
+            "f2_c_main_in_flow_mean_5": 0.169625,
+            "f2_c_main_in_flow_positive_5": 0.169625,
+            "f2_c_in_flow_mean_20": 0.1495,
+            "f2_c_in_flow_positive_20": 0.1495,
+            "f2_c_main_in_flow_mean_20": 0.1495,
+            "f2_c_main_in_flow_positive_20": 0.1495
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.999625,
+          "all_features_fraction": 0.9948333333333333,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 0.999625,
+            "f2_o_log_put_volume": 0.999625,
+            "f2_o_log_call_open_interest": 0.999625,
+            "f2_o_log_put_open_interest": 0.999625,
+            "f2_o_put_call_volume_ratio": 0.9954583333333333,
+            "f2_o_put_call_open_interest_ratio": 0.9994583333333333,
+            "f2_o_volume_relative_20": 0.9992083333333334,
+            "f2_o_oi_change_5": 0.99925
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.9995,
+          "all_features_fraction": 0.9988333333333334,
+          "field_nonmissing": {
+            "f2_v_iv": 0.9995,
+            "f2_v_hv": 0.9995,
+            "f2_v_iv_hv_spread": 0.9995,
+            "f2_v_iv_change_5": 0.9991666666666666,
+            "f2_v_hv_change_5": 0.9991666666666666,
+            "f2_v_iv_percentile_20": 0.9988333333333334
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.9996666666666667,
+          "all_features_fraction": 0.99925,
+          "field_nonmissing": {
+            "f2_s_short_percent": 0.9996666666666667,
+            "f2_s_quantity_relative_20": 0.99925,
+            "f2_s_short_percent_mean_5": 0.9995833333333334,
+            "f2_s_short_percent_mean_20": 0.9992916666666667
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-06",
+      "block": "candidate_calibration",
+      "days": [
+        "2026-01-21",
+        "2026-02-18"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9991666666666666,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9991666666666666,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-06",
+      "block": "top_calibration",
+      "days": [
+        "2026-03-05",
+        "2026-04-01"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.99875,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.99875,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-06",
+      "block": "selection",
+      "days": [
+        "2026-04-17",
+        "2026-05-14"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9970833333333333,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9979166666666667,
+            "f2_o_put_call_open_interest_ratio": 0.9995833333333334,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9995833333333334
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-06",
+      "block": "evaluation",
+      "days": [
+        "2026-06-01",
+        "2026-06-30"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2520,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.998015873015873,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9988095238095238,
+            "f2_o_put_call_open_interest_ratio": 0.9996031746031746,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9996031746031746
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-07",
+      "block": "training",
+      "days": [
+        "2025-04-21",
+        "2026-02-04"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.271625,
+          "all_features_fraction": 0.230375,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.271625,
+            "f2_c_super_in_flow": 0.271625,
+            "f2_c_big_in_flow": 0.271625,
+            "f2_c_mid_in_flow": 0.271625,
+            "f2_c_sml_in_flow": 0.271625,
+            "f2_c_main_in_flow": 0.271625,
+            "f2_c_in_flow_mean_5": 0.26245833333333335,
+            "f2_c_in_flow_positive_5": 0.26245833333333335,
+            "f2_c_main_in_flow_mean_5": 0.26245833333333335,
+            "f2_c_main_in_flow_positive_5": 0.26245833333333335,
+            "f2_c_in_flow_mean_20": 0.230375,
+            "f2_c_in_flow_positive_20": 0.230375,
+            "f2_c_main_in_flow_mean_20": 0.230375,
+            "f2_c_main_in_flow_positive_20": 0.230375
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9961666666666666,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9964166666666666,
+            "f2_o_put_call_open_interest_ratio": 0.999875,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.999875
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-07",
+      "block": "candidate_calibration",
+      "days": [
+        "2026-02-20",
+        "2026-03-19"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9995833333333334,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9995833333333334,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-07",
+      "block": "top_calibration",
+      "days": [
+        "2026-04-06",
+        "2026-05-01"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9970833333333333,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9970833333333333,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-07",
+      "block": "selection",
+      "days": [
+        "2026-05-18",
+        "2026-06-15"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.99875,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9991666666666666,
+            "f2_o_put_call_open_interest_ratio": 0.9995833333333334,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-07",
+      "block": "evaluation",
+      "days": [
+        "2026-07-01",
+        "2026-07-31"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2640,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2640,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9981060606060606,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9981060606060606,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2640,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2640,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-08",
+      "block": "training",
+      "days": [
+        "2025-05-21",
+        "2026-03-09"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.37245833333333334,
+          "all_features_fraction": 0.3312083333333333,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.37245833333333334,
+            "f2_c_super_in_flow": 0.37245833333333334,
+            "f2_c_big_in_flow": 0.37245833333333334,
+            "f2_c_mid_in_flow": 0.37245833333333334,
+            "f2_c_sml_in_flow": 0.37245833333333334,
+            "f2_c_main_in_flow": 0.37245833333333334,
+            "f2_c_in_flow_mean_5": 0.3632916666666667,
+            "f2_c_in_flow_positive_5": 0.3632916666666667,
+            "f2_c_main_in_flow_mean_5": 0.3632916666666667,
+            "f2_c_main_in_flow_positive_5": 0.3632916666666667,
+            "f2_c_in_flow_mean_20": 0.3312083333333333,
+            "f2_c_in_flow_positive_20": 0.3312083333333333,
+            "f2_c_main_in_flow_mean_20": 0.3312083333333333,
+            "f2_c_main_in_flow_positive_20": 0.3312083333333333
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9969166666666667,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9971666666666666,
+            "f2_o_put_call_open_interest_ratio": 0.999875,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.999875
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-08",
+      "block": "candidate_calibration",
+      "days": [
+        "2026-03-24",
+        "2026-04-21"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9975,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9975,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-08",
+      "block": "top_calibration",
+      "days": [
+        "2026-05-06",
+        "2026-06-03"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9975,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9979166666666667,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9995833333333334
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-08",
+      "block": "selection",
+      "days": [
+        "2026-06-18",
+        "2026-07-17"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9970833333333333,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9975,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9995833333333334
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-08",
+      "block": "evaluation",
+      "days": [
+        "2026-08-03",
+        "2026-08-31"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2520,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9992063492063492,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9992063492063492,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-09",
+      "block": "training",
+      "days": [
+        "2025-06-23",
+        "2026-04-08"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 24000,
+          "any_feature_fraction": 0.46870833333333334,
+          "all_features_fraction": 0.42745833333333333,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.46870833333333334,
+            "f2_c_super_in_flow": 0.46870833333333334,
+            "f2_c_big_in_flow": 0.46870833333333334,
+            "f2_c_mid_in_flow": 0.46870833333333334,
+            "f2_c_sml_in_flow": 0.46870833333333334,
+            "f2_c_main_in_flow": 0.46870833333333334,
+            "f2_c_in_flow_mean_5": 0.4595416666666667,
+            "f2_c_in_flow_positive_5": 0.4595416666666667,
+            "f2_c_main_in_flow_mean_5": 0.4595416666666667,
+            "f2_c_main_in_flow_positive_5": 0.4595416666666667,
+            "f2_c_in_flow_mean_20": 0.42745833333333333,
+            "f2_c_in_flow_positive_20": 0.42745833333333333,
+            "f2_c_main_in_flow_mean_20": 0.42745833333333333,
+            "f2_c_main_in_flow_positive_20": 0.42745833333333333
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.99725,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9974166666666666,
+            "f2_o_put_call_open_interest_ratio": 0.9999166666666667,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9999166666666667
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 24000,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-09",
+      "block": "candidate_calibration",
+      "days": [
+        "2026-04-23",
+        "2026-05-20"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9970833333333333,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9979166666666667,
+            "f2_o_put_call_open_interest_ratio": 0.9995833333333334,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9995833333333334
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-09",
+      "block": "top_calibration",
+      "days": [
+        "2026-06-05",
+        "2026-07-06"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9979166666666667,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.99875,
+            "f2_o_put_call_open_interest_ratio": 0.9995833333333334,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 0.9995833333333334
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-09",
+      "block": "selection",
+      "days": [
+        "2026-07-21",
+        "2026-08-17"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2400,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.9166666666666666,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.9166666666666666,
+            "f2_c_super_in_flow": 0.9166666666666666,
+            "f2_c_big_in_flow": 0.9166666666666666,
+            "f2_c_mid_in_flow": 0.9166666666666666,
+            "f2_c_sml_in_flow": 0.9166666666666666,
+            "f2_c_main_in_flow": 0.9166666666666666,
+            "f2_c_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_5": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_5": 0.9166666666666666,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 1.0,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2400,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "month": "2026-09",
+      "block": "evaluation",
+      "days": [
+        "2026-09-01",
+        "2026-09-30"
+      ],
+      "registered": 120,
+      "coverage": [
+        {
+          "family": "capital",
+          "stock_days": 2520,
+          "any_feature_fraction": 0.9166666666666666,
+          "all_features_fraction": 0.8904761904761904,
+          "field_nonmissing": {
+            "f2_c_in_flow": 0.8920634920634921,
+            "f2_c_super_in_flow": 0.8920634920634921,
+            "f2_c_big_in_flow": 0.8920634920634921,
+            "f2_c_mid_in_flow": 0.8920634920634921,
+            "f2_c_sml_in_flow": 0.8920634920634921,
+            "f2_c_main_in_flow": 0.8920634920634921,
+            "f2_c_in_flow_mean_5": 0.9095238095238095,
+            "f2_c_in_flow_positive_5": 0.9095238095238095,
+            "f2_c_main_in_flow_mean_5": 0.9095238095238095,
+            "f2_c_main_in_flow_positive_5": 0.9095238095238095,
+            "f2_c_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_in_flow_positive_20": 0.9166666666666666,
+            "f2_c_main_in_flow_mean_20": 0.9166666666666666,
+            "f2_c_main_in_flow_positive_20": 0.9166666666666666
+          }
+        },
+        {
+          "family": "options",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 0.9996031746031746,
+          "field_nonmissing": {
+            "f2_o_log_call_volume": 1.0,
+            "f2_o_log_put_volume": 1.0,
+            "f2_o_log_call_open_interest": 1.0,
+            "f2_o_log_put_open_interest": 1.0,
+            "f2_o_put_call_volume_ratio": 0.9996031746031746,
+            "f2_o_put_call_open_interest_ratio": 1.0,
+            "f2_o_volume_relative_20": 1.0,
+            "f2_o_oi_change_5": 1.0
+          }
+        },
+        {
+          "family": "volatility",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_v_iv": 1.0,
+            "f2_v_hv": 1.0,
+            "f2_v_iv_hv_spread": 1.0,
+            "f2_v_iv_change_5": 1.0,
+            "f2_v_hv_change_5": 1.0,
+            "f2_v_iv_percentile_20": 1.0
+          }
+        },
+        {
+          "family": "short_volume",
+          "stock_days": 2520,
+          "any_feature_fraction": 1.0,
+          "all_features_fraction": 1.0,
+          "field_nonmissing": {
+            "f2_s_short_percent": 1.0,
+            "f2_s_quantity_relative_20": 1.0,
+            "f2_s_short_percent_mean_5": 1.0,
+            "f2_s_short_percent_mean_20": 1.0
+          }
+        }
+      ]
+    }
+  ]
+}

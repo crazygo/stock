@@ -48,3 +48,5 @@ R05前日多日板块：先读R05/PROTOCOL.md，然后sector_daily.py --prepare�
 免费新成员审计见membership_addendum.json：实际自选ETF分类59只，旧来源57只，其中21只取得完整发行人美股持仓，36只仍未解决或属特殊资产/分类。新增XLE完整文件有21美股、现金/货币基金与衍生品另列；LUMA完整文件在本地403。新来源仅下一版准备，不改已冻结组。
 
 latest_features.py只生成最近已完成交易日的历史参考前缀，不自动盘中刷新；统一命令明确current_probability=false。未取得未来资格，所以本次没有部署五分钟有效信号服务。独立观察需另冻结新数据与模型。
+
+R06富途历史信息：实际核验新接口并将日级资金流、期权成交/持仓、IV/HV及每日卖空成交纳入八组固定输入。入口[R06/README.md](R06/README.md)，结案[R06/API_AUDIT.md](R06/API_AUDIT.md)，新指标[R06/REPORT.md](R06/REPORT.md)。统一命令支持`--round R06`；新增独立调试页`futu_data.html`。不改变原模型、结果或十月配置。

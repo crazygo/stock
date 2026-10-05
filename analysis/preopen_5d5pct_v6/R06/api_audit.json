@@ -1,0 +1,1071 @@
+{
+  "at": "2026-10-05T13:26:02.226208+00:00",
+  "status": "completed_all_dispositions_closed",
+  "requested": [
+    "2024-10-04",
+    "2026-09-30"
+  ],
+  "historical_pit_certified": false,
+  "probe_count": 29,
+  "probes": [
+    {
+      "name": "option_statistics",
+      "method": "get_option_underlying_his_statistic",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:53:52.234627+00:00",
+      "received_at": "2026-10-05T11:53:52.644410+00:00",
+      "disposition": "development_input",
+      "reason": "分两个≤364日窗口并翻页，取得约两年；OI不前移，使用记录日后2/5官方日延迟；未提供历史修订版本，不认证PIT。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 252,
+          "columns": [
+            "code",
+            "name",
+            "time",
+            "timestamp",
+            "option_volume",
+            "call_volume",
+            "put_volume",
+            "put_call_volume_ratio",
+            "option_open_interest",
+            "call_open_interest",
+            "put_open_interest",
+            "put_call_open_interest_ratio",
+            "underlying_price"
+          ],
+          "attrs": {},
+          "file": "cache/probes/option_statistics_0.parquet",
+          "sha256": "04526bf621e8bf3436a1cc43af27d2ff4e418e8c3f4f2d59f5f71e33ff205bf3"
+        },
+        {
+          "kind": "bytes"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "option_volatility_history",
+      "method": "get_option_underlying_his_volatility",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:53:54.138806+00:00",
+      "received_at": "2026-10-05T11:53:55.001449+00:00",
+      "disposition": "development_input",
+      "reason": "历史日级IV/HV已分窗翻页取得；2/5日延迟开发假设；不使用财报后未来IVcrush。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 260,
+          "columns": [
+            "code",
+            "name",
+            "time",
+            "timestamp",
+            "iv",
+            "hv",
+            "underlying_price"
+          ],
+          "attrs": {},
+          "file": "cache/probes/option_volatility_history_0.parquet",
+          "sha256": "7610d921a4b8bf34a21af97efad79ad673c462601f9376d2c58c2c6e9af3cf53"
+        },
+        {
+          "kind": "bytes"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "short_volume",
+      "method": "get_daily_short_volume",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:53:56.455470+00:00",
+      "received_at": "2026-10-05T11:53:56.839768+00:00",
+      "disposition": "development_input",
+      "reason": "每页50行、next_key翻页取得两年；卖空成交量不是净持仓或借券量。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 50,
+          "columns": [
+            "timestamp",
+            "timestamp_str",
+            "total_shares_short",
+            "nasdaq_shares_short",
+            "nyse_shares_short",
+            "short_percent",
+            "volume",
+            "close_price",
+            "last_close_price",
+            "daily_trade_avg_ratio"
+          ],
+          "attrs": {
+            "next_key": "1784865600"
+          },
+          "file": "cache/probes/short_volume_0.parquet",
+          "sha256": "4ea20aaa0ffb2795b50850b46073f544b3df0f1cbedf25694509b097b386ade9"
+        },
+        {
+          "kind": "frame",
+          "rows": 0,
+          "columns": [
+            "timestamp",
+            "timestamp_str",
+            "shares_traded",
+            "turnover",
+            "short_sell_shares_traded",
+            "short_sell_turnover",
+            "open_price",
+            "close_price",
+            "last_close_price",
+            "daily_trade_avg_ratio"
+          ],
+          "attrs": {
+            "next_key": "1784865600",
+            "aggregated_short": null,
+            "aggregated_short_ratio": null,
+            "new_time_str": null
+          },
+          "file": "cache/probes/short_volume_1.parquet",
+          "sha256": "efe8094b1caaac2be1adcfc973270d120c6c2d69ef93fbbb9e52230b5ba9a9a7"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "short_interest",
+      "method": "get_short_interest",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:53:58.318610+00:00",
+      "received_at": "2026-10-05T11:53:58.700824+00:00",
+      "disposition": "excluded_publication_unknown",
+      "reason": "结算日不等于可知公布日；没有逐条原始发布时间，不能把结算日当实时特征。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 50,
+          "columns": [
+            "timestamp",
+            "timestamp_str",
+            "shares_short",
+            "short_percent",
+            "avg_daily_share_volume",
+            "days_to_cover",
+            "close_price",
+            "last_close_price"
+          ],
+          "attrs": {
+            "next_key": "1724990400"
+          },
+          "file": "cache/probes/short_interest_0.parquet",
+          "sha256": "c1c0b1751560edf9d3a66fd513409d40401c2a915ac1bccb6dc46f6f410c8817"
+        },
+        {
+          "kind": "frame",
+          "rows": 0,
+          "columns": [
+            "timestamp",
+            "timestamp_str",
+            "aggregated_short",
+            "aggregated_short_ratio",
+            "close_price",
+            "last_close_price"
+          ],
+          "attrs": {
+            "next_key": "1724990400"
+          },
+          "file": "cache/probes/short_interest_1.parquet",
+          "sha256": "1447722d2173045eebca6eafb59d03fd1919a77c203daca70a979aecc876e0b8"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "earnings_price_history",
+      "method": "get_financials_earnings_price_history",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:00.176774+00:00",
+      "received_at": "2026-10-05T11:54:01.500444+00:00",
+      "disposition": "excluded_unsafe_or_duplicate",
+      "reason": "包含公布后价格路径、预测波动与未来IVcrush；公布时间存在00:00/None；无历史原始预期版本。普通OHLC也不形成新信息。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 600,
+          "columns": [
+            "fiscal_year",
+            "financial_type",
+            "period_text",
+            "is_current",
+            "pub_trading_day",
+            "pub_trading_day_str",
+            "pub_time",
+            "pub_time_str",
+            "pub_type",
+            "predict_vola_ratio_newest",
+            "predict_vola_ratio_highest",
+            "predict_vola_val_newest",
+            "predict_vola_val_highest",
+            "option_iv_crush",
+            "option_strike_date_iv_crush",
+            "trading_day",
+            "trading_day_str",
+            "close_price",
+            "open_price",
+            "highest_price",
+            "lowest_price",
+            "last_close_price",
+            "volume",
+            "schedule_delta",
+            "schedule_close_price"
+          ],
+          "attrs": {},
+          "file": "cache/probes/earnings_price_history_0.parquet",
+          "sha256": "86cd48cda531e2a28b964c560497bdc4691d3188ffa0c4a51abddd97e1f54d82"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "earnings_price_move",
+      "method": "get_financials_earnings_price_move",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:02.982635+00:00",
+      "received_at": "2026-10-05T11:54:03.621437+00:00",
+      "disposition": "excluded_future_path",
+      "reason": "分析含财报前后day_offset及未来路径与IV，不能作为当时输入。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 88,
+          "columns": [
+            "fiscal_year",
+            "financial_type",
+            "period_text",
+            "pub_trading_day",
+            "pub_trading_day_str",
+            "pub_type",
+            "price_info_index",
+            "day_offset",
+            "trading_day",
+            "trading_day_str",
+            "close_price",
+            "open_price",
+            "highest_price",
+            "lowest_price",
+            "last_close_price",
+            "option_iv",
+            "option_hv"
+          ],
+          "attrs": {},
+          "file": "cache/probes/earnings_price_move_0.parquet",
+          "sha256": "984168e1ca83fc3c1cc3ff3600824c4b27efe86f21de0191c4d0ea3da8005d8f"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "financial_statements",
+      "method": "get_financials_statements",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:05.093996+00:00",
+      "received_at": "2026-10-05T11:54:07.792768+00:00",
+      "disposition": "excluded_as_released_unproven",
+      "reason": "季度日期与当前结构化数字可得，但原始公布/接收/修订版本不完整，不能冒充当时实际值。保留原SEC accession路线。",
+      "parts": [
+        {
+          "kind": "dict",
+          "file": "cache/probes/financial_statements_0.json",
+          "sha256": "530d9880ab766ef0bc5d0d2db2194b950a270bc9f8c8a5465c5e0a600c6a264e"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "analyst_consensus",
+      "method": "get_research_analyst_consensus",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:09.274237+00:00",
+      "received_at": "2026-10-05T11:54:10.360360+00:00",
+      "disposition": "excluded_current_summary",
+      "reason": "实际为当前目标价与评级汇总，不是历史财报EPS/营收共识。",
+      "parts": [
+        {
+          "kind": "dict",
+          "file": "cache/probes/analyst_consensus_0.json",
+          "sha256": "ef99db69d778fa6bed8a84e783318d661b82b8f30084cc368e4881400415af7e"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "rating_detail",
+      "method": "get_research_rating_summary",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:11.817733+00:00",
+      "received_at": "2026-10-05T11:54:12.759271+00:00",
+      "disposition": "excluded_historical_vintages_unproven",
+      "reason": "当前机构评级资料，原始接收、历史修订以及两年完整覆盖未由响应证明。",
+      "parts": [
+        {
+          "kind": "dict",
+          "file": "cache/probes/rating_detail_0.json",
+          "sha256": "560b8537c4d02103cff5d9e1cd9d0daabb46fe85a71fef93114a0c655ca2e4bd"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "news_search",
+      "method": "get_search_news",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:14.243406+00:00",
+      "received_at": "2026-10-05T11:54:15.427936+00:00",
+      "disposition": "excluded_historical_search_unavailable",
+      "reason": "仅最近条目、公布时间及URL；所调用接口没有两年begin/end检索，不能补成历史新闻面板。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 10,
+          "columns": [
+            "title",
+            "news_sub_type",
+            "source",
+            "publish_time",
+            "view_count",
+            "related_securities",
+            "url"
+          ],
+          "attrs": {},
+          "file": "cache/probes/news_search_0.parquet",
+          "sha256": "c136ee1220276c792beb17caa5cc0d0df804b93bf11e0b1bd692289636b9cd17"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "short_volume_alab",
+      "method": "get_daily_short_volume",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:16.916185+00:00",
+      "received_at": "2026-10-05T11:54:17.278646+00:00",
+      "disposition": "development_input",
+      "reason": "每页50行、next_key翻页取得两年；卖空成交量不是净持仓或借券量。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 50,
+          "columns": [
+            "timestamp",
+            "timestamp_str",
+            "total_shares_short",
+            "nasdaq_shares_short",
+            "nyse_shares_short",
+            "short_percent",
+            "volume",
+            "close_price",
+            "last_close_price",
+            "daily_trade_avg_ratio"
+          ],
+          "attrs": {
+            "next_key": "1784865600"
+          },
+          "file": "cache/probes/short_volume_alab_0.parquet",
+          "sha256": "9d80edc4d667e94732fabb6d83039e4dfc140befb3ec7a1671e83c18e2c539f0"
+        },
+        {
+          "kind": "frame",
+          "rows": 0,
+          "columns": [
+            "timestamp",
+            "timestamp_str",
+            "shares_traded",
+            "turnover",
+            "short_sell_shares_traded",
+            "short_sell_turnover",
+            "open_price",
+            "close_price",
+            "last_close_price",
+            "daily_trade_avg_ratio"
+          ],
+          "attrs": {
+            "next_key": "1784865600",
+            "aggregated_short": null,
+            "aggregated_short_ratio": null,
+            "new_time_str": null
+          },
+          "file": "cache/probes/short_volume_alab_1.parquet",
+          "sha256": "efe8094b1caaac2be1adcfc973270d120c6c2d69ef93fbbb9e52230b5ba9a9a7"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "option_statistics_alab",
+      "method": "get_option_underlying_his_statistic",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:18.787244+00:00",
+      "received_at": "2026-10-05T11:54:20.395754+00:00",
+      "disposition": "development_input",
+      "reason": "分两个≤364日窗口并翻页，取得约两年；OI不前移，使用记录日后2/5官方日延迟；未提供历史修订版本，不认证PIT。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 252,
+          "columns": [
+            "code",
+            "name",
+            "time",
+            "timestamp",
+            "option_volume",
+            "call_volume",
+            "put_volume",
+            "put_call_volume_ratio",
+            "option_open_interest",
+            "call_open_interest",
+            "put_open_interest",
+            "put_call_open_interest_ratio",
+            "underlying_price"
+          ],
+          "attrs": {},
+          "file": "cache/probes/option_statistics_alab_0.parquet",
+          "sha256": "0362d262fd5189bfe926b2b410a31852f0a41d78d8d5607eac7bb2c2938738d9"
+        },
+        {
+          "kind": "bytes"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "option_volatility_history_alab",
+      "method": "get_option_underlying_his_volatility",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:21.856361+00:00",
+      "received_at": "2026-10-05T11:54:22.679712+00:00",
+      "disposition": "development_input",
+      "reason": "历史日级IV/HV已分窗翻页取得；2/5日延迟开发假设；不使用财报后未来IVcrush。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 260,
+          "columns": [
+            "code",
+            "name",
+            "time",
+            "timestamp",
+            "iv",
+            "hv",
+            "underlying_price"
+          ],
+          "attrs": {},
+          "file": "cache/probes/option_volatility_history_alab_0.parquet",
+          "sha256": "d22af7ef246f6b17dc381d18804312865d9fa8354498a300816fad15c1239a9c"
+        },
+        {
+          "kind": "bytes"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "capital_distribution",
+      "method": "get_capital_distribution",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:24.116359+00:00",
+      "received_at": "2026-10-05T11:54:25.099776+00:00",
+      "disposition": "excluded_current_snapshot",
+      "reason": "仅当前资金分布快照，无两年当时版本。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 1,
+          "columns": [
+            "capital_in_super",
+            "capital_in_big",
+            "capital_in_mid",
+            "capital_in_small",
+            "capital_out_super",
+            "capital_out_big",
+            "capital_out_mid",
+            "capital_out_small",
+            "update_time"
+          ],
+          "attrs": {},
+          "file": "cache/probes/capital_distribution_0.parquet",
+          "sha256": "a1e234d4c77d97c04d7d0fd0dcacf35041eb6046d5eecc735e5bfba94d90d875"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "capital_flow_intraday",
+      "method": "get_capital_flow",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:26.510005+00:00",
+      "received_at": "2026-10-05T11:54:28.552333+00:00",
+      "disposition": "development_daily_only",
+      "reason": "DAY实取最近一年；INTRADAY传五月日期却返回十月2日，不具有所请求的历史盘中数据。日级用真实同日RTH成交额，缺分母保留空缺。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 391,
+          "columns": [
+            "last_valid_time",
+            "in_flow",
+            "super_in_flow",
+            "big_in_flow",
+            "mid_in_flow",
+            "sml_in_flow",
+            "main_in_flow",
+            "capital_flow_item_time"
+          ],
+          "attrs": {},
+          "file": "cache/probes/capital_flow_intraday_0.parquet",
+          "sha256": "88fe57ad52ddc9e5d19d40d24fbc7c5fafb8d9e75f54acb5fdf8209f81c26d89"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "market_snapshot",
+      "method": "get_market_snapshot",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:29.981511+00:00",
+      "received_at": "2026-10-05T11:54:30.694107+00:00",
+      "disposition": "excluded_current_snapshot",
+      "reason": "实时/最新快照含当前基本面字段，不可回填历史时点。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 2,
+          "columns": [
+            "code",
+            "name",
+            "update_time",
+            "last_price",
+            "open_price",
+            "high_price",
+            "low_price",
+            "prev_close_price",
+            "volume",
+            "turnover",
+            "turnover_rate",
+            "suspension",
+            "listing_date",
+            "lot_size",
+            "price_spread",
+            "stock_owner",
+            "ask_price",
+            "bid_price",
+            "ask_vol",
+            "bid_vol",
+            "enable_margin",
+            "mortgage_ratio",
+            "long_margin_initial_ratio",
+            "enable_short_sell",
+            "short_sell_rate",
+            "short_available_volume",
+            "short_margin_initial_ratio",
+            "amplitude",
+            "avg_price",
+            "bid_ask_ratio",
+            "volume_ratio",
+            "highest52weeks_price",
+            "lowest52weeks_price",
+            "highest_history_price",
+            "lowest_history_price",
+            "close_price_5min",
+            "after_volume",
+            "after_turnover",
+            "sec_status",
+            "equity_valid",
+            "issued_shares",
+            "total_market_val",
+            "net_asset",
+            "net_profit",
+            "earning_per_share",
+            "outstanding_shares",
+            "circular_market_val",
+            "net_asset_per_share",
+            "ey_ratio",
+            "pe_ratio",
+            "pb_ratio",
+            "pe_ttm_ratio",
+            "dividend_ttm",
+            "dividend_ratio_ttm",
+            "dividend_lfy",
+            "dividend_lfy_ratio",
+            "wrt_valid",
+            "wrt_conversion_ratio",
+            "wrt_type",
+            "wrt_strike_price",
+            "wrt_maturity_date",
+            "wrt_end_trade",
+            "wrt_recovery_price",
+            "wrt_street_vol",
+            "wrt_issue_vol",
+            "wrt_street_ratio",
+            "wrt_delta",
+            "wrt_implied_volatility",
+            "wrt_premium",
+            "wrt_leverage",
+            "wrt_ipop",
+            "wrt_break_even_point",
+            "wrt_conversion_price",
+            "wrt_price_recovery_ratio",
+            "wrt_score",
+            "wrt_upper_strike_price",
+            "wrt_lower_strike_price",
+            "wrt_inline_price_status",
+            "wrt_issuer_code",
+            "option_valid",
+            "option_type",
+            "strike_time",
+            "option_strike_price",
+            "option_contract_size",
+            "option_open_interest",
+            "option_implied_volatility",
+            "option_premium",
+            "option_delta",
+            "option_gamma",
+            "option_vega",
+            "option_theta",
+            "option_rho",
+            "option_net_open_interest",
+            "option_expiry_date_distance",
+            "option_contract_nominal_value",
+            "option_owner_lot_multiplier",
+            "option_area_type",
+            "option_contract_multiplier",
+            "index_option_type",
+            "index_valid",
+            "index_raise_count",
+            "index_fall_count",
+            "index_equal_count",
+            "plate_valid",
+            "plate_raise_count",
+            "plate_fall_count",
+            "plate_equal_count",
+            "future_valid",
+            "future_last_settle_price",
+            "future_position",
+            "future_position_change",
+            "future_main_contract",
+            "future_last_trade_time",
+            "trust_valid",
+            "trust_dividend_yield",
+            "trust_aum",
+            "trust_outstanding_units",
+            "trust_netAssetValue",
+            "trust_premium",
+            "trust_assetClass",
+            "pre_price",
+            "pre_high_price",
+            "pre_low_price",
+            "pre_volume",
+            "pre_turnover",
+            "pre_change_val",
+            "pre_change_rate",
+            "pre_amplitude",
+            "after_price",
+            "after_high_price",
+            "after_low_price",
+            "after_change_val",
+            "after_change_rate",
+            "after_amplitude",
+            "overnight_price",
+            "overnight_high_price",
+            "overnight_low_price",
+            "overnight_volume",
+            "overnight_turnover",
+            "overnight_change_val",
+            "overnight_change_rate",
+            "overnight_amplitude"
+          ],
+          "attrs": {},
+          "file": "cache/probes/market_snapshot_0.parquet",
+          "sha256": "055c28ea23996017accbda9b77827a449dc8581d037bfa6132ebafaadcc1c0d7"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "order_book",
+      "method": "get_order_book",
+      "ret": -1,
+      "requested_at": "2026-10-05T11:54:32.121671+00:00",
+      "received_at": "2026-10-05T11:54:32.122367+00:00",
+      "disposition": "current_only_not_historical",
+      "reason": "实际订阅取得5档，但服务端时间字段为空；无两年历史深度，不进入训练或成交有效性结论。",
+      "parts": [
+        {
+          "kind": "str"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "recent_ticker",
+      "method": "get_rt_ticker",
+      "ret": -1,
+      "requested_at": "2026-10-05T11:54:33.531655+00:00",
+      "received_at": "2026-10-05T11:54:33.535263+00:00",
+      "disposition": "current_only_stale",
+      "reason": "订阅取得20条，但全为2026-10-02旧逐笔；不当作10月5日实时数据或两年回测。",
+      "parts": [
+        {
+          "kind": "str"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "owner_plates",
+      "method": "get_owner_plate",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:34.947664+00:00",
+      "received_at": "2026-10-05T11:54:35.267974+00:00",
+      "disposition": "excluded_current_membership",
+      "reason": "当前板块归属不是历史成员版本；不改冻结股票池。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 30,
+          "columns": [
+            "code",
+            "name",
+            "plate_code",
+            "plate_name",
+            "plate_type"
+          ],
+          "attrs": {},
+          "file": "cache/probes/owner_plates_0.parquet",
+          "sha256": "cd3c728aaede8e89ade09c86d103d779ea5d7bc674aca4db0a6348bcca4d4843"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "dividends",
+      "method": "get_corporate_actions_dividends",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:36.691908+00:00",
+      "received_at": "2026-10-05T11:54:37.227620+00:00",
+      "disposition": "excluded_no_increment",
+      "reason": "分红与拆股信息属标签质量审计；本轮保留原公司行动标签，不把重复公司行动当预测信息。",
+      "parts": [
+        {
+          "kind": "dict",
+          "file": "cache/probes/dividends_0.json",
+          "sha256": "5c14938872496aa7c7c8f6a0e65bf4764bbbd8b3d70486bc5671c84a96842bce"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "splits",
+      "method": "get_corporate_actions_stock_splits",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:38.647683+00:00",
+      "received_at": "2026-10-05T11:54:39.642929+00:00",
+      "disposition": "excluded_no_increment",
+      "reason": "公司行动仅验证已冻结标签口径，不更改原结果。",
+      "parts": [
+        {
+          "kind": "dict",
+          "file": "cache/probes/splits_0.json",
+          "sha256": "9c32fca85d654cf6576770dcbc8b0732462b4a2e87318905accf9d7b185a05b2"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "buybacks",
+      "method": "get_corporate_actions_buybacks",
+      "ret": -1,
+      "requested_at": "2026-10-05T11:54:41.068383+00:00",
+      "received_at": "2026-10-05T11:54:41.069462+00:00",
+      "disposition": "unavailable_us",
+      "reason": "实测美股不支持，不能作为美股历史回购特征。",
+      "parts": [
+        {
+          "kind": "str"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "insider_trades",
+      "method": "get_insider_trade_list",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:42.493226+00:00",
+      "received_at": "2026-10-05T11:54:42.854808+00:00",
+      "disposition": "excluded_disclosure_unknown",
+      "reason": "交易日期区间不证明公开披露日；没有可核对原受理时间，不用于事件惊喜。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 20,
+          "columns": [
+            "trade_shares",
+            "min_trade_date",
+            "min_trade_date_str",
+            "max_trade_date",
+            "max_trade_date_str",
+            "min_price",
+            "max_price",
+            "security_holder_quantity",
+            "is_proposed_sale_of_securities",
+            "holder_id",
+            "name",
+            "title",
+            "security_description",
+            "transaction_type",
+            "source_group_name"
+          ],
+          "attrs": {
+            "all_count": 372,
+            "next_key": "20"
+          },
+          "file": "cache/probes/insider_trades_0.parquet",
+          "sha256": "6f64955cf11afb7e3c09a87fd5f2e1afb912e3cbcd5e89760fe37faf4d1180a4"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "institutional_holdings",
+      "method": "get_shareholders_institutional",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:44.292855+00:00",
+      "received_at": "2026-10-05T11:54:44.823172+00:00",
+      "disposition": "excluded_original_filing_unknown",
+      "reason": "季度持仓与update_time不证明首次披露及历史版本。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 20,
+          "columns": [
+            "period_text",
+            "institution_quantity",
+            "institution_quantity_change",
+            "holder_quantity",
+            "holder_quantity_change",
+            "holder_pct",
+            "holder_pct_change",
+            "next_key",
+            "update_time",
+            "update_time_str"
+          ],
+          "attrs": {},
+          "file": "cache/probes/institutional_holdings_0.parquet",
+          "sha256": "ae13d6a9701e26e0718785dc56a1b3db0f79073cb33e6e8777d8882d893cd9b1"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "macro_list",
+      "method": "get_macro_indicator_list",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:46.242430+00:00",
+      "received_at": "2026-10-05T11:54:46.917953+00:00",
+      "disposition": "excluded_metadata_only",
+      "reason": "宏观指标目录可得，本身不是可回测信息增量。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 24,
+          "columns": [
+            "category_name",
+            "indicator_id",
+            "name"
+          ],
+          "attrs": {},
+          "file": "cache/probes/macro_list_0.parquet",
+          "sha256": "f2f7f8fa7a11b93d9868aa3e8c9593ef0ba79c934cca50aa1e631df51e0f776f"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "economic_calendar",
+      "method": "get_economic_calendar",
+      "ret": 0,
+      "requested_at": "2026-10-05T11:54:48.347076+00:00",
+      "received_at": "2026-10-05T11:54:50.353010+00:00",
+      "disposition": "excluded_vintages_unproven",
+      "reason": "日历有previous/consensus/actual，但未提供原始预期与实际修订版本。",
+      "parts": [
+        {
+          "kind": "frame",
+          "rows": 89,
+          "columns": [
+            "title",
+            "timestamp",
+            "country",
+            "star",
+            "previous",
+            "consensus",
+            "actual"
+          ],
+          "attrs": {},
+          "file": "cache/probes/economic_calendar_0.parquet",
+          "sha256": "f4ce1d67890d21dc76c704440c2664655d1ad2f60872b148f8e5f5a7ba16cad1"
+        },
+        {
+          "kind": "str"
+        },
+        {
+          "kind": "bool"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "earnings_calendar",
+      "method": "get_earnings_calendar",
+      "ret": -1,
+      "requested_at": "2026-10-05T11:54:51.780332+00:00",
+      "received_at": "2026-10-05T11:55:01.783666+00:00",
+      "disposition": "excluded_vintages_and_timeout",
+      "reason": "本次历史窗口实测NN_ProtoRet_TimeOut；既有缓存也不证明当时预期可知，未将其作为历史共识。",
+      "parts": [
+        {
+          "kind": "str"
+        }
+      ],
+      "error": null
+    },
+    {
+      "method": "get_macro_indicator_history",
+      "disposition": "excluded_vintages_unproven",
+      "reason": "100行含release_time/value/predict_value/previous_value，也包含未来尚未公布的N/A行；没有原始修订历史，不做as-released惊喜。",
+      "ret": 0,
+      "received_at": "2026-10-05T12:01:15.815851+00:00",
+      "rows": 100,
+      "columns": [
+        "data_time",
+        "release_time",
+        "value",
+        "predict_value",
+        "previous_value",
+        "unit_type"
+      ],
+      "file": "cache/probes/get_macro_indicator_history_extra.json",
+      "sha256": "76f149cebdfb2594b8f8c17b386949e8620fa11a6e2e14998c574c20a0f7943a"
+    },
+    {
+      "method": "get_option_volatility",
+      "disposition": "unavailable_wrong_instrument",
+      "reason": "传入AMD股票代码返回只支持期权代码；本轮所需历史标的IV/HV由专用历史接口取得，不留下依赖。",
+      "ret": -1,
+      "received_at": "2026-10-05T12:01:15.821686+00:00",
+      "error": "只支持期权代码，其他股票类型不支持"
+    }
+  ],
+  "history": [
+    {
+      "family": "capital",
+      "method": "get_capital_flow",
+      "requested": 124,
+      "returned": 124,
+      "stocks_with_rows": 124,
+      "rows": 30168,
+      "first": "2025-10-06",
+      "last": "2026-09-30",
+      "errors": []
+    },
+    {
+      "family": "options",
+      "method": "get_option_underlying_his_statistic",
+      "requested": 124,
+      "returned": 124,
+      "stocks_with_rows": 123,
+      "rows": 59674,
+      "first": "2024-10-04",
+      "last": "2026-09-30",
+      "errors": []
+    },
+    {
+      "family": "volatility",
+      "method": "get_option_underlying_his_volatility",
+      "requested": 124,
+      "returned": 124,
+      "stocks_with_rows": 123,
+      "rows": 59638,
+      "first": "2024-10-04",
+      "last": "2026-09-30",
+      "errors": []
+    },
+    {
+      "family": "short_volume",
+      "method": "get_daily_short_volume",
+      "requested": 124,
+      "returned": 124,
+      "stocks_with_rows": 124,
+      "rows": 59957,
+      "first": "2024-10-04",
+      "last": "2026-09-30",
+      "errors": []
+    }
+  ],
+  "subscription": {
+    "requested_at": "2026-10-05T12:00:27.460491+00:00",
+    "symbol": "US.AMD",
+    "scope": "this connection only",
+    "historical_training_eligible": false,
+    "subscribe_ret": 0,
+    "subscribe_message": "None",
+    "get_order_book": {
+      "ret": 0,
+      "received_at": "2026-10-05T12:00:28.717185+00:00",
+      "keys": [
+        "code",
+        "name",
+        "svr_recv_time_bid",
+        "svr_recv_time_ask",
+        "order_book_type",
+        "Bid",
+        "Ask"
+      ],
+      "bid_levels": 5,
+      "ask_levels": 5,
+      "server_time_bid": "",
+      "server_time_ask": "",
+      "file": "cache/probes/subscribed_get_order_book.json",
+      "sha256": "8266ac213a713f696ad229ab4773ce682f6b750192b94ff56b79a6df214d06eb"
+    },
+    "get_rt_ticker": {
+      "ret": 0,
+      "received_at": "2026-10-05T12:00:29.479701+00:00",
+      "rows": 20,
+      "columns": [
+        "code",
+        "name",
+        "time",
+        "price",
+        "volume",
+        "turnover",
+        "ticker_direction",
+        "sequence",
+        "type"
+      ],
+      "time_range": [
+        "2026-10-02 16:00:01.274",
+        "2026-10-02 16:00:01.274"
+      ],
+      "file": "cache/probes/subscribed_get_rt_ticker.json",
+      "sha256": "634535dae75d5101550cfa268341f927e8c9281ad7771b095751531cd458a8a9"
+    },
+    "unsubscribe_ret": 0,
+    "unsubscribe_message": "None",
+    "completed_at": "2026-10-05T12:01:30.014010+00:00"
+  },
+  "orders_sent": false,
+  "purchases": 0,
+  "cloud_upload": false,
+  "acquisition_sha256": "7c92599c42c091ce3f2f68d63c629620759b7a44410074d0827cb5bf1f9e66db"
+}

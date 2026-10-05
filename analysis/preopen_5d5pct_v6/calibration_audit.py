@@ -60,7 +60,7 @@ def firsts(f):
     return pd.DataFrame(events)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--round',choices=['R00','R01','R02','R03','R04','R05'],default='R00');a=ap.parse_args();dest=OUT if a.round=='R00' else OUT/a.round
+    ap=argparse.ArgumentParser();ap.add_argument('--round',choices=['R00','R01','R02','R03','R04','R05','R06'],default='R00');a=ap.parse_args();dest=OUT if a.round=='R00' else OUT/a.round
     results=json.loads((dest/'results.json').read_text());audits=[]
     for arm in results['arms']:
         frames={v:load(dest,arm['arm'],v) for v in ['candidate_only','top_one']}
@@ -83,7 +83,7 @@ def main():
             brier_candidate=float(np.average((valid.score_candidate-valid.y)**2,weights=w)),brier_top=float(np.average((valid.score_top-valid.y)**2,weights=w)),
             brier_delta=float(np.average(delta,weights=w)),brier_delta_ci=date_ci(valid,delta,w)))
         print(json.dumps(dict(arm=arm['arm'],calibration_audited=True)),flush=True)
-    comparisons={'R00':[('A1','A0'),('B1','A0'),('B2','B1'),('ALG_LR','A0'),('ALG_ET','A0')],'R01':[('S1','S0'),('S2','S0'),('S3','S1')],'R02':[('P1','P0'),('E1','E0')],'R03':[('H1','H0'),('H2','H1'),('H3','H2')],'R04':[('F1','F0')],'R05':[('D1','D0')]}[a.round]
+    comparisons={'R00':[('A1','A0'),('B1','A0'),('B2','B1'),('ALG_LR','A0'),('ALG_ET','A0')],'R01':[('S1','S0'),('S2','S0'),('S3','S1')],'R02':[('P1','P0'),('E1','E0')],'R03':[('H1','H0'),('H2','H1'),('H3','H2')],'R04':[('F1','F0')],'R05':[('D1','D0')],'R06':[('TC','T0'),('TF','TC'),('TO','TC'),('TV','TC'),('TS','TC'),('TA','TC'),('TL','TA')]}[a.round]
     for newer,reference in comparisons:
         f=load(dest,newer,'candidate_only');g=load(dest,reference,'candidate_only')
         if f.empty or g.empty:continue

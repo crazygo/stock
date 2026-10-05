@@ -1,0 +1,685 @@
+{
+  "version": "v6_research_reference",
+  "calculated_at": "2026-10-05T13:29:11.312412+00:00",
+  "feature_cutoff": "2026-10-02 15:30 America/New_York",
+  "current_probability": false,
+  "issued_signal": false,
+  "orders_sent": false,
+  "target": "5d5pct",
+  "window_end": "2026-10-08 16:00 America/New_York",
+  "abstention": "research models not independently admitted; past session is not a current signal",
+  "routes": [
+    {
+      "round": "R06",
+      "arm": "T0",
+      "name": "原H3重训控制",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "e0f3a0f3e00ee928f4052f575b0c3987f32b4d03762cdf9bca484bddf96f0e73",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "TWST",
+          "probability": 0.7259084681940845,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TXG",
+          "probability": 0.6988391628853131,
+          "matched_baseline": 0.5889956942008758,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 93.72362999999999,
+          "target_price": 98.40981149999999,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "MSTR",
+          "probability": 0.690792128021141,
+          "matched_baseline": 0.4374015533308932,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 157.43227499999998,
+          "target_price": 165.30388874999997,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    },
+    {
+      "round": "R06",
+      "arm": "TC",
+      "name": "共享数据覆盖控制",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "d8a28f721e6119b5993ad560a53a3b6a51ef01b8fcda84863ba83ac6809eb75a",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "MSTR",
+          "probability": 0.6317786288865019,
+          "matched_baseline": 0.4374015533308932,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 157.43227499999998,
+          "target_price": 165.30388874999997,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TWST",
+          "probability": 0.6231180008617191,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TXG",
+          "probability": 0.610158890042318,
+          "matched_baseline": 0.5889956942008758,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 93.72362999999999,
+          "target_price": 98.40981149999999,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    },
+    {
+      "round": "R06",
+      "arm": "TF",
+      "name": "日级资金流",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "c756d53e5942639f99f782e321a45bca34f8e04a7260f0f0f7ef0f30e652a495",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "MSTR",
+          "probability": 0.7080288393693587,
+          "matched_baseline": 0.4374015533308932,
+          "effective_threshold": null,
+          "historical_threshold": 0.8,
+          "evaluation_price": 157.43227499999998,
+          "target_price": 165.30388874999997,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TWST",
+          "probability": 0.6658847239615622,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.8,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "AAOI",
+          "probability": 0.6355120102329613,
+          "matched_baseline": 0.7609437933393942,
+          "effective_threshold": null,
+          "historical_threshold": 0.8,
+          "evaluation_price": 115.8731574,
+          "target_price": 121.66681527,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    },
+    {
+      "round": "R06",
+      "arm": "TO",
+      "name": "期权成交与持仓",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "b546c3011588a266a7a4b5e6ea4418f32e4da6dcda6093656e6d299b105738b0",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "TWST",
+          "probability": 0.7139315074180593,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.8,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TXG",
+          "probability": 0.6899028643840273,
+          "matched_baseline": 0.5889956942008758,
+          "effective_threshold": null,
+          "historical_threshold": 0.8,
+          "evaluation_price": 93.72362999999999,
+          "target_price": 98.40981149999999,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "AAOI",
+          "probability": 0.6811986754923691,
+          "matched_baseline": 0.7609437933393942,
+          "effective_threshold": null,
+          "historical_threshold": 0.8,
+          "evaluation_price": 115.8731574,
+          "target_price": 121.66681527,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    },
+    {
+      "round": "R06",
+      "arm": "TV",
+      "name": "历史IV与HV",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "1e687e2d78d13fb035678c8ebcb318fd8a7b6faf6e8a4d1dcad8f3fd53342473",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "TWST",
+          "probability": 0.6637496915563491,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TXG",
+          "probability": 0.6364511952610361,
+          "matched_baseline": 0.5889956942008758,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 93.72362999999999,
+          "target_price": 98.40981149999999,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "AXTI",
+          "probability": 0.621553929330008,
+          "matched_baseline": 0.8280454905641819,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 85.62554,
+          "target_price": 89.906817,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    },
+    {
+      "round": "R06",
+      "arm": "TS",
+      "name": "每日卖空成交",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "05ff354dd7deba856cd67fd73302e6c1e172b55c63f2cc59526c0470117f76e9",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "MSTR",
+          "probability": 0.6676709646400096,
+          "matched_baseline": 0.4374015533308932,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 157.43227499999998,
+          "target_price": 165.30388874999997,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TWST",
+          "probability": 0.6655647141710361,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "AAOI",
+          "probability": 0.6322078979945513,
+          "matched_baseline": 0.7609437933393942,
+          "effective_threshold": null,
+          "historical_threshold": 0.75,
+          "evaluation_price": 115.8731574,
+          "target_price": 121.66681527,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    },
+    {
+      "round": "R06",
+      "arm": "TA",
+      "name": "四族信息联合",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "4141f68a66e418b8630961992028613ae49f5c6b8a223a043ae35b63d515811f",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "TWST",
+          "probability": 0.6679878549515891,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "AXTI",
+          "probability": 0.6358339997148161,
+          "matched_baseline": 0.8280454905641819,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 85.62554,
+          "target_price": 89.906817,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TXG",
+          "probability": 0.618769841306255,
+          "matched_baseline": 0.5889956942008758,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 93.72362999999999,
+          "target_price": 98.40981149999999,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    },
+    {
+      "round": "R06",
+      "arm": "TL",
+      "name": "四族信息五交易日延迟",
+      "algorithm": "LightGBM",
+      "model_month": "2026-09",
+      "training_protocol": {
+        "training": [
+          "2025-06-23",
+          "2026-04-08"
+        ],
+        "train_days": 200,
+        "candidate_calibration": [
+          "2026-04-23",
+          "2026-05-20"
+        ],
+        "top_calibration": [
+          "2026-06-05",
+          "2026-07-06"
+        ],
+        "selection": [
+          "2026-07-21",
+          "2026-08-17"
+        ],
+        "target": "5d5pct",
+        "panel_sha256": "3571a555bbd752384229221e07309a76e9e786c5c96e8f3ff68af5984f055ef2",
+        "protocol_sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa",
+        "top_calibration_dedup": "global_stock_day_both_phases",
+        "baseline_vol_edges": "training_only"
+      },
+      "calibration_status": {
+        "candidate_calibrated": true,
+        "extra_first_calibrated": true,
+        "probability_interpretation": "temporally calibrated research estimate"
+      },
+      "model_sha256": "00df6978cac483d2b3ef4a2066f4bf2af483d005bdfcf5da0f1980e63b4dad8e",
+      "artifact_format": "data_only_native",
+      "upstream": null,
+      "options": [
+        {
+          "symbol": "TWST",
+          "probability": 0.6635338619950866,
+          "matched_baseline": 0.5739466508483366,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 188.57838999999996,
+          "target_price": 198.00730949999996,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "TXG",
+          "probability": 0.6579662612399936,
+          "matched_baseline": 0.5889956942008758,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 93.72362999999999,
+          "target_price": 98.40981149999999,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        },
+        {
+          "symbol": "SMTC",
+          "probability": 0.6304020663711016,
+          "matched_baseline": 0.5428632773588343,
+          "effective_threshold": null,
+          "historical_threshold": 0.7,
+          "evaluation_price": 197.48728999999997,
+          "target_price": 207.3616545,
+          "price_status": "historical_next_Open_known",
+          "evaluation_entry": "2026-10-02 15:35 America/New_York",
+          "window_end": "2026-10-08 16:00 America/New_York",
+          "issued_signal": false,
+          "reason": "no current frozen admission; probabilities are research estimates, not proven precision"
+        }
+      ],
+      "scored": 120
+    }
+  ]
+}

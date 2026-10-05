@@ -44,6 +44,7 @@ def route(arm):
     if arm in ['F0','F1']:return OUT/'R04'
     if arm in ['H0','H1','H2','H3']:return OUT/'R03'
     if arm in ['D0','D1']:return OUT/'R05'
+    if arm in ['T0','TC','TF','TO','TV','TS','TA','TL']:return OUT/'R06'
     raise ValueError('unknown registered arm')
 
 def events(arm,variant):
@@ -70,7 +71,11 @@ def inspect_event(q):
     calibration_status=dict(candidate_calibrated=True,
         extra_first_calibrated=q['variant']=='top_one' and meta['top_calibration_counts'][phase]['calibrator_fitted'],
         model_month=meta['month'],interpretation='research estimate; calibration fit does not prove reliability')
-    return dict(event=ev,features=f.iloc[0].to_dict(),first_touch=str(touches.end.iloc[0]) if ev['y']==1 and len(touches) else None,
+    source_evidence=None
+    if dest.name=='R06':
+        daily=pd.read_parquet(dest/'cache/daily_features.parquet',filters=[('symbol','==',ev['symbol']),('day','==',ev['day'])])
+        source_evidence={c:daily.iloc[0][c] for c in daily if c.endswith(('_source_day','_available_day','_stale_sessions','_missing','_coverage_20','_value_missing_fraction'))} if len(daily) else None
+    return dict(event=ev,features=f.iloc[0].to_dict(),source_evidence=source_evidence,first_touch=str(touches.end.iloc[0]) if ev['y']==1 and len(touches) else None,
          algorithm=meta['algorithm'],training=meta['training'],candidate_calibration=meta['candidate_calibration'],top_calibration=meta['top_calibration'],selection=meta['selection'],calibration_status=calibration_status)
 
 class Handler(BaseHTTPRequestHandler):
@@ -80,11 +85,11 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         p=urlparse(self.path);q={k:v[0] for k,v in parse_qs(p.query).items()}
         try:
-            if p.path in ['/','/index.html','/opportunity.html','/sector.html','/events.html']:
+            if p.path in ['/','/index.html','/opportunity.html','/sector.html','/events.html','/futu_data.html']:
                 return self.send((OUT/('index.html' if p.path=='/' else p.path[1:])).read_text(),mime='text/html')
             if p.path=='/api/results':
                 reports=[]
-                for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05')]:
+                for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05'),('R06',OUT/'R06')]:
                     path=base/'results.json'
                     if path.exists():
                         r=json.loads(path.read_text());reports.extend(dict(**arm,round=rid) for arm in r['arms'])

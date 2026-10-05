@@ -16,7 +16,7 @@ def source_snapshot(dest,name):
 
 def unavailable_report(reason):
     report=dict(version='v6_research_reference',calculated_at=now(),current_probability=False,issued_signal=False,orders_sent=False,target='5d5pct',abstention=reason,routes=[])
-    for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05')]:
+    for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04'),('R05',OUT/'R05'),('R06',OUT/'R06')]:
         path=base/'results.json'
         if path.exists():
             for arm in json.loads(path.read_text())['arms']:
@@ -24,7 +24,7 @@ def unavailable_report(reason):
     return report
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--top',type=int,default=3);ap.add_argument('--refresh',action='store_true');ap.add_argument('--round',choices=['all','R00','R01','R02','R03','R04','R05'],default='all');ap.add_argument('--format',choices=['json','markdown'],default='markdown');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--top',type=int,default=3);ap.add_argument('--refresh',action='store_true');ap.add_argument('--round',choices=['all','R00','R01','R02','R03','R04','R05','R06'],default='all');ap.add_argument('--format',choices=['json','markdown'],default='markdown');a=ap.parse_args()
     if not 1<=a.top<=20:ap.error('top must be 1–20')
     path=OUT/'cache/latest_features.parquet'
     if a.refresh or not path.exists():
@@ -38,13 +38,13 @@ def main():
     endday=DATES[DATES.index(day)+4];deadline=endday+' '+('13:00' if SESSIONS[endday]['duration_minutes']==210 else '16:00')+' America/New_York'
     report=dict(version='v6_research_reference',calculated_at=now(),feature_cutoff=f'{day} {minute//60:02d}:{minute%60:02d} America/New_York',current_probability=False,issued_signal=False,orders_sent=False,
         target='5d5pct',window_end=deadline,abstention='research models not independently admitted; past session is not a current signal',routes=[])
-    rounds=['R00','R01','R02','R03','R04','R05'] if a.round=='all' else [a.round]
+    rounds=['R00','R01','R02','R03','R04','R05','R06'] if a.round=='all' else [a.round]
     for round_id in rounds:
       dest=OUT if round_id=='R00' else OUT/round_id
       if not (dest/'results.json').exists():continue
       registered_arms=json.loads((dest/'results.json').read_text())['arms']
       roundframe=frame.copy();upstream_meta=None
-      if round_id in ['R03','R05']:
+      if round_id in ['R03','R05','R06']:
         from history_prepare import mature_features
         path=OUT/'R03/cache/anchors.parquet'
         if path.exists():anchors=pd.read_parquet(path)
@@ -55,6 +55,17 @@ def main():
         for symbol in roundframe.symbol.unique():
             f=mature_features(anchors[anchors.symbol==symbol],[day]);f['symbol']=symbol;additions.append(f)
         roundframe=roundframe.merge(pd.concat(additions,ignore_index=True),on=['symbol','day'],how='left',validate='one_to_one')
+      if round_id=='R06':
+        manifest_path=dest/'feature_snapshot_manifest.json'
+        if not manifest_path.exists():
+            for arm_meta in registered_arms:report['routes'].append(dict(round=round_id,arm=arm_meta['arm'],name=arm_meta['name'],algorithm=arm_meta['algorithm'],options=[],reason='frozen historical source feature snapshot unavailable'))
+            continue
+        fm=json.loads(manifest_path.read_text());source=OUT/fm['file'];assert sha(source)==fm['sha256'],'R06 source snapshot changed'
+        daily=pd.DataFrame(json.loads(gzip.decompress(source.read_bytes()))['records'])
+        if day!=fm['day']:
+            for arm_meta in registered_arms:report['routes'].append(dict(round=round_id,arm=arm_meta['arm'],name=arm_meta['name'],algorithm=arm_meta['algorithm'],options=[],reason='new source data do not cover the requested feature day; refresh acquisition in a new registered round'))
+            continue
+        roundframe=roundframe.merge(daily,on=['symbol','day'],how='left',validate='one_to_one')
       if round_id=='R05':
         from sector_daily import peer_daily
         daily=pd.read_parquet(OUT/'cache/latest_daily.parquet',columns=['symbol','day','d_return_5','d_return_20'])

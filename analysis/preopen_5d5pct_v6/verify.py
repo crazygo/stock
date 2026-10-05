@@ -26,7 +26,7 @@ def expected_event(e,raw,actions):
 def main():
     global OUT
     base_out=OUT
-    ap=argparse.ArgumentParser();ap.add_argument('--round',choices=['R00','R01','R02','R03','R04','R05'],default='R00');arguments=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--round',choices=['R00','R01','R02','R03','R04','R05','R06'],default='R00');arguments=ap.parse_args()
     if arguments.round!='R00':OUT=OUT/arguments.round
     errors=[];checked=0;price_rounding=0;cache={};actions={};predictions=[];rank_ticks=0;purges=[]
     coverage=json.loads((OUT/'coverage.json').read_text());assert sha(OUT/'cache/panel.parquet')==coverage['panel_sha256']
@@ -76,14 +76,14 @@ def main():
                 if not e['score']>=e['threshold']:errors.append(dict(kind='threshold',key=key))
                 symbol=e['symbol']
                 if symbol not in cache:
-                    source=base_out/'cache/backfill'/f'{symbol}.parquet' if arguments.round in ['R03','R05'] else OLD/'raw'/f'{symbol}.parquet'
+                    source=base_out/'cache/backfill'/f'{symbol}.parquet' if arguments.round in ['R03','R05','R06'] else OLD/'raw'/f'{symbol}.parquet'
                     if not source.exists():source=OLD/'raw'/f'{symbol}.parquet'
                     cache[symbol]=pd.read_parquet(source)
                     ad=set()
                     for base in [OLD.parents[1]/'market_data/model_training_history_v1/corporate_actions',OLD.parents[1]/'market_data/corporate_actions',OLD.parents[1]/'analysis/preopen_intraday_v2/cache/corporate_actions']:
                         pth=base/f'{symbol}.parquet'
                         if pth.exists():action_data=pd.read_parquet(pth);ad.update(action_data.ex_div_date.astype(str).str[:10])
-                    if OUT.name in ['R03','R04','R05']:
+                    if OUT.name in ['R03','R04','R05','R06']:
                         pth=base_out/'cache/corporate_actions'/f'{symbol}.parquet'
                         if pth.exists():action_data=pd.read_parquet(pth);ad.update(action_data.ex_div_date.astype(str).str[:10])
                     actions[symbol]=ad

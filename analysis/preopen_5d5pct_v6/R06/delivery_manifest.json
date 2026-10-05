@@ -1,0 +1,818 @@
+{
+  "at": "2026-10-05T13:26:02.513567+00:00",
+  "status": "completed_development",
+  "models": 40,
+  "variants": 80,
+  "historical_passed": 0,
+  "independent_pass": false,
+  "best_added_information_with_n100": {
+    "arm": "TO",
+    "variant": "top_one",
+    "metrics": {
+      "signals": 134,
+      "mature": 131,
+      "tp": 100,
+      "fp": 31,
+      "pending": 3,
+      "precision": 0.7633587786259542,
+      "conservative_precision": 0.746268656716418,
+      "date_count": 39,
+      "days": 105,
+      "weeks": 23,
+      "signals_per_week": 5.826086956521739,
+      "abstentions": 14356,
+      "abstention_ratio": 0.9907522429261559,
+      "baseline": 0.6379944263775535,
+      "lift": 0.1253643522484007,
+      "mean_signal_probability": 0.7989587410604381,
+      "brier": 0.1789709321981806,
+      "baseline_brier": 0.19617787274890286,
+      "block_ci": [
+        0.6499511173184358,
+        0.8854241071428571
+      ],
+      "lift_ci": [
+        -0.0027333926619935757,
+        0.24481218561416215
+      ],
+      "mature_date_count": 39
+    },
+    "passed": false,
+    "failures": [
+      "成熟信号日期至少40",
+      "达成率至少80%",
+      "日期块下限至少70%",
+      "固定五股各n至少20且达成率至少75%",
+      "第一名概率可信门禁"
+    ]
+  },
+  "acceptance": [
+    {
+      "arm": "T0",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 396,
+        "mature": 392,
+        "tp": 289,
+        "fp": 103,
+        "pending": 4,
+        "precision": 0.7372448979591837,
+        "conservative_precision": 0.7297979797979798,
+        "date_count": 72,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 17.217391304347824,
+        "abstentions": 14094,
+        "abstention_ratio": 0.9726708074534162,
+        "baseline": 0.641615749289135,
+        "lift": 0.09562914867004868,
+        "mean_signal_probability": 0.7497067776556808,
+        "brier": 0.19844868479828198,
+        "baseline_brier": 0.20336303731255614,
+        "block_ci": [
+          0.6481797279172254,
+          0.8096922684213511
+        ],
+        "lift_ci": [
+          0.005032886373050455,
+          0.17001125959085264
+        ],
+        "mature_date_count": 70
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "T0",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 332,
+        "mature": 329,
+        "tp": 220,
+        "fp": 109,
+        "pending": 3,
+        "precision": 0.668693009118541,
+        "conservative_precision": 0.6626506024096386,
+        "date_count": 54,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 14.434782608695652,
+        "abstentions": 14158,
+        "abstention_ratio": 0.9770876466528641,
+        "baseline": 0.6558919425754642,
+        "lift": 0.012801066543076778,
+        "mean_signal_probability": 0.8286727470613643,
+        "brier": 0.25660210840228914,
+        "baseline_brier": 0.2292303583882995,
+        "block_ci": [
+          0.5414669115579962,
+          0.8
+        ],
+        "lift_ci": [
+          -0.10755214613761477,
+          0.13757958005470408
+        ],
+        "mature_date_count": 52
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "匹配基准增量至少5pp",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TC",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 558,
+        "mature": 553,
+        "tp": 411,
+        "fp": 142,
+        "pending": 5,
+        "precision": 0.7432188065099458,
+        "conservative_precision": 0.7365591397849462,
+        "date_count": 67,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 24.26086956521739,
+        "abstentions": 13932,
+        "abstention_ratio": 0.9614906832298137,
+        "baseline": 0.6448548325738371,
+        "lift": 0.09836397393610863,
+        "mean_signal_probability": 0.7252929779801426,
+        "brier": 0.1998610916425869,
+        "baseline_brier": 0.20776698457800866,
+        "block_ci": [
+          0.6563358274647888,
+          0.8201825671815488
+        ],
+        "lift_ci": [
+          -0.009795420925503975,
+          0.18090204304220295
+        ],
+        "mature_date_count": 67
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TC",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 178,
+        "mature": 173,
+        "tp": 116,
+        "fp": 57,
+        "pending": 5,
+        "precision": 0.6705202312138728,
+        "conservative_precision": 0.651685393258427,
+        "date_count": 32,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 7.739130434782608,
+        "abstentions": 14312,
+        "abstention_ratio": 0.9877156659765356,
+        "baseline": 0.6937212790457106,
+        "lift": -0.02320104783183774,
+        "mean_signal_probability": 0.8894363306458083,
+        "brier": 0.2665104085969325,
+        "baseline_brier": 0.22915259373278934,
+        "block_ci": [
+          0.4284543325526932,
+          0.8547757475083055
+        ],
+        "lift_ci": [
+          -0.2451336693790604,
+          0.15222879999330646
+        ],
+        "mature_date_count": 31
+      },
+      "passed": false,
+      "failures": [
+        "成熟信号日期至少40",
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "匹配基准增量至少5pp",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TF",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 597,
+        "mature": 592,
+        "tp": 438,
+        "fp": 154,
+        "pending": 5,
+        "precision": 0.7398648648648649,
+        "conservative_precision": 0.7336683417085427,
+        "date_count": 68,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 25.956521739130434,
+        "abstentions": 13893,
+        "abstention_ratio": 0.9587991718426501,
+        "baseline": 0.6377806489253764,
+        "lift": 0.10208421593948847,
+        "mean_signal_probability": 0.7253764576848433,
+        "brier": 0.19894270788047502,
+        "baseline_brier": 0.21321423208749274,
+        "block_ci": [
+          0.6613219819611471,
+          0.8112044311377246
+        ],
+        "lift_ci": [
+          0.010753319265604088,
+          0.17471856184868995
+        ],
+        "mature_date_count": 68
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TF",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 761,
+        "mature": 748,
+        "tp": 474,
+        "fp": 274,
+        "pending": 13,
+        "precision": 0.6336898395721925,
+        "conservative_precision": 0.6228646517739816,
+        "date_count": 71,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 33.08695652173913,
+        "abstentions": 13729,
+        "abstention_ratio": 0.9474810213940649,
+        "baseline": 0.6425771405240822,
+        "lift": -0.00888730095188972,
+        "mean_signal_probability": 0.8480757371515922,
+        "brier": 0.2891353834665091,
+        "baseline_brier": 0.23825221585975095,
+        "block_ci": [
+          0.5351893550142054,
+          0.7486950204575042
+        ],
+        "lift_ci": [
+          -0.10315261225468408,
+          0.096799858023216
+        ],
+        "mature_date_count": 70
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "匹配基准增量至少5pp",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁",
+        "高概率区间连续两月明显高估"
+      ]
+    },
+    {
+      "arm": "TO",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 996,
+        "mature": 983,
+        "tp": 697,
+        "fp": 286,
+        "pending": 13,
+        "precision": 0.7090539165818922,
+        "conservative_precision": 0.6997991967871486,
+        "date_count": 73,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 43.30434782608695,
+        "abstentions": 13494,
+        "abstention_ratio": 0.9312629399585921,
+        "baseline": 0.6231790743986625,
+        "lift": 0.08587484218322972,
+        "mean_signal_probability": 0.7034818838896151,
+        "brier": 0.21519252522860097,
+        "baseline_brier": 0.21675145286342856,
+        "block_ci": [
+          0.6256846241298841,
+          0.7844633936662097
+        ],
+        "lift_ci": [
+          -0.004497611164512329,
+          0.16875173493778842
+        ],
+        "mature_date_count": 73
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TO",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 134,
+        "mature": 131,
+        "tp": 100,
+        "fp": 31,
+        "pending": 3,
+        "precision": 0.7633587786259542,
+        "conservative_precision": 0.746268656716418,
+        "date_count": 39,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 5.826086956521739,
+        "abstentions": 14356,
+        "abstention_ratio": 0.9907522429261559,
+        "baseline": 0.6379944263775535,
+        "lift": 0.1253643522484007,
+        "mean_signal_probability": 0.7989587410604381,
+        "brier": 0.1789709321981806,
+        "baseline_brier": 0.19617787274890286,
+        "block_ci": [
+          0.6499511173184358,
+          0.8854241071428571
+        ],
+        "lift_ci": [
+          -0.0027333926619935757,
+          0.24481218561416215
+        ],
+        "mature_date_count": 39
+      },
+      "passed": false,
+      "failures": [
+        "成熟信号日期至少40",
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TV",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 469,
+        "mature": 461,
+        "tp": 313,
+        "fp": 148,
+        "pending": 8,
+        "precision": 0.6789587852494577,
+        "conservative_precision": 0.6673773987206824,
+        "date_count": 58,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 20.391304347826086,
+        "abstentions": 14021,
+        "abstention_ratio": 0.9676328502415459,
+        "baseline": 0.6482076258421421,
+        "lift": 0.030751159407315654,
+        "mean_signal_probability": 0.7786009613276412,
+        "brier": 0.23465247534100658,
+        "baseline_brier": 0.23391227797566513,
+        "block_ci": [
+          0.540227787566071,
+          0.7696158354646206
+        ],
+        "lift_ci": [
+          -0.12003302703507114,
+          0.12224753460018609
+        ],
+        "mature_date_count": 55
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "匹配基准增量至少5pp",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TV",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 290,
+        "mature": 285,
+        "tp": 204,
+        "fp": 81,
+        "pending": 5,
+        "precision": 0.7157894736842105,
+        "conservative_precision": 0.7034482758620689,
+        "date_count": 54,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 12.608695652173912,
+        "abstentions": 14200,
+        "abstention_ratio": 0.9799861973775017,
+        "baseline": 0.6694555959940907,
+        "lift": 0.04633387769011987,
+        "mean_signal_probability": 0.8095016113576073,
+        "brier": 0.21555444904547405,
+        "baseline_brier": 0.21503115445921567,
+        "block_ci": [
+          0.590895399780942,
+          0.8133451882845188
+        ],
+        "lift_ci": [
+          -0.07645674654099081,
+          0.13282756640187093
+        ],
+        "mature_date_count": 52
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "匹配基准增量至少5pp",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁",
+        "高概率区间连续两月明显高估"
+      ]
+    },
+    {
+      "arm": "TS",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 459,
+        "mature": 448,
+        "tp": 334,
+        "fp": 114,
+        "pending": 11,
+        "precision": 0.7455357142857143,
+        "conservative_precision": 0.7276688453159041,
+        "date_count": 54,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 19.956521739130434,
+        "abstentions": 14031,
+        "abstention_ratio": 0.9683229813664597,
+        "baseline": 0.6525510647414057,
+        "lift": 0.09298464954430863,
+        "mean_signal_probability": 0.734887957171553,
+        "brier": 0.20306290031051794,
+        "baseline_brier": 0.21468079174811122,
+        "block_ci": [
+          0.6195286059629331,
+          0.8347280334728033
+        ],
+        "lift_ci": [
+          -0.0727734777100687,
+          0.18281033763263968
+        ],
+        "mature_date_count": 52
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TS",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 437,
+        "mature": 431,
+        "tp": 313,
+        "fp": 118,
+        "pending": 6,
+        "precision": 0.7262180974477959,
+        "conservative_precision": 0.7162471395881007,
+        "date_count": 47,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 19.0,
+        "abstentions": 14053,
+        "abstention_ratio": 0.9698412698412698,
+        "baseline": 0.6575287177657194,
+        "lift": 0.06868937968207645,
+        "mean_signal_probability": 0.781383730319535,
+        "brier": 0.21754044443737303,
+        "baseline_brier": 0.22070618647897403,
+        "block_ci": [
+          0.6130511934673367,
+          0.8087442284068285
+        ],
+        "lift_ci": [
+          -0.07822661801814557,
+          0.1507876290544286
+        ],
+        "mature_date_count": 47
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TA",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 873,
+        "mature": 864,
+        "tp": 581,
+        "fp": 283,
+        "pending": 9,
+        "precision": 0.6724537037037037,
+        "conservative_precision": 0.6655211912943871,
+        "date_count": 74,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 37.95652173913044,
+        "abstentions": 13617,
+        "abstention_ratio": 0.9397515527950311,
+        "baseline": 0.6303721727745875,
+        "lift": 0.04208153092911626,
+        "mean_signal_probability": 0.7156473776777664,
+        "brier": 0.22700997267139247,
+        "baseline_brier": 0.22709376862688913,
+        "block_ci": [
+          0.5907416951041159,
+          0.7650478900903945
+        ],
+        "lift_ci": [
+          -0.036976658691147184,
+          0.13050179518401692
+        ],
+        "mature_date_count": 74
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "匹配基准增量至少5pp",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TA",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 864,
+        "mature": 854,
+        "tp": 594,
+        "fp": 260,
+        "pending": 10,
+        "precision": 0.6955503512880562,
+        "conservative_precision": 0.6875,
+        "date_count": 79,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 37.56521739130435,
+        "abstentions": 13626,
+        "abstention_ratio": 0.9403726708074535,
+        "baseline": 0.62724245596687,
+        "lift": 0.0683078953211862,
+        "mean_signal_probability": 0.7481299992619075,
+        "brier": 0.2489703410608047,
+        "baseline_brier": 0.22528316410573804,
+        "block_ci": [
+          0.616066442448452,
+          0.7843612234580384
+        ],
+        "lift_ci": [
+          -0.01825628651823838,
+          0.1576097623268817
+        ],
+        "mature_date_count": 78
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁",
+        "高概率区间连续两月明显高估"
+      ]
+    },
+    {
+      "arm": "TL",
+      "variant": "candidate_only",
+      "metrics": {
+        "signals": 952,
+        "mature": 941,
+        "tp": 689,
+        "fp": 252,
+        "pending": 11,
+        "precision": 0.7321997874601488,
+        "conservative_precision": 0.7237394957983193,
+        "date_count": 70,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 41.391304347826086,
+        "abstentions": 13538,
+        "abstention_ratio": 0.9342995169082126,
+        "baseline": 0.6200013978400877,
+        "lift": 0.11219838962006112,
+        "mean_signal_probability": 0.6863413761202759,
+        "brier": 0.21054420426654993,
+        "baseline_brier": 0.21712989167506766,
+        "block_ci": [
+          0.6426920154155132,
+          0.8025457738968313
+        ],
+        "lift_ci": [
+          0.01021434081791631,
+          0.18606665625734412
+        ],
+        "mature_date_count": 69
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    },
+    {
+      "arm": "TL",
+      "variant": "top_one",
+      "metrics": {
+        "signals": 519,
+        "mature": 509,
+        "tp": 348,
+        "fp": 161,
+        "pending": 10,
+        "precision": 0.6836935166994106,
+        "conservative_precision": 0.6705202312138728,
+        "date_count": 52,
+        "days": 105,
+        "weeks": 23,
+        "signals_per_week": 22.565217391304348,
+        "abstentions": 13971,
+        "abstention_ratio": 0.9641821946169772,
+        "baseline": 0.6268086511584968,
+        "lift": 0.056884865540913765,
+        "mean_signal_probability": 0.8156013770793847,
+        "brier": 0.24248006751618353,
+        "baseline_brier": 0.225149314140912,
+        "block_ci": [
+          0.5916100031058656,
+          0.7632594458227869
+        ],
+        "lift_ci": [
+          -0.04099687339732232,
+          0.1418823446085584
+        ],
+        "mature_date_count": 51
+      },
+      "passed": false,
+      "failures": [
+        "达成率至少80%",
+        "日期块下限至少70%",
+        "固定五股各n至少20且达成率至少75%",
+        "已发信号概率可信门禁",
+        "第一名概率可信门禁"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "file": "coverage.json",
+      "sha256": "9c3fd4e71e9306e12e1973d70f16596528808bce00a9576f78326326b36c1143"
+    },
+    {
+      "file": "calibration_audit.json",
+      "sha256": "63c2b18db17414262593b509e9d8a3bb9005305677ef0e65bc0c2e03a760b155"
+    },
+    {
+      "file": "verification.json",
+      "sha256": "b6dc4f62b3c5d9934545aa9913590ade28e46039a2dca8b5515c22a4a0ed0c8e"
+    },
+    {
+      "file": "control_verification.json",
+      "sha256": "a62994553f76bea230e6f4dc449929e99354fc9dfa7ea504e0ea8ff3772a6b6a"
+    },
+    {
+      "file": "portable_verification.json",
+      "sha256": "459e1e3a30599670d3d73a38987eace7853b008819d3b2a3510591d27eb3bcb9"
+    },
+    {
+      "file": "input_stability_audit.json",
+      "sha256": "34e0c6bac2e58aa99f95bc5d42075d4680fb70dadefee68e5373eef550d808db"
+    },
+    {
+      "file": "api_audit.json",
+      "sha256": "aabfce6c0c5316a408c6dedcebaf4e3ded04afc39824c2734302acef1a172ce9"
+    },
+    {
+      "file": "training_coverage.json",
+      "sha256": "e7c96214f8c61c5eb9c1110d35b7fe60d72177f61c9a0a0a5453378789254fba"
+    },
+    {
+      "file": "source_quality.json",
+      "sha256": "d255698b6af7e62fd649d771871d71066c00c58157603d481f6c5beec5ebd62d"
+    },
+    {
+      "file": "ACCEPTANCE_IMPLEMENTATION.md",
+      "sha256": "7c09bcf84eaa212a1df52084807563dad4285a2616416b81c724348fee177257"
+    },
+    {
+      "file": "PROTOCOL.md",
+      "sha256": "ba2d5436c797d4a44304f944e8b09eae3b1cb7c64540474a9bfb5623351f63fa"
+    },
+    {
+      "file": "AUDIT_PROTOCOL.md",
+      "sha256": "e241fd8123a8836ff8201f96725eb9a68b81aae5bd14f151f6ff2ce2ca8f6ac4"
+    },
+    {
+      "file": "registration.json",
+      "sha256": "3152ddf4735c87a0da58c46e96059256ef00fb733312e2843f3d8cb9eed10e10"
+    },
+    {
+      "file": "REPORT.md",
+      "sha256": "e66e41c0252a5316164cfbdbac0f52ac452333eae9f9cfbc8ee9726a65dfd081"
+    },
+    {
+      "file": "REVIEW.md",
+      "sha256": "13bd60809c24b5a48881197e91aaa30e533cf4902a8553267ad62dfbd10a0426"
+    },
+    {
+      "file": "service_verification.json",
+      "sha256": "6802374d4b1ea37e4042cf0bd7d3b52d37f34e319ec4929fe9ffe6577a8b4e92"
+    },
+    {
+      "file": "subscription_verification.json",
+      "sha256": "ad841798cf9fbcca00b80f27811010b7b9316899f42232279949ea0e92bfa637"
+    },
+    {
+      "file": "inference_verification.json",
+      "sha256": "1ad1255c10142e2c95e5ab1a41bc5e3b45802f8ad8d2712689a5e17b579e596c"
+    },
+    {
+      "file": "all_models_verification.json",
+      "sha256": "c68691dcc26761b06a7b905628c0636dc9cbf70509f21703b331cec99ba4f686"
+    },
+    {
+      "file": "ui_verification.json",
+      "sha256": "fb1ed7f7340957ce351b83a033fdaa3d7565955a086ae0d143f403792bd42946"
+    },
+    {
+      "file": "pipeline_status.json",
+      "sha256": "c1d81418c54c65e72b11129b6e9360e7e581b4fcdcc710fc4c23c3fe72c8c248"
+    },
+    {
+      "file": "feature_snapshot_manifest.json",
+      "sha256": "4a4fd5b8a54db17c941001763bd56d704783c9e3f4b006033f1f2a67d2c3e035"
+    },
+    {
+      "file": "favorites_snapshot.json",
+      "sha256": "da1f567818b9a668a8ef415323f7e1c9f8e0647edb15d81beb561f23c5ef32b4"
+    }
+  ],
+  "paid_data_cost": 0,
+  "current_probability": false,
+  "issued_signal": false,
+  "orders_sent": false,
+  "delivery_closed_at": "2026-10-05T13:38:08.512067+00:00",
+  "dispositions_closed": true,
+  "engineering_checks_complete": true
+}
