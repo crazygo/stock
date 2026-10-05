@@ -34,3 +34,9 @@ R02：先读R02/PROTOCOL.md，再运行event_prepare.py、events_research.py --f
 R04季度实际同比对照：facts_prepare.py、facts_research.py --fit、verify.py --round R04、calibration_audit.py --round R04。原文抽查见SEC_FACTS_SAMPLE.md；没有历史共识，不称超预期。favorite_report.py补充当前全部33只特别关注美股股票，含零信号/未注册。
 
 portable_models/仅含最新月原生数据模型，SHA核验；export_models.py生成并对16模型及日级上游分别复算。统一命令优先原生加载，已用禁止pickle.loads的运行检验。数值移植不证明效果；原始行情/事件缓存仍需本地或数据准备，不附带伪造的当前行情。
+
+R03完整历史/成熟状态：先读R03/PROTOCOL.md。backfill_history.py --wait逐股补过去行情，continue_history.py在完成的符号上准备特征，随后顺序运行history_prepare.py、history_research.py --fit、校准、特别关注、独立复算及原生导出。deadline前无法完成的历史明确保留部分覆盖，不把新取得股票自动授予模型资格。原始价格逐项保持，不覆盖旧raw。
+
+旧+3%固定信号另作五日对照：old_control.py / OLD_CONTROL.md。它重新核对新行动与匹配五日基准，不重选旧信号，也不把当天+3%旧概率当五日概率。免费当前快照与盘口能力见execution_audit.json / book_probe.json；当前报价不证明历史成交。
+
+本轮复核发现原第一名校准分时去重及波动分层边界与文字契约的差异；R03四臂统一修正，原结果保留。历史覆盖变化、规则修复和新增市场信息分别解释。第一批提交e3504fa只含本目录。

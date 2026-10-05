@@ -38,14 +38,14 @@ def universe():
     return rows
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--limit',type=int,default=120);ap.add_argument('--start',default='2024-10-04');ap.add_argument('--end',default='2026-10-02');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--limit',type=int,default=120);ap.add_argument('--start',default='2024-10-04');ap.add_argument('--end',default='2026-10-02');ap.add_argument('--wait',action='store_true');a=ap.parse_args()
     rows=universe(); inventory=json.loads((OUT/'cache/r2_inventory.json').read_text());objects=[]
     for source in inventory['sources']:objects+=source.get('objects',[])
     from scripts.r2_client import R2Client
     import futu as ft
     client=R2Client();ft.SysConfig.enable_proto_encrypt(False)
     q=None;history_requests=0;report=[]
-    lock=(OUT/'cache/acquire.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    lock=(OUT/'cache/acquire.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX if a.wait else fcntl.LOCK_EX|fcntl.LOCK_NB)
     try:
         for r in rows:
             symbol=r['symbol'];meta=OUT/'cache/acquired'/f'{symbol}.json';path=meta.with_suffix('.parquet')
@@ -59,7 +59,10 @@ def main():
                 key=obj['key']
                 if not key.startswith(f'us_5m/{symbol}/') or not key.endswith('.parquet'):continue
                 local=ROOT/'market_data'/key
-                if not local.exists():local=OUT/'cache/r2'/key;local.parent.mkdir(parents=True,exist_ok=True);client.get_object(key,local)
+                if not local.exists():
+                    local=OUT/'cache/r2'/key;local.parent.mkdir(parents=True,exist_ok=True)
+                    try:client.get_object(key,local)
+                    except Exception as e:sources.append('R2_unavailable:'+key+':'+type(e).__name__);continue
                 try:frames.append(normalize_archive(pd.read_parquet(local)));sources.append('R2:'+key)
                 except ValueError:pass
             f=pd.concat(frames,ignore_index=True).drop_duplicates('start').sort_values('start') if frames else pd.DataFrame()

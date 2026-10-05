@@ -54,5 +54,11 @@ def main():
   err=float(np.max(np.abs(model.predict_proba(sample[last['features']])[:,1]-raw_probability(a,sample))));assert err<1e-10
   checks.append(dict(round='R01',arm='daily_opportunity',rows=len(sample),max_error=err));upstream_item=dict(file=file.name,sha256=sha(file),bytes=file.stat().st_size,source_pickle_sha256=sha(p))
  write(dest/'manifest.json',dict(schema='stock-v6-native-manifest-1',at=now(),models=models,upstream=upstream_item,admission='research_only_effective_threshold_none'))
+ anchors=OUT/'R03/cache/anchors.parquet'
+ if anchors.exists():
+  file=OUT/'source_data/R03/mature_anchors.json.gz';file.parent.mkdir(parents=True,exist_ok=True)
+  records=pd.read_parquet(anchors).to_dict('records')
+  file.write_bytes(gzip.compress(json.dumps(clean(dict(source_sha256=sha(anchors),records=records)),separators=(',',':'),allow_nan=False).encode(),compresslevel=9,mtime=0))
+  write(OUT/'R03/mature_anchor_manifest.json',dict(file=str(file.relative_to(OUT)),sha256=sha(file),rows=len(records),availability='complete prior label_end only; current membership retrospective'))
  write(OUT/'portable_verification.json',dict(at=now(),status='passed',checks=checks,note='Numeric portability is engineering evidence, not predictive or calibration validation.'))
 if __name__=='__main__':main()

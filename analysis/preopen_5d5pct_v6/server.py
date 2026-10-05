@@ -9,7 +9,8 @@ from common import OUT,OLD,SESSIONS,clean
 
 def raw_path(symbol):
     if not symbol or not all(c.isalnum() or c in '.-' for c in symbol):raise ValueError('invalid symbol')
-    p=OLD/'raw'/f'{symbol}.parquet'
+    p=OUT/'cache/backfill'/f'{symbol}.parquet'
+    if not p.exists():p=OLD/'raw'/f'{symbol}.parquet'
     if not p.exists():p=OUT/'cache/acquired'/f'{symbol}.parquet'
     if not p.exists():raise ValueError('minute history unavailable')
     return p
@@ -41,6 +42,7 @@ def route(arm):
     if arm in ['S0','S1','S2','S3']:return OUT/'R01'
     if arm in ['P0','P1','E0','E1']:return OUT/'R02'
     if arm in ['F0','F1']:return OUT/'R04'
+    if arm in ['H0','H1','H2','H3']:return OUT/'R03'
     raise ValueError('unknown registered arm')
 
 def events(arm,variant):
@@ -53,7 +55,7 @@ def inspect_event(q):
     ev=next((e for e in events(q['arm'],q['variant']) if e['symbol']==q['symbol'] and e['day']==q['day']),None)
     if ev is None:raise ValueError('signal unavailable')
     dest=route(q['arm']);meta=json.loads((dest/'cache/runs'/f"{q['arm']}_{ev['day'][:7]}"/'meta.json').read_text())
-    f=pd.read_parquet(dest/'cache/panel.parquet',columns=['symbol','day','minute']+meta['features'],filters=[('symbol','==',ev['symbol']),('day','==',ev['day']),('minute','==',ev['minute'])])
+    f=pd.read_parquet(dest/'cache'/meta.get('panel_file','panel.parquet'),columns=['symbol','day','minute']+meta['features'],filters=[('symbol','==',ev['symbol']),('day','==',ev['day']),('minute','==',ev['minute'])])
     p=raw_path(ev['symbol']);r=raw(ev['symbol'],p.stat().st_mtime);entry=pd.Timestamp(ev['day'])+pd.Timedelta(minutes=ev['minute']+5)
     mask=(r.start>=entry)&(r.end<=pd.Timestamp(ev['label_end']))&(r.minute>=570)&(r.minute<r.day.map({d:570+s['duration_minutes'] for d,s in SESSIONS.items()}))
     touches=r[mask&(r.high>=ev['target'])]
@@ -71,14 +73,17 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send((OUT/('index.html' if p.path=='/' else p.path[1:])).read_text(),mime='text/html')
             if p.path=='/api/results':
                 reports=[]
-                for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R04',OUT/'R04')]:
+                for rid,base in [('R00',OUT),('R01',OUT/'R01'),('R02',OUT/'R02'),('R03',OUT/'R03'),('R04',OUT/'R04')]:
                     path=base/'results.json'
                     if path.exists():
                         r=json.loads(path.read_text());reports.extend(dict(**arm,round=rid) for arm in r['arms'])
                 return self.send(dict(arms=reports,status='exposed_historical_development',independent_pass=False))
             if p.path=='/api/status':
                 names=['coverage','earnings_audit','sec_audit','r2_summary','history_acquisition','corporate_actions_audit']
-                return self.send({n:json.loads((OUT/(n+'.json')).read_text()) if (OUT/(n+'.json')).exists() else None for n in names})
+                status={n:json.loads((OUT/(n+'.json')).read_text()) if (OUT/(n+'.json')).exists() else None for n in names}
+                if q.get('arm'):
+                    path=route(q['arm'])/'coverage.json';status['route_coverage']=json.loads(path.read_text()) if path.exists() else None
+                return self.send(status)
             if p.path=='/api/chart':return self.send(chart(q['symbol'],q.get('start','2026-08-01'),q.get('end','2026-09-30')))
             if p.path=='/api/events':return self.send(events(q['arm'],q.get('variant','top_one')))
             if p.path=='/api/inspect':return self.send(inspect_event(q))

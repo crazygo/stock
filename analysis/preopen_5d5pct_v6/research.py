@@ -21,6 +21,8 @@ THRESHOLDS=[.60,.65,.70,.75,.80,.85,.90,.95]
 FIVE=['ALAB','AMD','MRVL','TER','TXG']
 VERSION='preopen_5d5pct_v6_R00'
 REPORT_TITLE='五日 +5% 免费数据 R00 结果'
+GLOBAL_TOP_CALIBRATION=False
+TRAINING_ONLY_VOL_EDGES=False
 
 def init():
     global PANEL,PANEL_SHA
@@ -63,8 +65,9 @@ def fit_cal(f,p):
     model=LogisticRegression(C=1,max_iter=1000,random_state=1005).fit(transformed(p[valid]),f.loc[valid,'y'],sample_weight=weights(f.loc[valid]))
     return model if model.coef_[0,0]>0 else None
 
-def baseline_table(history):
-    valid=history[history.y.notna()].copy();quantiles=np.quantile(valid.h_rv_30.dropna(),[1/3,2/3])
+def baseline_table(history,edge_history=None):
+    valid=history[history.y.notna()].copy();edges=valid if edge_history is None else edge_history[edge_history.y.notna()]
+    quantiles=np.quantile(edges.h_rv_30.dropna(),[1/3,2/3])
     valid['_volbin']=np.searchsorted(quantiles,valid.h_rv_30.fillna(-1))
     gm=valid.groupby('minute',observed=True).y.mean().to_dict()
     sm=valid.groupby(['symbol','minute'],observed=True).y.agg(['sum','count'])
@@ -120,7 +123,9 @@ def metrics(events,ticks,include_ci=True):
          mean_signal_probability=float(np.mean([e['score'] for e in known])) if n else None,
          brier=float(np.mean([(e['score']-e['y'])**2 for e in known])) if n else None,
          baseline_brier=float(np.mean([(e['baseline']-e['y'])**2 for e in known])) if n else None,
-         block_ci=block_ci(events,days) if include_ci else None)
+         block_ci=block_ci(events,days) if include_ci else None,
+         lift_ci=block_ci([dict(e,y=e['y']-e['baseline']) for e in known],days) if include_ci else None,
+         mature_date_count=len({e['day'] for e in known}))
 
 def probability_report(f):
     f=f[f.y.notna()].copy()
@@ -156,13 +161,23 @@ def fit(job):
     for phase in ['pre','regular']:
         f=ca[ca.minute<=570] if phase=='pre' else ca[ca.minute>570]
         cals[phase]=fit_cal(f,f.raw.to_numpy())
+    if GLOBAL_TOP_CALIBRATION:
+        hc['score']=np.nan;hc['baseline']=.5
+        for phase in ['pre','regular']:
+            ix=hc.minute<=570 if phase=='pre' else hc.minute>570
+            hc.loc[ix,'score']=apply_cal(cals[phase],hc.loc[ix,'raw'].to_numpy())
+        all_firsts,_=replay(hc,dict(pre=0.,regular=0.));first_cohort=pd.DataFrame(all_firsts)
+    for phase in ['pre','regular']:
         h=hc[hc.minute<=570].copy() if phase=='pre' else hc[hc.minute>570].copy()
-        h['score']=apply_cal(cals[phase],h.raw.to_numpy());h['baseline']=.5
-        es,_=replay(h,dict(pre=0.,regular=0.));top=pd.DataFrame(es)
+        if GLOBAL_TOP_CALIBRATION:
+            top=first_cohort[first_cohort.phase==phase]
+        else:
+            h['score']=apply_cal(cals[phase],h.raw.to_numpy());h['baseline']=.5
+            es,_=replay(h,dict(pre=0.,regular=0.));top=pd.DataFrame(es)
         tops[phase]=fit_cal(top,top.score.to_numpy()) if len(top) else None
         topcounts[phase]=dict(rows=len(top),calibrator_fitted=tops[phase] is not None)
     history=PANEL[PANEL.day.isin(td+cd+hd)&PANEL.symbol.isin(registered)&PANEL.y.notna()]
-    base=baseline_table(history);variants={}
+    base=baseline_table(history,tr if TRAINING_ONLY_VOL_EDGES else None);variants={}
     for variant in ['candidate_only','top_one']:
         def predict(frame):
             raw=raw_predict(model,cols,frame);p=np.empty(len(frame))
@@ -195,6 +210,7 @@ def fit(job):
     meta=dict(status='completed_development',arm=arm,month=month,name=NAMES[arm],algorithm=ALG[arm],target='5d5pct',training=[td[0],td[-1]],train_days=len(td),
               candidate_calibration=[cd[0],cd[-1]],top_calibration=[hd[0],hd[-1]],selection=[sd[0],sd[-1]],
               features=cols,registered=registered,top_calibration_counts=topcounts,variants=variants,model_sha256=sha(model_path),
+              top_calibration_dedup='global_stock_day_both_phases' if GLOBAL_TOP_CALIBRATION else 'phase_local_stock_day',baseline_vol_edges='training_only' if TRAINING_ONLY_VOL_EDGES else 'training_candidate_and_top_blocks',
               panel_sha256=PANEL_SHA,panel_file=(PANEL_PATH or OUT/'cache/panel.parquet').name,protocol_sha256=sha(OUT/'PROTOCOL.md'),warnings=[str(w.message)[:240] for w in caught],completed_at=now())
     write(meta_path,meta);return meta
 

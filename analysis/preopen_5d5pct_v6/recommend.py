@@ -1,5 +1,5 @@
 """One command: each available research arm's top three, with explicit abstention."""
-import argparse,json,pickle,subprocess,sys
+import argparse,gzip,json,pickle,subprocess,sys
 import numpy as np
 import pandas as pd
 from common import OUT,OLD,DATES,SESSIONS,write,clean,now,sha
@@ -8,7 +8,11 @@ from portable import load as load_portable,load_upstream,probabilities,raw_proba
 
 def source_snapshot(dest,name):
     path=dest/'cache'/name
-    return path if path.exists() else OUT/'source_data'/dest.name/name
+    path=path if path.exists() else OUT/'source_data'/dest.name/name
+    manifest=json.loads((OUT/'source_data/manifest.json').read_text())
+    item=next(r for r in manifest if r['round']==dest.name and r['file'].endswith('/'+name))
+    assert sha(path)==item['sha256'],'public event snapshot changed'
+    return path
 
 def unavailable_report(reason):
     report=dict(version='v6_research_reference',calculated_at=now(),current_probability=False,issued_signal=False,orders_sent=False,target='5d5pct',abstention=reason,routes=[])
@@ -20,7 +24,7 @@ def unavailable_report(reason):
     return report
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--top',type=int,default=3);ap.add_argument('--refresh',action='store_true');ap.add_argument('--round',choices=['all','R00','R01','R02','R04'],default='all');ap.add_argument('--format',choices=['json','markdown'],default='markdown');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--top',type=int,default=3);ap.add_argument('--refresh',action='store_true');ap.add_argument('--round',choices=['all','R00','R01','R02','R03','R04'],default='all');ap.add_argument('--format',choices=['json','markdown'],default='markdown');a=ap.parse_args()
     if not 1<=a.top<=20:ap.error('top must be 1–20')
     path=OUT/'cache/latest_features.parquet'
     if a.refresh or not path.exists():
@@ -34,12 +38,23 @@ def main():
     endday=DATES[DATES.index(day)+4];deadline=endday+' '+('13:00' if SESSIONS[endday]['duration_minutes']==210 else '16:00')+' America/New_York'
     report=dict(version='v6_research_reference',calculated_at=now(),feature_cutoff=f'{day} {minute//60:02d}:{minute%60:02d} America/New_York',current_probability=False,issued_signal=False,orders_sent=False,
         target='5d5pct',window_end=deadline,abstention='research models not independently admitted; past session is not a current signal',routes=[])
-    rounds=['R00','R01','R02','R04'] if a.round=='all' else [a.round]
+    rounds=['R00','R01','R02','R03','R04'] if a.round=='all' else [a.round]
     for round_id in rounds:
       dest=OUT if round_id=='R00' else OUT/round_id
       if not (dest/'results.json').exists():continue
       registered_arms=json.loads((dest/'results.json').read_text())['arms']
       roundframe=frame.copy();upstream_meta=None
+      if round_id=='R03':
+        from history_prepare import mature_features
+        path=dest/'cache/anchors.parquet'
+        if path.exists():anchors=pd.read_parquet(path)
+        else:
+            manifest=json.loads((dest/'mature_anchor_manifest.json').read_text());source=OUT/manifest['file'];assert sha(source)==manifest['sha256']
+            anchors=pd.DataFrame(json.loads(gzip.decompress(source.read_bytes()))['records'])
+        additions=[]
+        for symbol in roundframe.symbol.unique():
+            f=mature_features(anchors[anchors.symbol==symbol],[day]);f['symbol']=symbol;additions.append(f)
+        roundframe=roundframe.merge(pd.concat(additions,ignore_index=True),on=['symbol','day'],how='left',validate='one_to_one')
       if round_id=='R01':
         native=load_upstream()
         if native:

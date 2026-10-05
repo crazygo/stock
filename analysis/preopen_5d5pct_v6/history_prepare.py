@@ -15,7 +15,8 @@ def mature_features(anchors,days):
         for n in [20,60]:
             p=prior.tail(n);item[f'm5_rate_{n}']=float(p.y.mean()) if len(p) else np.nan
             item[f'm5_count_{n}']=float(len(p))
-        item['m5_stale_sessions']=float(DATES.index(day)-DATES.index(prior.iloc[-1].label_end)) if len(prior) else np.nan
+        item['m5_stale_sessions']=float(DATES.index(day)-DATES.index(str(prior.iloc[-1].label_end)[:10])) if len(prior) else np.nan
+        item['m5_max_label_end']=str(prior.iloc[-1].label_end) if len(prior) else None
         item['m5_missing']=float(prior.empty);rows.append(item)
     return pd.DataFrame(rows)
 
