@@ -1,4 +1,4 @@
-import argparse,json,tempfile,unittest
+import argparse,json,tempfile,unittest,time,subprocess
 from datetime import datetime
 from pathlib import Path
 from unittest.mock import patch
@@ -7,7 +7,7 @@ import pandas as pd
 from common import OUT,ET,ROUTES
 from portable import NativeModel,digest
 from cloud_data import MarketData,normalize_archive
-from recommend import run,schedule
+from recommend import run,run_all,schedule
 
 def args(**kwargs):
  d=dict(data_dir=None,offline=True,futu_host=None,futu_port=11111,as_of=None,top=3,save_features=None,output=None,record=None);d.update(kwargs);return argparse.Namespace(**d)
@@ -39,6 +39,35 @@ class Recommendation(unittest.TestCase):
   with tempfile.TemporaryDirectory() as td:
    m=MarketData(td)
    with patch('cloud_data.read_raw',side_effect=AssertionError('must not read other directory')):self.assertTrue(m.raw('AAOI').empty)
+ def test_all_targets_share_one_feature_build_and_keep_model_probabilities(self):
+  import recommend
+  with tempfile.TemporaryDirectory() as td,patch('recommend.build_features',wraps=recommend.build_features) as builder:
+   result=run_all(args(data_dir=td,target='all'),datetime(2026,10,4,12,tzinfo=ET))
+   self.assertEqual(builder.call_count,1);self.assertEqual(len(result['targets']),3)
+   self.assertEqual(sum(len(r['options']) for t in result['targets'] for r in t['routes']),27)
+   for t in result['targets']:
+    single=run(args(data_dir=td,target=t['target_id']),datetime(2026,10,4,12,tzinfo=ET))
+    self.assertEqual(t['routes'],single['routes']);self.assertFalse(t['current_probability'])
+ def test_hung_acquisition_child_is_killed_and_report_still_returns(self):
+  real_popen=subprocess.Popen;children=[]
+  def hung_worker(*a,**kw):
+   import sys
+   child=real_popen([sys.executable,'-c','import time; time.sleep(120)'],stdout=subprocess.DEVNULL);children.append(child);return child
+  with tempfile.TemporaryDirectory() as td,patch('cloud_data.subprocess.Popen',side_effect=hung_worker):
+   started=time.monotonic();result=run_all(args(data_dir=td,offline=False,data_timeout=.15,target='all'),datetime(2026,10,4,12,tzinfo=ET))
+   self.assertLess(time.monotonic()-started,5);self.assertEqual(len(children),1);self.assertIsNotNone(children[0].poll())
+   for target in result['targets']:
+    self.assertFalse(target['current_probability']);self.assertEqual(sum(len(r['options']) for r in target['routes']),9)
+    self.assertTrue(any(e['reason']=='time_budget_exceeded' for e in target['acquisition']['errors']))
+ def test_missing_r2_configuration_still_returns_explicit_reference(self):
+  with tempfile.TemporaryDirectory() as td,patch('scripts.r2_client.R2Client',side_effect=ValueError('Missing R2 credentials')),patch('cloud_data.socket.create_connection',side_effect=OSError('unreachable')):
+   market=MarketData(td);market.refresh(['AAOI'],'2026-10-05',245)
+   self.assertTrue(any(e['source']=='R2' and e['reason']=='ValueError' for e in market.errors));self.assertTrue(market.raw('AAOI').empty)
+ def test_stream_callback_receives_each_target_before_next_model_runs(self):
+  completed=[]
+  with tempfile.TemporaryDirectory() as td:
+   result=run_all(args(data_dir=td,target='all'),datetime(2026,10,4,12,tzinfo=ET),on_report=lambda r:completed.append(r['target_id']))
+   self.assertEqual(completed,[t['target_id'] for t in result['targets']])
  def test_unknown_adjustment_basis_rejected(self):
   with self.assertRaises(ValueError):normalize_archive(pd.DataFrame(dict(time_key=['2026-10-02 09:35'],open=[100],high=[101],low=[99],close=[100],volume=[1])))
  def test_r2_cache_rechecks_etag_and_preserves_actual_receipt(self):

@@ -3,6 +3,7 @@ name: Optical-primary universe
 on:
   push:
     branches:
+      - main
       - feat/optical-universe
     paths:
       - "optical_universe.py"
@@ -11,6 +12,7 @@ on:
       - ".github/workflows/optical-universe.yml"
   pull_request:
     branches:
+      - main
       - master
     paths:
       - "optical_universe.py"

@@ -1,0 +1,166 @@
+{
+  "version": "cloud_launch_fix_20261005",
+  "status": "passed",
+  "unit_tests": 55,
+  "configuration_already_tracked_in_6bfb9d4": true,
+  "configuration_unchanged": true,
+  "r2_read_probe": {
+    "config_tracked_path": "config/r2_storage.json",
+    "no_writes": true,
+    "configured": true,
+    "read_access": "passed",
+    "http_status": 200,
+    "sample_available": true,
+    "elapsed_seconds": 1.4
+  },
+  "isolated_launch": {
+    "status": "passed",
+    "cases": [
+      {
+        "case": "actual-r2-empty-checkout",
+        "exit_code": 0,
+        "wall_seconds": 32.61,
+        "targets": 3,
+        "models": 9,
+        "options": 27,
+        "current": [
+          false,
+          false,
+          false
+        ],
+        "sources": [
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot"
+        ],
+        "errors": [
+          {
+            "source": "acquisition",
+            "reason": "time_budget_exceeded"
+          }
+        ],
+        "feature_build_starts": 1
+      },
+      {
+        "case": "unreachable-r2",
+        "exit_code": 0,
+        "wall_seconds": 6.46,
+        "targets": 3,
+        "models": 9,
+        "options": 27,
+        "current": [
+          false,
+          false,
+          false
+        ],
+        "sources": [
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot"
+        ],
+        "errors": [
+          {
+            "source": "R2",
+            "reason": "TimeoutError"
+          },
+          {
+            "source": "OpenD",
+            "reason": "not_reachable"
+          }
+        ],
+        "feature_build_starts": 1
+      },
+      {
+        "case": "missing-config",
+        "exit_code": 0,
+        "wall_seconds": 1.55,
+        "targets": 3,
+        "models": 9,
+        "options": 27,
+        "current": [
+          false,
+          false,
+          false
+        ],
+        "sources": [
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot"
+        ],
+        "errors": [
+          {
+            "source": "R2",
+            "reason": "ValueError"
+          },
+          {
+            "source": "OpenD",
+            "reason": "not_reachable"
+          }
+        ],
+        "feature_build_starts": 1
+      },
+      {
+        "case": "offline",
+        "exit_code": 0,
+        "wall_seconds": 1.05,
+        "targets": 3,
+        "models": 9,
+        "options": 27,
+        "current": [
+          false,
+          false,
+          false
+        ],
+        "sources": [
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot",
+          "bundled_reference_snapshot"
+        ],
+        "errors": [],
+        "feature_build_starts": 1
+      }
+    ]
+  },
+  "frozen_equivalence": {
+    "status": "passed",
+    "compared_commit": "6bfb9d4",
+    "targets": 3,
+    "ranked_options": 27,
+    "probabilities_exact": true,
+    "conditions_exact": true,
+    "manifests_unchanged": true
+  },
+  "frozen_files_unchanged": [
+    "portable_models/manifest.json",
+    "horizon_v1/5d5pct/portable_models/manifest.json",
+    "horizon_v1/10d10pct/portable_models/manifest.json",
+    "signals_deployment.json",
+    "phase_deployment.json",
+    "deployment.json"
+  ],
+  "probe_whole_process_timeout_verified": true,
+  "source_hashes": {
+    "scripts/r2_client.py": "50475f672c9c859ad1ced8a3f5d010c97d2a0f2366918826ff1f641a6d5a728d",
+    "scripts/check_r2.py": "16ce083b1126d118ddda04c490b17860e7c195766def9643f5f4bf496c98c3ac",
+    "analysis/preopen_ranked_policy_v5/cloud_data.py": "f6855ac7e0e86a87ccb34e403577de0cb11a1a0e49ff407788bdc261760b65ae",
+    "analysis/preopen_ranked_policy_v5/recommend.py": "84af9f545b3dedbd5f41d8f7a79859c238f267e4b7c42c6406bfa9975edd9f26",
+    "analysis/preopen_ranked_policy_v5/test_recommend.py": "51e03564cf80ad9773a23d44d37f4ef924458e5e5fe1bd071c6e38eaec41dbf8",
+    "analysis/preopen_ranked_policy_v5/test_cloud_access.py": "1bd3b1ca50caeec98f64bcf5a436a3a22d6b56b8e6b6ccac75633234f5079445"
+  },
+  "main_branch_required": true,
+  "no_orders": true,
+  "no_r2_upload": true,
+  "scope": "Runtime and cloud bootstrap only; no model effectiveness or current market coverage claim.",
+  "workflow_branch_routing": {
+    "status": "passed",
+    "parser": "Ruby standard-library YAML",
+    "files": [
+      ".github/workflows/daily-screen.yml",
+      ".github/workflows/industry-profit-clusters.yml",
+      ".github/workflows/optical-universe.yml",
+      ".github/workflows/recent-half-price-screen.yml"
+    ],
+    "main_enabled": true,
+    "legacy_compatibility_preserved": true
+  }
+}

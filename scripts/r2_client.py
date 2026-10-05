@@ -12,6 +12,7 @@ import hashlib
 import hmac
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 import urllib.error
@@ -30,8 +31,10 @@ def load_r2_config(config_path: Optional[Path] = None) -> Dict[str, str]:
     if cfg_file.exists():
         try:
             data = json.loads(cfg_file.read_text(encoding="utf-8"))
-        except Exception as e:
-            pass
+        except (OSError, json.JSONDecodeError) as e:
+            raise ValueError(f"Cannot read R2 configuration: {cfg_file}") from e
+        if not isinstance(data, dict):
+            raise ValueError(f"R2 configuration must be a JSON object: {cfg_file}")
 
     endpoint = os.environ.get("R2_ENDPOINT") or data.get("endpoint", "")
     bucket = os.environ.get("R2_BUCKET") or data.get("bucket", "market-data")
@@ -57,7 +60,8 @@ def load_r2_config(config_path: Optional[Path] = None) -> Dict[str, str]:
 class R2Client:
     """Client for Cloudflare R2 bucket operations via AWS SigV4."""
 
-    def __init__(self, config: Optional[Dict[str, str]] = None, config_path: Optional[Path] = None):
+    def __init__(self, config: Optional[Dict[str, str]] = None, config_path: Optional[Path] = None,
+                 timeout: float = 30, deadline: Optional[float] = None):
         self.config = config or load_r2_config(config_path)
         self.endpoint = self.config["endpoint"]
         self.bucket = self.config["bucket"]
@@ -65,6 +69,15 @@ class R2Client:
         self.access_key = self.config["access_key_id"]
         self.secret_key = self.config["secret_access_key"]
         self.host = urllib.parse.urlparse(self.endpoint).netloc
+        self.timeout = timeout
+        self.deadline = deadline
+
+    def remaining_timeout(self) -> float:
+        """Bound each request by the remaining acquisition budget, when supplied."""
+        remaining = self.timeout if self.deadline is None else min(self.timeout, self.deadline - time.monotonic())
+        if remaining <= 0:
+            raise TimeoutError("R2 acquisition deadline exceeded")
+        return remaining
 
     def _sign(self, key: bytes, msg: str) -> bytes:
         return hmac.new(key, msg.encode("utf-8"), hashlib.sha256).digest()
@@ -134,7 +147,7 @@ class R2Client:
             headers=headers,
             method=method,
         )
-        return urllib.request.urlopen(req, timeout=30)
+        return urllib.request.urlopen(req, timeout=self.remaining_timeout())
 
     def _canonical_query(self, params: Dict[str, Any]) -> str:
         """Encode query params per AWS SigV4 (sorted by key, RFC 3986 encoding)."""
@@ -217,7 +230,11 @@ class R2Client:
         try:
             with self.request("GET", key) as resp, open(temp_path, "wb") as f:
                 bytes_written = 0
-                while chunk := resp.read(128 * 1024):
+                while True:
+                    self.remaining_timeout()
+                    chunk = resp.read(128 * 1024)
+                    if not chunk:
+                        break
                     f.write(chunk)
                     bytes_written += len(chunk)
             temp_path.replace(local_path)

@@ -1,5 +1,7 @@
 # U.S. Stock Drop → Flat Screener
 
+所有研究统一在主干 **`main`**。保留本地工作后执行 `git fetch origin`、`git switch main`、`git pull --ff-only origin main`；历史研究分支不再作为最新运行入口。
+
 ## 盘前 / 盘中当天 +3%：云端主动问一次
 
 在仓库根目录运行，**三个冻结模型各返回概率最高的三个参考选项**：
@@ -16,6 +18,8 @@ python3 analysis/preopen_ranked_policy_v5/recommend.py --top 3
 ```bash
 python3 analysis/preopen_ranked_policy_v5/recommend.py --target all --top 3
 ```
+
+R2 配置和凭证已随仓库保存在 `config/r2_storage.json`，无需猜测或另复制配置。先执行 `python3 scripts/check_r2.py --timeout 5` 检查一次只读访问。命令默认给 R2/OpenD 补数据30秒总预算，可用 `--data-timeout 60` 调整；全部目标共用行情与特征，网络不可达时及时生成明确的历史参考或缺失报告。`--target all --top 3 --offline` 可单独验证九个模型的运行。配置可用不等于行情新鲜，详见[云端说明](analysis/preopen_ranked_policy_v5/README.md#最新行情接入和不足处理)。
 
 完整两个23周表见 [跨日报告](analysis/preopen_ranked_policy_v5/horizon_v1/REPORT.md)。六组新回测整体55.12%–69.56%，未通过70%；尚未成熟和不可评分的有效信号保留。新目标十月仅提供研究参考概率，未获准自动发出有效信号。
 

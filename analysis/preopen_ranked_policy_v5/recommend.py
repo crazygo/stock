@@ -24,9 +24,10 @@ def schedule(now):
  eligible=[d for d in SESSIONS if d<day or (d==day and state=='post')]
  reference=max(eligible);return dict(day=reference,cut=570+SESSIONS[reference]['duration_minutes']-30,state=state,in_window=False)
 
-def build_features(market,symbols,day,cut):
+def build_features(market,symbols,day,cut,progress=None):
  rows=[];missing=[];until=pd.Timestamp(day)+pd.Timedelta(minutes=cut)
- for s in symbols:
+ for i,s in enumerate(symbols,1):
+  if progress and i%20==0:progress(f'因果特征已检查 {i}/{len(symbols)} 只')
   raw=market.raw(s)
   if raw.empty:missing.append(s);continue
   f=raw[(raw.end<=until)&(raw.end>=pd.Timestamp(day)-pd.Timedelta(days=110))]
@@ -46,22 +47,29 @@ def persist_report(report,path):
   key=report['model_manifest_sha256']+':'+report['observed_at'];con.execute('INSERT OR IGNORE INTO recommendation_reports VALUES(?,?,?,?,?)',(key,report['observed_at'],report['feature_cutoff'],int(report['current_probability']),json.dumps(clean(report),ensure_ascii=False,allow_nan=False)))
  con.close()
 
-def run(args,now=None):
+def model_directory(target):
+ return OUT/'portable_models' if target=='intraday3pct' else OUT/'horizon_v1'/target/'portable_models'
+
+def prepare_market(args,now,pool):
+ plan=schedule(now);market=MarketData(args.data_dir);progress=lambda msg:print(msg,file=sys.stderr,flush=True)
+ if not args.offline:market.refresh_bounded(pool,plan['day'],plan['cut'],args.futu_host,args.futu_port,progress,budget_seconds=getattr(args,'data_timeout',30))
+ progress(f'开始计算 {len(pool)} 只股票的当时特征；全部目标共用本次结果')
+ frame,missing=build_features(market,pool,plan['day'],plan['cut'],progress);requested_missing=list(missing);requested_scored=len(frame);day=plan['day'];cut=plan['cut']
+ if not plan['in_window']:
+  available_days=[str(market.raw(s).day.max()) for s in pool if not market.raw(s).empty]
+  possible=[d for d in available_days if d in SESSIONS and d<=day];actual=max(possible) if possible else None
+  if actual and actual!=day:
+   day=actual;cut=570+SESSIONS[day]['duration_minutes']-30;frame,missing=build_features(market,pool,day,cut,progress)
+ return dict(market=market,plan=plan,frame=frame,missing=missing,requested_missing=requested_missing,requested_scored=requested_scored,day=day,cut=cut)
+
+def run(args,now=None,prepared=None):
  now=now or datetime.now(ET);started=time.monotonic();target_id=getattr(args,'target','intraday3pct');specs={'intraday3pct':(1,.03),'5d5pct':(5,.05),'10d10pct':(10,.10)}
  if target_id not in specs:raise ValueError('Unknown target')
  sessions,gain=specs[target_id]
- model_dir=OUT/'portable_models' if target_id=='intraday3pct' else OUT/'horizon_v1'/target_id/'portable_models';manifest=json.loads((model_dir/'manifest.json').read_text());models={m['route']:NativeModel(model_dir/m['file'],m['sha256']) for m in manifest['all_routes']};plan=schedule(now)
- pool=sorted(set(sum([m['registered'] for m in manifest['all_routes']],[]))|set(sum(GROUPS.values(),[]))|set(getattr(args,'extra_symbols',[])));market=MarketData(args.data_dir)
+ model_dir=model_directory(target_id);manifest=json.loads((model_dir/'manifest.json').read_text());models={m['route']:NativeModel(model_dir/m['file'],m['sha256']) for m in manifest['all_routes']}
+ pool=sorted(set(sum([m['registered'] for m in manifest['all_routes']],[]))|set(sum(GROUPS.values(),[]))|set(getattr(args,'extra_symbols',[])))
  progress=lambda msg:print(msg,file=sys.stderr,flush=True)
- if not args.offline:market.refresh(pool,plan['day'],plan['cut'],args.futu_host,args.futu_port,progress)
- frame,missing=build_features(market,pool,plan['day'],plan['cut']);missing_requested=list(missing);requested_scored=len(frame);source='market_data';day=plan['day'];cut=plan['cut'];current=bool(plan['in_window']);reference_path=model_dir/'reference_snapshot.json'
- if not current:
-  # Outside the forecast window, prefer the newest usable reference, not stale R2.
-  available_days=[str(market.raw(s).day.max()) for s in pool if not market.raw(s).empty]
-  possible=[d for d in available_days if d in SESSIONS and d<=day]
-  actual=max(possible) if possible else None
-  if actual and actual!=day:
-   day=actual;cut=570+SESSIONS[day]['duration_minutes']-30;frame,missing=build_features(market,pool,day,cut)
+ prepared=prepared or prepare_market(args,now,pool);market=prepared['market'];plan=prepared['plan'];frame=prepared['frame'];missing=list(prepared['missing']);missing_requested=list(prepared['requested_missing']);requested_scored=prepared['requested_scored'];source='market_data';day=prepared['day'];cut=prepared['cut'];current=bool(plan['in_window']);reference_path=model_dir/'reference_snapshot.json'
  if reference_path.exists() and (frame.empty or not current):
   reference=json.loads(reference_path.read_text())
   if reference['model_manifest_sha256']!=digest(model_dir/'manifest.json'):raise ValueError('Reference snapshot model mismatch')
@@ -76,6 +84,7 @@ def run(args,now=None):
  last_day=dates[last_index];win_end=at(last_day,570+SESSIONS[last_day]['duration_minutes']);condition=f'下一根 5m Open×1.001 为评价价；买入当日计第 1 个交易日，买入后至第 {sessions} 个交易日常规盘收盘的 High≥评价价×{1+gain:.2f}。只统计常规盘；指示目标按参考 Close 推算，入场后重算。'
  report=dict(version='recommendation_v1',target_id=target_id,target_sessions=sessions,target_gain=gain,model_manifest_sha256=digest(model_dir/'manifest.json'),observed_at=finish.isoformat(),market_state=plan['state'],data_source=source,reference_day=day,feature_cutoff=at(day,cut),requested_feature_cutoff=at(plan['day'],plan['cut']),requested_feature_symbols=requested_scored,missing_requested_features=missing_requested,decision_at=at(day,cut,30),evaluation_entry_at=entry_at.isoformat(),window_end=win_end,current_probability=current,replay=bool(args.as_of),model_month=manifest['model_month'],model_frozen_at=manifest['frozen_at'],signal_admitted=manifest['admitted'],winning_condition=condition,options_are_issued_signals=False,missing=missing,acquisition=dict(attempts=market.audit,errors=market.errors),routes=[],elapsed_seconds=round(time.monotonic()-started,2))
  for route in ROUTES:
+  progress(f'[{target_id}] 正在计算 {NAMES[route]} / {ALGORITHMS[route]} 前 {args.top} 名')
   model=models[route];a=model.a;meta=next(m for m in manifest['all_routes'] if m['route']==route);f=frame[frame.symbol.isin(a['registered'])].copy() if len(frame) else frame.copy();phase='pre' if cut<=570 else 'regular';threshold=a['thresholds'][phase];options=[]
   if len(f):
    f['stock_id']=f.symbol.map(a['stock_map'])
@@ -88,12 +97,29 @@ def run(args,now=None):
     baseline=a['baseline_table'].get(f"{r['symbol']}|{cut}",a['baseline_minute'].get(str(cut),.1));reference=float(r['reference'])
     options.append(dict(rank=rank,symbol=r['symbol'],probability=probability,baseline=baseline,threshold=threshold,confidence_qualified=confidence,current_qualified_candidate=valid,issued_signal=False,status=reason,reference_price=reference,indicative_evaluation_price=reference*1.001,indicative_target_price=reference*1.001*(1+gain),target_formula=f'actual_next_5m_open * 1.001 * {1+gain:.2f}',feature_available=pd.Timestamp(r['feature_available']).tz_localize(ET).isoformat(),evaluation_entry_at=entry_at.isoformat(),window_end=report['window_end'],winning_condition=report['winning_condition']))
   report['routes'].append(dict(route=route,name=NAMES[route],algorithm=ALGORITHMS[route],threshold=threshold,registered=len(a['registered']),scored=len(f),missing=sorted(set(a['registered'])-set(f.symbol if len(f) else [])),model_sha256=meta['sha256'],options=options))
+ # Inference can also consume the entry deadline; timestamp actual completion.
+ completed=datetime.now(ET) if args.as_of is None else now;report['observed_at']=completed.isoformat();report['elapsed_seconds']=round(time.monotonic()-started,2)
+ if report['current_probability'] and completed>=entry_at.to_pydatetime():
+  report['current_probability']=False
+  for route in report['routes']:
+   for option in route['options']:option['current_qualified_candidate']=False;option['status']='reference_only'
  if args.save_features:
   if frame.empty:raise ValueError('Cannot save an empty reference snapshot')
   write(Path(args.save_features),dict(day=day,minute=cut,model_manifest_sha256=digest(model_dir/'manifest.json'),missing=missing,features=frame.to_dict('records'),not_current=True,source='causal available prefix; no future labels'))
  if args.output:write(Path(args.output),report)
  if args.record:persist_report(report,args.record)
  return clean(report)
+
+def run_all(args,now=None,on_report=None):
+ now=now or datetime.now(ET);started=time.monotonic();targets=['intraday3pct','5d5pct','10d10pct'];extra=set(sum(GROUPS.values(),[]))
+ for target in targets:
+  manifest=json.loads((model_directory(target)/'manifest.json').read_text());extra.update(sum([m['registered'] for m in manifest['all_routes']],[]))
+ prepared=prepare_market(args,now,sorted(extra));reports=[]
+ for target in targets:
+  options=argparse.Namespace(**vars(args));options.target=target;options.extra_symbols=sorted(extra);options.output=None;options.save_features=None
+  result=run(options,now,prepared=prepared);reports.append(result)
+  if on_report:on_report(result)
+ return dict(version='all_targets_recommendation_v1',orders_sent=False,targets=reports,elapsed_seconds=round(time.monotonic()-started,2))
 
 def markdown(report):
  lines=[f"目标：{report['target_sessions']} 个交易日触及 +{report['target_gain']:.0%}（买入当日计第 1 日）。",f"行情截止：{report['feature_cutoff']}；计算：{report['observed_at']}。",'当前概率。' if report['current_probability'] else '参考概率：闭市、数据不足或入场时限已过；不属于当前有效信号。',f"模型冻结：{report['model_frozen_at']}；十月有效信号资格：{'通过' if report['signal_admitted'] else '未通过'}。",'']
@@ -108,8 +134,9 @@ def markdown(report):
  return '\n'.join(lines)
 
 def main():
- ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--target',choices=['intraday3pct','5d5pct','10d10pct','all'],default='intraday3pct');ap.add_argument('--top',type=int,default=3);ap.add_argument('--format',choices=['markdown','json'],default='markdown');ap.add_argument('--data-dir');ap.add_argument('--futu-host');ap.add_argument('--futu-port',type=int,default=11111);ap.add_argument('--offline',action='store_true');ap.add_argument('--as-of',help='Timezone-aware historical replay time; never current/issued');ap.add_argument('--output');ap.add_argument('--record',help='Optional local SQLite reference-report log');ap.add_argument('--save-features',help=argparse.SUPPRESS);args=ap.parse_args()
+ ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--target',choices=['intraday3pct','5d5pct','10d10pct','all'],default='intraday3pct');ap.add_argument('--top',type=int,default=3);ap.add_argument('--format',choices=['markdown','json'],default='markdown');ap.add_argument('--data-dir');ap.add_argument('--futu-host');ap.add_argument('--futu-port',type=int,default=11111);ap.add_argument('--offline',action='store_true');ap.add_argument('--data-timeout',type=float,default=30,help='Total R2/OpenD acquisition budget in seconds (default: 30)');ap.add_argument('--as-of',help='Timezone-aware historical replay time; never current/issued');ap.add_argument('--output');ap.add_argument('--record',help='Optional local SQLite reference-report log');ap.add_argument('--save-features',help=argparse.SUPPRESS);args=ap.parse_args()
  if not 1<=args.top<=20:ap.error('--top must be between 1 and 20')
+ if not 0<args.data_timeout<=300:ap.error('--data-timeout must be between 0 and 300 seconds')
  now=None
  if args.as_of:
   stamp=pd.Timestamp(args.as_of)
@@ -117,14 +144,9 @@ def main():
   now=stamp.tz_convert(ET).to_pydatetime()
  try:
   if args.target=='all':
-   reports=[];extra=set()
-   for target in ['intraday3pct','5d5pct','10d10pct']:
-    path=OUT/'portable_models/manifest.json' if target=='intraday3pct' else OUT/'horizon_v1'/target/'portable_models/manifest.json';manifest=json.loads(path.read_text());extra.update(sum([m['registered'] for m in manifest['all_routes']],[]))
-   for i,target in enumerate(['intraday3pct','5d5pct','10d10pct']):
-    options=argparse.Namespace(**vars(args));options.target=target;options.extra_symbols=sorted(extra);options.offline=args.offline or i>0;options.output=None;options.save_features=None;reports.append(run(options,now))
-   report=dict(version='all_targets_recommendation_v1',orders_sent=False,targets=reports)
+   report=run_all(args,now,on_report=(lambda r:print(markdown(r),flush=True)) if args.format=='markdown' else None)
    if args.output:write(Path(args.output),report)
-   print(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False) if args.format=='json' else '\n\n'.join(markdown(r) for r in reports))
+   if args.format=='json':print(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False))
   else:
    report=run(args,now);print(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False) if args.format=='json' else markdown(report))
  except Exception as e:

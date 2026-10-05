@@ -47,11 +47,12 @@ python3 analysis/preopen_ranked_policy_v5/recommend.py --top 3
 
 三路线确实分别训练：基础风险是 LogisticRegression，相关股量价是 LightGBM，单股恢复是 ExtraTrees；共用数据和 +3% 标签，相关性和共用预处理意味着它们不是三份独立市场证据。
 
-代码分支为 `codex/preopen-weekly-cloud`。云端如果仍在默认分支，先取得本次代码：
+研究统一使用主干 `main`。`codex/preopen-weekly-cloud` 是历史分支，停留在旧交付版本，不再作为云端入口。先保留本地未提交工作，再更新主干；不要用 reset 丢弃扫描结果：
 
 ```bash
-git fetch origin codex/preopen-weekly-cloud
-git switch codex/preopen-weekly-cloud
+git fetch origin
+git switch main
+git pull --ff-only origin main
 ```
 
 首次云端环境准备（Python 3.11 或以上）：
@@ -67,7 +68,30 @@ python3 analysis/preopen_ranked_policy_v5/recommend.py --top 3
 
 ### 最新行情接入和不足处理
 
-命令默认按 **Local → R2 → 可访问的 OpenD** 只读补齐；缺失尾部和此前 30 个完整常规盘不足均触发获取。R2 使用仓库现有客户端，读取 `config/r2_storage.json` 或环境变量 `R2_ENDPOINT`、`R2_BUCKET`、`R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY`；云端请通过环境的秘密配置注入凭证，命令不打印凭证，也不自动上传行情。必须是明确 NONE 价格基准、明确开始和结束时间的 5m 行情，60m 或未知复权基准不会冒充模型输入。
+命令默认按 **Local → R2 → 可访问的 OpenD** 只读补齐；缺失尾部和此前 30 个完整常规盘不足均触发获取。`config/r2_storage.json` **已经随 Git 提交**，包括连接配置和凭证，路径按代码所在仓库自动定位；克隆本仓库即可读取，不需要猜凭据或另外复制本机文件。历史提交 `6bfb9d4` 也包含此配置。环境变量 `R2_ENDPOINT`、`R2_BUCKET`、`R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY` 可显式覆盖文件；如果云端设置了旧环境变量，应检查是否覆盖了仓库配置。命令不打印凭证，也不自动上传行情。必须是明确 NONE 价格基准、明确开始和结束时间的 5m 行情，60m 或未知复权基准不会冒充模型输入。
+
+先用只依赖 Python 标准库的探针检查配置与一次真实读取；它只请求一页、最多一个对象，不枚举整个桶，不打印 key：
+
+```bash
+python3 scripts/check_r2.py --timeout 5
+python3 analysis/preopen_ranked_policy_v5/recommend.py --target all --top 3
+```
+
+探针 `configured=true` 且 `read_access=passed` 只说明配置和一次读取可用，不证明行情足够新。HTTP 403 应排查授权、环境覆盖及系统时钟；TimeoutError/URLError 应排查网络、DNS和代理；配置无法解析或字段不足明确报错，不再静默吞掉。
+
+**2026-10-05 云端启动修复：** R2 单次请求最多5秒；整次 R2/OpenD 补数据默认30秒，使用可终止的子进程，网关或网络卡住时结束等待、保留已完成文件，再生成明确的参考/缺失报告。先下载常用 `us_5m/`，再检查训练历史目录。`--target all` 共用一次行情准备和因果特征计算，不再分别重算三次。Markdown 每个目标计算完成即输出，JSON 保持单个完整文档；stderr 显示下载、特征和算法阶段。预算只限制补数据，之后仍需读取本地数据和推理，不承诺任意机器30秒内完成全命令。
+
+```bash
+# 网络较慢时显式调整补数据总预算；不是每只股票各等60秒
+python3 analysis/preopen_ranked_policy_v5/recommend.py --target all --top 3 --data-timeout 60
+
+# 验证安装与全部九个模型，无需 R2/OpenD；结果为历史参考
+python3 analysis/preopen_ranked_policy_v5/recommend.py --target all --top 3 --offline
+```
+
+未完成的下载留在本地供下次继续使用，未知和过期保持显式状态；R2 可访问不代表完整股票池已补齐。运行层修复不改变冻结模型、概率校准、阈值或有效信号资格。
+
+启动修复证据见 [`cloud_launch_verification.json`](cloud_launch_verification.json)：55项测试通过；无本地行情、真实R2的隔离启动约32.6秒返回27个参考选项，网络不可达、配置缺失和离线也能完成。与旧提交的27个排序、概率、目标条件逐项相同。该耗时是本机检查记录，不保证云端机器的推理耗时；没有重新训练或升级效果通过状态。
 
 云端一般无法连接这台 Mac 的 `127.0.0.1:11111`。若云端已有可访问的行情网关，配置其地址：
 
