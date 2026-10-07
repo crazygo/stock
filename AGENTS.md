@@ -316,3 +316,14 @@ stock/
 - `config/r2_storage.json` 必须随 Git 保留，克隆后能自动定位并读取现有 R2 连接配置与凭证；不得要求协作者猜凭据。环境变量可以显式覆盖，日志与诊断不显示凭证值。读取配置失败应明确报错，不静默吞掉。
 - 云端先运行 `python3 scripts/check_r2.py --timeout 5`，区别配置、授权/网络与实际行情覆盖。只读探针通过不能证明最新全池行情可用。原始行情仍不入 Git，获取到的行情仍不自动上传 R2。
 - 一次性推荐补数据必须有总预算，默认30秒，R2请求最多5秒；在可终止的子进程中获取，卡住后保留完整本地文件并继续输出参考或缺失。`--target all` 共用一次行情/特征，逐阶段显示进展。过期概率不标当前，补数据或工程修复不改变冻结模型/门槛/准入。
+
+## 十二、AI 价值链股票池 v1：报告与召回（2026-10-07）
+
+统一名称为 **「AI 价值链股票池 v1」**，项目标识 `ai_value_chain_map_v1`。它保存 AI 相关股票的行业、产业链分组、价值传导、成分、研究初评与逐股核查等级。
+
+- **报告入口**：[AI 价值链股票池 v1 · 交互报告](analysis/ai_value_chain_map_v1/index.html)；方法、数据口径及复跑说明见 [README](analysis/ai_value_chain_map_v1/README.md)。
+- **召回最新版本**：用户说“召回 AI 价值链股票池 v1”时，读取报告及 [data.json](analysis/ai_value_chain_map_v1/data.json) 中的分组与成员，并结合 [最新初评](analysis/ai_value_chain_map_v1/quality/screen_current.json) 和 [逐股核查评级](analysis/ai_value_chain_map_v1/quality/current.json)；说明各自截至日、有效期与证据缺口，数量以文件实值为准。
+- **召回固定批次**：用户说“召回 AI 价值链股票池 v1 的 2026-10-07 批次”时，读取 [固定初评快照 screen_92f389e5c72d0f48](analysis/ai_value_chain_map_v1/quality/screen_runs/screen_92f389e5c72d0f48/snapshot.json)，按其 `groups` 和 `records` 恢复这批分组、成分及等级，不能用最新成员替代。该批次为458只证券，A+6、A303、A−87、B62；25只沿用有效的核查评级，433只为研究初评。
+- **继续评估**：使用 [ai-stock-rating skill](.agents/skills/ai-stock-rating/SKILL.md)。先复用已有官方业务标签、行业及财务缓存批量初评，再补重要缺口；委派沿用用户的 agyd／Luna 偏好，不使用 Sol 模型。
+
+初评规则 `ai_research_screen_v1` 用于安排研究优先级，逐股质量核查规则为 `ai_quality_v1`，两者分别展示。分组允许重叠，证券数不等于公司数或收入占比；当前成员回看不冒充历史PIT。固定快照保留，后续更新不得覆盖。
