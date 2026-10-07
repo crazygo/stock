@@ -78,10 +78,35 @@ def main():
     assert set(cat[cat.catalog_status=='registered'].ticker)==set(universe)
     assert set(cat[cat.catalog_status=='outside_registered'].ticker)=={r['ticker'] for r in lineage['registration']['universe']['exclusions']}
     candidates=[r for r in stocks if not r['comparison_only']]
+    ai_snapshot=json.loads((HERE/'ai_relevance.json').read_text());ai_labels=ai_snapshot['labels']
+    assert set(ai_labels)=={r['ticker'] for r in stocks},'AI review status must account for every candidate and comparison'
+    ai_sources=0
+    for r in stocks:
+        label=ai_labels[r['ticker']]
+        assert r['ai']==label and r['ai_grade']==label['grade'] and r['ai_status']==label['status'],r['ticker']
+        assert label['ticker']==r['ticker'] and label['name']==r['name'],r['ticker']
+        assert label['grade'] in ['++','+','0',None]
+        assert (label['status']=='pending')==(label['grade'] is None)
+        if label['grade'] is not None:
+            assert label['sources'] and label['reason'] and label['caveat'],r['ticker']
+            for s in label['sources']:
+                assert s['url'].startswith('https://') and s.get('observed_at') and s.get('title'),r['ticker']
+                assert s.get('status')!='issuer_sector_field','ETF sector evidence cannot assign AI relevance'
+                assert s['observed_at'][:10]<=meta['ai_classified_at'],r['ticker']
+                ai_sources+=1
+        else:
+            assert not label['sources'],'Unknown AI business evidence must remain unknown'
+    for k in ['++','+','0','pending']:
+        assert sum((r['ai_grade'] or 'pending')==k for r in candidates)==meta['ai_counts'][k]
+    for k in ['++','+']:
+        assert sum(r['ai_grade']==k and r['quality_tier'].startswith('A') and r['year_ratio']>=1.2 for r in candidates)==meta['ai_default_counts'][k]
+    related=[r for r in candidates if r['ai_grade'] in ['++','+']]
     for v in [1.2,1.5,1.8,1.9,2.,2.5]:
         assert sum(r['year_ratio']>=v for r in candidates)==meta['ratio_counts'][str(v)]
         assert sum(r['daily_year_ratio']>=v for r in candidates)==meta['daily_core_ratio_counts'][str(v)]
         assert sum(r['year_ratio']>=v and r['quality_tier'].startswith('A') for r in candidates)==meta['A_ratio_counts'][str(v)]
+        assert sum(r['year_ratio']>=v and r['price_basis_clean'] for r in related)==meta['ai_ratio_counts'][str(v)]
+        assert sum(r['year_ratio']>=v and r['quality_tier'].startswith('A') for r in related)==meta['ai_A_ratio_counts'][str(v)]
     assert meta['ratio_prescreen_removed'] and meta['new_1_2_to_1_5']['outside_prior_prescreen']>0
     assert next(r for r in stocks if r['ticker']=='MXL')['comparison_only']
     assert meta['probabilities_or_signals_created'] is False
@@ -89,5 +114,6 @@ def main():
     receipt=json.loads((HERE/'SOURCE_EVIDENCE.json').read_text())
     for p,s in receipt['source_paths_and_sha256'].items():assert sha(p)==s,p
     out={'verified_at':datetime.now(timezone.utc).isoformat(),'revision':meta['revision'],'stocks':len(stocks),'daily_bars_compared_to_source':checks,'annual_facts_compared_to_SEC_payload':annual_facts,'all_pool_outcomes':meta['registered_pool'],'stock_window_date_sets_independently_checked':coverage_checks,'catalog_securities_accounted':len(cat),'whole_pool_core_membership_exact_match':True,'ratio_prescreen_removed':True,'source_hashes_checked':len(receipt['source_paths_and_sha256']),'checks_passed':True,'financial_strength_is_not_predictive_validation':True,'business_risks_retained':True,'html_sha256':sha(HERE/'index.html'),'limits':['Daily session decomposition not verified','Whole-pool current quotes remain incomplete; all basic candidates have same-session snapshots','Registered current catalog is not all world equities or historical PIT','Incomplete dates cannot establish complete annual peak','No predictive probability or independent future outcome validation']}
+    out.update(ai_candidate_statuses_accounted=len(candidates),ai_source_entries_checked=ai_sources,ai_default_counts=meta['ai_default_counts'],ai_pending_not_conflated_with_zero=True,ai_is_business_relevance_not_financial_quality_or_probability=True)
     (HERE/'DATA_VERIFICATION.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out,indent=2))
 if __name__=='__main__':main()

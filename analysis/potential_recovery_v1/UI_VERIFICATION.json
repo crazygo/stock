@@ -1,47 +1,146 @@
 {
-  "verified_at": "2026-10-05T19:13:53.085192+00:00",
-  "revision": "whole_pool_1_2_v2",
-  "html_sha256": "c18ab9330770910fb5df7153b01aa7c4010503dc0651e8cc6e228d6e670c6040",
-  "browser": "Codex IAB tab 5 via CUA",
-  "checks_passed": true,
-  "observations": {
-    "default_snapshot_A_ge1_2": 47,
-    "snapshot_A_1_2_to_1_5": 34,
-    "snapshot_A_1_2_to_1_5_peak_AprJun": 15,
-    "daily_A_ge1_2": 48,
-    "daily_all_core_ge1_2": 387,
-    "snapshot_A_early_ge1_2": 35,
-    "audit_AprJun_incomplete": 390,
-    "audit_AprJun_zero": 108,
-    "audit_YTD_incomplete": 489,
-    "AVGO_AprJun_month_sessions": [
-      21,
-      20,
-      21
-    ],
-    "desktop_1280_Q2_visible_bars": 62,
-    "desktop_1280_main_candle_gap_px": 8.4,
-    "mobile_320_scroll_width": 320,
-    "mobile_320_canvas_width": 274,
-    "mobile_320_Q2_visible_bars": 37,
-    "mobile_320_main_candle_gap_px": 6.1,
-    "mini_Home_range": "2024-10-02–2024-12-30; 62 trading sessions preserved",
-    "mini_ArrowRight_range": "2024-10-03–2024-12-31",
-    "main_Home_readout_date": "2026-04-01",
-    "main_End_readout_date": "2026-06-30",
-    "console_errors_or_warnings": [],
-    "viewport_reset": true,
-    "filters_reset_to_snapshot_A_ge1_2": true
+  "verified_at": "2026-10-07",
+  "revision": "whole_pool_1_2_v2_ai_v1",
+  "html_sha256": "d1988927230925cdf84054e392736a496f88bde15e370a103104d346f145e461",
+  "browser": "Codex IAB",
+  "tab_id": "6",
+  "default_filters": {
+    "AI": "++ and +",
+    "financial_quality": "A",
+    "ratio_minimum": 1.2,
+    "price_comparable": true,
+    "sort": "AI strength descending"
   },
-  "screenshots": [
-    ".cache/potential_recovery_v1/evidence/desktop-1_2-q2-v2.png",
-    ".cache/potential_recovery_v1/evidence/mobile-1_2-v2.png"
+  "default_candidates": 30,
+  "default_grade_counts": {
+    "++": 4,
+    "+": 26
+  },
+  "checks": [
+    {
+      "test": "strong_only",
+      "summary": "符合当前筛选 4 只（AI ++ 4 / + 0；财务A 4 / B 0）；其中优先研究 1 只。本次固定快照；累计门槛。数量不代表未来上涨成功率。",
+      "symbols": [
+        "TTD",
+        "AVGO",
+        "ON",
+        "AEIS"
+      ],
+      "grades": [
+        "AI ++ · 强关联",
+        "AI ++ · 强关联",
+        "AI ++ · 强关联",
+        "AI ++ · 强关联"
+      ],
+      "comparison": true
+    },
+    {
+      "test": "plus_only",
+      "summary": "符合当前筛选 26 只（AI ++ 0 / + 26；财务A 26 / B 0）；其中优先研究 9 只。本次固定快照；累计门槛。数量不代表未来上涨成功率。",
+      "grades": [
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路"
+      ],
+      "comparison": false
+    },
+    {
+      "test": "early_recovery",
+      "summary": "符合当前筛选 22 只（AI ++ 4 / + 18；财务A 22 / B 0）；其中优先研究 10 只。本次固定快照；累计门槛。数量不代表未来上涨成功率。"
+    },
+    {
+      "test": "ratio_1_5",
+      "summary": "符合当前筛选 10 只（AI ++ 2 / + 8；财务A 10 / B 0）；其中优先研究 7 只。本次固定快照；累计门槛。数量不代表未来上涨成功率。"
+    },
+    {
+      "test": "band_1_2_to_1_5",
+      "summary": "符合当前筛选 20 只（AI ++ 2 / + 18；财务A 20 / B 0）；其中优先研究 3 只。本次固定快照；仅当前互斥档。数量不代表未来上涨成功率。"
+    },
+    {
+      "test": "quality_A_and_B",
+      "summary": "符合当前筛选 80 只（AI ++ 12 / + 68；财务A 30 / B 50）；其中优先研究 10 只。本次固定快照；累计门槛。数量不代表未来上涨成功率。"
+    },
+    {
+      "test": "daily_basis",
+      "summary": "符合当前筛选 30 只（AI ++ 4 / + 26；财务A 30 / B 0）；其中优先研究 10 只。统一10月2日Close；累计门槛。数量不代表未来上涨成功率。"
+    },
+    {
+      "test": "zero_audit",
+      "summary": "隐藏31只；显示1–31。待核查不等于没有AI业务。"
+    },
+    {
+      "test": "pending_search",
+      "summary": "隐藏1只；显示1–1。待核查不等于没有AI业务。",
+      "row": "CRS\nCarpenter Technology Corporation Common Stock\t待核查\tA\t本版尚缺逐公司AI产品/业务核查，不能从行业或ETF成员推定AI关联。"
+    },
+    {
+      "test": "Q2_chart_range",
+      "ranges": [
+        "选中 2026-04-01–2026-06-30：62交易日 / 真实62根 / 缺失0日。可见 62日，间距9.7px；全部区间可平移。",
+        "选中 2026-04-01–2026-06-30：62交易日 / 真实62根 / 缺失0日。可见 62日，间距9.7px；全部区间可平移。",
+        "选中 2026-04-01–2026-06-30：62交易日 / 真实62根 / 缺失0日。可见 62日，间距9.7px；全部区间可平移。",
+        "选中 2026-04-01–2026-06-30：62交易日 / 真实62根 / 缺失0日。可见 62日，间距9.7px；全部区间可平移。",
+        "选中 2026-04-01–2026-06-30：62交易日 / 真实62根 / 缺失0日。可见 62日，间距9.7px；全部区间可平移。",
+        "选中 2026-04-01–2026-06-30：62交易日 / 真实62根 / 缺失0日。可见 62日，间距9.7px；全部区间可平移。"
+      ]
+    },
+    {
+      "test": "two_year_mini_keyboard",
+      "range": "选中 2024-10-02–2024-12-30：62交易日 / 真实62根 / 缺失0日。可见 62日，间距9.7px；全部区间可平移。"
+    },
+    {
+      "test": "pagination",
+      "page": "7–12 / 30只 · 每页6图",
+      "symbols": [
+        "NXT",
+        "AGX",
+        "INTU",
+        "KFY",
+        "IDXX",
+        "ULS"
+      ],
+      "grades": [
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路",
+        "AI + · 有明确链路"
+      ]
+    },
+    {
+      "test": "reset",
+      "summary": "符合当前筛选 30 只（AI ++ 4 / + 26；财务A 30 / B 0）；其中优先研究 10 只。本次固定快照；累计门槛。数量不代表未来上涨成功率。",
+      "ai": "related",
+      "sort": "ai_strength"
+    },
+    {
+      "test": "mobile_320",
+      "layout": {
+        "range": "选中 2026-01-02–2026-06-30：123交易日 / 真实123根 / 缺失0日。可见 37日，间距6.1px；全部区间可平移。",
+        "scroll": 320,
+        "width": 320
+      }
+    },
+    {
+      "test": "desktop_1280",
+      "layout": {
+        "columns": "608px 608px",
+        "scroll": 1280,
+        "width": 1280
+      }
+    }
   ],
-  "limits": [
-    "Native pinch gesture not exercised; no zoom handlers were added",
-    "Whole-pool CSV file is linked; no browser download flow asserted",
-    "Verification is UI and source fidelity, not predictive effectiveness"
-  ],
-  "timestamp_label_uses_acquisition_bounds_not_instantaneous_quote_time": true,
-  "coverage_scope_exposes_unparsed_basic_financial_fields_count": 3033
+  "console_errors": [],
+  "pre_existing_682_stock_fields_unchanged": true,
+  "viewport_override_reset": true,
+  "screenshot_paths": {
+    "ai_default.png": "/Users/admin/Code/stock/.cache/potential_recovery_v1/evidence/ai_default.png",
+    "ai_desktop.png": "/Users/admin/Code/stock/.cache/potential_recovery_v1/evidence/ai_desktop.png",
+    "ai_mobile.png": "/Users/admin/Code/stock/.cache/potential_recovery_v1/evidence/ai_mobile.png"
+  },
+  "checks_passed": true
 }

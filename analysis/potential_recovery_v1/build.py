@@ -113,6 +113,7 @@ def main():
     grouped={t:g for t,g in panel.groupby('ticker',sort=False)}
     qpath=CACHE/'latest_market_snapshots.json';quotes=json.loads(qpath.read_text()) if qpath.exists() else {'stocks':{},'received_at':None}
     notes=json.loads((HERE/'business_reviews.json').read_text()) if (HERE/'business_reviews.json').exists() else {}
+    ai_snapshot=json.loads((HERE/'ai_relevance.json').read_text());ai_labels=ai_snapshot['labels']
     expected=calendar('2024-10-02',asof);sessions=[r['session_date'] for r in expected['sessions']]
     year_expected={d for d in valid_session_dates if d>='2026-01-01'}
     q2_expected={d for d in year_expected if '2026-04-01'<=d<='2026-06-30'}
@@ -128,6 +129,7 @@ def main():
     for t,meta in universe.items():
         row=pool.loc[t].to_dict() if t in pool.index else {};g=grouped.get(t);coverage=audit(g)
         base={'ticker':t,'name':meta.get('name'),'cik':meta.get('cik'),'price_date':row.get('price_date'),'ratio_source':'completed_daily_reference','reason':[],**coverage,'first_daily_date':g.date.min().date().isoformat() if g is not None else None,'latest_daily_date':g.date.max().date().isoformat() if g is not None else None,'invalid_panel_rows':int(invalid_counts.get(t,0)),'duplicate_panel_rows':int(duplicates.get(t,0)),'source_unknown_events':int(number(row.get('source_unknown_events')) or 0),'source_whole_history_unknown':str(row.get('source_whole_history_unknown')).lower()=='true','security_description_confirmed':bool(meta.get('security_description_confirmed',False))}
+        base.update(ai_grade=ai_labels.get(t,{}).get('grade'),ai_status=ai_labels.get(t,{}).get('status','outside_AI_review_scope'))
         if g is None or g.empty:base['reason'].append('missing_valid_daily');outcomes.append(base);continue
         year=g.loc[g.date.ge('2026-01-01')];last=g.iloc[-1]
         if year.empty:base['reason'].append('missing_2026_daily');outcomes.append(base);continue
@@ -165,7 +167,8 @@ def main():
         sources={'companyfacts_sha256':rawhashes[str(fpath)],'companyfacts_url':f'https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json','SEC_filings_url':f'https://www.sec.gov/edgar/browse/?CIK={cik}&owner=exclude','financial_period_end':financial['metrics'].get('report_period_end'),'financial_snapshot_cutoff':cutoff,'financial_source_received_no_later_than':registration['financial_source_received_no_later_than']}
         bars=g.loc[g.date.ge('2024-10-02'),['date',*pricecols]].copy();bars['date']=bars.date.dt.strftime('%Y-%m-%d')
         rec={**base,'comparison_only':t=='MXL','core_checks':gates,'quality_tier':tier,'quality_score':financial['score'],'quality_risks':risks,'financial':financial,'sector':SECTORS.get(str(row.get('industry_code'))[:2],'其他/待核验'),'market_cap':cap,'snapshot_pe_ttm':number(quote.get('pe_ttm_ratio')) if current_quote else None,'annual_earning_yield':earning_yield,'annual_FCF_yield':fcf_yield,'liquidity_dollars20':numeric['dollar_volume_actual'],'year_peak_close_support_days':support,'price_basis_clean':price_clean,'peak_after_low':float(trough.low),'peak_after_low_date':trough.date.date().isoformat(),'recovery_fraction':recovery,'rebound_from_peak_after_low':float(current/trough.low-1),'ret20':ret20,'stage':stage,'sessions_since_peak':len(after),'observed_2026_sessions':len(year),'financial_sources':sources,'review':notes.get(t),'bars':bars.values.tolist(),'outside_prior_1_45_prescreen':peak.high/ref<1.45,'price_year_complete':year_complete,'expected_2026_sessions':len(year_expected)}
-        rec['reason']=[];result.append(rec);outcomes.append({k:v for k,v in rec.items() if k not in ['bars','financial','financial_sources','review']})
+        rec['ai']=ai_labels[t]
+        rec['reason']=[];result.append(rec);outcomes.append({k:v for k,v in rec.items() if k not in ['bars','financial','financial_sources','review','ai']})
     result.sort(key=lambda r:(r['comparison_only'],not r['quality_tier'].startswith('A'),-r['quality_score'],-r['year_ratio']))
     candidates=[r for r in result if not r['comparison_only']];ratios=[1.2,1.5,1.8,1.9,2.,2.5]
     coverage_summary={key:{'expected_sessions':len(ds),'complete':sum(r[f'{key}_missing']==0 for r in outcomes),'partial':sum(0<r[f'{key}_observed']<len(ds) for r in outcomes),'zero':sum(r[f'{key}_observed']==0 for r in outcomes),'before_first_total_missing_days':sum(r[f'{key}_before_first'] for r in outcomes),'after_first_total_missing_days':sum(r[f'{key}_after_first'] for r in outcomes)} for key,ds in windows.items()}
@@ -185,16 +188,27 @@ def main():
     summary['basic_candidates_with_complete_AprJun']=sum(r['AprJun_missing']==0 for r in candidates)
     summary['basic_candidates_with_complete_YTD']=sum(r['YTD_missing']==0 for r in candidates)
     summary['registered_with_unparsed_basic_financial_fields']=sum(bool(r.get('unparsed_financial_fields')) for r in outcomes)
+    summary['revision']='whole_pool_1_2_v2_ai_v1'
+    summary['ai_classified_at']=ai_snapshot['metadata']['classified_at']
+    summary['ai_scope_candidates']=len(candidates)
+    summary['ai_counts']={k:sum((r['ai_grade'] or 'pending')==k for r in candidates) for k in ['++','+','0','pending']}
+    related=[r for r in candidates if r['ai_grade'] in ['++','+']]
+    summary['ai_ratio_counts']={str(v):sum(r['year_ratio']>=v and r['price_basis_clean'] for r in related) for v in ratios}
+    summary['ai_A_ratio_counts']={str(v):sum(r['year_ratio']>=v and r['quality_tier'].startswith('A') for r in related) for v in ratios}
+    summary['ai_default_counts']={k:sum(r['ai_grade']==k and r['year_ratio']>=1.2 and r['quality_tier'].startswith('A') for r in candidates) for k in ['++','+']}
+    summary['ai_early_A_1_2']=sum(r['year_ratio']>=1.2 and r['quality_tier'].startswith('A') and r['recovery_fraction']<.35 for r in related)
+    summary['ai_1_2_to_1_5_A']=sum(1.2<=r['year_ratio']<1.5 and r['quality_tier'].startswith('A') for r in related)
+    summary['ai_A_1_2_hidden']={k:sum((r['ai_grade'] or 'pending')==k and r['year_ratio']>=1.2 and r['quality_tier'].startswith('A') for r in candidates) for k in ['0','pending']}
     catalog_rows=[{'ticker':t,'name':m.get('name'),'catalog_status':'registered','reason':m.get('classification_reason'),'cik':m.get('cik')} for t,m in universe.items()]+[{'ticker':r['ticker'],'name':r.get('name'),'catalog_status':'outside_registered','reason':r.get('classification_reason'),'cik':r.get('cik')} for r in catalog['exclusions']]
     pd.DataFrame(catalog_rows).to_csv(HERE/'catalog_outcomes.csv',index=False)
     summaries=[{k:v for k,v in r.items() if k!='bars'} for r in result]
     (HERE/'screen_results.json').write_text(json.dumps(clean({'metadata':summary,'stocks':summaries}),ensure_ascii=False,indent=2,allow_nan=False)+'\n')
     csv_out=[{k:json.dumps(clean(v),ensure_ascii=False) if isinstance(v,(list,dict)) else v for k,v in r.items()} for r in clean(outcomes)]
     pd.DataFrame(csv_out).to_csv(HERE/'all_pool_outcomes.csv',index=False)
-    coverage_keys=['ticker','name','first_daily_date','latest_daily_date','year_peak_date','year_peak_is_complete','daily_year_ratio','year_ratio','ratio_source','quote_time_et','quote_received_at','core_pass','quality_tier','price_basis_clean','reason','unparsed_financial_fields','financial_source_support','financial_source_support_note','financial_reporting_units','source_unknown_events','source_whole_history_unknown','invalid_panel_rows','duplicate_panel_rows']+[k for k in outcomes[0] if any(k.startswith(w+'_') for w in windows)]
+    coverage_keys=['ticker','name','ai_grade','ai_status','first_daily_date','latest_daily_date','year_peak_date','year_peak_is_complete','daily_year_ratio','year_ratio','ratio_source','quote_time_et','quote_received_at','core_pass','quality_tier','price_basis_clean','reason','unparsed_financial_fields','financial_source_support','financial_source_support_note','financial_reporting_units','source_unknown_events','source_whole_history_unknown','invalid_panel_rows','duplicate_panel_rows']+[k for k in outcomes[0] if any(k.startswith(w+'_') for w in windows)]
     audit_rows=[{k:r.get(k) for k in coverage_keys} for r in outcomes]
     (HERE/'coverage_audit.json').write_text(json.dumps(clean({'metadata':summary,'stocks':audit_rows}),ensure_ascii=False,indent=2,allow_nan=False)+'\n')
-    local_sources=[HERE/'PROTOCOL.md',HERE/'source_registration.json',HERE/'business_reviews.json',Path(__file__).resolve(),HERE/'acquire_quotes.py']
+    local_sources=[HERE/'PROTOCOL.md',HERE/'AI_PROTOCOL.md',HERE/'ai_relevance.json',HERE/'source_registration.json',HERE/'business_reviews.json',Path(__file__).resolve(),HERE/'acquire_quotes.py']
     receipt={'generated_at':summary['generated_at'],'source_paths_and_sha256':{latest['panel_path']:sha(latest['panel_path']),str(Path(latest['path'])/'lineage.json'):sha(Path(latest['path'])/'lineage.json'),str(reportdir/'all_stocks.csv'):sha(reportdir/'all_stocks.csv'),str(qpath):sha(qpath),**{str(p):sha(p) for p in local_sources},**rawhashes},'no_legacy_source_mutation':True,'registered_source_cache_reused':True,'raw_OHLC_and_quotes_not_in_git':True}
     (HERE/'SOURCE_EVIDENCE.json').write_text(json.dumps(receipt,indent=2)+'\n')
     data=clean({'metadata':summary,'stocks':result,'sessions':sessions,'audit':audit_rows})
