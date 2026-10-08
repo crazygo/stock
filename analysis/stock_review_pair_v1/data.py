@@ -6,6 +6,7 @@ import math
 import re
 import shutil
 import time
+import tempfile
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -189,16 +190,21 @@ def coverage(bars, calendar, start, end, listing=None):
 
 
 class Acquisition:
-    def __init__(self, args, destination, cal, ends, deadline):
+    def __init__(self, args, destination, cal, ends, deadline, shared=None):
+        from storage import SharedData
+        self.shared = shared or SharedData(args.store)
+        self.staging = tempfile.TemporaryDirectory(prefix='price-capture-')
         self.args, self.destination, self.cal, self.ends, self.deadline = args, destination, cal, ends, deadline
         self.start = (pd.Timestamp(max(ends.values())) - pd.DateOffset(years=2)).strftime('%Y-%m-%d')
         self.index = defaultdict(list)
         roots = [ROOT / 'market_data/trend_quadrant_v1/daily',
                  ROOT / 'market_data/operation_cadence_v1', ROOT / 'market_data/stock_traits_daily_v1',
-                 args.store / 'runs']
+                 args.store / 'runs', args.store / 'data/raw']
         for root in roots:
             for p in root.rglob('*.parquet'):
-                if root.name == 'daily' or 'daily' in p.parts or 'opend_day_qfq' in p.parts or 'market' in p.parts:
+                if root.name == 'raw':
+                    self.index[p.parent.name].append(p)
+                elif root.name == 'daily' or 'daily' in p.parts or 'opend_day_qfq' in p.parts or 'market' in p.parts:
                     self.index[p.stem].append(p)
         self.remote = None
         self.client = None
@@ -206,6 +212,9 @@ class Acquisition:
         self.quota = None
         self.new_symbols = 0
         self.last_call = 0
+
+    def cleanup(self):
+        self.staging.cleanup()
 
     def local(self, row):
         code = row['code']
@@ -242,7 +251,7 @@ class Acquisition:
         for obj in self.remote:
             if Path(obj['key']).name != row['code'] + '.parquet' or time.monotonic() >= self.deadline:
                 continue
-            dest = self.destination / 'inputs/r2_cache' / (fingerprint(obj['key']) + '.parquet')
+            dest = Path(self.staging.name) / 'r2_cache' / (fingerprint(obj['key']) + '.parquet')
             try:
                 self.client.get_object(obj['key'], dest)
                 bars = normalize(pd.read_parquet(dest), self.start, self.ends[row['code'][:2]], row.get('listing_date'))
@@ -269,7 +278,7 @@ class Acquisition:
             return None
         time.sleep(pause)
         self.last_call = time.monotonic()
-        dest = self.destination / 'inputs/opend_day_qfq' / (row['code'] + '.parquet')
+        dest = Path(self.staging.name) / 'opend_day_qfq' / (row['code'] + '.parquet')
         dest.parent.mkdir(parents=True, exist_ok=True)
         result = worker(['kline_day', '--code', row['code'], '--start', self.start,
                          '--end', self.ends[row['code'][:2]], '--out', str(dest), '--autype', 'QFQ'],
@@ -308,12 +317,9 @@ class Acquisition:
                  'available_at': None, 'checked_at': now(), 'coverage': details,
                  'dataset_id': fingerprint([code, bars]), 'bars': bars}
         if candidate:
-            dest = self.destination / 'inputs/market' / (code + '.parquet')
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(candidate[3], dest)
             # Copying an old file does not turn it into newly received evidence.
-            entry.update(path=str(dest.relative_to(self.destination)), sha256=digest(dest),
+            entry.update(sha256=digest(candidate[3]),
                          source_sha256=digest(candidate[3]), source_path=str(candidate[3]),
                          received_at=datetime.fromtimestamp(candidate[3].stat().st_mtime, timezone.utc).isoformat(),
                          received_at_precision='file_mtime_proxy_not_first_receipt')
-        return entry
+        return self.shared.prices(entry, bars, candidate[3] if candidate else None)

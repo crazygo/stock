@@ -75,6 +75,9 @@ def publish(store, run, root=ROOT):
     for name, sha in files.items():
         if digest(run / name) != sha:
             raise ValueError('artifact changed after validation: ' + name)
+    if (run / 'inputs/data_manifest.json').exists():
+        from storage import verify_market
+        verify_market(run)
     previous = store / 'current/inputs/data_manifest.json'
     if previous.exists():
         old = read(previous)['market_cutoffs']

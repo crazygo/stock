@@ -19,6 +19,7 @@ from common import ROOT, PKG, DEFAULT_STORE, digest, fingerprint, lock, now, rea
 from data import Acquisition, calendars, cutoffs, membership
 from views import build
 from publish import publish
+from storage import SharedData, hydrate, price_bars, verify_market
 
 
 def source_files():
@@ -55,6 +56,7 @@ def parse():
     p.add_argument('--no-opend', action='store_true')
     p.add_argument('--no-publish', action='store_true', help='build and validate a candidate without changing either URL')
     p.add_argument('--from-run', type=Path, help='validate input hashes and replay an immutable run without acquisition')
+    p.add_argument('--recompute', action='store_true', help='recalculate all price statistics, bypassing calculation cache')
     p.add_argument('--skip-browser', action='store_true', help='candidate only; cannot publish without browser acceptance')
     args = p.parse_args()
     if args.skip_browser and not args.no_publish:
@@ -69,9 +71,7 @@ def verify_inputs(run):
     for name, sha in manifest['input_files'].items():
         if digest(run / name) != sha:
             raise ValueError('input checksum mismatch: ' + name)
-    for entry in manifest['datasets']:
-        if entry.get('path') and digest(run / entry['path']) != entry['sha256']:
-            raise ValueError('dataset checksum mismatch: ' + entry['security_id'])
+    verify_market(run, manifest)
     return manifest
 
 
@@ -84,7 +84,7 @@ def validate(run, skip_browser=False):
     for row in prices['records']:
         assert row['bars'] == [b[:5] for b in behavior['prices']['records'][row['code']]]
     for entry in manifest['datasets']:
-        assert all(b[0] <= manifest['market_cutoffs'][entry['market']] for b in entry['bars'])
+        assert all(b[0] <= manifest['market_cutoffs'][entry['market']] for b in price_bars(run, entry))
     node = shutil.which('node') or str(Path.home() / '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node')
     # Compile every embedded script even when a browser runtime is unavailable.
     import re
@@ -116,6 +116,8 @@ def execute(args):
         run = args.store / 'runs' / run_id
         run.mkdir(parents=True)
         started_at = now()
+        shared = SharedData(args.store)
+        acquisition = None
         sources = {str(p.relative_to(ROOT)): digest(p) for p in source_files()}
         repro = run / 'repro/workspace'
         for name in sources:
@@ -123,7 +125,8 @@ def execute(args):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, target)
         params = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}
-        write(run / 'run.json', {'run_id': run_id, 'run_kind': 'render' if args.from_run else 'update',
+        kind = 'recompute' if args.recompute and args.from_run else 'render' if args.from_run else 'update'
+        write(run / 'run.json', {'run_id': run_id, 'run_kind': kind,
                                  'started_at': started_at, 'information_cutoff': None,
                                  'status': 'preparing', 'parameters': params, 'source_sha256': sources})
         write(args.store / 'latest_attempt.json', {'run_id': run_id, 'started_at': now(), 'status': 'running'})
@@ -132,8 +135,8 @@ def execute(args):
             if args.from_run:
                 source = args.from_run.resolve()
                 manifest = verify_inputs(source)
-                shutil.copytree(source / 'inputs', run / 'inputs')
-                manifest = dict(manifest, run_id=run_id, replay_of=source.name)
+                manifest = shared.replay(source, run, manifest)
+                manifest = dict(manifest, run_id=run_id, replay_of=manifest['run_id'])
                 capture = read(run / 'inputs/members.json')
                 rows = {r['code']: r for r in capture['records']}
                 value_chain = read(run / 'inputs/value_chain.json')
@@ -142,7 +145,7 @@ def execute(args):
                 cal = calendars()
                 ends = cutoffs(cal, args.cutoff)
                 rows, capture, value_chain = membership(run, args, deadline)
-                acquisition = Acquisition(args, run, cal, ends, deadline)
+                acquisition = Acquisition(args, run, cal, ends, deadline, shared)
                 print(f'2/5 获取同口径日线：{len(rows)}证券；目标 {ends}', flush=True)
                 datasets = []
                 ordered = sorted(rows.values(), key=lambda r: ('special' not in r['groups'], 'holdings' not in r['groups'], r['code']))
@@ -173,9 +176,14 @@ def execute(args):
                                                   'quality': 'carried_forward', 'intraday': 'carried_forward'},
                             'errors': acquisition.errors,
                             'status': 'complete' if all(d['coverage']['status'] == 'complete' for d in datasets) else 'partial'}
+                shared.facts(run, manifest)
             write(run / 'inputs/data_manifest.json', manifest)
+            if acquisition:
+                acquisition.cleanup()
             print('3/5 分别计算两套描述并生成完整页面', flush=True)
-            details = build(run, manifest, rows, value_chain, cal, args.store)
+            details = build(run, hydrate(run, manifest), rows, value_chain, cal, args.store, args.recompute)
+            details['shared_storage'] = dict(shared.metrics)
+            details['run_parquet_files'] = len(list(run.rglob('*.parquet')))
             evaluation_id = 'pair-report-' + fingerprint([manifest['data_run_id'],
                               digest(ROOT / 'analysis/ai_trend_quadrant_v2/model.py'),
                               digest(ROOT / 'analysis/stock_behavior_description_v3/core.js')])[:20]
@@ -191,12 +199,15 @@ def execute(args):
             else:
                 details['evaluation_reused'] = True
             shutil.copyfile(evaluation, run / 'results/evaluation_snapshot.json')
+            if args.from_run and (source / 'results/trend/results.json').exists():
+                from review import compare_run
+                compare_run(source, run, details, args.recompute)
             print('4/5 校验同批输入、实际图表和交互', flush=True)
             validate(run, args.skip_browser)
             if any(digest(ROOT / name) != sha for name, sha in sources.items()):
                 raise RuntimeError('source changed during calculation; candidate kept, publication refused')
             write(run / 'run.json', {'run_id': run_id, 'data_run_id': manifest['data_run_id'], 'report_run_id': evaluation_id,
-                                     'run_kind': 'render' if args.from_run else 'update', 'started_at': started_at,
+                                     'run_kind': kind, 'started_at': started_at,
                                      'finished_at': now(), 'information_cutoff': manifest['information_cutoff'],
                                      'parameters': params, 'source_sha256': sources,
                                      'status': manifest['status'], 'market_cutoffs': manifest['market_cutoffs'],
@@ -215,13 +226,17 @@ def execute(args):
             (run / 'README.md').write_text(f'# 双页面批次 {run_id}\n\n'
                 f'行情目标：{manifest["market_cutoffs"]}；覆盖 {manifest["summary"]}。\n\n'
                 '离线打开 pages/stock_behavior_description_v3/index.html 或 pages/ai_trend_quadrant_v2/index.html。\n'
-                '断网重算：sh repro/replay.sh /absolute/path/to/new-store；使用包内源码与输入，不接 OpenD/R2。\n'
+                '本运行引用共用 data/ 对象库；移动或分享请先用 export.py 导出完整离线包。\n'
+                '断网重算：sh repro/replay.sh /absolute/path/to/new-store；使用封存源码和所引用输入，不接 OpenD/R2。\n'
                 '依赖 Python（numpy、pandas、pyarrow）、Node.js 与 Playwright/Chromium。\n'
                 '新闻未接入；财务、质量与小时证据沿用原截止缓存。历史时间谱为回算。\n')
             write(run / 'manifest.json', {'schema_version': 'stock_review_pair_bundle_v1', 'run_id': run_id,
                   'data_run_id': manifest['data_run_id'], 'report_run_id': evaluation_id,
                   'market_cutoffs': manifest['market_cutoffs'], 'status': manifest['status'],
                   'modules': manifest['auxiliary_sources'],
+                  'storage_schema': manifest.get('storage_schema', 'legacy_inline'),
+                  'shared_references': {d['security_id']: {k: d.get(k) for k in ['object_ref', 'raw_ref']}
+                                        for d in manifest['datasets']},
                   'source_sha256': sources, 'files': {str(p.relative_to(run)): {'sha256': digest(p), 'bytes': p.stat().st_size}
                                                      for p in run.rglob('*') if p.is_file()}})
             write(run / 'checksums.json', {str(p.relative_to(run)): digest(p) for p in run.rglob('*') if p.is_file()})
@@ -249,6 +264,9 @@ def execute(args):
             write(args.store / 'latest_attempt.json', {'run_id': run_id, 'status': 'failed',
                                                       'error': type(exc).__name__, 'path': str(run)})
             raise
+        finally:
+            if acquisition:
+                acquisition.cleanup()
 
 
 if __name__ == '__main__':

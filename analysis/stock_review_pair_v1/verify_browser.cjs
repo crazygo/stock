@@ -45,6 +45,18 @@ const out=path.resolve(process.argv[2]),run=JSON.parse(fs.readFileSync(path.join
  await page.screenshot({path:path.join(out,'validation/trend-desktop.png')});
  await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await page.screenshot({path:path.join(out,'validation/trend-mobile.png')});
+ const review=path.join(out,'validation/recompute_review.html');
+ if(fs.existsSync(review)){
+  await page.setViewportSize({width:1440,height:1000});await page.goto('file://'+review);
+  const comparison=JSON.parse(fs.readFileSync(path.join(out,'validation/recompute_review.json')));
+  assert.equal(await page.locator('#rows tr').count(),comparison.securities);
+  await page.locator('#special').check();assert.equal(await page.locator('#rows tr').count(),expected);
+  await page.locator('#changed').check();assert((await page.locator('#count').textContent()).startsWith('0 /'));
+  await page.locator('#reset').click();await page.locator('#search').fill('US.AAPL');assert.equal(await page.locator('#rows tr').count(),1);
+  await page.locator('#reset').click();await page.screenshot({path:path.join(out,'validation/review-desktop.png')});
+  await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.screenshot({path:path.join(out,'validation/review-mobile.png')});
+ }
  assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
  fs.writeFileSync(path.join(out,'validation/browser.json'),JSON.stringify({status:'passed',run_id:run.run_id,
   behavior_members:expected,errors,requests,checks:['offline both pages','shared batch','charts','search/reset','day/week','detail evidence/review save','per-market cutoff','map/time spectrum','mobile overflow']}));

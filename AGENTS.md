@@ -360,6 +360,7 @@ stock/
 - 行情复用已有 R2 归档，按 Local → R2 → OpenD 获取所需粒度与价格口径。原始 Parquet 不入 Git，新抓取数据不自动上传 R2；公司行动导致复权修订时另存一致版本。原始日线、分钟行情、成员、业务证据和研究结果分别登记，不能认为 R2 有行情就已包含全部页面依赖。
 - 双页面统一日更入口为 [stock_review_pair_v1](analysis/stock_review_pair_v1/README.md)：运行 `python3 analysis/stock_review_pair_v1/run.py`，一次完成成员查询、同口径日线补齐、两套计算、浏览器验收和共同指针发布。保留两个原页面及 v3 详情入口，原 HTML 备份、旧数据不覆盖；失败保留上一批。2026-10-08 已实跑 428 个证券（特别关注 55），426 个到达美股 10-07／港股 10-08 目标，缺口与短历史保留为 partial。桌面、窄屏、离线阅读和包内源码离线复算已验证；完整运行证据在 `.cache/stock_review_pair_v1/current/validation/`。
 - 这是一次双页面日线刷新配置。财务、质量与小时证据沿用真实截止缓存，新闻未接入；完整日报的精华消息、事件跟踪、跨机器包合并、自动调度与通知仍不能称为已实现。静态 HTML 打开或刷新不会获取新行情。
+- 底层行情与事实按内容版本共用在 `.cache/stock_review_pair_v1/data/`；新 run 只记录不可变引用、参数及结果，不再逐 run 复制 Parquet 或内嵌行情清单。旧 run 保留，独立离线分享时用 `export.py` 物化引用。`run.py --from-run <批次> --recompute --no-publish` 可关闭计算缓存、用冻结输入纯重算；`validation/recompute_review.html/json` 核对逐股原始值、未知、历史点、峰谷证据及实际存储变化，不改原行情截止或制造新评估点。
 
 ### 现有数据依赖与下一阶段目标
 

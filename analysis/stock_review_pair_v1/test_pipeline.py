@@ -122,7 +122,7 @@ class ContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder); store = root / '.cache/pair'; run = store / 'runs/old'
             write(store / 'current/inputs/data_manifest.json', {'market_cutoffs': {'US': '2026-10-07'}})
-            write(run / 'inputs/data_manifest.json', {'market_cutoffs': {'US': '2026-10-06'}})
+            write(run / 'inputs/data_manifest.json', {'market_cutoffs': {'US': '2026-10-06'}, 'datasets': []})
             write(run / 'validation/acceptance.json', {'status': 'passed'})
             write(run / 'checksums.json', {str(p.relative_to(run)): digest(p) for p in run.rglob('*') if p.is_file()})
             with self.assertRaisesRegex(ValueError, 'backwards'):publish(store, run, root)

@@ -50,10 +50,10 @@ def at(bars, days, cutoff):
     return values, states, returns[-max(lengths):] if lengths else None
 
 
-def trend_record(entry, days, end, cache):
+def trend_record(entry, days, end, cache, recompute=False):
     key = fingerprint([entry['dataset_id'], end, days, digest(TREND / 'model.py'), 'pair_adapter_v1'])
     path = cache / (key + '.json')
-    if path.exists():
+    if path.exists() and not recompute:
         return read(path), True
     values, states, returns = at(entry['bars'], days, end)
     uncertainty = MODEL.boot(returns, entry['security_id'], end) if returns is not None else [None] * 5
@@ -69,7 +69,11 @@ def trend_record(entry, days, end, cache):
               'bars': len(entry['bars']), 'evaluation_cutoff': end,
               'zero_volume_warning': bool(entry['bars'] and
                                          sum(b[5] <= 0 for b in entry['bars'][-61:]) / min(61, len(entry['bars'])) > .1)}
-    write(path, result)
+    if path.exists():
+        if read(path) != result:
+            raise ValueError('fresh calculation differs from cached result: ' + entry['security_id'])
+    else:
+        write(path, result)
     return result, False
 
 
@@ -87,7 +91,7 @@ def banner(page, manifest, other):
     return re.sub(r'(<body[^>]*>)', lambda m: m.group(1) + bar, page, count=1)
 
 
-def build(destination, manifest, rows, value_chain, cal, store):
+def build(destination, manifest, rows, value_chain, cal, store, recompute=False):
     entries = {d['security_id']: d for d in manifest['datasets']}
     end = max(manifest['market_cutoffs'].values())
     run_id = manifest['run_id']
@@ -97,7 +101,7 @@ def build(destination, manifest, rows, value_chain, cal, store):
         code, market = row['code'], row['code'][:2]
         entry = entries[code]
         result, cached = trend_record(entry, cal[market]['days'], manifest['market_cutoffs'][market],
-                                      store / 'calculations/trend')
+                                      store / 'calculations/trend', recompute)
         reused += cached
         records.append({**row, **result, 'favorite': 'special' in row['groups'],
                         'ai_related': bool(row.get('chains')), 'quality_grade': (row.get('quality') or {}).get('grade'),
@@ -199,4 +203,5 @@ def build(destination, manifest, rows, value_chain, cal, store):
     import shutil
     node = shutil.which('node') or str(Path.home() / '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node')
     subprocess.run([node, str(PKG / 'evaluate_behavior.cjs'), str(destination)], check=True)
-    return {'trend_records': len(records), 'behavior_records': len(special), 'calculation_cache_reused': reused}
+    return {'trend_records': len(records), 'behavior_records': len(special), 'calculation_cache_reused': reused,
+            'trend_fresh_calculations': len(records) - reused, 'behavior_fresh_calculations': len(special)}
