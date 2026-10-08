@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>股票观察 · 四象限与多股对比</title>
+<style>
+:root{color-scheme:light dark;--bg:#fff;--fg:#262626;--muted:#f2f2f2;--secondary:#626262;--line:#c7c7c7;--reverse:#8a5b36;--random:#777;--continue:#396f68;--selected:#222;font-family:system-ui,-apple-system,sans-serif;font-size:14px}svg text{pointer-events:none}
+@media(prefers-color-scheme:dark){:root{--bg:#1c1c1c;--fg:#e7e7e7;--muted:#2c2c2c;--secondary:#b8b8b8;--line:#555;--reverse:#d8a77e;--random:#adadad;--continue:#8ac4bb;--selected:#eee}}
+:root[data-theme="light"]{--bg:#fff;--fg:#262626;--muted:#f2f2f2;--secondary:#626262;--line:#c7c7c7;--reverse:#8a5b36;--random:#777;--continue:#396f68;--selected:#222;color-scheme:light}
+:root[data-theme="dark"]{--bg:#1c1c1c;--fg:#e7e7e7;--muted:#2c2c2c;--secondary:#b8b8b8;--line:#555;--reverse:#d8a77e;--random:#adadad;--continue:#8ac4bb;--selected:#eee;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);line-height:1.45}main{padding:20px;max-width:1600px;margin:auto}h1{font-size:23px;font-weight:500;margin:0}h2{font-size:18px;font-weight:500;margin:0}h3{font-size:15px;font-weight:500;margin:0}.small{font-size:12px}.muted{color:var(--secondary)}button,select,input{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:7px 10px}button{cursor:pointer}button:hover{background:var(--muted)}button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible,a:focus-visible{outline:2px solid var(--fg);outline-offset:2px}button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}select{min-width:0;max-width:100%;width:100%}a{color:inherit}svg{display:block;width:100%;overflow:visible}svg text{font-size:12px;fill:var(--fg);font-family:inherit}strong{font-weight:500}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.stack{display:grid;gap:8px}.controls{display:grid;grid-template-columns:minmax(150px,250px) minmax(200px,450px);gap:12px;margin:16px 0}.controls label{display:grid;gap:5px;min-width:0}.legend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0;font-size:12px}.swatch{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.map-wrap{position:relative}.info{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0}.plain-list{display:flex;flex-wrap:wrap;gap:7px}.drawer{position:fixed;z-index:20;right:12px;top:12px;bottom:12px;width:min(740px,66vw);background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column}.drawer[hidden]{display:none}.drawer-header{padding:14px 16px;border-bottom:1px solid var(--line);display:grid;gap:8px;flex:none}.drawer-title{display:flex;justify-content:space-between;align-items:start;gap:12px}.drawer-body{padding:14px 16px;overflow-y:auto;min-height:0}.trait-controls{display:flex;flex-wrap:wrap;gap:8px 14px}.trait-key{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;min-height:28px}.trait-key input{margin:0;accent-color:var(--fg)}.trait-key svg{width:28px;height:12px;flex:none}.timeline-chart svg{overflow:hidden}.timeline-point{cursor:pointer}.date-inspector{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;margin:12px 0 6px}.axis-hint{margin:10px 0}.lookback-controls{display:flex;gap:8px;flex-wrap:wrap}.timeline-counts{margin:8px 0}.raw-table td:nth-child(n+2){text-align:right}.spectrum-hint{margin:12px 0}.detail-table{overflow-x:auto;margin:10px 0}table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;padding:7px;border-bottom:1px solid var(--line);vertical-align:top}td{font-variant-numeric:tabular-nums}.explain{margin:18px 0;max-width:95ch}.popover{position:absolute;z-index:15;background:var(--bg);border:1px solid var(--line);padding:10px;max-width:min(340px,100%);display:grid;gap:7px}.popover[hidden]{display:none}.tooltip{position:absolute;z-index:25;background:var(--bg);border:1px solid var(--line);padding:7px;max-width:260px;font-size:12px;pointer-events:none}.tooltip[hidden]{display:none}.divider{border:0;border-top:1px solid var(--line);margin:16px 0}
+
+.price-section{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:18px}.price-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.price-key{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;margin:8px 0}.price-key input{margin-right:5px;accent-color:var(--fg)}.price-dates{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;margin:10px 0}.price-dates label{display:grid;gap:4px;min-width:0;font-size:12px}.price-dates input{width:100%;min-width:0;padding:6px;border:1px solid var(--line);border-radius:2px;background:var(--bg);color:var(--fg)}.price-shortcuts{display:flex;gap:6px;flex-wrap:wrap}.price-shortcuts button{font-size:12px;padding:5px 8px}.price-chart svg,.price-mini svg{overflow:hidden}.price-mini{cursor:pointer;margin:10px 0 3px}.price-mini:focus-visible{outline:2px solid var(--fg);outline-offset:2px}.price-probe-hit{cursor:crosshair}.price-pan{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;margin:8px 0}.price-pan input{width:100%;accent-color:var(--fg)}.price-message{margin:8px 0}.price-readout{margin:6px 0}.price-note{margin:7px 0}.timeline-heading{margin-bottom:10px}
+@media(max-width:420px){.price-dates{grid-template-columns:1fr 1fr}.price-dates button{grid-column:1/-1}.price-pan button{font-size:12px;padding:5px}.price-dates input{min-height:40px}}
+
+[hidden]{display:none!important}.view-tabs{display:flex;gap:8px;margin:16px 0;border-bottom:1px solid var(--line);padding-bottom:12px}.view-tabs [aria-selected="true"]{background:var(--fg);color:var(--bg)}.compare-controls{display:grid;gap:10px;border-bottom:1px solid var(--line);padding-bottom:14px;margin:14px 0}.compare-range{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;max-width:660px;align-items:end}.compare-range label{display:grid;gap:4px;font-size:12px;min-width:0}.compare-range input{min-width:0;width:100%}.compare-groups{display:grid;gap:8px}.compare-family{margin:0;padding:8px 10px;border:1px solid var(--line)}.compare-family legend{font-size:12px;padding:0 5px}.compare-options{display:flex;flex-wrap:wrap;gap:6px 18px}.compare-options label{display:inline-flex;gap:5px;align-items:center;font-size:12px;min-height:28px}.compare-options input{accent-color:var(--fg);margin:0}.compare-options small{color:var(--secondary)}.compare-search{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.compare-search input{min-width:160px;flex:1;max-width:400px}.compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}.compare-card{border:1px solid var(--line);padding:12px;min-width:0}.compare-card-head{display:flex;justify-content:space-between;gap:10px;align-items:start}.compare-card-head h3{font-size:16px}.compare-badges{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0}.compare-badges span{font-size:11px;border:1px solid var(--line);padding:2px 5px}.compare-card .small{margin:6px 0}.compare-chart svg{overflow:hidden}.pattern-marker{cursor:pointer}.compare-card .price-pan{margin:8px 0}.compare-card select{font-size:12px;padding:5px}.compare-case{margin:6px 0}.compare-pages{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}.compare-pending{margin:12px 0}.compare-pending button{font-size:12px}.compare-empty{padding:24px 0}.compare-data{margin:8px 0}.compare-card details{font-size:12px}
+@media(max-width:900px){.compare-grid{grid-template-columns:1fr}}@media(max-width:420px){.compare-range{grid-template-columns:1fr 1fr}.compare-range button{grid-column:1/-1}.compare-options{gap:6px 12px}.compare-card{padding:9px}.compare-card-head button{font-size:12px;padding:5px}}
+@media(max-width:1000px){.drawer{width:calc(100vw - 24px)}}
+@media(max-width:620px){main{padding:12px}.controls{grid-template-columns:1fr}button,select{min-height:44px}select{font-size:16px}.drawer-header,.drawer-body{padding:12px}.drawer{right:6px;top:6px;bottom:6px;width:calc(100vw - 12px)}.date-inspector{grid-template-columns:1fr}.trait-key{min-height:32px}h1{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style></head><body>
+<main id="map-app">
+  <header class="stack"><h1>股票观察 · 分布与多股对比</h1><div id="meta" class="small muted"></div></header>
+  <nav class="view-tabs" id="view-tabs" role="tablist" aria-label="股票视图"><button id="tab-map" role="tab" type="button" aria-selected="true" aria-controls="map-panel" tabindex="0">四象限分布</button><button id="tab-compare" role="tab" type="button" aria-selected="false" aria-controls="compare-panel" tabindex="-1">多股票对比</button></nav>
+  <section id="map-panel" role="tabpanel" aria-labelledby="tab-map">
+  <div class="controls">
+    <label>自选范围<select id="pool"><option value="all">全部股票与基金</option><option value="favorite">特别关注</option><option value="quality">质量 A+ / A 股票</option><option value="ai">AI 业务路径</option><option value="stock">股票</option><option value="fund">基金</option></select></label>
+    <label>选择证券，打开时间谱<select id="security"><option value="">请选择证券</option></select></label>
+  </div>
+  <div class="info small"><span id="coverage" aria-live="polite"></span><span>点击地图点打开右侧时间谱 · 同位置证券可分别选择</span></div>
+  <div id="map-wrap" class="map-wrap"><svg id="map" role="img" aria-label="五属性分布地图，横轴波动幅度，纵轴长期方向"></svg><div id="cluster" class="popover" hidden></div><div id="tooltip" class="tooltip" role="tooltip" hidden></div></div>
+  <div class="legend"><span><i class="swatch" style="background:var(--reverse)"></i>M 反向相关</span><span><i class="swatch" style="background:var(--random)"></i>M 接近零 / 未知</span><span><i class="swatch" style="background:var(--continue)"></i>M 延续相关</span><span>圆：J 较分散</span><span>菱形：J 较集中</span><span>叉号：J 未知</span><span>实环：S 较稳定</span><span>虚环：S 较易变</span><span>点环：S 未知</span></div>
+  <div class="small muted">选中证券的浅色框：G/V 各自的10–90%重采样范围；不是联合置信区域。</div>
+  <details id="pending"><summary id="pending-title"></summary><div id="pending-list" class="plain-list"></div></details>
+  <details class="explain"><summary>五个标签的计算口径与数据边界</summary><div id="definitions"></div><p>颜色、形状与环线来自当前点估计；概率和范围见证券详情。M、J、S 是本版探索代理，尚未验证为可交易特性、真实事件或未来稳定概率。各市场比较本币价格路径。业务质量另行筛选，ETF 不套公司评级。</p><p>日线与成员来源沿用此前实际读取的快照；未知不补零。没有接真实交易，也未验证持有策略收益。</p><a href="PROTOCOL.md">模型登记协议</a> · <a href="VIEW_NOTES.md">当前视图说明</a> · <a href="../ai_trend_quadrant_v1/index.html">保留的 v1 地图</a></details>
+</section>
+<section id="compare-panel" role="tabpanel" aria-labelledby="tab-compare" hidden>
+ <div class="stack"><h2>多股票 · 日线 60 天 × 周线 420 天</h2><div id="compare-data" class="small muted compare-data"></div></div>
+ <div class="compare-controls">
+  <form id="compare-range" class="compare-range"><label>日线起点<input id="compare-from" type="date" required></label><label>共用终点<input id="compare-to" type="date" required></label><button type="submit">应用范围</button></form>
+  <div class="price-shortcuts" role="group" aria-label="多股日历天快捷范围"><button type="button" data-compare-days="30">30 天</button><button type="button" data-compare-days="60">60 天</button><button type="button" data-compare-days="90">90 天</button><button type="button" data-compare-days="180">180 天</button></div>
+  <div id="compare-axis" class="small"></div><div id="compare-options" class="compare-groups"></div>
+  <div class="small muted">同一排内取并集，不同排之间取交集；不勾选该排表示不限。形态筛选：所选日历范围内完整包含的 10 交易日形态，至少命中一次。</div>
+  <div class="compare-search"><label for="compare-search">代码 / 名称</label><input id="compare-search" type="search" placeholder="搜索证券"><button id="compare-clear" type="button">清除筛选</button><label><input id="compare-week" type="checkbox" checked>显示周线</label></div>
+ </div>
+ <div id="compare-status" class="small" role="status"></div><div class="compare-pages"><button id="compare-prev" type="button">上一页</button><span id="compare-page-info" class="small"></span><button id="compare-next" type="button">下一页</button></div>
+ <div id="compare-grid" class="compare-grid"></div><div id="compare-empty" class="compare-empty small" hidden>当前组合没有命中股票；可以放宽所选分组或调整日期。</div>
+ <details id="compare-pending" class="compare-pending"><summary id="compare-pending-title"></summary><div id="compare-pending-list" class="plain-list"></div></details>
+ <details class="explain"><summary>日线四形态、象限分组和数据口径</summary><div id="compare-method" class="small"></div><a href="COMPARISON_NOTES.md">完整规则、分组来源与验证边界</a></details>
+</section>
+</main>
+<aside id="drawer" class="drawer" hidden role="dialog" aria-modal="false" aria-labelledby="drawer-name">
+  <header class="drawer-header"><div class="drawer-title"><div class="stack"><h2 id="drawer-name"></h2><div id="drawer-grade" class="small"></div></div><button id="close" type="button" aria-label="关闭股票详情">关闭 ×</button></div><div class="small muted">日线 × 周线价格图 · 五标签时间谱</div><div id="drawer-warning" class="small"></div></header>
+  <div id="drawer-body" class="drawer-body"><section class="price-section" aria-labelledby="price-title">
+  <div class="price-heading"><h3 id="price-title">价格 · 日 K × 周 K</h3><span class="small muted">双时间范围 · 周回看 = 日回看 × 7</span></div>
+  <div class="price-key"><span>窄蜡烛：日线（空心涨 / 实心跌）</span><label><input id="show-week" type="checkbox" checked>宽浅色蜡烛：周线（浅涨 / 深跌）</label></div>
+  <form id="price-range" class="price-dates"><label>日线起点<input id="price-from" type="date" required></label><label>共用终点<input id="price-to" type="date" required></label><button type="submit">应用范围</button><label>周线起点（自动 ×7）<input id="price-week-from" type="date" readonly></label></form>
+  <div class="price-shortcuts" role="group" aria-label="价格图日历天快捷范围"><button type="button" data-price-days="30">30 天</button><button type="button" data-price-days="60">60 天</button><button type="button" data-price-days="90">90 天</button><button type="button" data-price-days="180">180 天</button></div>
+  <div id="price-message" class="small price-message" role="status"></div>
+  <div id="price-chart" class="price-chart"></div>
+  <div id="price-hover" class="small muted" aria-live="off"></div>
+  <div id="price-pan" class="price-pan"><button id="price-prev" type="button">← 较早</button><input id="price-pan-slider" type="range" min="0" max="0" step="1" value="0" aria-label="平移可见交易日"><button id="price-next" type="button">较近 →</button></div>
+  <div id="price-visible" class="small muted"></div>
+  <label class="date-inspector">定位日线日期（同时对照周线位置）<select id="price-inspect"></select></label><div id="price-readout" class="detail-table raw-table price-readout"></div>
+  <div class="small muted">固定两年导航 · 实线框：日范围；虚线框：周范围<br>点击跳转；← / → 移动 7 日，Home / End 到首尾</div>
+  <div id="price-mini" class="price-mini" role="slider" tabindex="0" aria-label="两年日级OHLC快速导航"></div><div id="price-coverage" class="small muted"></div>
+  <div class="small muted price-note">两层各自将回看范围铺满横轴，同一横向位置对应不同日期；共同右端为所选终点。日线 N 日历天，周线 7N 日历天，约 N 周；边界周可能未满。虚线周蜡烛表示未完、截断或覆盖不足。所选终点之后的行情不计入；未知不补 OHLC。滚轮和拖拽不缩放，长区间用平移控件查看。这里显示市场价格，不是内在价值估计。</div>
+</section>
+<section id="trait-section"><h3 class="timeline-heading">时间谱 · 五个标签</h3><div id="trait-legend" class="trait-controls" role="group" aria-label="时间谱标签"></div><p class="small muted">点：有效历史计算结果 · 横轴：实际日期 · 未知不补点</p><div class="lookback-controls" role="group" aria-label="日历天回看范围"><button type="button" data-lookback="14">14 天</button><button type="button" data-lookback="30">30 天</button><button type="button" data-lookback="60">60 天</button></div><div id="axis-hint" class="small muted axis-hint"></div><div id="time-spectrum" class="timeline-chart"></div><div id="timeline-counts" class="small muted timeline-counts"></div><label class="date-inspector">查看计算日期<select id="inspect-day"></select></label><div id="historical-values" class="detail-table raw-table"></div><div class="small muted spectrum-hint">纵轴是固定映射的显示分数，不是概率；各标签高低不代表可直接比较的好坏。原始量纲见日期详情。点来自本次按当时已有行情的历史回算，不代表当日实时运行记录。</div><details><summary>显示尺度与标签算法</summary><div id="display-scale" class="small"></div><p class="small">G：120交易日 · V/M/J：60交易日 · S：过去20交易日属性变化。14／30／60天只截取日期范围，不改变算法窗口。缺失计算结果断线，非交易日保留真实日期间隔。</p></details><details id="detail"><summary>截止日原始值、归属模型概率与缺失依据</summary><div id="detail-table" class="detail-table"></div></details></section></div>
+</aside>
+<script>
+__TIMELINE__
+__PRICE_CHART__
+__DAILY_PATTERNS__
+(()=>{
+const D=__DATA__, $=id=>document.getElementById(id),ROOT=$('map-app'),NS='http://www.w3.org/2000/svg';
+const defs=[{key:'G',name:'长期方向 G',unit:'年化历史 log 增长',note:'最近120交易日 mean(log收益) ×252；不是未来年收益预测。',window:120},{key:'V',name:'波动幅度 V',unit:'年化波动',note:'最近60交易日 log收益样本标准差 ×√252。',window:60},{key:'M',name:'收益组织 M',unit:'相邻日相关 ρ',note:'最近60交易日相邻收益的Pearson相关；负为短期反向，正为延续代理。',window:60},{key:'J',name:'跳变集中 J',unit:'大变化能量占比',note:'最近60交易日去均值收益，最大的10%残差平方占全部残差平方的比例；不是事件归因。',window:60},{key:'S',name:'历史稳定 S',unit:'描述分数 0—1',note:'过去20交易日四属性的平均归一变化，经 exp(-10D) 映射；不是稳定概率或持续期预测。',window:140}];
+const saved=(()=>{try{return JSON.parse(localStorage.getItem('five-traits-map-v2-ui'))||{}}catch{return{}}})();
+const P=__PRICES__,PC=PriceOverlay,C=__COMPARISON__,DP=DailyPatterns;const comparePrices=new Map([...P.records,...C.extra_prices].map(p=>[p.code,p]));let priceLayout=null;
+const TL=FiveTraitTimeline;const state={pool:saved.pool||'all',code:null,open:false,lookback:60,traits:new Set(TL.KEYS),inspectDay:D.as_of,price:{from:PC.start(D.as_of,30),end:D.as_of,offset:null,week:true,probe:null}},records=D.records;let returnFocus=null,points=[];
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=v=>v==null?'—':(v*100).toFixed(1)+'%';const fmt=(k,v)=>v==null?'—':k===2||k===4?v.toFixed(2):pct(v);
+const why=s=>({insufficient_history:'历史不足',missing_sessions:'交易日有缺失',unavailable:'行情不可用',unverified_calendar:'日历未核验',undefined_zero_variation:'零变化，无法估计'}[s]||s);
+const ts=s=>Date.parse(s+'T00:00:00Z'),dayOffset=n=>new Date(ts(D.as_of)-(n-1)*86400000).toISOString().slice(0,10);
+function E(tag,a={},t){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);if(t!=null)e.textContent=t;return e;}
+function T(svg,x,y,t,anchor='start',a={}){svg.append(E('text',{x,y,'text-anchor':anchor,...a},t));}
+function persist(){try{localStorage.setItem('five-traits-map-v2-ui',JSON.stringify({pool:state.pool}))}catch{}}
+function filtered(){return records.filter(r=>state.pool==='all'||state.pool==='favorite'&&r.favorite||state.pool==='quality'&&['A+','A'].includes(r.quality_grade)||state.pool==='ai'&&r.ai_related||state.pool==='stock'&&r.kind==='STOCK'||state.pool==='fund'&&r.kind==='ETF');}
+const mapped=records.filter(r=>r.mapped),allG=mapped.flatMap(r=>[r.v[0],...(r.uncertainty[0]?.range||[])]),allV=mapped.flatMap(r=>[r.v[1],...(r.uncertainty[1]?.range||[])]);
+const minG=Math.asinh(Math.min(-.1,...allG)/.5),maxG=Math.asinh(Math.max(.1,...allG)/.5),gSpan=maxG-minG,gDomain=[minG-.06*gSpan,maxG+.06*gSpan],vMax=Math.max(.35,...allV)*1.06;
+function renderMap(){
+  if($('map-panel').hidden)return;const svg=$('map'),w=$('map-wrap').clientWidth,h=Math.max(460,Math.min(700,innerHeight-250)),p={l:w<480?66:80,r:20,t:24,b:66};svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.setAttribute('height',h);svg.replaceChildren();
+  const sx=v=>p.l+10+Math.asinh(v/.20)/Math.asinh(vMax/.20)*(w-p.l-p.r-20),sy=v=>h-p.b-(Math.asinh(v/.5)-gDomain[0])/(gDomain[1]-gDomain[0])*(h-p.t-p.b);
+  svg.append(E('rect',{x:p.l,y:p.t,width:w-p.l-p.r,height:h-p.t-p.b,fill:'none',stroke:'var(--line)','data-chart-frame':''}));
+  const neutralTop=sy(.1),neutralBottom=sy(-.1);svg.append(E('rect',{x:p.l,y:neutralTop,width:w-p.l-p.r,height:neutralBottom-neutralTop,fill:'var(--muted)'}));
+  const rawTicks=[0,.2,.35,.6,1,2,4,8,16,32],ticks=rawTicks.filter(v=>v<=vMax);let lastX=-Infinity;
+  for(const v of ticks){const x=sx(v);if(x-lastX<(w<480?54:65))continue;lastX=x;svg.append(E('line',{x1:x,x2:x,y1:p.t,y2:h-p.b,stroke:'var(--line)','stroke-width':1}));T(svg,x,h-p.b+22,pct(v),'middle');}
+  let lastY=-Infinity;for(const v of [16,8,4,2,1,.5,0,-.5,-1,-2,-4,-8,-16]){const y=sy(v);if(y<p.t||y>h-p.b||y-lastY<(w<480?58:42))continue;lastY=y;svg.append(E('line',{x1:p.l,x2:w-p.r,y1:y,y2:y,stroke:'var(--line)','stroke-width':1}));T(svg,p.l-7,y+4,pct(v),'end');}
+  svg.append(E('line',{x1:p.l,x2:w-p.r,y1:sy(0),y2:sy(0),stroke:'var(--fg)','stroke-width':1}));svg.append(E('line',{x1:sx(.35),x2:sx(.35),y1:p.t,y2:h-p.b,stroke:'var(--fg)','stroke-width':1}));
+  T(svg,(p.l+w-p.r)/2,h-7,w<480?'V 年化波动（非线性轴）':'V 年化波动 · asinh 压缩极大值，刻度为实际百分比','middle',{'data-axis':'x',class:'axis-title'});
+  T(svg,15,(p.t+h-p.b)/2,'G 年化历史 log 增长（非线性轴）','middle',{'data-axis':'y',class:'axis-title',transform:`rotate(-90 15 ${(p.t+h-p.b)/2})`});
+  const active=records.find(r=>r.code===state.code);
+  if(active?.mapped){const a=active.uncertainty[0]?.range,b=active.uncertainty[1]?.range;if(a&&b)svg.append(E('rect',{x:sx(b[0]),y:sy(a[1]),width:sx(b[1])-sx(b[0]),height:sy(a[0])-sy(a[1]),fill:'var(--fg)',opacity:.06}));}
+  points=filtered().filter(r=>r.mapped).map(r=>({r,x:sx(r.v[1]),y:sy(r.v[0])}));
+  const draw=q=>{const r=q.r,[g,v,m,j,s]=r.v,selected=r.code===state.code,c=m==null?'var(--random)':m<-.15?'var(--reverse)':m>.15?'var(--continue)':'var(--random)',radius=selected?6:4;const a={'data-code':r.code,fill:c,opacity:selected?1:.72};
+    svg.append(j==null?E('path',{...a,fill:'none',stroke:c,'stroke-width':1.5,d:`M${q.x-radius},${q.y-radius}L${q.x+radius},${q.y+radius}M${q.x-radius},${q.y+radius}L${q.x+radius},${q.y-radius}`}):j>.60?E('path',{...a,d:`M${q.x},${q.y-radius}L${q.x+radius},${q.y}L${q.x},${q.y+radius}L${q.x-radius},${q.y}Z`}):E('circle',{...a,cx:q.x,cy:q.y,r:radius}));
+    svg.append(E('circle',{cx:q.x,cy:q.y,r:radius+3,fill:'none',stroke:selected?'var(--selected)':'var(--fg)','stroke-width':selected?1.5:1,'stroke-dasharray':s==null?'1 3':s<.75?'3 3':'',opacity:selected?1:.5}));};
+  points.filter(q=>q.r.code!==state.code).forEach(draw);const sel=points.find(q=>q.r.code===state.code);if(sel)draw(sel);
+  const occupied=[];for(const q of [...points].sort((a,b)=>(b.r.code===state.code)-(a.r.code===state.code)||Number(b.r.favorite)-Number(a.r.favorite))){
+    const label=q.r.symbol,ww=label.length*7.5;
+    for(const[dx,dy]of [[9,-9],[9,18],[-ww-9,-9],[-ww-9,18]]){const box={x:q.x+dx,y:q.y+dy-13,w:ww,h:15};if(box.x<p.l||box.x+ww>w-p.r||box.y<p.t||box.y+15>h-p.b||occupied.some(o=>box.x<o.x+o.w+4&&box.x+ww+4>o.x&&box.y<o.y+o.h+4&&box.y+15+4>o.y))continue;T(svg,box.x,box.y+13,label);occupied.push(box);break;}}
+  svg.onpointermove=e=>{if(e.pointerType==='touch')return;const rect=svg.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,near=points.map(q=>({...q,d:Math.hypot(q.x-x,q.y-y)})).sort((a,b)=>a.d-b.d)[0];if(!near||near.d>16){$('tooltip').hidden=true;return;}$('tooltip').textContent=`${near.r.code} ${near.r.name} · G ${fmt(0,near.r.v[0])} / V ${fmt(1,near.r.v[1])}`;$('tooltip').hidden=false;$('tooltip').style.left=Math.min(w-260,Math.max(0,x+12))+'px';$('tooltip').style.top=(y+12)+'px';};svg.onpointerleave=()=>{$('tooltip').hidden=true;};
+  svg.onclick=e=>{const rect=svg.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,near=points.map(q=>({...q,d:Math.hypot(q.x-x,q.y-y)})).filter(q=>q.d<22).sort((a,b)=>a.d-b.d);if(!near.length){$('cluster').hidden=true;return;}const close=near.filter(q=>q.d<=near[0].d+6);if(close.length===1){open(close[0].r.code);return;}const c=$('cluster');c.replaceChildren();const title=document.createElement('strong');title.textContent='选择附近证券';c.append(title);for(const q of close){const b=document.createElement('button');b.type='button';b.textContent=q.r.code+' · '+q.r.name;b.onclick=()=>{c.hidden=true;open(q.r.code)};c.append(b);}c.hidden=false;c.style.left=Math.max(0,Math.min(w-300,x+10))+'px';c.style.top=Math.max(0,Math.min(h-160,y+10))+'px';c.querySelector('button')?.focus();};
+}
+function priceProbeText(l,u){
+ const p=PC.probe(l,u),d=p.daily,w=p.weekly;
+ return `日线 ${d?.day||'无'} · 收 ${d?.bar?PC.number(d.bar[4]):'—'} ｜ 周线 ${w?w.periodFrom+' → '+w.periodEnd:'无'} · 收 ${w?.c!=null?PC.number(w.c):'—'}（双轴日期不同）`;
+}
+function drawPrice(){
+ if(!state.open||$('drawer').hidden)return;
+ const r=comparePrices.get(state.code);if(!r)return;const ps=state.price,cal=P.calendars[r.market];
+ const l=PC.layout(r,cal,ps.from,ps.end,$('price-chart').clientWidth,ps.offset);priceLayout=l;ps.offset=l.offset;
+ if(ps.probe==null||ps.probe<l.u0||ps.probe>l.u1)ps.probe=l.u1-1e-10;
+ const selected=PC.probe(l,ps.probe),valid=l.visible.filter(d=>d.bar),validWeeks=l.weekly.filter(w=>w.o!=null);
+ $('price-from').min=$('price-to').min=P.mini_start;$('price-from').max=$('price-to').max=P.as_of;$('price-from').value=ps.from;$('price-to').value=ps.end;$('price-week-from').value=l.weeklyFrom;$('show-week').checked=ps.week;
+ document.querySelectorAll('button[data-price-days]').forEach(b=>b.setAttribute('aria-pressed',String(ps.end===P.as_of&&ps.from===PC.start(P.as_of,Number(b.dataset.priceDays)))));
+ $('price-message').textContent=`下轴（日）：${ps.from} → ${ps.end} · ${l.dailyDays} 个日历天；上轴（周）：${l.weeklyFrom} → ${ps.end} · ${l.weeklyDays} 个日历天。缓存行情截止 ${P.as_of}。`;
+ const events=state.drawerPatterns?DP.scan(r,cal,ps.from,ps.end).events:[],selectedEvent=events.find(e=>e.start+'|'+e.day===state.drawerEvent)||null;
+ if(selectedEvent)$('price-message').textContent+=` 所选日线形态：${selectedEvent.start} → ${selectedEvent.day} · ${selectedEvent.matches.map(id=>DP.TYPES.find(t=>t.id===id).name).join(' / ')}。`;
+ $('price-chart').innerHTML=PC.svg(l,ps.week,ps.probe,{events,selectedEvent});const chart=$('price-chart').querySelector('svg');
+ const ratio=e=>{const box=chart.getBoundingClientRect(),x=(e.clientX-box.left)*l.width/box.width;return Math.max(l.u0,Math.min(l.u1-1e-10,l.u0+(x-l.frame.left)/(l.frame.right-l.frame.left)*(l.u1-l.u0)));};
+ const selectMark=mark=>{state.drawerEvent=mark.dataset.start+'|'+mark.dataset.day;ps.probe=(l.days.indexOf(mark.dataset.day)+.5)/l.days.length;drawPrice();};
+ chart.onclick=e=>{const mark=e.target.closest('.pattern-marker');if(mark){selectMark(mark);return;}if(e.target.closest('.price-probe-hit')){ps.probe=ratio(e);drawPrice();}};
+ chart.onkeydown=e=>{const mark=e.target.closest('.pattern-marker');if(mark&&['Enter',' '].includes(e.key)){e.preventDefault();selectMark(mark);$('price-inspect').focus();}};
+ chart.onpointermove=e=>{if(e.target.closest('.price-probe-hit'))$('price-hover').textContent=priceProbeText(l,ratio(e));};chart.onpointerleave=()=>{$('price-hover').textContent=priceProbeText(l,ps.probe);};$('price-hover').textContent=priceProbeText(l,ps.probe);
+ $('price-pan-slider').max=String(l.maxOffset);$('price-pan-slider').value=String(l.offset);$('price-pan-slider').disabled=!l.maxOffset;$('price-prev').disabled=l.offset===0;$('price-next').disabled=l.offset===l.maxOffset;
+ const dayVisible=l.visible.length?l.visible[0].day+' → '+l.visible.at(-1).day:'无日线日期',weekVisible=l.weekly.length?l.weekly[0].periodFrom+' → '+l.weekly.at(-1).periodEnd:'无周范围';
+ $('price-visible').textContent=`日线可见 ${dayVisible} · ${valid.length}/${l.source.length} 根真实日 K；周线可见 ${weekVisible} · ${validWeeks.length}/${l.allWeeks.filter(w=>w.o!=null).length} 根有价周 K。两层间距至少5.5px；滑条同步平移两条轴的观察位置。`;
+ const barsByDay=new Map(l.source.map(b=>[b[0],b]));$('price-inspect').innerHTML=l.days.map(day=>`<option value="${day}">${day}${barsByDay.has(day)?'':r.listing_date&&day<r.listing_date?' · 上市前':' · 缺OHLC'}</option>`).join('');$('price-inspect').disabled=!l.days.length;if(selected.daily)$('price-inspect').value=selected.daily.day;
+ const row=(label,values,note)=>`<tr><td>${label}<br><span class="muted">${esc(note)}</span></td>${values.map(v=>`<td>${v==null?'—':PC.number(v)}</td>`).join('')}</tr>`,d=selected.daily,w=selected.weekly;
+ $('price-readout').innerHTML=`<table><caption class="small">所选横向位置 · 两个独立日期 · ${r.currency} 前复权</caption><thead><tr><th>周期 / 实际范围</th><th>开</th><th>高</th><th>低</th><th>收</th></tr></thead><tbody>${row('日 K',d?.bar?d.bar.slice(1):[null,null,null,null],d?d.day+(d.bar?'':d.notListed?' / 上市前':' / 缺OHLC')+(cal?.early_close.includes(d.day)?' / 半日市':''):'无有效日线日期')}${row('周 K',w?[w.o,w.h,w.l,w.c]:[null,null,null,null],w?w.periodFrom+' → '+w.periodEnd+' / '+w.bars.length+' 日 / '+(w.flags.join('；')||'完整周'):'无有效周范围')}</tbody></table>`;
+ $('price-mini').innerHTML=PC.mini(r,P.mini_start,P.as_of,ps.from,ps.end,$('price-mini').clientWidth,l.weeklyFrom);const center=Math.round((PC.ts(ps.from)+PC.ts(ps.end))/2),value=Math.round((center-PC.ts(P.mini_start))/PC.DAY);
+ $('price-mini').setAttribute('aria-valuemin','0');$('price-mini').setAttribute('aria-valuemax',String(Math.round((PC.ts(P.as_of)-PC.ts(P.mini_start))/PC.DAY)));$('price-mini').setAttribute('aria-valuenow',String(value));$('price-mini').setAttribute('aria-valuetext','日线 '+ps.from+' 至 '+ps.end+'；周线 '+l.weeklyFrom+' 至 '+ps.end);
+ $('price-coverage').textContent=`两年导航：${P.mini_start} → ${P.as_of}；实际行情：${r.first_day||'无'} → ${r.last_day||'无'}。没有 OHLC 的日期保持空白。${l.weeklyFrom<P.mini_start?'周范围早于两年导航起点，虚线框在左边界截断；主图仍保留完整请求范围。':''}${r.calendar_unverified_bars?'早期日线超出已核验日历，周完整性未知。':''}`;
+}
+function setPriceRange(from,end){
+ if(!from||!end||from>end||from<P.mini_start||end>P.as_of){$('price-message').textContent='请选择两年导航范围内且起点不晚于终点的日线日期。周范围按日线日历天数乘7自动扩大。';return;}
+ Object.assign(state.price,{from,end,offset:null,probe:null});drawPrice();
+}
+function jumpPrice(day){
+ const n=Math.round((PC.ts(state.price.end)-PC.ts(state.price.from))/PC.DAY)+1,minimum=PC.ts(P.mini_start),maximum=PC.ts(P.as_of),span=(n-1)*PC.DAY;
+ const first=Math.max(minimum,Math.min(maximum-span,PC.ts(day)-Math.floor((n-1)/2)*PC.DAY));setPriceRange(PC.iso(first),PC.iso(first+span));
+}
+function panPrice(delta){if(!priceLayout)return;state.price.offset=Math.max(0,Math.min(priceLayout.maxOffset,priceLayout.offset+delta));state.price.probe=null;drawPrice();}
+function drawTimeline(){
+ const r=records.find(r=>r.code===state.code);if(!state.open||$('drawer').hidden||!r)return;
+ const from=TL.start(D.as_of,state.lookback);if(state.inspectDay<from||state.inspectDay>D.as_of)state.inspectDay=D.as_of;
+ const l=TL.layout(r,D.as_of,state.lookback,$('time-spectrum').clientWidth,[...state.traits]);
+ $('axis-hint').textContent=from+' → '+D.as_of+' · 最近'+state.lookback+'个日历天（含截止日）';
+ document.querySelectorAll('[data-lookback]').forEach(b=>{if(b.tagName==='BUTTON')b.setAttribute('aria-pressed',String(Number(b.dataset.lookback)===state.lookback));});
+ $('time-spectrum').innerHTML=TL.svg(l,state.inspectDay);
+ $('time-spectrum').querySelector('svg').onclick=e=>{const p=e.target.closest('.timeline-point');if(p){state.inspectDay=p.dataset.day;drawTimeline();}};
+ $('timeline-counts').textContent='有效计算点：'+l.series.map(s=>s.key+' '+s.points.length).join(' · ');
+ const dates=l.rows.filter(h=>h.v.some(v=>v!=null));$('inspect-day').innerHTML=dates.map(h=>`<option value="${h.day}">${h.day}</option>`).join('');
+ if(!dates.some(h=>h.day===state.inspectDay))$('inspect-day').insertAdjacentHTML('beforeend',`<option value="${state.inspectDay}">${state.inspectDay} · 无有效计算结果</option>`);$('inspect-day').value=state.inspectDay;
+ const h=r.history.find(h=>h.day===state.inspectDay)||{v:[null,null,null,null,null],status:r.status};
+ $('historical-values').innerHTML=`<table><caption class="small">${state.inspectDay} · 所选日期原始值</caption><thead><tr><th>标签 / 量纲</th><th>原始值</th><th>显示分数</th></tr></thead><tbody>${defs.map((f,k)=>`<tr data-trait="${f.key}"><td>${esc(f.name)}<br><span class="muted">${esc(f.unit)}</span></td><td>${h.v[k]==null?why(h.status[k]):fmt(k,h.v[k])}</td><td>${h.v[k]==null?'—':TL.score(f.key,h.v[k]).toFixed(1)}</td></tr>`).join('')}</tbody></table>`;
+}
+function renderDrawer(){
+ if(!state.open||$('drawer').hidden)return;
+ const original=records.find(r=>r.code===state.code);$('trait-section').hidden=!original;if(!original){const extra=C.records.find(r=>r.code===state.code);if(!extra)return;$('drawer-name').textContent=extra.code+' · '+extra.name;$('drawer-grade').textContent=(extra.quality?extra.quality.grade+' · '+(extra.quality.status==='verified'?'已核查':'研究初筛'):'未接入评级')+' · 日线截止 '+P.as_of;$('drawer-warning').textContent='原地图快照未收录该证券；此处显示价格与日线形态。';drawPrice();return;}const r=original;$('drawer-name').textContent=r.code+' · '+r.name;$('drawer-grade').textContent=(r.kind==='ETF'?'基金 · 公司评级不适用':r.quality_grade||'业务质量待评级')+' · 日线截止 '+D.as_of;
+ const warnings=[];if(r.structure)warnings.push(r.structure+'；结构条款另行核验');if(r.zero_volume_warning)warnings.push('成交量覆盖警示：近期超过10%的日线量为零');if(!r.mapped)warnings.push('地图坐标不足：G '+why(r.status[0])+' / V '+why(r.status[1]));if(r.coverage.fetch_error)warnings.push(r.coverage.fetch_error);$('drawer-warning').textContent=warnings.join(' · ');
+ $('trait-legend').replaceChildren();for(const f of defs){const style=TL.STYLES[f.key],label=document.createElement('label');label.className='trait-key';label.dataset.trait=f.key;label.innerHTML=`<input type="checkbox" value="${f.key}" aria-label="显示${f.name}" ${state.traits.has(f.key)?'checked':''}><svg viewBox="0 0 28 12" aria-hidden="true"><path d="M0,6L28,6" fill="none" stroke="${style.color}" stroke-width="1.5" stroke-dasharray="${style.dash}"/>${TL.marker(style.shape,14,6,2.6,`fill="var(--bg)" stroke="${style.color}" stroke-width="1.1"`)}</svg><span>${f.name}</span>`;label.querySelector('input').onchange=e=>{if(e.target.checked)state.traits.add(f.key);else state.traits.delete(f.key);drawTimeline();};$('trait-legend').append(label);}drawTimeline();drawPrice();
+ $('detail-table').innerHTML=`<table><thead><tr><th>标签</th><th>当前值 / 10–90%范围</th><th>条件模型归属</th></tr></thead><tbody>${defs.map((f,k)=>{const u=r.uncertainty[k];return `<tr><td>${f.key} · ${f.name}</td><td>${fmt(k,r.v[k])}${u?'<br>'+fmt(k,u.range[0])+' ～ '+fmt(k,u.range[1]):'<br>'+why(r.status[k])}</td><td>${u?u.categories.map((c,i)=>esc(c)+' '+pct(u.p[i])).join('<br>'):'—'}</td></tr>`}).join('')}</tbody></table><p class="small">这些是时间块重采样下的描述性归属，尚未经属性标签校准，非未来上涨概率。历史曲线只显示点估计。S 是历史变化分数，曲线范围与持续期预测分开。</p>`;
+}
+function open(code,fromComparison=false){returnFocus=document.activeElement&&document.activeElement!==document.body&&!$('cluster').contains(document.activeElement)?document.activeElement:$('security');state.code=code;state.open=true;state.drawerPatterns=fromComparison;state.drawerEvent=null;if(fromComparison){state.price.from=cmp.from;state.price.end=cmp.end;}state.inspectDay=D.as_of;state.price.offset=null;state.price.probe=null;$('security').value=code;$('drawer').hidden=false;$('cluster').hidden=true;$('tooltip').hidden=true;renderMap();renderDrawer();$('drawer-body').scrollTop=0;$('close').focus();}
+function close(){state.open=false;$('drawer').hidden=true;returnFocus?.focus();}
+function render(){const rows=filtered();$('security').innerHTML='<option value="">请选择证券</option>'+rows.map(r=>`<option value="${esc(r.code)}">${esc(r.code)} · ${esc(r.name)}${r.mapped?'':' · 无地图坐标'}</option>`).join('');if(state.code&&rows.some(r=>r.code===state.code))$('security').value=state.code;else if(state.open){close();state.code=null;}
+ const pending=rows.filter(r=>!r.mapped);$('coverage').textContent=`${rows.filter(r=>r.mapped).length} 个地图点 · ${pending.length} 个待定位 · 两轴非线性压缩，刻度为实际数值`;$('pending-title').textContent=`缺少坐标的证券（${pending.length}，可打开详情）`;$('pending-list').replaceChildren();for(const r of pending){const b=document.createElement('button');b.type='button';b.textContent=r.code+' · '+why(r.status[0]);b.onclick=()=>open(r.code);$('pending-list').append(b);}renderMap();if(state.open)renderDrawer();}
+__COMPARISON_UI__
+$('meta').textContent=`四象限快照 · 行情截止 ${D.as_of} · 自选读取 ${new Date(D.watchlist_observed_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})} 北京时间 · ${D.summary.securities} 个证券 · 五标签为探索描述代理`;
+$('definitions').innerHTML=defs.map(f=>`<p><strong>${f.name}</strong>：${f.note}</p>`).join('');if(!['all','favorite','quality','ai','stock','fund'].includes(state.pool))state.pool='all';$('pool').value=state.pool;
+$('pool').onchange=e=>{state.pool=e.target.value;persist();$('cluster').hidden=true;render();};$('security').onchange=e=>{if(e.target.value)open(e.target.value)};$('close').onclick=close;document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('cluster').hidden){$('cluster').hidden=true;$('security').focus();}else if(state.open)close();}});
+document.querySelectorAll('button[data-lookback]').forEach(b=>b.onclick=()=>{state.lookback=Number(b.dataset.lookback);drawTimeline();});$('inspect-day').onchange=e=>{state.inspectDay=e.target.value;drawTimeline();};
+$('price-range').onsubmit=e=>{e.preventDefault();setPriceRange($('price-from').value,$('price-to').value);};
+document.querySelectorAll('button[data-price-days]').forEach(b=>b.onclick=()=>setPriceRange(PC.start(P.as_of,Number(b.dataset.priceDays)),P.as_of));
+$('show-week').onchange=e=>{state.price.week=e.target.checked;drawPrice();};
+$('price-prev').onclick=()=>panPrice(-Math.max(1,Math.floor(priceLayout.count*.8)));$('price-next').onclick=()=>panPrice(Math.max(1,Math.floor(priceLayout.count*.8)));
+$('price-pan-slider').oninput=e=>{state.price.offset=Number(e.target.value);state.price.probe=null;drawPrice();};
+$('price-inspect').onchange=e=>{const i=priceLayout.days.indexOf(e.target.value);state.price.probe=(i+.5)/priceLayout.days.length;if(state.price.probe<priceLayout.u0||state.price.probe>priceLayout.u1)state.price.offset=Math.max(0,Math.min(priceLayout.maxOffset,Math.floor(state.price.probe*priceLayout.total-priceLayout.count/2)));drawPrice();};
+$('price-mini').onclick=e=>jumpPrice(PC.miniTarget(e.clientX,$('price-mini').getBoundingClientRect(),P.mini_start,P.as_of));
+$('price-mini').onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const center=PC.iso(Math.round((PC.ts(state.price.from)+PC.ts(state.price.end))/2));jumpPrice(e.key==='Home'?P.mini_start:e.key==='End'?P.as_of:PC.iso(PC.ts(center)+(e.key==='ArrowLeft'?-1:1)*(e.shiftKey?30:7)*PC.DAY));};
+$('display-scale').innerHTML='<p>只改变显示位置，模型和原始值保持原样；所有证券与回看范围使用相同固定尺度。</p><p>G：50×(1+tanh(G/0.50))；V：50×(1+tanh((V−0.35)/0.25))；M：50×(1+M)；J：100×J；S：100×S。</p>';
+let timer;new ResizeObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>{renderMap();if(state.open)renderDrawer()},80)}).observe($('map-wrap'));new ResizeObserver(()=>{if(state.open){clearTimeout(timer);timer=setTimeout(renderDrawer,80)}}).observe($('drawer-body'));
+render();
+})();
+</script></body></html>

@@ -1,0 +1,43 @@
+const fs=require('fs'),path=require('path');
+const {chromium}=require('/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const out=__dirname,assert=(v,s)=>{if(!v)throw new Error(s)};
+(async()=>{
+ const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:8768/analysis/operation_cadence_v1/index.html',{waitUntil:'load'});
+ await page.waitForFunction(()=>window.audit);
+ assert(await page.locator('#stocks tbody tr').count()===55,'All live members retained');
+ assert(await page.locator('#chartStatus').innerText().then(s=>s.includes('60分钟')),'Default all-session 60m');
+ assert(await page.evaluate(()=>audit.getVisible().at(-1)[6])==='2026-10-07','Default shows latest covered session');
+ await page.locator('#search').fill('MXL');assert(await page.locator('#stocks tbody tr').count()===1,'Search');
+ await page.locator('[data-stock="US.MXL"]').click();assert(await page.locator('#detailName').innerText().then(s=>s.includes('MXL')),'Selection');
+ await page.locator('#reset').click();await page.locator('#scope').selectOption('other');assert(await page.locator('#stocks tbody tr').count()===17,'ETF retention');
+ await page.locator('#scope').selectOption('stock');assert(await page.locator('#stocks tbody tr').count()===38,'Stock identity');
+ await page.locator('#scope').selectOption('all');await page.locator('[data-stock="US.SNPS"]').click();
+ await page.locator('#caseTarget').selectOption('hold');await page.locator('#caseState').selectOption('fail');
+ const first=page.locator('[data-case]').first();assert(await first.count()===1,'Failure examples retained');await first.click();
+ assert(await page.locator('#caseInfo').innerText().then(s=>s.includes('未达成')&&s.includes('评价入场')),'Failure window and next-open entry');
+ assert(await page.locator('#chart svg rect[fill="#d4d4d4"]').count()>0,'Full regular-session shaded window');
+ assert(await page.locator('#caseFeatures tr').count()===15,'Features at forecast time');
+ let before=await page.evaluate(()=>audit.getVisible()[0][0]);await page.locator('#next').click();let after=await page.evaluate(()=>audit.getVisible()[0][0]);assert(after>before,'Explicit panning');
+ let zoomBefore=await page.evaluate(()=>audit.getVisible().map(b=>b[0]));await page.locator('#chart').hover();await page.mouse.wheel(0,600);assert(JSON.stringify(zoomBefore)===JSON.stringify(await page.evaluate(()=>audit.getVisible().map(b=>b[0]))),'Wheel does not zoom/pan Kline');
+ await page.locator('#latest').click();await page.locator('#granularity').selectOption('day');assert(await page.locator('#chartStatus').innerText().then(s=>s.includes('日级')),'Daily mode');
+ assert(await page.evaluate(()=>{const s=document.querySelector('#priceSvg');let w=+s.getAttribute('viewBox').split(' ')[2];return (w-72)/audit.getVisible().length>=5}),'At least 5px spacing');
+ await page.locator('#mini').focus();let date0=await page.locator('#end').inputValue();await page.keyboard.press('ArrowLeft');assert(await page.locator('#end').inputValue()<date0,'Keyboard two-year mini');
+ await page.locator('#end').fill('2026-07-31');await page.locator('[data-days="30"]').click();assert(await page.locator('#start').inputValue()==='2026-07-02','30 calendar day range inclusive');
+ await page.locator('#latest').click();await page.locator('#reset').click();
+ await page.locator('#modelTab').click();assert(await page.locator('#metrics tbody tr').count()===5,'Five model metrics');
+ const metrics=await page.locator('#metrics').innerText();await page.locator('#reliabilityTarget').selectOption('quick');assert(await page.locator('#reliability svg').count()===1,'Reliability chart');
+ await page.locator('details').filter({hasText:'调整审查偏好'}).locator('summary').click();await page.locator('#policyProb').fill('20');await page.locator('#policyRisk').fill('60');await page.locator('#policyApply').click();assert(await page.locator('#policyStatus').innerText().then(s=>s.includes('探索')),'Exploration annotation');assert(await page.locator('#metrics').innerText()===metrics,'Preference changes cannot alter frozen results');await page.locator('#policyReset').click();
+ await page.screenshot({path:path.join(out,'model-desktop.png'),fullPage:true});
+ await page.locator('#reviewTab').click();await page.locator('#granularity').selectOption('hour');await page.locator('#latest').click();await page.screenshot({path:path.join(out,'review-desktop.png'),fullPage:true});
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),'Desktop overflow');
+ await page.setViewportSize({width:390,height:844});await page.locator('#latest').click();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),'Mobile overflow');
+ await page.screenshot({path:path.join(out,'review-mobile.png'),fullPage:true});
+ await page.locator('#modelTab').click();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),'Mobile model overflow');await page.screenshot({path:path.join(out,'model-mobile.png'),fullPage:true});
+ assert(errors.length===0,'No browser errors: '+errors.join('; '));
+ const report={status:'passed',browser:'Playwright Chromium headless; HTTP loopback',desktop:[1440,1000],mobile:[390,844],errors,
+  checks:['live member counts','selection/search/filter','actual default ALL-60m latest data','failure window/next-open/features','explicit pan','no wheel zoom','daily granularity','5px spacing','two-year keyboard navigation','calendar range','metrics/reliability','exploration isolation','wide/narrow no overflow'],
+  html_sha256:require('crypto').createHash('sha256').update(fs.readFileSync(path.join(out,'index.html'))).digest('hex')};
+ fs.writeFileSync(path.join(out,'browser_verification.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

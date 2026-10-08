@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>过去的股票性格 · 描述审查</title>
+<style>
+:root{--ink:#181818;--muted:#606060;--line:#bcbcbc;--wash:#f3f3f3}*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:14px/1.55 system-ui,-apple-system,sans-serif}
+main{max-width:1440px;margin:auto;padding:24px 28px 60px}h1{font-size:28px;margin:4px 0 8px}h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:4px 0 8px}p{margin:8px 0 12px}a{color:inherit;text-underline-offset:3px}
+button,input,select,textarea{font:inherit;color:inherit;border:1px solid #999;border-radius:2px;background:white;padding:5px 8px;max-width:100%}button{cursor:pointer}button:hover{background:#eee}button[aria-pressed=true]{background:#222;color:#fff}button:disabled{color:#999;cursor:default}
+:focus-visible{outline:3px solid #666;outline-offset:2px}small,.muted{color:var(--muted);font-size:12px}small{display:block}.toolbar{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;margin:10px 0}.toolbar label{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.panel{border:1px solid var(--line);padding:16px;margin:16px 0}details{margin:12px 0}summary{cursor:pointer;font-weight:600}details[open]>summary{margin-bottom:12px}
+.statement{border-left:3px solid #444;background:var(--wash);padding:10px 14px;font-size:16px}.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border:1px solid var(--line);margin:12px 0}.stat{padding:10px 12px;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat b{display:block;font-size:23px;font-weight:600}.stat button{font-size:12px;margin-top:4px}.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}.wrap{overflow:auto;max-height:470px}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid #d4d4d4;padding:7px 9px;text-align:left;vertical-align:top}th{font-weight:600;background:#f5f5f5}thead th{position:sticky;top:0;z-index:1}td.n,th.n{text-align:right;white-space:nowrap}tr.selected{background:#eee}code{font:12px ui-monospace,monospace;overflow-wrap:anywhere}.chart{width:100%;min-height:345px;touch-action:pan-y}.chart svg,.mini svg,.strip svg{display:block;width:100%;height:auto}.mini{height:84px;border:1px solid #aaa;cursor:pointer;touch-action:pan-y}.status{font-size:12px;color:#555;margin:6px 0;overflow-wrap:anywhere}.panning{display:flex;gap:8px;align-items:center}.panning input{flex:1;min-width:30px;padding:0}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}.legend span:before{content:'';display:inline-block;width:11px;height:11px;border:1px solid #888;margin-right:4px;background:var(--shade)}.scoreline{display:grid;grid-template-columns:160px 1fr 125px;gap:12px;align-items:center;margin:8px 0}.scorebar{height:12px;background:#eee;border:1px solid #aaa}.scorebar i{display:block;height:100%;background:#555}.review textarea{display:block;width:100%;min-height:65px;margin:8px 0}.empty{padding:35px 15px;color:#666}.strip{margin:8px 0}.method td{max-width:600px}.tag{border:1px solid #aaa;padding:2px 6px;font-size:12px;display:inline-block}#evidenceInfo{border:1px dashed #aaa;padding:8px;margin:8px 0}#stockSelect{min-width:220px;max-width:350px}.notice{font-size:13px;padding:8px 12px;background:#f4f4f4}#exportStatus{display:inline-block}.stat .note{margin-top:4px}
+@media(max-width:720px){main{padding:14px 12px 35px}h1{font-size:23px}.panel{padding:12px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{border-bottom:1px solid #ccc}.stat:last-child{grid-column:1/-1}.stat b{font-size:22px}.split{grid-template-columns:1fr}.scoreline{grid-template-columns:112px 1fr 82px;gap:6px;font-size:12px}.toolbar{gap:7px}.toolbar label{font-size:13px}.panning button{font-size:12px;padding:5px}#stockSelect{width:100%;min-width:0;max-width:100%}.toolbar .stock-picker{width:100%}.chart{min-height:250px}.wrap{max-height:380px}td,th{padding:6px}input[type=date]{width:142px}}
+</style></head><body><main>
+<header><div class="muted">特别关注 · 历史形态描述 v3 · 人工审查中</div><h1>先描述过去，再核对 K 线</h1>
+<p>这里的输出是一段已经发生的价格路径的描述。先检查“偏上行、折返频率、折返幅度”是否符合你的观察。</p>
+<div id="metadata" class="muted"></div></header>
+<section class="panel" id="reviewMain">
+ <div class="toolbar"><label class="stock-picker">证券 <select id="stockSelect" aria-label="特别关注证券"></select></label><button id="previousStock">上一只</button><button id="nextStock">下一只</button><span id="identity" class="tag"></span></div>
+ <div class="toolbar"><label>起点 <input id="start" type="date"></label><label>终点 <input id="end" type="date"></label><button data-days="30">30天</button><button data-days="60">60天</button><button data-days="90">90天</button><button data-days="180">180天</button><button id="applyDates">应用日期</button><button id="latest">恢复默认区间</button></div>
+ <p class="muted">快捷范围为日历天，包含终点。所有描述随区间重算；美股使用美东交易日，港股使用当地交易日。默认截至已取得完整日线的 2026-10-07。</p>
+ <h2 id="detailName"></h2><div id="description" class="statement"></div><p id="descriptionScope" class="status"></p>
+ <div class="stats" id="facts"></div>
+ <h3>描述对应的整个区间 · 常规盘日线概览</h3><div id="overview" style="overflow:auto"></div><p class="muted">每根均为真实日OHLC。圆点为方向变化起点的极值，方块为达到阈值的确认收盘，虚线只连接这段证据。较长区间可用概览下方横向滚动条查看；点击任一日定位详细图。</p>
+ <div class="toolbar"><label>观察粒度 <select id="granularity"><option value="hour">全天60分钟</option><option value="day">常规盘日线</option></select></label><label><input type="checkbox" id="showMoves" checked> 显示已确认折返依据</label><button id="wholeDaily">用日线看整个描述区间</button><button id="clearEvidence">取消局部定位</button></div>
+ <div class="legend"><span style="--shade:#ededed">夜盘</span><span style="--shade:#f5f5f5">盘前</span><span style="--shade:#fff">常规盘</span><span style="--shade:#e4e4e4">盘后</span><span style="--shade:#ccc">正在核对的历史片段</span></div>
+ <div id="evidenceInfo">点击统计依据、历史窗口或折返记录，在图上定位对应片段。</div>
+ <div id="chart" class="chart"></div><p id="chartStatus" class="status"></p>
+ <div class="panning"><button id="firstPan">最早</button><button id="prevPan">← 平移</button><input id="pan" type="range" min="0" max="0" value="0" aria-label="平移查看区间内全部行情"><button id="nextPan">平移 →</button><button id="lastPan">最近</button></div>
+ <p id="barInfo" class="status">点击 K 线或按 Enter 查看 OHLC、成交量和所属时段。</p>
+ <p class="muted">空心为收涨、实心为收跌。小时标签为实际 bar 的完成时刻；09:30 完成的 bar 属于盘前，16:00 完成的 bar 属于常规盘。折返依据来自常规盘日收盘；小时盘中振幅单独展示，不混入日收盘计数。图内不支持滚轮、拖拽或双指缩放。</p>
+ <div id="mini" class="mini" tabindex="0" role="slider" aria-label="固定两年真实日级OHLC导航；左右键移动十个交易日，Home和End跳转"></div><p id="coverage" class="status"></p>
+</section>
+<section class="panel">
+ <h2>历史形态：方向、折返频率、折返幅度</h2>
+ <div id="frequency"></div>
+ <p id="frequencyNote" class="muted"></p>
+ <div id="strip" class="strip"></div>
+ <div class="toolbar"><label>核对片段 <select id="windowFilter"><option value="all">全部历史窗口</option><option value="up">偏上行</option><option value="neither">不符合偏上行</option></select></label></div>
+ <div class="wrap"><table id="windows"><thead><tr><th>已经发生的区间</th><th class="n">净涨跌</th><th class="n">方向效率</th><th class="n">日波动</th><th class="n">确认方向段</th><th>描述符合情况</th></tr></thead><tbody></tbody></table></div>
+ <details><summary>这些百分数的数学含义与探索参数</summary>
+ <p><code>p̂(A) = 符合描述 A 的完整历史窗口数 / 全部完整历史窗口数</code>。随机从本区间内已经发生的窗口里选一段，它符合描述的比例就是这里的百分数。此占比仅用于偏上行。折返频率＝已确认反向变化次数×20／整个区间的实际交易日变化数；幅度为不重复完整峰谷波段的高／低−1中位数。</p>
+ <p>这是历史发生比例；窗口彼此重叠，不能当作独立样本给出胜率置信区间。规则是否符合你的语义，仍需你逐段审查。</p>
+ <div class="toolbar"><label>确认门槛 <select id="threshold"><option value="0.03">3%</option><option value="0.05" selected>5%</option><option value="0.08">8%</option><option value="0.10">10%</option></select></label><label>上行窗口 <select id="windowSize"><option value="10">10个交易日变化</option><option value="20" selected>20个交易日变化</option><option value="40">40个交易日变化</option></select></label><button id="applyParams">应用探索参数</button><button id="resetParams">恢复默认</button></div><p id="parameterStatus" class="status">默认描述规则；尚未获得人工语义验收。</p>
+ <table class="method"><tbody><tr><th>偏上行</th><td>窗口净收益大于0，且有符号方向效率 ≥ 0.20。</td></tr><tr><th>折返频率</th><td>整个区间的反向确认次数×20／实际交易日变化数；初始方向不计，同向连续变化不拆段。</td></tr><tr><th>折返幅度</th><td>完整波段的高收盘／低收盘−1中位数。结束极值由下一次反向确认；观察起点截断段及未结束末段排除。无完整波段留空。</td></tr><tr><th>边界</th><td>每个窗口从自己的起点重新寻找极值，不借用窗口外的高低点。20个交易日变化需要21个连续交易日收盘。缺日窗口不进分母。</td></tr></tbody></table>
+ </details>
+</section>
+<section class="panel">
+ <div class="split"><section><h2>完整峰谷波段的幅度证据</h2><p id="moveNote" class="muted"></p><div class="wrap"><table id="moves"><thead><tr><th>峰谷区间 / 反向确认日</th><th>方向</th><th class="n">完整峰谷幅度</th><th class="n">间隔</th></tr></thead><tbody></tbody></table></div></section>
+ <section><h2>截至所选终点，过去12个月</h2><div id="yearFacts"></div><p class="muted">用于辨别“只是小幅上涨”与“曾出现大幅上涨区间”。最强20日是历史中最大的一段实际收盘变化，不表示可以提前选中。最大3个上涨日贡献占比以正 log 收益总和为分母，不能等同于净收益贡献或新闻归因。</p><div id="yearTopDays"></div></section></div>
+</section>
+<details class="panel"><summary>比较全部特别关注：同一历史区间、同一描述规则</summary>
+ <div class="toolbar"><label>搜索 <input id="search" type="search" placeholder="代码 / 名称"></label><label>类型 <select id="scope"><option value="all">全部证券</option><option value="stock">公司股票</option><option value="etf">ETF</option></select></label><label>排序 <select id="sort"><option value="code">代码</option><option value="net">区间净涨跌</option><option value="up">偏上行窗口占比</option><option value="frequency">折返频率</option><option value="amplitude">折返幅度</option></select></label></div>
+ <p class="muted" id="tableNote"></p><div class="wrap"><table id="stocks"><thead><tr><th>证券</th><th class="n">净涨跌</th><th class="n">偏上行</th><th class="n">折返频率</th><th class="n">折返幅度</th><th>真实日线范围 / 分母</th></tr></thead><tbody></tbody></table></div>
+</details>
+<section class="panel review"><h2>你的语义审查</h2><p>审查对象是当前股票、当前历史区间及当前描述规则。你可以指出“看起来在缓慢上行，但模型却说折返很多”等分歧；这才是下一轮修改模型的依据。</p>
+ <label>这段描述与 K 线是否一致？ <select id="verdict"><option value="pending">尚未审查</option><option value="agree">符合</option><option value="partial">部分符合</option><option value="disagree">不符合</option><option value="insufficient">证据不足</option></select></label>
+ <textarea id="reviewNote" placeholder="记录哪里不符合你的判断，以及你会怎样描述这段历史。" aria-label="人工语义审查意见"></textarea>
+ <button id="saveReview">保存这段审查</button> <button id="exportReview">导出已保存审查 JSON</button> <span id="exportStatus" class="status"></span><p id="reviewStatus" class="muted">审查保存在当前浏览器，不会自动发送。</p>
+</section>
+<details class="panel"><summary>公司的基本面、细分头部证据（单独核查）</summary><div id="fundamental"></div><p class="muted">这是2026-10-07附近缓存的公司资料，不是所选历史日期的已知资料，不参与价格形态计算。研究初评等级不能代替头部地位。ETF保留价格描述，公司财务与头部指标不套用。</p></details>
+<details class="panel"><summary>数学定义、与原 G/V/M/J/S 的关系及数据证据</summary>
+ <p>路线名：历史路径描述；算法：有符号路径效率、方向变化法（Directional Change）、经验窗口频率。没有训练分类器；本轮验证是计算与价格证据核对，语义正确性等待人工审查。</p>
+ <table class="method"><tbody><tr><th>净涨跌</th><td><code>R = C末 / C初 − 1</code>，只比较选定区间的首末真实收盘。</td></tr><tr><th>有符号方向效率</th><td><code>E = Σ log(Ct/Ct−1) / Σ |log(Ct/Ct−1)|</code>，范围 −1…1。+1表示一路上行，−1表示一路下行，接近0表示位移被来回变化抵消；平价路径设0。</td></tr><tr><th>波动幅度</th><td>选定区间日 log 收益样本标准差（非年化）。</td></tr><tr><th>收盘最大回撤</th><td><code>max(1 − Ct / max(C0…Ct))</code>。点击定位峰值到谷值；未把盘中低点混为收盘回撤。</td></tr><tr><th>折返节奏</th><td>相邻确认日的交易日间隔中位数；从极值到确认有滞后，也依赖阈值。这不是建议持仓天数。</td></tr></tbody></table>
+ <h3>保留原五参数，窗口不足时留空</h3><p class="muted">只使用当前选择区间中的连续日收盘。G需120次变化，V/M/J需60次，S需140次；原模型的0/1标签不参与本轮。扩大区间后才会出现相应数值。</p><div id="traits"></div>
+ <h3>可复查的输入</h3><div id="sourceEvidence"></div><p>两年日线请求与实际覆盖分别列出；当前成员回看历史不冒充历史成员。全天60m仅在已取得的实际范围内展示，未用端点存在推断每分钟完整。当前单次QFQ捕获适合回看描述，不能改称历史当时可用的价格口径。</p>
+ <p>原参考：<a href="../ai_trend_quadrant_v2/index.html">五属性连续评估 v2</a>。早先超前做的预测实验保留在独立目录；本页面不调用它的未来标签、概率或操作分支。</p>
+</details>
+</main>
+<script>__CORE__</script>
+<script id="dataset" type="application/json">__DATA__</script>
+<script>
+'use strict';
+const D=JSON.parse(document.getElementById('dataset').textContent),P=D.prices,I=D.intraday,B=Behavior;
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=(v,signed=false)=>v==null?'—':(signed&&v>0?'+':'')+(v*100).toFixed(1)+'%',num=(v,n=3)=>v==null?'—':v.toFixed(n);
+let selected=D.records.some(r=>r.code==='US.MXL')?'US.MXL':D.records[0].code,cfg={...B.DEFAULTS},offset=1e9,viewCap=100,visible=[],chartBars=[],current=null,evidence=null,allDescriptions=new Map();
+const member=()=>D.records.find(r=>r.code===selected),dayOf=b=>$('granularity').value==='hour'?b[6]:b[0];
+$('metadata').textContent=`特别关注成员快照 ${D.members.observed_at.replace('T',' ').slice(0,19)} UTC；${D.records.length}个证券，${D.records.filter(r=>r.kind==='STOCK').length}只公司股票、${D.records.filter(r=>r.kind==='ETF').length}只ETF。只描述真实覆盖区间。`;
+$('stockSelect').innerHTML=D.records.map(r=>`<option value="${esc(r.code)}">${esc(r.code)} · ${esc(r.name)}</option>`).join('');
+function range(){return [$('start').value,$('end').value]}
+function valid(){let [s,e]=range();if(!s||!e||s>e){$('descriptionScope').textContent='起点不得晚于终点，请输入有效日期。';return false}return true}
+function refresh(reset=true){
+ if(!valid())return;if(reset){offset=1e9;evidence=null}
+ let [s,e]=range();allDescriptions=new Map(D.records.map(r=>[r.code,B.describe(P,r.code,s,e,cfg)]));current=allDescriptions.get(selected);
+ $('stockSelect').value=selected;$('identity').textContent=member().kind==='ETF'?'ETF · 价格形态可描述':'公司股票';$('detailName').textContent=selected+' · '+member().name;
+ description();frequencies();moveTable();yearFacts();traitTable();company();table();loadReview();chart();sources();
+}
+function description(){
+ let x=current,m=x.metrics;
+ if(!m){$('description').textContent=x.rows.length===1?'仅有一个真实收盘，无法计算区间变化或路径形态。':x.rows.length?`只有部分价格证据；${x.calendarKnown?'存在缺失交易日':'缺少这段的完整交易日历'}，不生成完整路径描述。`:'此区间没有真实日线，无法描述。';$('facts').innerHTML='';}
+ else{
+  let direction=m.net>0?'净上行':m.net<0?'净下行':'首末持平',organization=Math.abs(m.signedEfficiency)>=.5?'方向较集中':Math.abs(m.signedEfficiency)>=.2?'有方向，但折返也明显':'首末位移占来回变化的比例较小';
+  let swings=m.moveCount>=3?`确认了${m.moveCount}段交替方向的${pct(cfg.threshold)}级变化`:`确认了${m.moveCount}段${pct(cfg.threshold)}级变化，反复程度有限`;
+  $('description').textContent=`${m.first}—${m.last}：${direction}${pct(m.net,true)}。${organization}（方向效率${num(m.signedEfficiency,2)}）；${swings}。最大收盘回撤${pct(m.drawdown)}。`;
+  $('facts').innerHTML=[['区间净涨跌',pct(m.net,true),'首末收盘；不是未来收益','net'],['方向效率',num(m.signedEfficiency,2),'−1 下行 / 0 往返 / +1 上行','net'],['日波动幅度',pct(m.vol),'日 log 收益标准差','net'],[`${pct(cfg.threshold)}确认方向段`,String(m.moveCount),`${m.roundTrips}对交替段；不保证回到原价`,'moves'],['收盘最大回撤',pct(m.drawdown),`${m.drawdownFrom} → ${m.drawdownTo}`,'drawdown']].map(([label,value,note,key])=>`<div class="stat"><small>${label}</small><b>${value}</b><small class="note">${note}</small><button data-fact="${key}">在日线核对</button></div>`).join('');
+  document.querySelectorAll('[data-fact]').forEach(el=>el.onclick=()=>{let k=el.dataset.fact;if(k==='drawdown')focusEvidence(m.drawdownFrom,m.drawdownTo,'收盘最大回撤：'+pct(m.drawdown));else focusEvidence(m.first,m.last,k==='moves'?`${pct(cfg.threshold)}方向变化；圆点为极值，方块为确认日`:'整个历史描述区间')});
+ }
+ $('descriptionScope').textContent=`请求 ${x.start}—${x.end}；日线实际 ${x.observedFirst||'无'}—${x.observedLast||'无'}，${x.rows.length}根。${x.missing.length?'内部缺日 '+x.missing.join('、')+'；完整描述留空。':'描述仅针对实际日线区间；所选日期之前的极值不参与。'}`;
+}
+function frequencies(){
+ const s=current.shares,f=current.folds,w=cfg.window;
+ const all=[...allDescriptions.values()],frequencyScale=Math.max(4,Math.ceil(Math.max(0,...all.map(x=>x.folds?.frequency??0))/2)*2),amplitudeScale=Math.max(.2,Math.ceil(Math.max(0,...all.map(x=>x.folds?.amplitudeMedian??0))*10)/10);
+ const items=[['偏上行',s?.up,s?`${pct(s.up)} · ${s.upN}/${s.n}`:'— · 无完整窗口'],['折返频率',f?f.frequency/frequencyScale:null,f?`${f.frequency.toFixed(2)}次/20日`:'— · 覆盖不足'],['折返幅度',f?.amplitudeMedian==null?null:f.amplitudeMedian/amplitudeScale,f?.amplitudeMedian!=null?`${pct(f.amplitudeMedian)} · ${f.amplitudeN}段`:'— · 无完整波段']];
+ $('frequency').innerHTML=items.map(([label,width,text])=>`<div class="scoreline"><b>${label}</b><div class="scorebar"><i style="width:${width==null?0:width*100}%"></i></div><span>${text}</span></div>`).join('');
+ $('frequencyNote').textContent=`偏上行：${s?.n||0}个完整${w}日变化窗口。折返：整个区间${f?.returns??'—'}次日变化、${f?.turnCount??'—'}次反向确认；幅度${f?.amplitudeN??0}个完整波段。两项折返数值不使用重叠窗口。全55股共用条形刻度：频率0—${frequencyScale}次/20日、幅度0—${pct(amplitudeScale)}；与首页同范围时一致。`;
+ const wins=current.windows,W=1000,H=64,L=15,R=985;if(!wins.length){$('strip').innerHTML='';windowTable();return}
+ const step=(R-L)/wins.length;let svg=`<svg viewBox="0 0 ${W} ${H}" aria-label="每个历史窗口是否偏上行"><text x="${L}" y="16" font-size="11">偏上行</text>`;
+ wins.forEach((v,i)=>{svg+=`<rect data-window="${i}" x="${L+i*step}" y="20" width="${Math.max(.5,step-.4)}" height="12" fill="${v.up?'#555':'#eee'}"><title>${v.first}—${v.last} ${v.up?'偏上行':'不符合偏上行'}</title></rect>`});
+ svg+=`<text x="${L}" y="58" font-size="10">${wins[0].last}（窗口结束日）</text><text x="${R}" y="58" text-anchor="end" font-size="10">${wins.at(-1).last} · 深色符合 / 浅色不符合</text></svg>`;$('strip').innerHTML=svg;
+ document.querySelectorAll('#strip [data-window]').forEach(e=>e.onclick=()=>focusWindow(+e.dataset.window));windowTable();
+}
+function windowTable(){let key=$('windowFilter').value;
+ let rows=current.windows.map((v,i)=>({v,i})).filter(({v})=>key==='all'?true:key==='neither'?!v.up:!!v[key]);
+ $('windows').querySelector('tbody').innerHTML=rows.map(({v,i})=>`<tr><td><button data-window="${i}">${v.first} → ${v.last}</button></td><td class="n">${pct(v.net,true)}</td><td class="n">${num(v.efficiency,2)}</td><td class="n">${pct(v.vol)}</td><td class="n">${v.moves}</td><td>${v.up?'偏上行':'不符合偏上行'}</td></tr>`).join('')||'<tr><td colspan="6">此筛选没有完整历史窗口。</td></tr>';
+ document.querySelectorAll('#windows [data-window]').forEach(e=>e.onclick=()=>focusWindow(+e.dataset.window));
+}
+function focusWindow(i){let v=current.windows[i];if(v)focusEvidence(v.first,v.last,`${cfg.window}个交易日变化：净${pct(v.net,true)}、效率${num(v.efficiency,2)}、${v.moves}段已确认方向变化`)}
+function moveTable(){const f=current.folds;
+ $('moveNote').textContent=f?`整个区间${f.returns}次日变化、${f.turnCount}次反向确认，频率${f.frequency.toFixed(2)}次/20日。下表${f.amplitudeN}个完整峰谷波段；幅度为高收盘/低收盘−1；排除${f.excluded.length}个起点截断段，未结束末段不计。结束极值的确认日另列。`:'缺少完整日线，不跨缺口连接极值。';
+ $('moves').querySelector('tbody').innerHTML=(f?.completed||[]).map((v,i)=>`<tr><td><button data-wave="${i}">${v.start} → ${v.end}</button><small>${num(v.from)} → ${num(v.to)}</small><small>反向确认 ${v.confirmed}</small></td><td>${v.direction>0?'上涨波段':'下跌波段'}</td><td class="n">${pct(v.amplitude)}</td><td class="n">${v.days}交易日</td></tr>`).join('')||'<tr><td colspan="4">没有满足完整波段条件的幅度证据；幅度留空。</td></tr>';
+ document.querySelectorAll('[data-wave]').forEach(e=>e.onclick=()=>{let v=f.completed[+e.dataset.wave];focusEvidence(v.start,v.confirmed,`完整波段 ${v.start}—${v.end}，幅度${pct(v.amplitude)}；反向确认${v.confirmed}`)});
+}
+function yearFacts(){let y=B.year(P,selected,$('end').value),m=y.metrics;
+ $('yearFacts').innerHTML=`<p>请求 ${y.start}—${y.end}；实际 ${y.first||'无'}—${y.last||'无'}。<b>${y.adequate?'具备12个月端点及连续日线覆盖':'不足完整12个月，只报告已取得的区间'}</b>。</p>`+(m?`<p>实际区间净涨跌 <b>${pct(m.net,true)}</b>，收盘最大回撤 <b>${pct(m.drawdown)}</b>。</p><p>最强历史20日变化：<b>${pct(y.best20?.net,true)}</b> ${y.best20?`<button id="bestYear">核对 ${y.best20.first} → ${y.best20.last}</button>`:''}</p><p>最大3个上涨日占全部正 log 收益 <b>${pct(m.top3Share)}</b>（共${m.positiveDays}个上涨日）。</p>`:'<p>连续日线或日历不足，未给全年数值。</p>');
+ $('yearTopDays').innerHTML=m?m.topDays.map(v=>`<button data-year-day="${v.day}">${v.day} · ${pct(Math.expm1(v.value),true)}</button>`).join(' '):'';
+ if($('bestYear'))$('bestYear').onclick=()=>setRangeAndEvidence(y.best20.first,y.best20.last,'过去12个月的最强20日变化；已知结果后的历史描述');
+ document.querySelectorAll('[data-year-day]').forEach(el=>el.onclick=()=>{let v=m.topDays.find(v=>v.day===el.dataset.yearDay);setRangeAndEvidence(v.from,v.day,'最大的单日收盘上涨之一；实际 '+pct(Math.expm1(v.value),true))});
+}
+function setRangeAndEvidence(s,e,label){$('start').value=s;$('end').value=e;refresh();focusEvidence(s,e,label)}
+function traitTable(){let keys=['G','V','M','J','S'],defs=['末120次日log变化均值×252','末60次日log变化标准差×√252','末60次相邻日收益相关系数','末60次去均值变化平方，最大6次能量占比','20次滚动归一化四属性向量变化的稳定度 exp(−10D)'];
+ $('traits').innerHTML=`<table><tbody>${keys.map((k,i)=>`<tr><th>${k}</th><td>${num(current.traits[i],4)}</td><td>${defs[i]}${current.traits[i]==null?'；本区间不足窗口或退化，留空':''}</td></tr>`).join('')}</tbody></table>`;
+}
+function company(){let r=member(),f=r.fundamental,a=f.facts||{},l=f.leader||{};
+ if(r.kind==='ETF'){$('fundamental').innerHTML='<p>ETF：公司营业收入、现金流和细分头部指标不适用。价格形态仍按真实日线描述；产品条款尚未在此核查。</p>';return}
+ $('fundamental').innerHTML=`<p>缓存截至 ${esc(f.as_of||'未提供')}；财报期末 ${esc(f.freshness?.latest_period_end||'缺失')}，申报 ${esc(f.freshness?.latest_filed||'缺失')}。</p><p>收入同比 ${pct(a.revenue_yoy)}；自由现金流率 ${pct(a.fcf_margin)}；净利率 ${pct(a.net_margin)}。</p><p>头部证据：${esc(l.status||'待核验')}，领域 ${esc(l.segment||'未明确')}。${esc(l.basis||'')}</p>${l.source?`<p><a href="${esc(l.source)}" target="_blank" rel="noopener">头部证据来源</a> · 核对日期 ${esc(l.observed_at||'缓存未记录')}</p>`:''}<p>缺口：${esc((f.missing||[]).join('；')||'本字段未列出，不代表已完成核查')}。</p><details><summary>原始来源与提取限制</summary>${(f.sources||[]).map(v=>`<p><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.title)}</a> · ${esc(v.published_at||'发布日期缺失')}</p>`).join('')}<p>${esc((f.risks||[]).join('；'))}</p></details>`;
+}
+function table(){let q=$('search').value.trim().toLowerCase(),scope=$('scope').value,sort=$('sort').value;
+ let rows=D.records.filter(r=>(scope==='all'||scope==='stock'&&r.kind==='STOCK'||scope==='etf'&&r.kind==='ETF')&&(!q||(r.code+' '+r.name).toLowerCase().includes(q)));
+ const value=r=>{let x=allDescriptions.get(r.code);return sort==='net'?x.metrics?.net:sort==='up'?x.shares?.up:sort==='frequency'?x.folds?.frequency:x.folds?.amplitudeMedian};rows.sort((a,b)=>sort==='code'?a.code.localeCompare(b.code):(value(b)??-Infinity)-(value(a)??-Infinity));
+ $('tableNote').textContent=`显示${rows.length}/${D.records.length}个证券；请求 ${range().join('—')}。比较价格描述，不做持有/交易资格排序。`;
+ $('stocks').querySelector('tbody').innerHTML=rows.map(r=>{let x=allDescriptions.get(r.code),s=x.shares;return `<tr class="${r.code===selected?'selected':''}"><td><button data-stock="${esc(r.code)}">${esc(r.code)}</button><small>${esc(r.name)} · ${r.kind}</small></td><td class="n">${pct(x.metrics?.net,true)}</td><td class="n">${pct(s?.up)}</td><td class="n">${x.folds?x.folds.frequency.toFixed(2)+'次/20日':'—'}</td><td class="n">${pct(x.folds?.amplitudeMedian)}</td><td>${x.observedFirst||'无'}—${x.observedLast||'无'}<small>${x.rows.length}根 / ${s?.n||0}个完整窗口${x.missing.length?'；缺日 '+x.missing.length:''}</small></td></tr>`}).join('');
+ document.querySelectorAll('[data-stock]').forEach(e=>e.onclick=()=>{select(e.dataset.stock);$('reviewMain').scrollIntoView({block:'start'})});
+}
+function focusEvidence(s,e,label){evidence={start:s,end:e,label};$('granularity').value='day';offset=Math.max(0,(P.records[selected]||[]).filter(b=>b[0]>=current.start&&b[0]<s).length-2);chart();$('chart').scrollIntoView({block:'center'});}
+function overview(){
+ let rows=current.rows;if(!rows.length){$('overview').innerHTML='<p>没有真实日线概览。</p>';return}
+ let W=Math.max(300,$('overview').clientWidth,rows.length*7+70),H=205,L=52,T=12,C=166,step=(W-L-18)/rows.length;
+ let lo=Math.min(...rows.map(b=>b[3])),hi=Math.max(...rows.map(b=>b[2])),pad=Math.max((hi-lo)*.08,hi*.003);lo-=pad;hi+=pad;let y=p=>C-(p-lo)/(hi-lo)*(C-T),svg=`<svg viewBox="0 0 ${W} ${H}" style="display:block;width:${W}px;height:${H}px" role="img" aria-label="所选区间全部真实日OHLC">`;
+ for(let j=0;j<=3;j++){let v=lo+(hi-lo)*j/3;svg+=`<line x1="${L}" x2="${W-10}" y1="${y(v)}" y2="${y(v)}" stroke="#ddd"/><text x="${L-5}" y="${y(v)+4}" font-size="10" text-anchor="end">${v.toFixed(2)}</text>`}
+ let labelX=-100;rows.forEach((b,i)=>{let x=L+(i+.5)*step,up=b[4]>=b[1];if(evidence&&b[0]>=evidence.start&&b[0]<=evidence.end)svg+=`<rect x="${x-step/2}" y="${T}" width="${step}" height="${C-T}" fill="#ccc"/>`;svg+=`<g data-overview="${i}" tabindex="0" role="button" aria-label="${b[0]}真实日OHLC"><rect x="${x-step/2}" y="${T}" width="${step}" height="${C-T}" fill="transparent"/><line x1="${x}" x2="${x}" y1="${y(b[2])}" y2="${y(b[3])}" stroke="#444"/><rect x="${x-step*.25}" y="${Math.min(y(b[1]),y(b[4]))}" width="${Math.max(2,step*.5)}" height="${Math.max(1,Math.abs(y(b[1])-y(b[4])))}" fill="${up?'white':'#555'}" stroke="#555"/><title>${b[0]} O ${b[1]} H ${b[2]} L ${b[3]} C ${b[4]}</title></g>`;if(x-labelX>=90){svg+=`<text x="${x}" y="191" font-size="10">${b[0].slice(5)}</text>`;labelX=x}});
+ if($('showMoves').checked&&current.metrics)current.metrics.moves.forEach(v=>{let a=L+(v.anchorIndex+.5)*step,b=L+(v.confirmIndex+.5)*step;svg+=`<line x1="${a}" y1="${y(v.from)}" x2="${b}" y2="${y(v.to)}" stroke="#111" stroke-dasharray="5 3" pointer-events="none"/><circle cx="${a}" cy="${y(v.from)}" r="4" fill="white" stroke="#111" pointer-events="none"/><rect x="${b-3}" y="${y(v.to)-3}" width="6" height="6" fill="#111" pointer-events="none"/>`});
+ svg+='</svg>';$('overview').innerHTML=svg;document.querySelectorAll('[data-overview]').forEach(el=>{const focus=()=>{let b=rows[+el.dataset.overview];focusEvidence(b[0],b[0],`真实日OHLC：O ${num(b[1])} H ${num(b[2])} L ${num(b[3])} C ${num(b[4])}`)};el.onclick=focus;el.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();focus()}}});
+}
+function chart(){
+ let mode=$('granularity').value,[s,e]=range(),full=mode==='hour'?(I.records[selected]||[]):(P.records[selected]||[]);
+ chartBars=full.filter(b=>(mode==='hour'?b[6]:b[0])>=s&&(mode==='hour'?b[6]:b[0])<=e);
+ let W=Math.max(300,Math.round($('chart').clientWidth||1000)),H=360,L=52,T=25,C=260,cap=Math.max(15,Math.floor((W-L-22)/7));viewCap=cap;
+ offset=Math.max(0,Math.min(offset,Math.max(0,chartBars.length-cap)));visible=chartBars.slice(offset,offset+cap);$('pan').max=Math.max(0,chartBars.length-cap);$('pan').value=offset;
+ $('prevPan').disabled=$('firstPan').disabled=offset===0;$('nextPan').disabled=$('lastPan').disabled=offset>=+$('pan').max;
+ $('evidenceInfo').textContent=evidence?`${evidence.start}—${evidence.end}：${evidence.label}。灰色阴影只定位已发生片段；上方统计仍描述原选择区间。`:'点击统计依据、历史窗口或折返记录，在图上定位对应片段。';
+ if(!visible.length){$('chart').innerHTML=`<p class="empty">此范围没有真实${mode==='hour'?'全天60分钟':'日线'}。${mode==='hour'?'可以切换日线；未补造小时行情。':''}</p>`;$('chartStatus').textContent=`请求 ${s}—${e}；此粒度实际无覆盖。`;mini();overview();return}
+ let lo=Math.min(...visible.map(b=>b[3])),hi=Math.max(...visible.map(b=>b[2])),pad=Math.max((hi-lo)*.1,hi*.005);lo-=pad;hi+=pad;
+ let y=p=>C-(p-lo)/(hi-lo)*(C-T),step=(W-L-22)/visible.length,volume=Math.max(1,...visible.map(b=>b[5])),svg=`<svg id="priceSvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(selected)}真实价格与成交量">`;
+ for(let j=0;j<=4;j++){let a=lo+(hi-lo)*j/4;svg+=`<line x1="${L}" x2="${W-14}" y1="${y(a)}" y2="${y(a)}" stroke="#ddd"/><text x="${L-5}" y="${y(a)+4}" text-anchor="end" font-size="10">${a.toFixed(2)}</text>`}
+ let lastDay='',labels=[],closePoints=[],closeRun=[],cal=B.calendar(P,selected,s,e),ordinal=cal?new Map(cal.map((d,i)=>[d,i])):null;const flush=()=>{if(closeRun.length)closePoints.push(closeRun.join(' '));closeRun=[]};
+ visible.forEach((b,i)=>{let day=mode==='hour'?b[6]:b[0],kind=mode==='hour'?b[7]:'常规盘',x=L+(i+.5)*step,up=b[4]>=b[1],ink=up?'#555':'#111';
+  if(mode==='hour'&&kind!=='常规盘')svg+=`<rect x="${x-step/2}" y="${T}" width="${step}" height="${C-T}" fill="${({'夜盘':'#ededed','盘前':'#f5f5f5','盘后':'#e4e4e4'})[kind]||'#eee'}"/>`;
+  if(evidence&&day>=evidence.start&&day<=evidence.end)svg+=`<rect data-evidence-shade x="${x-step/2}" y="${T}" width="${step}" height="${C-T}" fill="#aaa" opacity=".32"/>`;
+  if(day!==lastDay){svg+=`<line x1="${x-step/2}" x2="${x-step/2}" y1="${T}" y2="328" stroke="#777" stroke-width="1.5"/>`;if(!labels.length||x-labels.at(-1).x>=68)labels.push({x,day});lastDay=day}
+  let top=Math.min(y(b[1]),y(b[4])),body=Math.max(1,Math.abs(y(b[1])-y(b[4])));
+  svg+=`<g data-bar="${i}" tabindex="0" role="button" aria-label="${esc(b[0])} ${kind} OHLC"><rect x="${x-step/2}" y="${T}" width="${step}" height="302" fill="transparent"/><line x1="${x}" x2="${x}" y1="${y(b[2])}" y2="${y(b[3])}" stroke="${ink}"/><rect x="${x-step*.27}" y="${top}" width="${Math.max(2,step*.54)}" height="${body}" fill="${up?'white':ink}" stroke="${ink}"/><rect x="${x-step*.27}" y="${321-b[5]/volume*40}" width="${Math.max(2,step*.54)}" height="${b[5]/volume*40}" fill="#aaa"/><title>${esc(b[0])} ${kind}\nO ${b[1]} H ${b[2]} L ${b[3]} C ${b[4]} V ${b[5]}</title></g>`;
+  if(mode==='day'){if(i&&(!ordinal||ordinal.get(day)-ordinal.get(visible[i-1][0])!==1))flush();closeRun.push(x+','+y(b[4]));}
+ });flush();if(mode==='day')closePoints.forEach(points=>svg+=`<polyline fill="none" stroke="#888" stroke-dasharray="2 3" pointer-events="none" points="${points}"/>`);
+ if($('showMoves').checked&&current.metrics){const locate=d=>visible.findIndex(b=>mode==='day'?b[0]===d:b[6]===d&&b[7]==='常规盘'&&b[0].slice(11,16)==='16:00');
+  current.metrics.moves.forEach(v=>{let a=locate(v.anchor),b=locate(v.confirmed);if(a>=0&&b>=0){svg+=`<line x1="${L+(a+.5)*step}" y1="${y(v.from)}" x2="${L+(b+.5)*step}" y2="${y(v.to)}" stroke="#111" stroke-dasharray="5 3" pointer-events="none"/>`}
+   if(a>=0)svg+=`<circle cx="${L+(a+.5)*step}" cy="${y(v.from)}" r="4" fill="white" stroke="#111" stroke-width="1.5" pointer-events="none"/>`;
+   if(b>=0)svg+=`<rect x="${L+(b+.5)*step-3}" y="${y(v.to)-3}" width="6" height="6" fill="#111" pointer-events="none"/>`;
+  });
+ }
+ labels.forEach(v=>svg+=`<text x="${Math.min(W-45,v.x)}" y="343" font-size="10">${v.day.slice(5)}</text>`);
+ svg+=`<text x="${L}" y="15" font-size="11">${mode==='hour'?'全天60m · 完成时刻':'常规盘日OHLC · 点线为收盘路径'} / 下方成交量</text></svg>`;$('chart').innerHTML=svg;
+ $('chartStatus').textContent=`选择区间共${chartBars.length}根真实${mode==='hour'?'60分钟':'日级'}行情；当前第${offset+1}—${offset+visible.length}根：${visible[0][0]}—${visible.at(-1)[0]}。间距${step.toFixed(1)}px；全部数据可用平移按钮和滑条查看，非交易日不占宽度。`;
+ document.querySelectorAll('[data-bar]').forEach(el=>{const show=()=>{let a=visible[+el.dataset.bar];$('barInfo').textContent=`${mode==='hour'?a[8]+'—'+a[9]:a[0]} · ${mode==='hour'?a[7]+' / 归属交易日 '+a[6]:'常规盘日线'} · O ${num(a[1])} H ${num(a[2])} L ${num(a[3])} C ${num(a[4])} · 量 ${Math.round(a[5]).toLocaleString()}`};el.onclick=show;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show()}}});mini();overview();
+}
+function mini(){
+ let bars=P.records[selected]||[],W=1000,H=80,s=P.requested_start,e=P.as_of,isUS=selected.startsWith('US.'),days=isUS?P.us_sessions.filter(d=>d>=s&&d<=e):bars.map(b=>b[0]),ordinal=new Map(days.map((d,i)=>[d,i]));
+ if(!bars.length){$('mini').innerHTML='无日级预览';return}
+ let lo=Math.min(...bars.map(b=>b[3])),hi=Math.max(...bars.map(b=>b[2])),y=p=>65-(p-lo)/Math.max(1e-8,hi-lo)*55,x=d=>isUS?(ordinal.get(d)??0)/(Math.max(1,days.length-1))*W:(new Date(d)-new Date(s))/(new Date(e)-new Date(s))*W;
+ let a=isUS?days.find(d=>d>=range()[0]):range()[0]<s?s:range()[0],z=isUS?days.filter(d=>d<=range()[1]).at(-1):range()[1]>e?e:range()[1],svg=`<svg viewBox="0 0 ${W} ${H}" aria-label="固定两年实际日OHLC">`;
+ if(a&&z&&a<=z)svg+=`<rect x="${x(a)}" y="0" width="${Math.max(2,x(z)-x(a))}" height="80" fill="#ddd"/>`;
+ bars.forEach(b=>{if(!ordinal.has(b[0]))return;let px=x(b[0]);svg+=`<line x1="${px}" x2="${px}" y1="${y(b[2])}" y2="${y(b[3])}" stroke="#666"/><line x1="${px-.7}" x2="${px+.7}" y1="${y(b[1])}" y2="${y(b[4])}" stroke="#222"/>`});svg+='</svg>';$('mini').innerHTML=svg;
+ $('mini').setAttribute('aria-valuemin','0');$('mini').setAttribute('aria-valuemax',String(days.length-1));$('mini').setAttribute('aria-valuenow',String(Math.max(0,days.findIndex(d=>d>=range()[1]))));$('mini').setAttribute('aria-valuetext',range().join('至'));
+ let hourly=I.records[selected]||[];$('coverage').textContent=`mini固定两年请求 ${s}—${e}；日线实际 ${bars[0][0]}—${bars.at(-1)[0]}（${bars.length}根）。60m实际 ${hourly.length?hourly[0][0]+'—'+hourly.at(-1)[0]:'缺失'}。缺失不画成真实K线。${!isUS?'港股只保留真实日线；2026年前日历未核验，mini使用固定日历时间轴，不猜交易日。主图不留非交易日空白。':''}`;
+ $('mini').onclick=ev=>{let box=$('mini').getBoundingClientRect(),fraction=Math.max(0,Math.min(1,(ev.clientX-box.left)/box.width));if(isUS)jump(days[Math.round(fraction*(days.length-1))]);else jump(B.shifts(s,Math.round(fraction*(new Date(e)-new Date(s))/86400000)))};
+ $('mini').onkeydown=ev=>{let n=days.findIndex(d=>d>=range()[1]);if(n<0)n=days.length-1;let i=ev.key==='ArrowLeft'?Math.max(0,n-10):ev.key==='ArrowRight'?Math.min(days.length-1,n+10):ev.key==='Home'?0:ev.key==='End'?days.length-1:null;if(i!=null){ev.preventDefault();jump(days[i])}};
+}
+function jump(day){let span=Math.round((new Date(range()[1])-new Date(range()[0]))/86400000);$('end').value=day;$('start').value=B.shifts(day,-span);refresh()}
+function sources(){let r=member(),h=I.sources[selected];$('sourceEvidence').innerHTML=`<p>日线来源 ${esc(r.coverage?.source||'缺失')}；价格口径 ${esc(r.coverage?.price_basis||'缺失')}；接收 ${esc(r.coverage?.received_at||'未知')}。</p><p><code>${esc(r.coverage?.path||'无路径')}</code></p><p class="status">SHA256 ${esc(r.coverage?.sha256||'缺失')}</p><p>小时来源 ${esc(h?.source||'缺失')}；time_key为完成时刻，已保留源时间与交易日归属。</p><p class="status">${esc(h?.path||'无小时文件')}</p><p>美股日历沿用原捕获所核对的官方NYSE/Nasdaq来源；周日晚夜盘按下一交易日归属。半日市由原日历记录，日线计算按真实交易日；当前小时捕获区间没有半日市。</p><p>${P.sources.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.split('/').at(-1))}</a>`).join(' · ')}</p>`}
+function select(code){selected=code;evidence=null;refresh()}
+const STORAGE='stock_historical_semantic_reviews_v3';let reviews=[];try{reviews=JSON.parse(localStorage.getItem(STORAGE)||'[]')}catch(_){reviews=[]}
+function reviewKey(){return JSON.stringify([D.version,D.model_sha256,selected,...range(),cfg.threshold,cfg.window,cfg.efficiency])}
+function loadReview(){let r=reviews.find(r=>r.key===reviewKey());$('verdict').value=r?.verdict||'pending';$('reviewNote').value=r?.note||'';$('reviewStatus').textContent=r?`已保存这段审查 · ${r.saved_at}；共${reviews.length}段。本地浏览器存储。`:`这段尚未保存审查；共${reviews.length}段已保存。本地浏览器存储。`;$('exportStatus').textContent=''}
+$('saveReview').onclick=()=>{let key=reviewKey(),r={key,version:D.version,model_sha256:D.model_sha256,code:selected,start:range()[0],end:range()[1],actual_start:current.observedFirst,actual_end:current.observedLast,settings:{...cfg},verdict:$('verdict').value,note:$('reviewNote').value,description:$('description').textContent,shares:current.shares,folds:current.folds,source_sha256:member().coverage?.sha256,price_input_sha256:D.manifest['prices.json'].sha256,saved_at:new Date().toISOString()};reviews=reviews.filter(a=>a.key!==key);reviews.push(r);try{localStorage.setItem(STORAGE,JSON.stringify(reviews));loadReview()}catch(_){$('reviewStatus').textContent='浏览器存储不可用；本次内存保留，可立即导出JSON。'}};
+$('exportReview').onclick=()=>{let blob=new Blob([JSON.stringify({version:D.version,exported_at:new Date().toISOString(),reviews},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='historical-semantic-reviews.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);$('exportStatus').textContent=`已导出${reviews.length}段审查。`};
+$('stockSelect').onchange=()=>select($('stockSelect').value);for(let [id,delta] of [['previousStock',-1],['nextStock',1]])$(id).onclick=()=>{let i=D.records.findIndex(r=>r.code===selected);select(D.records[(i+delta+D.records.length)%D.records.length].code)};
+$('applyDates').onclick=()=>refresh();document.querySelectorAll('[data-days]').forEach(el=>el.onclick=()=>{$('start').value=B.shifts($('end').value||P.as_of,1-Number(el.dataset.days));refresh()});
+$('latest').onclick=()=>{$('end').value=P.as_of;$('start').value=B.shifts(P.as_of,-59);refresh()};$('granularity').onchange=()=>{offset=1e9;chart()};$('showMoves').onchange=chart;
+$('wholeDaily').onclick=()=>{$('granularity').value='day';evidence=null;offset=0;chart()};$('clearEvidence').onclick=()=>{evidence=null;chart()};$('pan').oninput=()=>{offset=+$('pan').value;chart()};$('firstPan').onclick=()=>{offset=0;chart()};$('lastPan').onclick=()=>{offset=1e9;chart()};$('prevPan').onclick=()=>{offset-=Math.max(1,Math.floor(viewCap*.7));chart()};$('nextPan').onclick=()=>{offset+=Math.max(1,Math.floor(viewCap*.7));chart()};
+$('windowFilter').onchange=windowTable;for(let id of ['scope','sort'])$(id).onchange=table;$('search').oninput=table;
+$('applyParams').onclick=()=>{cfg={...B.DEFAULTS,threshold:+$('threshold').value,window:+$('windowSize').value};$('parameterStatus').textContent='探索参数已修改，历史描述重算；尚未获得人工语义验收。';refresh()};$('resetParams').onclick=()=>{cfg={...B.DEFAULTS};$('threshold').value='.05';$('threshold').value='0.05';$('windowSize').value='20';$('parameterStatus').textContent='默认描述规则；尚未获得人工语义验收。';refresh()};
+window.addEventListener('resize',chart);let query=new URLSearchParams(location.search);if(D.records.some(r=>r.code===query.get('code')))selected=query.get('code');
+$('end').value=/^\d{4}-\d{2}-\d{2}$/.test(query.get('end')||'')?query.get('end'):P.as_of;
+$('start').value=/^\d{4}-\d{2}-\d{2}$/.test(query.get('start')||'')?query.get('start'):B.shifts(P.as_of,-59);
+if(['.03','.05','.08','.1','0.03','0.05','0.08','0.10'].includes(query.get('threshold'))){cfg.threshold=+query.get('threshold');$('threshold').value=cfg.threshold===.1?'0.10':cfg.threshold.toFixed(2)}
+if(['10','20','40'].includes(query.get('window'))){cfg.window=+query.get('window');$('windowSize').value=String(cfg.window)}refresh();
+window.audit={data:D,Behavior:B,select,refresh,focusWindow,getVisible:()=>visible,getChartBars:()=>chartBars,getDescription:()=>current,getAll:()=>Object.fromEntries(allDescriptions),getSettings:()=>cfg,getEvidence:()=>evidence};
+</script></body></html>

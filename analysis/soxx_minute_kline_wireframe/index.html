@@ -1,0 +1,4066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOXX · 多日区间分钟级 K 线交互评估原型 (Wireframe · 默认180天)</title>
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --border-light: #e2e8f0;
+      --border-dark: #94a3b8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --up-color: #ef4444;      /* 红涨绿跌 */
+      --down-color: #10b981;
+      --up-candle: #ef4444;
+      --down-candle: #10b981;
+      --ma5-color: #f59e0b;
+      --ma20-color: #3b82f6;
+      --ma60-color: #8b5cf6;
+      --vwap-color: #ec4899;
+      --canvas-bg: #ffffff;
+      --grid-line: #f1f5f9;
+      --grid-border: #cbd5e1;
+      --day-sep-line: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 16px 24px 32px 24px;
+      line-height: 1.5;
+    }
+
+    /* 顶栏与标的信息 */
+    .header-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-symbol {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .title-text h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title-text .subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .stat-item .label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .stat-item .value {
+      font-size: 15px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-item .value.up { color: var(--up-color); }
+    .stat-item .value.down { color: var(--down-color); }
+
+    /* 控制栏：多日区间选择器与颗粒度 */
+    .control-toolbar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .group-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-right: 2px;
+    }
+
+    /* 日期选择器样式 */
+    .date-picker-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc;
+      border: 1px solid var(--border-dark);
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    input[type="date"] {
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      outline: none;
+    }
+
+    .btn {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: var(--border-dark);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .btn-group {
+      display: inline-flex;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .btn-group .btn {
+      border: none;
+      border-right: 1px solid var(--border-light);
+      border-radius: 0;
+    }
+
+    .btn-group .btn:last-child {
+      border-right: none;
+    }
+
+    /* 防缩放提示与指示标 */
+    .anti-zoom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 5px;
+    }
+
+    .anti-zoom-badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2563eb;
+    }
+
+    /* 范围详情信息条 */
+    .range-summary-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 8 种微观形态复选框与标签样式 */
+    .pattern-checkbox-label {
+      font-size: 11px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.15s ease;
+      color: var(--text-main);
+      user-select: none;
+    }
+    .pattern-checkbox-label:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .pattern-checkbox-label input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    /* 自选 ETF 叠加对比标签样式 */
+    .overlay-etf-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      transition: all 0.15s ease;
+    }
+    .overlay-etf-tag .color-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .overlay-etf-tag .tag-close-btn {
+      cursor: pointer;
+      color: #94a3b8;
+      font-weight: bold;
+      font-size: 13px;
+      line-height: 1;
+      padding: 0 3px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .overlay-etf-tag .tag-close-btn:hover {
+      color: #ef4444;
+      background: #fee2e2;
+    }
+
+    /* 主可视化卡片 */
+    .chart-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    /* 实时 HUD 悬浮指示板 */
+    .hud-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hud-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hud-val {
+      font-weight: 600;
+    }
+
+    .legend-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+    }
+    .legend-tag .line-sample {
+      width: 12px;
+      height: 2px;
+      display: inline-block;
+    }
+
+    /* 画布区域 */
+    .canvas-wrapper {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      cursor: crosshair;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 底部历史全景与日期选择条 */
+    .year-timeline-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .timeline-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .timeline-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .strip-wrapper {
+      position: relative;
+      width: 100%;
+      height: 82px;
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 线框图审查与设计决策注解 */
+    .wireframe-spec-card {
+      background: #ffffff;
+      border: 1px dashed var(--border-dark);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .spec-item h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    /* 加载中浮层 */
+    .loading-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      z-index: 20;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border-light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. 顶栏：标的与区间概览 -->
+  <header class="header-panel">
+    <div class="title-group">
+      <span class="badge-symbol">SOXX</span>
+      <div class="title-text">
+        <h1>
+          iShares Semiconductor ETF (半导体ETF) · 多日区间分钟级 K 线
+          <span class="anti-zoom-badge" title="鼠标在K线图表上移动或滚动时，已严格禁用缩放，仅呈现十字光标与高精度悬浮数据">
+            <span class="dot"></span> 鼠标滑动防缩放已锁定
+          </span>
+        </h1>
+        <div class="subtitle">默认展示最近 180 天 (支持 1~253 天自由区间) · 连续多日分钟级微观与宏观连续时序线框图</div>
+      </div>
+    </div>
+
+    <div class="header-stats" id="headerStats">
+      <div class="stat-item">
+        <span class="label">区间起始 ~ 截止</span>
+        <span class="value" id="statDateRange">-- ~ --</span>
+      </div>
+      <div class="stat-item">
+        <span class="label">区间总涨跌幅</span>
+        <span class="value" id="statPeriodChange">--</span>
+      </div>
+      <div class="stat-item">
+        <span class="label">区间最高 / 最低</span>
+        <span class="value" id="statPeriodRange">--</span>
+      </div>
+      <div class="stat-item">
+        <span class="label">区间总成交量</span>
+        <span class="value" id="statPeriodVolume">--</span>
+      </div>
+      <div class="stat-item">
+        <span class="label">最新时点价格</span>
+        <span class="value" id="statLatestPrice">--</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. 控制栏：多日区间选择器、快捷区间预设、颗粒度与显隐控制 -->
+  <nav class="control-toolbar">
+    <!-- 第一行：多日日期区间选择器与快捷跨度按钮 -->
+    <div class="toolbar-row">
+      <div class="toolbar-group">
+        <span class="group-label">📅 日期区间:</span>
+        <div class="date-picker-wrap">
+          <input type="date" id="startDatePicker" min="2025-10-01" max="2026-10-02" value="2026-04-05">
+          <span style="color: var(--text-muted); font-size: 11px;">至</span>
+          <input type="date" id="endDatePicker" min="2025-10-01" max="2026-10-02" value="2026-10-02">
+        </div>
+        <button class="btn" id="btnApplyDates" style="background: #0f172a; color: #fff; font-weight: 600;">确定区间</button>
+
+        <span class="group-label" style="margin-left: 8px;">快捷跨度:</span>
+        <div class="btn-group" id="presetRangeGroup">
+          <button class="btn active" data-range="180d" id="btnPreset180">近180天 ★ (默认)</button>
+          <button class="btn" data-range="90d">近90天</button>
+          <button class="btn" data-range="30d">近30天</button>
+          <button class="btn" data-range="7d">近1周</button>
+          <button class="btn" data-range="1d">最新单日</button>
+          <button class="btn" data-range="all">全量1年 (253天)</button>
+        </div>
+      </div>
+
+      <div class="toolbar-group">
+        <span class="range-summary-tag" id="rangeSummaryTag">
+          已加载 126 个交易日 · 共 9,828 根 5m K线
+        </span>
+      </div>
+    </div>
+
+    <!-- 第二行：K线颗粒度、时段过滤与指标开关 -->
+    <div class="toolbar-row">
+      <div class="toolbar-group">
+        <span class="group-label">⏱ 分钟颗粒度:</span>
+        <div class="btn-group" id="granularityGroup">
+          <button class="btn active" data-gran="5m" title="5分钟级 (标准基准K线)">5分 ★</button>
+          <button class="btn" data-gran="15m" title="15分钟复合K线">15分</button>
+          <button class="btn" data-gran="30m" title="30分钟复合K线">30分</button>
+          <button class="btn" data-gran="60m" title="60分钟/小时K线 (180天大跨度清晰推荐)">60分 (小时K)</button>
+          <button class="btn" data-gran="1m" id="btnGran1m" title="1分钟级高频 (支持单日/近月高频)">1分</button>
+        </div>
+
+        <span class="group-label" style="margin-left: 8px;">🕒 时段:</span>
+        <div class="btn-group" id="sessionGroup">
+          <button class="btn active" data-session="regular" title="常规盘时段 (09:30 ~ 16:00 美东时间)">常规盘 (09:30~16:00)</button>
+          <button class="btn" data-session="all" title="全天全部时段 (含盘前 04:00~09:30 及盘后 16:00~20:00)">全时段 (含盘前盘后)</button>
+        </div>
+      </div>
+
+      <div class="toolbar-group">
+        <span class="group-label">视图辅助:</span>
+        <label style="font-size: 11px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer;">
+          <input type="checkbox" id="chkDayDivider" checked> 日期分界虚线
+        </label>
+        <label style="font-size: 11px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; margin-left: 6px;">
+          <input type="checkbox" id="chkMA" checked> MA均线 (5/20/60)
+        </label>
+        <label style="font-size: 11px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; margin-left: 6px;">
+          <input type="checkbox" id="chkVWAP"> VWAP日内均价
+        </label>
+
+        <div class="btn-group" style="margin-left: 8px;">
+          <button class="btn" id="btnStepPrev" title="将当前多日区间向前滑动">&#9664; 区间前移</button>
+          <button class="btn" id="btnStepNext" title="将当前多日区间向后滑动">区间后移 &#9654;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第三行：8 大微观微结构形态过滤 (默认勾选 4 大上涨形态) -->
+    <div class="toolbar-row" style="background: #f8fafc; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; margin-top: 2px;">
+      <div class="toolbar-group" style="gap: 8px;">
+        <span class="group-label" style="color: #0f172a; font-weight: 700;">🎯 8 大微结构形态:</span>
+
+        <!-- 4 种上涨形态 (默认不勾选，保持画面干净) -->
+        <div style="display: flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.06); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(239, 68, 68, 0.2);">
+          <span style="font-size: 11px; font-weight: 700; color: #b91c1c; margin-right: 2px;">上涨形态:</span>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="▲ 单边拉升"> ▲ 单边拉升
+          </label>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="V型深弹"> V型深弹
+          </label>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="冲高回落"> 冲高回落
+          </label>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="阶梯中继"> 阶梯中继
+          </label>
+        </div>
+
+        <!-- 4 种下跌形态 (默认不勾选) -->
+        <div style="display: flex; align-items: center; gap: 4px; background: rgba(16, 185, 129, 0.06); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.2);">
+          <span style="font-size: 11px; font-weight: 700; color: #047857; margin-right: 2px;">下跌形态:</span>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="▼ 单边下杀"> ▼ 单边下杀
+          </label>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="倒V冲顶"> 倒V冲顶
+          </label>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="探底回抽"> 探底回抽
+          </label>
+          <label class="pattern-checkbox-label">
+            <input type="checkbox" class="chk-pattern" data-pat="破位阴跌"> 破位阴跌
+          </label>
+        </div>
+
+        <!-- 快捷切换按钮 -->
+        <div class="btn-group">
+          <button class="btn" id="btnPatSelectUp" title="仅勾选 4 种上涨形态">全选上涨</button>
+          <button class="btn" id="btnPatSelectDown" title="仅勾选 4 种下跌形态">全选下跌</button>
+          <button class="btn" id="btnPatSelectAll" title="勾选全部 8 种形态">全选8种</button>
+          <button class="btn" id="btnPatClear" title="清空形态勾选">清空</button>
+          <button class="btn" id="btnToggleParamPanel" style="background: #eef2ff; color: #4338ca; font-weight: 700; border-color: #c7d2fe;" title="展开/收起 8 大形态参数配置面板">⚙️ 参数微调 & 未命中诊断</button>
+        </div>
+      </div>
+
+      <div class="toolbar-group">
+        <span class="range-summary-tag" id="patternStatsTag" style="background: #ffffff; border: 1px solid #cbd5e1; font-weight: 600;">
+          形态匹配: 计算中...
+        </span>
+      </div>
+    </div>
+
+    <!-- 8 大微结构形态参数微调与未命中诊断面板 (默认展开，支持全参数自由调节与即刻重算) -->
+    <div id="patternParamPanel" style="display: block; background: #f8fafc; padding: 10px 14px; border-radius: 6px; border: 1px solid #cbd5e1; margin-top: 3px; font-size: 11.5px;">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between;">
+        
+        <!-- 1. 窗口宽度 N -->
+        <div style="display: inline-flex; align-items: center; gap: 6px;">
+          <span style="font-weight: 700; color: #0f172a;">⏱ 检测窗口 N (K线根数):</span>
+          <div class="btn-group" id="paramWindowPreset">
+            <button class="btn" data-n="6" title="30分钟窗口 (捕捉极短线急拉)">6根 (30分)</button>
+            <button class="btn" data-n="12" title="1小时窗口 (短线爆发脉冲)">12根 (1h)</button>
+            <button class="btn active" data-n="24" title="2小时窗口 (默认标准基准)">24根 (2h ★)</button>
+            <button class="btn" data-n="36" title="3小时窗口 (中跨度波段)">36根 (3h)</button>
+            <button class="btn" data-n="78" title="全天常规盘 (全日常规慢牛)">78根 (全天)</button>
+          </div>
+          <input type="number" id="inputParamN" value="24" min="3" max="150" style="width: 50px; padding: 2px 4px; font-weight: 700; text-align: center; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace;">
+          <span style="color: #64748b;">根</span>
+        </div>
+
+        <!-- 2. 上涨启动门槛 M -->
+        <div style="display: inline-flex; align-items: center; gap: 6px;">
+          <span style="font-weight: 700; color: #b91c1c;">🚀 上涨启动门槛 M:</span>
+          <input type="range" id="rangeParamM" min="0.5" max="6.0" step="0.1" value="2.0" style="width: 90px; cursor: pointer;">
+          <input type="number" id="inputParamM" value="2.0" min="0.2" max="15.0" step="0.1" style="width: 52px; padding: 2px 4px; font-weight: 700; text-align: center; border: 1px solid #fca5a5; border-radius: 4px; color: #b91c1c; font-family: monospace;">
+          <span style="font-weight: 700; color: #b91c1c;">%</span>
+          <div class="btn-group" id="paramMPreset">
+            <button class="btn" data-m="1.0" title="降低门槛，标出平缓慢牛上涨">+1.0%</button>
+            <button class="btn" data-m="1.5" title="灵敏模式">+1.5%</button>
+            <button class="btn active" data-m="2.0" title="默认标准门槛">+2.0% ★</button>
+            <button class="btn" data-m="3.0" title="强劲脉冲">+3.0%</button>
+          </div>
+        </div>
+
+        <!-- 3. 下跌启动门槛 D -->
+        <div style="display: inline-flex; align-items: center; gap: 6px;">
+          <span style="font-weight: 700; color: #047857;">🩸 下跌启动门槛 D:</span>
+          <input type="number" id="inputParamD" value="2.0" min="0.2" max="15.0" step="0.1" style="width: 52px; padding: 2px 4px; font-weight: 700; text-align: center; border: 1px solid #86efac; border-radius: 4px; color: #047857; font-family: monospace;">
+          <span style="font-weight: 700; color: #047857;">%</span>
+        </div>
+
+        <!-- 4. 操作按钮 -->
+        <div style="display: inline-flex; align-items: center; gap: 6px;">
+          <button class="btn" id="btnApplyCustomParams" style="background: #0f172a; color: #ffffff; font-weight: 700; padding: 5px 12px;">⚡ 立即重算形态</button>
+          <button class="btn" id="btnResetDefaultParams" style="color: #64748b;" title="恢复系统默认参数 (24根, ±2.0%)">⟲ 默认参数</button>
+        </div>
+      </div>
+
+      <!-- 诊断与参数解释条 -->
+      <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed #cbd5e1; display: flex; justify-content: space-between; align-items: center; color: #475569; font-size: 11px;">
+        <div>
+          <span>💡 <b>未命中诊断指引</b>：当前以 <b><span id="txtActiveN">24</span> 根 (约<span id="txtActiveNHours">2</span>小时)</b> 滚幅 <b>≥ +<span id="txtActiveM">2.0</span>%</b> 为触发门槛。若某段上涨未标出，通常因：① <b>涨幅平缓</b>（2h内滚幅未达门槛，调至 +1.2%~+1.5% 即可标出）；② <b>短线急拉</b>（30分钟内冲顶，切换为 6根/30分 或 12根/1h 即可标出）；③ <b>慢牛波段</b>（跨数日上涨，切换为 78根/全天）。</span>
+        </div>
+        <div style="white-space: nowrap; margin-left: 12px; font-weight: 600; color: #0f172a;">
+          <span>当前形态总数: <span id="paramMatchStatsBadge" style="color:#2563eb; font-family:monospace;">--</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第四行：行业趋势迁移与避险对冲对比系统 -->
+    <div class="toolbar-row" id="rotationToolbarRow" style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid #cbd5e1; margin-top: 2px; flex-direction: column; gap: 8px;">
+      
+      <!-- 4.1 顶部操作条：核心组合一键载入、时间锚点定位与视图开关 -->
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; width: 100%;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
+          <span class="group-label" style="color: #0f172a; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+            <span>🔄 趋势迁移 & 避险轮动对比:</span>
+          </span>
+
+          <!-- 核心两套一键载入组合 -->
+          <button class="btn" id="btnLoadHedgingSectors" style="background: #065f46; color: #ffffff; font-weight: 700; border-color: #047857; padding: 5px 12px;" title="一键对比能源(XLE)、医疗(XLV/HLTH)、美债(TLT)、公用电力(XLU)、黄金(GLD)、做空(SOXS)等真正规避/负相关对冲标的">
+            🛡️ 一键载入规避对冲标的 (能源/医疗/公用/美债/做空/黄金) ★
+          </button>
+          <button class="btn" id="btnLoadHardwareSectors" style="background: #1e1b4b; color: #ffffff; font-weight: 700; border-color: #312e81; padding: 5px 12px;" title="一键对比存储(DRAM)、光通信(LYTE)、AI应用(CHAT)、AI软件(IGV)细分产业链">
+            🚀 一键载入 AI 硬件细分 (存储/光通信/AI应用)
+          </button>
+
+          <!-- 自选 ETF 下拉菜单 (支持从自选 59 只 ETF 中任意选择添加) -->
+          <select id="etfSelectDropdown" class="btn" style="padding: 4px 8px; font-weight: 600; cursor: pointer; max-width: 220px;">
+            <option value="">+ 添加其他自选 ETF (59只)...</option>
+          </select>
+
+          <button class="btn" id="btnClearAllOverlays" style="color: #64748b;" title="清空图上所有叠加对比行业">清空对比</button>
+        </div>
+
+        <!-- 4.2 核心时间锚点定位器 (Time Anchor Controls) -->
+        <div style="display: flex; align-items: center; gap: 6px; background: #f0fdf4; padding: 4px 10px; border-radius: 5px; border: 1px solid #bbf7d0;">
+          <span style="font-size: 11.5px; font-weight: 700; color: #166534; display: inline-flex; align-items: center; gap: 4px;">
+            <span>📍 0% 对齐锚点时刻:</span>
+            <span id="tagAnchorTimeVal" style="background: #ffffff; color: #15803d; padding: 2px 8px; border-radius: 4px; border: 1px solid #86efac; font-family: monospace; font-weight: 700;">--</span>
+          </span>
+          <div class="btn-group" id="anchorPresetGroup">
+            <button class="btn active" id="btnAnchorStart" title="以所选时间区间的第一根柱作为 0.0% 归一化对齐点">⏮ 区间起点 (默认)</button>
+            <button class="btn" id="btnAnchorPeak" title="自动寻找区间内 SOXX 最高峰值时刻作为 0.0% 对齐点，看谁在 SOXX 见顶回落后逆势抗跌/上涨">🔻 SOXX 起跌峰值</button>
+            <button class="btn" id="btnAnchorLatestDay" title="以最新交易日开盘 (09:30) 作为 0.0% 对齐点，聚焦今日日内轮动">⚡ 今日开盘</button>
+          </div>
+          <span style="font-size: 10.5px; color: #15803d; margin-left: 2px;" title="可在主图上直接点击任意K线柱设置锚点，或拖动紫色竖线">(💡 图上点击任一柱即可切换锚点)</span>
+        </div>
+
+        <!-- 4.3 呈现模式切换 -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="btn-group" id="chartModeGroup">
+            <button class="btn active" data-mode="trend_migration" title="归一化收益率折线，清晰无杂乱，直观展示行业趋势分化与轮动">📈 趋势迁移曲线 (%归一化)</button>
+            <button class="btn" data-mode="kline_overlay" title="SOXX 主 K 线 + 镂空线框叠加">🕯️ 传统K线模式</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.4 行业快捷多选药丸按钮组 (规避对冲核心 + 产业链细分) -->
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-top: 4px; border-top: 1px solid #f1f5f9;">
+        <span style="font-size: 11px; font-weight: 700; color: #047857; margin-right: 2px;">🛡️ 规避/对冲标的:</span>
+        <div class="btn-group" id="coreSectorButtons">
+          <button class="btn active" id="btnSectorSOXX" data-sym="SOXX" style="border-color:#93c5fd; background:#eff6ff; color:#1d4ed8; font-weight:700;">🟦 SOXX (半导体·基准)</button>
+          <button class="btn" id="btnSectorSOXS" data-sym="SOXS" title="Direxion 每日半导体3倍放空股票 - 数学反向对冲首选 (胜率 83.3%)">⚡ SOXS (3倍空半导体)</button>
+          <button class="btn" id="btnSectorXLE" data-sym="XLE" title="标普能源精选行业 ETF - 传统能源龙头 (负相关 $r=-0.19$, 胜率 61.5%)">🔥 XLE (传统能源龙头)</button>
+          <button class="btn" id="btnSectorXLV" data-sym="XLV" title="标普医疗保健精选 ETF - 穿越周期的刚需防御 (负相关 $r=-0.16$, 胜率 50%)">🏥 XLV (标普医疗健康)</button>
+          <button class="btn" id="btnSectorHLTH" data-sym="HLTH" title="Tema Healthcare AI ETF - AI医疗科技 (胜率 54.5%, 用户持仓)">🧬 HLTH (AI 医疗)</button>
+          <button class="btn" id="btnSectorXLU" data-sym="XLU" title="标普公用事业精选 ETF - 高股息/AI电网紧缺真实受益 (胜率 46.2%)">💎 XLU (公用事业/电力)</button>
+          <button class="btn" id="btnSectorTLT" data-sym="TLT" title="iShares 20年+长期美债 ETF - 衰退降息与宏观避险 (胜率 44.9%)">🛡️ TLT (长久期美债)</button>
+          <button class="btn" id="btnSectorGLD" data-sym="GLD" title="SPDR 黄金信托 - 地缘与货币抗通胀避险 (胜率 48.7%)">🥇 GLD (SPDR 黄金)</button>
+          <button class="btn" id="btnSectorIGV" data-sym="IGV" title="iShares 扩展科技软件 ETF - 企业级SaaS/承接算力回调资金 (胜率 47.4%)">💻 IGV (AI 软件基准)</button>
+        </div>
+
+        <span style="font-size: 11px; font-weight: 700; color: #4338ca; margin-left: 8px; margin-right: 2px;">🚀 细分产业链:</span>
+        <div class="btn-group" id="hardwareSectorButtons">
+          <button class="btn" id="btnSectorDRAM" data-sym="DRAM" title="Roundhill Memory ETF - 存储芯片行业 (高Beta放大)">💾 DRAM (存储芯片)</button>
+          <button class="btn" id="btnSectorLYTE" data-sym="LYTE" title="Roundhill Photonics ETF - 纯正光子学与光通信 (高弹性硬件)">🔮 LYTE (光通信/光学)</button>
+          <button class="btn" id="btnSectorCHAT" data-sym="CHAT" title="Roundhill Generative AI ETF - 纯正生成式AI应用">🤖 CHAT (AI 应用)</button>
+        </div>
+      </div>
+
+      <!-- 4.5 已激活的行业对比标签列表 -->
+      <div id="activeOverlayTags" style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 4px; border-top: 1px dashed #e2e8f0;"></div>
+    </div>
+  </nav>
+
+  <!-- 3. 主图表容器 -->
+  <main class="chart-container">
+    <!-- 实时悬浮数据 HUD -->
+    <div class="hud-bar" id="hudBar">
+      <div class="hud-left">
+        <span>⏰ 时点: <span class="hud-val" id="hudTime">--</span></span>
+        <span>开: <span class="hud-val" id="hudOpen">--</span></span>
+        <span>高: <span class="hud-val" id="hudHigh">--</span></span>
+        <span>低: <span class="hud-val" id="hudLow">--</span></span>
+        <span>收: <span class="hud-val" id="hudClose">--</span></span>
+        <span>柱涨跌: <span class="hud-val" id="hudChg">--</span></span>
+        <span>量: <span class="hud-val" id="hudVol">--</span></span>
+        <span id="hudPatternBadge" style="display: none; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;"></span>
+        <span style="background: rgba(59, 130, 246, 0.08); padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.25);">
+          🔍 滚幅诊断: <span class="hud-val" id="hudDiagnostic" style="color: #1d4ed8; font-weight: 600;">--</span>
+        </span>
+      </div>
+      <div class="hud-right" style="display: flex; gap: 12px; align-items: center;">
+        <span class="legend-tag"><span class="line-sample" style="background: var(--ma5-color);"></span> MA5: <span class="hud-val" id="hudMA5">--</span></span>
+        <span class="legend-tag"><span class="line-sample" style="background: var(--ma20-color);"></span> MA20: <span class="hud-val" id="hudMA20">--</span></span>
+        <span class="legend-tag"><span class="line-sample" style="background: var(--ma60-color);"></span> MA60: <span class="hud-val" id="hudMA60">--</span></span>
+        <span class="legend-tag" id="hudVwapTag" style="display: none;"><span class="line-sample" style="background: var(--vwap-color);"></span> VWAP: <span class="hud-val" id="hudVWAP">--</span></span>
+      </div>
+    </div>
+    <!-- 趋势迁移与行业轮动实时 HUD 榜单 -->
+    <div id="hudOverlayBar" style="display: none; flex-wrap: wrap; gap: 10px; align-items: center; background: #ffffff; border: 1px solid var(--border-light); border-radius: 6px; padding: 5px 12px; margin-bottom: 8px; font-size: 11px;">
+      <span style="font-weight: 700; color: #0f172a;">🏆 行业相对表现排行:</span>
+      <div id="hudOverlayValues" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;"></div>
+    </div>
+
+    <!-- 主画布（Retina 高清适配） -->
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <canvas id="klineCanvas"></canvas>
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div>正在载入 SOXX 最近 1 年分钟级全时序数据 (2.4MB)...</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 3.5 行业趋势迁移与逆势超额量化矩阵 (Sector Rotation Matrix) -->
+  <section class="rotation-matrix-panel" id="sectorRotationMatrixCard" style="max-width: 1600px; margin: 0 auto 12px; padding: 0 16px;">
+    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 700; font-size: 13px; color: #0f172a;">📊 行业趋势迁移与逆势超额量化矩阵 (Sector Rotation & Divergence Alpha Matrix)</span>
+          <span style="font-size: 11px; color: #64748b;">(量化选区内半导体 SOXX 回调时，各细分产业链的资金承接与逆势对冲表现)</span>
+        </div>
+        <div style="font-size: 11px; color: #475569; display: flex; gap: 12px; align-items: center;">
+          <span>选区交易日: <b id="statTotalDays" style="color: #0f172a;">--</b> 天</span>
+          <span>半导体 (SOXX) 回调日: <b id="statSoxxDownDays" style="color: #b91c1c;">--</b> 天</span>
+          <span style="color: #64748b;">| 实证规律: AI 医疗 (HLTH) 与 AI 软件应用 (IGV) 胜率超 50%，呈现极强独立避险与资金接力属性</span>
+        </div>
+      </div>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; min-width: 850px;">
+          <thead>
+            <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569;">
+              <th style="padding: 7px 10px;">行业板块/角色</th>
+              <th style="padding: 7px 10px;">代表 ETF</th>
+              <th style="padding: 7px 10px; color: #4f46e5;" id="thAnchorRet">📍 相对锚点收益</th>
+              <th style="padding: 7px 10px;">选区累计收益</th>
+              <th style="padding: 7px 10px; color: #b91c1c;">SOXX 下跌日均涨跌</th>
+              <th style="padding: 7px 10px; color: #047857;">逆势超额 (Alpha)</th>
+              <th style="padding: 7px 10px;">逆势上涨胜率</th>
+              <th style="padding: 7px 10px;">资金轮动与避险定性</th>
+            </tr>
+          </thead>
+          <tbody id="sectorMatrixBody">
+            <!-- 动态填充 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 底部全景时间轴与区间高亮滑块 (Overview Minimap) -->
+  <section class="year-timeline-panel">
+    <div class="timeline-header">
+      <span class="timeline-title">📊 1 年历史全景价格走势与 180 天选区缩略导航 (2025-10-01 ~ 2026-10-02 全量 253 交易日)</span>
+      <span class="timeline-desc">完整展示全年 SOXX 收盘价走势曲线与高低峰谷；蓝色视窗框选当前 180 天多日区间，支持鼠标按住实时平移与两侧把手拖拽缩放</span>
+    </div>
+    <div class="strip-wrapper" id="stripWrapper" title="在缩略条上点击或拖动以选择多日区间">
+      <canvas id="stripCanvas"></canvas>
+    </div>
+  </section>
+
+  <!-- 5. Wireframe 交互规约与设计决策审查说明 -->
+  <footer class="wireframe-spec-card">
+    <div style="font-weight: 700; color: var(--text-main); font-size: 13px; margin-bottom: 6px;">
+      📝 线框图 (Wireframe) 多日区间、8大微结构形态、对数双轴与自选ETF叠加设计规范
+    </div>
+    <div class="spec-grid">
+      <div class="spec-item">
+        <h4>1. 默认 180 天多日连续分钟级 K 线</h4>
+        <p>默认加载 2026-04-05 至 2026-10-02（近 180 自然日，共 126 个交易日，近 1 万根 5m 分钟 K 线）。通过连续时间轴无缝串联每日走势，并提供垂直日分界虚线，精准呈现跨日跳空高开/低开以及日内微观微波。</p>
+      </div>
+      <div class="spec-item">
+        <h4>2. 8 种微观形态可视化 (默认勾选4大上涨形态)</h4>
+        <p>完整列出历史实证的 8 种微结构形态：4 大上涨形态（▲ 单边拉升、V型深弹、冲高回落、阶梯中继）默认勾选并高亮显示；4 大下跌形态（▼ 单边下杀、倒V冲顶、探底回抽、破位阴跌）可随时勾选查看，支持鼠标 Hover 实时穿透查看涨跌与持续根数。</p>
+      </div>
+      <div class="spec-item">
+        <h4>3. 对数坐标双轴系统与可拖拽 0% 基准标线</h4>
+        <p>左轴采用对数收益率刻度（Log %），右轴显示实际股价（$ USD）。提供一条<b>可上下拖动的 0.0% 水平基准标线</b>（默认锚定选区起点），鼠标按住拖拽即可实时重置左轴 0% 起始位置，双轴与光标百分比全动态重算联动。</p>
+      </div>
+      <div class="spec-item">
+        <h4>4. 自选 ETF 镂空 K 线叠加 (非实心 · 54只自由对比)</h4>
+        <p>叠加股票来自用户牛牛自选池全部 ETF。叠加上去的标的<b>严格呈现为非实心镂空线框蜡烛 K 线</b>（独立色系线框边框，不覆盖底层实心 SOXX 蜡烛），支持 5m/15m/30m/60m 精准对齐，并可随时一键增删。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 叠加折线颜色预设库 (高对比度、清晰辨识)
+    const OVERLAY_COLORS = [
+      { code: '#06b6d4', name: '青蓝', bg: '#ecfeff', border: '#a5f3fc' },
+      { code: '#f97316', name: '琥珀橙', bg: '#fff7ed', border: '#fed7aa' },
+      { code: '#a855f7', name: '紫色', bg: '#faf5ff', border: '#e9d5ff' },
+      { code: '#ec4899', name: '枚红', bg: '#fdf2f8', border: '#fbcfe8' },
+      { code: '#14b8a6', name: '松石绿', bg: '#f0fdf4', border: '#bbf7d0' },
+      { code: '#6366f1', name: '靛蓝', bg: '#eef2ff', border: '#c7d2fe' },
+      { code: '#eab308', name: '金黄', bg: '#fefce8', border: '#fef08a' }
+    ];
+
+    // 核心对冲与产业链细分行业预设库 (含传统能源/医疗/公用/美债/做空/黄金/存储/光/AI应用)
+    const CORE_SECTOR_ROSTER = [
+      {
+        symbol: 'SOXX',
+        role: '半导体 (基准)',
+        name: 'iShares 半导体 ETF',
+        color: { code: '#2563eb', bg: '#eff6ff', border: '#bfdbfe' },
+        isBenchmark: true
+      },
+      {
+        symbol: 'SOXS',
+        role: '3倍空半导体 (数学反向对冲)',
+        name: 'Direxion 半导体3倍做空 ETF',
+        color: { code: '#dc2626', bg: '#fef2f2', border: '#fecaca' }
+      },
+      {
+        symbol: 'XLE',
+        role: '传统能源龙头 (宏观顺周期)',
+        name: '能源精选行业 SPDR ETF',
+        color: { code: '#d97706', bg: '#fef3c7', border: '#fde68a' }
+      },
+      {
+        symbol: 'XLV',
+        role: '标普医疗健康 (刚需穿越周期)',
+        name: '医疗保健精选 SPDR ETF',
+        color: { code: '#059669', bg: '#ecfdf5', border: '#a7f3d0' }
+      },
+      {
+        symbol: 'HLTH',
+        role: 'AI 医疗科技 (独立估值赛道)',
+        name: 'Tema Healthcare AI ETF',
+        color: { code: '#10b981', bg: '#f0fdf4', border: '#bbf7d0' }
+      },
+      {
+        symbol: 'XLU',
+        role: '公用事业/电力 (高股息/AI电网防御)',
+        name: '公用事业精选 SPDR ETF',
+        color: { code: '#0284c7', bg: '#f0f9ff', border: '#bae6fd' }
+      },
+      {
+        symbol: 'TLT',
+        role: '20年+长期美债 (避险降息交易)',
+        name: '20年以上美国国债 iShares ETF',
+        color: { code: '#7c3aed', bg: '#f5f3ff', border: '#ddd6fe' }
+      },
+      {
+        symbol: 'GLD',
+        role: 'SPDR 黄金 (地缘/货币避险)',
+        name: 'SPDR 黄金信托 ETF',
+        color: { code: '#ca8a04', bg: '#fefce8', border: '#fef08a' }
+      },
+      {
+        symbol: 'IGV',
+        role: 'AI 软件/SaaS (承接硬件溢出资金)',
+        name: '扩展科技软件 iShares ETF',
+        color: { code: '#0891b2', bg: '#ecfeff', border: '#a5f3fc' }
+      },
+      {
+        symbol: 'DRAM',
+        role: '存储芯片 (高Beta周期放大)',
+        name: 'Roundhill Memory ETF',
+        color: { code: '#f59e0b', bg: '#fffbeb', border: '#fde68a' }
+      },
+      {
+        symbol: 'LYTE',
+        role: '光通信/光学 (CPO硬件弹性)',
+        name: 'Roundhill Photonics ETF',
+        color: { code: '#9333ea', bg: '#faf5ff', border: '#e9d5ff' }
+      },
+      {
+        symbol: 'CHAT',
+        role: '生成式 AI 应用 (软硬件轮动)',
+        name: 'Roundhill Generative AI ETF',
+        color: { code: '#ea580c', bg: '#fff7ed', border: '#fed7aa' }
+      }
+    ];
+
+    // 状态管理
+    const state = {
+      rawDataset: null,
+      startDate: '2026-04-05',  // 默认近 180 天
+      endDate: '2026-10-02',
+      granularity: '5m',
+      sessionMode: 'regular',   // 'regular' (09:30~16:00) | 'all' (04:00~20:00)
+      showMA: true,
+      showVWAP: false,          // 多日区间下默认主看 MA，VWAP 可选开启
+      showDayDivider: true,     // 默认显示跨日分界虚线
+      hoverIndex: -1,
+      currentBars: [],          // 当前计算并渲染的连续多日 K 线数据
+      selectedPatterns: new Set(), // 默认不勾选形态，保持画面极简纯净
+      chartMode: 'trend_migration', // 'trend_migration' (% 归一化收益率曲线) | 'kline_overlay' (SOXX K线 + 镂空线框)
+      highlightDivergence: false,   // 关闭逆势迁移背景柱，杜绝大色柱遮挡图表
+      activeOverlays: [],       // 当前激活的叠加对比自选 ETF 列表: [{ symbol, name, color, daily_closes, daily_bars }]
+      anchorDateTime: null,     // 0% 对齐的时间基准点 (null 时默认选区首根柱的时间)
+      anchorBarIndex: 0,        // 锚点柱在当前 currentBars 中的索引
+      isDraggingAnchorLine: false,// 是否正在左右拖拽时间锚点竖线
+      currentAnchorX: undefined,// 当前锚点竖线的 X 坐标缓存
+      mouseDownX: undefined,    // 记录鼠标按下位置 (区分点击与拖动)
+      mouseDownY: undefined,
+      currentZeroY: undefined,  // 当前 0% 基准线的 Y 坐标缓存
+      patternParams: {
+        windowN: 24,            // 检测窗口宽度 (24根 5m = 2小时)
+        surgeThreshold: 0.02,   // 上涨启动门槛 (+2.0%)
+        dropThreshold: 0.02,    // 下跌启动门槛 (-2.0%)
+        maxPullback: -0.005,    // 单边拉升允许最大回踩 (-0.5%)
+        vDeepPullback: -0.010,  // V型深弹最小下探深度 (-1.0%)
+        retracementDrop: 0.010  // 冲高回落从最高点回撤幅度 (1.0%)
+      },
+      computedPatterns: null    // 动态计算的微结构形态集合
+    };
+
+    // DOM 元素
+    const startDatePicker = document.getElementById('startDatePicker');
+    const endDatePicker = document.getElementById('endDatePicker');
+    const btnApplyDates = document.getElementById('btnApplyDates');
+    const presetRangeGroup = document.getElementById('presetRangeGroup');
+    const granularityGroup = document.getElementById('granularityGroup');
+    const sessionGroup = document.getElementById('sessionGroup');
+    const chkMA = document.getElementById('chkMA');
+    const chkVWAP = document.getElementById('chkVWAP');
+    const chkDayDivider = document.getElementById('chkDayDivider');
+    const btnStepPrev = document.getElementById('btnStepPrev');
+    const btnStepNext = document.getElementById('btnStepNext');
+    const rangeSummaryTag = document.getElementById('rangeSummaryTag');
+
+    const patternStatsTag = document.getElementById('patternStatsTag');
+    const btnToggleParamPanel = document.getElementById('btnToggleParamPanel');
+    const patternParamPanel = document.getElementById('patternParamPanel');
+    const inputParamN = document.getElementById('inputParamN');
+    const rangeParamM = document.getElementById('rangeParamM');
+    const inputParamM = document.getElementById('inputParamM');
+    const inputParamD = document.getElementById('inputParamD');
+    const btnApplyCustomParams = document.getElementById('btnApplyCustomParams');
+    const btnResetDefaultParams = document.getElementById('btnResetDefaultParams');
+    const paramWindowPreset = document.getElementById('paramWindowPreset');
+    const paramMPreset = document.getElementById('paramMPreset');
+    const txtActiveN = document.getElementById('txtActiveN');
+    const txtActiveNHours = document.getElementById('txtActiveNHours');
+    const txtActiveM = document.getElementById('txtActiveM');
+    const paramMatchStatsBadge = document.getElementById('paramMatchStatsBadge');
+    const hudDiagnostic = document.getElementById('hudDiagnostic');
+
+    const btnLoadHedgingSectors = document.getElementById('btnLoadHedgingSectors');
+    const btnLoadHardwareSectors = document.getElementById('btnLoadHardwareSectors');
+    const coreSectorButtons = document.getElementById('coreSectorButtons');
+    const hardwareSectorButtons = document.getElementById('hardwareSectorButtons');
+    const chartModeGroup = document.getElementById('chartModeGroup');
+    const chkHighlightDivergence = document.getElementById('chkHighlightDivergence');
+    const etfSelectDropdown = document.getElementById('etfSelectDropdown');
+    const activeOverlayTags = document.getElementById('activeOverlayTags');
+    const tagAnchorTimeVal = document.getElementById('tagAnchorTimeVal');
+    const anchorPresetGroup = document.getElementById('anchorPresetGroup');
+    const btnAnchorStart = document.getElementById('btnAnchorStart');
+    const btnAnchorPeak = document.getElementById('btnAnchorPeak');
+    const btnAnchorLatestDay = document.getElementById('btnAnchorLatestDay');
+    const btnClearAllOverlays = document.getElementById('btnClearAllOverlays');
+    const sectorRotationMatrixCard = document.getElementById('sectorRotationMatrixCard');
+    const sectorMatrixBody = document.getElementById('sectorMatrixBody');
+    const statTotalDays = document.getElementById('statTotalDays');
+    const statSoxxDownDays = document.getElementById('statSoxxDownDays');
+
+    const hudOverlayBar = document.getElementById('hudOverlayBar');
+    const hudOverlayValues = document.getElementById('hudOverlayValues');
+    const hudPatternBadge = document.getElementById('hudPatternBadge');
+
+    const btnPatSelectUp = document.getElementById('btnPatSelectUp');
+    const btnPatSelectDown = document.getElementById('btnPatSelectDown');
+    const btnPatSelectAll = document.getElementById('btnPatSelectAll');
+    const btnPatClear = document.getElementById('btnPatClear');
+
+    const canvasWrapper = document.getElementById('canvasWrapper');
+    const klineCanvas = document.getElementById('klineCanvas');
+    const stripCanvas = document.getElementById('stripCanvas');
+    const stripWrapper = document.getElementById('stripWrapper');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    // HUD 元素
+    const hudTime = document.getElementById('hudTime');
+    const hudOpen = document.getElementById('hudOpen');
+    const hudHigh = document.getElementById('hudHigh');
+    const hudLow = document.getElementById('hudLow');
+    const hudClose = document.getElementById('hudClose');
+    const hudChg = document.getElementById('hudChg');
+    const hudVol = document.getElementById('hudVol');
+    const hudMA5 = document.getElementById('hudMA5');
+    const hudMA20 = document.getElementById('hudMA20');
+    const hudMA60 = document.getElementById('hudMA60');
+    const hudVWAP = document.getElementById('hudVWAP');
+    const hudVwapTag = document.getElementById('hudVwapTag');
+
+    // 顶部统计
+    const statDateRange = document.getElementById('statDateRange');
+    const statPeriodChange = document.getElementById('statPeriodChange');
+    const statPeriodRange = document.getElementById('statPeriodRange');
+    const statPeriodVolume = document.getElementById('statPeriodVolume');
+    const statLatestPrice = document.getElementById('statLatestPrice');
+
+    // 辅助转换 HEX 颜色为 RGBA
+    function hexToRgba(hex, alpha) {
+      let c = (hex || '#3b82f6').replace('#', '');
+      if (c.length === 3) c = c.split('').map(x => x + x).join('');
+      const num = parseInt(c, 16);
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // 初始化入口
+    async function initApp() {
+      try {
+        const resp = await fetch('./soxx_data.json');
+        if (!resp.ok) throw new Error(`HTTP Error ${resp.status}`);
+        state.rawDataset = await resp.json();
+
+        // 异步预加载 ETF 5m 高频缓存数据 (零阻塞)
+        fetch('./etf_5m_cache.json')
+          .then(r => r.json())
+          .then(cache => {
+            window.etf5mCache = cache;
+            if (state.activeOverlays.length > 0) renderMainChart();
+          })
+          .catch(err => console.warn('etf_5m_cache.json background load warning:', err));
+
+        const dates = state.rawDataset.daily_summaries.map(d => d.date);
+        const minDate = dates[0];
+        const maxDate = dates[dates.length - 1];
+
+        startDatePicker.min = minDate;
+        startDatePicker.max = maxDate;
+        endDatePicker.min = minDate;
+        endDatePicker.max = maxDate;
+
+        // 计算默认近 180 天 (从 maxDate 倒推 180 天)
+        const maxDt = new Date(maxDate);
+        const startDt = new Date(maxDt.getTime() - 180 * 24 * 3600 * 1000);
+        const defaultStartStr = startDt.toISOString().slice(0, 10);
+        
+        state.startDate = defaultStartStr >= minDate ? defaultStartStr : minDate;
+        state.endDate = maxDate;
+
+        startDatePicker.value = state.startDate;
+        endDatePicker.value = state.endDate;
+
+        loadingOverlay.style.display = 'none';
+
+        // 填充自选 ETF 下拉选项并挂载事件
+        populateEtfDropdown();
+        renderActiveOverlayTags();
+
+        setupEvents();
+        recomputeActivePatterns();
+        loadHedgingSectors();
+        refreshMultiDayBars();
+        renderTimelineStrip();
+      } catch (err) {
+        console.error('Failed to load dataset:', err);
+        loadingOverlay.innerHTML = `<div style="color: #ef4444; font-weight: bold;">数据加载失败: ${err.message}</div><div style="font-size: 11px; color: #64748b; margin-top: 4px;">请确保本地服务正在运行 (python3 -m http.server 8768)</div>`;
+      }
+    }
+
+    // 填充用户自选与全量对冲/行业 ETF 下拉列表 (59只，细分四大主题)
+    function populateEtfDropdown() {
+      if (!state.rawDataset || !state.rawDataset.etf_universe) return;
+      etfSelectDropdown.innerHTML = '<option value="">+ 添加其他自选 ETF (59只)...</option>';
+
+      const hedgeSyms = ['SOXS', 'XLE', 'IYE', 'XLV', 'HLTH', 'XLU', 'TLT', 'GLD', 'SLV', 'ITA', 'IBB', 'BBH', 'XBI'];
+      const appSyms = ['IGV', 'CHAT', 'BOTZ', 'AIPO', 'HAKY', 'FINX', 'AIUP', 'HTEC', 'ARKG'];
+      const hardSyms = ['DRAM', 'LYTE', 'SMH', 'SOXL', 'LAZR', 'LRNZ', 'MUU', 'SNXX', 'AAOZ', 'BATT', 'COPX', 'GRID'];
+      const macroSyms = ['QQQ', 'SPY', 'VOO', 'VT', 'IWO', 'QUAL', 'VLUE'];
+
+      const grpHedge = document.createElement('optgroup');
+      grpHedge.label = '🛡️ 规避与对冲半导体 (做空/能源/医疗/公用/美债/黄金)';
+      const grpApp = document.createElement('optgroup');
+      grpApp.label = '🤖 AI 软件与生成式应用';
+      const grpHard = document.createElement('optgroup');
+      grpHard.label = '💾 芯片与硬件细分 (存储/光通信/设备)';
+      const grpMacro = document.createElement('optgroup');
+      grpMacro.label = '🌐 宏观与大盘指数基准';
+      const grpOther = document.createElement('optgroup');
+      grpOther.label = '其他主题 ETF';
+
+      state.rawDataset.etf_universe.forEach(e => {
+        const opt = document.createElement('option');
+        opt.value = e.symbol;
+        opt.textContent = `${e.symbol} · ${e.name} ($${e.latest_close || '--'})`;
+        if (hedgeSyms.includes(e.symbol)) {
+          grpHedge.appendChild(opt);
+        } else if (appSyms.includes(e.symbol)) {
+          grpApp.appendChild(opt);
+        } else if (hardSyms.includes(e.symbol)) {
+          grpHard.appendChild(opt);
+        } else if (macroSyms.includes(e.symbol)) {
+          grpMacro.appendChild(opt);
+        } else {
+          grpOther.appendChild(opt);
+        }
+      });
+
+      etfSelectDropdown.appendChild(grpHedge);
+      etfSelectDropdown.appendChild(grpApp);
+      etfSelectDropdown.appendChild(grpHard);
+      etfSelectDropdown.appendChild(grpMacro);
+      if (grpOther.children.length > 0) etfSelectDropdown.appendChild(grpOther);
+    }
+
+    // 获取特定叠加标的与当前主图 K 线完全对齐的逐根 OHLC 蜡烛数据
+    function getOverlayBarsForCurrentView(item, currentBars) {
+      if (!currentBars || currentBars.length === 0) return [];
+      const cache5m = window.etf5mCache && window.etf5mCache[item.symbol];
+      const dailyBars = item.daily_bars;
+      const dailyCloses = item.daily_closes;
+
+      const out = new Array(currentBars.length);
+
+      for (let i = 0; i < currentBars.length; i++) {
+        const b = currentBars[i];
+        let barOhlc = null;
+
+        if (cache5m) {
+          if (b.rawDateTimes && b.rawDateTimes.length > 0) {
+            let matched = [];
+            for (const dt of b.rawDateTimes) {
+              if (cache5m[dt]) matched.push(cache5m[dt]);
+            }
+            if (matched.length > 0) {
+              const open = matched[0][0];
+              const high = Math.max(...matched.map(m => m[1]));
+              const low = Math.min(...matched.map(m => m[2]));
+              const close = matched[matched.length - 1][3];
+              barOhlc = { open, high, low, close };
+            }
+          } else if (cache5m[b.dateTime]) {
+            const m = cache5m[b.dateTime];
+            barOhlc = { open: m[0], high: m[1], low: m[2], close: m[3] };
+          }
+        }
+
+        if (!barOhlc && dailyBars && dailyBars[b.date]) {
+          const db = dailyBars[b.date];
+          barOhlc = { open: db[0], high: db[1], low: db[2], close: db[3] };
+        } else if (!barOhlc && dailyCloses && dailyCloses[b.date] !== undefined) {
+          const c = dailyCloses[b.date];
+          barOhlc = { open: c, high: c, low: c, close: c };
+        }
+
+        out[i] = barOhlc;
+      }
+      return out;
+    }
+
+    // 添加一只自选 ETF 到对比
+    function addOverlayETF(symbol) {
+      if (!symbol || !state.rawDataset || !state.rawDataset.etf_universe) return;
+      if (state.activeOverlays.some(item => item.symbol === symbol)) return;
+      const etf = state.rawDataset.etf_universe.find(e => e.symbol === symbol);
+      if (!etf) return;
+
+      const rosterItem = CORE_SECTOR_ROSTER.find(c => c.symbol === symbol);
+      const color = rosterItem ? rosterItem.color : OVERLAY_COLORS[state.activeOverlays.length % OVERLAY_COLORS.length];
+
+      state.activeOverlays.push({
+        symbol: etf.symbol,
+        role: rosterItem ? rosterItem.role : etf.name,
+        name: etf.name,
+        color: color,
+        daily_closes: etf.daily_closes,
+        daily_bars: etf.daily_bars,
+        latest_close: etf.latest_close
+      });
+
+      if (!window.etf5mCache && !window.etf5mLoading) {
+        window.etf5mLoading = true;
+        fetch('./etf_5m_cache.json')
+          .then(res => res.json())
+          .then(data => {
+            window.etf5mCache = data;
+            window.etf5mLoading = false;
+            renderMainChart();
+          })
+          .catch(err => {
+            console.warn('etf_5m_cache.json load fallback:', err);
+            window.etf5mLoading = false;
+          });
+      }
+
+      syncCoreSectorButtons();
+      renderActiveOverlayTags();
+      renderMainChart();
+      updateSectorRotationMatrix();
+    }
+
+    // 从对比中移除特定 ETF
+    function removeOverlayETF(symbol) {
+      state.activeOverlays = state.activeOverlays.filter(item => item.symbol !== symbol);
+      syncCoreSectorButtons();
+      renderActiveOverlayTags();
+      renderMainChart();
+      updateSectorRotationMatrix();
+    }
+
+    // 切换特定行业 ETF 的对比激活状态
+    function toggleSectorOverlay(symbol) {
+      if (symbol === 'SOXX') {
+        return;
+      }
+      if (state.activeOverlays.some(item => item.symbol === symbol)) {
+        removeOverlayETF(symbol);
+      } else {
+        addOverlayETF(symbol);
+      }
+    }
+
+    // 载入规避对冲核心组合 (传统能源/医疗/公用电力/长期美债/黄金/做空/软件)
+    function loadHedgingSectors() {
+      if (!state.rawDataset || !state.rawDataset.etf_universe) return;
+      const targetSyms = ['SOXS', 'XLE', 'XLV', 'HLTH', 'XLU', 'TLT', 'GLD', 'IGV'];
+      loadSectorsBySymbols(targetSyms);
+    }
+
+    // 载入 AI 硬件细分组合 (存储/光通信/AI应用/软件)
+    function loadHardwareSectors() {
+      if (!state.rawDataset || !state.rawDataset.etf_universe) return;
+      const targetSyms = ['DRAM', 'LYTE', 'HLTH', 'CHAT', 'IGV'];
+      loadSectorsBySymbols(targetSyms);
+    }
+
+    // 通用按标的列表加载
+    function loadSectorsBySymbols(targetSyms) {
+      state.activeOverlays = [];
+      targetSyms.forEach(sym => {
+        const etf = state.rawDataset.etf_universe.find(e => e.symbol === sym);
+        if (etf) {
+          const rosterItem = CORE_SECTOR_ROSTER.find(c => c.symbol === sym);
+          state.activeOverlays.push({
+            symbol: etf.symbol,
+            role: rosterItem ? rosterItem.role : etf.name,
+            name: etf.name,
+            color: rosterItem ? rosterItem.color : OVERLAY_COLORS[state.activeOverlays.length % OVERLAY_COLORS.length],
+            daily_closes: etf.daily_closes,
+            daily_bars: etf.daily_bars,
+            latest_close: etf.latest_close
+          });
+        }
+      });
+
+      state.chartMode = 'trend_migration';
+      syncChartModeButtons();
+      syncCoreSectorButtons();
+      renderActiveOverlayTags();
+      renderMainChart();
+      updateSectorRotationMatrix();
+    }
+
+    // ========================================================
+    // 📍 核心时间锚点 (Time Anchor) 管理系统
+    // 统一以特定时间点的各自取值为 0.0%，消除绝对价格偏差，直观呈现趋势迁移
+    // ========================================================
+    function setAnchorByBarIndex(idx) {
+      if (!state.currentBars || state.currentBars.length === 0) return;
+      const clampedIdx = Math.max(0, Math.min(idx, state.currentBars.length - 1));
+      state.anchorBarIndex = clampedIdx;
+      state.anchorDateTime = state.currentBars[clampedIdx].dateTime;
+
+      updateAnchorUI();
+      renderMainChart();
+      updateSectorRotationMatrix();
+    }
+
+    function setAnchorPreset(presetType) {
+      const bars = state.currentBars;
+      if (!bars || bars.length === 0) return;
+
+      if (presetType === 'start') {
+        setAnchorByBarIndex(0);
+      } else if (presetType === 'peak') {
+        // 自动定位当前区间 SOXX 价格最高峰值点 (起跌时刻)
+        let maxP = -Infinity, maxIdx = 0;
+        for (let i = 0; i < bars.length; i++) {
+          if (bars[i].high > maxP) {
+            maxP = bars[i].high;
+            maxIdx = i;
+          }
+        }
+        setAnchorByBarIndex(maxIdx);
+      } else if (presetType === 'today') {
+        // 寻找最新交易日开盘 (09:30) 的柱
+        const lastDate = bars[bars.length - 1].date;
+        let todayOpenIdx = bars.findIndex(b => b.date === lastDate && b.time >= '09:30');
+        if (todayOpenIdx === -1) todayOpenIdx = bars.findIndex(b => b.date === lastDate);
+        if (todayOpenIdx === -1) todayOpenIdx = bars.length - 1;
+        setAnchorByBarIndex(todayOpenIdx);
+      }
+    }
+
+    function updateAnchorUI() {
+      if (!tagAnchorTimeVal) return;
+      const bars = state.currentBars;
+      if (!bars || bars.length === 0) {
+        tagAnchorTimeVal.textContent = '--';
+        return;
+      }
+      const curIdx = state.anchorBarIndex;
+      const bar = bars[curIdx] || bars[0];
+      const isStart = curIdx === 0;
+      tagAnchorTimeVal.textContent = `${bar.dateTime}${isStart ? ' (首根)' : ''}`;
+
+      if (anchorPresetGroup) {
+        const btnStart = document.getElementById('btnAnchorStart');
+        if (btnStart) btnStart.classList.toggle('active', isStart);
+      }
+    }
+
+    // 同步行业快捷按钮激活高亮样式 (支持两个按钮组)
+    function syncCoreSectorButtons() {
+      const activeSyms = new Set(state.activeOverlays.map(o => o.symbol));
+      const allBtns = document.querySelectorAll('#coreSectorButtons button, #hardwareSectorButtons button');
+      allBtns.forEach(btn => {
+        const sym = btn.dataset.sym;
+        if (sym === 'SOXX') {
+          btn.classList.add('active');
+        } else {
+          const isActive = activeSyms.has(sym);
+          btn.classList.toggle('active', isActive);
+          const roster = CORE_SECTOR_ROSTER.find(c => c.symbol === sym);
+          if (isActive && roster) {
+            btn.style.background = roster.color.bg;
+            btn.style.borderColor = roster.color.border;
+            btn.style.color = roster.color.code;
+            btn.style.fontWeight = '700';
+          } else {
+            btn.style.background = '';
+            btn.style.borderColor = '';
+            btn.style.color = '';
+            btn.style.fontWeight = '';
+          }
+        }
+      });
+    }
+
+    // 同步图表呈现模式按钮状态
+    function syncChartModeButtons() {
+      if (!chartModeGroup) return;
+      chartModeGroup.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', b.dataset.mode === state.chartMode);
+      });
+    }
+
+    // 渲染已激活的叠加 ETF 标签栏 (带各自色块与删除 × 按钮)
+    function renderActiveOverlayTags() {
+      if (!activeOverlayTags) return;
+      activeOverlayTags.innerHTML = '';
+
+      if (state.activeOverlays.length === 0) {
+        activeOverlayTags.innerHTML = '<span style="font-size: 11px; color: #94a3b8; font-style: italic;">当前仅展示 SOXX 半导体基准 · 点击上方 "🚀 一键载入五大产业链" 开启对比</span>';
+        if (hudOverlayBar) hudOverlayBar.style.display = 'none';
+        return;
+      }
+
+      if (hudOverlayBar) hudOverlayBar.style.display = 'flex';
+
+      const firstDate = state.startDate;
+      const lastDate = state.endDate;
+
+      state.activeOverlays.forEach(item => {
+        let pStart = null, pEnd = null;
+        if (item.daily_closes) {
+          const dates = Object.keys(item.daily_closes).sort();
+          for (const d of dates) {
+            if (d >= firstDate && pStart === null) pStart = item.daily_closes[d];
+            if (d <= lastDate) pEnd = item.daily_closes[d];
+          }
+        }
+        let retStr = '--';
+        let retClass = '';
+        if (pStart && pEnd && pStart > 0) {
+          const ret = ((pEnd - pStart) / pStart) * 100;
+          retStr = `${ret >= 0 ? '+' : ''}${ret.toFixed(1)}%`;
+          retClass = ret >= 0 ? 'var(--up-color)' : 'var(--down-color)';
+        }
+
+        const rosterItem = CORE_SECTOR_ROSTER.find(c => c.symbol === item.symbol);
+        const roleLabel = rosterItem ? ` · ${rosterItem.role}` : '';
+
+        const tag = document.createElement('div');
+        tag.className = 'overlay-etf-tag';
+        tag.style.borderColor = item.color.border;
+        tag.style.background = item.color.bg;
+        tag.innerHTML = `
+          <span class="color-dot" style="background: ${item.color.code};"></span>
+          <span style="font-weight: 700; color: #0f172a;">${item.symbol}${roleLabel}</span>
+          <span style="font-size: 10px; color: #64748b;">${item.name.slice(0, 18)}</span>
+          <span style="color: ${retClass}; font-weight: 700;">${retStr}</span>
+          <span class="tag-close-btn" data-symbol="${item.symbol}" title="移除 ${item.symbol}">×</span>
+        `;
+        tag.querySelector('.tag-close-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          removeOverlayETF(item.symbol);
+        });
+        activeOverlayTags.appendChild(tag);
+      });
+    }
+
+    // 重新计算并刷新底部【行业轮动与逆势超额量化矩阵】
+    function updateSectorRotationMatrix() {
+      if (!sectorMatrixBody || !state.rawDataset || !state.currentBars || state.currentBars.length === 0) return;
+
+      const activeDays = state.rawDataset.daily_summaries.filter(d => d.date >= state.startDate && d.date <= state.endDate);
+      const soxxDaily = {};
+      activeDays.forEach(d => { soxxDaily[d.date] = d.change_pct; });
+
+      if (statTotalDays) statTotalDays.textContent = activeDays.length;
+
+      // 获取当前时间锚点信息
+      const anchorBar = state.currentBars[state.anchorBarIndex] || state.currentBars[0];
+      const anchorDate = anchorBar ? anchorBar.date : state.startDate;
+      const thAnchor = document.getElementById('thAnchorRet');
+      if (thAnchor) {
+        thAnchor.textContent = `📍 相对锚点 [${anchorBar ? anchorBar.dateTime.slice(5) : '--'}] 收益`;
+      }
+
+      // 统计所有激活对比的行业标的 (含 SOXX 基准)
+      const listToEvaluate = [
+        { symbol: 'SOXX', role: '半导体 (基准)', name: 'iShares 半导体 ETF', isBenchmark: true, color: '#2563eb' }
+      ];
+
+      state.activeOverlays.forEach(item => {
+        const rosterItem = CORE_SECTOR_ROSTER.find(c => c.symbol === item.symbol);
+        listToEvaluate.push({
+          symbol: item.symbol,
+          role: rosterItem ? rosterItem.role : (item.role || '自选对比 ETF'),
+          name: item.name,
+          daily_closes: item.daily_closes,
+          color: (item.color && item.color.code) || (rosterItem && rosterItem.color && rosterItem.color.code) || '#64748b'
+        });
+      });
+
+      // 计算 SOXX 回调下跌交易日天数
+      let totalSoxxDownDays = 0;
+      activeDays.forEach(d => {
+        if (d.change_pct < 0) totalSoxxDownDays++;
+      });
+      if (statSoxxDownDays) statSoxxDownDays.textContent = totalSoxxDownDays;
+
+      let html = '';
+
+      listToEvaluate.forEach(sec => {
+        let dailyCloses = {};
+        if (sec.symbol === 'SOXX') {
+          activeDays.forEach(d => { dailyCloses[d.date] = d.close; });
+        } else {
+          dailyCloses = sec.daily_closes || {};
+        }
+
+        const validDates = activeDays.map(d => d.date).filter(d => dailyCloses[d] !== undefined);
+        if (validDates.length < 2) return;
+
+        const p0 = dailyCloses[validDates[0]];
+        const pEnd = dailyCloses[validDates[validDates.length - 1]];
+        const totalRet = ((pEnd - p0) / p0) * 100;
+        const totalRetSign = totalRet >= 0 ? '+' : '';
+        const totalRetClass = totalRet >= 0 ? 'var(--up-color)' : 'var(--down-color)';
+
+        // 相对时间锚点时刻的收益率
+        let pAnchor = null;
+        if (dailyCloses[anchorDate] !== undefined) {
+          pAnchor = dailyCloses[anchorDate];
+        } else {
+          for (const d of validDates) {
+            if (d >= anchorDate) { pAnchor = dailyCloses[d]; break; }
+          }
+        }
+        if (!pAnchor && validDates.length > 0) pAnchor = dailyCloses[validDates[0]];
+
+        let anchorRetStr = '--';
+        let anchorRetClass = '';
+        if (pAnchor && pEnd && pAnchor > 0) {
+          const aRet = ((pEnd - pAnchor) / pAnchor) * 100;
+          anchorRetStr = `${aRet >= 0 ? '+' : ''}${aRet.toFixed(1)}%`;
+          anchorRetClass = aRet >= 0 ? 'var(--up-color)' : 'var(--down-color)';
+        }
+
+        let soxxDownCount = 0;
+        let secUpCount = 0;
+        let secDownTotal = 0;
+        let soxxDownTotal = 0;
+
+        for (let i = 1; i < validDates.length; i++) {
+          const d = validDates[i];
+          const prevD = validDates[i - 1];
+          const sChg = soxxDaily[d];
+          if (sChg !== undefined && sChg < 0) {
+            soxxDownCount++;
+            soxxDownTotal += sChg;
+            const secChg = ((dailyCloses[d] - dailyCloses[prevD]) / dailyCloses[prevD]) * 100;
+            secDownTotal += secChg;
+            if (secChg > 0) secUpCount++;
+          }
+        }
+
+        const avgSecDown = soxxDownCount > 0 ? secDownTotal / soxxDownCount : 0;
+        const avgSoxxDown = soxxDownCount > 0 ? soxxDownTotal / soxxDownCount : 0;
+        const alpha = sec.isBenchmark ? 0 : (avgSecDown - avgSoxxDown);
+        const winRate = soxxDownCount > 0 ? (secUpCount / soxxDownCount) * 100 : 0;
+
+        let verdictBadge = '';
+        if (sec.isBenchmark) {
+          verdictBadge = `<span style="background:#eff6ff; color:#1d4ed8; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #bfdbfe;">🎯 基准对照 (半导体周期尺)</span>`;
+        } else if (sec.symbol === 'SOXS') {
+          verdictBadge = `<span style="background:#fef2f2; color:#b91c1c; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #fecaca;">⚡ 3倍做空对冲 (直接对冲首选)</span>`;
+        } else if (winRate >= 58 || alpha >= 2.8) {
+          verdictBadge = `<span style="background:#ecfdf5; color:#047857; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #a7f3d0;">🔥 强负相关吸金 (逆势超额最高)</span>`;
+        } else if (winRate >= 48) {
+          verdictBadge = `<span style="background:#f0fdf4; color:#15803d; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #86efac;">💎 韧性防守避险 (抗跌吸金)</span>`;
+        } else if (alpha >= 1.5) {
+          verdictBadge = `<span style="background:#fffbeb; color:#b45309; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #fde68a;">🔄 结构性抗跌对冲 (超额显著)</span>`;
+        } else {
+          verdictBadge = `<span style="background:#f1f5f9; color:#475569; padding:2px 8px; border-radius:4px; font-weight:600; border:1px solid #cbd5e1;">⚡ 顺周期同频 (跟随半导体回撤)</span>`;
+        }
+
+        html += `
+          <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s;">
+            <td style="padding: 7px 10px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+              <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${sec.color};"></span>
+              <span>${sec.role}</span>
+            </td>
+            <td style="padding: 7px 10px; font-family: monospace; font-weight: 700;">
+              <span>${sec.symbol}</span>
+              <span style="font-size: 10px; font-weight: normal; color: #64748b; margin-left: 4px;">(${sec.name.slice(0, 18)})</span>
+            </td>
+            <td style="padding: 7px 10px; font-weight: 700; color: ${anchorRetClass}; font-family: monospace;">
+              ${anchorRetStr}
+            </td>
+            <td style="padding: 7px 10px; font-weight: 700; color: ${totalRetClass}; font-family: monospace;">
+              ${totalRetSign}${totalRet.toFixed(1)}%
+            </td>
+            <td style="padding: 7px 10px; font-weight: 700; color: ${avgSecDown >= 0 ? 'var(--up-color)' : 'var(--down-color)'}; font-family: monospace;">
+              ${avgSecDown >= 0 ? '+' : ''}${avgSecDown.toFixed(2)}%
+            </td>
+            <td style="padding: 7px 10px; font-weight: 700; color: ${alpha >= 0 ? 'var(--up-color)' : 'var(--down-color)'}; font-family: monospace;">
+              ${sec.isBenchmark ? '--' : (alpha >= 0 ? '+' : '') + alpha.toFixed(2) + '%'}
+            </td>
+            <td style="padding: 7px 10px; font-weight: 700; color: ${winRate >= 45 ? '#b91c1c' : '#475569'}; font-family: monospace;">
+              ${sec.isBenchmark ? '--' : winRate.toFixed(1) + '%'} (${secUpCount}/${soxxDownCount}天)
+            </td>
+            <td style="padding: 7px 10px;">
+              ${verdictBadge}
+            </td>
+          </tr>
+        `;
+      });
+
+      sectorMatrixBody.innerHTML = html;
+    }
+
+    // 绑定事件
+    function setupEvents() {
+      // 应用自定义日期区间
+      btnApplyDates.addEventListener('click', () => {
+        applyCustomDateRange(startDatePicker.value, endDatePicker.value);
+      });
+
+      // 快捷区间按钮
+      presetRangeGroup.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn || !btn.dataset.range) return;
+        presetRangeGroup.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const range = btn.dataset.range;
+        const dates = state.rawDataset.daily_summaries.map(d => d.date);
+        const maxDate = dates[dates.length - 1];
+        let startStr = dates[0];
+
+        if (range === '180d') {
+          const maxDt = new Date(maxDate);
+          startStr = new Date(maxDt.getTime() - 180 * 24 * 3600 * 1000).toISOString().slice(0, 10);
+        } else if (range === '90d') {
+          const maxDt = new Date(maxDate);
+          startStr = new Date(maxDt.getTime() - 90 * 24 * 3600 * 1000).toISOString().slice(0, 10);
+        } else if (range === '30d') {
+          const maxDt = new Date(maxDate);
+          startStr = new Date(maxDt.getTime() - 30 * 24 * 3600 * 1000).toISOString().slice(0, 10);
+        } else if (range === '7d') {
+          const maxDt = new Date(maxDate);
+          startStr = new Date(maxDt.getTime() - 7 * 24 * 3600 * 1000).toISOString().slice(0, 10);
+        } else if (range === '1d') {
+          startStr = maxDate;
+        } else if (range === 'all') {
+          startStr = dates[0];
+        }
+
+        applyCustomDateRange(startStr, maxDate);
+      });
+
+      // 区间滑动（前移 30 天 / 后移 30 天）
+      btnStepPrev.addEventListener('click', () => stepDateRange(-30));
+      btnStepNext.addEventListener('click', () => stepDateRange(30));
+
+      // 颗粒度选择
+      granularityGroup.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn || !btn.dataset.gran) return;
+        granularityGroup.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.granularity = btn.dataset.gran;
+        refreshMultiDayBars();
+      });
+
+      // 时段切换
+      sessionGroup.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn || !btn.dataset.session) return;
+        sessionGroup.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.sessionMode = btn.dataset.session;
+        refreshMultiDayBars();
+      });
+
+      // 指标开关
+      chkMA.addEventListener('change', () => { state.showMA = chkMA.checked; renderMainChart(); });
+      chkVWAP.addEventListener('change', () => { 
+        state.showVWAP = chkVWAP.checked; 
+        hudVwapTag.style.display = state.showVWAP ? 'inline-flex' : 'none';
+        renderMainChart(); 
+      });
+      chkDayDivider.addEventListener('change', () => { state.showDayDivider = chkDayDivider.checked; renderMainChart(); });
+
+      // 8 大微结构形态复选框监听
+      document.querySelectorAll('.chk-pattern').forEach(chk => {
+        chk.addEventListener('change', () => {
+          const pat = chk.dataset.pat;
+          if (chk.checked) {
+            state.selectedPatterns.add(pat);
+          } else {
+            state.selectedPatterns.delete(pat);
+          }
+          renderMainChart();
+        });
+      });
+
+      // 形态快捷按钮
+      const upPatterns = ['▲ 单边拉升', 'V型深弹', '冲高回落', '阶梯中继'];
+      const downPatterns = ['▼ 单边下杀', '倒V冲顶', '探底回抽', '破位阴跌'];
+
+      btnPatSelectUp.addEventListener('click', () => {
+        state.selectedPatterns = new Set(upPatterns);
+        document.querySelectorAll('.chk-pattern').forEach(chk => {
+          chk.checked = upPatterns.includes(chk.dataset.pat);
+        });
+        btnPatSelectUp.classList.add('active');
+        btnPatSelectDown.classList.remove('active');
+        btnPatSelectAll.classList.remove('active');
+        renderMainChart();
+      });
+
+      btnPatSelectDown.addEventListener('click', () => {
+        state.selectedPatterns = new Set(downPatterns);
+        document.querySelectorAll('.chk-pattern').forEach(chk => {
+          chk.checked = downPatterns.includes(chk.dataset.pat);
+        });
+        btnPatSelectDown.classList.add('active');
+        btnPatSelectUp.classList.remove('active');
+        btnPatSelectAll.classList.remove('active');
+        renderMainChart();
+      });
+
+      btnPatSelectAll.addEventListener('click', () => {
+        state.selectedPatterns = new Set([...upPatterns, ...downPatterns]);
+        document.querySelectorAll('.chk-pattern').forEach(chk => {
+          chk.checked = true;
+        });
+        btnPatSelectAll.classList.add('active');
+        btnPatSelectUp.classList.remove('active');
+        btnPatSelectDown.classList.remove('active');
+        renderMainChart();
+      });
+
+      btnPatClear.addEventListener('click', () => {
+        state.selectedPatterns.clear();
+        document.querySelectorAll('.chk-pattern').forEach(chk => {
+          chk.checked = false;
+        });
+        btnPatSelectUp.classList.remove('active');
+        btnPatSelectDown.classList.remove('active');
+        btnPatSelectAll.classList.remove('active');
+        renderMainChart();
+      });
+
+      // 8 大微结构形态参数配置面板展开/收起
+      if (btnToggleParamPanel && patternParamPanel) {
+        btnToggleParamPanel.addEventListener('click', () => {
+          const isHidden = patternParamPanel.style.display === 'none' || !patternParamPanel.style.display;
+          patternParamPanel.style.display = isHidden ? 'block' : 'none';
+          btnToggleParamPanel.style.background = isHidden ? '#4338ca' : '#eef2ff';
+          btnToggleParamPanel.style.color = isHidden ? '#ffffff' : '#4338ca';
+        });
+      }
+
+      // 上涨门槛滑块与数字输入框双向同步
+      if (rangeParamM && inputParamM) {
+        rangeParamM.addEventListener('input', () => {
+          inputParamM.value = rangeParamM.value;
+          applyParamsFromUI();
+        });
+        inputParamM.addEventListener('change', () => {
+          rangeParamM.value = inputParamM.value;
+          applyParamsFromUI();
+        });
+      }
+
+      // 检测窗口 N 更改
+      if (inputParamN) {
+        inputParamN.addEventListener('change', () => {
+          applyParamsFromUI();
+        });
+      }
+
+      // 下跌门槛 D 更改
+      if (inputParamD) {
+        inputParamD.addEventListener('change', () => {
+          applyParamsFromUI();
+        });
+      }
+
+      // 窗口 N 预设按钮组
+      if (paramWindowPreset) {
+        paramWindowPreset.addEventListener('click', (e) => {
+          const btn = e.target.closest('button');
+          if (!btn || !btn.dataset.n) return;
+          paramWindowPreset.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (inputParamN) inputParamN.value = btn.dataset.n;
+          applyParamsFromUI();
+        });
+      }
+
+      // 上涨门槛 M 预设按钮组
+      if (paramMPreset) {
+        paramMPreset.addEventListener('click', (e) => {
+          const btn = e.target.closest('button');
+          if (!btn || !btn.dataset.m) return;
+          paramMPreset.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (inputParamM) inputParamM.value = btn.dataset.m;
+          if (rangeParamM) rangeParamM.value = btn.dataset.m;
+          applyParamsFromUI();
+        });
+      }
+
+      // 立即重算与重置按钮
+      if (btnApplyCustomParams) {
+        btnApplyCustomParams.addEventListener('click', () => {
+          applyParamsFromUI();
+        });
+      }
+
+      if (btnResetDefaultParams) {
+        btnResetDefaultParams.addEventListener('click', () => {
+          resetParamsToDefault();
+        });
+      }
+
+      // 行业趋势迁移与避险对冲组合载入
+      if (btnLoadHedgingSectors) {
+        btnLoadHedgingSectors.addEventListener('click', () => {
+          loadHedgingSectors();
+        });
+      }
+
+      if (btnLoadHardwareSectors) {
+        btnLoadHardwareSectors.addEventListener('click', () => {
+          loadHardwareSectors();
+        });
+      }
+
+      // 行业快捷药丸按钮点击切换 (规避对冲与细分产业链)
+      const allSectorPillContainers = document.querySelectorAll('#coreSectorButtons, #hardwareSectorButtons');
+      allSectorPillContainers.forEach(container => {
+        container.addEventListener('click', (e) => {
+          const btn = e.target.closest('button');
+          if (!btn || !btn.dataset.sym) return;
+          toggleSectorOverlay(btn.dataset.sym);
+        });
+      });
+
+      // 时间锚点预设快捷按钮
+      if (anchorPresetGroup) {
+        anchorPresetGroup.addEventListener('click', (e) => {
+          const btn = e.target.closest('button');
+          if (!btn) return;
+          if (btn.id === 'btnAnchorStart') setAnchorPreset('start');
+          else if (btn.id === 'btnAnchorPeak') setAnchorPreset('peak');
+          else if (btn.id === 'btnAnchorLatestDay') setAnchorPreset('today');
+        });
+      }
+
+      if (chartModeGroup) {
+        chartModeGroup.addEventListener('click', (e) => {
+          const btn = e.target.closest('button');
+          if (!btn || !btn.dataset.mode) return;
+          state.chartMode = btn.dataset.mode;
+          syncChartModeButtons();
+          renderMainChart();
+        });
+      }
+
+      if (chkHighlightDivergence) {
+        chkHighlightDivergence.addEventListener('change', () => {
+          state.highlightDivergence = chkHighlightDivergence.checked;
+          renderMainChart();
+        });
+      }
+
+      if (etfSelectDropdown) {
+        etfSelectDropdown.addEventListener('change', () => {
+          const val = etfSelectDropdown.value;
+          if (val) {
+            addOverlayETF(val);
+            etfSelectDropdown.value = '';
+          }
+        });
+      }
+
+      if (btnClearAllOverlays) {
+        btnClearAllOverlays.addEventListener('click', () => {
+          state.activeOverlays = [];
+          syncCoreSectorButtons();
+          renderActiveOverlayTags();
+          renderMainChart();
+          updateSectorRotationMatrix();
+        });
+      }
+
+      // ========================================================
+      // 核心交互：时间锚点左右拖拽 & 点击任一柱即时设定
+      // 彻底废除纵向 Y 轴拖动，确保所有资产在统一时刻为 0.0% 归一化原点
+      // ========================================================
+      klineCanvas.addEventListener('mousedown', (e) => {
+        const rect = klineCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // 检查是否正在点击/拖动时间锚点垂直指示线
+        if (state.currentAnchorX !== undefined && Math.abs(mouseX - state.currentAnchorX) <= 14) {
+          state.isDraggingAnchorLine = true;
+          document.body.style.cursor = 'ew-resize';
+          document.body.style.userSelect = 'none';
+
+          const onAnchorDrag = (ev) => {
+            if (!state.isDraggingAnchorLine || !state.currentBars || state.currentBars.length === 0) return;
+            const cRect = klineCanvas.getBoundingClientRect();
+            const curX = ev.clientX - cRect.left;
+            const paddingLeft = 70;
+            const paddingRight = 75;
+            const plotW = cRect.width - paddingLeft - paddingRight;
+            const barW = plotW / state.currentBars.length;
+            const newIdx = Math.max(0, Math.min(Math.floor((curX - paddingLeft) / barW), state.currentBars.length - 1));
+
+            if (newIdx !== state.anchorBarIndex) {
+              setAnchorByBarIndex(newIdx);
+            }
+          };
+
+          const onAnchorUp = () => {
+            if (!state.isDraggingAnchorLine) return;
+            state.isDraggingAnchorLine = false;
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            window.removeEventListener('mousemove', onAnchorDrag);
+            window.removeEventListener('mouseup', onAnchorUp);
+          };
+
+          window.addEventListener('mousemove', onAnchorDrag);
+          window.addEventListener('mouseup', onAnchorUp);
+          return;
+        }
+
+        // 记录鼠标按下坐标以区分点击与图表内部操作
+        state.mouseDownX = mouseX;
+        state.mouseDownY = mouseY;
+      });
+
+      klineCanvas.addEventListener('mouseup', (e) => {
+        if (state.isDraggingAnchorLine) return;
+        const rect = klineCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // 若鼠标移动微弱 (<5px)，响应为直接点击：将点击柱设为 0% 锚点
+        if (state.mouseDownX !== undefined && Math.abs(mouseX - state.mouseDownX) < 5 && Math.abs(mouseY - state.mouseDownY) < 5) {
+          const paddingLeft = 70;
+          const paddingRight = 75;
+          const plotW = rect.width - paddingLeft - paddingRight;
+          if (mouseX >= paddingLeft && mouseX <= rect.width - paddingRight && state.currentBars && state.currentBars.length > 0) {
+            const barW = plotW / state.currentBars.length;
+            const clickedIdx = Math.max(0, Math.min(Math.floor((mouseX - paddingLeft) / barW), state.currentBars.length - 1));
+            setAnchorByBarIndex(clickedIdx);
+          }
+        }
+      });
+      
+      // 1. 鼠标在画布上滑动：严格仅更新十字光标和 HUD 数据，绝对不改变视窗或缩放
+      klineCanvas.addEventListener('mousemove', (e) => {
+        const rect = klineCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        handleMouseMove(mouseX, mouseY);
+      });
+
+      // 2. 鼠标离开画布：清除十字光标
+      klineCanvas.addEventListener('mouseleave', () => {
+        state.hoverIndex = -1;
+        renderMainChart();
+        if (state.currentBars.length > 0) {
+          updateHUDWithBar(state.currentBars[state.currentBars.length - 1]);
+        }
+      });
+
+      // 3. 严格禁用滚轮缩放：当滚轮在画布上滚动时，不拦截页面自然滚动，绝不触发图表缩放
+      klineCanvas.addEventListener('wheel', (e) => {
+        // 不执行任何 zoom 逻辑！纯净保持图表稳定
+      }, { passive: true });
+
+      // 4. 底部时间轴实时滑动与选区拖拽 (Real-time Minimap Drag & Slide)
+      const minimapState = {
+        isDragging: false,
+        mode: null, // 'pan' | 'resize-left' | 'resize-right'
+        dragOffsetIdx: 0,
+        initialSpan: 0,
+        rafId: null
+      };
+
+      stripCanvas.addEventListener('mousemove', (e) => {
+        if (minimapState.isDragging) return;
+        const rect = stripCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const days = state.rawDataset.daily_summaries;
+        if (!days || days.length === 0) return;
+        const stepW = rect.width / days.length;
+        const allDates = days.map(d => d.date);
+        const startIdx = Math.max(allDates.findIndex(d => d >= state.startDate), 0);
+        let endIdx = allDates.findIndex(d => d > state.endDate);
+        if (endIdx === -1) endIdx = allDates.length;
+        const selX = startIdx * stepW;
+        const selW = Math.max((endIdx - startIdx) * stepW, 6);
+
+        if (Math.abs(mouseX - selX) <= 8) {
+          stripCanvas.style.cursor = 'ew-resize';
+          stripCanvas.title = '↔ 拖拽调整起始日期 (实时刷新)';
+        } else if (Math.abs(mouseX - (selX + selW)) <= 8) {
+          stripCanvas.style.cursor = 'ew-resize';
+          stripCanvas.title = '↔ 拖拽调整截止日期 (实时刷新)';
+        } else if (mouseX >= selX && mouseX <= selX + selW) {
+          stripCanvas.style.cursor = 'grab';
+          stripCanvas.title = '✋ 按住并左右滑动，实时平移多日K线视图';
+        } else {
+          stripCanvas.style.cursor = 'pointer';
+          stripCanvas.title = '点击直接跳转并居中多日区间';
+        }
+      });
+
+      stripCanvas.addEventListener('mousedown', (e) => {
+        const rect = stripCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const days = state.rawDataset.daily_summaries;
+        if (!days || days.length === 0) return;
+        const totalDays = days.length;
+        const stepW = rect.width / totalDays;
+        const allDates = days.map(d => d.date);
+        const startIdx = Math.max(allDates.findIndex(d => d >= state.startDate), 0);
+        let endIdx = allDates.findIndex(d => d > state.endDate);
+        if (endIdx === -1) endIdx = allDates.length;
+        const selX = startIdx * stepW;
+        const selW = Math.max((endIdx - startIdx) * stepW, 6);
+        const span = Math.max(endIdx - startIdx, 1);
+
+        minimapState.initialSpan = span;
+
+        if (Math.abs(mouseX - selX) <= 8) {
+          minimapState.mode = 'resize-left';
+          minimapState.isDragging = true;
+          document.body.style.cursor = 'ew-resize';
+        } else if (Math.abs(mouseX - (selX + selW)) <= 8) {
+          minimapState.mode = 'resize-right';
+          minimapState.isDragging = true;
+          document.body.style.cursor = 'ew-resize';
+        } else if (mouseX >= selX && mouseX <= selX + selW) {
+          minimapState.mode = 'pan';
+          minimapState.isDragging = true;
+          const clickIdx = Math.floor((mouseX / rect.width) * totalDays);
+          minimapState.dragOffsetIdx = clickIdx - startIdx;
+          document.body.style.cursor = 'grabbing';
+        } else {
+          // 点击在选区外部：瞬间将选区居中到点击位置，并支持即刻连续拖动
+          const clickIdx = Math.floor((mouseX / rect.width) * totalDays);
+          const halfSpan = Math.floor(span / 2);
+          let newStart = Math.max(0, Math.min(clickIdx - halfSpan, totalDays - span));
+          let newEnd = Math.min(totalDays, newStart + span);
+          state.startDate = days[newStart].date;
+          state.endDate = days[newEnd - 1].date;
+          minimapState.mode = 'pan';
+          minimapState.isDragging = true;
+          minimapState.dragOffsetIdx = halfSpan;
+          document.body.style.cursor = 'grabbing';
+          triggerRealtimeMinimapUpdate();
+        }
+
+        document.body.style.userSelect = 'none';
+        window.addEventListener('mousemove', onMinimapWindowMouseMove);
+        window.addEventListener('mouseup', onMinimapWindowMouseUp);
+      });
+
+      function onMinimapWindowMouseMove(e) {
+        if (!minimapState.isDragging) return;
+        const rect = stripCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const days = state.rawDataset.daily_summaries;
+        if (!days || days.length === 0) return;
+        const totalDays = days.length;
+        const currentMouseIdx = Math.floor((mouseX / rect.width) * totalDays);
+        const allDates = days.map(d => d.date);
+        let startIdx = Math.max(allDates.findIndex(d => d >= state.startDate), 0);
+        let endIdx = allDates.findIndex(d => d > state.endDate);
+        if (endIdx === -1) endIdx = allDates.length;
+
+        if (minimapState.mode === 'pan') {
+          const span = minimapState.initialSpan;
+          let newStart = currentMouseIdx - minimapState.dragOffsetIdx;
+          newStart = Math.max(0, Math.min(newStart, totalDays - span));
+          let newEnd = newStart + span;
+          const newStartStr = days[newStart].date;
+          const newEndStr = days[newEnd - 1].date;
+          if (newStartStr !== state.startDate || newEndStr !== state.endDate) {
+            state.startDate = newStartStr;
+            state.endDate = newEndStr;
+            triggerRealtimeMinimapUpdate();
+          }
+        } else if (minimapState.mode === 'resize-left') {
+          let newStart = Math.max(0, Math.min(currentMouseIdx, endIdx - 2));
+          const newStartStr = days[newStart].date;
+          if (newStartStr !== state.startDate) {
+            state.startDate = newStartStr;
+            triggerRealtimeMinimapUpdate();
+          }
+        } else if (minimapState.mode === 'resize-right') {
+          let newEnd = Math.min(totalDays, Math.max(currentMouseIdx + 1, startIdx + 2));
+          const newEndStr = days[newEnd - 1].date;
+          if (newEndStr !== state.endDate) {
+            state.endDate = newEndStr;
+            triggerRealtimeMinimapUpdate();
+          }
+        }
+      }
+
+      function onMinimapWindowMouseUp(e) {
+        if (!minimapState.isDragging) return;
+        minimapState.isDragging = false;
+        minimapState.mode = null;
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+        stripCanvas.style.cursor = 'grab';
+        window.removeEventListener('mousemove', onMinimapWindowMouseMove);
+        window.removeEventListener('mouseup', onMinimapWindowMouseUp);
+
+        if (minimapState.rafId) {
+          cancelAnimationFrame(minimapState.rafId);
+          minimapState.rafId = null;
+        }
+        startDatePicker.value = state.startDate;
+        endDatePicker.value = state.endDate;
+        refreshMultiDayBars();
+        renderTimelineStrip();
+      }
+
+      function triggerRealtimeMinimapUpdate() {
+        if (minimapState.rafId) return;
+        minimapState.rafId = requestAnimationFrame(() => {
+          minimapState.rafId = null;
+          startDatePicker.value = state.startDate;
+          endDatePicker.value = state.endDate;
+          refreshMultiDayBars();
+          renderTimelineStrip();
+        });
+      }
+
+      // 窗口尺寸自适应
+      window.addEventListener('resize', () => {
+        renderMainChart();
+        renderTimelineStrip();
+      });
+    }
+
+    // 应用自定义日期区间
+    function applyCustomDateRange(startStr, endStr) {
+      const dates = state.rawDataset.daily_summaries.map(d => d.date);
+      const minDate = dates[0];
+      const maxDate = dates[dates.length - 1];
+
+      let s = startStr < minDate ? minDate : (startStr > maxDate ? maxDate : startStr);
+      let e = endStr < minDate ? minDate : (endStr > maxDate ? maxDate : endStr);
+
+      if (s > e) {
+        const tmp = s; s = e; e = tmp;
+      }
+
+      state.startDate = s;
+      state.endDate = e;
+      startDatePicker.value = s;
+      endDatePicker.value = e;
+
+      refreshMultiDayBars();
+      renderTimelineStrip();
+    }
+
+    // 日期区间前后平移
+    function stepDateRange(daysOffset) {
+      const sDt = new Date(state.startDate);
+      const eDt = new Date(state.endDate);
+      const newS = new Date(sDt.getTime() + daysOffset * 24 * 3600 * 1000).toISOString().slice(0, 10);
+      const newE = new Date(eDt.getTime() + daysOffset * 24 * 3600 * 1000).toISOString().slice(0, 10);
+      applyCustomDateRange(newS, newE);
+    }
+
+    // ========================================================
+    // 8 大微结构形态核心计算引擎 (支持用户实时调整参数)
+    // ========================================================
+    function applyParamsFromUI() {
+      const nVal = parseInt(inputParamN ? inputParamN.value : 24, 10) || 24;
+      const mVal = parseFloat(inputParamM ? inputParamM.value : 2.0) || 2.0;
+      const dVal = parseFloat(inputParamD ? inputParamD.value : 2.0) || 2.0;
+
+      state.patternParams.windowN = Math.max(3, Math.min(150, nVal));
+      state.patternParams.surgeThreshold = Math.max(0.1, mVal) / 100;
+      state.patternParams.dropThreshold = Math.max(0.1, dVal) / 100;
+
+      recomputeActivePatterns();
+    }
+
+    function resetParamsToDefault() {
+      state.patternParams = {
+        windowN: 24,
+        surgeThreshold: 0.02,
+        dropThreshold: 0.02,
+        maxPullback: -0.005,
+        vDeepPullback: -0.010,
+        retracementDrop: 0.010
+      };
+
+      if (inputParamN) inputParamN.value = '24';
+      if (inputParamM) inputParamM.value = '2.0';
+      if (rangeParamM) rangeParamM.value = '2.0';
+      if (inputParamD) inputParamD.value = '2.0';
+
+      if (paramWindowPreset) {
+        paramWindowPreset.querySelectorAll('.btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.n === '24');
+        });
+      }
+      if (paramMPreset) {
+        paramMPreset.querySelectorAll('.btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.m === '2.0');
+        });
+      }
+
+      recomputeActivePatterns();
+    }
+
+    function recomputeActivePatterns() {
+      if (!state.rawDataset || !state.rawDataset.days_5m) return;
+      
+      state.computedPatterns = computePatterns(state.rawDataset, state.patternParams);
+
+      if (txtActiveN) txtActiveN.textContent = state.patternParams.windowN;
+      if (txtActiveNHours) txtActiveNHours.textContent = ((state.patternParams.windowN * 5) / 60).toFixed(1);
+      if (txtActiveM) txtActiveM.textContent = (state.patternParams.surgeThreshold * 100).toFixed(1);
+      if (paramMatchStatsBadge) {
+        paramMatchStatsBadge.textContent = `${state.computedPatterns.length} 个`;
+      }
+
+      renderMainChart();
+      if (state.currentBars && state.currentBars.length > 0) {
+        const hoverBar = state.hoverIndex >= 0 ? state.currentBars[state.hoverIndex] : state.currentBars[state.currentBars.length - 1];
+        updateHUDWithBar(hoverBar);
+      }
+    }
+
+    function computePatterns(rawDataset, params) {
+      if (!rawDataset || !rawDataset.days_5m) return [];
+
+      const N = params.windowN || 24;
+      const M = params.surgeThreshold !== undefined ? params.surgeThreshold : 0.02;
+      const D = params.dropThreshold !== undefined ? params.dropThreshold : 0.02;
+      const maxPullback = params.maxPullback !== undefined ? params.maxPullback : -0.005;
+      const vDeepPullback = params.vDeepPullback !== undefined ? params.vDeepPullback : -0.010;
+      const retracementDrop = params.retracementDrop !== undefined ? params.retracementDrop : 0.010;
+
+      // 按时间顺序扁平化所有 5m K 线
+      const dates = Object.keys(rawDataset.days_5m).sort();
+      const flatBars = [];
+      for (let i = 0; i < dates.length; i++) {
+        const d = dates[i];
+        const dayBars = rawDataset.days_5m[d];
+        if (!dayBars) continue;
+        for (let j = 0; j < dayBars.length; j++) {
+          const b = dayBars[j];
+          flatBars.push({
+            date: d,
+            time: b[0],
+            dateTime: `${d} ${b[0]}`,
+            close: b[4]
+          });
+        }
+      }
+
+      const tot = flatBars.length;
+      if (tot <= N) return [];
+
+      const closes = new Float64Array(tot);
+      const timeKeys = new Array(tot);
+      for (let i = 0; i < tot; i++) {
+        closes[i] = flatBars[i].close;
+        timeKeys[i] = flatBars[i].dateTime;
+      }
+
+      const rets = new Float64Array(tot);
+      for (let i = 0; i < N; i++) rets[i] = NaN;
+      for (let i = N; i < tot; i++) {
+        rets[i] = (closes[i] - closes[i - N]) / closes[i - N];
+      }
+
+      let in_s = false, s_st = 0;
+      let in_d = false, d_st = 0;
+      const s_events = [], d_events = [];
+
+      for (let i = N; i < tot; i++) {
+        const r = rets[i];
+        if (r >= M) {
+          if (!in_s) { in_s = true; s_st = i; }
+        } else {
+          if (in_s) {
+            s_events.push({ type: 'SURGE', st: s_st - N, end: i - 1 });
+            in_s = false;
+          }
+        }
+        if (r <= -D) {
+          if (!in_d) { in_d = true; d_st = i; }
+        } else {
+          if (in_d) {
+            d_events.push({ type: 'DROP', st: d_st - N, end: i - 1 });
+            in_d = false;
+          }
+        }
+      }
+      if (in_s) s_events.push({ type: 'SURGE', st: s_st - N, end: tot - 1 });
+      if (in_d) d_events.push({ type: 'DROP', st: d_st - N, end: tot - 1 });
+
+      const evts = [...s_events, ...d_events];
+      for (let eIdx = 0; eIdx < evts.length; eIdx++) {
+        const e = evts[eIdx];
+        const st = e.st;
+        const end = e.end;
+        const cnt = end - st + 1;
+        const p0 = closes[st];
+        let min_ret = Infinity, max_ret = -Infinity;
+        let min_idx = 0, max_idx = 0;
+
+        for (let k = 0; k < cnt; k++) {
+          const sub_r = (closes[st + k] - p0) / p0;
+          if (sub_r < min_ret) { min_ret = sub_r; min_idx = k; }
+          if (sub_r > max_ret) { max_ret = sub_r; max_idx = k; }
+        }
+
+        const denom = Math.max(1, cnt - 1);
+        const min_pos = min_idx / denom;
+        const max_pos = max_idx / denom;
+        const end_ret = (closes[end] - p0) / p0;
+
+        let pat = '';
+        if (e.type === 'SURGE') {
+          if (min_ret >= maxPullback && max_pos >= 0.75) {
+            pat = '▲ 单边拉升';
+          } else if (min_pos <= 0.45 && min_ret <= vDeepPullback) {
+            pat = 'V型深弹';
+          } else if (max_pos <= 0.55 && end_ret < max_ret - retracementDrop) {
+            pat = '冲高回落';
+          } else {
+            pat = '阶梯中继';
+          }
+        } else {
+          if (max_ret <= -maxPullback && min_pos >= 0.75) {
+            pat = '▼ 单边下杀';
+          } else if (max_pos <= 0.45 && max_ret >= -vDeepPullback) {
+            pat = '倒V冲顶';
+          } else if (min_pos <= 0.55 && end_ret > min_ret + retracementDrop) {
+            pat = '探底回抽';
+          } else {
+            pat = '破位阴跌';
+          }
+        }
+        e.pattern = pat;
+      }
+
+      const PATTERNS = [
+        '▲ 单边拉升', 'V型深弹', '冲高回落', '阶梯中继',
+        '▼ 单边下杀', '倒V冲顶', '探底回抽', '破位阴跌'
+      ];
+
+      const shapes = [];
+      for (let pIdx = 0; pIdx < PATTERNS.length; pIdx++) {
+        const p_name = PATTERNS[pIdx];
+        const p_evts = evts.filter(e => e.pattern === p_name);
+        const active = new Uint8Array(tot);
+        for (let k = 0; k < p_evts.length; k++) {
+          const e = p_evts[k];
+          for (let idx = e.st; idx <= e.end; idx++) active[idx] = 1;
+        }
+
+        let in_shape = false, s_idx = 0;
+        for (let i = 0; i < tot; i++) {
+          if (active[i] === 1) {
+            if (!in_shape) { in_shape = true; s_idx = i; }
+          } else {
+            if (in_shape) {
+              const p0 = closes[s_idx];
+              const p_end = closes[i - 1];
+              shapes.push({
+                pattern: p_name,
+                st_idx: s_idx,
+                end_idx: i - 1,
+                st_time: timeKeys[s_idx],
+                end_time: timeKeys[i - 1],
+                st_date: timeKeys[s_idx].slice(0, 10),
+                end_date: timeKeys[i - 1].slice(0, 10),
+                st_price: Math.round(p0 * 100) / 100,
+                end_price: Math.round(p_end * 100) / 100,
+                ret_pct: Math.round(((p_end - p0) / p0) * 10000) / 100,
+                bars: i - s_idx,
+                is_upward: ['▲ 单边拉升', 'V型深弹', '冲高回落', '阶梯中继'].includes(p_name)
+              });
+              in_shape = false;
+            }
+          }
+        }
+        if (in_shape) {
+          const p0 = closes[s_idx];
+          const p_end = closes[tot - 1];
+          shapes.push({
+            pattern: p_name,
+            st_idx: s_idx,
+            end_idx: tot - 1,
+            st_time: timeKeys[s_idx],
+            end_time: timeKeys[tot - 1],
+            st_date: timeKeys[s_idx].slice(0, 10),
+            end_date: timeKeys[tot - 1].slice(0, 10),
+            st_price: Math.round(p0 * 100) / 100,
+            end_price: Math.round(p_end * 100) / 100,
+            ret_pct: Math.round(((p_end - p0) / p0) * 10000) / 100,
+            bars: tot - s_idx,
+            is_upward: ['▲ 单边拉升', 'V型深弹', '冲高回落', '阶梯中继'].includes(p_name)
+          });
+        }
+      }
+
+      shapes.sort((a, b) => a.st_time.localeCompare(b.st_time));
+      return shapes;
+    }
+
+    // 重新整合多日分钟 K 线并聚合计算指标
+    function refreshMultiDayBars() {
+      const allDays = state.rawDataset.daily_summaries.map(d => d.date);
+      const activeDays = allDays.filter(d => d >= state.startDate && d <= state.endDate);
+
+      if (activeDays.length === 0) {
+        state.currentBars = [];
+        renderMainChart();
+        return;
+      }
+
+      // 1. 抽取区间内所有交易日的分钟级原始 K 线
+      let rawSeq = [];
+      const gran = state.granularity;
+
+      for (let dayIdx = 0; dayIdx < activeDays.length; dayIdx++) {
+        const dateStr = activeDays[dayIdx];
+        let dayBars = [];
+
+        // 优先检查 1m 或 5m
+        if (gran === '1m' && state.rawDataset.days_1m && state.rawDataset.days_1m[dateStr]) {
+          dayBars = state.rawDataset.days_1m[dateStr];
+        } else if (state.rawDataset.days_5m && state.rawDataset.days_5m[dateStr]) {
+          dayBars = state.rawDataset.days_5m[dateStr];
+        }
+
+        if (!dayBars || dayBars.length === 0) continue;
+
+        // 时段过滤
+        let filtered = dayBars;
+        if (state.sessionMode === 'regular') {
+          filtered = dayBars.filter(b => b[0] >= '09:30' && b[0] <= '16:00');
+        }
+
+        // 标记首根柱（用于绘制日分界线）
+        for (let i = 0; i < filtered.length; i++) {
+          const b = filtered[i];
+          const dtStr = `${dateStr} ${b[0]}`;
+          rawSeq.push({
+            date: dateStr,
+            time: b[0],
+            dateTime: dtStr,
+            rawDateTimes: [dtStr],
+            open: b[1],
+            high: b[2],
+            low: b[3],
+            close: b[4],
+            volume: b[5],
+            vwap: b[6] || b[4],
+            isNewDay: i === 0,
+            dayIndex: dayIdx
+          });
+        }
+      }
+
+      // 2. 复合颗粒度聚合 (5m -> 15m, 30m, 60m)
+      let aggregated = [];
+      if (gran === '15m' || gran === '30m' || gran === '60m') {
+        const step = gran === '15m' ? 3 : (gran === '30m' ? 6 : 12);
+        // 按天内分块聚合，防止跨日污染
+        let currentDay = '';
+        let dayBuffer = [];
+
+        for (const bar of rawSeq) {
+          if (bar.date !== currentDay) {
+            if (dayBuffer.length > 0) {
+              aggregated.push(...aggregateChunk(dayBuffer, step));
+              dayBuffer = [];
+            }
+            currentDay = bar.date;
+          }
+          dayBuffer.push(bar);
+        }
+        if (dayBuffer.length > 0) {
+          aggregated.push(...aggregateChunk(dayBuffer, step));
+        }
+      } else {
+        aggregated = rawSeq;
+      }
+
+      // 3. 计算连续多日均线 MA5, MA20, MA60
+      for (let i = 0; i < aggregated.length; i++) {
+        aggregated[i].ma5 = calcMA(aggregated, i, 5);
+        aggregated[i].ma20 = calcMA(aggregated, i, 20);
+        aggregated[i].ma60 = calcMA(aggregated, i, 60);
+      }
+
+      state.currentBars = aggregated;
+      state.hoverIndex = -1;
+
+      // 4. 更新区间概览统计
+      updateHeaderRangeStats(activeDays, aggregated);
+      renderMainChart();
+      updateSectorRotationMatrix();
+
+      if (aggregated.length > 0) {
+        updateHUDWithBar(aggregated[aggregated.length - 1]);
+      }
+    }
+
+    function aggregateChunk(chunkList, step) {
+      const out = [];
+      for (let i = 0; i < chunkList.length; i += step) {
+        const sub = chunkList.slice(i, i + step);
+        if (sub.length === 0) continue;
+        const open = sub[0].open;
+        const high = Math.max(...sub.map(s => s.high));
+        const low = Math.min(...sub.map(s => s.low));
+        const close = sub[sub.length - 1].close;
+        const volume = sub.reduce((sum, s) => sum + s.volume, 0);
+        const vwap = sub[sub.length - 1].vwap;
+        out.push({
+          date: sub[0].date,
+          time: sub[sub.length - 1].time,
+          dateTime: `${sub[0].date} ${sub[sub.length - 1].time}`,
+          rawDateTimes: sub.flatMap(s => s.rawDateTimes || [s.dateTime]),
+          open, high, low, close, volume, vwap,
+          isNewDay: i === 0,
+          dayIndex: sub[0].dayIndex
+        });
+      }
+      return out;
+    }
+
+    function calcMA(bars, idx, period) {
+      if (idx < period - 1) return null;
+      let sum = 0;
+      for (let k = 0; k < period; k++) {
+        sum += bars[idx - k].close;
+      }
+      return sum / period;
+    }
+
+    // 更新区间顶部统计卡
+    function updateHeaderRangeStats(activeDays, bars) {
+      if (!bars || bars.length === 0) {
+        statDateRange.textContent = `${state.startDate} ~ ${state.endDate}`;
+        statPeriodChange.textContent = '--';
+        statPeriodRange.textContent = '--';
+        statPeriodVolume.textContent = '--';
+        statLatestPrice.textContent = '--';
+        rangeSummaryTag.textContent = `区间内未查询到交易日数据`;
+        return;
+      }
+
+      const firstBar = bars[0];
+      const lastBar = bars[bars.length - 1];
+      const periodOpen = firstBar.open;
+      const periodClose = lastBar.close;
+      const periodChange = periodClose - periodOpen;
+      const periodPct = (periodChange / periodOpen) * 100;
+      const sign = periodChange >= 0 ? '+' : '';
+
+      statDateRange.textContent = `${state.startDate} ~ ${state.endDate}`;
+      statPeriodChange.textContent = `${sign}$${periodChange.toFixed(2)} (${sign}${periodPct.toFixed(2)}%)`;
+      statPeriodChange.className = `value ${periodChange >= 0 ? 'up' : 'down'}`;
+
+      let minP = Infinity, maxP = -Infinity, totalVol = 0;
+      for (const b of bars) {
+        if (b.low < minP) minP = b.low;
+        if (b.high > maxP) maxP = b.high;
+        totalVol += b.volume;
+      }
+      const amp = ((maxP - minP) / periodOpen) * 100;
+      statPeriodRange.textContent = `$${minP.toFixed(2)} ~ $${maxP.toFixed(2)} (振幅 ${amp.toFixed(1)}%)`;
+      statPeriodVolume.textContent = `${(totalVol / 1e6).toFixed(1)}M 股`;
+      statLatestPrice.textContent = `$${periodClose.toFixed(2)}`;
+
+      rangeSummaryTag.textContent = `已加载 ${activeDays.length} 个交易日 · 共 ${bars.length.toLocaleString()} 根 ${state.granularity} K线`;
+    }
+
+    // 鼠标在画布上滑动：仅更新十字标尺和 HUD 数据 (绝对不缩放)
+    function handleMouseMove(x, y) {
+      const bars = state.currentBars;
+      if (!bars || bars.length === 0) return;
+
+      const rect = klineCanvas.getBoundingClientRect();
+      const paddingLeft = 70;
+      const paddingRight = 70;
+      const plotWidth = rect.width - paddingLeft - paddingRight;
+
+      // 检查鼠标是否在时间锚点竖线附近 (提供左右水平调整光标指示)
+      if (state.currentAnchorX !== undefined && Math.abs(x - state.currentAnchorX) <= 12) {
+        klineCanvas.style.cursor = 'ew-resize';
+        klineCanvas.title = '↔ 按住并左右拖动时间锚点，将该时刻设为 0.0% 归一化原点';
+      } else {
+        klineCanvas.style.cursor = 'crosshair';
+        klineCanvas.title = '💡 点击任意柱即可将其设为 0.0% 基准锚点';
+      }
+
+      if (x < paddingLeft || x > rect.width - paddingRight) {
+        state.hoverIndex = -1;
+        renderMainChart();
+        return;
+      }
+
+      const barSlotWidth = plotWidth / bars.length;
+      const idx = Math.min(Math.max(Math.floor((x - paddingLeft) / barSlotWidth), 0), bars.length - 1);
+
+      if (state.hoverIndex !== idx) {
+        state.hoverIndex = idx;
+        renderMainChart(x, y);
+        updateHUDWithBar(bars[idx]);
+      } else {
+        renderMainChart(x, y);
+      }
+    }
+
+    // 更新 HUD 悬浮板
+    function updateHUDWithBar(bar) {
+      if (!bar) return;
+      hudTime.textContent = bar.dateTime;
+      hudOpen.textContent = `$${bar.open.toFixed(2)}`;
+      hudHigh.textContent = `$${bar.high.toFixed(2)}`;
+      hudLow.textContent = `$${bar.low.toFixed(2)}`;
+      hudClose.textContent = `$${bar.close.toFixed(2)}`;
+      
+      const chg = bar.close - bar.open;
+      const pct = (chg / bar.open) * 100;
+      const sign = chg >= 0 ? '+' : '';
+      hudChg.textContent = `${sign}$${chg.toFixed(2)} (${sign}${pct.toFixed(2)}%)`;
+      hudChg.style.color = chg >= 0 ? 'var(--up-color)' : 'var(--down-color)';
+
+      hudVol.textContent = `${bar.volume.toLocaleString()} 股`;
+      hudMA5.textContent = bar.ma5 ? `$${bar.ma5.toFixed(2)}` : '--';
+      hudMA20.textContent = bar.ma20 ? `$${bar.ma20.toFixed(2)}` : '--';
+      hudMA60.textContent = bar.ma60 ? `$${bar.ma60.toFixed(2)}` : '--';
+      hudVWAP.textContent = bar.vwap ? `$${bar.vwap.toFixed(2)}` : '--';
+
+      // 检查当前 bar 是否命中某个选中的微结构形态
+      if (hudPatternBadge) {
+        let hitPat = null;
+        const allPatternsList = state.computedPatterns || (state.rawDataset && state.rawDataset.patterns_8) || [];
+        if (allPatternsList.length > 0 && state.selectedPatterns) {
+          hitPat = allPatternsList.find(p => {
+            return state.selectedPatterns.has(p.pattern) && bar.dateTime >= p.st_time && bar.dateTime <= p.end_time;
+          });
+        }
+        if (hitPat) {
+          hudPatternBadge.style.display = 'inline-flex';
+          hudPatternBadge.style.background = hitPat.is_upward ? 'rgba(239, 68, 68, 0.12)' : 'rgba(16, 185, 129, 0.12)';
+          hudPatternBadge.style.border = `1px solid ${hitPat.is_upward ? 'rgba(239, 68, 68, 0.4)' : 'rgba(16, 185, 129, 0.4)'}`;
+          hudPatternBadge.style.color = hitPat.is_upward ? '#b91c1c' : '#047857';
+          hudPatternBadge.innerHTML = `🎯 形态区间: [${hitPat.pattern}] ${hitPat.st_time.slice(5)} ~ ${hitPat.end_time.slice(5)} (${hitPat.ret_pct >= 0 ? '+' : ''}${hitPat.ret_pct}%, ${hitPat.bars}根5m)`;
+        } else {
+          hudPatternBadge.style.display = 'none';
+        }
+      }
+
+      // 实时计算光标所在柱的滚动窗口幅度与未命中原因诊断
+      if (hudDiagnostic && state.currentBars && state.currentBars.length > 0) {
+        const curIdx = state.hoverIndex >= 0 ? state.hoverIndex : state.currentBars.length - 1;
+        const N = (state.patternParams && state.patternParams.windowN) || 24;
+        const M_pct = (state.patternParams ? state.patternParams.surgeThreshold * 100 : 2.0);
+        const D_pct = (state.patternParams ? state.patternParams.dropThreshold * 100 : 2.0);
+
+        if (curIdx >= 0) {
+          const lookbackIdx = Math.max(0, curIdx - N);
+          const pPrev = state.currentBars[lookbackIdx].close;
+          const pCur = bar.close;
+          const actualBars = curIdx - lookbackIdx;
+          const rollRet = ((pCur - pPrev) / pPrev) * 100;
+          const sign = rollRet >= 0 ? '+' : '';
+
+          if (rollRet >= M_pct) {
+            hudDiagnostic.innerHTML = `<span style="color:#b91c1c; font-weight:700;">${sign}${rollRet.toFixed(2)}%</span> (近${actualBars}根 ≥+${M_pct.toFixed(1)}% 触发上涨 🎯)`;
+          } else if (rollRet <= -D_pct) {
+            hudDiagnostic.innerHTML = `<span style="color:#047857; font-weight:700;">${sign}${rollRet.toFixed(2)}%</span> (近${actualBars}根 ≤-${D_pct.toFixed(1)}% 触发下跌 🎯)`;
+          } else if (rollRet >= 0) {
+            const gap = M_pct - rollRet;
+            hudDiagnostic.innerHTML = `<span style="color:#b91c1c; font-weight:600;">${sign}${rollRet.toFixed(2)}%</span> (近${actualBars}根未达+${M_pct.toFixed(1)}%门槛, 差 <span style="font-weight:700;">${gap.toFixed(2)}%</span>)`;
+          } else {
+            const gapD = Math.abs(rollRet - (-D_pct));
+            hudDiagnostic.innerHTML = `<span style="color:#047857; font-weight:600;">${sign}${rollRet.toFixed(2)}%</span> (近${actualBars}根未达-${D_pct.toFixed(1)}%门槛, 差 <span style="font-weight:700;">${gapD.toFixed(2)}%</span>)`;
+          }
+        }
+      }
+
+      // 更新叠加 ETF 与行业趋势迁移实时榜单 (支持相对表现动态排行与逆势吸金提示)
+      if (hudOverlayValues) {
+        if (!state.activeOverlays || state.activeOverlays.length === 0) {
+          hudOverlayBar.style.display = 'none';
+        } else {
+          hudOverlayBar.style.display = 'flex';
+          const hoverIdx = state.hoverIndex >= 0 ? state.hoverIndex : state.currentBars.length - 1;
+          const P_0 = state.currentBars[0].open || state.currentBars[0].close;
+          const soxxCurClose = state.currentBars[hoverIdx].close;
+          const soxxRet = ((soxxCurClose - P_0) / P_0) * 100;
+
+          // 收集各标的相对当前选区起点的表现
+          const ranked = [
+            { symbol: 'SOXX', role: '半导体(基准)', ret: soxxRet, color: '#2563eb', bg: '#eff6ff', border: '#bfdbfe', isBenchmark: true }
+          ];
+
+          state.activeOverlays.forEach(item => {
+            const obars = getOverlayBarsForCurrentView(item, state.currentBars);
+            let basePrice = null;
+            for (let i = 0; i < obars.length; i++) {
+              if (obars[i]) {
+                basePrice = obars[i].open || obars[i].close;
+                break;
+              }
+            }
+            const hoverOb = obars && obars[hoverIdx];
+            let ret = null;
+            if (hoverOb && basePrice && basePrice > 0) {
+              ret = ((hoverOb.close - basePrice) / basePrice) * 100;
+            }
+            const rosterItem = CORE_SECTOR_ROSTER.find(c => c.symbol === item.symbol);
+            ranked.push({
+              symbol: item.symbol,
+              role: rosterItem ? rosterItem.role : item.name.slice(0, 10),
+              ret: ret,
+              color: item.color ? item.color.code : '#64748b',
+              bg: item.color ? item.color.bg : '#f8fafc',
+              border: item.color ? item.color.border : '#e2e8f0',
+              isBenchmark: false
+            });
+          });
+
+          // 按收益率从大到小排序
+          ranked.sort((a, b) => {
+            if (a.ret === null) return 1;
+            if (b.ret === null) return -1;
+            return b.ret - a.ret;
+          });
+
+          let itemsHtml = '';
+          const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣'];
+          ranked.forEach((r, idx) => {
+            const medal = medals[idx] || `${idx + 1}.`;
+            const retStr = r.ret !== null ? `${r.ret >= 0 ? '+' : ''}${r.ret.toFixed(1)}%` : '--';
+            const retColor = r.ret !== null ? (r.ret >= 0 ? 'var(--up-color)' : 'var(--down-color)') : '#94a3b8';
+            itemsHtml += `
+              <span style="display:inline-flex; align-items:center; gap:5px; background:${r.bg}; padding:3px 8px; border-radius:4px; border:1px solid ${r.border};">
+                <span>${medal}</span>
+                <span class="color-dot" style="background:${r.color};"></span>
+                <span style="font-weight:700; color:#0f172a;">${r.symbol}</span>
+                <span style="font-size:10px; color:#64748b;">(${r.role})</span>
+                <span style="font-weight:700; color:${retColor}; font-family:monospace;">${retStr}</span>
+              </span>
+            `;
+          });
+
+          // 如果当前时点半导体(SOXX)处于回调，探测逆势领涨的板块
+          const topGainer = ranked.find(r => !r.isBenchmark && r.ret !== null && r.ret > soxxRet);
+          if (soxxRet < 0 && topGainer) {
+            itemsHtml += `
+              <span style="background:#fff1f2; color:#b91c1c; padding:3px 8px; border-radius:4px; border:1px solid #fecdd3; font-weight:700;">
+                ⚡ 资金逆势迁移: 半导体(${soxxRet.toFixed(1)}%)回调期间，【${topGainer.symbol} ${topGainer.role}】逆势大涨 (${topGainer.ret >= 0 ? '+' : ''}${topGainer.ret.toFixed(1)}%)！
+              </span>
+            `;
+          }
+
+          hudOverlayValues.innerHTML = itemsHtml;
+        }
+      }
+    }
+
+    // ========================================================
+    // 行业趋势迁移 & 归一化收益率全景图 Canvas 渲染
+    // 解决多股K线重叠混乱，直观展示半导体与各行业的趋势轮动与逆势吸金
+    // ========================================================
+    function renderTrendMigrationChart(ctx, width, height, dpr, mouseX, mouseY) {
+      const bars = state.currentBars;
+      if (!bars || bars.length === 0) return;
+
+      const paddingLeft = 70;
+      const paddingRight = 75;
+      const paddingTop = 30;
+      const volumeHeight = 70;
+      const dividerGap = 15;
+      const plotHeight = height - paddingTop - volumeHeight - dividerGap - 30;
+      const plotWidth = width - paddingLeft - paddingRight;
+
+      // 1. 确定时间基准锚点 (Time Anchor) 所在的柱与基准价格
+      let anchorIdx = 0;
+      if (state.anchorDateTime && bars.length > 0) {
+        const found = bars.findIndex(b => b.dateTime >= state.anchorDateTime);
+        if (found !== -1) {
+          anchorIdx = found;
+        }
+      }
+      state.anchorBarIndex = anchorIdx;
+      const anchorBar = bars[anchorIdx] || bars[0];
+      const anchorTimeStr = anchorBar ? anchorBar.dateTime : bars[0].dateTime;
+
+      if (tagAnchorTimeVal) {
+        const isStart = anchorIdx === 0;
+        tagAnchorTimeVal.textContent = `${anchorTimeStr}${isStart ? ' (首根)' : ''}`;
+      }
+
+      // SOXX 在锚点时刻的基准价格 P_0 (统一以锚点柱 close 为 0.0% 原点)
+      const P_0 = anchorBar.close;
+
+      // 2. 收集所有要绘制的资产收益率序列
+      // 2.1 SOXX 基准收益率: 在 i === anchorIdx 时严格等于 0.0%
+      const soxxReturns = new Float64Array(bars.length);
+      for (let i = 0; i < bars.length; i++) {
+        soxxReturns[i] = ((bars[i].close - P_0) / P_0) * 100;
+      }
+
+      // 2.2 各叠加资产收益率序列
+      const assetSeries = [
+        {
+          symbol: 'SOXX',
+          role: '半导体 (基准)',
+          name: 'iShares 半导体 ETF',
+          color: '#2563eb',
+          lineWidth: 2.6,
+          isBenchmark: true,
+          returns: soxxReturns,
+          latestRet: soxxReturns[bars.length - 1]
+        }
+      ];
+
+      if (state.activeOverlays && state.activeOverlays.length > 0) {
+        state.activeOverlays.forEach(item => {
+          const obars = getOverlayBarsForCurrentView(item, bars);
+          // 寻找该 ETF 在 anchorIdx 时刻的有效价格
+          let basePrice = null;
+          if (obars[anchorIdx]) {
+            basePrice = obars[anchorIdx].close;
+          } else {
+            for (let k = anchorIdx; k >= 0; k--) {
+              if (obars[k]) { basePrice = obars[k].close; break; }
+            }
+            if (!basePrice) {
+              for (let k = anchorIdx; k < obars.length; k++) {
+                if (obars[k]) { basePrice = obars[k].close; break; }
+              }
+            }
+          }
+          if (!basePrice || basePrice <= 0) return;
+
+          const rets = new Float64Array(bars.length);
+          for (let i = 0; i < bars.length; i++) {
+            if (!obars[i]) {
+              rets[i] = NaN;
+            } else {
+              rets[i] = ((obars[i].close - basePrice) / basePrice) * 100;
+            }
+          }
+
+          let lastValidRet = NaN;
+          for (let i = bars.length - 1; i >= 0; i--) {
+            if (!isNaN(rets[i])) { lastValidRet = rets[i]; break; }
+          }
+
+          const rosterItem = CORE_SECTOR_ROSTER.find(c => c.symbol === item.symbol);
+          assetSeries.push({
+            symbol: item.symbol,
+            role: rosterItem ? rosterItem.role : item.name.slice(0, 10),
+            name: item.name,
+            color: (item.color && item.color.code) || (rosterItem && rosterItem.color && rosterItem.color.code) || '#d97706',
+            lineWidth: 2.0,
+            isBenchmark: false,
+            returns: rets,
+            latestRet: lastValidRet
+          });
+        });
+      }
+
+      // 3. 计算极值范围 (minPct, maxPct)
+      let minPct = Infinity, maxPct = -Infinity;
+      let maxVol = 0;
+
+      for (let i = 0; i < bars.length; i++) {
+        if (bars[i].volume > maxVol) maxVol = bars[i].volume;
+      }
+      if (maxVol === 0) maxVol = 1;
+
+      assetSeries.forEach(s => {
+        for (let i = 0; i < bars.length; i++) {
+          const v = s.returns[i];
+          if (!isNaN(v)) {
+            if (v < minPct) minPct = v;
+            if (v > maxPct) maxPct = v;
+          }
+        }
+      });
+
+      if (minPct > 0) minPct = 0;
+      if (maxPct < 0) maxPct = 0;
+      const pctSpan = Math.max(maxPct - minPct, 4.0);
+      minPct -= pctSpan * 0.08;
+      maxPct += pctSpan * 0.08;
+
+      const getYFromPct = (p) => paddingTop + plotHeight - ((p - minPct) / (maxPct - minPct)) * plotHeight;
+      const getVolY = (v) => paddingTop + plotHeight + dividerGap + volumeHeight - (v / maxVol) * volumeHeight;
+      const barSlotWidth = plotWidth / bars.length;
+
+      // 4. 绘制水平网格与左轴收益率刻度、右轴 SOXX 对等价值
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#f1f5f9';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '11px sans-serif';
+
+      const tickStep = (maxPct - minPct) / 6;
+      for (let k = 0; k <= 6; k++) {
+        const pctVal = minPct + k * tickStep;
+        const y = getYFromPct(pctVal);
+
+        ctx.beginPath();
+        ctx.strokeStyle = Math.abs(pctVal) < 0.3 ? '#fcd34d' : '#f1f5f9';
+        ctx.lineWidth = Math.abs(pctVal) < 0.3 ? 1.5 : 1;
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(width - paddingRight, y);
+        ctx.stroke();
+
+        // 左轴刻度 (% 收益率)
+        const sign = pctVal >= 0.05 ? '+' : '';
+        ctx.fillStyle = Math.abs(pctVal) < 0.3 ? '#b45309' : (pctVal > 0 ? '#b91c1c' : '#047857');
+        ctx.textAlign = 'right';
+        ctx.fillText(`${sign}${pctVal.toFixed(1)}%`, paddingLeft - 8, y + 4);
+
+        // 右轴刻度 (SOXX 对等股价)
+        const equivPrice = P_0 * (1 + pctVal / 100);
+        ctx.fillStyle = '#64748b';
+        ctx.textAlign = 'left';
+        ctx.fillText(`$${equivPrice.toFixed(2)}`, width - paddingRight + 8, y + 4);
+      }
+
+      // 4.1 0.0% 水平基准线
+      const zeroY = getYFromPct(0.0);
+      state.currentZeroY = zeroY;
+      ctx.save();
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(paddingLeft, zeroY);
+      ctx.lineTo(width - paddingRight, zeroY);
+      ctx.stroke();
+
+      // 0.0% 徽章
+      ctx.fillStyle = '#d97706';
+      ctx.fillRect(paddingLeft - 66, zeroY - 9, 64, 18);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 10.5px sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('0.0% 原点', paddingLeft - 6, zeroY + 4);
+      ctx.restore();
+
+      // 4.2 📍 垂直时间锚点指示线与把手 (Vertical Time Anchor Guideline & Handle)
+      const anchorX = paddingLeft + anchorIdx * barSlotWidth + barSlotWidth / 2;
+      state.currentAnchorX = anchorX;
+
+      ctx.save();
+      ctx.strokeStyle = '#6366f1'; // Indigo
+      ctx.lineWidth = 2.0;
+      ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(anchorX, paddingTop);
+      ctx.lineTo(anchorX, paddingTop + plotHeight);
+      ctx.stroke();
+
+      // 顶部锚点悬浮胶囊标牌 (Top Anchor Pill Handle)
+      const anchorTagText = `📍 0% 对齐锚点: ${anchorTimeStr.slice(5)}`;
+      ctx.font = 'bold 10px sans-serif';
+      const atw = ctx.measureText(anchorTagText).width + 16;
+      const atx = Math.max(paddingLeft, Math.min(anchorX - atw / 2, width - paddingRight - atw));
+      ctx.fillStyle = '#4f46e5';
+      ctx.beginPath();
+      safeRoundRect(ctx, atx, paddingTop + 2, atw, 18, 4);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText(anchorTagText, atx + atw / 2, paddingTop + 15);
+
+      // 在 (anchorX, zeroY) 处绘制所有曲线汇聚的交点圆环 (All Lines Converge at 0.0%)
+      ctx.beginPath();
+      ctx.arc(anchorX, zeroY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#4f46e5';
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.restore();
+
+      // 双轴顶部标题提示
+      ctx.font = '10px sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.textAlign = 'left';
+      ctx.fillText(`← 左轴: 相对锚点 [${anchorTimeStr.slice(5)}] 收益率 (%)`, paddingLeft, paddingTop - 10);
+      ctx.textAlign = 'right';
+      ctx.fillText('右轴: 半导体 SOXX 对等价值 ($) →', width - paddingRight, paddingTop - 10);
+
+      // 5. 绘制多日分界虚线
+      if (state.showDayDivider) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(203, 213, 225, 0.7)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        for (let i = 0; i < bars.length; i++) {
+          if (bars[i].isNewDay && i > 0) {
+            const x = paddingLeft + i * barSlotWidth;
+            ctx.beginPath();
+            ctx.moveTo(x, paddingTop);
+            ctx.lineTo(x, paddingTop + plotHeight + dividerGap + volumeHeight);
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+      }
+
+      // 6. 绘制各行业趋势迁移折线 (Lines) - 纯净线条，无背景色块遮挡
+      assetSeries.forEach(s => {
+        ctx.save();
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = s.lineWidth;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+
+        ctx.beginPath();
+        let started = false;
+        let lastValidX = 0, lastValidY = 0;
+
+        for (let i = 0; i < bars.length; i++) {
+          const val = s.returns[i];
+          if (isNaN(val)) continue;
+          const x = paddingLeft + i * barSlotWidth + barSlotWidth / 2;
+          const y = getYFromPct(val);
+
+          if (!started) {
+            ctx.moveTo(x, y);
+            started = true;
+          } else {
+            ctx.lineTo(x, y);
+          }
+          lastValidX = x;
+          lastValidY = y;
+        }
+        ctx.stroke();
+
+        // 7.3 在曲线右端点绘制精美 Pill Badge 标签
+        if (started && !isNaN(s.latestRet)) {
+          const sign = s.latestRet >= 0 ? '+' : '';
+          const pillText = `${s.symbol} ${sign}${s.latestRet.toFixed(1)}%`;
+          ctx.font = 'bold 10px sans-serif';
+          const pw = ctx.measureText(pillText).width + 10;
+          const px = Math.min(lastValidX + 4, width - paddingRight - pw);
+          const py = Math.max(paddingTop + 6, Math.min(lastValidY - 8, paddingTop + plotHeight - 12));
+
+          ctx.fillStyle = s.color;
+          ctx.beginPath();
+          safeRoundRect(ctx, px, py, pw, 16, 3);
+          ctx.fill();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.fillText(pillText, px + pw / 2, py + 11);
+        }
+        ctx.restore();
+      });
+
+      // 8. 绘制成交量柱状图
+      const volTopY = paddingTop + plotHeight + dividerGap;
+      ctx.beginPath();
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.moveTo(paddingLeft, volTopY);
+      ctx.lineTo(width - paddingRight, volTopY);
+      ctx.stroke();
+
+      for (let i = 0; i < bars.length; i++) {
+        const b = bars[i];
+        const x = paddingLeft + i * barSlotWidth + barSlotWidth * 0.1;
+        const bw = Math.max(barSlotWidth * 0.8, 1);
+        const y = getVolY(b.volume);
+        const bh = (volTopY + volumeHeight) - y;
+        const isUp = b.close >= b.open;
+        ctx.fillStyle = isUp ? 'rgba(37, 99, 235, 0.35)' : 'rgba(100, 116, 139, 0.35)';
+        ctx.fillRect(x, y, bw, Math.max(bh, 1));
+      }
+
+      // 9. X 轴时间刻度
+      const labelStep = Math.max(Math.floor(bars.length / 8), 1);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#64748b';
+      for (let i = 0; i < bars.length; i += labelStep) {
+        const x = paddingLeft + i * barSlotWidth + barSlotWidth / 2;
+        const b = bars[i];
+        const labelText = bars.length > 300 ? b.date.slice(5) : `${b.date.slice(5)} ${b.time}`;
+        ctx.fillText(labelText, x, volTopY + volumeHeight + 18);
+      }
+
+      // 10. 十字光标与各行业数值圆点探测
+      if (state.hoverIndex >= 0 && state.hoverIndex < bars.length) {
+        const idx = state.hoverIndex;
+        const hx = paddingLeft + idx * barSlotWidth + barSlotWidth / 2;
+
+        ctx.save();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.moveTo(hx, paddingTop);
+        ctx.lineTo(hx, volTopY + volumeHeight);
+        ctx.stroke();
+        ctx.restore();
+
+        assetSeries.forEach(s => {
+          const val = s.returns[idx];
+          if (!isNaN(val)) {
+            const hy = getYFromPct(val);
+            ctx.save();
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = s.color;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(hx, hy, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+          }
+        });
+      }
+    }
+
+    // 主 K 线与成交量 Canvas 渲染 (对数双轴坐标系 + 8大形态高亮 + 自选ETF叠加)
+    function renderMainChart(mouseX = null, mouseY = null) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvasWrapper.getBoundingClientRect();
+      
+      klineCanvas.width = rect.width * dpr;
+      klineCanvas.height = rect.height * dpr;
+      
+      const ctx = klineCanvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      
+      const width = rect.width;
+      const height = rect.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // 若处于趋势迁移归一化曲线模式，直接调用趋势迁移专用渲染引擎
+      if (state.chartMode === 'trend_migration') {
+        renderTrendMigrationChart(ctx, width, height, dpr, mouseX, mouseY);
+        return;
+      }
+
+      const bars = state.currentBars;
+      if (!bars || bars.length === 0) {
+        ctx.fillStyle = '#64748b';
+        ctx.font = '14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('所选日期区间无 K 线数据，请调整开始与截止日期', width / 2, height / 2);
+        return;
+      }
+
+      // 布局尺寸切分 (左右两侧各保留 70px 用于对数坐标收益率与实际股价刻度)
+      const paddingLeft = 70;
+      const paddingRight = 70;
+      const paddingTop = 26;
+      const volumeHeight = 85;
+      const dividerGap = 15;
+      const klineHeight = height - paddingTop - volumeHeight - dividerGap - 30;
+      const plotWidth = width - paddingLeft - paddingRight;
+
+      // 1. 确定时间基准锚点 (Time Anchor) 所在的柱与基准价格
+      let anchorIdx = 0;
+      if (state.anchorDateTime && bars.length > 0) {
+        const found = bars.findIndex(b => b.dateTime >= state.anchorDateTime);
+        if (found !== -1) {
+          anchorIdx = found;
+        }
+      }
+      state.anchorBarIndex = anchorIdx;
+      const anchorBar = bars[anchorIdx] || bars[0];
+      const anchorTimeStr = anchorBar ? anchorBar.dateTime : bars[0].dateTime;
+      const zeroPrice = anchorBar.close;
+
+      if (tagAnchorTimeVal) {
+        const isStart = anchorIdx === 0;
+        tagAnchorTimeVal.textContent = `${anchorTimeStr}${isStart ? ' (首根)' : ''}`;
+      }
+
+      // 2. 极值计算 (High, Low, MaxVol)，并统筹叠加 ETF 镂空K线相对波动
+      let minPrice = Infinity;
+      let maxPrice = -Infinity;
+      let maxVol = 0;
+
+      for (const b of bars) {
+        if (b.low < minPrice) minPrice = b.low;
+        if (b.high > maxPrice) maxPrice = b.high;
+        if (b.volume > maxVol) maxVol = b.volume;
+      }
+
+      // 若激活了自选 ETF 叠加对比，将叠加标的镂空K线的高低点等效映射价格计入极值范围，保证烛体全部在可见区域内
+      if (state.activeOverlays && state.activeOverlays.length > 0) {
+        state.activeOverlays.forEach(item => {
+          const obars = getOverlayBarsForCurrentView(item, bars);
+          let basePrice = null;
+          for (let i = 0; i < obars.length; i++) {
+            if (obars[i]) {
+              basePrice = obars[i].open || obars[i].close;
+              break;
+            }
+          }
+          if (!basePrice || basePrice <= 0) return;
+
+          for (let i = 0; i < obars.length; i++) {
+            const ob = obars[i];
+            if (!ob) continue;
+            const rLow = (ob.low - basePrice) / basePrice;
+            const rHigh = (ob.high - basePrice) / basePrice;
+            const equivLow = zeroPrice * (1 + rLow);
+            const equivHigh = zeroPrice * (1 + rHigh);
+            if (equivLow < minPrice) minPrice = equivLow;
+            if (equivHigh > maxPrice) maxPrice = equivHigh;
+          }
+        });
+      }
+
+      // 确保可拖拽的 0% 基准标线本身始终在 Y 轴可见绘图范围内
+      if (zeroPrice < minPrice) minPrice = zeroPrice * 0.98;
+      if (zeroPrice > maxPrice) maxPrice = zeroPrice * 1.02;
+
+      const pricePadding = (maxPrice - minPrice) * 0.05 || 1.0;
+      minPrice = Math.max(minPrice - pricePadding, 0.01);
+      maxPrice += pricePadding;
+      if (maxVol === 0) maxVol = 1;
+
+      // 3. 对数坐标系数学映射函数 (Logarithmic Scale Mapping)
+      // ln(P) 在 [lnMin, lnMax] 之间线性插值
+      const lnMin = Math.log(minPrice);
+      const lnMax = Math.log(maxPrice);
+      const lnRange = Math.max(lnMax - lnMin, 0.0001);
+
+      // 价格 P 映射到 Canvas Y 坐标 (对数坐标)
+      const getY = (p) => {
+        const safeP = Math.max(p, 0.01);
+        const normY = (Math.log(safeP) - lnMin) / lnRange;
+        return paddingTop + klineHeight - normY * klineHeight;
+      };
+
+      // Canvas Y 坐标逆向反解出价格 P (对数逆向)
+      const getPriceFromY = (y) => {
+        const normY = (paddingTop + klineHeight - y) / klineHeight;
+        return Math.exp(lnMin + normY * lnRange);
+      };
+
+      const getVolY = (v) => paddingTop + klineHeight + dividerGap + volumeHeight - (v / maxVol) * volumeHeight;
+
+      const barSlotWidth = plotWidth / bars.length;
+      const barBodyWidth = Math.max(Math.min(barSlotWidth * 0.8, 14), 1);
+
+      // 4. 绘制水平网格线与双轴刻度 (左轴: 对数收益率 % [以0%基准标线为原点] | 右轴: 实际股价 $)
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#f1f5f9';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '11px sans-serif';
+
+      const priceTicksCount = 6;
+      for (let i = 0; i <= priceTicksCount; i++) {
+        const norm = i / priceTicksCount;
+        const y = paddingTop + klineHeight - norm * klineHeight;
+        const p = Math.exp(lnMin + norm * lnRange);
+        
+        ctx.beginPath();
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(width - paddingRight, y);
+        ctx.stroke();
+
+        // 右轴：显示实际美元价值 ($ USD)
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText(`$${p.toFixed(2)}`, width - paddingRight + 6, y + 4);
+
+        // 左轴：对数坐标系显示相对 0% 基准标线的相对涨跌幅 (Log % Return)
+        const retPct = ((p - zeroPrice) / zeroPrice) * 100;
+        const sign = retPct >= 0 ? '+' : '';
+        ctx.textAlign = 'right';
+        ctx.fillStyle = retPct >= 0 ? '#ef4444' : '#10b981';
+        ctx.fillText(`${sign}${retPct.toFixed(1)}%`, paddingLeft - 6, y + 4);
+      }
+
+      // 4.1 绘制可上下拖拽的 0.0% 水平基准标线 (Draggable 0% Horizontal Baseline)
+      const zeroY = getY(zeroPrice);
+      state.currentZeroY = zeroY;
+      state.currentPriceFromY = getPriceFromY;
+
+      if (zeroY >= paddingTop && zeroY <= paddingTop + klineHeight) {
+        ctx.save();
+        ctx.strokeStyle = state.isDraggingZeroLine ? '#ea580c' : '#f59e0b';
+        ctx.lineWidth = state.isDraggingZeroLine ? 2.5 : 2.0;
+        ctx.setLineDash([7, 4]);
+
+        ctx.beginPath();
+        ctx.moveTo(paddingLeft, zeroY);
+        ctx.lineTo(width - paddingRight, zeroY);
+        ctx.stroke();
+        ctx.restore();
+
+        // 中间基准线说明徽标
+        ctx.save();
+        const baselineLabel = `── 0.0% 水平基准标线 (对齐锚点时刻 $${zeroPrice.toFixed(2)} · ${anchorTimeStr.slice(5)}) ──`;
+        ctx.font = 'bold 10px sans-serif';
+        const labelW = ctx.measureText(baselineLabel).width + 16;
+        const labelX = paddingLeft + (plotWidth - labelW) / 2;
+        
+        ctx.fillStyle = '#d97706';
+        ctx.beginPath();
+        safeRoundRect(ctx, labelX, zeroY - 10, labelW, 20, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.fillText(baselineLabel, labelX + labelW / 2, zeroY + 4);
+
+        // 左轴 0.0% 显式徽章 (固定在左轴边缘)
+        ctx.fillStyle = '#d97706';
+        ctx.fillRect(paddingLeft - 66, zeroY - 9, 64, 18);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10.5px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('0.0% 原点', paddingLeft - 6, zeroY + 4);
+
+        // 右轴价格徽章 (固定在右轴边缘)
+        ctx.fillStyle = '#d97706';
+        ctx.fillRect(width - paddingRight + 2, zeroY - 9, 64, 18);
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'left';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillText(`$${zeroPrice.toFixed(2)}`, width - paddingRight + 6, zeroY + 4);
+        ctx.restore();
+      }
+
+      // 4.2 垂直时间锚点指示线与把手
+      const anchorX = paddingLeft + anchorIdx * barSlotWidth + barSlotWidth / 2;
+      state.currentAnchorX = anchorX;
+
+      ctx.save();
+      ctx.strokeStyle = '#6366f1';
+      ctx.lineWidth = 2.0;
+      ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(anchorX, paddingTop);
+      ctx.lineTo(anchorX, paddingTop + klineHeight);
+      ctx.stroke();
+
+      const anchorTagText = `📍 0% 对齐锚点: ${anchorTimeStr.slice(5)}`;
+      ctx.font = 'bold 10px sans-serif';
+      const atw = ctx.measureText(anchorTagText).width + 16;
+      const atx = Math.max(paddingLeft, Math.min(anchorX - atw / 2, width - paddingRight - atw));
+      ctx.fillStyle = '#4f46e5';
+      ctx.beginPath();
+      safeRoundRect(ctx, atx, paddingTop + 2, atw, 18, 4);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText(anchorTagText, atx + atw / 2, paddingTop + 15);
+      ctx.restore();
+
+      // 双轴顶部标题提示
+      ctx.font = '10px sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.textAlign = 'left';
+      ctx.fillText(`← 左轴: 相对锚点 [${anchorTimeStr.slice(5)}] 收益率 (%)`, paddingLeft, paddingTop - 8);
+      ctx.textAlign = 'right';
+      ctx.fillText('右轴: 实际股价 ($ USD) →', width - paddingRight, paddingTop - 8);
+
+      // 成交量顶部分割线与标尺
+      const volTopY = paddingTop + klineHeight + dividerGap;
+      ctx.beginPath();
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.moveTo(paddingLeft, volTopY);
+      ctx.lineTo(width - paddingRight, volTopY);
+      ctx.stroke();
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(`${(maxVol / 1000).toFixed(0)}k`, width - paddingRight + 6, volTopY + 12);
+      ctx.fillText('0', width - paddingRight + 6, volTopY + volumeHeight);
+
+      // 5. 绘制 8 大微观微结构形态高亮区间与标牌 (位于 K 线烛体底部/背景层)
+      let visiblePatternCount = 0;
+      let upPatternCount = 0;
+      let downPatternCount = 0;
+
+      const allPatternsList = state.computedPatterns || (state.rawDataset && state.rawDataset.patterns_8) || [];
+      if (allPatternsList.length > 0 && state.selectedPatterns && state.selectedPatterns.size > 0) {
+        const visiblePatterns = allPatternsList.filter(p => {
+          if (!state.selectedPatterns.has(p.pattern)) return false;
+          return p.end_date >= state.startDate && p.st_date <= state.endDate;
+        });
+
+        visiblePatternCount = visiblePatterns.length;
+
+        for (const pat of visiblePatterns) {
+          if (pat.is_upward) upPatternCount++;
+          else downPatternCount++;
+
+          let stIdx = -1, endIdx = -1;
+          for (let i = 0; i < bars.length; i++) {
+            if (stIdx === -1 && bars[i].dateTime >= pat.st_time) stIdx = i;
+            if (bars[i].dateTime <= pat.end_time) endIdx = i;
+          }
+
+          if (stIdx === -1 && bars.length > 0 && bars[0].dateTime > pat.st_time && bars[0].dateTime <= pat.end_time) stIdx = 0;
+          if (endIdx === -1 && bars.length > 0 && bars[bars.length - 1].dateTime >= pat.st_time) endIdx = bars.length - 1;
+
+          if (stIdx !== -1 && endIdx !== -1 && endIdx >= stIdx) {
+            const x1 = paddingLeft + stIdx * barSlotWidth;
+            const x2 = paddingLeft + (endIdx + 1) * barSlotWidth;
+            const bandW = Math.max(x2 - x1, 4);
+
+            // 严禁绘制纵贯全图的背景大色柱 (杜绝遮挡 K 线)
+            // 仅在画布边缘绘制细区间标线与轻量徽标
+            const isHover = state.hoverIndex >= stIdx && state.hoverIndex <= endIdx;
+
+            ctx.save();
+            const color = pat.is_upward ? '#ef4444' : '#10b981';
+            const by = pat.is_upward ? paddingTop + 4 : paddingTop + klineHeight - 18;
+
+            // 顶部/底部水平极细线段指示区间跨度
+            ctx.strokeStyle = color;
+            ctx.lineWidth = isHover ? 2 : 1;
+            ctx.beginPath();
+            ctx.moveTo(x1, pat.is_upward ? paddingTop + 1 : paddingTop + klineHeight - 1);
+            ctx.lineTo(x2, pat.is_upward ? paddingTop + 1 : paddingTop + klineHeight - 1);
+            ctx.stroke();
+
+            // 仅在宽度足够或悬停时绘制小徽章，避免拥挤重叠
+            if (bandW >= 42 || isHover) {
+              const badgeText = `${pat.pattern} ${pat.ret_pct >= 0 ? '+' : ''}${pat.ret_pct}%`;
+              ctx.font = 'bold 9px sans-serif';
+              const bw = Math.max(ctx.measureText(badgeText).width + 8, 48);
+              const bx = Math.max(x1 + (bandW - bw) / 2, paddingLeft + 2);
+
+              ctx.fillStyle = color;
+              ctx.beginPath();
+              safeRoundRect(ctx, bx, by, bw, 14, 3);
+              ctx.fill();
+
+              ctx.fillStyle = '#ffffff';
+              ctx.textAlign = 'center';
+              ctx.fillText(badgeText, bx + bw / 2, by + 10);
+            }
+            ctx.restore();
+          }
+        }
+      }
+
+      if (patternStatsTag) {
+        patternStatsTag.innerHTML = `形态匹配: <b>${visiblePatternCount}</b> 个区间 (<span style="color:var(--up-color)">上涨 ${upPatternCount} 笔</span> / <span style="color:var(--down-color)">下跌 ${downPatternCount} 笔</span>)`;
+      }
+
+      // 6. 绘制多日分界虚线与日期标签 (Day Dividers)
+      if (state.showDayDivider) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(203, 213, 225, 0.7)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+
+        for (let i = 0; i < bars.length; i++) {
+          if (bars[i].isNewDay && i > 0) {
+            const x = paddingLeft + i * barSlotWidth;
+            ctx.beginPath();
+            ctx.moveTo(x, paddingTop);
+            ctx.lineTo(x, volTopY + volumeHeight);
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+      }
+
+      // 7. 绘制 X 轴时间刻度
+      const labelStep = Math.max(Math.floor(bars.length / 8), 1);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#64748b';
+      for (let i = 0; i < bars.length; i += labelStep) {
+        const x = paddingLeft + i * barSlotWidth + barSlotWidth / 2;
+        const b = bars[i];
+        const labelText = bars.length > 300 ? b.date.slice(5) : `${b.date.slice(5)} ${b.time}`;
+        ctx.fillText(labelText, x, volTopY + volumeHeight + 18);
+      }
+
+      // 8. 绘制成交量柱状图 (Volume Bars)
+      for (let i = 0; i < bars.length; i++) {
+        const b = bars[i];
+        const x = paddingLeft + i * barSlotWidth + (barSlotWidth - barBodyWidth) / 2;
+        const y = getVolY(b.volume);
+        const barH = (volTopY + volumeHeight) - y;
+        
+        const isUp = b.close >= b.open;
+        ctx.fillStyle = isUp ? 'rgba(239, 68, 68, 0.45)' : 'rgba(16, 185, 129, 0.45)';
+        ctx.fillRect(x, y, barBodyWidth, Math.max(barH, 1));
+      }
+
+      // 9. 绘制 K 线烛体 (Candlesticks · 对数坐标投影)
+      for (let i = 0; i < bars.length; i++) {
+        const b = bars[i];
+        const centerX = paddingLeft + i * barSlotWidth + barSlotWidth / 2;
+        const x = paddingLeft + i * barSlotWidth + (barSlotWidth - barBodyWidth) / 2;
+
+        const openY = getY(b.open);
+        const closeY = getY(b.close);
+        const highY = getY(b.high);
+        const lowY = getY(b.low);
+
+        const isUp = b.close >= b.open;
+        const color = isUp ? 'var(--up-candle)' : 'var(--down-candle)';
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+
+        // 细线影线
+        ctx.beginPath();
+        ctx.moveTo(centerX, highY);
+        ctx.lineTo(centerX, lowY);
+        ctx.stroke();
+
+        // 矩形实体 (若柱过细则单线绘制)
+        const topY = Math.min(openY, closeY);
+        const bodyH = Math.max(Math.abs(openY - closeY), 1.2);
+        ctx.fillRect(x, topY, barBodyWidth, bodyH);
+      }
+
+      // 10. 绘制均线 (MA5, MA20, MA60 · 对数投影)
+      if (state.showMA) {
+        drawLineIndicator(bars, 'ma5', '#f59e0b', 1.4, paddingLeft, barSlotWidth, getY);
+        drawLineIndicator(bars, 'ma20', '#3b82f6', 1.4, paddingLeft, barSlotWidth, getY);
+        drawLineIndicator(bars, 'ma60', '#8b5cf6', 1.4, paddingLeft, barSlotWidth, getY);
+      }
+
+      // 11. 绘制 VWAP 线
+      if (state.showVWAP) {
+        drawLineIndicator(bars, 'vwap', '#ec4899', 1.6, paddingLeft, barSlotWidth, getY, [3, 2]);
+      }
+
+      // 12. 绘制自选 ETF 叠加对比 (镂空线框蜡烛 K 线 · 非实心 · 支持多标的)
+      if (state.activeOverlays && state.activeOverlays.length > 0) {
+        state.activeOverlays.forEach(item => {
+          const obars = getOverlayBarsForCurrentView(item, bars);
+          let basePrice = null;
+          for (let i = 0; i < obars.length; i++) {
+            if (obars[i]) {
+              basePrice = obars[i].open || obars[i].close;
+              break;
+            }
+          }
+          if (!basePrice || basePrice <= 0) return;
+
+          ctx.save();
+          ctx.strokeStyle = item.color.code;
+
+          // 12.1 极轻微的虚线走势指引，串联各K线收盘价，辅助宏观趋势识别
+          ctx.setLineDash([2, 3]);
+          ctx.lineWidth = 1.0;
+          ctx.beginPath();
+          let started = false;
+          let lastX = 0, lastY = 0, lastRet = 0, lastP = 0;
+
+          for (let i = 0; i < bars.length; i++) {
+            const ob = obars[i];
+            if (!ob) continue;
+
+            const ret = (ob.close - basePrice) / basePrice;
+            const equivP = zeroPrice * (1 + ret);
+            const x = paddingLeft + i * barSlotWidth + barSlotWidth / 2;
+            const y = getY(equivP);
+
+            if (!started) {
+              ctx.moveTo(x, y);
+              started = true;
+            } else {
+              ctx.lineTo(x, y);
+            }
+            lastX = x;
+            lastY = y;
+            lastRet = ret * 100;
+            lastP = ob.close;
+          }
+          ctx.stroke();
+          ctx.setLineDash([]); // 恢复实线
+
+          // 12.2 逐根绘制镂空线框蜡烛 K 线 (Hollow Outline Candlesticks · 非实心)
+          ctx.lineWidth = 1.3;
+          for (let i = 0; i < bars.length; i++) {
+            const ob = obars[i];
+            if (!ob) continue;
+
+            const ro = (ob.open - basePrice) / basePrice;
+            const rh = (ob.high - basePrice) / basePrice;
+            const rl = (ob.low - basePrice) / basePrice;
+            const rc = (ob.close - basePrice) / basePrice;
+
+            const equivO = zeroPrice * (1 + ro);
+            const equivH = zeroPrice * (1 + rh);
+            const equivL = zeroPrice * (1 + rl);
+            const equivC = zeroPrice * (1 + rc);
+
+            const yO = getY(equivO);
+            const yH = getY(equivH);
+            const yL = getY(equivL);
+            const yC = getY(equivC);
+
+            const centerX = paddingLeft + i * barSlotWidth + barSlotWidth / 2;
+            const x = paddingLeft + i * barSlotWidth + (barSlotWidth - barBodyWidth) / 2;
+
+            // ① 影线 (上下影线)
+            ctx.beginPath();
+            ctx.moveTo(centerX, yH);
+            ctx.lineTo(centerX, yL);
+            ctx.stroke();
+
+            // ② 烛体实体：严格为空心/镂空线框 (strokeRect，非实心，不遮挡底层 SOXX 实心K线)
+            const topY = Math.min(yO, yC);
+            const bodyH = Math.max(Math.abs(yO - yC), 1.2);
+            const isUp = ob.close >= ob.open;
+
+            ctx.strokeRect(x, topY, barBodyWidth, bodyH);
+
+            // 若为下跌柱，填充 12% 极微透明色并加一条对角斜线，既能一眼分辨涨跌，又完全透视底层 K 线
+            if (!isUp) {
+              ctx.fillStyle = hexToRgba(item.color.code, 0.12);
+              ctx.fillRect(x, topY, barBodyWidth, bodyH);
+              ctx.beginPath();
+              ctx.moveTo(x, topY);
+              ctx.lineTo(x + barBodyWidth, topY + bodyH);
+              ctx.stroke();
+            }
+          }
+
+          // 12.3 曲线右端终点标牌 (展示代码与基于 0% 基准线的相对涨跌幅)
+          if (started && lastX > 0) {
+            const sign = lastRet >= 0 ? '+' : '';
+            const endText = `${item.symbol} ${sign}${lastRet.toFixed(1)}% (镂空K线)`;
+            ctx.font = 'bold 9.5px sans-serif';
+            const tw = ctx.measureText(endText).width + 8;
+            ctx.fillStyle = item.color.code;
+            ctx.beginPath();
+            safeRoundRect(ctx, Math.min(lastX + 4, width - paddingRight - tw), lastY - 8, tw, 16, 3);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'left';
+            ctx.fillText(endText, Math.min(lastX + 8, width - paddingRight - tw + 4), lastY + 4);
+          }
+
+          // 12.4 Hover 状态光标处的高亮圆点
+          if (state.hoverIndex >= 0 && state.hoverIndex < bars.length) {
+            const hoverOb = obars[state.hoverIndex];
+            if (hoverOb) {
+              const hoverRet = (hoverOb.close - basePrice) / basePrice;
+              const hoverEquivP = zeroPrice * (1 + hoverRet);
+              const dotX = paddingLeft + state.hoverIndex * barSlotWidth + barSlotWidth / 2;
+              const dotY = getY(hoverEquivP);
+
+              ctx.fillStyle = '#ffffff';
+              ctx.beginPath();
+              ctx.arc(dotX, dotY, 4.5, 0, Math.PI * 2);
+              ctx.fill();
+
+              ctx.fillStyle = item.color.code;
+              ctx.beginPath();
+              ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+
+          ctx.restore();
+        });
+      }
+
+      // 13. 绘制交互十字光标与双轴双向联动标牌 (Crosshair & Dual-Axis Badges)
+      if (state.hoverIndex >= 0 && state.hoverIndex < bars.length) {
+        const hoverBar = bars[state.hoverIndex];
+        const hX = paddingLeft + state.hoverIndex * barSlotWidth + barSlotWidth / 2;
+        const hY = mouseY !== null && mouseY >= paddingTop && mouseY <= (volTopY + volumeHeight) 
+                   ? mouseY 
+                   : getY(hoverBar.close);
+
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 1;
+
+        // 垂直标尺
+        ctx.beginPath();
+        ctx.moveTo(hX, paddingTop);
+        ctx.lineTo(hX, volTopY + volumeHeight);
+        ctx.stroke();
+
+        // 水平标尺
+        ctx.beginPath();
+        ctx.moveTo(paddingLeft, hY);
+        ctx.lineTo(width - paddingRight, hY);
+        ctx.stroke();
+        ctx.restore();
+
+        // X 轴时间标牌
+        ctx.fillStyle = '#0f172a';
+        const timeBadgeW = 95;
+        ctx.fillRect(hX - timeBadgeW / 2, volTopY + volumeHeight + 4, timeBadgeW, 18);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(hoverBar.dateTime.slice(5), hX, volTopY + volumeHeight + 17);
+
+        // Y 轴双向标牌：右轴实际股价，左轴对数收益率 (以 0% 基准标线为原点)
+        if (hY <= volTopY) {
+          const curP = getPriceFromY(hY);
+          const curRet = ((curP - zeroPrice) / zeroPrice) * 100;
+          const s = curRet >= 0 ? '+' : '';
+
+          // 右侧实际股价
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(width - paddingRight + 2, hY - 9, 64, 18);
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'left';
+          ctx.font = 'bold 10.5px sans-serif';
+          ctx.fillText(`$${curP.toFixed(2)}`, width - paddingRight + 6, hY + 4);
+
+          // 左侧对数收益率
+          const leftBadgeW = 60;
+          ctx.fillStyle = curRet >= 0 ? '#b91c1c' : '#047857';
+          ctx.fillRect(paddingLeft - leftBadgeW - 2, hY - 9, leftBadgeW, 18);
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'right';
+          ctx.font = 'bold 10.5px sans-serif';
+          ctx.fillText(`${s}${curRet.toFixed(1)}%`, paddingLeft - 6, hY + 4);
+        }
+      }
+
+      // 边框
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.strokeRect(paddingLeft, paddingTop, plotWidth, klineHeight);
+      ctx.strokeRect(paddingLeft, volTopY, plotWidth, volumeHeight);
+    }
+
+    // 辅助折线指标绘制
+    function drawLineIndicator(bars, field, color, lineWidth, paddingLeft, barSlotWidth, getY, lineDash = null) {
+      const ctx = klineCanvas.getContext('2d');
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      if (lineDash) ctx.setLineDash(lineDash);
+
+      let started = false;
+      ctx.beginPath();
+      for (let i = 0; i < bars.length; i++) {
+        const val = bars[i][field];
+        if (val === null || val === undefined) continue;
+        const x = paddingLeft + i * barSlotWidth + barSlotWidth / 2;
+        const y = getY(val);
+        if (!started) {
+          ctx.moveTo(x, y);
+          started = true;
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // 辅助安全绘制圆角矩形 (兼容所有浏览器引擎，防报错，并始终显式开启独立路径杜绝污染前序线条)
+    function safeRoundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(x, y, w, h, r);
+      } else {
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+    }
+
+    // 底部 1 年 253 个交易日全景价格走势与选区缩略导航 (Overview Minimap)
+    function renderTimelineStrip() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = stripWrapper.getBoundingClientRect();
+      stripCanvas.width = rect.width * dpr;
+      stripCanvas.height = rect.height * dpr;
+
+      const ctx = stripCanvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      const width = rect.width;
+      const height = rect.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const days = state.rawDataset.daily_summaries;
+      if (!days || days.length === 0) return;
+
+      const totalDays = days.length;
+      const stepW = width / totalDays;
+
+      // 布局尺寸划分
+      const topBadgeH = 15;
+      const axisH = 18;
+      const chartTop = topBadgeH;
+      const chartBottom = height - axisH;
+      const chartH = chartBottom - chartTop;
+
+      // 1. 计算全年价格与成交量极值
+      let minPrice = Infinity;
+      let maxPrice = -Infinity;
+      let maxVol = 0;
+      let minIdx = 0;
+      let maxIdx = 0;
+
+      for (let i = 0; i < totalDays; i++) {
+        const c = days[i].close;
+        const v = days[i].volume;
+        if (c < minPrice) { minPrice = c; minIdx = i; }
+        if (c > maxPrice) { maxPrice = c; maxIdx = i; }
+        if (v > maxVol) maxVol = v;
+      }
+
+      const pPad = (maxPrice - minPrice) * 0.08 || 10;
+      const plotMin = minPrice - pPad;
+      const plotMax = maxPrice + pPad;
+
+      const getStripY = (p) => chartBottom - ((p - plotMin) / (plotMax - plotMin)) * chartH;
+
+      // 2. 绘制成交量背景柱 (置于图表底部 14px)
+      for (let i = 0; i < totalDays; i++) {
+        const x = i * stepW;
+        const vH = (days[i].volume / maxVol) * 14;
+        ctx.fillStyle = days[i].change >= 0 ? 'rgba(239, 68, 68, 0.25)' : 'rgba(16, 185, 129, 0.25)';
+        ctx.fillRect(x, chartBottom - vH, Math.max(stepW - 0.5, 1), vH);
+      }
+
+      // 3. 绘制全年价格走势曲线 (SOXX Close Price Area Chart)
+      ctx.save();
+      // 3.1 渐变面积填充
+      const grad = ctx.createLinearGradient(0, chartTop, 0, chartBottom);
+      grad.addColorStop(0, 'rgba(59, 130, 246, 0.28)');
+      grad.addColorStop(1, 'rgba(59, 130, 246, 0.02)');
+
+      ctx.beginPath();
+      ctx.moveTo(0, chartBottom);
+      for (let i = 0; i < totalDays; i++) {
+        const x = i * stepW + stepW / 2;
+        const y = getStripY(days[i].close);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(width, chartBottom);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // 3.2 价格主折线
+      ctx.beginPath();
+      for (let i = 0; i < totalDays; i++) {
+        const x = i * stepW + stepW / 2;
+        const y = getStripY(days[i].close);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 1.8;
+      ctx.stroke();
+      ctx.restore();
+
+      // 3.3 标记最高点与最低点
+      const maxPtX = maxIdx * stepW + stepW / 2;
+      const maxPtY = getStripY(maxPrice);
+      const minPtX = minIdx * stepW + stepW / 2;
+      const minPtY = getStripY(minPrice);
+
+      ctx.font = 'bold 9px sans-serif';
+      // 峰值标记 (红色微点 + 价格)
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath(); ctx.arc(maxPtX, maxPtY, 2.5, 0, Math.PI * 2); ctx.fill();
+      ctx.textAlign = maxPtX > width - 60 ? 'right' : 'center';
+      ctx.fillText(`$${maxPrice.toFixed(0)} 峰`, maxPtX, Math.max(maxPtY - 3, chartTop + 9));
+
+      // 谷值标记 (绿色微点 + 价格)
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath(); ctx.arc(minPtX, minPtY, 2.5, 0, Math.PI * 2); ctx.fill();
+      ctx.textAlign = minPtX < 60 ? 'left' : 'center';
+      ctx.fillText(`$${minPrice.toFixed(0)} 谷`, minPtX, minPtY + 9);
+
+      // 4. 绘制底部分离式日期轴 (Date Axis Track)
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, chartBottom, width, axisH);
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, chartBottom);
+      ctx.lineTo(width, chartBottom);
+      ctx.stroke();
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '9px sans-serif';
+      ctx.textAlign = 'center';
+      let prevM = '';
+      for (let i = 0; i < totalDays; i++) {
+        const m = days[i].date.slice(0, 7);
+        if (m !== prevM) {
+          prevM = m;
+          const x = i * stepW;
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.beginPath();
+          ctx.moveTo(x, chartBottom);
+          ctx.lineTo(x, height);
+          ctx.stroke();
+
+          const label = m.slice(5) === '01' ? m : m.slice(5) + '月';
+          ctx.fillText(label, x + 18, height - 5);
+        }
+      }
+
+      // 5. 计算当前多日选中区间 (Active Selection Range)
+      const allDates = days.map(d => d.date);
+      const startIdx = Math.max(allDates.findIndex(d => d >= state.startDate), 0);
+      let endIdx = allDates.findIndex(d => d > state.endDate);
+      if (endIdx === -1) endIdx = allDates.length;
+
+      const selX = startIdx * stepW;
+      const selW = Math.max((endIdx - startIdx) * stepW, 8);
+      const spanDays = endIdx - startIdx;
+
+      // 6. 遮罩非选区 (Spotlight Effect: 未选中的历史区间半透明压暗)
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.08)';
+      if (selX > 0) {
+        ctx.fillRect(0, 0, selX, chartBottom);
+      }
+      if (selX + selW < width) {
+        ctx.fillRect(selX + selW, 0, width - (selX + selW), chartBottom);
+      }
+
+      // 7. 绘制选区窗口外框 (Selection Window Frame)
+      ctx.fillStyle = minimapState.isDragging ? 'rgba(37, 99, 235, 0.12)' : 'rgba(37, 99, 235, 0.05)';
+      ctx.fillRect(selX, 0, selW, height);
+
+      // 上下边框
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = minimapState.isDragging ? 2.5 : 2;
+      ctx.beginPath();
+      ctx.moveTo(selX, 1); ctx.lineTo(selX + selW, 1);
+      ctx.moveTo(selX, height - 1); ctx.lineTo(selX + selW, height - 1);
+      ctx.stroke();
+
+      // 左右竖线
+      ctx.beginPath();
+      ctx.moveTo(selX, 0); ctx.lineTo(selX, height);
+      ctx.moveTo(selX + selW, 0); ctx.lineTo(selX + selW, height);
+      ctx.stroke();
+
+      // 8. 绘制左右边缘抓取把手 (Thumb Handles)
+      drawHandle(ctx, selX, height);
+      drawHandle(ctx, selX + selW, height);
+
+      // 9. 标示选区实时信息徽标 (Floating Capsule Badge)
+      const badgeText = minimapState.isDragging 
+                        ? `⚡ 实时滑动: ${spanDays}交易日 (${state.startDate.slice(5)} ~ ${state.endDate.slice(5)})` 
+                        : `选区: ${spanDays}交易日 · ${state.startDate.slice(5)} ~ ${state.endDate.slice(5)}`;
+      
+      ctx.font = 'bold 9px sans-serif';
+      const badgeW = ctx.measureText(badgeText).width + 14;
+      const badgeX = Math.max(selX + selW / 2 - badgeW / 2, 4);
+      const clampedBadgeX = Math.min(badgeX, width - badgeW - 4);
+
+      ctx.fillStyle = minimapState.isDragging ? '#1d4ed8' : '#0f172a';
+      ctx.beginPath();
+      safeRoundRect(ctx, clampedBadgeX, 2, badgeW, 15, 3);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText(badgeText, clampedBadgeX + badgeW / 2, 13);
+    }
+
+    // 辅助绘制两侧把手
+    function drawHandle(ctx, x, h) {
+      const hw = 7;
+      const hh = 32;
+      const hy = (h - hh) / 2;
+
+      ctx.save();
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 1.5;
+
+      ctx.beginPath();
+      safeRoundRect(ctx, x - hw / 2, hy, hw, hh, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      // 把手中间 2 条防滑抓取纹
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x - 1, hy + 9); ctx.lineTo(x - 1, hy + hh - 9);
+      ctx.moveTo(x + 1, hy + 9); ctx.lineTo(x + 1, hy + hh - 9);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // 启动
+    initApp();
+  </script>
+</body>
+</html>

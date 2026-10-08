@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+  body { font-family: -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; color: #222; background: #fff; }
+  header, main { padding: 10px 16px; }
+  header { border-bottom: 1px solid #bbb; }
+  h1 { font-size: 18px; margin: 0 0 6px; }
+  .meta { font-size: 12px; color: #444; line-height: 1.6; }
+  .warn { border: 1px solid #999; background: #f3f3f3; padding: 6px 8px; margin: 6px 0; font-size: 13px; }
+  .badge { display: inline-block; border: 1px solid #888; padding: 0 6px; margin-right: 4px; font-size: 12px; }
+  #mapwrap { max-width: 760px; }
+  svg { display: block; width: 100%; height: auto; }
+  .axis text, .tick { font-size: 10px; fill: #555; }
+  .pt { cursor: pointer; }
+  .lbl { font-size: 9px; fill: #333; pointer-events: none; }
+  fieldset { border: 1px solid #bbb; font-size: 12px; margin: 6px 0; }
+  .frow { margin: 3px 0; line-height: 1.9; }
+  .frow b { display: inline-block; min-width: 64px; }
+  .frow label { white-space: nowrap; margin-right: 8px; }
+  .frow button { font-size: 11px; margin-right: 4px; }
+  #fcount { font-size: 12px; color: #333; }
+  #unknown button, #chooser button { margin: 2px; font-size: 12px; }
+  #panel { position: fixed; top: 0; right: 0; width: 620px; max-width: 100%; height: 100%; overflow: auto; background: #fff;
+           border-left: 1px solid #888; box-shadow: -2px 0 6px rgba(0,0,0,.15); padding: 10px 14px; box-sizing: border-box; }
+  #panel[hidden] { display: none; }
+  #panel h2 { font-size: 16px; margin: 4px 0; }
+  #close { float: right; font-size: 16px; }
+  table { border-collapse: collapse; font-size: 12px; width: 100%; }
+  td, th { border: 1px solid #ccc; padding: 2px 4px; text-align: left; vertical-align: top; }
+  .legend span { display: inline-block; margin-right: 10px; font-size: 12px; }
+  .sw { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 3px; }
+  .ranges button[aria-pressed="true"] { font-weight: bold; border-width: 2px; }
+  @media (max-width: 760px) {
+    #panel { top: auto; bottom: 0; width: 100%; height: 78vh; border-left: 0; border-top: 1px solid #888; }
+    header, main { padding: 8px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title"></h1>
+  <div class="meta" id="meta"></div>
+  <div id="banners"></div>
+</header>
+<main>
+  <fieldset id="filters"><legend>筛选（不改变坐标）</legend></fieldset>
+  <div id="mapwrap"><svg id="map" viewBox="0 0 640 470" role="img" aria-label="V-G 地图"></svg></div>
+  <div class="meta">横轴 V 波动幅度（asinh(V/0.20)，刻度为实际年化值），纵轴 G 长期方向（asinh(G/0.50)）。
+    颜色 = M（蓝 反向 / 灰 接近零 / 橙 延续 / 白 未知）；形状 = J（圆 较分散 / 菱形 较集中 / 十字 未知）；
+    外环 = S（实线 较稳定 / 虚线 较易变 / 点线 未知）。* = 价格未到评估截止（沿用较早收盘）。坐标轴固定，不随本次股票自动缩放。</div>
+  <h3 style="font-size:14px">无地图坐标（G 或 V 未知）——仍可查看详情</h3>
+  <div id="unknown"></div>
+</main>
+<aside id="panel" hidden aria-label="证券详情">
+  <button id="close" aria-label="关闭">×</button>
+  <div id="chooser"></div>
+  <div id="detail"></div>
+</aside>
+<script type="application/json" id="data">__DATA_JSON__</script>
+<script>/*VIEW_LOGIC*/</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var L = window.ViewLogic, NS = 'http://www.w3.org/2000/svg';
+  var TR = ['G', 'V', 'M', 'J', 'S'], COLORS = { G: '#1b5e20', V: '#b71c1c', M: '#0d47a1', J: '#6a1b9a', S: '#555' };
+  var NAMES = { G: 'G 长期方向', V: 'V 波动幅度', M: 'M 收益组织', J: 'J 跳变集中', S: 'S 历史稳定度' };
+  var lt = D.latest, cutoff = lt.evaluation_cutoff, range = 30, current = null, selDate = null;
+  function el(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function h(tag, text, parent) { var e = document.createElement(tag); if (text !== undefined) e.textContent = text; if (parent) parent.appendChild(e); return e; }
+  function fmt(v, d) { return v === null || v === undefined ? '—' : (+v).toFixed(d === undefined ? 3 : d); }
+  var ULABEL = D.universe_label || (lt.universe.source && lt.universe.source.group) || '股票池';
+  document.getElementById('title').textContent = ULABEL + ' · five_traits_v2 地图 · 评估截止 ' + cutoff + '（' + lt.observation_mode + '）';
+  var GL = (lt.universe.source && lt.universe.source.group_labels) || {};
+  function glabel(g) { return (GL[g] && GL[g].label) ? GL[g].label : g; }
+  var c = lt.counts, src = lt.universe.source;
+  document.getElementById('meta').innerHTML = '';
+  var meta = document.getElementById('meta');
+  h('div', 'report_run_id ' + lt.report_run_id + ' · data_run_id ' + lt.data.data_run_id + ' · 计算时间 ' + lt.computed_at_shanghai + '（北京时间） · 渲染 ' + D.render_id, meta);
+  if (src.type === 'ai_value_chain_screen') {
+    h('div', '成员来源：' + src.basket_path + '（built_at ' + src.basket_built_at + '，共 ' + src.basket_total + '）× ' + src.screen_path + '（' + src.screen_run_id + '，as_of ' + src.screen_as_of + '）· 档位 ' + (src.grades || []).join('/') + '（研究优先级，不是质量或收益评级）', meta);
+  } else {
+    h('div', '成员来源：' + src.type + (src.path ? ' ' + src.path : '') + ' · 分组 ' + (src.group || '—') + ' · 成员观测时间 ' + src.observed_at + ' (UTC)', meta);
+  }
+  if (D.price_basis && D.price_basis.label) {
+    var bs = D.price_basis.by_source ? Object.keys(D.price_basis.by_source).map(function (k) { return k + ' ' + D.price_basis.by_source[k]; }).join(' · ') : '';
+    h('div', '价格口径：' + D.price_basis.label + (bs ? ' · 来源分布 ' + bs : '') + ((D.price_basis.qfq_rebase_detected_vs_reuse || []).length ? ' · 复权基准变化(与旧文件比) ' + D.price_basis.qfq_rebase_detected_vs_reuse.length + ' 只' : ''), meta);
+  }
+  h('div', '成员 ' + c.members + ' · 五项全算 ' + c.evaluated_all_five + ' · 部分 ' + c.partial + ' · 未知 ' + c.unknown + ' · 有地图坐标 ' + c.with_map_coordinates + ' · 价格过期 ' + c.price_stale, meta);
+  var ban = document.getElementById('banners');
+  var pa = (lt.source_cutoffs.market_daily_price_asof_values || []);
+  if (pa.length && pa[pa.length - 1] < cutoff) h('div', '行情未到评估截止：价格截至 ' + pa.join(', ') + '，评估截止 ' + cutoff + '。地图使用最近完整收盘，不是新行情。', ban).className = 'warn';
+  var b = h('div', '', ban); ['新闻 未接入', '估值 未接入', '业务评级 未接入', '无综合分数'].forEach(function (t) { h('span', t, b).className = 'badge'; });
+  // filters (never change coordinates): class / grade / value-chain group / ticker search / labels
+  var fs = document.getElementById('filters');
+  function tg(s) { return s.tags || {}; }
+  function filterRow(title, kind, keys, counts, labelOf) {
+    var st = {}; if (!keys.length) return st;
+    var row = h('div', '', fs); row.className = 'frow'; row.setAttribute('data-filter', kind); h('b', title, row);
+    var boxes = [];
+    if (keys.length > 3) {
+      var all = h('button', '全选', row); all.type = 'button'; all.setAttribute('data-act', 'all');
+      var none = h('button', '全不选', row); none.type = 'button'; none.setAttribute('data-act', 'none');
+      all.onclick = function () { boxes.forEach(function (b) { b.checked = true; st[b.value] = true; }); refresh(); };
+      none.onclick = function () { boxes.forEach(function (b) { b.checked = false; st[b.value] = false; }); refresh(); };
+    }
+    keys.forEach(function (k) { st[k] = true; var lab = h('label', '', row); var cb = h('input', undefined, lab); cb.type = 'checkbox'; cb.checked = true; cb.value = k; cb.setAttribute('data-' + kind, k); boxes.push(cb);
+      cb.onchange = function () { st[k] = cb.checked; refresh(); }; lab.appendChild(document.createTextNode(' ' + labelOf(k) + '（' + (counts[k] || 0) + '）')); });
+    return st;
+  }
+  function tally(fn) { var o = {}; D.securities.forEach(function (s) { fn(s).forEach(function (k) { o[k] = (o[k] || 0) + 1; }); }); return o; }
+  var cCnt = tally(function (s) { return [s.class]; });
+  var shown = filterRow('类别', 'class', Object.keys(cCnt).sort(), cCnt, function (k) { return k; });
+  var hasTags = D.securities.some(function (s) { return s.tags; });
+  var GORDER = ['A+', 'A', 'A-', 'B'];
+  var gCnt = hasTags ? tally(function (s) { return tg(s).grade ? [tg(s).grade] : ['—']; }) : {};
+  var grades = Object.keys(gCnt).sort(function (a, b) { return (GORDER.indexOf(a) + 99) % 99 - (GORDER.indexOf(b) + 99) % 99; });
+  var shownGrade = filterRow('档位', 'grade', grades, gCnt, function (k) { return k; });
+  var vgCnt = hasTags ? tally(function (s) { return (tg(s).groups && tg(s).groups.length) ? tg(s).groups : ['—']; }) : {};
+  var gkeys = Object.keys(GL).length ? Object.keys(GL).sort(function (a, b) { return ((GL[a].order || 0) - (GL[b].order || 0)) || (a < b ? -1 : 1); }) : Object.keys(vgCnt).sort();
+  if (vgCnt['—']) gkeys.push('—');
+  var shownGroup = hasTags ? filterRow('价值链分组', 'group', gkeys, vgCnt, glabel) : {};
+  var row2 = h('div', '', fs); row2.className = 'frow';
+  h('b', '代码', row2); var q = h('input', undefined, row2); q.type = 'search'; q.id = 'fsearch'; q.placeholder = '代码或名称'; q.oninput = function () { refresh(); };
+  var ll = h('label', '', row2); var lcb = h('input', undefined, ll); lcb.type = 'checkbox'; lcb.id = 'flabels'; ll.appendChild(document.createTextNode(' 显示代码标签'));
+  var mapped = D.securities.filter(function (s) { return s.map; }).length; lcb.checked = mapped <= 80; lcb.onchange = function () { drawMap(); };
+  var fc = h('span', '', row2); fc.id = 'fcount';
+  function visible(s) {
+    if (!shown[s.class]) return false;
+    if (hasTags) {
+      if (!shownGrade[tg(s).grade || '—']) return false;
+      var gs = (tg(s).groups && tg(s).groups.length) ? tg(s).groups : ['—'];
+      if (!gs.some(function (g) { return shownGroup[g]; })) return false;
+    }
+    var t = (q.value || '').trim().toUpperCase();
+    if (t && (s.ticker + ' ' + (s.name || '') + ' ' + s.id).toUpperCase().indexOf(t) < 0) return false;
+    return true;
+  }
+  function refresh() { drawMap(); drawUnknown(); }
+  // fixed map scale
+  var M = { l: 50, r: 620, t: 15, b: 430 }, XD = [0, 3.5], YD = [-2.6, 2.6];
+  function sx(x) { return M.l + (Math.min(Math.max(x, XD[0]), XD[1]) - XD[0]) / (XD[1] - XD[0]) * (M.r - M.l); }
+  function sy(y) { return M.b - (Math.min(Math.max(y, YD[0]), YD[1]) - YD[0]) / (YD[1] - YD[0]) * (M.b - M.t); }
+  function mcol(cat) { return cat === '反向' ? '#3b6fb6' : cat === '延续' ? '#d9822b' : cat === '接近零' ? '#999' : '#fff'; }
+  function drawMap() {
+    var svg = document.getElementById('map'); while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var ax = el('g', { 'class': 'axis' }, svg);
+    el('rect', { x: M.l, y: M.t, width: M.r - M.l, height: M.b - M.t, fill: 'none', stroke: '#999' }, ax);
+    [0.1, 0.2, 0.35, 0.5, 1, 2, 3].forEach(function (v) { var x = sx(Math.asinh(v / 0.2)); el('line', { x1: x, x2: x, y1: M.t, y2: M.b, stroke: v === 0.35 ? '#666' : '#e3e3e3', 'stroke-dasharray': v === 0.35 ? '4 3' : '' }, ax); var t = el('text', { x: x, y: M.b + 14, 'text-anchor': 'middle' }, ax); t.textContent = v; });
+    [-3, -1, -0.5, -0.1, 0, 0.1, 0.5, 1, 3].forEach(function (g) { var y = sy(Math.asinh(g / 0.5)); el('line', { x1: M.l, x2: M.r, y1: y, y2: y, stroke: Math.abs(g) === 0.1 ? '#666' : '#e3e3e3', 'stroke-dasharray': Math.abs(g) === 0.1 ? '4 3' : '' }, ax); var t = el('text', { x: M.l - 4, y: y + 3, 'text-anchor': 'end' }, ax); t.textContent = g; });
+    var tx = el('text', { x: (M.l + M.r) / 2, y: 462, 'text-anchor': 'middle' }, ax); tx.textContent = 'V 年化波动（0.35 = 较低/较高界）';
+    var ty = el('text', { x: 12, y: (M.t + M.b) / 2, transform: 'rotate(-90 12 ' + (M.t + M.b) / 2 + ')', 'text-anchor': 'middle' }, ax); ty.textContent = 'G 年化 log 增长（±0.10 界）';
+    D.securities.forEach(function (s) {
+      if (!s.map || !visible(s)) return;
+      var p = s.points[s.points.length - 1], t = p.traits, x = sx(s.map.x), y = sy(s.map.y);
+      var g = el('g', { 'class': 'pt', 'data-id': s.id, tabindex: 0, opacity: (p.stale_sessions.length ? 0.8 : 1) }, svg);
+      var sdash = t.S.category === '较稳定' ? '' : (t.S.category === '较易变' ? '3 2' : '1 2');
+      el('circle', { cx: x, cy: y, r: 9, fill: 'none', stroke: '#222', 'stroke-width': 1.3, 'stroke-dasharray': sdash }, g);
+      if (t.J.category === '较集中') el('rect', { x: x - 4.5, y: y - 4.5, width: 9, height: 9, transform: 'rotate(45 ' + x + ' ' + y + ')', fill: mcol(t.M.category), stroke: '#333' }, g);
+      else if (t.J.category === '较分散') el('circle', { cx: x, cy: y, r: 5, fill: mcol(t.M.category), stroke: '#333' }, g);
+      else el('path', { d: 'M' + (x - 5) + ' ' + y + 'H' + (x + 5) + 'M' + x + ' ' + (y - 5) + 'V' + (y + 5), stroke: '#333' }, g);
+      var tt = el('title', {}, g); tt.textContent = s.ticker + ' G=' + fmt(t.G.value) + ' V=' + fmt(t.V.value);
+      g.addEventListener('keydown', function (e) { if (e.key === 'Enter') openIds([s.id]); });
+      if (!document.getElementById('flabels').checked) return;
+      var lb = el('text', { x: x + 11, y: y + 3, 'class': 'lbl' }, svg); var clamped = s.map.x > XD[1] || s.map.y > YD[1] || s.map.y < YD[0]; lb.textContent = s.ticker + (p.stale_sessions.length ? '*' : '') + (clamped ? ' (超出坐标范围，贴边显示)' : '');
+    });
+    var nv = D.securities.filter(function (s) { return s.map && visible(s); }).length;
+    document.getElementById('fcount').textContent = ' 地图显示 ' + nv + ' / ' + mapped + '（共 ' + D.securities.length + ' 只）';
+    svg.setAttribute('data-visible', String(nv));
+  }
+  document.getElementById('map').addEventListener('click', function (e) {
+    var svg = e.currentTarget, pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    var q = pt.matrixTransform(svg.getScreenCTM().inverse()), hits = [];
+    D.securities.forEach(function (s) { if (!s.map || !visible(s)) return; var dx = sx(s.map.x) - q.x, dy = sy(s.map.y) - q.y; if (dx * dx + dy * dy <= 13 * 13) hits.push(s.id); });
+    if (hits.length) openIds(hits);
+  });
+  var uk = document.getElementById('unknown');
+  function drawUnknown() { uk.innerHTML = '';
+    D.securities.filter(function (s) { return !s.map && visible(s); }).forEach(function (s) { var bt = h('button', s.ticker + '（' + (s.unknown_reason || s.status) + '）', uk); bt.onclick = function () { openIds([s.id]); }; }); }
+  drawUnknown();
+  function byId(id) { return D.securities.filter(function (s) { return s.id === id; })[0]; }
+  function openIds(ids) {
+    var p = document.getElementById('panel'), ch = document.getElementById('chooser'); ch.innerHTML = '';
+    if (ids.length > 1) { h('div', '此处重叠 ' + ids.length + ' 只证券，选择：', ch); ids.forEach(function (id) { var bt = h('button', byId(id).ticker, ch); bt.onclick = function () { show(id); }; }); }
+    p.hidden = false; show(ids[0]);
+  }
+  function closePanel() { document.getElementById('panel').hidden = true; current = null; }
+  document.getElementById('close').onclick = closePanel;
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+  function show(id) { current = byId(id); var pts = current.points; selDate = pts.length ? pts[pts.length - 1].date : null; drawDetail(); }
+  function drawDetail() {
+    var s = current, d = document.getElementById('detail'); d.innerHTML = '';
+    h('h2', s.ticker + ' · ' + (s.name || '') , d);
+    h('div', s.id + ' · ' + s.class + ' · 状态 ' + s.status + (s.unknown_reason ? '（' + s.unknown_reason + '）' : '') + ' · 新闻 ' + s.news + ' · 估值 ' + s.valuation, d).className = 'meta';
+    if (s.tags) h('div', '档位 ' + (s.tags.grade || '—') + (s.tags.verified_grade ? '（已核查 ' + s.tags.verified_grade + '）' : '') + ' · AI 相关度 tier ' + (s.tags.tier || '—') + ' · 分组 ' + (s.tags.groups || []).map(glabel).join('、') + (s.tags.primary_group ? ' · 主分组 ' + glabel(s.tags.primary_group) : ''), d).className = 'meta';
+    if (s.data_source) h('div', '价格来源：' + (s.data_source.type === 'opend_fresh' ? 'OpenD 新拉 QFQ 日K' : s.data_source.type === 'reused_file' ? '复用已有 QFQ 日K ' + (s.data_source.path || '') : s.data_source.type) + (s.data_source.rebase_detected_vs_reuse ? ' · 与旧文件比复权基准已变（用新拉）' : ''), d).className = 'meta';
+    if (s.detail) h('div', s.detail, d).className = 'meta';
+    var rg = h('div', '展示范围（日历天，含评估截止日；不改变 120/60/20 计算窗口）：', d); rg.className = 'ranges';
+    [14, 30, 60].forEach(function (n) { var bt = h('button', n + ' 天', rg); bt.setAttribute('aria-pressed', String(range === n)); bt.onclick = function () { range = n; drawDetail(); }; });
+    var svg = el('svg', { viewBox: '0 0 600 250', id: 'timeline', role: 'img', 'aria-label': '五维时间图' }); d.appendChild(svg);
+    var P = { l: 34, r: 590, t: 10, b: 215 }, end = L.dayNum(cutoff), start = end - (range - 1);
+    function tx(date) { return P.l + (L.dayNum(date) - start) / Math.max(1, end - start) * (P.r - P.l); }
+    function ty(v) { return P.b - v / 100 * (P.b - P.t); }
+    el('rect', { x: P.l, y: P.t, width: P.r - P.l, height: P.b - P.t, fill: 'none', stroke: '#999' }, svg);
+    [0, 25, 50, 75, 100].forEach(function (v) { el('line', { x1: P.l, x2: P.r, y1: ty(v), y2: ty(v), stroke: '#eee' }, svg); var t = el('text', { x: P.l - 4, y: ty(v) + 3, 'text-anchor': 'end', 'class': 'tick' }, svg); t.textContent = v; });
+    var step = range <= 14 ? 2 : (range <= 30 ? 5 : 10);
+    for (var k = 0; k < range; k += step) { var dd = new Date((end - k) * 86400000).toISOString().slice(0, 10); var xx = tx(dd); el('line', { x1: xx, x2: xx, y1: P.b, y2: P.b + 4, stroke: '#999' }, svg); var t2 = el('text', { x: xx, y: P.b + 15, 'text-anchor': 'middle', 'class': 'tick' }, svg); t2.textContent = dd.slice(5); }
+    var pts = L.cropPoints(s.points, cutoff, range);
+    TR.forEach(function (T) {
+      L.segments(pts, T).forEach(function (sg) { var ln = el('line', { x1: tx(sg.from.date), y1: ty(sg.from.v), x2: tx(sg.to.date), y2: ty(sg.to.v), stroke: COLORS[T], 'stroke-width': 1.5, 'stroke-dasharray': sg.gapDays > 3 ? '5 3' : '' }, svg); var tt = el('title', {}, ln); tt.textContent = T + '：' + sg.from.date + ' → ' + sg.to.date + '，间隔 ' + sg.gapDays + ' 天' + (sg.gapDays > 3 ? '（中间未计算，仅连端点）' : ''); });
+      pts.forEach(function (p) { var v = p.traits[T].display; if (v === null || v === undefined) { el('text', { x: tx(p.date), y: P.b - 3, 'text-anchor': 'middle', 'class': 'tick' }, svg).textContent = '×'; return; } var c = el('circle', { cx: tx(p.date), cy: ty(v), r: 4, fill: COLORS[T], 'class': 'pt', 'data-date': p.date }, svg); var tt = el('title', {}, c); tt.textContent = T + ' ' + p.date + ' 显示值 ' + fmt(v, 1) + ' 原始 ' + fmt(p.traits[T].value); c.onclick = function () { selDate = p.date; drawDetail(); }; });
+    });
+    if (!pts.length) el('text', { x: 300, y: 120, 'text-anchor': 'middle', 'class': 'tick' }, svg).textContent = '此范围内没有保存的计算结果';
+    var lg = h('div', '', d); lg.className = 'legend';
+    TR.forEach(function (T) { var sp = h('span', '', lg); var sw = h('span', '', sp); sw.className = 'sw'; sw.style.background = COLORS[T]; sp.appendChild(document.createTextNode(NAMES[T])); });
+    h('div', '纵轴为固定 0–100 显示映射（G=50(1+tanh(G/.5)), V=50(1+tanh((V-.35)/.25)), M=50(1+M), J=100J, S=100S）；不是概率，不同维度不可比较优劣。点只出现在已保存的计算结果处；× = 该次记录未知（断线）。', d).className = 'meta';
+    var p = s.points.filter(function (x) { return x.date === selDate; })[0];
+    if (!p) { h('div', '没有保存的计算结果。', d); return; }
+    h('h3', '日期详情 ' + p.date, d).style.fontSize = '14px';
+    var info = h('table', '', d);
+    [['评估截止', p.date], ['价格截至', (p.price_asof || '—') + (p.stale_sessions.length ? '（缺 ' + p.stale_sessions.join(', ') + '）' : '')], ['计算时间（北京）', p.computed_at], ['模式', p.mode === 'live' ? 'live 实际运行' : '历史回算'], ['report_run_id', p.report_run_id], ['data_run_id', p.data_run_id], ['连续收盘数', p.contiguous_closes === undefined ? '—' : p.contiguous_closes], ['修订历史', s.superseded_versions.length ? s.superseded_versions.map(function (v) { return v.date + ' ' + v.report_run_id; }).join('; ') : '无']].forEach(function (r) { var tr = h('tr', '', info); h('th', r[0], tr); h('td', String(r[1]), tr); });
+    var tb = h('table', '', d); var hr = h('tr', '', tb); ['标签', '原始值', '单位', '显示值', '类别', 'p10–p90', '类别频率（重采样倾向，未校准）', '状态'].forEach(function (x) { h('th', x, hr); });
+    TR.forEach(function (T) { var t = p.traits[T], tr = h('tr', '', tb); h('td', NAMES[T], tr); h('td', fmt(t.value, 4), tr); h('td', t.unit || '', tr); h('td', fmt(t.display, 1), tr); h('td', t.category || '未知', tr); h('td', t.p10 === null || t.p10 === undefined ? '—' : fmt(t.p10) + ' – ' + fmt(t.p90), tr); h('td', t.freq ? Object.keys(t.freq).map(function (k) { return k + ' ' + (100 * t.freq[k]).toFixed(1) + '%'; }).join(' / ') : '—', tr); h('td', t.status + (t.reason ? '：' + t.reason : ''), tr); });
+  }
+  drawMap();
+})();
+</script>
+</body>
+</html>

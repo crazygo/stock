@@ -1,0 +1,183 @@
+<div id="tq-map-v1">
+  <style>
+    #tq-map-v1 { color:var(--foreground); font-variant-numeric:tabular-nums; }
+    #tq-map-v1 .tq-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:12px 0; }
+    #tq-map-v1 .tq-controls label { display:grid; gap:5px; min-width:0; }
+    #tq-map-v1 .tq-chart { width:100%; display:block; }
+    #tq-map-v1 .tq-legend { display:flex; flex-wrap:wrap; gap:12px; margin:8px 0; }
+    #tq-map-v1 .tq-probs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:12px 0; }
+    #tq-map-v1 .tq-prob { display:grid; gap:5px; }
+    #tq-map-v1 .tq-track { background:var(--muted); height:8px; }
+    #tq-map-v1 .tq-track span { display:block; height:100%; background:var(--foreground); }
+    #tq-map-v1 .tq-detail { display:grid; gap:9px; margin:14px 0; }
+    #tq-map-v1 .tq-chart text { fill:var(--foreground); font-family:inherit; }
+    #tq-map-v1 .tq-chart .tq-grid { stroke:var(--border); stroke-width:1; }
+    #tq-map-v1 .tq-chart .tq-axis { stroke:var(--foreground); stroke-width:1; }
+    #tq-map-v1 .tq-table { overflow-x:auto; }
+    #tq-map-v1 summary { margin:10px 0; }
+    #tq-map-v1 td, #tq-map-v1 th { white-space:nowrap; }
+    #tq-map-v1 .tq-missing { display:flex; flex-wrap:wrap; gap:8px; margin:9px 0; }
+    @media(max-width:460px) { #tq-map-v1 .tq-probs { grid-template-columns:repeat(2,minmax(0,1fr)); } #tq-map-v1 .tq-controls { grid-template-columns:1fr; } }
+  </style>
+  <h2>四象限概率地图</h2>
+  <div id="tq-meta" class="text-small"></div>
+  <div class="tq-controls">
+    <label class="form-label">自选范围<select id="tq-pool" class="form-select"><option value="all">全部股票与基金</option><option value="favorite">特别关注</option><option value="quality">质量 A+ / A 股票</option><option value="ai">已建立 AI 业务路径</option><option value="stocks">股票</option><option value="funds">基金</option></select></label>
+    <label class="form-label">观察窗口<select id="tq-window" class="form-select"><option value="20">20 个交易日收益区间</option><option value="60" selected>60 个交易日收益区间</option><option value="120">120 个交易日收益区间</option></select></label>
+    <label class="form-label">画像截止<select id="tq-date" class="form-select"></select></label>
+    <label class="form-label">选择股票 / 基金<select id="tq-security" class="form-select"></select></label>
+  </div>
+  <div id="tq-count" class="text-small" aria-live="polite"></div>
+  <svg id="tq-scatter" class="tq-chart" role="img" aria-label="自选证券四象限地图，横轴风险，纵轴跳变和阶段不稳定"></svg>
+  <div class="tq-legend text-small"><span>● 股票</span><span>□ 基金</span><span>空心：下行 / 震荡</span><span>路径：所选证券的周画像迁移</span></div>
+  <div id="tq-detail" class="tq-detail" aria-live="polite"></div>
+  <div id="tq-probs" class="tq-probs"></div>
+  <svg id="tq-history" class="tq-chart" role="img" aria-label="所选证券四类归属概率随周观察日期变化"></svg>
+  <details id="tq-pugh"><summary>所选证券的 8 维 Pugh 依据</summary><div id="tq-matrix" class="tq-table"></div></details>
+  <details><summary id="tq-pending-title">未评分证券</summary><div id="tq-pending" class="tq-missing"></div></details>
+  <div class="viz-row"><button id="tq-export" type="button" class="btn">导出当前范围 CSV</button><span class="text-small">归属模型概率 · 未经类型标签校准 · 不代表上涨概率</span></div>
+  <div id="tq-extra"></div>
+  <script>
+  (() => {
+    const root=document.getElementById("tq-map-v1");
+    const D=__DATA__;
+    for(const r of D.records)r.history=r.history.map(a=>Object.fromEntries(D.history_fields.map((k,i)=>[k,a[i]]).filter(v=>v[1]!=null)));
+    const $=id=>root.querySelector("#"+id);
+    const C=D.classes, saved=window.openai?.widgetState?.privateContent||{};
+    if(!D.standalone)$("tq-export").hidden=true;
+    const state={pool:saved.pool||"all",window:saved.window||"60",date:saved.date||D.as_of,code:saved.code||"US.NVDA"};
+    const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+    const pct=(v,d=1)=>v==null?"—":(100*v).toFixed(d)+"%";
+    const signpct=v=>v==null?"—":(v>=0?"+":"")+pct(v);
+    const reason=t=>({insufficient_history:"上市历史不足",missing_sessions:"缺少应有交易日",invalid_prices:"价格异常",unavailable:"行情不可用"}[t?.status]||t?.status||"未计算");
+    const metaTime=new Date(D.watchlist_observed_at).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai",hour12:false});
+    $("tq-meta").textContent=`自选读取：${metaTime} 北京时间 · 已完成日线截止：${D.as_of} · ${D.summary.securities} 个证券 / ${D.summary.excluded_non_securities} 个非证券条目`;
+    for(const day of D.history_dates){const o=document.createElement("option");o.value=day;o.textContent=day+(day===D.as_of?" · 最新":" · 60日周画像");$("tq-date").append(o);}
+    if(!D.history_dates.includes(state.date))state.date=D.as_of;
+    function list(){return D.records.filter(r=>state.pool==="all"||(state.pool==="favorite"&&r.favorite)||(state.pool==="quality"&&["A+","A"].includes(r.quality_grade))||(state.pool==="ai"&&r.ai_related)||(state.pool==="stocks"&&r.kind==="STOCK")||(state.pool==="funds"&&r.kind==="ETF"));}
+    function row(r){return state.date===D.as_of?r.windows[state.window]:(r.history.find(t=>t.as_of===state.date)||{status:"unavailable"});}
+    function save(){if(window.openai?.setWidgetState)Promise.resolve(window.openai.setWidgetState({modelContent:{selected_security:state.code,as_of:state.date,window:Number(state.window),pool:state.pool},privateContent:{...state}})).catch(()=>{});}
+    function svgEl(tag,attrs,text){const el=document.createElementNS("http://www.w3.org/2000/svg",tag);for(const [k,v] of Object.entries(attrs||{}))el.setAttribute(k,v);if(text!==undefined)el.textContent=text;return el;}
+    function label(svg,x,y,text,anchor="start",cls=""){svg.append(svgEl("text",{x,y,"text-anchor":anchor,class:cls},text));}
+    function marker(svg,r,t,x,y,selected=false){
+      const attrs={fill:t.direction==="上行"?"var(--foreground)":"var(--background)",stroke:"var(--foreground)","stroke-width":selected?2:1,opacity:selected?1:.65,"data-code":r.code};
+      const m=r.kind==="ETF"?svgEl("rect",{...attrs,x:x-4,y:y-4,width:8,height:8}):svgEl("circle",{...attrs,cx:x,cy:y,r:selected?6:4});
+      m.setAttribute("data-tooltip",`${r.symbol} · ${t.direction||""} · ${C[t.dominant]} ${pct(Math.max(...t.p))}`);
+      m.setAttribute("aria-label",`${r.code} ${r.name}，${C.map((c,i)=>c+" "+pct(t.p[i])).join("，")}`);svg.append(m);
+    }
+    function renderScatter(rows){
+      const svg=$("tq-scatter"),w=Math.max(280,root.clientWidth),h=w<480?440:530,pad={l:64,r:20,t:40,b:70};
+      svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.setAttribute("height",h);svg.replaceChildren();
+      const x=v=>pad.l+(v+1)/2*(w-pad.l-pad.r),y=v=>h-pad.b-(v+1)/2*(h-pad.t-pad.b);
+      svg.append(svgEl("rect",{x:pad.l,y:pad.t,width:w-pad.l-pad.r,height:h-pad.t-pad.b,fill:"none",stroke:"var(--border)","data-chart-frame":""}));
+      const ticks=w<480?[-1,0,1]:[-1,-.5,0,.5,1];
+      for(const t of ticks){svg.append(svgEl("line",{x1:x(t),x2:x(t),y1:pad.t,y2:h-pad.b,class:t===0?"tq-axis":"tq-grid"}));svg.append(svgEl("line",{x1:pad.l,x2:w-pad.r,y1:y(t),y2:y(t),class:t===0?"tq-axis":"tq-grid"}));label(svg,x(t),h-pad.b+19,t.toFixed(1),"middle","text-small");label(svg,pad.l-8,y(t)+4,t.toFixed(1),"end","text-small");}
+      label(svg,x(-.52),pad.t-14,"事件台阶","middle");label(svg,x(.52),pad.t-14,"高波动反转","middle");
+      label(svg,x(-.52),h-pad.b+42,"平稳累积","middle");label(svg,x(.52),h-pad.b+42,"波动累积","middle");
+      const xaxis=svgEl("text",{x:x(0),y:h-4,"text-anchor":"middle",class:"text-small axis-title","data-axis":"x"},w<480?"风险 Pugh：低波动 → 高波动":"风险 Pugh：低波动 / 浅回撤 → 高波动 / 深回撤");svg.append(xaxis);
+      const axis=svgEl("text",{x:15,y:(pad.t+h-pad.b)/2,transform:`rotate(-90 15 ${(pad.t+h-pad.b)/2})`,"text-anchor":"middle",class:"text-small axis-title","data-axis":"y"},"跳变 / 阶段不稳定 Pugh →");svg.append(axis);
+      const selected=rows.find(r=>r.code===state.code);
+      if(selected){
+        const t=row(selected);
+        if(t.status==="scored"&&t.xy_interval){const [lo,hi]=t.xy_interval;svg.append(svgEl("rect",{x:x(lo[0]),y:y(hi[1]),width:x(hi[0])-x(lo[0]),height:y(lo[1])-y(hi[1]),fill:"var(--foreground)",opacity:.06}));}
+        if(state.window==="60"){
+          let previous=null;
+          for(const t of selected.history.filter(t=>t.as_of<=state.date)){
+            if(t.status!=="scored"){previous=null;continue;}
+            if(previous)svg.append(svgEl("line",{x1:x(previous.x),y1:y(previous.y),x2:x(t.x),y2:y(t.y),stroke:"var(--foreground)","stroke-width":1.3,opacity:.35}));
+            svg.append(svgEl("circle",{cx:x(t.x),cy:y(t.y),r:2,fill:"var(--foreground)",opacity:.4}));previous=t;
+          }
+        }
+      }
+      const points=rows.filter(r=>row(r).status==="scored");
+      for(const r of points)if(r.code!==state.code){const t=row(r);marker(svg,r,t,x(t.x),y(t.y));}
+      const occupied=[];
+      const priority=[...points].sort((a,b)=>(b.code===state.code)-(a.code===state.code)||Number(b.favorite)-Number(a.favorite)||a.code.localeCompare(b.code));
+      for(const r of priority){const t=row(r),px=x(t.x),py=y(t.y);if(r.code===state.code)marker(svg,r,t,px,py,true);
+        const width=r.symbol.length*7.5,height=15;
+        for(const offset of [[7,-7],[7,16],[-width-7,-7],[-width-7,16]]){
+          const box={x:px+offset[0],y:py+offset[1]-height,w:width,h:height};
+          const overlap=occupied.some(o=>box.x<o.x+o.w+2&&box.x+box.w+2>o.x&&box.y<o.y+o.h+2&&box.y+box.h+2>o.y);
+          if(!overlap&&box.x>=pad.l&&box.x+box.w<w-pad.r&&box.y>=pad.t&&box.y+box.h<=h-pad.b){label(svg,box.x,box.y+height,r.symbol,"start","text-small");occupied.push(box);break;}
+        }
+      }
+      svg.onclick=e=>{
+        const box=svg.getBoundingClientRect(),px=(e.clientX-box.left)*w/box.width,py=(e.clientY-box.top)*h/box.height;
+        const nearest=points.map(r=>({r,d:Math.hypot(x(row(r).x)-px,y(row(r).y)-py)})).sort((a,b)=>a.d-b.d)[0];
+        if(nearest&&nearest.d<28){state.code=nearest.r.code;render();save();}
+      };
+    }
+    function renderHistory(r){
+      const svg=$("tq-history"),w=Math.max(280,root.clientWidth),h=190,pad={l:64,r:15,t:25,b:40};
+      svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.setAttribute("height",h);svg.replaceChildren();
+      const legend=root.querySelector("#tq-history-legend");if(legend)legend.remove();
+      const history=r.history||[];if(!history.some(t=>t.status==="scored")){label(svg,10,30,"60日周画像：历史不足");return;}
+      const x=i=>pad.l+i/Math.max(1,history.length-1)*(w-pad.l-pad.r),y=v=>h-pad.b-v*(h-pad.t-pad.b);
+      svg.append(svgEl("rect",{x:pad.l,y:pad.t,width:w-pad.l-pad.r,height:h-pad.t-pad.b,fill:"none",stroke:"var(--border)","data-chart-frame":""}));
+      for(const v of [0,.5,1]){svg.append(svgEl("line",{x1:pad.l,x2:w-pad.r,y1:y(v),y2:y(v),class:"tq-grid"}));label(svg,pad.l-6,y(v)+4,pct(v,0),"end","text-small");}
+      const styles=["","5 3","2 3","8 3 2 3"];
+      for(let k=0;k<4;k++){
+        let commands=[];
+        for(let i=0;i<history.length;i++){const t=history[i];if(t.status!=="scored"||t.as_of>state.date){commands.push(null);continue;}commands.push([x(i),y(t.p[k])]);}
+        let d="",previous=false;
+        for(const v of commands){if(v){d+=(previous?"L":"M")+v.join(",");previous=true;}else previous=false;}
+        svg.append(svgEl("path",{d,fill:"none",stroke:"var(--foreground)","stroke-width":1.4,"stroke-dasharray":styles[k],opacity:1-k*.12}));
+      }
+      const step=w<480?6:3;for(let i=0;i<history.length;i++)if(i%step===0||i===history.length-1){
+        if(i>0&&i<history.length-1&&x(history.length-1)-x(i)<70)continue;
+        label(svg,x(i),h-22,history[i].as_of.slice(5),i===0?"start":i===history.length-1?"end":"middle","text-small");
+      }
+      label(svg,pad.l,15,"60日归属概率 · 周观察","start","text-small");
+      svg.append(svgEl("text",{x:(pad.l+w-pad.r)/2,y:h-2,"text-anchor":"middle",class:"text-small axis-title","data-axis":"x"},"观察日期"));
+      svg.append(svgEl("text",{x:15,y:(pad.t+h-pad.b)/2,transform:`rotate(-90 15 ${(pad.t+h-pad.b)/2})`,"text-anchor":"middle",class:"text-small axis-title","data-axis":"y"},"归属概率（%）"));
+      const div=document.createElement("div");div.id="tq-history-legend";div.className="tq-legend text-small";div.textContent="实线：平稳累积　长虚线：波动上行　点线：事件台阶　点划线：高波动反转";svg.after(div);
+    }
+    function renderDetail(rows){
+      const r=rows.find(v=>v.code===state.code),area=$("tq-detail");$("tq-probs").replaceChildren();$("tq-matrix").replaceChildren();
+      if(!r){area.textContent="该范围没有证券";$("tq-history").replaceChildren();return;}
+      const t=row(r),grade=r.kind==="ETF"?"基金 · 公司质量评级不适用":r.quality_grade||"业务质量待评级";
+      if(t.status!=="scored"){
+        area.innerHTML=`<strong>${esc(r.code)} · ${esc(r.name)}</strong><span>${esc(grade)} · ${esc(reason(t))}</span><span>${esc(r.coverage?.fetch_error||"")}</span>`;
+        renderHistory(r);return;
+      }
+      const status=state.date!==D.as_of?(Math.max(...t.p)>=.65?"周画像倾向 · 敏感性未复算":"混合倾向"):(t.clear_tendency?"倾向较明确":"混合 / 边界敏感");
+      const stable=t.observed_stable_weeks??r.history.find(v=>v.as_of===state.date)?.observed_stable_weeks;
+      area.innerHTML=`<strong>${esc(r.code)} · ${esc(r.name)}</strong><span>${esc(grade)} · ${esc(t.direction)} · ${status}${stable>0?" · 近16次观察中连续 "+stable+" 次倾向一致":" · 尚无稳定倾向"}</span><span>窗口收益 ${signpct(t.price_return)} · 年化波动 ${pct(t.measurements?.[0])} · 最大收盘回撤 ${pct(t.measurements?.[1])} · 概率熵 ${t.entropy.toFixed(2)}</span>${r.structure?"<span>"+esc(r.structure)+" · 多日收益受每日重置影响</span>":""}<span class="text-small">${esc(t.start||"")} → ${esc(t.actual_last_day||t.as_of)} · ${t.calendar_verified?"官方交易日覆盖已核验":"观察日覆盖，官方日历未核验"} · 本币价格 · 10–90%坐标带为重采样范围</span>`;
+      if(t.low_liquidity_observed){const warning=document.createElement("span");warning.textContent="成交量覆盖警示：窗口内超过10%的日线成交量为零；画像不证明流动性或可成交性。";area.append(warning);}
+      C.forEach((c,i)=>{const div=document.createElement("div");div.className="tq-prob";div.innerHTML=`<span>${esc(c)}</span><strong>${pct(t.p[i])}</strong><div class="tq-track"><span style="width:${100*t.p[i]}%"></span></div>`;$("tq-probs").append(div);});
+      if(t.measurements){
+        const rows=D.feature_names.map((f,i)=>{const v=t.measurements[i],datum=D.datum[i],z=t.z[i],weight=i<4?D.weight_x[i]:D.weight_y[i-4];const fmt=i===6?v.toFixed(2):pct(v);const fmtDatum=i===6?datum.toFixed(2):pct(datum);return `<tr><td>${esc(f)}</td><td>${i<4?"风险 X":"不连续 Y"}</td><td>${fmt}</td><td>${fmtDatum}</td><td>${z.toFixed(3)}</td><td>${pct(weight,0)}</td><td>${(z*weight).toFixed(3)}</td></tr>`;}).join("");
+        $("tq-matrix").innerHTML=`<table class="table table-sm"><thead><tr><th>指标</th><th>轴</th><th>实测</th><th>中性基准</th><th>Pugh值</th><th>组内权重</th><th>轴贡献</th></tr></thead><tbody>${rows}</tbody></table><div class="text-small">原始坐标 X=${t.x.toFixed(3)}，Y=${t.y.toFixed(3)} · 基准±15% / 5与10日时间块敏感性：${t.sensitivity?.length? t.sensitivity.map(v=>C[v.dominant]).join(" / "):"历史点未另跑敏感性"}</div>`;
+      }else $("tq-matrix").textContent="历史点仅保留坐标和四项概率；完整8维依据见当前截止。";
+      renderHistory(r);
+    }
+    function render(){
+      if(state.date!==D.as_of)state.window="60";
+      $("tq-pool").value=state.pool;$("tq-window").value=state.window;$("tq-date").value=state.date;
+      const rows=list().sort((a,b)=>a.code.localeCompare(b.code));if(!rows.some(r=>r.code===state.code))state.code=rows[0]?.code;
+      $("tq-security").replaceChildren();for(const r of rows){const o=document.createElement("option");o.value=r.code;o.textContent=`${r.code} · ${r.name}${row(r).status!=="scored"?" · 未评分":""}`;$("tq-security").append(o);}$("tq-security").value=state.code;
+      const scored=rows.filter(r=>row(r).status==="scored"),pending=rows.filter(r=>row(r).status!=="scored");
+      $("tq-count").textContent=`${scored.length} 个地图点 · ${pending.length} 个未评分 · 历史观察仅60日窗口 · 每点均保留，标签按重叠情况显示`;
+      renderScatter(rows);renderDetail(rows);
+      $("tq-pending-title").textContent=`未评分证券（${pending.length}）`;
+      $("tq-pending").replaceChildren();for(const r of pending){const b=document.createElement("button");b.type="button";b.className="btn";b.textContent=r.code+" · "+reason(row(r));b.onclick=()=>{state.code=r.code;render();save();};$("tq-pending").append(b);}
+      if(D.standalone){
+        $("tq-extra").innerHTML=`<details><summary>全部当前范围明细（${rows.length}）</summary><div class="tq-table"><table class="table table-sm"><thead><tr><th>证券</th><th>名称</th><th>方向</th>${C.map(c=>"<th>"+esc(c)+"</th>").join("")}<th>状态</th></tr></thead><tbody>${rows.map(r=>{const t=row(r);return `<tr><td><button type="button" class="btn btn-ghost" data-security="${esc(r.code)}">${esc(r.code)}</button></td><td>${esc(r.name)}</td><td>${esc(t.direction||"—")}</td>${[0,1,2,3].map(k=>"<td>"+(t.p?pct(t.p[k]):"—")+"</td>").join("")}<td>${t.status==="scored"?(t.clear_tendency?"倾向较明确":"混合 / 边界敏感"):esc(reason(t))}</td></tr>`;}).join("")}</tbody></table></div></details><details><summary>数学规则与边界</summary><p>横轴由年化波动、收盘回撤、尾部亏损、日振幅组成；纵轴由大波动集中、隔夜能量、漂移变化、方向碎片化组成。每维对固定基准做连续Pugh比较，两组各自加权。</p><p>zⱼ = tanh((mⱼ − dⱼ)/sⱼ)，X = Σwₓⱼzⱼ，Y = Σwᵧⱼzⱼ。</p><p>联合日序列按5日移动块重采样512次，权重按Dirichlet(40w)变化；四象限归属 pₖ = (Nₖ + 0.5)/(512 + 2)。这只是在本版假设下的归属概率，未做人工类型标签校准。</p><p>60日画像按周低通平滑：pₜ = .65qₜ + .35pₜ₋₁；若原始概率发生较大变化或日线缺失，则立即重置。稳定期为已经观察到的连续倾向，不能推断未来持续多久。20/120日画像独立展示。</p><p>业务质量来自 ${esc(D.quality_as_of)} 的现有规则。待评级仍保留，ETF不套公司评级。当前自选历史回看不是历史PIT成员；收益、类型与操作策略有效性分别处理。</p><p>策略关联：平稳累积对应低频持有/再平衡；波动上行对应风险仓位与波段验证；事件台阶对应明确事件假设和跳空预算；高波动反转对应状态切换复核。均未验证优于买入持有。</p><p>运行 ${esc(D.run_id)} · ${esc(D.model_version)} · 原始Parquet本地保存、不上传R2、不接券商交易。</p></details><details><summary>非证券条目（${D.excluded.length}）</summary><div>${D.excluded.map(r=>esc(r.code)+" · "+esc(r.name)).join("<br>")}</div></details>`;
+        for(const b of root.querySelectorAll("[data-security]"))b.onclick=()=>{state.code=b.dataset.security;render();save();};
+      }
+    }
+    $("tq-pool").onchange=e=>{state.pool=e.target.value;render();save();};
+    $("tq-window").onchange=e=>{state.window=e.target.value;if(state.window!=="60")state.date=D.as_of;render();save();};
+    $("tq-date").onchange=e=>{state.date=e.target.value;render();save();};
+    $("tq-security").onchange=e=>{state.code=e.target.value;render();save();};
+    $("tq-export").onclick=()=>{
+      const lines=[["code","name","as_of","window","status","direction",...C,"X","Y"]];for(const r of list()){const t=row(r);lines.push([r.code,r.name,state.date,state.window,t.status,t.direction||"",...(t.p||["","","",""]),t.x??"",t.y??""]);}
+      const content="\ufeff"+lines.map(v=>v.map(s=>'"'+String(s).replace(/"/g,'""')+'"').join(",")).join("\n");
+      const url=URL.createObjectURL(new Blob([content],{type:"text/csv;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download=`trend-${state.date}-${state.window}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    };
+    let resizeTimer;new ResizeObserver(()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{const rows=list();renderScatter(rows);const r=rows.find(r=>r.code===state.code);if(r)renderHistory(r);},80);}).observe(root);
+    window.addEventListener("openai:set_globals",e=>{const s=e.detail?.globals?.widgetState?.privateContent;if(s){Object.assign(state,s);render();}});
+    render();
+  })();
+  </script>
+</div>

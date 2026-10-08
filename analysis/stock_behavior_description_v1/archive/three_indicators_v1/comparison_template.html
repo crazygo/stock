@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>股票历史描述 · 多股对比</title>
+<style>
+:root{--bg:#fff;--fg:#222;--secondary:#666;--line:#c5c5c5;--muted:#f2f2f2;color-scheme:light;font:14px/1.45 system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg)}main{max-width:1680px;margin:auto;padding:16px 20px 40px}h1{font-size:22px;font-weight:600;margin:0}h2{font-size:16px;font-weight:600;margin:0}h3{font-size:15px;font-weight:600;margin:0}p{margin:7px 0}.small,.muted{font-size:12px}.muted{color:var(--secondary)}button,input,select{font:inherit;color:inherit;background:white;border:1px solid #aaa;border-radius:2px;padding:6px 8px;max-width:100%}button{cursor:pointer}button:hover{background:#eee}button:disabled{color:#999;cursor:default}input[type=checkbox]{margin:0;accent-color:#555}a{color:inherit;text-underline-offset:3px}:focus-visible{outline:2px solid #555;outline-offset:2px}[hidden]{display:none!important}
+.layout{display:grid;grid-template-columns:258px minmax(0,1fr);gap:20px;align-items:start;margin-top:12px}.sidebar{position:sticky;top:12px;max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line);padding:12px;display:grid;gap:12px;min-width:0;scrollbar-gutter:stable}.sidebar label.control{display:grid;gap:4px;font-size:12px}.sidebar input[type=date],.sidebar input[type=search],.sidebar select{width:100%;min-width:0}.shortcuts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.shortcuts button{padding:5px 2px;font-size:12px}.sidebar .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.sidebar hr{width:100%;border:0;border-top:1px solid var(--line);margin:0}.sidebar summary{font-size:12px;cursor:pointer}.content{min-width:0}.wall-heading{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px}.view-legend{font-size:12px;color:var(--secondary);margin-bottom:8px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{border:1px solid var(--line);padding:10px;min-width:0}.card-head{display:flex;gap:8px;align-items:center;justify-content:space-between;min-height:26px}.card-title{display:flex;gap:6px;align-items:baseline;min-width:0;flex:1}.card-title h3{white-space:nowrap;flex:none}.card-name{font-size:12px;color:var(--secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.detail-link{font-size:12px;flex:none}.badge{font-size:10px;border:1px solid #ccc;padding:1px 3px}.chart{min-height:278px;touch-action:pan-y}.chart svg{display:block;width:100%;height:auto;overflow:hidden}.chart svg text{font:11px system-ui,sans-serif;fill:var(--fg);pointer-events:none}.price-probe-hit{cursor:crosshair}.metric-lines{display:grid;gap:5px;margin:5px 0 3px}.metric-line{display:grid;grid-template-columns:67px minmax(20px,1fr) 97px;gap:7px;align-items:center;font-size:12px;line-height:18px}.metric-label{font-weight:600;white-space:nowrap}.metric-bar{height:11px;background:#eee;border:1px solid #aaa}.metric-bar i{display:block;height:100%;background:#555}.metric-value{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.metric-line.unknown .metric-bar{background:repeating-linear-gradient(90deg,#eee 0px,#eee 3px,#fff 3px,#fff 6px)}.card-footer{font-size:11px;color:#666;min-height:17px}.probe{font-size:10px;color:#555;min-height:27px;line-height:13px;margin-top:4px;overflow-wrap:anywhere}.pan-controls{display:flex;gap:5px;align-items:center;margin:5px 0}.pan-controls button{font-size:10px;padding:2px 5px}.pan-controls input{width:100%;min-width:0;padding:0;border:0;accent-color:#666;height:16px}.pan-controls [type=range]{flex:1}.mini{cursor:pointer;border:1px solid #ccc;touch-action:pan-y}.mini svg{display:block;width:100%;height:auto}.mini svg text{font:10px system-ui;fill:#555}.empty{padding:28px 12px;border:1px solid #ccc;color:#666}.help{border-top:1px solid var(--line);margin-top:18px;padding-top:12px}.help summary{cursor:pointer;font-size:12px}.help p{font-size:12px;max-width:105ch}code{font-size:11px;overflow-wrap:anywhere}#message{font-size:12px;color:#555}#parameterStatus{font-size:11px;color:#666}.sidebar .apply{width:100%}.mini-caption{font-size:11px;margin:4px 0}.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}.coverage-warning{font-size:10px;color:#666;margin-top:2px}.type-note{font-size:11px;color:#555}
+@media(max-width:1190px){.layout{grid-template-columns:230px minmax(0,1fr);gap:14px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:720px){main{padding:12px}.layout{grid-template-columns:minmax(0,1fr)}.sidebar{position:static;max-height:none;overflow:visible;grid-template-columns:1fr 1fr;gap:10px}.sidebar .full{grid-column:1/-1}.sidebar hr{grid-column:1/-1}.sidebar .settings-row{grid-column:1/-1}.grid{grid-template-columns:minmax(0,1fr)}.sidebar .mini-section{display:none}.card{padding:9px}.chart svg text{font-size:11px}h1{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style></head><body><main>
+<header><h1>股票历史描述 · 多股对比</h1><div id="meta" class="small muted"></div></header>
+<div class="layout">
+<aside class="sidebar" aria-label="所有股票的统一对比设置">
+ <h2 class="full">统一观察范围</h2>
+ <label class="control">日线起点<input id="from" type="date" required></label>
+ <label class="control">共同终点<input id="end" type="date" required></label>
+ <button id="applyDates" class="apply full">应用日期</button>
+ <div class="shortcuts full"><button data-days="30">30天</button><button data-days="60">60天</button><button data-days="90">90天</button><button data-days="180">180天</button></div>
+ <div id="rangeHint" class="small muted full"></div>
+ <label class="row full small"><input id="showWeek" type="checkbox" checked>显示周线</label>
+ <label class="row full small"><input id="showSlope" type="checkbox" checked>显示前后半段斜率</label>
+ <hr>
+ <label class="control full">类型<select id="scope"><option value="all">全部特别关注</option><option value="stock">公司股票</option><option value="etf">ETF</option></select></label>
+ <label class="control full">搜索代码／名称<input id="search" type="search" placeholder="MXL, CRDO, AMAT"></label>
+ <div class="small muted full">逗号分隔可选择多只股票并排比较。</div>
+ <label class="control full">按指标排序<select id="sort"><option value="members">特别关注顺序</option><option value="up_desc">偏上行：高 → 低</option><option value="up_asc">偏上行：低 → 高</option><option value="quietUp_desc">较平顺上行：高 → 低</option><option value="quietUp_asc">较平顺上行：低 → 高</option><option value="repeated_desc">反复折返：高 → 低</option><option value="repeated_asc">反复折返：低 → 高</option><option value="code">代码</option></select></label>
+ <button id="clearFilters" class="full">清除筛选和排序</button>
+ <hr>
+ <label class="control full">指标描述范围<select id="metricRange"><option value="daily">日线区间 · N天</option><option value="weekly">周线背景 · 7N天</option></select></label>
+ <div id="metricHint" class="small muted full"></div>
+ <details class="full"><summary>探索描述规则</summary><div class="settings-row" style="margin-top:8px"><label class="control">折返幅度<select id="threshold"><option value="0.03">3%</option><option value="0.05" selected>5%</option><option value="0.08">8%</option><option value="0.10">10%</option></select></label><label class="control">历史窗口<select id="windowSize"><option value="10">10日变化</option><option value="20" selected>20日变化</option><option value="40">40日变化</option></select></label></div><div class="row" style="margin-top:8px"><button id="applyParams">应用</button><button id="resetParams">恢复默认</button></div><p id="parameterStatus">默认规则；人工语义审查中。</p></details>
+ <div id="message" class="full" role="status"></div>
+ <section class="mini-section full"><h3>两年快速导航</h3><div id="miniLabel" class="mini-caption"></div><div id="mini" class="mini" tabindex="0" role="slider" aria-label="固定两年真实日OHLC导航；左右移动七日，Home和End跳转"></div><div class="small muted">点击跳转所有图。实框为日线范围，虚框为周线范围。← / → 移动7日。</div></section>
+</aside>
+<section class="content" aria-label="多股票日线周线与历史描述比较">
+ <div class="wall-heading"><h2 id="heading"></h2><span id="count" class="small muted" aria-live="polite"></span></div>
+ <div class="view-legend">窄蜡烛：日线 · 宽浅蜡烛：周线。上下轴日期不同，共用价格轴。趋势按日线交易日等分：前50%虚线／后50%实线，斜率为对数%/交易日。</div>
+ <div id="grid" class="grid"></div><div id="empty" class="empty" hidden>当前筛选没有股票。清除筛选可恢复全部特别关注。</div>
+ <details class="help"><summary>指标如何解释 · 日期、覆盖与数据来源</summary>
+ <p>三条指标使用与上一版相同的历史描述计算：偏上行为净收益大于0且方向效率≥0.20；较平顺上行还要求日log波动≤2%；反复折返为窗口中至少3段达到所选幅度的交替方向变化。默认20个交易日变化，需要21个连续收盘。比例＝符合描述的完整历史窗口数／全部完整历史窗口数，允许同时符合多个描述。</p>
+ <p>主视图用于跨股票比较这些比例与图形；默认指标对应日线选择区间，左栏可统一改为周线背景区间。周线本身由真实日OHLC聚合；指标计算仍使用该背景区间内的连续日收盘。改变范围或探索参数会重算全部股票，尚未表示语义验收通过。</p>
+ <p>两段斜率是独立的图形辅助展示，不参与三条指标。始终把整个日线观察范围按官方交易日位置等分，前半⌊n/2⌋个收盘，后半剩余收盘（奇数时后半多1日），分别拟合 log(Cₜ)=α+βt。显示100β，单位为对数%/交易日；正数向上、负数向下。后−前＝100(β后−β前)，为两段趋势速度差，不是瞬时加速度或未来判断。两段独立拟合，不强制在中点相接；中点不是自动识别的变坡日期。平移、周线显隐及指标参数不会改变这两段拟合。缺收盘或日历未核验的半段留空，日期和收盘数量可查看标注说明。</p>
+ <p>绘图直接复用参考页 price_chart.js：日线N个日历天，周线7N个日历天，各自铺满横向范围、共同右端对齐。每张图的两层共用一个实际价格轴；不同股票各自有价格范围。过长范围通过各卡片的平移按钮／滑条查看全部位置；指标仍使用整个指定区间。图内滚轮、触控板、双指与拖拽不缩放。</p>
+ <p>没有填补缺失OHLC。周线起点截断、未完周、缺交易日、未核验日历保留虚线及悬浮依据。选择范围可能超过实际捕获或上市历史，缺失不算成0%。当前特别关注回看不是历史成员。这里的百分数是已发生窗口的比例，不是未来胜率。</p>
+ <div id="sourceNote" class="small muted"></div>
+ <p>单股分钟证据、原始数学量、基本面资料和审查意见保留在卡片“详情”中；参考布局为<a href="../ai_trend_quadrant_v2/index.html">五属性连续评估 v2 · 多股票对比</a>。</p>
+ </details>
+</section></div>
+</main><script>__CORE__</script><script>__PRICE_OVERLAY__</script><script>__SLOPE_OVERLAY__</script><script type="application/json" id="dataset">__DATA__</script>
+<script>
+'use strict';
+const D=JSON.parse(document.getElementById('dataset').textContent),P=D.prices,B=Behavior,PC=PriceOverlay,SO=SlopeOverlay,$=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=v=>v==null?'—':(v*100).toFixed(1)+'%';
+const members=D.records,calendars={US:{start:'2024-01-01',end:'2026-12-31',days:P.us_sessions,early_close:P.us_early_close},HK:{start:P.hk_calendar.start,end:P.hk_calendar.end,days:B.calendar(P,'HK.CALENDAR',P.hk_calendar.start,P.hk_calendar.end),early_close:[]}};
+const prices=new Map(members.map(r=>[r.code,{code:r.code,name:r.name,market:r.code.split('.')[0],currency:r.code.startsWith('US.')?'USD':'HKD',listing_date:r.listing_date==='1970-01-01'?null:r.listing_date,bars:P.records[r.code]||[]} ]));
+const state={from:B.shifts(P.as_of,-59),end:P.as_of,week:true,slope:true,scope:'all',search:'',sort:'members',metricRange:'daily',cfg:{...B.DEFAULTS},navCode:members.some(r=>r.code==='US.MXL')?'US.MXL':members[0].code};
+let descriptions=new Map(),filtered=[],views=new Map(),reviewCacheKey=null;
+const weeklyFrom=()=>PC.start(state.end,(Math.round((PC.ts(state.end)-PC.ts(state.from))/PC.DAY)+1)*7);
+const metricFrom=()=>state.metricRange==='weekly'?weeklyFrom():state.from;
+$('meta').textContent=`特别关注 ${members.length}个证券 · 快照 ${D.members.observed_at.replace('T',' ').slice(0,19)} UTC · 历史描述人工审查中`;
+$('sourceNote').textContent=`日线请求 ${P.requested_start}—${P.as_of}；53证券有效日线截至10-07，HK.03006／HK.07747截至10-06。各卡片详情保留实际捕获、上市范围及原始SHA。模型SHA ${D.model_sha256}；绘图代码SHA ${D.price_renderer_sha256}。`;
+for(const id of ['from','end']){$(id).min=P.requested_start;$(id).max=P.as_of}
+function syncControls(){
+ $('from').value=state.from;$('end').value=state.end;
+ let n=Math.round((PC.ts(state.end)-PC.ts(state.from))/PC.DAY)+1;
+ $('heading').textContent=`日线 ${n} 天 × 周线 ${n*7} 天`;
+ $('rangeHint').textContent=`日历天，含终点。周线 ${weeklyFrom()}—${state.end}。`;
+ $('metricHint').textContent=`指标：${metricFrom()}—${state.end}。每段${state.cfg.window}个交易日变化；数字为比例 · 符合数/完整窗口数。`;
+}
+function calculate(){let key=JSON.stringify([metricFrom(),state.end,state.cfg]);if(key===reviewCacheKey)return;reviewCacheKey=key;descriptions=new Map(members.map(r=>[r.code,B.describe(P,r.code,metricFrom(),state.end,state.cfg)]))}
+function selectedMembers(){
+ const queries=state.search.toLowerCase().split(/[,，;；]/).map(s=>s.trim()).filter(Boolean);
+ let rows=members.filter(r=>(state.scope==='all'||state.scope==='stock'&&r.kind==='STOCK'||state.scope==='etf'&&r.kind==='ETF')&&(!queries.length||queries.some(q=>(r.code+' '+r.name).toLowerCase().includes(q))));
+ if(state.sort==='code')rows.sort((a,b)=>a.code.localeCompare(b.code));
+ else if(state.sort!=='members'){let [key,dir]=state.sort.split('_'),sign=dir==='asc'?1:-1;rows.sort((a,b)=>{let x=descriptions.get(a.code).shares?.[key],y=descriptions.get(b.code).shares?.[key];if(x==null)return y==null?0:1;if(y==null)return -1;return sign*(x-y)})}
+ return rows;
+}
+function metricMarkup(x){let s=x.shares;return [['偏上行','up','upN'],['较平顺上行','quietUp','quietN'],['反复折返','repeated','repeatedN']].map(([label,key,number])=>`<div class="metric-line ${s?'':'unknown'}" data-metric="${key}" data-value="${s?.[key]??''}"><span class="metric-label">${label}</span><div class="metric-bar"><i style="width:${s?s[key]*100:0}%"></i></div><span class="metric-value">${s?`${pct(s[key])} · ${s[number]}/${s.n}`:'— · 无完整窗口'}</span></div>`).join('')}
+function detailHref(code){const qs=new URLSearchParams({code,start:metricFrom(),end:state.end,threshold:state.cfg.threshold.toFixed(2),window:String(state.cfg.window)});return 'detail.html?'+qs.toString()}
+function render(){
+ syncControls();calculate();filtered=selectedMembers();$('count').textContent=`${filtered.length}/${members.length}个证券 · 全部连续展示`;$('empty').hidden=!!filtered.length;
+ $('grid').innerHTML=filtered.map(r=>{let x=descriptions.get(r.code),expected=B.calendar(P,r.code,metricFrom(),state.end),partialStart=!!x.observedFirst&&(metricFrom()<calendars[r.code.split('.')[0]].start||expected?.length&&x.observedFirst>expected[0]),status=!x.shares?'窗口不足或日历未核验':x.missing.length?'部分窗口缺日，分母仅含完整窗口':partialStart?'指标仅覆盖 '+x.observedFirst+'—'+x.observedLast:x.observedLast<state.end?'日线实际截至 '+x.observedLast:'';
+  return `<article class="card" data-code="${esc(r.code)}"><header class="card-head"><div class="card-title"><h3>${esc(r.code)}</h3><span class="card-name" title="${esc(r.name)}">${esc(r.name)}</span>${r.kind==='ETF'?'<span class="badge">ETF</span>':''}</div><a class="detail-link" href="${detailHref(r.code)}" target="_blank" rel="noopener">详情</a></header><div class="chart"></div><div class="metric-lines">${metricMarkup(x)}</div><div class="coverage-warning">${esc(status)}</div><div class="probe" aria-live="off"></div><div class="pan-controls" hidden><button data-pan="first" aria-label="${esc(r.code)} 双范围最早">最早</button><button data-pan="prev" aria-label="${esc(r.code)} 双范围向前平移">←</button><input type="range" min="0" step="1" aria-label="${esc(r.code)} 日线周线双范围平移"><button data-pan="next" aria-label="${esc(r.code)} 双范围向后平移">→</button><button data-pan="last" aria-label="${esc(r.code)} 双范围最近">最近</button></div></article>`;
+ }).join('');
+ document.querySelectorAll('.card').forEach(card=>{
+  const code=card.dataset.code;card.querySelector('input[type=range]').oninput=e=>{views.get(code).offset=+e.target.value;views.get(code).probe=null;draw(card)};
+  card.querySelectorAll('[data-pan]').forEach(el=>el.onclick=()=>{let v=views.get(code),l=v.layout,step=Math.max(1,Math.floor(l.count*.7));v.offset=el.dataset.pan==='first'?0:el.dataset.pan==='last'?l.maxOffset:el.dataset.pan==='prev'?l.offset-step:l.offset+step;v.probe=null;draw(card)});draw(card);
+ });mini();
+}
+function probeText(l,u){let p=PC.probe(l,u),d=p.daily,w=p.weekly;
+ let daily=d?.bar?`${d.day} C ${PC.number(d.bar[4])}`:d?.notListed?'上市前':`${d?.day||'—'} 缺日线`;
+ let weekly=w?.o!=null?`${w.periodFrom}—${w.periodEnd} C ${PC.number(w.c)}${w.flags.length?' · '+w.flags.join('、'):''}`:`${w?.periodFrom||'—'} 缺周线`;
+ return {daily,weekly,text:`日 ${daily} ｜ 周 ${weekly}`};
+}
+function draw(card){
+ let code=card.dataset.code,r=prices.get(code),chart=card.querySelector('.chart'),v=views.get(code);
+ if(!v){v={offset:null,probe:null,layout:null};views.set(code,v)}
+ let l=PC.layout(r,calendars[r.market],state.from,state.end,chart.clientWidth,v.offset,{compact:true});v.layout=l;v.offset=l.offset;
+ if(v.probe==null||v.probe<l.u0||v.probe>l.u1)v.probe=l.u1-1e-10;
+ v.slopes=SO.describe(l);let original=PC.svg(l,state.week,v.probe,{id:'wall-'+code.replace(/[^a-zA-Z0-9]/g,'-')});
+ chart.innerHTML=state.slope?SO.svg(original,l,v.slopes,{id:'slope-'+code.replace(/[^a-zA-Z0-9]/g,'-')}):original;
+ let svg=chart.querySelector('svg'),hit=chart.querySelector('.price-probe-hit');svg.setAttribute('tabindex','0');svg.setAttribute('aria-label',code+' 日线N天与周线7N天共用价格轴；左右键核对位置'+(state.slope?'；前后50%日线趋势斜率 '+v.slopes.halves.map(h=>h.beta==null?'不可计算':h.logPercent.toFixed(3)+'%/交易日').join(' → '):''));
+ const ratio=e=>{let box=svg.getBoundingClientRect(),x=(e.clientX-box.left)*l.width/box.width;return Math.max(l.u0,Math.min(l.u1-1e-10,l.u0+(x-l.frame.left)/(l.frame.right-l.frame.left)*(l.u1-l.u0)))};
+ hit.onpointermove=e=>card.querySelector('.probe').textContent=probeText(l,ratio(e)).text;
+ svg.onpointerleave=()=>card.querySelector('.probe').textContent=probeText(l,v.probe).text;
+ hit.onclick=e=>{v.probe=ratio(e);state.navCode=code;draw(card);mini()};
+ svg.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();v.probe=e.key==='Home'?l.u0+1e-10:e.key==='End'?l.u1-1e-10:Math.max(l.u0+1e-10,Math.min(l.u1-1e-10,v.probe+(e.key==='ArrowLeft'?-1:1)/l.total));draw(card);card.querySelector('svg').focus()};
+ card.querySelector('.probe').textContent=probeText(l,v.probe).text;
+ let controls=card.querySelector('.pan-controls'),slider=controls.querySelector('input');controls.hidden=!l.maxOffset;slider.max=l.maxOffset;slider.value=l.offset;controls.querySelector('[data-pan=first]').disabled=controls.querySelector('[data-pan=prev]').disabled=l.offset===0;controls.querySelector('[data-pan=last]').disabled=controls.querySelector('[data-pan=next]').disabled=l.offset===l.maxOffset;
+ slider.setAttribute('aria-valuetext',`日线位置 ${l.visible[0]?.day||'无'}—${l.visible.at(-1)?.day||'无'}；周线位置 ${l.weekly[0]?.periodFrom||'无'}—${l.weekly.at(-1)?.periodEnd||'无'}`);
+}
+function mini(){let r=prices.get(state.navCode),s=P.requested_start,e=P.as_of,width=Math.max(230,$('mini').clientWidth);
+ $('miniLabel').textContent='真实日OHLC参考：'+r.code;$('mini').innerHTML=PC.mini(r,s,e,state.from,state.end,width,weeklyFrom());
+ $('mini').setAttribute('aria-valuemin','0');$('mini').setAttribute('aria-valuemax',String(Math.round((PC.ts(e)-PC.ts(s))/PC.DAY)));$('mini').setAttribute('aria-valuenow',String(Math.round((PC.ts(state.end)-PC.ts(s))/PC.DAY)));$('mini').setAttribute('aria-valuetext',state.from+'至'+state.end);
+ $('mini').onclick=ev=>jump(PC.miniTarget(ev.clientX,$('mini').getBoundingClientRect(),s,e));
+ $('mini').onkeydown=ev=>{let end=ev.key==='ArrowLeft'?B.shifts(state.end,ev.shiftKey?-30:-7):ev.key==='ArrowRight'?B.shifts(state.end,ev.shiftKey?30:7):ev.key==='Home'?s:ev.key==='End'?e:null;if(end){ev.preventDefault();jump(end)}};
+}
+function jump(end){const n=Math.round((PC.ts(state.end)-PC.ts(state.from))/PC.DAY);end=end<P.requested_start?P.requested_start:end>P.as_of?P.as_of:end;setRange(B.shifts(end,-n),end,true)}
+function setRange(from,end,navigation=false){
+ if(!from||!end||from>end||end>P.as_of||!navigation&&from<P.requested_start){$('message').textContent='请输入有效历史日期，终点不得超过行情截止日。';return false}
+ state.from=from;state.end=end;views.clear();$('message').textContent='';render();return true;
+}
+$('applyDates').onclick=()=>setRange($('from').value,$('end').value);document.querySelectorAll('[data-days]').forEach(el=>el.onclick=()=>setRange(B.shifts(state.end,1-Number(el.dataset.days)),state.end));
+$('showWeek').onchange=()=>{state.week=$('showWeek').checked;document.querySelectorAll('.card').forEach(draw)};
+$('showSlope').onchange=()=>{state.slope=$('showSlope').checked;document.querySelectorAll('.card').forEach(draw)};
+$('scope').onchange=()=>{state.scope=$('scope').value;render()};$('sort').onchange=()=>{state.sort=$('sort').value;render()};$('search').oninput=()=>{state.search=$('search').value;render()};
+$('clearFilters').onclick=()=>{state.scope='all';state.search='';state.sort='members';$('scope').value='all';$('search').value='';$('sort').value='members';render()};
+$('metricRange').onchange=()=>{state.metricRange=$('metricRange').value;render()};
+$('applyParams').onclick=()=>{state.cfg={...B.DEFAULTS,threshold:+$('threshold').value,window:+$('windowSize').value};$('parameterStatus').textContent='探索参数已修改；全部指标重算，人工语义尚未验收。';render()};
+$('resetParams').onclick=()=>{state.cfg={...B.DEFAULTS};$('threshold').value='0.05';$('windowSize').value='20';$('parameterStatus').textContent='默认规则；人工语义审查中。';render()};
+let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{document.querySelectorAll('.card').forEach(draw);mini()},100)});
+render();window.audit={data:D,state,Behavior:B,PriceOverlay:PC,prices,calendars,getDescriptions:()=>Object.fromEntries(descriptions),getFiltered:()=>filtered.map(r=>r.code),getViews:()=>views,setRange,render,drawAll:()=>document.querySelectorAll('.card').forEach(draw)};
+</script></body></html>
