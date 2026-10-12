@@ -1,0 +1,89 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "panel": [
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "MU",
+    "AMAT",
+    "LRCX",
+    "KLAC",
+    "INTC"
+  ],
+  "availability": "Facts must match catalog accession,form and filed date. Available_date=calendar day after max(filingDate,acceptanceDateTime literal YYYY-MM-DD),at00ET. Daily inputs include only available_date<=query ET date and periodend<querydate. This deliberately waits past both listed dates and may add delay when UTCdate differs. Historical firstpublic time and delivery latency not established. Unknownaccession,metadata mismatch orcurrency mismatch excluded,notfilled. Filing acceptance is not firstpublic timestamp. Never backfill old facts using later restatements.",
+  "universe": "Existing fixed8reference issuers; current mapping confirmed against cached SEC CIK/ticker payload, not historical PIT full sector. Same panel, not selected by results. Broadcom company-wide revenue includes software; no claim of semiconductor-segment demand isolation.",
+  "version": "soxl_soxs_cross_asset_v42",
+  "primary": "macro_band",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+    "cases": ".cache/soxl_soxs_14d5pct_v39/runs/financial_extension_20261013"
+  },
+  "hypothesis": "V40 nonlinear capacity and v41 overlap weights did not improve the same inputs. Test additional cross-asset observed risk-price information instead of further filtering existing proposals. Six predetermined liquid ETFs represent broad/small equity and different bond risk exposures. Relative bond returns are not pure yields or credit spreads.",
+  "inputs": "Original v35full27/39fields plus8dailyfields: SPY total logreturn5/20, IWMminusSPY5/20, TLTminusSHY5/20,HYGminusLQD5/20. Equity-only adds4,bonds-only4,baseline0. Full macro dimensions35/47. Complete previous official session only, all four clocks share these new daily values. No currentdaymacroclose,news,monthIDs,parametergrid orfuturehotstate.",
+  "training": "Daily00ET perclock expandingcomplete paired-terminal chronologicalprefix,min120dates,stopfirstunknown/notmature. Same126datehalf-life normalization/scaler/Ridge100/logitC.1. Eachvariant ownimmutableasissuedraws and owncalibration; nooverlapweightsv41, noHGBv40.",
+  "target": "C=(netlogL+netlogS)/2;D=(netlogL-netlogS)/2;M=abs(D). q learns I(D>0), weighted by timeweight*M renormalizedsumN. Ideal q=E[max(D,0)|x]/E[abs(D)|x], not ordinary direction frequency or profit probability. Dhat=max(0,Mhat)*(2q-1);Lhat=Chat+Dhat,Shat=Chat-Dhat. Single positive-weight class uses its weighted constant;allzeroM=>q=.5.",
+  "algorithms": {
+    "macro": "Ridge100 C/M and amountweightedLogisticRegressionC.1, all8newinputs, primary",
+    "equity": "samelearner +4equityfields",
+    "bonds": "samelearner +4bondfields",
+    "baseline": "exactfullv35refit; no newinputs"
+  },
+  "calibration": "Samev32fourclockpartialsharing;eachnewvariantownas-issuedraws/residuals,samejointwholedatepairedterminalprefix,latest120/min60withrawscoresformacro/equity/bonds/baseline.63datehalflife totalNsplitamong3/4clocks,interceptsfree,penalty20||meanbeta||^2+20sum||beta_clock-mean||^2.199circular10dateblocks seed826+dateordinal,allclock/ETFsame-date movejointly. Refitwithinclockhistoricalweightedstandardization andcoefficients eachreplicate. Notnewprobabilitycalibration orzero-lossguarantee.",
+  "decision": "Point=owncurrentraw+predictedresidual. Commonradius=max(0,higher90%quantile maxETF upwardbootstrapdeviation). Selectgreatestpositive(point-radius)>1e-12, tieSOXL;elsecash. Missinginput/minsamples/expiredunresolvedprefix>=14calendar=>cash. No day/monthspecific filter. Bandissensitivity,notguaranteedmonthlylossbound. 0/1originalsettledcash only.",
+  "routes": {
+    "macro_band": "PRIMARY all8macroinputs plusoriginalcalibration/radius",
+    "macro_point": "primarypointwithout radius",
+    "equity_band": "4equityinputsonly",
+    "bonds_band": "4bondinputsonly",
+    "baseline_band": "fulloriginalv35refit",
+    "source_v35": "immutablev35fullband",
+    "premarket_only": "primary09:25only",
+    "cash": "cash",
+    "double_cost": "primaryfrozenactionsdoublecost"
+  },
+  "source": "Reuse SHA-verified v35 development panel/labels and v39 verified extension only AFTER this primary passes. V39 failed strategy not promoted. PreMay source extension records already exact; new v42 case run must preserve its own preMay predictions/daily fits. No case-specific selection; failures and all diagnostics retained.",
+  "verification": "Syntheticdividend/split arithmetic,missingclose,nofuture/currentprice/actionleak,21priorcloses,exactdates,strictlabelmaturity,currentunready,noinputdrop; independentrawclose/actionsperdateproduct versuslogsum,allfeatureequations,allbaseRidge/logit/calibrationequations,anchors,actions,ninefullbooks andallstatistics; exactbaseline source;caseguard.",
+  "method_reference": [
+    "https://openapi.futunn.com/futu-api-doc/quote/get-rehab.html",
+    "https://www.ishares.com/us/products/239710/ishares-russell-2000-etf",
+    "https://www.ishares.com/us/products/239454/TLT",
+    "https://www.ishares.com/us/products/239565/ishares-iboxx-usd-high-yield-corporate-bond-etf",
+    "https://www.ishares.com/us/products/239566/ishare",
+    "https://www.ssga.com/us/en/institutional/etfs/state-street-spdr-sp-500-etf-trust-spy"
+  ],
+  "diagnostics": "Report raw and calibrated top-choice payoff/regret by equal date,unknowns retained separately,allroutes/allmonths,actualtrades andcoststress. No post-result primaryswitch or assertion that increased model capacity ensures profits.",
+  "macro_acquisition": ".cache/soxl_soxs_14d5pct_v42/data/acquisition.json",
+  "macro_range": [
+    "2024-09-01",
+    "2026-09-30"
+  ],
+  "macro_features": "ReadrawK_DAY NONE regular close. Each dailygross=(currentrawclose*sharesperpreviousshare+cashdividendperpreviousshare)/previousrawclose. Share multiplier=1/Futu split_ratio on exdate; no action=>1; cash missing=>0 on fullyqueried actiontable. Simultaneoussplitandcash or unsupportedcorporateactions make thatdate unknown. Sum prior5/20loggross; needs21priorofficialclosingrows for20returns. Missing/invalidprices remainunknown,nevercarryforward; weekends/holidaysabsent,earlycloseofficial. Cashdividend is a total-return adjustment, not spendable brokeragecash. RatiosuseactualETFprices,notcurrentconstituentbackfills.",
+  "macro_availability": "Assume priorofficialclose andpast exdateaction available by nextETmidnight. Actual received_at separatelyrecorded2026-10-12; no historicalfirstpublication/receivedPIT proof. Future split/cash factors never backadjust earlierreturns. Fullsourceacquisitionhash+12rawfilehashes frozenbefore new forecasts; broaddataJan2026labelsnotusedtochooseassets/formulas. Fail experiment if newinputsremove any otherwiseeligible source date, to preserve matched training/readiness.",
+  "pre_registration_repairs": "Before any new outcomes: fixed one test comprehension syntax error; renamed generic audit helper modules to avoid older sys.path module collision. Both failed logs preserved; final16tests passed. All1459 sourcequeries have macroinputs and four Jan5 baseline fits exactly reproduce source. These are input/engineering checks, not new capital results."
+}

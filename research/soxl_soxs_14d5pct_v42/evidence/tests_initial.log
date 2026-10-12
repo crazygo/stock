@@ -1,0 +1,22 @@
+test_macro (unittest.loader._FailedTest.test_macro) ... ERROR
+
+======================================================================
+ERROR: test_macro (unittest.loader._FailedTest.test_macro)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_macro
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v42/test_macro.py", line 68
+    raw,cal,f,d=raw_fixture();queries=pd.DataFrame({'date':[d[20],d[21]]},index=[pd.Timestamp(str(x.date())+' 09:25:30',tz=core.ET).tz_convert('UTC') for x in [d[20],d[21]]);x,_,_=build_features(queries,raw,cal);self.assertEqual(x.macro_ready.tolist(),[False,True])
+                                                                                                                                                                            ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '['
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
