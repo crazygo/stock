@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-当前入口见 [v4 每日向前训练](research/soxl_soxs_14d5pct_v4/README.md)：固定学习和风控方法，每天用当时已成熟的数据重新训练；9 月模型可学习此前 5—8 月结果，旧预测不改写。5—9 月 105 个每日模型的回归仍未通过：5、7、9 月净收益算术均值 −0.72%，且存在负月，当前不行动。固定在 4 月末的模型只作对照，不按回归结果选模。[v3 风险研究](research/soxl_soxs_14d5pct_v3/README.md)保留原结果。
+最新研究为 [v5 多模型与退出规则](research/soxl_soxs_14d5pct_v5/README.md)：已扩展 12 组学习/风控组合、2 个基准与一个按已成熟历史表现选路的主策略，全部未通过。主策略 5、7、9 月净收益算术均值 −1.56%，且存在负月；[持续目标仍在进行中](research/soxl_soxs_14d5pct_v5/GOAL_PROGRESS.md)。[v4 每日训练及任意时点分析](research/soxl_soxs_14d5pct_v4/README.md)继续可用，当前不行动；9 月可学习此前成熟数据，旧预测不改写。[v3 风险研究](research/soxl_soxs_14d5pct_v3/README.md)保留原结果。
 
 [v2 历史结果](research/soxl_soxs_14d5pct_v2/REPORT.md)的三个月算术均值 +11.69% 不再代表当前准入；旧数字与亏损保留。[v1 迁移记录](research/soxl_soxs_14d5pct_v1/ANALYSIS.md)保留原模型失败证据。原始行情不进 Git，真实交易仍由用户手动执行。
 
