@@ -1,0 +1,161 @@
+{
+  "post_run_only": true,
+  "models_and_actions_unchanged": true,
+  "actual_entries": 23,
+  "same_day_exits": 18,
+  "same_day_risk_stops": 10,
+  "target_exits": 11,
+  "risk_stops": 12,
+  "actual_continuation_exits": 0,
+  "counterfactual_case_reviews": 72,
+  "counterfactual_case_exit_intents": 24,
+  "actual_holding_reviews": [
+    {
+      "entry_date": "2026-05-15",
+      "symbol": "SOXL",
+      "outcome": "risk_stop",
+      "net_return": -0.0614597972180718,
+      "reviews": [
+        {
+          "id": "2026-05-15T13:25:30+00:00|SOXL@2026-05-18T13:25:30+00:00",
+          "key": "2026-05-15T13:25:30+00:00|SOXL",
+          "cost_path": "base",
+          "at": "2026-05-18 13:25:30+00:00",
+          "entry_date": "2026-05-15 00:00:00",
+          "raw": 0.006871025446571299,
+          "adjusted": 0.008117310269750997,
+          "ready": true,
+          "action": "HOLD"
+        }
+      ]
+    },
+    {
+      "entry_date": "2026-08-12",
+      "symbol": "SOXS",
+      "outcome": "target",
+      "net_return": 0.0490614904934978,
+      "reviews": [
+        {
+          "id": "2026-08-12T13:25:30+00:00|SOXS@2026-08-13T13:25:30+00:00",
+          "key": "2026-08-12T13:25:30+00:00|SOXS",
+          "cost_path": "base",
+          "at": "2026-08-13 13:25:30+00:00",
+          "entry_date": "2026-08-12 00:00:00",
+          "raw": 0.00019240306651996245,
+          "adjusted": 0.003991961835719509,
+          "ready": true,
+          "action": "HOLD"
+        },
+        {
+          "id": "2026-08-12T13:25:30+00:00|SOXS@2026-08-14T13:25:30+00:00",
+          "key": "2026-08-12T13:25:30+00:00|SOXS",
+          "cost_path": "base",
+          "at": "2026-08-14 13:25:30+00:00",
+          "entry_date": "2026-08-12 00:00:00",
+          "raw": 0.00610965134936595,
+          "adjusted": 0.009909210118565496,
+          "ready": true,
+          "action": "HOLD"
+        }
+      ]
+    },
+    {
+      "entry_date": "2026-08-27",
+      "symbol": "SOXS",
+      "outcome": "target",
+      "net_return": 0.0490638399003044,
+      "reviews": [
+        {
+          "id": "2026-08-27T13:25:30+00:00|SOXS@2026-08-28T13:25:30+00:00",
+          "key": "2026-08-27T13:25:30+00:00|SOXS",
+          "cost_path": "base",
+          "at": "2026-08-28 13:25:30+00:00",
+          "entry_date": "2026-08-27 00:00:00",
+          "raw": 0.021331167688534006,
+          "adjusted": 0.02453794156389898,
+          "ready": true,
+          "action": "HOLD"
+        }
+      ]
+    },
+    {
+      "entry_date": "2026-09-10",
+      "symbol": "SOXL",
+      "outcome": "target",
+      "net_return": 0.0489626788192307,
+      "reviews": [
+        {
+          "id": "2026-09-10T13:25:30+00:00|SOXL@2026-09-11T13:25:30+00:00",
+          "key": "2026-09-10T13:25:30+00:00|SOXL",
+          "cost_path": "base",
+          "at": "2026-09-11 13:25:30+00:00",
+          "entry_date": "2026-09-10 00:00:00",
+          "raw": 0.006919436716807661,
+          "adjusted": 0.011406286849031898,
+          "ready": true,
+          "action": "HOLD"
+        }
+      ]
+    },
+    {
+      "entry_date": "2026-09-14",
+      "symbol": "SOXS",
+      "outcome": "risk_stop",
+      "net_return": -0.0615571209600173,
+      "reviews": [
+        {
+          "id": "2026-09-14T13:25:30+00:00|SOXS@2026-09-15T13:25:30+00:00",
+          "key": "2026-09-14T13:25:30+00:00|SOXS",
+          "cost_path": "base",
+          "at": "2026-09-15 13:25:30+00:00",
+          "entry_date": "2026-09-14 00:00:00",
+          "raw": 0.021073708216115268,
+          "adjusted": 0.025955435968730078,
+          "ready": true,
+          "action": "HOLD"
+        },
+        {
+          "id": "2026-09-14T13:25:30+00:00|SOXS@2026-09-16T13:25:30+00:00",
+          "key": "2026-09-14T13:25:30+00:00|SOXS",
+          "cost_path": "base",
+          "at": "2026-09-16 13:25:30+00:00",
+          "entry_date": "2026-09-14 00:00:00",
+          "raw": 0.004313944854241869,
+          "adjusted": 0.009920635764530086,
+          "ready": true,
+          "action": "HOLD"
+        }
+      ]
+    }
+  ],
+  "training_anchors": [
+    {
+      "date": "2026-05-01",
+      "cutoff": "2026-05-01 04:00:00+00:00",
+      "latest_label_release": "2026-04-30 20:00:01+00:00",
+      "entry_first_training_date": "2025-04-16 00:00:00",
+      "entry_last_training_date": "2026-04-17 00:00:00",
+      "entry_training_dates": 252,
+      "manager_training_dates": 167
+    },
+    {
+      "date": "2026-07-01",
+      "cutoff": "2026-07-01 04:00:00+00:00",
+      "latest_label_release": "2026-06-30 20:00:01+00:00",
+      "entry_first_training_date": "2025-06-17 00:00:00",
+      "entry_last_training_date": "2026-06-17 00:00:00",
+      "entry_training_dates": 252,
+      "manager_training_dates": 157
+    },
+    {
+      "date": "2026-09-01",
+      "cutoff": "2026-09-01 04:00:00+00:00",
+      "latest_label_release": "2026-08-31 20:00:01+00:00",
+      "entry_first_training_date": "2025-08-18 00:00:00",
+      "entry_last_training_date": "2026-08-18 00:00:00",
+      "entry_training_dates": 252,
+      "manager_training_dates": 133
+    }
+  ],
+  "interpretation": "Daily manager was ready, but most selected trades reached a barrier before the next review. Its exits on unselected hypothetical episodes are not actual capital gains. Historical failure motivates earlier observable risk information, not case-specific thresholds."
+}

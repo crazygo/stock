@@ -1,0 +1,72 @@
+{
+  "started_at": "2026-10-12T09:53:01.498224+00:00",
+  "preregistration": {
+    "registered_at": "2026-10-12T09:44:04.463790+00:00",
+    "protocol_sha256": "f3f1b5b4d6df0812e4dffcfa20a2a7e170a168a01e29a479f604b13bb2080f20",
+    "protocol": {
+      "version": "soxl_soxs_continuation_v9",
+      "status": "exposed_history_development_regression",
+      "hypothesis": "Daily valuation of an existing position's remaining contractual payoff may preserve multi-day +5% opportunities while exiting states with negative continuation advantage. Learn managed-entry outcomes, not merely one-day returns.",
+      "source_features": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012/features.parquet",
+      "analysis_clock_et": "09:25:30",
+      "entry": "At most one position; choose SOXL/SOXS or cash from the day's selected-value-corrected prediction. First regular5m Open strictly after decision+30s, within6min (09:30). Use only features available at09:25:30. Historical features use bar-end+1s availability assumption, not manufactured live receipt.",
+      "contract": "Attach entry+5% cent-rounded regular-session TP and fixed6% initial protective stop. Maximum14 inclusive calendar days, ending at the last official close on/before entrydate+13. Stop-first ambiguous bars and adverse gap fills. No forced entry-day close or short-term profit-protection ratchet.",
+      "review": "At09:25:30 each subsequent official session, review only positions not already exited under the registered barriers/expiry. If corrected continuation advantage<=0, cancel remaining orders and schedule exit at next regular Open after30s. Otherwise hold the attached contract. Missing model/feature/calibration means keep protective contract, not invented profitable exit.",
+      "manager_target": "For historical baseline6%-stop/5%-TP/14day positions still alive at a review, target log((baseline terminal sale net of sell fee + dividends strictly after reviewdate)/(next-regular-Open immediate sale net of slippage and sell fee)). Immediate sale is capped at original target in ambiguous favorable-gap cases. Dividends already earned cancel from the comparison. This predicts the remaining fixed contract, not an oracle best exit or globally optimal future managed policy.",
+      "entry_target": "log(1+net completed trade return). Primary entry learner uses archived counterfactual episodes managed by the actually available daily models on each historical review day. Both ETF episodes are created independently of the actual buy choice, all released only after their full original14day window matures. A separate diagnostic learner uses baseline fixed-contract returns.",
+      "features": "Compact signed/own-ETF causal prior1/5/20day returns, volatility, current premarket return and volume/range; SOXX/QQQ regime and sector-relative measures; fixed-panel breadth return/dispersion. Manager adds current economic PnL, calendar age, calendar time left, distance to entry-frozen target and stop, and drawdown from observed regular-session peak. Current mark is the latest available same-day quote, age<=6min. No future High or price enters a state.",
+      "algorithm": "HistGradientBoostingRegressor squared_error,max_iter80,max_leaf_nodes7,min_samples_leaf20,learning_rate.05,l2_regularization5,early_stoppingFalse,random_state814. One pooled entry model over both ETF directions and one pooled manager model. No model or threshold search by case month.",
+      "training": "Daily00:00ET. Latest252 entry dates whose BOTH baseline ETF full14day windows are complete and released strictly before cutoff. Entry learner needs120 dates, each date total sample weight1 across2ETF episodes. Manager needs120 distinct eligible entry dates with at least one review state; each such entry date total review-state weight1. Managed entry labels are also required complete/released, irrespective of early outcome sign.",
+      "training_window_dates": 252,
+      "minimum_training_dates": 120,
+      "calibration_window_dates": 60,
+      "minimum_calibration_dates": 40,
+      "entry_calibration": "Choose raw higher predicted ETF first (tiesSOXL), then add the mean actual-minus-raw residual for prior saved raw TOP choices over latest60 mature entry dates, minimum40. Common correction cannot change ETF rank. Positive corrected top score required to buy. Do not recompute historical raw predictions with later models.",
+      "manager_calibration": "Prior as-of forecasts emitted for actually alive managed counterfactual episodes, with fixed-contract continuation targets. Only after parent entrydate's full14day release. Average residual within each entrydate, then mean over latest60 distinct entrydates, minimum40. Before ready keep the protective contract and record raw forecasts. No current-day or future labels.",
+      "simulation": "Advance each episode through completed regular bars before the day's review; generate all decisions with that day's model; evaluate scheduled Open exits and later barriers only afterwards. Continue counterfactual SOXL/SOXS episodes even on days the real normalized ledger abstains. These are training trajectories, not extra capital or independent trades.",
+      "primary": "daily_managed_entry_and_exit",
+      "controls": [
+        "same_primary_entry_decisions_with_fixed_contract",
+        "daily_baseline_entry_with_fixed_contract",
+        "trend20_entry_with_fixed_contract"
+      ],
+      "stress": "Double fee/slippage, retain the same primary entry decisions and the same daily manager model/correction, but evaluate it on each stressed episode's own fill, remaining barriers and observed state. Do not retrain from stressed outcomes. This allows causal exit decisions to differ under altered fills. Keep all paths and costs.",
+      "capital": "100% settled cash, one position,no same-day reentry,T+1 proceeds,dividends and cross-month daily MTM. Preserve unknown exits and funds occupied; do not reset capital or clip monthly losses.",
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ],
+      "acceptance": "Primary three regression-month net ledger returns arithmetic mean>=10%, allMay-September months>=0, complete daily/premarket coverage. Controls cannot be promoted after cases. Cash0 fails return target. Exposed history is development, not independent forward validation or a future nonnegative-month guarantee.",
+      "no_case_specific_parameters": true,
+      "no_broker_orders": true,
+      "no_automatic_R2_upload": true
+    },
+    "new_strategy_case_results_not_computed": true,
+    "prior_versions_exposed_same_history": true
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0"
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v9/run_continuation.py": "b8289d5516cf20693cfd16a9475ed5d785edc7d7bb006de8ca1a918773421a7e",
+    "research/soxl_soxs_14d5pct_v9/continuation.py": "5a36056f00423915280d0a4a691923e319925ff680cb1dd7b4f206fee315ea12",
+    "research/soxl_soxs_14d5pct_v9/test_continuation.py": "ab59df600843473f89ade7061e0e7edf933a44826b14b6bc859325de5913898a",
+    "research/soxl_soxs_14d5pct_v9/protocol.json": "f3f1b5b4d6df0812e4dffcfa20a2a7e170a168a01e29a479f604b13bb2080f20",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v3/risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac"
+  }
+}
