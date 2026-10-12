@@ -1,0 +1,59 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_online_regime_memory_v29",
+  "primary": "regime_band",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "hypothesis": "V28 causal censored prefixes added no action increment; only0.67-1.15unresolved parents perETF in ready estimates. V22 state-distance weighting had negative months. New test of causal change-point filtering and adaptive memory, distinguishing detected transitions from a simple faster time decay. No retrospective hot-period segmentation or month identity.",
+  "analysis_clocks_et": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "contract": "At each completed5mbar+30sec decision, enter next regular5mOpen strictlyafter another30sec:09:30/10:10/10:40/13:10ET. Keep attached centrounded+5% TP,fixed6%protective stop,stop-first ambiguity and actual gapfills. Max14inclusive calendar days,last officialclose on/before entry+13. Halfday clocks>=close absent. V4 arbitrary-time analysis remains available/unqualified. No new holding exits or orders.",
+  "inputs": "Same verified causal v23 features:19 price/industry factors premarket,31 afteropen including session/VWAP/recent15/high-low/diffusion context. Same-clock full volume prefixes for8leaders and20prior official sessions,missing/late prefix disablesfeatures. No future hot intervals/hit rates,month identities or historical PIT membership claim.",
+  "base_forecasts": "Use v23 context variant expanding daily00ET early-terminal raw paired predictor (Ridge100 commonC/magnitude absD,LogisticC.1 weighted signD,recency126,min120parents). PreMay as-issued records frozen by newly audited source manifest: member prefix and every raw model equation independently rechecked. Do not rebuild them with later models. AfterMay, only if this experiment primary dev passes, extend exactly that raw learner at each clock using then-known data; generate no old v23 capital policy. Source old predictions are historical development emissions, not live forecasts.",
+  "control_source": ".cache/soxl_soxs_14d5pct_v27/runs/clock_reliability_20261012",
+  "state_observations": "One observation per official date released09:25:30ET from verified causal premarket features: SOXX_ret1/max(SOXX_vol20,1e-4); (SOXX_ret1-QQQ_ret1)/sqrt(max(SOXX_vol20,1e-4)^2+max(QQQ_vol20,1e-4)^2); 2*(2*breadth_ret1_positive_fraction-1) for8registered leaders. Each clipped[-5,5]. These are priorregular-day price/breadth observations,notfutureTPoutcomes. Same state shared across4clocks; no later-clock data enters it. Missing required officialdate or coordinate resets filter and requires20consecutive complete observations. Known available historical bar timings remain source assumptions, notlive received_at evidence.",
+  "state_filter": "Bayesian online change-point run-length distribution, initialP(r0=0)=1, constant hazard1/63. Three conditionally independent Normal-Inverse-Gamma observation heads,prior mean0,kappa1,alpha2,beta2. Student-t predictive df2alpha and scale^2=beta*(kappa+1)/(alpha*kappa). At every new x, multiply each previous run probability by its predictive likelihood; send hazard mass to run0 and remaining mass to run+1; normalize in logspace. Update each growth sufficient statistic and insert fresh prior at run0. No posterior truncation and no backward smoothing. Correlation/autocorrelation of coordinates and the geometric duration prior are modeling assumptions, not verified market laws. P(run0) equalsconstant hazard and is notinterpreted as a changealarm; reportP(run<5) and expectedrunlength as diagnostics only,notbullishprobabilities.",
+  "error_model": "Same as v27 two-score Ridge20 residual model: same-clock latest120/min60 original forecasts with both policy terminal outcomes known beforeday00ET, chronological completeprefix,expiredprefix disablesclock. At querytime each parentdate age=a in officialstate observations receives membershipP(current_run>=a+1), then multiplier.25+.75*membership on original63parent half-life. Normalize weights sumN to holdregularization constant;Kish effectiveparents>=30 elseabstain. At least20complete stateobservations. Pairedoutputactualnetlogreturns minusoriginalrawscores. Weightedpopulation scale and intercept, alpha20 unchanged. Filter changes weights atcurrentclock, so do notcallfit midnight-trained. Require sum of current-regime memberships across mature source dates >=10; this is expected membership mass,notindependent sample size. Otherwiseabstain rather than normalizing a uniform.25 old-regime floor into false confidence. Fixedprior control uses itsownexpectedmembership andsame rule. This numerical support requirement is a preregistered research assumption,not a proven safety guarantee.",
+  "uncertainty": "Same199circular10parent blocks,seed826+ETdateordinal,pairedETFcounts; refit scalerandRidge eachreplicate withcurrentfilterweights fixed. Commonmargin=max(0,90thpercentile_higher of max twoETF bootstrap-point upwarddeviation); lower=point-margin. Conditional estimator sensitivity only,notfull state/base model uncertainty,confidence guarantee or monthlylossbound.",
+  "decision": "Select largerpositive lower,tieSOXL,elsecash; fullavailable settledcash withoriginalsinglepositionanddailylock. Currentstate affects only residual calibration weights,notrawsource retraining,entry/exit ruleor month-specificmodel selection.",
+  "routes": {
+    "regime_band": "PRIMARY detected-regime memory andsharedband,4clocks",
+    "regime_point": "samepoint withoutband diagnostic",
+    "hazard_only_band": "same modeling/readiness,replace observedmembership by prior(62/63)^(a+1), isolating fasterfixeddecay",
+    "premarket_only": "primary09:25only",
+    "source_v27": "unchangedv27scoresandcapital,preMayexact; postMay ifpermittedsamelearner extension",
+    "cash": "alwayscash",
+    "double_cost": "frozenprimaryactions,own doublecostfills/barriers"
+  },
+  "verification": "11synthetic boundary tests beforeoutcomes, includingbatchsuffix versusincremental sufficientstatistics,futureappendisolation,oneobservation/day,missingdateandpartialmissingreset,syntheticmeanchange,constant run0 hazard,ageweights normalization,independentweighted regression timestampdecoding andno-mature-new-regime rejection. Independently reconstructallstateposteriors withscipyStudent-tanddirectsuffixsums,allpairterminalreceiptmemberships,all point/bootstrapnormal equations anddecisions. Sevencontinuous books; exactv27control. Ifprimarydevfails,execute rejectionbeforecaseoutputcreation. Cases ifpassed mustchecknewcausalinputs/rawmodels/exits andunchangedpreMaystatesandforecasts.",
+  "diagnostics": "Clockticks anddates remain dependent. Report changedweights,effectiveparents,recentmass,runlengthdistribution,detected-versusprior memoryactiondifferences andactualcapitalincrement. Detectionofstatisticalchange alone isnot detectionofbullmarket or proof ofTPpredictivevalue. No parametergrid,thresholdreset orprimaryswitch afterresults.",
+  "method_reference": "https://arxiv.org/abs/0710.3742"
+}
