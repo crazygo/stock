@@ -1,0 +1,56 @@
+{
+  "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v14/runs/paired_20261012",
+    "cases": ".cache/soxl_soxs_14d5pct_v17/runs/paired_cases_20261012"
+  },
+  "capital": "One settled-cash position at most;allocation only0/1,no leverage,same-day reentry forbidden. T+1,fees,slippage,gaps,dividends,full14calendar expiry and continuous cross-month MTM unchanged. Missing held outcome retains occupation. Entry trigger/exit rules remain exactsourcecontract.",
+  "version": "soxl_soxs_joint_terminal_base_training_v21",
+  "primary": "early_base_cal",
+  "hypothesis": "V20 sped up only expert selection and failed. Test early paired terminal feedback in base training and calibration themselves, retaining original architecture, factors and risk history. Factorial controls isolate base admission versus calibration admission. No case-specific month tuning.",
+  "terminal_receipt": "Each side must have finite fixedpolicy netreturn and actual known target/riskstop/expiry terminalbar. Check EVERY official regular5mbar fromdelayedentry throughterminal inclusive,exact orderedexpectedends,5minstarts,available_at>=barend and no missingavailabletimestamp. Release=max prefixbaravailable_at. Jointrelease=maxbothsides. No laterwindowbar isneeded. If eitherprefixunknown,entrymissing,oroutcomeunresolved,retainunknown. Corporateactionunit convention unchanged. Dividend-bearing outcomes conservatively retainoriginal full-windowrelease;no new announcement-time assumption.",
+  "availability": "Historical available_at is existing bar_end+1second simulation assumption,notlive received_at evidence. Daily00:00ET learns only releases STRICTLY BEFORE cutoff;predict09:25:30 withcausalpremarketfeatures. No currentday label,latebar orone-sidedwin-only feedback. Existing arbitrarytimeanalysis remainsavailable andunqualified.",
+  "training": "Source universe is EVERY historical feature-ready premarket date, independent of forecasts/actions. At daily00ET consume chronological complete paired-terminal prefix before first unresolved date; full expanding prefix,min120. Never skip known-later dates. Expired unresolved prefix>=14calendar days forces early routes to abstain. Full-window comparator uses original joint full14day labels. Original features,C,D and label prices are unchanged;finite checks occur after label availability admission.",
+  "model": "Reuse v14 regret_regime:19 causal factors,weighted StandardScaler,recency half126 dates,regression Ridge alpha100 on C and |D|,LogisticRegression C.1 on signD weighted by recency*|D|. D=max(0,M)*(2q-1);C+D and C-D predict netlogpayoffs,not hit probabilities. Daily refit;no hyperparameter search.",
+  "calibration": "Separate scalar Ridge20 maps for C/D on latest120 own historical AS-ISSUED raw forecasts,min60. Early mode only chronological terminalprefix eligible dates;full mode original full14day eligible dates. No in-sample regenerated scores. Slopes unrestricted exactlyv14. Current or future forecasts excluded. early_raw bypasses map values but retains same60label readiness.",
+  "risk": "Exactv18 binarygamma5 entropy policy using ORIGINAL v14 saved calibrated score/advantage/state coordinates and original FULL14day joint matured120/min60 prior. Only selectedETF and entropy mean target come from new forecasts. No replacement of old risk coordinates;before original coordinate availability abstain. Min20weightconcentration,empiricalsupport and cost/ledgerunchanged. This isolates forecast change but risk tail estimation still has fullwindow delay.",
+  "routes": {
+    "early_base_cal": "Primary:early base training plus early calibration",
+    "early_base_full_cal": "Only base training early;calibration fullwindow",
+    "full_base_early_cal": "Original asissued base forecast,early calibration",
+    "early_raw": "Early base raw prediction with earlycal60 readiness",
+    "full_calibrated": "Exactoriginal base/fullcal plusv16/v17binaryrisk control",
+    "early_no_risk": "Primary positivepredictednetlogpayoff withoutentropyutility gate",
+    "source_full": "Originalv14calibrated fullcash",
+    "source_raw_full": "Originalv14raw fullcash",
+    "cash": "Alwayscash",
+    "double_cost": "Sameprimaryfrozenactions,own doublecostfills/barriers"
+  },
+  "verification": "Independent scheduledbar terminalreceipts and truncated-market outcome reruns;chronological base and calibration membership;weighted ridge normal equations and penalized logistic gradients;manual loaded-model predictions;independent calibration arithmetic and entropyroot;allfullcapitalbooks;full original control exact. After case expansion allpreMay forecasts must remain same. Tests futuretruth/rawpredictions cannot affect today;strictETcutoff;pendingprefix;originalriskcoordinatesrequired.",
+  "scoring": "Originalmean579>=10% and allMay-Sep nonnegative,full continuouscapital. No case replay unless primaryJan-Apr development screen passed andindependent verifier passed. Controls cannot rescue failedprimary after results. Common fullwindow-mature opportunitydiagnostics retainunknown;earlytrainingadmission differsfrom diagnosticdenominator. Exposedhistoryonly.",
+  "diagnostics": "Base latestdate age,readycounts,negativeDcalibration slopes,commonmature directioncorrect/netlogpayoff/regret and causal support/weakness/mixedslices. Allroutesandcoststress retained. Paired10session5000bootstrapseed707 descriptiveonly. No learned exits or thresholds inthisexperiment."
+}
