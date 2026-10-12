@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v37/audit_diagnostics.py", line 49, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);audit(p.parse_args().run)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v37/audit_diagnostics.py", line 43, in audit
+    receipt={'passed':True,'independent_diagnostic_assertions':checks,'removed_trade_keys':len(o-n),'added_trade_keys':len(n-o),
+                                                                                               ~^~
+TypeError: unsupported operand type(s) for -: 'set' and 'int'

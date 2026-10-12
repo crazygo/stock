@@ -1,0 +1,39 @@
+test_future_records_do_not_change_daily_fit (test_selected.Tests.test_future_records_do_not_change_daily_fit) ... ok
+test_gradient_equations (test_selected.Tests.test_gradient_equations) ... ok
+test_independent_all_resampled_fits (test_selected.Tests.test_independent_all_resampled_fits) ... ok
+test_independent_selected_features (test_selected.Tests.test_independent_selected_features) ... ERROR
+test_loss_magnitude_changes_decision (test_selected.Tests.test_loss_magnitude_changes_decision) ... ok
+test_point_quality_not_win_probability (test_selected.Tests.test_point_quality_not_win_probability) ... ok
+test_return_scale_invariance (test_selected.Tests.test_return_scale_invariance) ... ok
+test_single_class (test_selected.Tests.test_single_class) ... ok
+test_sklearn_equivalence (test_selected.Tests.test_sklearn_equivalence) ... ok
+test_source_gate_and_risk_gate (test_selected.Tests.test_source_gate_and_risk_gate) ... ok
+test_tie_selects_soxl (test_selected.Tests.test_tie_selects_soxl) ... ok
+test_unknown_prefix_stops_training (test_selected.Tests.test_unknown_prefix_stops_training) ... ok
+test_warmup_preserves_source_actions (test_selected.Tests.test_warmup_preserves_source_actions) ... ok
+test_winner_fixed_before_outcome (test_selected.Tests.test_winner_fixed_before_outcome) ... ok
+test_zero_returns (test_selected.Tests.test_zero_returns) ... ok
+test_zero_weight_rows (test_selected.Tests.test_zero_weight_rows) ... ok
+
+======================================================================
+ERROR: test_independent_selected_features (test_selected.Tests.test_independent_selected_features)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v37/test_selected.py", line 54, in test_independent_selected_features
+    self.assertEqual(verify_panel(self.original,self.panel,self.records),len(self.panel)*14)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v37/verify_selected.py", line 24, in verify_panel
+    if np.isfinite(original.loc[at,['C','D']]).all():near(row.selected_y,original.loc[at,'C']+direction*original.loc[at,'D'])
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/generic.py", line 2171, in __array_ufunc__
+    return arraylike.array_ufunc(self, ufunc, method, *inputs, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/arraylike.py", line 399, in array_ufunc
+    result = getattr(ufunc, method)(*inputs, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ufunc 'isfinite' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.377s
+
+FAILED (errors=1)

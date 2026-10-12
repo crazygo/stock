@@ -1,0 +1,76 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "forecast_source": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+  "source": "Reuse immutable independently verified v35 raw and as-issued calibrated forecasts, input/financial panels and fixed trade labels. Check all top-level, daily and training SHAs against committed v35 delivery manifest. Underlying base models remain daily-retrained on data available before that day; using cached issued forecasts does not freeze the economic model to one old month. No raw source downloads or uploads.",
+  "case_workflow": "A failed independently verified primary blocks beforecreating any caseoutput. If primary passes, extend v35 raw/as-issued forecasts using the unchanged v35 daily financial/price recipe throughSeptember, preserve all preMay records, then apply the frozen v37 meta rules to continuousMaySeptember. Source extension engineering is not implemented by the development runner; it must be completed and verified if authorized. No case fitting or primaryswitch.",
+  "version": "soxl_soxs_selected_payoff_risk_v37",
+  "primary": "context_gate",
+  "hypothesis": "V36 reduced all-candidate MSE without avoiding actual March losses. Learn the return sign of the ETF ranked first in as-issued v35 calibrated scores. Loss-magnitude weighting targets gain/loss balance; test industry and financial state beyond issued score diagnostics. V13 tried old premarket-only top raw mean-return calibration; this is a distinct top calibrated classifier on v35 financial forecasts, not a claim that top calibration was never tried.",
+  "selection": "When source v35 full estimate is ready, choose larger as-issued calibrated point, tie SOXL. Fixed before labels. Label selected net log return C+sign*D. Include all ready top choices, even negative scores and source-rejected candidates; actual capital occupancy is not a training condition. Query filter acts only on source-eligible choices unless standalone diagnostic. Unselected ETF results never become outcomes of this choice.",
+  "history": "Daily 00ET, original whole-date chronological paired-terminal prefix (all 3/4 clocks and both ETFs) before cutoff, stop first unknown or unmatured. Among prefix latest 120 dates with as-issued full calibration ready at all clocks. Min 60 dates. Time weights 63-date half-life normalize N dates, split across actual clocks. Current/future records cannot train. Source fallback until 60 mature dates, preserving the v36 rule without warmup tuning.",
+  "features": {
+    "top_lower": "source calibrated top score minus original common risk radius",
+    "top_gap": "top calibrated score minus runner-up",
+    "raw_direction_agreement": "sign*(original raw L-original raw S), sign +1 for L and -1 for S",
+    "is_soxs": "selected SOXS indicator",
+    "clock_indicators": "10:05,10:35,13:05 indicators; premarket reference",
+    "aligned_relative5": "sign*existing relative_5, volatility-normalized SOXX-vs-QQQ 5-day relative return",
+    "aligned_breadth5": "sign*existing breadth_5, already 2*8-issuer positive fraction-1; not centered twice",
+    "aligned_volume_diffusion": "sign*existing volume_direction_diffusion at current completed clock",
+    "volatility": "existing log_sector_volatility",
+    "aligned_growth_acceleration": "sign*existing as-available financial growth_acceleration",
+    "recent_earnings": "existing recent_earnings_share"
+  },
+  "models": {
+    "context": "PRIMARY 7 score/clock fields +6 industry/financial fields =13",
+    "scores": "matched 7 score/clock fields without context",
+    "frequency": "intercept-only weighted gain/loss ratio"
+  },
+  "fit": "Weighted standardization uses original date-split weights. y=1(selected net log return>0), magnitude weights=w*abs(return), normalized to N dates. Objective sum(m*(logaddexp(0,eta)-y*eta))+5||beta||^2, free intercept, equivalent L2 LogisticRegression C=.1. Damped Newton,100 iterations, max gradient<1e-8, Armijo backtrack1e-4 with additive1e-13 arithmetic tolerance; failures raise. Single class or zero magnitude uses constant gain share (all zero=>.5), not certainty. Uniform return scaling does not change normalized fitting weights.",
+  "meaning": "Not win probability: ideal q(x)=E[positivepart(net log return)|x]/E[abs(net log return)|x]. q>.5 iff expected net log return positive at an unrestricted population optimum. A regularized finite-history estimate is not a guarantee. 60% wins at+.04 and40% losses at-.08 gives gain share .24/.56<.5. Threshold .5 follows zero expected log return, not month-return tuning. This alone does not optimize turnover or a monthly floor.",
+  "decision": "PRIMARY keeps source full_band choice only if quality>.5+1e-12; original source risk band retained, no reranking or second-place replacement. Missing source/features or expired prefix=>cash. Before 60 mature meta dates preserve source action for every risk route. Separate band diagnostic uses quality-max(0,higher90% upward bootstrap deviation)>.5. Standalone uses quality>.5 without source band after warmup; same original ranking. Diagnostics cannot rescue failed primary.",
+  "uncertainty": "199 circular10-date blocks, seed826+ET date ordinal; all clocks and selected ETFs from same date repeat together. Refit normalization, standardization, each head per draw. Source as-issued scores and current base model held fixed. Conditional meta-model sensitivity, not complete prediction coverage or nonnegative-month guarantee. Only context_band uses lower quality; primary uses point risk estimate alongside existing source band.",
+  "routes": {
+    "context_gate": "PRIMARY contextual loss-weighted Logit AND source band",
+    "scores_gate": "score-only Logit AND source band",
+    "frequency_gate": "intercept-only gain share AND source band",
+    "context_band": "context lower quality AND source band",
+    "standalone": "context quality without source band after warmup",
+    "source_v35": "exact old v35 full-financial policy",
+    "cash": "cash",
+    "double_cost": "primary frozen actions, own double-cost labels"
+  },
+  "verification": "16 synthetic tests: sklearn numerical equivalence, gradient/Hessian convex optimum, first selection before truth, loss magnitude vs frequency, future-record invariance, whole-date prefix, all199 resampled fits, warmup and source gate. Full run independent feature equations and explicit repeated-date fit equations, qualities/actions,8 capital books,104 summary assertions. Verified source hashes and4 exact v35 control CSVs. No new raw data.",
+  "pre_registration_errors": "Initial16 tests found isfinite on heterogeneous pandas object Series in independent feature audit; explicitly converted C/D to float. Final tests rerun before outcomes. Initial protocol-generation command had an apostrophe quoting SyntaxError and wrote no file; corrected before registration.",
+  "method_reference": [
+    "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
+    "../soxl_soxs_14d5pct_v13/README.md",
+    "../soxl_soxs_14d5pct_v36/README.md"
+  ]
+}
