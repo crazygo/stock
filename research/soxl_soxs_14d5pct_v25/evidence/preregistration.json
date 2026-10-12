@@ -1,0 +1,100 @@
+{
+  "registered_at": "2026-10-12T15:27:23.956484+00:00",
+  "protocol_sha256": "19c7da4b3d68a5d6b7e9c50b7d2db86d8c44f3378b872f511189d66d876fd4b8",
+  "protocol": {
+    "version": "soxl_soxs_settled_cash_planning_v25",
+    "primary": "planning_calibrated",
+    "development": {
+      "evaluation_start": "2026-01-01",
+      "evaluation_end": "2026-04-30",
+      "months": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04"
+      ]
+    },
+    "cases": {
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ]
+    },
+    "development_screen": "Verified primary complete-coverage Jan-Apr ledger, all months nonnegative, arithmetic mean at least 10%, at least 10 completed trades. Diagnostic controls cannot rescue primary. Failure forbids new case replay. This development screen is not the user case acceptance.",
+    "acceptance": "Original May/July/September net capital month arithmetic mean at least 10%; all May-September months nonnegative and complete coverage. Exposed history is development regression, not independent future validation. No added future observation acceptance period.",
+    "source_runs": {
+      "development": ".cache/soxl_soxs_14d5pct_v21/runs/early_20261012",
+      "cases": ".cache/soxl_soxs_14d5pct_v21/runs/cases_20261012"
+    },
+    "hypothesis": "V24 capacity audit found 16 proposed entries blocked by existing holdings, 15 known and 12 profitable. These hindsight counterfactuals are not additional executable trades. Test prospective buy versus wait value using complete capital-cycle transitions, including opportunity after settlement. Unlike v8 intraday nearest-neighbor wait/1.5% stop/flat-close, use cross-day learned Q values and the unchanged 6% stop/14 calendar contract. Unlike v10/v11 no new held-position exit policy.",
+    "contract": "Premarket 09:25:30 ET causal features, entry first regular open after 30-second latency at 09:30. Attach cent-rounded +5% take profit; fixed 6% protective stop, stop-first ambiguous bar, actual gap fills, 14 inclusive calendar days ending last official close on/before entry+13 days. Existing v4 arbitrary-time analysis remains available and unqualified. No real orders.",
+    "capital": "At most one ETF, full settled cash or abstention only (allocations 0/1), no leverage or same-day reentry. NEW conservative full-cash cycle: after an exit wait for T+1 and all already accrued dividend receivables to be paid before another entry. Receivables still marked in capital, never discarded. Full fees/slippage, corporate-action units, continuous cross-month MTM and unresolved held capital retained. source_early and same_action_regular_cash alone use original partial cash reuse.",
+    "inputs": "Exactly the verified v14/v21 19 causal premarket price, sector-relative strength, breadth, persistence and same-clock-volume factors; no month identities, future hit rates, hindsight hot-state labels or current members historical PIT claim.",
+    "states_and_transitions": "State is those 19 factors when all capital is free. Actions ordered CASH, SOXL, SOXS. WAIT reward 0 and next official premarket. BUY reward log1p(fixed-policy net return), successor first official premarket after sale T+1 and all that trade dividends paid. Duration is count of official session advances. Dividend return realization conservatively assigned to whole-cycle completion. No path-dependent intervention while held.",
+    "availability": "Parent transition admitted only when both fixed-policy terminal prefixes and all three successor feature states are known strictly before current daily 00:00 ET. Dividend terminal receipts retain prior conservative full-window delay. Expanding contiguous complete parent prefix, min120; never skip earlier pending parent. Missing parent beyond expiry/settlement and possibly accrued payment bound disables forecasting. Pending future payment alone is not expired. Future transition data cannot alter an earlier model.",
+    "algorithm": "Finite fitted-Q iteration, 20 fixed stages. Initial continuation V=0. At each stage targets_a=.99**duration_a * (log-return_a + max(0,previous_Q(successor_a))). Three multioutput Ridge heads, alpha100, SVD; weighted population mean/std (std<1e-12 ->1), recency half126, normalized sumN. No hyperparameter search, convergence/optimality guarantee or probability interpretation. Stage1 is registered myopic diagnostic; stage20 primary. Finite iteration counts capital cycles, not fixed calendar horizon.",
+    "calibration": "Own saved as-issued raw forecasts only. Latest120 admitted parent forecast dates, min60, recency half63 sumN. Planning additionally needs all three own successor as-issued raw forecasts; residual = .99**duration*(reward+max(0,saved successor raw Q20))-saved parent raw Q20. Myopic residual = .99**duration*reward-saved parent raw Q1. Mean residual per action added to query values. No refitted historical forecasts or unknown future query values. Raw controls retain identical calibration readiness.",
+    "decision": "Compare calibrated SOXL/SOXS Q to max(0,CASH Q). Buy highest only when advantage >1e-12; tie buys prefer SOXL; wait/buy tie waits. Otherwise CASH. Expired unresolved or insufficient base/calibration -> CASH. Growth objective uses log wealth but capital acceptance remains arithmetic mean of net month returns.",
+    "routes": {
+      "planning_calibrated": "PRIMARY: stage20 plus own Bellman residual correction",
+      "planning_raw": "stage20 raw, calibration readiness retained",
+      "myopic_calibrated": "stage1 corrected, no opportunity continuation",
+      "myopic_raw": "stage1 raw, readiness retained",
+      "same_action_regular_cash": "primary frozen actions with original cash reuse",
+      "source_full_cash": "v21 frozen actions with full-cash-cycle rule",
+      "source_early": "exact original v21 capital control",
+      "cash": "always cash",
+      "double_cost": "primary frozen actions with double costs and own fills/barriers"
+    },
+    "verification": "Before outcomes: independent transition/calendar/T+1/payment and terminal-prefix audit, all 20*3 ridge normal equations separate from sklearn SVD, own as-issued calibration/decisions, all nine continuous books. Source v21 ledger exact. Future feature/reward invariance and unknown/tie/receivable/serialization tests. Cases only after verified primary pass; every preMay training record and forecast must remain exactly equal. Independent equation tolerance atol1e-10/rtol1e-8 only for different solvers; action checks exact.",
+    "diagnostics": "Retain all routes, executed versus blocked proposals, each known/missing outcome separately, waiting advantage and gross value level, duration, frozen-entry comparison, full-cash waiting cost, per-month full capital, paired 10-session 5000-replicate bootstrap seed707 descriptive only. No after-result policy changes.",
+    "method_reference": "https://jmlr.csail.mit.edu/papers/volume6/ernst05a/ernst05a.pdf ; fitted-Q batch regression concept, not evidence of this linear market adaptation or guaranteed convergence.",
+    "no_broker_orders": true,
+    "no_automatic_R2_upload": true,
+    "no_case_specific_parameters": true
+  },
+  "code_sha256": {
+    "research/soxl_soxs_14d5pct_v10/micro_manager.py": "f89abaf58cce20264832a54564ed148f40423eae25b24868694fc45445972212",
+    "research/soxl_soxs_14d5pct_v11/uncertainty.py": "223b4cb20e65189a705da8fa607ac67560f669dd34250eb6dac2c711d8c3cfe1",
+    "research/soxl_soxs_14d5pct_v12/entry_value.py": "78d392d7f746146935c1e2a5ef7d69a122fcb9751f3d17465a50966255a8360d",
+    "research/soxl_soxs_14d5pct_v13/linear_entry.py": "13d544777e9b6ba6918d538dde74a5c94201b11639586a660e594201730c73b4",
+    "research/soxl_soxs_14d5pct_v14/paired_entry.py": "0b94168b179a5c2d783d389ee75b64156d177a1573d421c28a566980f0b8aeef",
+    "research/soxl_soxs_14d5pct_v15/allocation.py": "89a161eb0a66758e5051b1d9431883d3db0bfbcba5ca34256ad9045c4abf7c71",
+    "research/soxl_soxs_14d5pct_v15/verify_allocation.py": "c44fee51259499cca46232efe8fcaa1fd26fba3c0f2dd304af58affc654df177",
+    "research/soxl_soxs_14d5pct_v16/anchored_allocation.py": "bbdcddfc7fe7058deb339cd239f48da79a72adb56327a6ca12272d800139e58b",
+    "research/soxl_soxs_14d5pct_v18/adaptive_blend.py": "ea54c198dd8a85683b1526ebd90c746d0f0e7ee6f0c0c154db66688fed22ba8e",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/ledger.py": "4c515303094eb2fad2dc2270bab8912b41afc1c2cdf3d86e9d9aea914eaf53e4",
+    "research/soxl_soxs_14d5pct_v2/model.py": "6acc4c2072e146cf07e5d84bd0155e43eef71c6555671e77407f1eb9d5a65afd",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v20/resolved_feedback.py": "9f7ddb010efa0287607503e26086f1fc3ff5f7ed9affc152fb53889ff08b6ece",
+    "research/soxl_soxs_14d5pct_v20/verify_feedback_v2.py": "bc365ef150b747607b4104824d20a612c0b0a81e42099f9b67905bbf2cc2a435",
+    "research/soxl_soxs_14d5pct_v21/early_training.py": "c2bf9cbcbf8c9080081fa3342ebed2b47b68a569b0f4a75a829e598eda5fade2",
+    "research/soxl_soxs_14d5pct_v24/joint_loss.py": "cebfa8b9ec1a3d471c3ced6e21967ac2f037882763a7495d6b937495427310cf",
+    "research/soxl_soxs_14d5pct_v25/audit_books.py": "b225eea7584099de5ef27c892a3ac043ebf6954c6a2fdfb4aa55cf2cda8e3916",
+    "research/soxl_soxs_14d5pct_v25/audit_prior_capacity.py": "779ffdba58b9cf7dfed6a8eb44b44d9760c58380e67dec042ee7a6571da99400",
+    "research/soxl_soxs_14d5pct_v25/cycle_ledger.py": "d7f65a23380a112aeb4635729897a14270c62b4459b67f511d66a9c000ff3bd1",
+    "research/soxl_soxs_14d5pct_v25/planning.py": "126c19f0658751b81275235a76aded06239ef165e72315815a95b75754d35c8c",
+    "research/soxl_soxs_14d5pct_v25/protocol.json": "19c7da4b3d68a5d6b7e9c50b7d2db86d8c44f3378b872f511189d66d876fd4b8",
+    "research/soxl_soxs_14d5pct_v25/run_planning.py": "970347a417522ae07042ddbcb133ada5b639dfbc188c841d95d5a62096248227",
+    "research/soxl_soxs_14d5pct_v25/test_planning.py": "4af6ec5cf08c6e05efa2e6d8f293fab466b6c265f38bac4c77357345e27ce97d",
+    "research/soxl_soxs_14d5pct_v25/verify_planning.py": "99c452ee23a0acb320381912317c1e533182dc901a5ac8139e83dc134c514dd1",
+    "research/soxl_soxs_14d5pct_v3/risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v6/learning.py": "736662a57b83596b99d4ad99e10b1423b59ae1f028b3b1b0a8205bafe3cb4eb8",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac",
+    "research/soxl_soxs_14d5pct_v9/continuation.py": "5a36056f00423915280d0a4a691923e319925ff680cb1dd7b4f206fee315ea12",
+    "research/soxl_soxs_14d5pct_v9/verify_continuation.py": "81d97b29ef030ad76e085e0d6ee385d911cba9d98b68d4ffac2a2f6e05ef435b"
+  },
+  "new_v25_results_seen": false,
+  "unit_tests_passed": 9,
+  "prior_capacity_audit_sha256": "9bf9d639d2a18b4bd0a3dbe5094aae77c4b4ad60fabe66122fddbbe72b516c2c"
+}

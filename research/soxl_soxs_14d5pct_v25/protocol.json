@@ -1,0 +1,55 @@
+{
+  "version": "soxl_soxs_settled_cash_planning_v25",
+  "primary": "planning_calibrated",
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary complete-coverage Jan-Apr ledger, all months nonnegative, arithmetic mean at least 10%, at least 10 completed trades. Diagnostic controls cannot rescue primary. Failure forbids new case replay. This development screen is not the user case acceptance.",
+  "acceptance": "Original May/July/September net capital month arithmetic mean at least 10%; all May-September months nonnegative and complete coverage. Exposed history is development regression, not independent future validation. No added future observation acceptance period.",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v21/runs/early_20261012",
+    "cases": ".cache/soxl_soxs_14d5pct_v21/runs/cases_20261012"
+  },
+  "hypothesis": "V24 capacity audit found 16 proposed entries blocked by existing holdings, 15 known and 12 profitable. These hindsight counterfactuals are not additional executable trades. Test prospective buy versus wait value using complete capital-cycle transitions, including opportunity after settlement. Unlike v8 intraday nearest-neighbor wait/1.5% stop/flat-close, use cross-day learned Q values and the unchanged 6% stop/14 calendar contract. Unlike v10/v11 no new held-position exit policy.",
+  "contract": "Premarket 09:25:30 ET causal features, entry first regular open after 30-second latency at 09:30. Attach cent-rounded +5% take profit; fixed 6% protective stop, stop-first ambiguous bar, actual gap fills, 14 inclusive calendar days ending last official close on/before entry+13 days. Existing v4 arbitrary-time analysis remains available and unqualified. No real orders.",
+  "capital": "At most one ETF, full settled cash or abstention only (allocations 0/1), no leverage or same-day reentry. NEW conservative full-cash cycle: after an exit wait for T+1 and all already accrued dividend receivables to be paid before another entry. Receivables still marked in capital, never discarded. Full fees/slippage, corporate-action units, continuous cross-month MTM and unresolved held capital retained. source_early and same_action_regular_cash alone use original partial cash reuse.",
+  "inputs": "Exactly the verified v14/v21 19 causal premarket price, sector-relative strength, breadth, persistence and same-clock-volume factors; no month identities, future hit rates, hindsight hot-state labels or current members historical PIT claim.",
+  "states_and_transitions": "State is those 19 factors when all capital is free. Actions ordered CASH, SOXL, SOXS. WAIT reward 0 and next official premarket. BUY reward log1p(fixed-policy net return), successor first official premarket after sale T+1 and all that trade dividends paid. Duration is count of official session advances. Dividend return realization conservatively assigned to whole-cycle completion. No path-dependent intervention while held.",
+  "availability": "Parent transition admitted only when both fixed-policy terminal prefixes and all three successor feature states are known strictly before current daily 00:00 ET. Dividend terminal receipts retain prior conservative full-window delay. Expanding contiguous complete parent prefix, min120; never skip earlier pending parent. Missing parent beyond expiry/settlement and possibly accrued payment bound disables forecasting. Pending future payment alone is not expired. Future transition data cannot alter an earlier model.",
+  "algorithm": "Finite fitted-Q iteration, 20 fixed stages. Initial continuation V=0. At each stage targets_a=.99**duration_a * (log-return_a + max(0,previous_Q(successor_a))). Three multioutput Ridge heads, alpha100, SVD; weighted population mean/std (std<1e-12 ->1), recency half126, normalized sumN. No hyperparameter search, convergence/optimality guarantee or probability interpretation. Stage1 is registered myopic diagnostic; stage20 primary. Finite iteration counts capital cycles, not fixed calendar horizon.",
+  "calibration": "Own saved as-issued raw forecasts only. Latest120 admitted parent forecast dates, min60, recency half63 sumN. Planning additionally needs all three own successor as-issued raw forecasts; residual = .99**duration*(reward+max(0,saved successor raw Q20))-saved parent raw Q20. Myopic residual = .99**duration*reward-saved parent raw Q1. Mean residual per action added to query values. No refitted historical forecasts or unknown future query values. Raw controls retain identical calibration readiness.",
+  "decision": "Compare calibrated SOXL/SOXS Q to max(0,CASH Q). Buy highest only when advantage >1e-12; tie buys prefer SOXL; wait/buy tie waits. Otherwise CASH. Expired unresolved or insufficient base/calibration -> CASH. Growth objective uses log wealth but capital acceptance remains arithmetic mean of net month returns.",
+  "routes": {
+    "planning_calibrated": "PRIMARY: stage20 plus own Bellman residual correction",
+    "planning_raw": "stage20 raw, calibration readiness retained",
+    "myopic_calibrated": "stage1 corrected, no opportunity continuation",
+    "myopic_raw": "stage1 raw, readiness retained",
+    "same_action_regular_cash": "primary frozen actions with original cash reuse",
+    "source_full_cash": "v21 frozen actions with full-cash-cycle rule",
+    "source_early": "exact original v21 capital control",
+    "cash": "always cash",
+    "double_cost": "primary frozen actions with double costs and own fills/barriers"
+  },
+  "verification": "Before outcomes: independent transition/calendar/T+1/payment and terminal-prefix audit, all 20*3 ridge normal equations separate from sklearn SVD, own as-issued calibration/decisions, all nine continuous books. Source v21 ledger exact. Future feature/reward invariance and unknown/tie/receivable/serialization tests. Cases only after verified primary pass; every preMay training record and forecast must remain exactly equal. Independent equation tolerance atol1e-10/rtol1e-8 only for different solvers; action checks exact.",
+  "diagnostics": "Retain all routes, executed versus blocked proposals, each known/missing outcome separately, waiting advantage and gross value level, duration, frozen-entry comparison, full-cash waiting cost, per-month full capital, paired 10-session 5000-replicate bootstrap seed707 descriptive only. No after-result policy changes.",
+  "method_reference": "https://jmlr.csail.mit.edu/papers/volume6/ernst05a/ernst05a.pdf ; fitted-Q batch regression concept, not evidence of this linear market adaptation or guaranteed convergence.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true
+}
