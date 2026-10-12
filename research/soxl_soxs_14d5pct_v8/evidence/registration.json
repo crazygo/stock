@@ -1,0 +1,97 @@
+{
+  "started_at": "2026-10-12T09:23:01.792628+00:00",
+  "preregistration": {
+    "registered_at": "2026-10-12T09:16:33.359588+00:00",
+    "protocol": {
+      "version": "soxl_soxs_sequential_abstention_v8",
+      "status": "exposed_history_development_regression",
+      "hypothesis": "Calibrate the selected top-of-two trade and compare its conservative value with the learned value of waiting, rather than buying the first positive candidate prediction.",
+      "source_run": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+      "source_contract": "Reuse immutable v7 daily as-of Ridge/HGB forecasts, candidate corrections, causal features and flat_close labels. Verify source SHA and v7 audits. No retrospective refit of old predictions. v7 base models were retrained daily before each forecast date.",
+      "analysis_clocks_et": [
+        "09:25:30",
+        "10:05:30",
+        "10:35:30",
+        "13:05:30"
+      ],
+      "premarket": "09:25 analyses record WAIT_FOR_REGULAR_INFORMATION; no invented regular context. At later clocks choose buySOXL, buySOXS, or WAIT/CASH. Missing/immature inputs cause WAIT, not synthetic zero returns.",
+      "policies": {
+        "breadth_wait_conservative": {
+          "input": "breadth",
+          "wait": true,
+          "penalty": 1.0
+        },
+        "breadth_top_conservative": {
+          "input": "breadth",
+          "wait": false,
+          "penalty": 1.0
+        },
+        "breadth_wait_mean": {
+          "input": "breadth",
+          "wait": true,
+          "penalty": 0.0
+        },
+        "base_wait_conservative": {
+          "input": "base",
+          "wait": true,
+          "penalty": 1.0
+        }
+      },
+      "primary": "breadth_wait_conservative",
+      "controls": "Retain v7 breadth__ensemble_log and base__ensemble_log capital books as unchanged controls. Other v8 policies are diagnostics only and cannot replace the primary after case inspection.",
+      "candidate": "Top ETF by v7 ensemble corrected expected log return at that clock; tiesSOXL. Even negative top scores remain in calibration. Require v7 raw/candidate-calibration readiness; do not label raw scores as probabilities.",
+      "meta_features": [
+        "top_score",
+        "top_margin",
+        "component_disagreement",
+        "direction",
+        "sector_vol20",
+        "signed_sector_session_return",
+        "signed_sector_vwap_distance",
+        "signed_qqq_recent15"
+      ],
+      "feature_definitions": "top_score and margin use corrected v7 ensemble scores; disagreement=abs(corrected Ridge-selectedETF minus corrected HGB-selectedETF); direction=+1SOXL/-1SOXS; other three signed quantities multiply corresponding v7 causal observed fields by direction. Scale solely with eligible preceding dates' mean/std; zero std gets scale1.",
+      "training": "Daily00:00ET cutoff, separately per policy and clock. Use the latest126 prior eligible distinct dates, minimum80. Both ETF labels and every observed intraday clock of the date must have full-session mature finite outcomes before cutoff. Pool membership depends on availability, not outcome sign or whether an actual trade occurred.",
+      "window_dates": 126,
+      "minimum_dates": 80,
+      "neighbors": 40,
+      "local_calibration": "Standardized Euclidean nearest40 of the past126 same-clock meta states; stable timestamp tie break. Buy target=actual log(1+net return) of the ETF selected by that historical day's saved v7 forecast. Predict its mean and sample std/sqrt40. This empirical penalty is a heuristic, not a calibrated confidence guarantee; neighboring days can remain dependent.",
+      "continuation": "For each historical date, archive each clock's v8 decision as a counterfactual fresh-cash state, even if the actual account had already bought earlier. Wait target at clockk is the realized net log return of the first BUY in that SAME policy's saved later clocks; zero only if all required later decisions are observed and explicitly WAIT/CASH. This target is released after the whole entry-day label set matures. Do not maximize realized future ETF returns. Historical later decisions used only features then available and prior-day training; today's later state/outcomes are never available to current selection.",
+      "wait_model": "Use the same nearest40 historical meta states to estimate the mean of their matured saved-policy continuation returns. At the last available clock continuation is identically0. No other clock on today's path is read. Policies with wait=false compare only against cash0.",
+      "decision": "buy_value=local_selected_trade_mean - penalty*std/sqrt40. wait_value=max(0,local_continuation_mean) when wait enabled. BUY selectedETF only if buy_value>wait_value; otherwise WAIT to the next available clock, or CASH at the last. No same-day second entry. Missing/unready history implies WAIT. Future clock availability is from the official calendar, not future observed prices.",
+      "warmup": "Before80 eligible same-clock meta states, save explicit WAIT decisions. Their suffix is0 only once complete future decisions and EOD labels have matured. This bootstraps causal policy iteration without an oracle continuation target.",
+      "execution": "Unchanged v7 flat_close: first RTH5m Open after decision+30s within6min; entry+5% cent-rounded TP, initial1.5% stop, scheduled official same-day close otherwise. Stop-first ambiguous bars, adverse gaps and slippage retained;14-calendar-day maximum remains satisfied.",
+      "capital": "Unchanged one-position continuous full settled-cash ledger,T+1 proceeds,no same-day reentry,all losing trades/costs/months kept. Hypothetical suffix branches are training states, never additional capital or independent trades.",
+      "costs": "Keep v7 fee5bp per side and market slippage5bp assumptions; double-cost primary replay uses unchanged saved primary decisions and recomputes raw price paths. No account fee reduction or live orders.",
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ],
+      "acceptance": "Only primary: three regression-month net capital returns arithmetic mean>=10%; everyMay-September month>=0; complete105-day/premarket coverage. Cash0 fails return gate. All other routes and cost stress must be reported. No independent future validation or future nonnegative-month guarantee is claimed.",
+      "uncertainty": "Compare primary versus unchanged breadth v7 control using paired daily log-equity differences and fixed5000 circular10-session-block bootstraps seed707. Diagnostic only, not optimization.",
+      "no_broker_orders": true,
+      "no_automatic_R2_upload": true
+    },
+    "protocol_sha256": "e407626df3be6742be1250241cc249ce439e1da2b03ee159c221661bcd7d873d",
+    "new_policy_case_results_not_computed": true,
+    "prior_versions_same_history_exposed": true
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v8/test_sequential.py": "3818635e849c5e10f735b7618554fe0d0e86bff2489c7e0d791795daf937f959",
+    "research/soxl_soxs_14d5pct_v8/sequential.py": "42414038a1ac9afa90fa02d80ffb66837aa5390490082a243f39a80f5ed4d3bd",
+    "research/soxl_soxs_14d5pct_v8/run_sequential.py": "39f2185da354726a7404c5d5083725b42368e9c60a824bd109b90bf368872896",
+    "research/soxl_soxs_14d5pct_v8/protocol.json": "e407626df3be6742be1250241cc249ce439e1da2b03ee159c221661bcd7d873d",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac"
+  }
+}
