@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新研究为 [v9 每日入场与持仓延续](research/soxl_soxs_14d5pct_v9/README.md)：9 月模型吸收此前月份新成熟的数据，入场与持仓每天分别学习，保留完整14日标签成熟边界。主策略23次入场，5/7/9月净收益算术均值 −8.47%，五个月累计 −20.92%，仍未通过；18笔在当天结束，次日复评没有改善实际退出。[持续目标保持进行中](research/soxl_soxs_14d5pct_v9/GOAL_PROGRESS.md)。[v8 等待价值](research/soxl_soxs_14d5pct_v8/README.md)、[v7 行业广度](research/soxl_soxs_14d5pct_v7/README.md)、[v6 盘中路径](research/soxl_soxs_14d5pct_v6/README.md)、[v5 多模型](research/soxl_soxs_14d5pct_v5/README.md)及更早失败结果保留；[v4 每日训练及任意时点分析](research/soxl_soxs_14d5pct_v4/README.md)继续可用，当前不行动。
+最新研究为 [v10 盘中持仓价值复评](research/soxl_soxs_14d5pct_v10/README.md)：保持每日训练，将持仓复评提前到首根常规盘 K 线完成后，原保护订单在执行延迟内仍有效。主策略24次入场、17次提前退出，5/7/9月净收益算术均值 −3.89%，五个月累计 −11.99%，仍未通过；17次退出中12次截断后来会止盈的持仓，尚未证明退出价值。[持续目标保持进行中](research/soxl_soxs_14d5pct_v10/GOAL_PROGRESS.md)。[v9 每日持仓学习](research/soxl_soxs_14d5pct_v9/README.md)、[v8 等待价值](research/soxl_soxs_14d5pct_v8/README.md)、[v7 行业广度](research/soxl_soxs_14d5pct_v7/README.md)、[v6 盘中路径](research/soxl_soxs_14d5pct_v6/README.md)、[v5 多模型](research/soxl_soxs_14d5pct_v5/README.md)及更早失败结果保留；[v4 每日训练及任意时点分析](research/soxl_soxs_14d5pct_v4/README.md)继续可用，当前不行动。
 
 [v2 历史结果](research/soxl_soxs_14d5pct_v2/REPORT.md)的三个月算术均值 +11.69% 不再代表当前准入；旧数字与亏损保留。[v1 迁移记录](research/soxl_soxs_14d5pct_v1/ANALYSIS.md)保留原模型失败证据。原始行情不进 Git，真实交易仍由用户手动执行。
 

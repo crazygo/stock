@@ -1,0 +1,105 @@
+{
+  "started_at": "2026-10-12T10:12:43.811978+00:00",
+  "preregistration": {
+    "registered_at": "2026-10-12T10:06:43.714381+00:00",
+    "protocol_sha256": "8c452eb496480f2d445fafb4a1f44aae2a74deb42aaadb95f21b6f996305a761",
+    "protocol": {
+      "version": "soxl_soxs_intraday_continuation_v10",
+      "status": "exposed_history_development_regression",
+      "hypothesis": "Observed intraday holding information may enable risk exits before the next premarket review. Learn remaining fixed-contract value versus executable delayed sale, including orders that fill during decision latency.",
+      "source_features": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012/features.parquet",
+      "premarket_reference": ".cache/soxl_soxs_14d5pct_v9/runs/continuation_20261012",
+      "primary": "intraday_continuation",
+      "entry_clock_et": "09:25:30",
+      "review_clocks_et": [
+        "09:25:30",
+        "09:35:30",
+        "09:45:30",
+        "10:05:30",
+        "10:35:30",
+        "11:05:30",
+        "12:05:30",
+        "13:05:30",
+        "14:05:30",
+        "15:05:30",
+        "15:45:30"
+      ],
+      "entry": "Daily pooled HGB entry prediction of previously managed hypothetical trade net log return. Choose the raw higher ETF then apply saved-top-choice bias correction; corrected value>0 buys SOXL/SOXS, otherwise cash. At most one actual holding and one entry/day. Next regular Open strictly after09:25:30+30s, within6min, normally09:30.",
+      "contract": "Same v9 attached+5% cent-rounded regular TP, initial fixed6% protective stop, stop-first ambiguous OHLC, adverse gaps, maximum14 inclusive calendar days ending at official close on/before entrydate+13. No new trailing stop, no fixed daily flattening.",
+      "review": "Review each existing hypothetical holding at every registered clock before official close, including entry day after entry. Use only completed bars available by the decision. Nonpositive corrected continuation value schedules a market exit for first regular Open strictly after decision+30s, within6min. Protective orders remain active during latency; an earlier barrier/expiry cancels the pending market exit. Missing state/model/calibration/execution keeps the protective contract and unknowns.",
+      "manager_target": "log(remaining fixed-contract net proceeds / executable-exit counterfactual net proceeds), measured per constant economic share unit. Both alternatives include dividends earned strictly after reviewdate; already accrued dividends cancel. The executable-exit alternative retains any original barrier/expiry that executes before its scheduled Open, giving exactly zero advantage when the order latency prevents changing that result. Otherwise use next regular raw Open capped at original target then subtract slip/fee. It is not future-best-price or optimal-oracle value.",
+      "features": "Entry: exactly the25 v9 compact own-ETF/signed SOXX/QQQ/prior20vol/fixed-panel premarket breadth columns. Manager: those day's09:25 features,6 observed holding fields, own/SOXX/QQQ complete-prefix regular session return,VWAP distance,last5m return,observed up-to15m return,range position,efficiency,observed range,cumulative bars and volume relative to previous20 complete sessions. Sector/QQQ directional fields signed by held ETF; explicit regular-ready flag separates premarket zeros. Current holding mark uses only available same-day bar; age<=6min. Peak is observed RTH High since entry only.",
+      "algorithm": "HistGradientBoostingRegressor squared_error,max_iter80,max_leaf_nodes7,min_samples_leaf20,learning_rate.05,l2_regularization5,early_stoppingFalse,random_state814. Separate pooled entry and manager learners; no case-month tuning.",
+      "training": "Daily00:00ET, latest252 distinct entry dates whose BOTH ETF complete original14day labels released strictly before cutoff. Minimum120 dates for entry and120 eligible parent dates represented in manager states. Entry date total weight1 across both ETFs; manager parent entry date total weight1 across all its states/ETFs. Manager trains fixed-contract survival states. Entry trains archived outcomes produced by the historically available manager, not later-refitted exits.",
+      "training_window_dates": 252,
+      "minimum_training_dates": 120,
+      "calibration_window_dates": 60,
+      "minimum_calibration_dates": 40,
+      "entry_calibration": "Latest60 fully mature prior raw-top forecasts, minimum40, add mean(actual managed log return minus old raw top forecast). No rewriting old predictions or choosing alternative ETF after calibration.",
+      "manager_calibration": "Only previously emitted raw forecasts on actual surviving managed hypothetical holdings. Require parent full14day joint maturity; average residual within parent entrydate then average latest60 dates, minimum40. Warmup holds protective contract and saves raw forecasts. No intraday fitting or calibration update.",
+      "controls": [
+        "same_entry_fixed_contract",
+        "same_entry_v9_premarket_manager",
+        "same_entry_simple_trend_exit",
+        "original_v9_primary"
+      ],
+      "simple_trend_control": "Same new primary entry decisions and6%/+5%/14day contract. At registered regular review clocks, exit if signed SOXX session-return and VWAP-distance and observed up-to15m return are all negative and signed QQQ session-return and VWAP-distance are both negative. Uses identical latency and earlier-barrier handling. This is a diagnostic rule, not an alternative primary selected after results.",
+      "stress": "Double fee/slippage; same saved primary entry decisions and same daily model/correction, manager evaluated on each stressed holding's own entry/barriers/observed state. Stress outcomes never train or calibrate.",
+      "capital": "100% settled cash, one position, no same-day reentry, T+1 sale proceeds, dividends and split economic units, all costs/losses/pending funds and daily cross-month MTM retained. No monthly equity resets or loss clipping.",
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ],
+      "acceptance": "Primary arithmetic mean of5/7/9 monthly net ledger returns>=10%, allMay-September monthly net returns>=0, complete expected premarket coverage. Cash0 fails return goal. Controls cannot replace primary after cases. Already exposed history is development, not independent future verification.",
+      "no_case_specific_parameters": true,
+      "no_broker_orders": true,
+      "no_automatic_R2_upload": true,
+      "future_nonnegative_month_guarantee": false
+    },
+    "new_strategy_case_results_not_computed": true,
+    "prior_versions_exposed_same_history": true,
+    "pre_case_probe": {
+      "label_release_cutoff": "2026-05-01T00:00:00-04:00",
+      "source": ".cache/soxl_soxs_14d5pct_v9/runs/continuation_20261012/baseline_labels.json",
+      "SOXL": {
+        "matured": 357,
+        "exit_first5m": 2,
+        "exit_first30m": 32,
+        "same_day": 149
+      },
+      "SOXS": {
+        "matured": 357,
+        "exit_first5m": 1,
+        "exit_first30m": 28,
+        "same_day": 147
+      }
+    }
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0"
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v10/test_micro.py": "b5ab0c3787aaf45c6dc3ad53dd7fb81a13c8c83bd966b5230fcdff55779b5632",
+    "research/soxl_soxs_14d5pct_v10/run_micro.py": "1889ece8c3b3d1e1c9c56eb8771191c853089f9d957b8c54de25c23bcb7bcab4",
+    "research/soxl_soxs_14d5pct_v10/micro_manager.py": "f89abaf58cce20264832a54564ed148f40423eae25b24868694fc45445972212",
+    "research/soxl_soxs_14d5pct_v10/protocol.json": "8c452eb496480f2d445fafb4a1f44aae2a74deb42aaadb95f21b6f996305a761",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v3/risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac",
+    "research/soxl_soxs_14d5pct_v9/continuation.py": "5a36056f00423915280d0a4a691923e319925ff680cb1dd7b4f206fee315ea12",
+    "research/soxl_soxs_14d5pct_v9/run_continuation.py": "b8289d5516cf20693cfd16a9475ed5d785edc7d7bb006de8ca1a918773421a7e"
+  }
+}
