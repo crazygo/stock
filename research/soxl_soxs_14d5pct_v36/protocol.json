@@ -1,0 +1,56 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_adaptive_correction_v36",
+  "primary": "adaptive_band",
+  "forecast_source": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+  "hypothesis": "V35 raw fullfinancial forecast MSE improved but correction slightly worsened total MSE. Retest v18 bounded C/D expert mixing on the v35 daily fourclock financial forecasts, using actual paired-terminal feedback and date-joint calibration/meta resampling. This is a controlled method transfer, not a new algorithm discovery or a clock/month blacklist.",
+  "source": "Reuse immutable independently verified v35 raw and as-issued calibrated forecasts, input/financial panels and fixed trade labels. Check all top-level, daily and training SHAs against committed v35 delivery manifest. Underlying base models remain daily-retrained on data available before that day; using cached issued forecasts does not freeze the economic model to one old month. No raw source downloads or uploads.",
+  "meta_history": "Every day00ET, same whole-date terminal chronological prefix as v35. Stop at first feature-ready date with any unknown or not-yet-mature terminal; do not skip it. Among that prefix select latest120 dates with source full calibrated predictions actually ready for all3/4clocks. Min60 dates to enable correction learner. Both expert forecasts are their original as-issued values, not retrospectively refitted predictions. Current-day forecasts and labels excluded.",
+  "warmup": "Source calibrated forecasts first ready2025-11-05; only39 issued days before Jan, found in pre-result coverage inspection. Until60mature meta dates, all adapted band routes preserve original source point/lower/199draws exactly (alpha1), rather than discard source forecasts. Unknown source remains cash. Adaptive point diagnostic omits band throughout. This fallback fixed before any new ledger outcomes.",
+  "fit": "Transform two ETF expected net log returns to C=(L+S)/2,D=(L-S)/2. For each clock and component separately, minimize weighted sum[(raw+a(cal-raw)-truth)^2]+lambda(a-.5)^2 over0<=a<=1. Weights63datehalf-life totalN, divided across3/4clocks, then normalized for each head. Aggregate normalized rowweights by ORIGINAL DATE to compute neff=1/sum(dateweight^2). A=sumw(delta^2),B=sumw(delta*(truth-raw)),lambda=2A/neff; a=clip((B+lambda/2)/(A+lambda),0,1), or.5ifA<=1e-16. Same scalar loss as v18; no state-distance weights. Shared diagnostic pools all clocks but still date-based neff. For bootstrap, date multiplicities aggregate before neff.",
+  "joint_bootstrap": "Use sorted union of current v35 calibration dates and meta dates.199circular10-date block draws,seed826+ETdateordinal. Same date multiplicity affects both fits, including overlapping dates even when pools start differently. Refit source partial-sharing calibration with own original dateweight normalization, weighted standardization and penalty20; refit clock/shared blend with perturbed meta weights and neff. Historical expert forecasts stay fixed as-issued. Current raw model held fixed; raw-training parameter uncertainty is not quantified.",
+  "decision": "Current point=componentwise raw+alpha*(sourcecal-raw), restored toETF netlog scores. Each joint bootstrap predicts with its refit calibration and alpha. Joint radius=max(0,higher90% maxETF(draw-point)). Final radius=max(originalv35 radius,joint radius), so weakening calibration cannot automatically shrink safety margin below source. This empirical perturbation band is not a monthlyloss guarantee or a formally calibrated coverage interval. Greatestpositive point-radius (>1e-12) buys, tieSOXL; else cash. Same sourcefeature/pending-prefix gates. No targeted month or clock exemptions.",
+  "routes": {
+    "adaptive_band": "PRIMARY perclockC/D mixing with source risk floor",
+    "adaptive_point": "primarypoints withoutband diagnostic",
+    "shared_band": "C/D mixweights sharedacrossclocks withfloor",
+    "equal_band": "fixed.5mix aftermetawarmup withfloor",
+    "raw_band": "fixed0mix aftermetawarmup withfloor",
+    "source_v35": "exactoldfullfinancialpolicy",
+    "cash": "cash",
+    "double_cost": "primaryactions own2xcostlabels"
+  },
+  "case_workflow": "A failed independently verified primary blocks beforecreating any caseoutput. If primary passes, extend v35 raw/as-issued forecasts using the unchanged v35 daily financial/price recipe throughSeptember, preserve all preMay records, then apply the frozen v36 meta rules to continuousMaySeptember. Source extension engineering is not implemented by the development runner; it must be completed and verified if authorized. No case fitting or primaryswitch.",
+  "verification": "17 synthetic tests, including bounded solution checked with SciPy BVLS, full jointfit independently audited by normal equations/KKT, complete future/current record perturbation invariance, missing prefix, sourcefallback and originalriskfloor. Fullrun allmeta minima, all199jointcalibrationfits and date multiplicities, issued actions and8 independentcapitalbooks. Source v35 exact4CSV outputs.104independent summary assertions and actual failed-case CLI guard.",
+  "attempts_before_registration": "Initial13tests passed; after adding fullaudit/futurefit tests, initial16test suite failed only audit helper near() arity. Corrected to directgradient tolerance; addedwarmup test after sourcecoverage finding. No newmodel or capitalresults before finalregistration.",
+  "method_reference": [
+    "../soxl_soxs_14d5pct_v18/adaptive_blend.py",
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.lsq_linear.html"
+  ]
+}

@@ -1,0 +1,15 @@
+verified correction through 2025-01-28 15:05:30+00:00
+verified correction through 2025-04-09 14:05:30+00:00
+verified correction through 2025-06-23 14:05:30+00:00
+verified correction through 2025-09-03 14:35:30+00:00
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v36/verify_correction.py", line 160, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);verify(p.parse_args().run)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v36/verify_correction.py", line 113, in verify
+    ready=bool(record['estimates']['full']['ready'] and row.feature_ready)
+                                                        ^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/generic.py", line 6299, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Series' object has no attribute 'feature_ready'
