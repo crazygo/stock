@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v28/verify_censored.py", line 192, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);verify(p.parse_args().run)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v28/verify_censored.py", line 132, in verify
+    paths,exit_checks=independent_paths(market,features,base)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v28/verify_censored.py", line 36, in independent_paths
+    event_data=first_exit(f,entry,target,.06,None,.0005,.0005)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v3/risk.py", line 24, in first_exit
+    rounded_stop = math.floor(stop / factor * 100 + 1e-10) / 100 * factor
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: cannot convert float NaN to integer

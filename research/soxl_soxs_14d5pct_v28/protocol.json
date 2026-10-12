@@ -1,0 +1,63 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_censored_competing_risks_v28",
+  "primary": "censored_band",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "hypothesis": "Known uninterrupted path prefixes can update entry risk before both ETF terminals mature. V27 additional clocks improved observed supply but failed growth and cost stability; this experiment changes risk estimation, not exit barriers. Earlier history exposed; all results development research.",
+  "analysis_clocks_et": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "contract": "At each completed5mbar+30sec decision, enter next regular5mOpen strictlyafter another30sec:09:30/10:10/10:40/13:10ET. Keep attached centrounded+5% TP,fixed6%protective stop,stop-first ambiguity and actual gapfills. Max14inclusive calendar days,last officialclose on/before entry+13. Halfday clocks>=close absent. V4 arbitrary-time analysis remains available/unqualified. No new holding exits or orders.",
+  "inputs": "Same verified causal v23 features:19 price/industry factors premarket,31 afteropen including session/VWAP/recent15/high-low/diffusion context. Same-clock full volume prefixes for8leaders and20prior official sessions,missing/late prefix disablesfeatures. No future hot intervals/hit rates,month identities or historical PIT membership claim.",
+  "base_forecasts": "Use v23 context variant expanding daily00ET early-terminal raw paired predictor (Ridge100 commonC/magnitude absD,LogisticC.1 weighted signD,recency126,min120parents). PreMay as-issued records frozen by newly audited source manifest: member prefix and every raw model equation independently rechecked. Do not rebuild them with later models. AfterMay, only if this experiment primary dev passes, extend exactly that raw learner at each clock using then-known data; generate no old v23 capital policy. Source old predictions are historical development emissions, not live forecasts.",
+  "control_source": ".cache/soxl_soxs_14d5pct_v27/runs/clock_reliability_20261012",
+  "observations": "At each day00ET, each prior same-clock original raw emission contributes the uninterrupted official regular5m prefix strictly available before cutoff. Reindex every required official bar, stop at first missing/late/bad bar. An observed TP/stop/expiry is terminal only after that full prefix is known. Otherwise right-censor at observed_bars/expected_bars. Duration normalized by scheduled remaining bars to the same14calendar expiry; calendar is known in advance. Censor has no terminal payoff and is never a negative example. Expired missing prefixes disable current estimate. No condition on partner ETF completion or earlier pending pairs.",
+  "learning_payoff": "Price-only net logreturn, fee and slippage included, dividend income omitted from learner to avoid anticipation of future dividend metadata. Actual ledger includes dividends as before. Estimated value is explicitly price-only, not a forecast of total capital monthly return.",
+  "local_weights": "Latest252/min60 original same-clock paired raw scores with entrydate before cutoff;2input coordinates encode original19/31causal industry+price predictors. Recency63sessions, weighted population std per coordinate floored.001. Gaussian weight exp(-squared standardized query distance/2), min numerical exponent-700. No label-dependent neighbor filtering. At least30 Kish effective source dates perETF. Coordinates never recomputed using newer models.",
+  "estimator": "Weighted Aalen-Johansen product-integral: for each distinct normalized duration, riskweight of every observation still at risk, causeweight for TP/stop/expiry; jointly remove all terminal events after adding their incidence using prior survival. Same-duration censor remains at risk for that event group; no random jitter. Price-only mean logreturn is sum of event-mass times its realized net logreturn. Unidentified remaining mass retained; point and all bootstrap replicates must have mass<=1e-10 and positive totalweight, otherwiseCASH. Administrative censoring may still correlate with calendar regime; conditional noninformative censoring is an unproven modeling assumption, not a guarantee.",
+  "uncertainty": "199 circular10parent-date block bootstrap replicates, same multiplicities for both ETFs, original kernelweights fixed at current query. Seed828+ETdateordinal. Common margin=max(0,90thpercentile_higher of max acrossETF bootstrap-point deviation). Point-minus-margin must be positive. This estimates local weighted-sample sensitivity, not full base-model uncertainty, a formal confidence bound, simultaneous control across4dailychecks, or a guarantee of nonnegative months.",
+  "decision": "Primary uses greatest positive price-only expectedlog lower;tieSOXL,otherwiseCASH. Full available settledcash, maxoneposition andoneentry/day. Clock histories separate; earliest executable eligibleclock wins, no future-clock selection. Same fixedTP5/stop6/14calendar exit rules and cost-stress replay.",
+  "routes": {
+    "censored_band": "PRIMARY 4clock competing risks with block margin",
+    "censored_point": "same estimates point without margin; retains data/support eligibility",
+    "terminal_only_band": "same local weights and bootstrap; omit perETF censoredrows from risk sets, diagnostic only",
+    "premarket_only": "primary only09:25",
+    "source_v27": "immutable v27 primary exact development ledger; cases if permitted extend same raw learner/error formulation",
+    "cash": "allcash",
+    "double_cost": "primary frozenactions,doublefees/slippage ownbarriers"
+  },
+  "verification": "Before empirical outcomes:14tests of censoring,competing/tiedevents,unidentifiedtail,explicitresampling,futurepath andcutoff isolation,missingprefix,route masks,independentAJformulas anddateblocks. Every saved observation independently checked from officialcalendar,prefix availability and frozen original exit solver; all point/bootstrap eventrisk sums independently recomputed,pairedmembership anddecisions checked. Seven separate continuous books independently reconciled and control matchesv27. Failed primary cannot trigger case replay or be replaced by a diagnostic. Preserve failures and corrective verification amendments.",
+  "diagnostics": "Report effectiveparents,knownterminals,rightcensoredprefixes,clock/date/candidate/executedtrade counts,pairedblock dailylogincrement versus terminal-only andv27. Separate asissuedhistoricalsource fromliveforecasts. Freeze predictions beforecapital replay. No hyperparametergrid or monthidentityinputs.",
+  "method_reference": [
+    "https://scikit-survival.readthedocs.io/en/stable/user_guide/competing-risks.html",
+    "https://lifelines.readthedocs.io/en/latest/fitters/univariate/AalenJohansenFitter.html"
+  ]
+}
