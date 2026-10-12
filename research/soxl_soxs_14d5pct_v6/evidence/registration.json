@@ -1,0 +1,87 @@
+{
+  "started_at": "2026-10-12T08:04:32.969238+00:00",
+  "preregistration": {
+    "registered_at": "2026-10-12T07:56:56.014290+00:00",
+    "protocol": {
+      "version": "soxl_soxs_intraday_path_v6",
+      "registered_on": "2026-10-12",
+      "status": "exposed_history_development_regression",
+      "goal": "May/July/September net capital monthly returns arithmetic mean >=10%; every May-September month nonnegative; continuous capital including all losses, costs and marked open positions.",
+      "analysis_clocks_et": [
+        "09:25:30",
+        "10:05:30",
+        "10:35:30",
+        "13:05:30"
+      ],
+      "premarket": "09:25 analysis always records WAIT_FOR_REGULAR_INFORMATION; no invented regular-session observations. Subsequent fixed clocks can buy SOXL/SOXS or abstain. One actual entry per official session.",
+      "entry": "First same-day regular 5m Open strictly after decision+30s, at most six minutes later; skip clocks after official close. +5% rounded-cent take-profit attached at fill.",
+      "features": "Existing v2 causal four-symbol context plus completed regular SOXX/QQQ opening return, first-30m range breakout, volume-weighted typical-price distance, recent and previous 15m return, range location and observed direction efficiency. The first-30m range is unavailable until complete. No future hit-rate features.",
+      "entry_rules": [
+        "range_breakout",
+        "vwap_momentum",
+        "pullback_resume",
+        "range_failure",
+        "ridge_log",
+        "boosted_log"
+      ],
+      "rule_definitions": {
+        "range_breakout": "SOXX completed close outside first 30m high/low and on the corresponding side of session VWAP, with QQQ session return confirming direction",
+        "vwap_momentum": "SOXX opening return, VWAP distance and recent15m return agree, with QQQ opening return confirming",
+        "pullback_resume": "SOXX session direction and VWAP side agree; previous15m moves against this direction and recent15m resumes it; QQQ opening return confirms",
+        "range_failure": "SOXX previously crossed first30m high/low but latest close returns inside that boundary; latest15m and QQQ latest15m confirm the reversal",
+        "ridge_log": "StandardScaler + Ridge(alpha=20), one per ETF and exit policy, expected log(1+net return)",
+        "boosted_log": "HGB squared loss, 80 iterations, 7 leaves, min leaf20, learning_rate .05, l2=5, no random validation, random_state814; one per ETF and exit policy"
+      },
+      "exit_policies": [
+        "flat_close",
+        "trail_close",
+        "adaptive_overnight"
+      ],
+      "exit_definitions": {
+        "flat_close": "Initial 1.5% protective stop, +5% take-profit, otherwise predetermined official closing-price market exit on entry day (risk avoidance of overnight exposure)",
+        "trail_close": "Same initial 1.5% stop and entry-day closing exit; after observed +2% excursion, raise stop to max(fee/slippage-adjusted flat, highest completed-bar High * .985), after observation availability plus 30 seconds",
+        "adaptive_overnight": "Initial 3% stop, same delayed +2%/1.5% trailing protection; after first30m, if SOXX session return and VWAP side both oppose held ETF direction and QQQ session return confirms, cancel target and sell at first subsequent regular Open strictly after joint observation availability+30s. Exit capped at original target in ambiguous opening-price improvement cases. Otherwise retain +5% target or mandatory exit within 14 inclusive calendar days."
+      },
+      "ambiguity": "Adverse gap executes at min(Open, armed stop) less slippage; simultaneous high-target/low-stop bar is stop-first. Protection cannot activate in its trigger bar. Missing prefix remains unknown and capital occupied. Planned closing exit is scheduled at entry; it is not a decision using the future close.",
+      "training": "Daily 00:00 ET cutoff, latest252 eligible distinct entry dates, minimum120 dates; all three intraday observations of a date are jointly eligible only when both ETF labels are complete and released. Each date has total sample weight1 across clocks. Historical bars assume available_at, current receipt is not manufactured.",
+      "training_window_dates": 252,
+      "minimum_training_dates": 120,
+      "label_release": "flat_close/trail_close need the complete entry-day regular session, released at max(official close+1s, observed available_at through close), for both winners and losers. adaptive_overnight conservatively waits for complete full14d contract for all outcomes.",
+      "calibration": "Per ETF, model, exit and decision clock, average actual log return minus previously saved as-of raw forecast over latest60 mature dates, minimum40. No recomputing old predictions with later fits. Positive corrected score required; choose higher ETF, else cash.",
+      "calibration_window_dates": 60,
+      "minimum_calibration_dates": 40,
+      "expert_count": 18,
+      "selector": "One registered primary selector: each expert has its own continuous shadow capital ledger since history start, with actual positions, settlement and fees. At each date use exactly the preceding64 daily closes to derive63 daily log returns. Require positive63-session return, positive last21-session return, last63-session maximum closing drawdown <=10%, at least12 actual trades entered in that window and exited before cutoff. Rank mean daily log return - .25*std/sqrt(63), require positive score, stable ID tie break. No eligible expert means cash. Today's shadow close is forbidden. Future exit columns may only identify exits already elapsed.",
+      "selector_sessions": 63,
+      "selector_min_closed_trades": 12,
+      "selector_max_drawdown": 0.1,
+      "selector_penalty": 0.25,
+      "capital": "One position, 100% settled cash, no additional leverage, proceeds reusable next official session, no same-day reentry; cross-month holdings marked daily. Entry-selected exit policy persists if next day's selected expert changes.",
+      "allocation": 1.0,
+      "cooldown_sessions": 0,
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ],
+      "admission": "Only the registered shadow-ledger selector is the primary candidate. All18 expert case returns are diagnostics and cannot replace it after seeing outcomes. Double costs as stress with same saved primary actions. Do not change parameters or omit losing months to claim success.",
+      "no_broker_orders": true,
+      "no_automatic_R2_upload": true,
+      "no_future_profit_guarantee": true
+    },
+    "protocol_sha256": "57cd88e9936f1bec5da3d06fe1b5ac7bba1a1cf4a462ee9ef2cdb4fe207278bd",
+    "v6_case_runs_before_registration": 0,
+    "goal_status": "active"
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "62a52925860f65cef9fe3594e529a3861ac7c158c123fccaa31a17cfd672ecd3",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "cc13e23b7540fb2d44ac24cdf8600748371d956006e7de2a5e26479756f25bd3",
+    "research/soxl_soxs_14d5pct_v6/test_intraday.py": "38a0db2ea93613343b0d22baddebe373ddffac65e1b27784598a19093a649726",
+    "research/soxl_soxs_14d5pct_v6/learning.py": "736662a57b83596b99d4ad99e10b1423b59ae1f028b3b1b0a8205bafe3cb4eb8",
+    "research/soxl_soxs_14d5pct_v6/protocol.json": "57cd88e9936f1bec5da3d06fe1b5ac7bba1a1cf4a462ee9ef2cdb4fe207278bd",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43"
+  }
+}

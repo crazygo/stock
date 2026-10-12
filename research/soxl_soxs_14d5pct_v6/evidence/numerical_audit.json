@@ -1,0 +1,59 @@
+{
+  "pass": true,
+  "all_fitted_forecasts_finite": true,
+  "fitted_forecast_rows_per_expert": {
+    "ridge_log__flat_close": 1071,
+    "boosted_log__flat_close": 1071,
+    "ridge_log__trail_close": 1071,
+    "boosted_log__trail_close": 1071,
+    "ridge_log__adaptive_overnight": 1044,
+    "boosted_log__adaptive_overnight": 1044
+  },
+  "weighted_scaler_runtime_warning": "Installed sklearn emits sqrt warning for tiny negative roundoff variance of constant features, then constant_mask replaces that scale with 1. All fitted forecasts verified finite.",
+  "constant_variance_probe_scales": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "actual_reconstructed_scalers": [
+    {
+      "date": "2025-09-01",
+      "negative_variances": [],
+      "runtime_warnings": 0
+    },
+    {
+      "date": "2025-10-01",
+      "negative_variances": [],
+      "runtime_warnings": 0
+    },
+    {
+      "date": "2025-11-03",
+      "negative_variances": [],
+      "runtime_warnings": 0
+    }
+  ],
+  "reproduced_actual_warning_cases": [
+    {
+      "date": "2025-05-16 00:00:00",
+      "warnings": 1,
+      "negative_variances": [
+        {
+          "feature": "regular_context_ready",
+          "variance": -5.560708191765147e-48,
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "date": "2025-05-20 00:00:00",
+      "warnings": 1,
+      "negative_variances": [
+        {
+          "feature": "regular_context_ready",
+          "variance": -1.0947644252537633e-47,
+          "scale": 1.0
+        }
+      ]
+    }
+  ]
+}

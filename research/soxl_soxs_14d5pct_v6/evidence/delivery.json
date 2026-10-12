@@ -1,0 +1,55 @@
+{
+  "verified_at": "2026-10-12T08:26:10.662293+00:00",
+  "goal_status": "active_unachieved",
+  "actual_economic_replays": 1,
+  "experts": 18,
+  "tests_passed": 11,
+  "tests_failed": 0,
+  "acceptance_passed": false,
+  "independent_verification": {
+    "pass": true,
+    "training_membership_checks": 1434,
+    "calibrated_forecasts_recomputed": 5598,
+    "selector_days_recomputed": 105,
+    "raw_trade_checks": 173,
+    "verified_books": [
+      "primary",
+      "double_cost",
+      "ridge_log__adaptive_overnight"
+    ],
+    "trailing_exits": 42,
+    "trend_exits": 25,
+    "planned_session_close_exits": 9,
+    "premarket_rows_always_wait": true,
+    "marked_capital_and_monthly_returns_recomputed": true,
+    "historical_replay_not_broker_fills": true,
+    "acceptance_passed": false
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v6/verify_intraday.py": "593ef8774b0eed6e27e545825874d54e844ca70a779c59f132406407dc1167be",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v6/test_intraday.py": "8ba739f8b0e20be22369d70124ccad1a9a50651a6d4ad28c69e04f906dd068f4",
+    "research/soxl_soxs_14d5pct_v6/learning.py": "736662a57b83596b99d4ad99e10b1423b59ae1f028b3b1b0a8205bafe3cb4eb8",
+    "research/soxl_soxs_14d5pct_v6/protocol.json": "57cd88e9936f1bec5da3d06fe1b5ac7bba1a1cf4a462ee9ef2cdb4fe207278bd",
+    "research/soxl_soxs_14d5pct_v6/README.md": "0853b7b36c724581393eb3e8daa8ea88ba047f1a8b2612b91a155c30eef3d156",
+    "research/soxl_soxs_14d5pct_v6/GOAL_PROGRESS.md": "54a6983a725075d7a4db30d2fb80d5b1c0ddc91bd5c107405fb46af6c3eb322c",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2"
+  },
+  "full_selector_registry_sha256": "4c16a9c82a8b1b83f12d47be284afc94262dfdf0812a50bc51542b765a572e76",
+  "post_run_hardening": "Reject nonfinite base features; only explicit premarket not-ready context can use absent-field zero. All1907 input rows were recomputed and match the original run. No economic rule or threshold changed after results.",
+  "feature_equivalence": {
+    "pass": true,
+    "complete_feature_rows_checked": 1907,
+    "post_run_missingness_guard_changes_no_current_input_values": true,
+    "all_non_premarket_inputs_finite": true,
+    "premarket_absence_zero_only_with_explicit_context_not_ready_flag": true
+  },
+  "raw_market_features_full_training_members_and_trade_books_stay_out_of_git": true,
+  "old_versions_preserved": true,
+  "broker_orders_submitted": false
+}
