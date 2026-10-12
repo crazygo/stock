@@ -1,0 +1,68 @@
+{
+  "phase": "development",
+  "post_run_only": true,
+  "models_and_thresholds_unchanged": true,
+  "empirical_coverage": {
+    "parent_residual_upper90": {
+      "ready_review_rows": 1681,
+      "unknown_or_immature_rows_retained": 202,
+      "mature_parent_dates": 78,
+      "parent_weighted_fraction_below_bound": 0.9873251344405191,
+      "fraction_parents_with_all_issued_bounds_covering": 0.9230769230769231,
+      "warning": "Empirical descriptive coverage; overlapping parent dates are not independent. Local mean bound is not an individual-return interval."
+    },
+    "local_parent_mean_upper": {
+      "ready_review_rows": 1402,
+      "unknown_or_immature_rows_retained": 175,
+      "mature_parent_dates": 75,
+      "parent_weighted_fraction_below_bound": 0.5850555359375327,
+      "fraction_parents_with_all_issued_bounds_covering": 0.06666666666666667,
+      "warning": "Empirical descriptive coverage; overlapping parent dates are not independent. Local mean bound is not an individual-return interval."
+    }
+  },
+  "stress_path_changes": [
+    {
+      "entry_date": "2026-02-17",
+      "symbol": "SOXS",
+      "exit_at_base": "2026-02-17 19:35:00+00:00",
+      "reason_base": "risk_stop",
+      "net_return_base": -0.0667332662666327,
+      "exit_at_stress": "2026-02-17 19:00:00+00:00",
+      "reason_stress": "risk_stop",
+      "net_return_stress": -0.0632141085687538
+    },
+    {
+      "entry_date": "2026-03-20",
+      "symbol": "SOXS",
+      "exit_at_base": "2026-03-20 14:15:00+00:00",
+      "reason_base": "target",
+      "net_return_base": 0.0490516777086411,
+      "exit_at_stress": "2026-03-20 14:25:00+00:00",
+      "reason_stress": "target",
+      "net_return_stress": 0.0480000291858582
+    },
+    {
+      "entry_date": "2026-04-21",
+      "symbol": "SOXS",
+      "exit_at_base": "2026-04-22 16:40:00+00:00",
+      "reason_base": "risk_stop",
+      "net_return_base": -0.0616046962039913,
+      "exit_at_stress": "2026-04-22 16:25:00+00:00",
+      "reason_stress": "risk_stop",
+      "net_return_stress": -0.0629338545624995
+    },
+    {
+      "entry_date": "2026-04-24",
+      "symbol": "SOXL",
+      "exit_at_base": "2026-04-28 13:35:00+00:00",
+      "reason_base": "risk_stop",
+      "net_return_base": -0.1331944945532808,
+      "exit_at_stress": "2026-04-27 13:55:00+00:00",
+      "reason_stress": "risk_stop",
+      "net_return_stress": -0.0628567920440649
+    }
+  ],
+  "stress_interpretation": "Higher entry cost changes cent-rounded attached stop/target prices. Earlier stop execution can avoid a later gap; cost sensitivity need not be monotone when the path changes. This does not make higher costs beneficial in general.",
+  "case_months_computed": false,
+  "next_research": "Test entry-model information and calibration against simple no-model baselines on pre-case data; check history length and target alignment before adding more exit rules."
+}

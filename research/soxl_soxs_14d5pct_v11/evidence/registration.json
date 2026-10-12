@@ -1,0 +1,111 @@
+{
+  "started_at": "2026-10-12T10:34:16.443353+00:00",
+  "phase": "development",
+  "protocol_sha256": "1d83c19a343062e8363875f2725d9f80d9aab2344dc287e8ab6883aef63ef3a1",
+  "preregistration": {
+    "registered_at": "2026-10-12T10:28:30.502348+00:00",
+    "protocol_sha256": "1d83c19a343062e8363875f2725d9f80d9aab2344dc287e8ab6883aef63ef3a1",
+    "protocol": {
+      "version": "soxl_soxs_exit_uncertainty_v11",
+      "status": "pre_case_development_screen",
+      "hypothesis": "A negative point prediction is insufficient evidence to abandon the attached5% target. Require a negative empirical upper bound on holding value; evaluate before reopening case-month regressions.",
+      "source_run": ".cache/soxl_soxs_14d5pct_v10/runs/micro_20261012",
+      "source_models": "Reuse each historical day's frozen v10 manager HGB, which was trained that day only on matured prior fixed-contract states. Recompute its raw forecasts on ALL baseline surviving states, including those absent from v10's managed path. Do not fit with later data or rewrite v10 artifacts. Entry actions remain the saved v10 daily as-of entry decisions for a matched exit comparison.",
+      "primary": "parent_residual_upper90",
+      "diagnostic": "local_parent_mean_upper",
+      "controls": [
+        "fixed_contract",
+        "original_v10_point"
+      ],
+      "contract": "Same9:25:30 premarket entry,5% rounded TP,6% initial stop,14 inclusive calendar days, official calendar, one actual holding, T+1 and all costs/dividends/cross-month MTM. Same11 v10 review clocks, observation cutoff and30s order latency. Existing barriers/expiry remain active before a scheduled Open exit.",
+      "review_clocks_et": [
+        "09:25:30",
+        "09:35:30",
+        "09:45:30",
+        "10:05:30",
+        "10:35:30",
+        "11:05:30",
+        "12:05:30",
+        "13:05:30",
+        "14:05:30",
+        "15:05:30",
+        "15:45:30"
+      ],
+      "bank": "Only raw as-of forecasts on fully covered baseline surviving review states. Parent entrydate requires BOTH ETF full14day windows released strictly before current00:00ET, and all that parent's required states have a finite raw forecast/target. Parents with no review states provide no calibration evidence. Group by entrydate across both ETFs; repeated reviews cannot create extra parent dates. Exclude current/future review times explicitly.",
+      "primary_bound": "For each eligible parent date, max(target continuation log advantage minus saved raw forecast) over all its baseline review states. Latest60 complete parents, minimum40. Sort these maxima and use one-based rank ceil((n+1)*0.90), capped at n. Bound=current raw forecast+this residual order statistic. Exit only when bound<0. Otherwise keep the protective contract. No percentile/threshold search.",
+      "quantile": 0.9,
+      "parent_window": 60,
+      "minimum_parents": 40,
+      "local_bound": "Diagnostic only. Latest126 eligible parents. Standardize11 fixed query fields using each parent's equal total weight across its states. Within each parent keep the closest state to the query, then select40 closest parent representatives with stable distance/ID tie breaks. Bound=mean(realized continuation targets)+1.645*sample_std/sqrt(40). Exit only when bound<0. This heuristic is not a proven conditional confidence interval under overlapping market paths.",
+      "local_window": 126,
+      "local_neighbors": 40,
+      "local_z": 1.645,
+      "local_columns": [
+        "raw",
+        "direction",
+        "age_calendar",
+        "mark_return",
+        "observed_peak_drawdown",
+        "own_vol20",
+        "micro_own_vwap_distance",
+        "micro_own_recent15",
+        "micro_sector_session_return",
+        "micro_sector_recent15",
+        "micro_qqq_vwap_distance"
+      ],
+      "calibration_time": "Compute parent pools and preprocessing once at00:00ET and hold them fixed all day. Forecasts for a held state may use bars through its review timestamp only. No policy's later actual decision/outcome can enter another earlier decision.",
+      "coverage_interpretation": "Empirical bounds only. Serial dependence, overlapping14day outcomes and distribution drift prevent treating90% as a guaranteed conditional coverage, exit success rate, monthly nonloss or future return guarantee. Report realized coverage with parent-date weighting, not minute-row independence.",
+      "development": {
+        "observation_cutoff_exclusive_et": "2026-05-01 00:00:00",
+        "evaluation_start": "2026-01-01",
+        "evaluation_end": "2026-04-30",
+        "months": [
+          "2026-01",
+          "2026-02",
+          "2026-03",
+          "2026-04"
+        ],
+        "data_barrier": "Trim market bars/daily records at the exclusive cutoff before generating baseline labels, review targets, exits or books. Calendar future dates remain available for expiry/settlement. Later ex-dividend events cannot enter the truncated engine. Load only model files dated before cutoff; score open positions at April30 without using May prices. Earlier exposed history remains development, not an untouched holdout.",
+        "gate": "Primary four-month net capital returns arithmetic mean>=10%, every month>=0, complete premarket/MTM coverage and at least10 completed actual entries. This is a development screen, not replacement of5/7/9 acceptance. If it fails, DO NOT run new case-month results, and do not rescue with a better diagnostic. Stress and controls are reported without replacing the primary."
+      },
+      "cases": {
+        "evaluation_start": "2026-05-01",
+        "evaluation_end": "2026-09-30",
+        "regression_months": [
+          "2026-05",
+          "2026-07",
+          "2026-09"
+        ],
+        "acceptance": "Unchanged: primary5/7/9 monthly net ledger returns arithmetic mean>=10%, allMay-September months>=0 and complete coverage. No case-specific parameters; do not treat repeated exposed regressions as independent validation."
+      },
+      "stress": "Double fees/slippage, same entry decisions and daily base calibration pools; raw daily manager evaluated on the stress holding's own fill and observed state. No stressed target trains or calibrates.",
+      "no_model_or_threshold_search_by_case_month": true,
+      "no_broker_orders": true,
+      "no_automatic_R2_upload": true
+    },
+    "new_strategy_pre_case_results_not_computed": true,
+    "new_strategy_case_results_not_computed": true,
+    "earlier_versions_exposed_same_history": true,
+    "method_reference": "https://arxiv.org/abs/2202.13415",
+    "reference_scope": "Motivation to distinguish empirical bounds from coverage guarantees under distribution drift; not a claim to reproduce the paper method."
+  },
+  "case_authorization": null,
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v11/uncertainty.py": "223b4cb20e65189a705da8fa607ac67560f669dd34250eb6dac2c711d8c3cfe1",
+    "research/soxl_soxs_14d5pct_v11/test_uncertainty.py": "8ebec9b3587fd32ab88e2fb6359599f4d0bf7821a3e74d5a777c493982866aa0",
+    "research/soxl_soxs_14d5pct_v11/run_uncertainty.py": "64b88e568b73da80be5ca98fb5c9ae98ee140cd50d47c02e98bf66c3e84fc899",
+    "research/soxl_soxs_14d5pct_v11/protocol.json": "1d83c19a343062e8363875f2725d9f80d9aab2344dc287e8ab6883aef63ef3a1",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v3/risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac",
+    "research/soxl_soxs_14d5pct_v9/continuation.py": "5a36056f00423915280d0a4a691923e319925ff680cb1dd7b4f206fee315ea12",
+    "research/soxl_soxs_14d5pct_v10/micro_manager.py": "f89abaf58cce20264832a54564ed148f40423eae25b24868694fc45445972212"
+  }
+}
