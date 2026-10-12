@@ -1,0 +1,74 @@
+{
+  "registered_at": "2026-10-12T06:51:50.348675+00:00",
+  "protocol": {
+    "version": "soxl_soxs_risk_guard_v3",
+    "registered_on": "2026-10-12",
+    "status": "historical_development_exposed_regression_cases_not_independent_test",
+    "intent": "User accepts general risk-avoidance handling; May, July and September are regression cases, never parameter-selection targets.",
+    "return_definition": "One continuous compounded capital ledger. Retain the previously confirmed arithmetic mean >=10% on May/July/September; report geometric growth separately, without silently making geometric 10% a new user requirement.",
+    "risk_acceptance": "Each May-September monthly marked-to-market net return must be >=0; also report the three named regression cases separately. Zero-trade cash cannot pass the 10% return requirement.",
+    "analysis_clock_et": "09:25:30",
+    "selection_start": "2025-05-01",
+    "selection_end": "2026-04-30",
+    "selection_entry_cutoff": "Only entries whose full 14-calendar-day contractual expiry precedes 2026-05-01",
+    "selection_ranking": [
+      "highest worst monthly return",
+      "highest geometric monthly return",
+      "lowest drawdown",
+      "stable policy ID"
+    ],
+    "selection_admission": "All 12 selection months complete and nonnegative; at least 12 completed trades; no pending position at selection end.",
+    "direction_rules": [
+      "trend1",
+      "trend5",
+      "trend20",
+      "agree5_20",
+      "agree1_5",
+      "agree5_premarket"
+    ],
+    "risk_rules": [
+      {
+        "id": "stop3",
+        "stop_fraction": 0.03,
+        "breakeven_trigger": null
+      },
+      {
+        "id": "stop6",
+        "stop_fraction": 0.06,
+        "breakeven_trigger": null
+      },
+      {
+        "id": "stop6_be2",
+        "stop_fraction": 0.06,
+        "breakeven_trigger": 0.02
+      }
+    ],
+    "capital_fractions": [
+      0.5,
+      1.0
+    ],
+    "cooldown_sessions_after_loss": [
+      0,
+      3
+    ],
+    "maximum_policy_trials": 72,
+    "regression_policy": "Freeze one best policy using selection data only before any May-September risk replay. Evaluate that policy once; no retry or parameter change based on regression outcomes. Evaluate cash and legacy v2 only as diagnostics.",
+    "exit_contract": "Attach +5% regular-session limit at fill. Risk stops may exit earlier; 14 inclusive calendar days remains the maximum. Conservative stop-first assumption if both barriers occur in one 5m bar; favorable excursion can raise the stop only at the first regular bar start strictly after the completed trigger bar available_at plus 30 seconds (usually two bars later). Stops execute at min(bar Open, stop trigger) less slippage, including gap losses.",
+    "profit_protection": "Breakeven trigger accounts for round-trip fees and sell slippage; it is a modeled threshold, not a guaranteed fill or monthly loss floor. A gap below it remains a loss.",
+    "capital": "One position; fixed entry fraction of settled cash; reserve cash retained. Reuse sale proceeds next official session, no same-day reentry. A losing exit blocks the next N full sessions. No negative-month clipping, removal, month-reset capital or excluded losses.",
+    "costs": "Reuse v2 5bps commission each side, 5bps regular market slippage. Double all costs as a diagnostic with the same frozen policy.",
+    "deployment": "No new-buy admission unless both selection admission and all historical regression gates pass. These remain development gates, not prospective guarantees. Existing position management remains available.",
+    "no_broker_orders": true,
+    "no_automatic_R2_upload": true,
+    "implementation_repair": "Profit-protection update activation now includes observed historical bar availability and 30-second order latency. Original run retained; no rule, threshold or size was chosen from regression results."
+  },
+  "source_hashes": {
+    "run_study.py": "c36a0c06cd1ea698391e6993581cf3a53ec59a886425bfe890aaf92695c430a2",
+    "verify_run.py": "b377cedcea2ef07a08beb7f901feab4414957bac994fe0c7ad3b0c49830a10e8",
+    "test_risk.py": "7cda543f0dfe501f98ae3d086093e947caf4e7f34dfebb9a08f5bedab4310d2c",
+    "risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "protocol.json": "a8edda87a31bff2c294bc576803f0460a7e773463d790324b67c53a6a801561f",
+    "risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "analyze_risk.py": "efb18f7699d4ea48a00512909ea10691af3b5f12fed66afc45ca0173ccace4d0"
+  }
+}

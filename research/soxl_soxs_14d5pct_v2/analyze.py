@@ -53,6 +53,13 @@ def analyze(data_root, run, decision_at, strategy='auto', position=None, current
     if strategy not in results or not results[strategy]['primary_pass']:
         report.update({'reason': 'chosen_strategy_failed_user_gate', 'strategy': strategy})
         return report
+    # User's 2026-10-12 risk requirement supersedes the old arithmetic-only gate.
+    negative_months = [m for m in results[strategy]['monthly'] if m['return'] < -1e-12]
+    if negative_months:
+        report.update({'reason': 'negative_months_fail_current_requirement',
+                       'strategy': strategy, 'failed_months': negative_months,
+                       'legacy_arithmetic_pass_does_not_grant_current_admission': True})
+        return report
     report['strategy'] = strategy
     report['historical_three_month_mean'] = results[strategy]['primary_average']
     registered_clock = results[strategy].get('scheduled_analysis_clock_et')
