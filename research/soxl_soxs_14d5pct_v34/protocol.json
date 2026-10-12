@@ -1,0 +1,78 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "version": "soxl_soxs_industry_coherence_v34",
+  "primary": "full_band",
+  "control_source": ".cache/soxl_soxs_14d5pct_v32/runs/hierarchical_20261013",
+  "hypothesis": "V33 conservative cost labels lowered scores butdidnot improve sequentialcapital. Test causalindustryinternal synchronization andleadershipdiffusion asnewinputs to dailybase models, notanothercosthurdle. Priorv7/v9 alreadyincluded crosssectionalmeans/std andbreadth; additions hereare rollingcrossstockcorrelation,signedamplitudeparticipation andlaggardcatchup, notclaims thatoldinputs werenew. No labelsused tochoose hotmonths,groups orthresholds.",
+  "panel": [
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "MU",
+    "AMAT",
+    "LRCX",
+    "KLAC",
+    "INTC"
+  ],
+  "universe": "Reuse existingfixed8referencepanel andhash-verifiedlocalrawbars/actions. Thisis notthe complete historicalsemiconductoruniverse orPIT constituents. Do not selectmembers fromcaseperformance. No newacquisition orupload.",
+  "history": "At eachclocktake exactly21prior officialsession economiccloses perstock,allcompleteandavailable beforequery. Compute20simpledailyreturns R; past5returns arelast5rows. Currentreturn=latestavailable completedbar economicclose dividedbypriorofficialclose minus1,latestbarage<=360s and sameETsessiondate. Fullcurrentday dailycloses/futurebars cannotenter. Positive-priceunits andcurrentQFQrescaling notallowed tochangehistoricalvalues; reusecausalcorporate-action economicfactors.",
+  "features": {
+    "participation_5": "vol_j=max(sample std of20dailyreturns,1e-4). z5_j=clip(compoundreturn(last5)/(vol_j*sqrt5),-5,5). P(z)=sum(z)*abs(sum(z))/(8*sum(z*z)); allzero=>0. P5=P(z5). Ranges[-1,1]; equals1for8equalpositive movers and1/8foronepositivemover,0forbalancedopposition.",
+    "participation_now": "znow_j=clip(currentreturn_j/vol_j,-5,5); Pnow=P(znow). Onlycurrentknownbar,notfullpremarket/day.",
+    "laggard_catchup": "Rankz5 ascendingwithfixedpanelorderties; bottom4andtop4knownbeforequery. (mean(znow_bottom4)-mean(znow_top4))/2. Thisis laggardrelative currentperformance,notan automaticbuysignal.",
+    "synchrony_20": "Mean of28off-diagonal pairwisePearsoncorrelations of20prior dailyreturns. Noeigenvector or futuretraining.",
+    "synchrony_change": "Mean pairwisecorrelation oflast5dailyreturns minus20daymean. Eachstockmusthavenonzero temporalstd>=1e-12 inbothwindows; otherwiseunknown,notfilledwith0or1.",
+    "synchronous_flow": "synchrony_20*participation_now,predefinedstate-direction interaction,notselectedbyoutcomes."
+  },
+  "variants": {
+    "full": "PRIMARY old19premarket/31intraday columns plusall6newfactors (25/37).",
+    "participation": "oldcolumns plus3participation/catchup factors (22/34),no correlation block.",
+    "baseline": "old19/31columns,refit sameadmittedhistory asnewvariants."
+  },
+  "common_readiness": "All3newrawmodels require originalfeature_ready AND all6newfactorsready. Retainmissingdates as no_action andreportlostcoverage; historicalinputunavailable rows excludedbycontemporaneousreadiness only. Thismatchesdates across featureablations. Exactoldv32 separatelyretainsoldreadiness. New labels/terminalreleases unchanged frombaseline+5/6%stop/14calendar contract; no v33worstcosttargets.",
+  "raw_training": "Fit eachclockseparately daily00ET, expandingchronologicalmaturepairedprefix,min120dates. Stopatfirstterminalreleaseunknownor>=cutoff,do notskip laterloss/win. WeightedStandardScaler;weights126datehalflife sumN;Ridgealpha100 C=(logL+logS)/2 andM=abs((logL-logS)/2);LogisticC.1 lossweights w*M normalizedsumN, no penaltyintercept. PredictedD=max(0,Mhat)*(2q-1); Lhat=C+D,Shat=C-D. Identicalalgorithm/weights/labels/regularization across3variants,onlycolumns differ. All3variants retrainedthroughhistory,saveeveryas-issued rawscore andmodel; noaddingnewfeatures tooldforecasts.",
+  "calibration": "Perday jointmaturewhole-dateprefix,allclock pairlabels known,maxrelease; latest120/min60dates having originalrawscoresforall3variants andallclocks. Dateweights63halflife totalN,shared199circular10datebootstrap seed826+ETdateordinal. Eachvariantusesits ownpreviouslyissued rawpair tofit baselineactualnetlog residual; no backfilledforecasts. Samefixedv32partialsharing:4unpenalizedclockintercepts,2rawslopesperETF perclock,penalty20||meanbeta||^2+20sum||beta_c-mean||^2. Withinclockweightedhistoricalstandardization;constantstd<1e-12=>1. Refitallscales/coefficients for199replicates. Separatevariantmodels,commonhistoricalmembers/weights/bootstrap.",
+  "decision": "Point=owncurrentraw+predictedresidual. Commonradius=max(0,higher90%quantile maxETF upwardbootstrapdeviation). Selectgreatestpositive(point-radius)>1e-12, tieSOXL;elsecash. Missinginput/minsamples/expiredunresolvedprefix>=14calendar=>cash. No day/monthspecific filter. Bandissensitivity,notguaranteedmonthlylossbound. 0/1originalsettledcash only.",
+  "routes": {
+    "full_band": "PRIMARY all6newinputs+partialcalibration+band",
+    "full_point": "samefull pointonlydiagnostic",
+    "participation_band": "3participationfactors+samecalibration",
+    "baseline_band": "refittedoldcolumns+samecalibration/readiness",
+    "source_v32": "exactoldpartial_band andcausalcontinuationifcasesallowed",
+    "premarket_only": "primary09:25only",
+    "cash": "alwayscash",
+    "double_cost": "frozenprimaryactions,own2xcostpaths"
+  },
+  "source_control": "PreMay v32actions andv23rawsource receipts immutable/hashchecked. Ifprimarypassesdevelopment,extendoriginalv32recipe withoriginalfeatures/maturity forcontrol;notnewqualificationforthefailedoldmodel. Newvariants trainfromthen-knownhistoricalrows evenbeforeMay; preserveoriginalold files andsources.",
+  "verification": "14preoutcometests: broadvsconcentratedrise,participationbounds/sign/scale,perfectandopposingcorrelations,constant-historyunknown,independentfeaturearithmetic,laggardcatchup,pricepathinputaudit,currentdaydaily/futureleakage,delayedbar,missinghistory,stockpriceunits,rawRidge/logit equationsandfuturelabels,all199calibrationequations/oldforecasts,pendingprefix. Independentlyrebuild6features via28pairwisedotproducts/rawcloses,timestamps/missingness,allnewrawRidgeequations/logitgradients,all3as-issued calibrationfits/querybands,8books,oldv32exactcontrol,104statistics. Cases onlyafterverifiedprimarydev; preMayrecords remainexact.",
+  "diagnostics": "Inputcoverage andvalue ranges byclock,within-date staticcorrelation vs currentflow,rawandadjustedcandidate errors,as-issued calibratedslope shifts,signal countversusactualtrades,allmonthlycapital. Distinguishcandidateerrorsfromchoiceperformance,unknownsretained. No postresult primaryswitch orselectingdatefilters. Resultsobservedhistoricaldevelopment only.",
+  "method_reference": "https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html ; Pearsoncoefficientdefinition only. Customparticipation/catchup features andpredictiveuse are hypotheses,notvalidatedbydocumentation. Installednumpy2.3.5 retained."
+}
