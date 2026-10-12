@@ -1,0 +1,623 @@
+{
+  "registered_diagnostic_only": true,
+  "decisions_changed": false,
+  "overlapping_opportunities_are_not_capital_returns": true,
+  "routes": {
+    "terminal_frontier_hard": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 3.0,
+        "maximum_latest_training_date_age_calendar_days": 14,
+        "dates_with_known_results_waiting_behind_pending": 12,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 82,
+      "forecast_ready_dates": 82,
+      "unknown_dates": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "reasons": {
+        "cash_best": 61,
+        "positive_utility": 21
+      },
+      "mature_opportunities": {
+        "dates": 73,
+        "predicted_mean_log": 0.003272047682099667,
+        "actual_mean_log": 0.012402441232850607,
+        "mean_squared_error": 0.0028015948424492364,
+        "D_mean_squared_error": 0.003350172575087939,
+        "mean_regret_log": 0.0363557879881829,
+        "direction_correct": 44
+      },
+      "allowed_mature_opportunities": {
+        "dates": 18,
+        "predicted_mean_log": 0.012158578922712283,
+        "actual_mean_log": 0.02311759549046028,
+        "mean_squared_error": 0.002208134877716104,
+        "D_mean_squared_error": 0.0023148089668791885,
+        "mean_regret_log": 0.025362614973673345,
+        "direction_correct": 12
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 44,
+          "predicted_mean_log": 0.0023712607071265162,
+          "actual_mean_log": 0.01760123411369795,
+          "mean_squared_error": 0.0026767675951602106,
+          "D_mean_squared_error": 0.0029406311820437893,
+          "mean_regret_log": 0.03105246681041163,
+          "direction_correct": 28
+        },
+        "support": {
+          "dates": 23,
+          "predicted_mean_log": 0.006318909559289956,
+          "actual_mean_log": 0.007673722368208634,
+          "mean_squared_error": 0.002930128928876091,
+          "D_mean_squared_error": 0.004304685412511881,
+          "mean_regret_log": 0.04133530091512566,
+          "direction_correct": 14
+        },
+        "weakness": {
+          "dates": 6,
+          "predicted_mean_log": -0.0018018183639933391,
+          "actual_mean_log": -0.007595284245569056,
+          "mean_squared_error": 0.003224280657932474,
+          "D_mean_squared_error": 0.002694510247286589,
+          "mean_regret_log": 0.05615867707189163,
+          "direction_correct": 2
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.8780487804878049,
+          "max": 1.0,
+          "raw_endpoint_dates": 10,
+          "calibrated_endpoint_dates": 72
+        },
+        "D": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        }
+      }
+    },
+    "terminal_available_hard": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 2.0,
+        "maximum_latest_training_date_age_calendar_days": 7,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 82,
+      "forecast_ready_dates": 82,
+      "unknown_dates": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "reasons": {
+        "cash_best": 61,
+        "positive_utility": 21
+      },
+      "mature_opportunities": {
+        "dates": 73,
+        "predicted_mean_log": 0.003272047682099667,
+        "actual_mean_log": 0.012402441232850607,
+        "mean_squared_error": 0.0028015948424492364,
+        "D_mean_squared_error": 0.003350172575087939,
+        "mean_regret_log": 0.0363557879881829,
+        "direction_correct": 44
+      },
+      "allowed_mature_opportunities": {
+        "dates": 18,
+        "predicted_mean_log": 0.012158578922712283,
+        "actual_mean_log": 0.02311759549046028,
+        "mean_squared_error": 0.002208134877716104,
+        "D_mean_squared_error": 0.0023148089668791885,
+        "mean_regret_log": 0.025362614973673345,
+        "direction_correct": 12
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 44,
+          "predicted_mean_log": 0.0023712607071265162,
+          "actual_mean_log": 0.01760123411369795,
+          "mean_squared_error": 0.0026767675951602106,
+          "D_mean_squared_error": 0.0029406311820437893,
+          "mean_regret_log": 0.03105246681041163,
+          "direction_correct": 28
+        },
+        "support": {
+          "dates": 23,
+          "predicted_mean_log": 0.006318909559289956,
+          "actual_mean_log": 0.007673722368208634,
+          "mean_squared_error": 0.002930128928876091,
+          "D_mean_squared_error": 0.004304685412511881,
+          "mean_regret_log": 0.04133530091512566,
+          "direction_correct": 14
+        },
+        "weakness": {
+          "dates": 6,
+          "predicted_mean_log": -0.0018018183639933391,
+          "actual_mean_log": -0.007595284245569056,
+          "mean_squared_error": 0.003224280657932474,
+          "D_mean_squared_error": 0.002694510247286589,
+          "mean_regret_log": 0.05615867707189163,
+          "direction_correct": 2
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.8780487804878049,
+          "max": 1.0,
+          "raw_endpoint_dates": 10,
+          "calibrated_endpoint_dates": 72
+        },
+        "D": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        }
+      }
+    },
+    "terminal_frontier_global": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 3.0,
+        "maximum_latest_training_date_age_calendar_days": 14,
+        "dates_with_known_results_waiting_behind_pending": 12,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 82,
+      "forecast_ready_dates": 82,
+      "unknown_dates": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "reasons": {
+        "cash_best": 61,
+        "positive_utility": 21
+      },
+      "mature_opportunities": {
+        "dates": 73,
+        "predicted_mean_log": 0.0034669967568743227,
+        "actual_mean_log": 0.012402441232850607,
+        "mean_squared_error": 0.002776671352494689,
+        "D_mean_squared_error": 0.003350172575087939,
+        "mean_regret_log": 0.0363557879881829,
+        "direction_correct": 44
+      },
+      "allowed_mature_opportunities": {
+        "dates": 18,
+        "predicted_mean_log": 0.01211735406267258,
+        "actual_mean_log": 0.023118827950040548,
+        "mean_squared_error": 0.0021861913679884193,
+        "D_mean_squared_error": 0.002215797272906995,
+        "mean_regret_log": 0.02561617236886501,
+        "direction_correct": 11
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 44,
+          "predicted_mean_log": 0.002317622940686092,
+          "actual_mean_log": 0.01760123411369795,
+          "mean_squared_error": 0.0026762482340242557,
+          "D_mean_squared_error": 0.0029406311820437893,
+          "mean_regret_log": 0.03105246681041163,
+          "direction_correct": 28
+        },
+        "support": {
+          "dates": 23,
+          "predicted_mean_log": 0.007040272349808588,
+          "actual_mean_log": 0.007673722368208634,
+          "mean_squared_error": 0.0028520174994543547,
+          "D_mean_squared_error": 0.004304685412511881,
+          "mean_regret_log": 0.04133530091512566,
+          "direction_correct": 14
+        },
+        "weakness": {
+          "dates": 6,
+          "predicted_mean_log": -0.0018018183639933391,
+          "actual_mean_log": -0.007595284245569056,
+          "mean_squared_error": 0.003224280657932474,
+          "D_mean_squared_error": 0.002694510247286589,
+          "mean_regret_log": 0.05615867707189163,
+          "direction_correct": 2
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        },
+        "D": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        }
+      }
+    },
+    "terminal_frontier_blend": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 3.0,
+        "maximum_latest_training_date_age_calendar_days": 14,
+        "dates_with_known_results_waiting_behind_pending": 12,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 82,
+      "forecast_ready_dates": 82,
+      "unknown_dates": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "reasons": {
+        "cash_best": 62,
+        "positive_utility": 20
+      },
+      "mature_opportunities": {
+        "dates": 73,
+        "predicted_mean_log": 0.002971038281651113,
+        "actual_mean_log": 0.012402441232850607,
+        "mean_squared_error": 0.0027776195678275765,
+        "D_mean_squared_error": 0.003350172575087939,
+        "mean_regret_log": 0.0363557879881829,
+        "direction_correct": 44
+      },
+      "allowed_mature_opportunities": {
+        "dates": 17,
+        "predicted_mean_log": 0.011971364735297549,
+        "actual_mean_log": 0.02166292380421431,
+        "mean_squared_error": 0.002187861523864933,
+        "D_mean_squared_error": 0.002076944442956204,
+        "mean_regret_log": 0.027123006037621775,
+        "direction_correct": 10
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 44,
+          "predicted_mean_log": 0.002184384433882029,
+          "actual_mean_log": 0.01760123411369795,
+          "mean_squared_error": 0.0026768293811156034,
+          "D_mean_squared_error": 0.0029406311820437893,
+          "mean_regret_log": 0.03105246681041163,
+          "direction_correct": 28
+        },
+        "support": {
+          "dates": 23,
+          "predicted_mean_log": 0.0057531172971564066,
+          "actual_mean_log": 0.007673722368208634,
+          "mean_squared_error": 0.0028508628609488253,
+          "D_mean_squared_error": 0.004304685412511881,
+          "mean_regret_log": 0.04133530091512566,
+          "direction_correct": 14
+        },
+        "weakness": {
+          "dates": 6,
+          "predicted_mean_log": -0.0019248030608125671,
+          "actual_mean_log": -0.007595284245569056,
+          "mean_squared_error": 0.0032359816467505847,
+          "D_mean_squared_error": 0.002694510247286589,
+          "mean_regret_log": 0.05615867707189163,
+          "direction_correct": 2
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.4297763793082193,
+          "mean": 0.7742469328884223,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 19
+        },
+        "D": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        }
+      }
+    },
+    "full_window_hard": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 14.0,
+        "maximum_latest_training_date_age_calendar_days": 17,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 82,
+      "forecast_ready_dates": 82,
+      "unknown_dates": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "reasons": {
+        "cash_best": 60,
+        "positive_utility": 22
+      },
+      "mature_opportunities": {
+        "dates": 73,
+        "predicted_mean_log": 0.003525644378129085,
+        "actual_mean_log": 0.012402441232850607,
+        "mean_squared_error": 0.0027524504100150224,
+        "D_mean_squared_error": 0.003350172575087939,
+        "mean_regret_log": 0.0363557879881829,
+        "direction_correct": 44
+      },
+      "allowed_mature_opportunities": {
+        "dates": 19,
+        "predicted_mean_log": 0.012210648527738933,
+        "actual_mean_log": 0.02442228665122813,
+        "mean_squared_error": 0.002154773806097621,
+        "D_mean_squared_error": 0.002302132343794437,
+        "mean_regret_log": 0.02402774050137475,
+        "direction_correct": 13
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 44,
+          "predicted_mean_log": 0.0026224637199748165,
+          "actual_mean_log": 0.01760123411369795,
+          "mean_squared_error": 0.0026624362789478477,
+          "D_mean_squared_error": 0.0029406311820437893,
+          "mean_regret_log": 0.03105246681041163,
+          "direction_correct": 28
+        },
+        "support": {
+          "dates": 23,
+          "predicted_mean_log": 0.006643241135151795,
+          "actual_mean_log": 0.007673722368208634,
+          "mean_squared_error": 0.002801565204773758,
+          "D_mean_squared_error": 0.004304685412511881,
+          "mean_regret_log": 0.04133530091512566,
+          "direction_correct": 14
+        },
+        "weakness": {
+          "dates": 6,
+          "predicted_mean_log": -0.0018018183639933391,
+          "actual_mean_log": -0.007595284245569056,
+          "mean_squared_error": 0.003224280657932474,
+          "D_mean_squared_error": 0.002694510247286589,
+          "mean_regret_log": 0.05615867707189163,
+          "direction_correct": 2
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.8536585365853658,
+          "max": 1.0,
+          "raw_endpoint_dates": 12,
+          "calibrated_endpoint_dates": 70
+        },
+        "D": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        }
+      }
+    },
+    "calibrated_fixed": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 14.0,
+        "maximum_latest_training_date_age_calendar_days": 17,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 82,
+      "forecast_ready_dates": 82,
+      "unknown_dates": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "reasons": {
+        "cash_best": 61,
+        "positive_utility": 21
+      },
+      "mature_opportunities": {
+        "dates": 73,
+        "predicted_mean_log": 0.0034669967568743227,
+        "actual_mean_log": 0.012402441232850607,
+        "mean_squared_error": 0.002776671352494689,
+        "D_mean_squared_error": 0.003350172575087939,
+        "mean_regret_log": 0.0363557879881829,
+        "direction_correct": 44
+      },
+      "allowed_mature_opportunities": {
+        "dates": 18,
+        "predicted_mean_log": 0.01211735406267258,
+        "actual_mean_log": 0.023118827950040548,
+        "mean_squared_error": 0.0021861913679884193,
+        "D_mean_squared_error": 0.002215797272906995,
+        "mean_regret_log": 0.02561617236886501,
+        "direction_correct": 11
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 44,
+          "predicted_mean_log": 0.002317622940686092,
+          "actual_mean_log": 0.01760123411369795,
+          "mean_squared_error": 0.0026762482340242557,
+          "D_mean_squared_error": 0.0029406311820437893,
+          "mean_regret_log": 0.03105246681041163,
+          "direction_correct": 28
+        },
+        "support": {
+          "dates": 23,
+          "predicted_mean_log": 0.007040272349808588,
+          "actual_mean_log": 0.007673722368208634,
+          "mean_squared_error": 0.0028520174994543547,
+          "D_mean_squared_error": 0.004304685412511881,
+          "mean_regret_log": 0.04133530091512566,
+          "direction_correct": 14
+        },
+        "weakness": {
+          "dates": 6,
+          "predicted_mean_log": -0.0018018183639933391,
+          "actual_mean_log": -0.007595284245569056,
+          "mean_squared_error": 0.003224280657932474,
+          "D_mean_squared_error": 0.002694510247286589,
+          "mean_regret_log": 0.05615867707189163,
+          "direction_correct": 2
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        },
+        "D": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 82
+        }
+      }
+    },
+    "raw_fixed": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 14.0,
+        "maximum_latest_training_date_age_calendar_days": 17,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 82,
+      "forecast_ready_dates": 82,
+      "unknown_dates": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "reasons": {
+        "cash_best": 61,
+        "positive_utility": 21
+      },
+      "mature_opportunities": {
+        "dates": 73,
+        "predicted_mean_log": 0.002273369941758465,
+        "actual_mean_log": -0.01909887211018878,
+        "mean_squared_error": 0.005309444592899034,
+        "D_mean_squared_error": 0.004003246076539815,
+        "mean_regret_log": 0.06785710133122229,
+        "direction_correct": 31
+      },
+      "allowed_mature_opportunities": {
+        "dates": 20,
+        "predicted_mean_log": 0.011996352760422739,
+        "actual_mean_log": -0.032655188491068125,
+        "mean_squared_error": 0.005484828909665733,
+        "D_mean_squared_error": 0.004413070230001823,
+        "mean_regret_log": 0.08110410954930733,
+        "direction_correct": 6
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 44,
+          "predicted_mean_log": 0.0023311285271482903,
+          "actual_mean_log": -0.010688469190499286,
+          "mean_squared_error": 0.003859145887182033,
+          "D_mean_squared_error": 0.0034149871319536338,
+          "mean_regret_log": 0.05934217011460887,
+          "direction_correct": 20
+        },
+        "support": {
+          "dates": 23,
+          "predicted_mean_log": 2.872888751655551e-05,
+          "actual_mean_log": -0.047817900236364015,
+          "mean_squared_error": 0.0088733765602473,
+          "D_mean_squared_error": 0.005563116152295445,
+          "mean_regret_log": 0.09682692351969832,
+          "direction_correct": 6
+        },
+        "weakness": {
+          "dates": 6,
+          "predicted_mean_log": 0.010454264356827064,
+          "actual_mean_log": 0.02931444762909329,
+          "mean_squared_error": 0.002283229226655349,
+          "D_mean_squared_error": 0.0023376430464418924,
+          "mean_regret_log": 0.01924894519722929,
+          "direction_correct": 5
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.0,
+          "max": 0.0,
+          "raw_endpoint_dates": 82,
+          "calibrated_endpoint_dates": 0
+        },
+        "D": {
+          "min": 0.0,
+          "mean": 0.0,
+          "max": 0.0,
+          "raw_endpoint_dates": 82,
+          "calibrated_endpoint_dates": 0
+        }
+      }
+    }
+  }
+}

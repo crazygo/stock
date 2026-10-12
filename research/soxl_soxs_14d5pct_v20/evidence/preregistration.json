@@ -1,0 +1,85 @@
+{
+  "registered_at": "2026-10-12T13:24:01.028474+00:00",
+  "protocol_sha256": "2696f41c62bdb6a0e01967bb01d65305a95a303c2a428ad45bd7c4407d10c930",
+  "protocol": {
+    "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+    "development": {
+      "evaluation_start": "2026-01-01",
+      "evaluation_end": "2026-04-30",
+      "months": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04"
+      ]
+    },
+    "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+    "cases": {
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ]
+    },
+    "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+    "no_broker_orders": true,
+    "no_automatic_R2_upload": true,
+    "no_case_specific_parameters": true,
+    "source_runs": {
+      "development": ".cache/soxl_soxs_14d5pct_v14/runs/paired_20261012",
+      "cases": ".cache/soxl_soxs_14d5pct_v17/runs/paired_cases_20261012"
+    },
+    "state_columns": [
+      "relative_5",
+      "relative_20",
+      "breadth_5",
+      "strength_persistence_5",
+      "volume_direction_diffusion",
+      "log_sector_volatility"
+    ],
+    "weights": "Recency weights2^(-rank_age/63),normalized. State weights multiply Gaussian exp(-d/(2h)):training-only recency weighted mean/std,scale1 if<1e-12;d=mean squared standardized six-state difference;h=max(40th smallest d,1e-12). No prediction scores or labels in distance. Global comparator uses recency only. Learned mixture/hard-selection require weight effective dates1/sumw2>=20;fixed blend comparisons do not require estimation. Effective dates are concentration summaries,not independent sample size.",
+    "risk": "Unchanged v16/v17 binary entropy policy. For the newly chosen ETF, use original saved v14 calibration score,advantage,signedrelative5,breadth5,volume diffusion,logvol as the six prior-distance coordinates;do not rewrite those old coordinates with new blends. Same matured120/min60,63recency,40bandwidth,min20prior/posterior concentration. Replace only entropy mean target with current blended netlogpayoff. Reweight existing real same-ETF historical returns with minimum KL. Outside positiveprior support abstain;do not clip. Gamma5 utility over fractions[0,1],score tie<=1e-12cash. This preserves calibrated_fixed exactly as v17 recipe and isolates blend change.",
+    "capital": "One settled-cash position at most;allocation only0/1,no leverage,same-day reentry forbidden. T+1,fees,slippage,gaps,dividends,full14calendar expiry and continuous cross-month MTM unchanged. Missing held outcome retains occupation. Entry trigger/exit rules remain exactsourcecontract.",
+    "version": "soxl_soxs_joint_terminal_feedback_v20",
+    "primary": "terminal_frontier_hard",
+    "hypothesis": "V19 found roughly13days of extra waiting after both fixed-policy contracts terminated. Test earlier paired terminal feedback for only the daily forecast-source selector. The primary consumes a chronological completed prefix,withholding later resolved dates behind an earlier pending date. This avoids skipping pending dates but is not a proof of unbiased stopping-time sampling or better returns.",
+    "source": "Reuse exact immutable v14 raw and pairedcalibrated regret_regime asissuedforecasts and features (v14development/v17case cache). Original base models/calibrators KEEP their old full14day training. Risk prior KEEP full14day maturity. Change only label admission into C/D expert-error selector;no new base-model fitting or old prediction rewrite.",
+    "terminal_receipt": "Each side must have finite fixedpolicy netreturn and actual known target/riskstop/expiry terminalbar. Check EVERY official regular5mbar fromdelayedentry throughterminal inclusive,exact orderedexpectedends,5minstarts,available_at>=barend and no missingavailabletimestamp. Release=max prefixbaravailable_at. Jointrelease=maxbothsides. No laterwindowbar isneeded. If eitherprefixunknown,entrymissing,oroutcomeunresolved,retainunknown. Corporateactionunit convention unchanged. Dividend-bearing outcomes conservatively retainoriginal full-windowrelease;no new announcement-time assumption.",
+    "availability": "Historical available_at is existing bar_end+1second simulation assumption,notlive received_at evidence. Daily00:00ET learns only releases STRICTLY BEFORE cutoff;predict09:25:30 withcausalpremarketfeatures. No currentday label,latebar orone-sidedwin-only feedback. Existing arbitrarytimeanalysis remainsavailable andunqualified.",
+    "training": "Across all past source-calibration-ready as-issued dates in chronological order, locate first date whose jointterminalrelease isunknown ornotbeforecurrent00ET. Primary mayuseonlythecompleteprefix BEFORE thatdate,latest120dates,min60. Knownlaterdates remainqueued;neverdeleted orskippedinto primary. Originalreadyforecast dates ratherthan actualbuydate define the universe. Ifanunresolvedprefixdate isalready14calendardaysold,thefrontierrouteabstains asdataunknown/expired,notzerooutcome. Prefix lag andwithheldrecordsarevisible. Comparison available mode useslatest120alljointterminalknown dates evenacrossgaps and mustbe labelled as subject to differentialresolutiontiming. Fullmode isexactoldjointfull14maturity. AllC/Dtruthandstates mustbefinite.",
+    "selector": "Reuse v18 state_weights and forecast. For each C,D head choose raw(alpha0) or oldcalibration(alpha1) with lower prior weighted squared error;tieswithin1e-12alpha.5. New currentC,D thenrankSOXLifD>=0elseSOXS. Minimumweightconcentration20 forlearnedselectors;no date/monthfeature. Continuousblendcomparison retains v18 shrinkage lambda2A/n_eff and aclip((B+lambda/2)/(A+lambda),0,1). No weights/window/stop search.",
+    "routes": {
+      "terminal_frontier_hard": "Primary:chronological terminalprefix,stateweighted hardC/Dselection",
+      "terminal_available_hard": "Same hardselector buttakealljointterminalknown dates;retains unresolved audit andexposes selection-timing difference",
+      "terminal_frontier_global": "Sameprefix,recencywithoutstate distance,hardselector",
+      "terminal_frontier_blend": "Sameprefixandstateweights,continuousconvexblend",
+      "full_window_hard": "Exactv18/v19state_hard usingold14daymaturity",
+      "calibrated_fixed": "Old100%calibratedforecast/binaryriskcontrol",
+      "raw_fixed": "Old100%rawforecast/binaryriskcontrol",
+      "frontier_no_risk": "Primaryforecast,positivevaluegateallsettledcashwithoutentropyutilityfilter",
+      "source_full": "Exactv14calibratedfullcapital",
+      "source_raw_full": "Exactv14rawfullcapital",
+      "cash": "Alwayscash",
+      "double_cost": "Sameprimaryfrozenactions,owndoublecostfills/barriers"
+    },
+    "scoring": "Completecontinuouscapitalbook unchanged. Opportunityerror diagnostics continueusingcommon full-window-mature labels by evaluationcutoff,withallunknownsretained forcomparison;earliertrainingavailability isseparatefromthis common diagnosticdenominator. Primarygate remainsrequestedmean579>=10%andallMay-Sepnonnegative. Othercontrols cannotrescuefailedprimary. Exposedhistory,not independentfuturevalidation.",
+    "diagnostics": "Training frontier latestdateage,knownbutwithhelddates,expiredunknown counts;allrouteC/Dselectorweights/forecastpayoffs/regret andactualcapitalmonthlyreturns. Prefix terminal waiting reduction,dividendfallbacks,incompletes kept. Same causal support/weakness/mixed slices and10session5000pairedbootstrapseed707 asv18descriptiveonly. No freshcaseevaluation unless primarydevelopment gate passes andengineeringverified.",
+    "verification": "Independent raw scheduled-prefix/time receipts,asoftruncated-market rerun ofeveryknownpairedfixedpolicyoutcome afteritsfirstdailycutoff,strictchronologicalmembership includingwaitinggaps,headselection/convexKKT,independent entropy root,completeT+1/dividend/crossmonthbook. Exactoldfullwindowselection andfixedforecastcontrol replays. Tests current/futurevalues cannotadvancependingfrontier,strictcutoff,missingprefix,postterminalchanges,latebars/dividendfallback,expiredunknown.",
+    "reference": "https://proceedings.mlr.press/v28/joulani13.html",
+    "reference_scope": "Online Learning under Delayed Feedback studies how delays affect online-learning regret. Background only;this chronological-prefix wrapper is not claimed to implement their meta-algorithms or inherit their guarantees. Earlier feedback alone is no return guarantee."
+  },
+  "new_v20_results_seen": false,
+  "older_development_and_cases_exposed": true,
+  "independent_future_validation_claimed": false,
+  "code_sha256": {
+    "research/soxl_soxs_14d5pct_v20/diagnose_feedback.py": "5176c544af899edaac3dbc2c27b85ca0edf1d8c227f4132c6a2aa614c789033b",
+    "research/soxl_soxs_14d5pct_v20/resolved_feedback.py": "9f7ddb010efa0287607503e26086f1fc3ff5f7ed9affc152fb53889ff08b6ece",
+    "research/soxl_soxs_14d5pct_v20/run_feedback.py": "879a00079bbf27aa86242e7a8dd457f475daa923d1004a827a0ee978ecc5f1cc",
+    "research/soxl_soxs_14d5pct_v20/test_feedback.py": "e92fde8bc723f5a195e8090cf31db6b047a02d3bbfa2bd683e5b721d70193ecb",
+    "research/soxl_soxs_14d5pct_v20/verify_feedback.py": "43410e751698e313ae093140ee4d291cc5b9456174704090ea9f62a71d43a0ba"
+  },
+  "source_prediction_sha256": "875822a6b7020bb4c4ec8605986059ddad38d1a676ea1538a1fa48278ecd7df1",
+  "reused_selector_sha256": "ea54c198dd8a85683b1526ebd90c746d0f0e7ee6f0c0c154db66688fed22ba8e"
+}

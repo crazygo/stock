@@ -1,0 +1,623 @@
+{
+  "registered_diagnostic_only": true,
+  "decisions_changed": false,
+  "overlapping_opportunities_are_not_capital_returns": true,
+  "routes": {
+    "terminal_frontier_hard": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 2.0,
+        "maximum_latest_training_date_age_calendar_days": 14,
+        "dates_with_known_results_waiting_behind_pending": 9,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 105,
+      "forecast_ready_dates": 105,
+      "unknown_dates": [
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "reasons": {
+        "cash_best": 72,
+        "positive_utility": 33
+      },
+      "mature_opportunities": {
+        "dates": 96,
+        "predicted_mean_log": 0.0047689969837915415,
+        "actual_mean_log": -0.016892587911451425,
+        "mean_squared_error": 0.00448568478027585,
+        "D_mean_squared_error": 0.0035101702659450403,
+        "mean_regret_log": 0.06513366385975412,
+        "direction_correct": 36
+      },
+      "allowed_mature_opportunities": {
+        "dates": 33,
+        "predicted_mean_log": 0.012887703130397754,
+        "actual_mean_log": -0.003546687237780279,
+        "mean_squared_error": 0.003434694955762468,
+        "D_mean_squared_error": 0.0031670661177830633,
+        "mean_regret_log": 0.051564323113458224,
+        "direction_correct": 14
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 62,
+          "predicted_mean_log": 0.004199343951649311,
+          "actual_mean_log": -0.01038984588983058,
+          "mean_squared_error": 0.0033972697725937217,
+          "D_mean_squared_error": 0.0029877087566683434,
+          "mean_regret_log": 0.05850105534321528,
+          "direction_correct": 22
+        },
+        "support": {
+          "dates": 22,
+          "predicted_mean_log": 0.008124685944624751,
+          "actual_mean_log": -0.03509841454113174,
+          "mean_squared_error": 0.00820345303113632,
+          "D_mean_squared_error": 0.005066775922620786,
+          "mean_regret_log": 0.08384412026551356,
+          "direction_correct": 9
+        },
+        "weakness": {
+          "dates": 12,
+          "predicted_mean_log": 0.0015601078883321785,
+          "actual_mean_log": -0.017112739535411915,
+          "mean_squared_error": 0.003293253860055986,
+          "D_mean_squared_error": 0.003355777693302442,
+          "mean_regret_log": 0.06509963778464588,
+          "direction_correct": 5
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.7047619047619048,
+          "max": 1.0,
+          "raw_endpoint_dates": 31,
+          "calibrated_endpoint_dates": 74
+        },
+        "D": {
+          "min": 0.0,
+          "mean": 0.7523809523809524,
+          "max": 1.0,
+          "raw_endpoint_dates": 26,
+          "calibrated_endpoint_dates": 79
+        }
+      }
+    },
+    "terminal_available_hard": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 2.0,
+        "maximum_latest_training_date_age_calendar_days": 6,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 105,
+      "forecast_ready_dates": 105,
+      "unknown_dates": [
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "reasons": {
+        "cash_best": 72,
+        "positive_utility": 33
+      },
+      "mature_opportunities": {
+        "dates": 96,
+        "predicted_mean_log": 0.0047689969837915415,
+        "actual_mean_log": -0.016892587911451425,
+        "mean_squared_error": 0.00448568478027585,
+        "D_mean_squared_error": 0.0035101702659450403,
+        "mean_regret_log": 0.06513366385975412,
+        "direction_correct": 36
+      },
+      "allowed_mature_opportunities": {
+        "dates": 33,
+        "predicted_mean_log": 0.012887703130397754,
+        "actual_mean_log": -0.003546687237780279,
+        "mean_squared_error": 0.003434694955762468,
+        "D_mean_squared_error": 0.0031670661177830633,
+        "mean_regret_log": 0.051564323113458224,
+        "direction_correct": 14
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 62,
+          "predicted_mean_log": 0.004199343951649311,
+          "actual_mean_log": -0.01038984588983058,
+          "mean_squared_error": 0.0033972697725937217,
+          "D_mean_squared_error": 0.0029877087566683434,
+          "mean_regret_log": 0.05850105534321528,
+          "direction_correct": 22
+        },
+        "support": {
+          "dates": 22,
+          "predicted_mean_log": 0.008124685944624751,
+          "actual_mean_log": -0.03509841454113174,
+          "mean_squared_error": 0.00820345303113632,
+          "D_mean_squared_error": 0.005066775922620786,
+          "mean_regret_log": 0.08384412026551356,
+          "direction_correct": 9
+        },
+        "weakness": {
+          "dates": 12,
+          "predicted_mean_log": 0.0015601078883321785,
+          "actual_mean_log": -0.017112739535411915,
+          "mean_squared_error": 0.003293253860055986,
+          "D_mean_squared_error": 0.003355777693302442,
+          "mean_regret_log": 0.06509963778464588,
+          "direction_correct": 5
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.7047619047619048,
+          "max": 1.0,
+          "raw_endpoint_dates": 31,
+          "calibrated_endpoint_dates": 74
+        },
+        "D": {
+          "min": 0.0,
+          "mean": 0.7523809523809524,
+          "max": 1.0,
+          "raw_endpoint_dates": 26,
+          "calibrated_endpoint_dates": 79
+        }
+      }
+    },
+    "terminal_frontier_global": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 2.0,
+        "maximum_latest_training_date_age_calendar_days": 14,
+        "dates_with_known_results_waiting_behind_pending": 9,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 105,
+      "forecast_ready_dates": 105,
+      "unknown_dates": [
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "reasons": {
+        "cash_best": 73,
+        "positive_utility": 32
+      },
+      "mature_opportunities": {
+        "dates": 96,
+        "predicted_mean_log": 0.005052227489574532,
+        "actual_mean_log": -0.012106789226796305,
+        "mean_squared_error": 0.004061893195745956,
+        "D_mean_squared_error": 0.003388466672702052,
+        "mean_regret_log": 0.06034786517509901,
+        "direction_correct": 37
+      },
+      "allowed_mature_opportunities": {
+        "dates": 31,
+        "predicted_mean_log": 0.013283523987889963,
+        "actual_mean_log": -0.0028168616084702,
+        "mean_squared_error": 0.003328969768459495,
+        "D_mean_squared_error": 0.0033704023066826864,
+        "mean_regret_log": 0.05084216512346989,
+        "direction_correct": 13
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 62,
+          "predicted_mean_log": 0.004573253094471181,
+          "actual_mean_log": -0.010391383878095644,
+          "mean_squared_error": 0.0033802518780131196,
+          "D_mean_squared_error": 0.002972286190674912,
+          "mean_regret_log": 0.058502593331480356,
+          "direction_correct": 20
+        },
+        "support": {
+          "dates": 22,
+          "predicted_mean_log": 0.008395424395559783,
+          "actual_mean_log": -0.018602656345167546,
+          "mean_squared_error": 0.006341843951374127,
+          "D_mean_squared_error": 0.004637656268163533,
+          "mean_regret_log": 0.06734836206954939,
+          "direction_correct": 11
+        },
+        "weakness": {
+          "dates": 12,
+          "predicted_mean_log": 0.001397734203302219,
+          "actual_mean_log": -0.009060627144735782,
+          "mean_squared_error": 0.0034037969520473044,
+          "D_mean_squared_error": 0.003248551571496233,
+          "mean_regret_log": 0.05704752539396974,
+          "direction_correct": 6
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.7047619047619048,
+          "max": 1.0,
+          "raw_endpoint_dates": 31,
+          "calibrated_endpoint_dates": 74
+        },
+        "D": {
+          "min": 0.0,
+          "mean": 0.8952380952380953,
+          "max": 1.0,
+          "raw_endpoint_dates": 11,
+          "calibrated_endpoint_dates": 94
+        }
+      }
+    },
+    "terminal_frontier_blend": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 2.0,
+        "maximum_latest_training_date_age_calendar_days": 14,
+        "dates_with_known_results_waiting_behind_pending": 9,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 105,
+      "forecast_ready_dates": 105,
+      "unknown_dates": [
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "reasons": {
+        "cash_best": 90,
+        "positive_utility": 15
+      },
+      "mature_opportunities": {
+        "dates": 96,
+        "predicted_mean_log": 0.0018719370046347396,
+        "actual_mean_log": -0.007035774101822871,
+        "mean_squared_error": 0.0038830616893345796,
+        "D_mean_squared_error": 0.0033018408529285753,
+        "mean_regret_log": 0.05527685005012558,
+        "direction_correct": 41
+      },
+      "allowed_mature_opportunities": {
+        "dates": 15,
+        "predicted_mean_log": 0.01336535509975465,
+        "actual_mean_log": 0.010887173440223628,
+        "mean_squared_error": 0.0025909440356841913,
+        "D_mean_squared_error": 0.0025780061752469535,
+        "mean_regret_log": 0.037307182622292295,
+        "direction_correct": 8
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 62,
+          "predicted_mean_log": 0.0011057210935647786,
+          "actual_mean_log": -0.0065600433001866045,
+          "mean_squared_error": 0.0031975325256051903,
+          "D_mean_squared_error": 0.002814475938645044,
+          "mean_regret_log": 0.054671252753571306,
+          "direction_correct": 22
+        },
+        "support": {
+          "dates": 22,
+          "predicted_mean_log": 0.004956410301720099,
+          "actual_mean_log": -0.013026694715012404,
+          "mean_squared_error": 0.006191780035929814,
+          "D_mean_squared_error": 0.0047185496748979915,
+          "mean_regret_log": 0.06177240043939425,
+          "direction_correct": 12
+        },
+        "weakness": {
+          "dates": 12,
+          "predicted_mean_log": 0.0001758515005063797,
+          "actual_mean_log": 0.0014896378805705514,
+          "mean_squared_error": 0.003192312066511835,
+          "D_mean_squared_error": 0.003222593403116219,
+          "mean_regret_log": 0.04649726036866342,
+          "direction_correct": 7
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.7031401554722542,
+          "max": 1.0,
+          "raw_endpoint_dates": 15,
+          "calibrated_endpoint_dates": 56
+        },
+        "D": {
+          "min": 0.19382467549155927,
+          "mean": 0.7177798620486924,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 36
+        }
+      }
+    },
+    "full_window_hard": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 14.0,
+        "maximum_latest_training_date_age_calendar_days": 17,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 105,
+      "forecast_ready_dates": 105,
+      "unknown_dates": [
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "reasons": {
+        "cash_best": 73,
+        "positive_utility": 32
+      },
+      "mature_opportunities": {
+        "dates": 96,
+        "predicted_mean_log": 0.005377403558022287,
+        "actual_mean_log": -0.007311951617270867,
+        "mean_squared_error": 0.004135832249048351,
+        "D_mean_squared_error": 0.0032646244778875154,
+        "mean_regret_log": 0.055553027565573565,
+        "direction_correct": 42
+      },
+      "allowed_mature_opportunities": {
+        "dates": 32,
+        "predicted_mean_log": 0.013553790047834642,
+        "actual_mean_log": 0.013133851972139636,
+        "mean_squared_error": 0.002632606250202992,
+        "D_mean_squared_error": 0.0025539487969899605,
+        "mean_regret_log": 0.034889342449731735,
+        "direction_correct": 17
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 62,
+          "predicted_mean_log": 0.00484832752091915,
+          "actual_mean_log": -0.0015872289733858617,
+          "mean_squared_error": 0.003078227439471979,
+          "D_mean_squared_error": 0.00272785279067313,
+          "mean_regret_log": 0.04969843842677057,
+          "direction_correct": 25
+        },
+        "support": {
+          "dates": 22,
+          "predicted_mean_log": 0.008269892106883829,
+          "actual_mean_log": -0.023157159312762344,
+          "mean_squared_error": 0.007566339884394979,
+          "D_mean_squared_error": 0.0047485139991381925,
+          "mean_regret_log": 0.07190286503714419,
+          "direction_correct": 11
+        },
+        "weakness": {
+          "dates": 12,
+          "predicted_mean_log": 0.0028080674101423294,
+          "actual_mean_log": -0.007840137835609018,
+          "mean_squared_error": 0.0033108597670574564,
+          "D_mean_squared_error": 0.0033174807395356027,
+          "mean_regret_log": 0.05582703608484298,
+          "direction_correct": 6
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.7619047619047619,
+          "max": 1.0,
+          "raw_endpoint_dates": 25,
+          "calibrated_endpoint_dates": 80
+        },
+        "D": {
+          "min": 0.0,
+          "mean": 0.819047619047619,
+          "max": 1.0,
+          "raw_endpoint_dates": 19,
+          "calibrated_endpoint_dates": 86
+        }
+      }
+    },
+    "calibrated_fixed": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 14.0,
+        "maximum_latest_training_date_age_calendar_days": 17,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 105,
+      "forecast_ready_dates": 105,
+      "unknown_dates": [
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "reasons": {
+        "cash_best": 79,
+        "positive_utility": 26
+      },
+      "mature_opportunities": {
+        "dates": 96,
+        "predicted_mean_log": 0.004119711620799411,
+        "actual_mean_log": -0.014694473884358891,
+        "mean_squared_error": 0.004345949846323257,
+        "D_mean_squared_error": 0.0033948201526394634,
+        "mean_regret_log": 0.06293554983266159,
+        "direction_correct": 37
+      },
+      "allowed_mature_opportunities": {
+        "dates": 26,
+        "predicted_mean_log": 0.01385989679660924,
+        "actual_mean_log": 0.0008421788086035826,
+        "mean_squared_error": 0.0031104787950514347,
+        "D_mean_squared_error": 0.003040256532550749,
+        "mean_regret_log": 0.047216741382835485,
+        "direction_correct": 12
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 62,
+          "predicted_mean_log": 0.003714816864406345,
+          "actual_mean_log": -0.010803440426087729,
+          "mean_squared_error": 0.0033842410641007382,
+          "D_mean_squared_error": 0.002924553993734741,
+          "mean_regret_log": 0.05891464987947243,
+          "direction_correct": 21
+        },
+        "support": {
+          "dates": 22,
+          "predicted_mean_log": 0.007932068060028826,
+          "actual_mean_log": -0.02873312094291748,
+          "mean_squared_error": 0.00765503104304405,
+          "D_mean_squared_error": 0.004799898553812715,
+          "mean_regret_log": 0.07747882666729933,
+          "direction_correct": 10
+        },
+        "weakness": {
+          "dates": 12,
+          "predicted_mean_log": -0.000777652276423664,
+          "actual_mean_log": -0.009060627144735782,
+          "mean_squared_error": 0.0032481296938181533,
+          "D_mean_squared_error": 0.003248551571496233,
+          "mean_regret_log": 0.05704752539396974,
+          "direction_correct": 6
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 105
+        },
+        "D": {
+          "min": 1.0,
+          "mean": 1.0,
+          "max": 1.0,
+          "raw_endpoint_dates": 0,
+          "calibrated_endpoint_dates": 105
+        }
+      }
+    },
+    "raw_fixed": {
+      "feedback": {
+        "median_latest_training_date_age_calendar_days": 14.0,
+        "maximum_latest_training_date_age_calendar_days": 17,
+        "dates_with_known_results_waiting_behind_pending": 0,
+        "expired_unresolved_prefix_dates": 0
+      },
+      "evaluation_dates": 105,
+      "forecast_ready_dates": 105,
+      "unknown_dates": [
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "reasons": {
+        "cash_best": 70,
+        "positive_utility": 35
+      },
+      "mature_opportunities": {
+        "dates": 96,
+        "predicted_mean_log": 0.004712019984149783,
+        "actual_mean_log": -0.002417177343000489,
+        "mean_squared_error": 0.003794101511479036,
+        "D_mean_squared_error": 0.0033164242231417894,
+        "mean_regret_log": 0.05065825329130319,
+        "direction_correct": 45
+      },
+      "allowed_mature_opportunities": {
+        "dates": 34,
+        "predicted_mean_log": 0.012035777565119782,
+        "actual_mean_log": 0.0003404696431334051,
+        "mean_squared_error": 0.003451687246485104,
+        "D_mean_squared_error": 0.003519443732784301,
+        "mean_regret_log": 0.04766011310004694,
+        "direction_correct": 17
+      },
+      "state_descriptions": {
+        "mixed": {
+          "dates": 62,
+          "predicted_mean_log": 0.004890887212136564,
+          "actual_mean_log": 0.0024806191320234524,
+          "mean_squared_error": 0.003110947880319814,
+          "D_mean_squared_error": 0.002817434938055332,
+          "mean_regret_log": 0.04563059032136124,
+          "direction_correct": 30
+        },
+        "support": {
+          "dates": 22,
+          "predicted_mean_log": 0.003131756321190617,
+          "actual_mean_log": -0.00822542879371984,
+          "mean_squared_error": 0.005938299133454036,
+          "D_mean_squared_error": 0.004700670248999631,
+          "mean_regret_log": 0.05697113451810168,
+          "direction_correct": 10
+        },
+        "weakness": {
+          "dates": 12,
+          "predicted_mean_log": 0.006685022688309876,
+          "actual_mean_log": -0.01707399813763871,
+          "mean_squared_error": 0.00339269963218085,
+          "D_mean_squared_error": 0.0033567511486824477,
+          "mean_regret_log": 0.06506089638687268,
+          "direction_correct": 5
+        }
+      },
+      "alpha_calibrated": {
+        "C": {
+          "min": 0.0,
+          "mean": 0.0,
+          "max": 0.0,
+          "raw_endpoint_dates": 105,
+          "calibrated_endpoint_dates": 0
+        },
+        "D": {
+          "min": 0.0,
+          "mean": 0.0,
+          "max": 0.0,
+          "raw_endpoint_dates": 105,
+          "calibrated_endpoint_dates": 0
+        }
+      }
+    }
+  }
+}
