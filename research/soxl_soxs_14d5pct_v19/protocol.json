@@ -1,0 +1,69 @@
+{
+  "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_state_error_switch_v19",
+  "primary": "state_hard",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v14/runs/paired_20261012",
+    "cases": ".cache/soxl_soxs_14d5pct_v17/runs/paired_cases_20261012"
+  },
+  "hypothesis": "Test whether per-head hard selection by prior state-weighted as-issued squared error adapts when the old calibration loses value. C and D independently select raw or old calibration;ties<=1e-12equalblend. Same dailyjointmaturity/stateweights/riskprior/entropy5TP6stop14calendar contract. No case-specific month rules.",
+  "source": "Exact verified v14 daily raw and paired-calibrated regret_regime forecasts, 19factor features and fixed6stop/+5TP/14calendar outcomes. Reuse cached daily fits; do not rewrite or retrospectively calibrate historical forecasts. Original learner already retrained daily; new blending layer also updates daily.",
+  "clock": "Daily00:00ET historical eligibility; current09:25:30ET premaket features; execution first eligible09:30RTH bar after30second delay. Existing arbitrary-time analysis remains available and unqualified.",
+  "training": "Latest120 prior source-calibration-ready dates with BOTH full14day labels released strictly before current00:00ET;minimum60. No early winners or partial current/future outcomes. One paired vector/date. Unknown windows retained, cannot enter fitting. Use saved raw and saved calibrated C,D on those dates, not current model fitted values.",
+  "state_columns": [
+    "relative_5",
+    "relative_20",
+    "breadth_5",
+    "strength_persistence_5",
+    "volume_direction_diffusion",
+    "log_sector_volatility"
+  ],
+  "weights": "Recency weights2^(-rank_age/63),normalized. State weights multiply Gaussian exp(-d/(2h)):training-only recency weighted mean/std,scale1 if<1e-12;d=mean squared standardized six-state difference;h=max(40th smallest d,1e-12). No prediction scores or labels in distance. Global comparator uses recency only. Learned mixture/hard-selection require weight effective dates1/sumw2>=20;fixed blend comparisons do not require estimation. Effective dates are concentration summaries,not independent sample size.",
+  "blend": "Primary selects raw or calibrated PER HEAD by historical weighted MSE:alpha1 if calibrated MSE lower,alpha0 if raw lower,ties within1e-12 alpha.5. Requires>=60maturedates andstate-weight concentration>=20. The continuous regularized convex recipe remains unchanged as comparison: For C,D separately, raw x,old calibrated z,truth y: minimize sumw*(x+a*(z-x)-y)^2 + lambda*(a-.5)^2 over0<=a<=1. Let A=sumw*(z-x)^2,B=sumw*(z-x)*(y-x),n_eff=1/sumw2,lambda=2*A/n_eff. If A<=1e-16 takea=.5;otherwisea=clip((B+lambda/2)/(A+lambda),0,1). Two weight units of shrinkage are fixed,not tuned or a confidence interval. Currentforecast=(1-a)*currentraw+a*currentcalibrated for eachhead;rankSOXLifD>=0elseSOXS. NewmeanC+absD is not a calibrated probability.",
+  "risk": "Unchanged v16/v17 binary entropy policy. For the newly chosen ETF, use original saved v14 calibration score,advantage,signedrelative5,breadth5,volume diffusion,logvol as the six prior-distance coordinates;do not rewrite those old coordinates with new blends. Same matured120/min60,63recency,40bandwidth,min20prior/posterior concentration. Replace only entropy mean target with current blended netlogpayoff. Reweight existing real same-ETF historical returns with minimum KL. Outside positiveprior support abstain;do not clip. Gamma5 utility over fractions[0,1],score tie<=1e-12cash. This preserves calibrated_fixed exactly as v17 recipe and isolates blend change.",
+  "routes": {
+    "state_blend": "Comparison:state-conditioned convex C,D blend plus unchanged binary risk rule",
+    "global_blend": "Convex blend using recency without state similarity;identical risk prior",
+    "state_hard": "Primary:per-head choose raw or calibrated with lower prior state-weighted squared error,ties1e-12 equalblend;identical risk",
+    "equal_blend": "Fixed50/50 perhead;identical risk",
+    "calibrated_fixed": "Fixed100% old calibration;exact v16binary development/v17case control",
+    "raw_fixed": "Fixed100% raw forecast;identical risk",
+    "blend_no_risk": "Same primary blended forecasts;allsettledcash if positivebestlogpayoff,otherwisecash;no entropy utility filter",
+    "source_full": "Exact v14 calibrated positivegate fullcapital",
+    "source_raw_full": "Exact v14 raw positivegate fullcapital",
+    "cash": "Always cash",
+    "double_cost": "Same primary frozenactions,own doublecostfills/stop/TP"
+  },
+  "capital": "One settled-cash position at most;allocation only0/1,no leverage,same-day reentry forbidden. T+1,fees,slippage,gaps,dividends,full14calendar expiry and continuous cross-month MTM unchanged. Missing held outcome retains occupation. Entry trigger/exit rules remain exactsourcecontract.",
+  "diagnostics": "All preregistered comparisons retained;none can rescue primary. C/Dblend weights incl endpoints,as-issued future error and direction regret,allowed/abstained counts,meanconstraint feasibility,actual completeledger monthly returns anddrawdown. Common joint-mature date-equal opportunities plus unknowns;overlapping forecasts not independent returns. Causal state descriptions:relative5/breadth5/volumediffusion all>0 support,all<0 weakness,otherwise mixed;descriptive only. Same10session5000pairedbootstrapseed707 descriptiveexposedhistory. No new hypothesis selection from579.",
+  "verification": "Independent savedforecast/labelbank reconciliation,strict dailyjointmaturity membership,convex KKT conditions/endpoint optimum,independent entropy Brent root,fullcapital book includingT+1/dividends/unknowns. Exactmatchcalibratedbinary andv14raw/calibrated fullcontrols. Frozen hashes and targeted syntheticfuture-label exclusion checks.",
+  "reference": "https://arxiv.org/abs/math/0410214",
+  "reference_scope": "Aggregation for Regression Learning distinguishes model selection,convex and linear aggregation. Background only;our stateweighted delayed-feedback finite-history blend is its own preregistered experiment,not a claim of that paper theorem or a trading guarantee.",
+  "selection_run": ".cache/soxl_soxs_14d5pct_v18/runs/blend_20261012",
+  "selection": "V18 continuousblend primary remainsfailed. Before ANY new v19 case actions/results, select preregistered state_hard comparison using ONLY Jan-Aprdevelopment:fourmonthsnonnegative,mean12.02264818%,16trades. Freeze allrecipes; no new threshold,slopewindow,stop or riskparameter. Selection is exposeddevelopment,not independentvalidation. V18 fixedcalibratedcontrol is oldv17,already failed originalcases;not promoted. No otherroute can replace v19 primary aftercases.",
+  "case_policy": "Only pre-May selected state_hard is judged by original5/7/9 arithmeticmean>=10% and allMay-Sepmonthsnonnegative. All11routesretained. Parent-primary blend_no_risk anddouble_cost now follow state_hard;other9routes musthaveallpreMayeventsidenticaltov18. Sourcev14 dailyfits throughSep30 are immutable verifiedv17cache,not newlyfittedusingwholecases."
+}

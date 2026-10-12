@@ -1,0 +1,82 @@
+{
+  "registered_at": "2026-10-12T12:53:38.853677+00:00",
+  "protocol_sha256": "d843254d962b8443df39a6571abaa28c491d1507d7f023ab7d82efa5ab312904",
+  "protocol": {
+    "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+    "development": {
+      "evaluation_start": "2026-01-01",
+      "evaluation_end": "2026-04-30",
+      "months": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04"
+      ]
+    },
+    "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+    "cases": {
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ]
+    },
+    "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+    "no_broker_orders": true,
+    "no_automatic_R2_upload": true,
+    "no_case_specific_parameters": true,
+    "version": "soxl_soxs_adaptive_calibration_blend_v18",
+    "primary": "state_blend",
+    "source_runs": {
+      "development": ".cache/soxl_soxs_14d5pct_v14/runs/paired_20261012",
+      "cases": ".cache/soxl_soxs_14d5pct_v17/runs/paired_cases_20261012"
+    },
+    "hypothesis": "V17 showed past calibration reversal did not retain value in new regimes. Test a constrained convex blend of immutable raw and calibrated forecasts whose weight is learned daily from only prior joint-mature as-issued errors, conditioned on current causal state. This does not assume either forecast is accurate; no monthly identifiers, counterfactual case winner or retuned stop.",
+    "source": "Exact verified v14 daily raw and paired-calibrated regret_regime forecasts, 19factor features and fixed6stop/+5TP/14calendar outcomes. Reuse cached daily fits; do not rewrite or retrospectively calibrate historical forecasts. Original learner already retrained daily; new blending layer also updates daily.",
+    "clock": "Daily00:00ET historical eligibility; current09:25:30ET premaket features; execution first eligible09:30RTH bar after30second delay. Existing arbitrary-time analysis remains available and unqualified.",
+    "training": "Latest120 prior source-calibration-ready dates with BOTH full14day labels released strictly before current00:00ET;minimum60. No early winners or partial current/future outcomes. One paired vector/date. Unknown windows retained, cannot enter fitting. Use saved raw and saved calibrated C,D on those dates, not current model fitted values.",
+    "state_columns": [
+      "relative_5",
+      "relative_20",
+      "breadth_5",
+      "strength_persistence_5",
+      "volume_direction_diffusion",
+      "log_sector_volatility"
+    ],
+    "weights": "Recency weights2^(-rank_age/63),normalized. State weights multiply Gaussian exp(-d/(2h)):training-only recency weighted mean/std,scale1 if<1e-12;d=mean squared standardized six-state difference;h=max(40th smallest d,1e-12). No prediction scores or labels in distance. Global comparator uses recency only. Learned mixture/hard-selection require weight effective dates1/sumw2>=20;fixed blend comparisons do not require estimation. Effective dates are concentration summaries,not independent sample size.",
+    "blend": "For C,D separately, raw x,old calibrated z,truth y: minimize sumw*(x+a*(z-x)-y)^2 + lambda*(a-.5)^2 over0<=a<=1. Let A=sumw*(z-x)^2,B=sumw*(z-x)*(y-x),n_eff=1/sumw2,lambda=2*A/n_eff. If A<=1e-16 takea=.5;otherwisea=clip((B+lambda/2)/(A+lambda),0,1). Two weight units of shrinkage are fixed,not tuned or a confidence interval. Currentforecast=(1-a)*currentraw+a*currentcalibrated for eachhead;rankSOXLifD>=0elseSOXS. NewmeanC+absD is not a calibrated probability.",
+    "risk": "Unchanged v16/v17 binary entropy policy. For the newly chosen ETF, use original saved v14 calibration score,advantage,signedrelative5,breadth5,volume diffusion,logvol as the six prior-distance coordinates;do not rewrite those old coordinates with new blends. Same matured120/min60,63recency,40bandwidth,min20prior/posterior concentration. Replace only entropy mean target with current blended netlogpayoff. Reweight existing real same-ETF historical returns with minimum KL. Outside positiveprior support abstain;do not clip. Gamma5 utility over fractions[0,1],score tie<=1e-12cash. This preserves calibrated_fixed exactly as v17 recipe and isolates blend change.",
+    "routes": {
+      "state_blend": "Primary:state-conditioned convex C,D blend plus unchanged binary risk rule",
+      "global_blend": "Convex blend using recency without state similarity;identical risk prior",
+      "state_hard": "Per-head choose raw or calibrated with lower prior weighted squared error,ties1e-12 equalblend;identical risk",
+      "equal_blend": "Fixed50/50 perhead;identical risk",
+      "calibrated_fixed": "Fixed100% old calibration;exact v16binary development/v17case control",
+      "raw_fixed": "Fixed100% raw forecast;identical risk",
+      "blend_no_risk": "Same primary blended forecasts;allsettledcash if positivebestlogpayoff,otherwisecash;no entropy utility filter",
+      "source_full": "Exact v14 calibrated positivegate fullcapital",
+      "source_raw_full": "Exact v14 raw positivegate fullcapital",
+      "cash": "Always cash",
+      "double_cost": "Same primary frozenactions,own doublecostfills/stop/TP"
+    },
+    "capital": "One settled-cash position at most;allocation only0/1,no leverage,same-day reentry forbidden. T+1,fees,slippage,gaps,dividends,full14calendar expiry and continuous cross-month MTM unchanged. Missing held outcome retains occupation. Entry trigger/exit rules remain exactsourcecontract.",
+    "diagnostics": "All preregistered comparisons retained;none can rescue primary. C/Dblend weights incl endpoints,as-issued future error and direction regret,allowed/abstained counts,meanconstraint feasibility,actual completeledger monthly returns anddrawdown. Common joint-mature date-equal opportunities plus unknowns;overlapping forecasts not independent returns. Causal state descriptions:relative5/breadth5/volumediffusion all>0 support,all<0 weakness,otherwise mixed;descriptive only. Same10session5000pairedbootstrapseed707 descriptiveexposedhistory. No new hypothesis selection from579.",
+    "verification": "Independent savedforecast/labelbank reconciliation,strict dailyjointmaturity membership,convex KKT conditions/endpoint optimum,independent entropy Brent root,fullcapital book includingT+1/dividends/unknowns. Exactmatchcalibratedbinary andv14raw/calibrated fullcontrols. Frozen hashes and targeted syntheticfuture-label exclusion checks.",
+    "reference": "https://arxiv.org/abs/math/0410214",
+    "reference_scope": "Aggregation for Regression Learning distinguishes model selection,convex and linear aggregation. Background only;our stateweighted delayed-feedback finite-history blend is its own preregistered experiment,not a claim of that paper theorem or a trading guarantee."
+  },
+  "new_v18_results_seen": false,
+  "old_development_and_case_results_exposed": true,
+  "independent_future_validation_claimed": false,
+  "code_sha256": {
+    "research/soxl_soxs_14d5pct_v18/adaptive_blend.py": "ea54c198dd8a85683b1526ebd90c746d0f0e7ee6f0c0c154db66688fed22ba8e",
+    "research/soxl_soxs_14d5pct_v18/diagnose_blend.py": "c80ddcb44eb79bb7ce88eccdc2855a2398aa163e1feb9193b3e371e73a0c1d14",
+    "research/soxl_soxs_14d5pct_v18/run_blend.py": "f6ca1700c98074547f3e4cb3d9715b69ff40e508c4ae5d21a74e3df267e00d28",
+    "research/soxl_soxs_14d5pct_v18/test_blend.py": "8106b0dafc20c4fba05e48f894f4720a9c963177aacf8fce9dafd3080230dab8",
+    "research/soxl_soxs_14d5pct_v18/verify_blend.py": "01bc8631f1607c6de140d5468526d0c38709e2e396444738d2f27e8ca545d32b"
+  },
+  "source_development_prediction_sha256": "875822a6b7020bb4c4ec8605986059ddad38d1a676ea1538a1fa48278ecd7df1",
+  "prior_control_results_sha256": "196dd62245a05596f66650f6d309a232809b46ec3aa6cbc418de4fbd24d134de"
+}
