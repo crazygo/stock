@@ -1,0 +1,18 @@
+bounded confidence trained through 2025-01-28 15:05:30+00:00
+bounded confidence trained through 2025-04-09 14:05:30+00:00
+bounded confidence trained through 2025-06-23 14:05:30+00:00
+bounded confidence trained through 2025-09-03 14:35:30+00:00
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v50/run_correction.py", line 78, in <module>
+    a=parser.parse_args();run(a.output,a.case_after)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v50/run_correction.py", line 47, in run
+    daily=fit_day(panel,records,histories,reg,at);dump(output/'daily'/(str(row.date.date())+'.json'),daily);previous=row.date
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v50/confidence_shrinkage.py", line 89, in fit_day
+    'bootstrap_models':[fit_shrinkage(X,q,truth[:,1],w*c[groups],n,kind) for c in counts]}
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v50/confidence_shrinkage.py", line 50, in fit_shrinkage
+    if residual>1e-8*max(1,n_dates):raise ArithmeticError(f'Bounded logistic KKT failed: {residual}')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ArithmeticError: Bounded logistic KKT failed: 7.355361382188619e-07
