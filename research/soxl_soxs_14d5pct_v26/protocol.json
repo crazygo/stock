@@ -1,0 +1,58 @@
+{
+  "version": "soxl_soxs_prequential_reliability_v26",
+  "primary": "context_band",
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v21/runs/early_20261012",
+    "cases": ".cache/soxl_soxs_14d5pct_v21/runs/cases_20261012"
+  },
+  "hypothesis": "V25 continuation changed only3of82actions versus calibrated one-trade value; calibration changed32versus raw planning. Test directly realized return error conditional on previously issued predictions and current industry context, with a paired block-resampling safety margin. This is entry reliability, unlike v11 holding-exit residual bound. Unlike v18 combining existing raw/cal predictions by error, fit a new conditional raw-forecast residual map and estimate its sensitivity to historical date blocks. Prior exposed losses inform hypothesis only, not a hindsight trade filter.",
+  "contract": "Retain v21 premarket09:25:30ET completed-data snapshot and delayed09:30RTH entry. Attached cent-rounded+5% TP; fixed6% protective stop; stop-first ambiguous bar and actual gap fills. Max14inclusive calendar days, last official close on/before entry+13. No new holding exits. V4 arbitrary-time analysis remains available/unqualified; no restriction of analysis start to prior close.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "base_models": "Reuse verified v21 daily expanding early-terminal paired model: Ridge common/magnitude and return-difference weighted LogisticRegression direction,19 causal factors. Read original as-issued raw SOXL/SOXS log-return forecasts from each immutable daily training record and check its delivery hash. Do not use old calibrated values as new targets or retrain historical forecasts.",
+  "context": "Six causal states relative_5,relative_20,breadth_5,strength_persistence_5,volume_direction_diffusion,log_sector_volatility. Together with the2raw forecasts form8inputs. No month, hindsight sector-hot period, future hit rate or historical PIT membership claim.",
+  "pool": "At current daily00ET, take the complete chronological paired-terminal prefix from v21; never skip an earlier unknown parent. Among these dates with saved raw predictions, latest120,min60. Feature readiness and source min120training remain. Expired unresolved>=14calendar disables new actions. Current query factors at09:25:30 may be used; current/future realized targets may not.",
+  "target": "For each past paired date, residual Y=(log1p(net_return_L),log1p(net_return_S))-asissued_raw_pair. Net returns use fixed original contract including costs and dividends. Actual completed return target, not bootstrapped future Q values. BothETF rows remain one paired date.",
+  "calibration": "Multioutput Ridge(alpha20,solverSVD),weighted population standardization, std<1e-12=>1. Recency half63,parentweights normalized sumN. Fitted residual added to current raw pair. Intercept-only control uses weighted paired residual mean. All maps trained from own frozen historical base predictions only.",
+  "uncertainty": "199 fixed circular moving-block bootstrap replicates of10consecutive eligible parent dates. Uniform block starts; wrap within observed prefix, truncate toNparents; preserve paired outcomes/inputs. Original chronological recency weights multiplied by resampled counts and renormalized sumN; recompute scaler and residual Ridge per replicate. Seed826+ETcalendar-date ordinal; no random reruns or parameter search. These are estimator perturbations, not199independent market samples.",
+  "band": "At query, point=raw+fullsample residual map. Each replicate b yields paired q_b. Radius=max(0, empirical90thpercentile_higher(max_across_two_ETFs(q_b-point))). Both action lower values=point-radius, so the comparison penalizes selecting the better of two noisy estimates. Nominal quantile is a research sensitivity margin, not proven90% coverage, conditional loss bound or nonnegative-month guarantee; bootstrap stationarity/bias assumptions can fail.",
+  "decision": "Choose largest lower logvalue if strictly>1e-12; ties SOXL. Else CASH. Point controls use largest point estimate>1e-12 with same readiness; no post-result switching. No v21 entropy utility filter layered over new primary so reliability effect is explicit; original filtered and unfiltered v21 books retained.",
+  "routes": {
+    "context_band": "PRIMARY:8input residual map plus paired10date block band",
+    "context_point": "same8input point values, no band",
+    "score_band": "2raw-score inputs plus block band",
+    "score_point": "2score point values",
+    "intercept_band": "intercept-only residual plus block band",
+    "context_iid_band": "8input band using iid individual dates, diagnostic dependence comparison",
+    "source_early": "exact v21 original risk-filtered actions/account",
+    "source_no_risk": "exact v21 early_no_risk account",
+    "cash": "always cash",
+    "double_cost": "primary frozen actions, double cost fills/barriers"
+  },
+  "verification": "Before results: future truth/forecast invariance, exact cutoff, pending prefix, bootstrap paired block structure/counts, zero-count immunity, common radius/decision ties, min parent count and intercept weighted mean tests. Independently verify every source daily record hash, prefix, both terminal receipts and all point/bootstrap models via normal equations using explicit repeated observations instead of training SVD/countweights. Check fixed quantile and action, ten continuous books and exact two source controls. Cases only after verified primary dev pass; all preMay records/actions exactly invariant.",
+  "diagnostics": "All routes and unknowns retained. Separate proposed/blocked/executed choices; band versus point changes, accepted/rejected known realized returns (not independent extra trades), radius and score levels, negative months, netcapital, gaplosses, actual readiness. Paired10session5000bootstrapseed707 for descriptive equity increment only. Never infer probability from logscore or replace capital mean by individual trade sums.",
+  "method_reference": "https://stat.ethz.ch/R-manual/R-devel/library/boot/html/tsboot.html ; documented time-series block resampling, not validation of this custom paired ridge decision bound.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true
+}

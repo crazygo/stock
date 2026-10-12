@@ -1,0 +1,183 @@
+{
+  "prior_v25_run": ".cache/soxl_soxs_14d5pct_v25/runs/planning_20261012",
+  "source_sha256": {
+    "results.json": "faae94832ae70621be34816e26bc4f14f495682da2df35d628076781c6560bed",
+    "verification.json": "412c1e51b146abbe692bcb7164e584bd8a35de957a96f48b7180793950469baa",
+    "diagnostics.json": "7abf4890b7f71979da902af452f6ed7ad96307dc2dc9daf5d45dd076b40f915f"
+  },
+  "prior_primary": {
+    "primary_metric": "requested_arithmetic_mean_10pct_and_all_months_nonnegative",
+    "primary_average": -0.14303343713501154,
+    "primary_threshold": 0.1,
+    "requested_months_complete": true,
+    "geometric_average": -0.1569634585199765,
+    "continuous_return": -0.49489042844879216,
+    "close_max_drawdown": -0.5536147703992583,
+    "entries": 35,
+    "completed_trades": 35,
+    "pending_trades": 0,
+    "target_exits": 17,
+    "expiry_exits": 0,
+    "mean_losing_trade": -0.07891638169689232,
+    "monthly": [
+      {
+        "month": "2026-01",
+        "return": -0.06362839689592004,
+        "end_equity": 0.93637160310408,
+        "mark_complete": true,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-02",
+        "return": 0.054152535011701364,
+        "end_equity": 0.9870784991251367,
+        "mark_complete": true,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-03",
+        "return": -0.21229052899337075,
+        "end_equity": 0.7775310823878789,
+        "mark_complete": true,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-04",
+        "return": -0.35036735766245675,
+        "end_equity": 0.5051095715512078,
+        "mark_complete": true,
+        "end_position": "CASH"
+      }
+    ],
+    "entry_month_attribution": [
+      {
+        "entry_month": "2026-01",
+        "entries": 8,
+        "completed": 8,
+        "pending": 0,
+        "sum_completed_trade_net_returns": -0.052975692922380135,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      },
+      {
+        "entry_month": "2026-02",
+        "entries": 11,
+        "completed": 11,
+        "pending": 0,
+        "sum_completed_trade_net_returns": -0.05743727826880385,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      },
+      {
+        "entry_month": "2026-03",
+        "entries": 8,
+        "completed": 8,
+        "pending": 0,
+        "sum_completed_trade_net_returns": -0.09130452926764476,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      },
+      {
+        "entry_month": "2026-04",
+        "entries": 8,
+        "completed": 8,
+        "pending": 0,
+        "sum_completed_trade_net_returns": -0.38532822391339927,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      }
+    ],
+    "prospective_expected_return_established": false,
+    "execution_evidence": "OHLC limit/expiry simulation, not broker fill confirmation",
+    "arithmetic_gate": false,
+    "negative_months": [
+      {
+        "month": "2026-01",
+        "return": -0.06362839689592004,
+        "end_equity": 0.93637160310408,
+        "mark_complete": true,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-03",
+        "return": -0.21229052899337075,
+        "end_equity": 0.7775310823878789,
+        "mark_complete": true,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-04",
+        "return": -0.35036735766245675,
+        "end_equity": 0.5051095715512078,
+        "mark_complete": true,
+        "end_position": "CASH"
+      }
+    ],
+    "all_months_nonnegative": false,
+    "primary_pass": false,
+    "risk_stop_exits": 18,
+    "trailing_stop_exits": 0,
+    "trend_exits": 0,
+    "session_close_exits": 0
+  },
+  "proposal_and_execution": {
+    "all_proposals": {
+      "proposals": 61,
+      "known": 60,
+      "unknown": 1,
+      "profitable": 32,
+      "mean_known_single_trade_return": -0.011256693491624397,
+      "not_a_capital_return": true
+    },
+    "executed": {
+      "proposals": 35,
+      "known": 35,
+      "unknown": 0,
+      "profitable": 17,
+      "mean_known_single_trade_return": -0.016772734982063657,
+      "not_a_capital_return": true
+    },
+    "by_account_status": {
+      "buy_SOXL": {
+        "proposals": 31,
+        "known": 31,
+        "unknown": 0,
+        "profitable": 17,
+        "mean_known_single_trade_return": -0.006065013752434182,
+        "not_a_capital_return": true
+      },
+      "buy_SOXS": {
+        "proposals": 4,
+        "known": 4,
+        "unknown": 0,
+        "profitable": 0,
+        "mean_known_single_trade_return": -0.0997575745116921,
+        "not_a_capital_return": true
+      },
+      "position_held": {
+        "proposals": 26,
+        "known": 25,
+        "unknown": 1,
+        "profitable": 15,
+        "mean_known_single_trade_return": -0.0035342354050094337,
+        "not_a_capital_return": true
+      }
+    },
+    "capital_return": -0.49489042844879216,
+    "account_status_counts": {
+      "no_action": 20,
+      "buy_SOXL": 31,
+      "position_held": 27,
+      "buy_SOXS": 4
+    },
+    "actual_symbols": {
+      "SOXL": 31,
+      "SOXS": 4
+    },
+    "complete_trade_reasons": {
+      "risk_stop": 18,
+      "target": 17
+    },
+    "executed_gap_losses": 5
+  },
+  "actions_changed_by_continuation": 3,
+  "actions_changed_by_calibration": 32,
+  "new_v26_outcomes_seen": false,
+  "not_a_retrospective_trading_filter": true
+}
