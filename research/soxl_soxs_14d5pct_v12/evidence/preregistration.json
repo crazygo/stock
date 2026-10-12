@@ -1,0 +1,64 @@
+{
+  "registered_at": "2026-10-12T10:56:57.511297+00:00",
+  "protocol_sha256": "c53f7527c0772f95f7e45319189d40e2ad4958888209e06944173a7b41a46f30",
+  "protocol": {
+    "version": "soxl_soxs_entry_decomposition_v12",
+    "status": "exposed_history_development_only",
+    "primary": "two_part_expanding",
+    "source_features": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012/features.parquet",
+    "analysis_clock_et": "09:25:30",
+    "hypothesis": "Separating the probability of the contractual target exit from the conditional payoff of all other exits may improve entry value over direct regression; expanding history is tested against a fixed252-date history. This is a registered hypothesis, not a claim of improvement.",
+    "contract": "Same fixed6% protective stop, cent-rounded+5% target,14 inclusive calendar days, official sessions and stop-first ambiguous bars as v9. Entry at09:30 after the09:25:30 prediction and30-second latency. No learned early exit in any v12 arm.",
+    "features": "Reuse verified causal25 signed/own/panel entry features from v9. The first input date is2024-11-12; no invented older history. Premarket receipt is a historical bar_end+1s assumption, not live received_at evidence.",
+    "training": "Daily00:00ET, only entry dates whose BOTH ETF full14-day windows are complete and available strictly before cutoff; early winners are not released sooner than losses. Primary/direct/mean use ALL eligible historical dates;252-date two-part arm caps only its training/calibration eligibility. Each date contributes2ETF rows, each weight0.5.",
+    "minimum_training_dates": 120,
+    "minimum_failure_dates": 40,
+    "calibration_window_dates": 60,
+    "minimum_calibration_dates": 40,
+    "algorithm": "HGB classifier for target-exit flag and HGB squared-error regressor for log(1+net return) conditional on every non-target exit. Both:80 iterations,7 leaves,minleaf20,lr0.05,L2=5,no early stopping,seed814. Failure fit retains original0.5 weights and needs40 distinct failure dates; otherwise use ETF-specific training failure mean. A missing class uses empirical class probability. Win log-payoff is ETF-specific training target-exit mean. Direct HGB uses the same hyperparameters and dates to regress all net log returns.",
+    "prediction": "For each ETF, g=p_calibrated*mean_log_target+(1-p_calibrated)*predicted_log_non_target. This decomposition predicts contract log payoff, not daily capital return, and is not a guaranteed profitability or optimal sizing claim. Mean arm predicts the ETF training mean log payoff.",
+    "calibration": "Two-part p adds mean(hit-old_as_issued_raw_p) per ETF over latest60 mature forecast dates,min40,clipped[0.001,0.999]. Choose largest g first,tieSOXL; then add mean(actual_log_return-old_as_issued_g_of_top) over latest60 mature SCORE-READY top forecasts,min40. Candidate probability calibration and chosen-value correction are separate. Before either required calibration is ready, CASH; all old raw forecasts remain immutable. Direct/mean arms require only top-value calibration. No in-sample prediction may enter residual calibration.",
+    "decision": "Buy only if corrected top log-value>0; otherwise CASH. One position; no same-day reentry;100% settled cash;T+1;dividends;cross-month MTM;unknown outcomes and occupied funds retained. No month-specific features,thresholds or policy switching.",
+    "controls": [
+      "direct_expanding",
+      "mean_expanding",
+      "two_part_252",
+      "always_soxl",
+      "always_soxs",
+      "trend20",
+      "cash",
+      "double_cost"
+    ],
+    "stress": "Same primary daily actions with double fees/slippage and own resulting barriers. No stressed training or action reselection.",
+    "development": {
+      "evaluation_start": "2026-01-01",
+      "evaluation_end": "2026-04-30",
+      "months": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04"
+      ]
+    },
+    "development_screen": "Do not open new case replay unless primary has complete marks/premarket coverage,at least10 completed actual trades,all4 development months nonnegative and arithmetic average>=10%. This research resource screen is not a replacement of the user's5/7/9 acceptance. Diagnostic arms cannot rescue the primary after results. Development history is already exposed.",
+    "cases": {
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ]
+    },
+    "acceptance": "Specified5/7/9 monthly net capital arithmetic mean>=10%,allMay-Sep months nonnegative,complete coverage. Case months are development regressions,not independent future evidence. User goal cannot be completed from pre-May screening alone; future monthly losslessness is not guaranteed.",
+    "diagnostics": "Matched continuous ledger comparisons and10-session circular block bootstrap5000replicates seed707; probability Brier/reliability,conditional non-target log error and chosen raw/corrected value bias. Report mature/unknown denominators and actual trade counts separately. All registered arms remain reported; no parameter sweep or winner promotion.",
+    "no_broker_orders": true,
+    "no_automatic_R2_upload": true,
+    "no_case_specific_parameters": true
+  },
+  "new_v12_outcomes_seen": false,
+  "earlier_versions_and_pre_May_interval_exposed": true,
+  "primary_chosen_before_run": "two_part_expanding",
+  "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html",
+  "reference_use": "Classifier API, not evidence of investment performance"
+}

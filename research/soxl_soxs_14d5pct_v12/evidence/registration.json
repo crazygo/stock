@@ -1,0 +1,97 @@
+{
+  "phase": "development",
+  "started_at": "2026-10-12T10:56:59.068407+00:00",
+  "protocol_sha256": "c53f7527c0772f95f7e45319189d40e2ad4958888209e06944173a7b41a46f30",
+  "preregistration": {
+    "registered_at": "2026-10-12T10:56:57.511297+00:00",
+    "protocol_sha256": "c53f7527c0772f95f7e45319189d40e2ad4958888209e06944173a7b41a46f30",
+    "protocol": {
+      "version": "soxl_soxs_entry_decomposition_v12",
+      "status": "exposed_history_development_only",
+      "primary": "two_part_expanding",
+      "source_features": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012/features.parquet",
+      "analysis_clock_et": "09:25:30",
+      "hypothesis": "Separating the probability of the contractual target exit from the conditional payoff of all other exits may improve entry value over direct regression; expanding history is tested against a fixed252-date history. This is a registered hypothesis, not a claim of improvement.",
+      "contract": "Same fixed6% protective stop, cent-rounded+5% target,14 inclusive calendar days, official sessions and stop-first ambiguous bars as v9. Entry at09:30 after the09:25:30 prediction and30-second latency. No learned early exit in any v12 arm.",
+      "features": "Reuse verified causal25 signed/own/panel entry features from v9. The first input date is2024-11-12; no invented older history. Premarket receipt is a historical bar_end+1s assumption, not live received_at evidence.",
+      "training": "Daily00:00ET, only entry dates whose BOTH ETF full14-day windows are complete and available strictly before cutoff; early winners are not released sooner than losses. Primary/direct/mean use ALL eligible historical dates;252-date two-part arm caps only its training/calibration eligibility. Each date contributes2ETF rows, each weight0.5.",
+      "minimum_training_dates": 120,
+      "minimum_failure_dates": 40,
+      "calibration_window_dates": 60,
+      "minimum_calibration_dates": 40,
+      "algorithm": "HGB classifier for target-exit flag and HGB squared-error regressor for log(1+net return) conditional on every non-target exit. Both:80 iterations,7 leaves,minleaf20,lr0.05,L2=5,no early stopping,seed814. Failure fit retains original0.5 weights and needs40 distinct failure dates; otherwise use ETF-specific training failure mean. A missing class uses empirical class probability. Win log-payoff is ETF-specific training target-exit mean. Direct HGB uses the same hyperparameters and dates to regress all net log returns.",
+      "prediction": "For each ETF, g=p_calibrated*mean_log_target+(1-p_calibrated)*predicted_log_non_target. This decomposition predicts contract log payoff, not daily capital return, and is not a guaranteed profitability or optimal sizing claim. Mean arm predicts the ETF training mean log payoff.",
+      "calibration": "Two-part p adds mean(hit-old_as_issued_raw_p) per ETF over latest60 mature forecast dates,min40,clipped[0.001,0.999]. Choose largest g first,tieSOXL; then add mean(actual_log_return-old_as_issued_g_of_top) over latest60 mature SCORE-READY top forecasts,min40. Candidate probability calibration and chosen-value correction are separate. Before either required calibration is ready, CASH; all old raw forecasts remain immutable. Direct/mean arms require only top-value calibration. No in-sample prediction may enter residual calibration.",
+      "decision": "Buy only if corrected top log-value>0; otherwise CASH. One position; no same-day reentry;100% settled cash;T+1;dividends;cross-month MTM;unknown outcomes and occupied funds retained. No month-specific features,thresholds or policy switching.",
+      "controls": [
+        "direct_expanding",
+        "mean_expanding",
+        "two_part_252",
+        "always_soxl",
+        "always_soxs",
+        "trend20",
+        "cash",
+        "double_cost"
+      ],
+      "stress": "Same primary daily actions with double fees/slippage and own resulting barriers. No stressed training or action reselection.",
+      "development": {
+        "evaluation_start": "2026-01-01",
+        "evaluation_end": "2026-04-30",
+        "months": [
+          "2026-01",
+          "2026-02",
+          "2026-03",
+          "2026-04"
+        ]
+      },
+      "development_screen": "Do not open new case replay unless primary has complete marks/premarket coverage,at least10 completed actual trades,all4 development months nonnegative and arithmetic average>=10%. This research resource screen is not a replacement of the user's5/7/9 acceptance. Diagnostic arms cannot rescue the primary after results. Development history is already exposed.",
+      "cases": {
+        "evaluation_start": "2026-05-01",
+        "evaluation_end": "2026-09-30",
+        "regression_months": [
+          "2026-05",
+          "2026-07",
+          "2026-09"
+        ]
+      },
+      "acceptance": "Specified5/7/9 monthly net capital arithmetic mean>=10%,allMay-Sep months nonnegative,complete coverage. Case months are development regressions,not independent future evidence. User goal cannot be completed from pre-May screening alone; future monthly losslessness is not guaranteed.",
+      "diagnostics": "Matched continuous ledger comparisons and10-session circular block bootstrap5000replicates seed707; probability Brier/reliability,conditional non-target log error and chosen raw/corrected value bias. Report mature/unknown denominators and actual trade counts separately. All registered arms remain reported; no parameter sweep or winner promotion.",
+      "no_broker_orders": true,
+      "no_automatic_R2_upload": true,
+      "no_case_specific_parameters": true
+    },
+    "new_v12_outcomes_seen": false,
+    "earlier_versions_and_pre_May_interval_exposed": true,
+    "primary_chosen_before_run": "two_part_expanding",
+    "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html",
+    "reference_use": "Classifier API, not evidence of investment performance"
+  },
+  "authorization": null,
+  "runtime": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0"
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v12/entry_value.py": "78d392d7f746146935c1e2a5ef7d69a122fcb9751f3d17465a50966255a8360d",
+    "research/soxl_soxs_14d5pct_v12/verify_entry.py": "6773a29d3288ae7037ba2a4abd6869a1f102de003adf27926ea7d2bb4dac1a31",
+    "research/soxl_soxs_14d5pct_v12/run_entry.py": "0b6da6d5c6100f8a764d7f5fe5a827d9ab13f52fe6b3506f521c5e3a406ea63a",
+    "research/soxl_soxs_14d5pct_v12/test_entry_value.py": "a5660cad9f1943a45bc48a44fa0fb385fb63cdf2a9191ee54aea86da483a2007",
+    "research/soxl_soxs_14d5pct_v12/diagnose_entry.py": "79e5ba34718cbf2839abdf03f97af812fda0ed8442ce273c57e41ba7db8c3577",
+    "research/soxl_soxs_14d5pct_v12/protocol.json": "c53f7527c0772f95f7e45319189d40e2ad4958888209e06944173a7b41a46f30",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v3/risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac",
+    "research/soxl_soxs_14d5pct_v9/continuation.py": "5a36056f00423915280d0a4a691923e319925ff680cb1dd7b4f206fee315ea12",
+    "research/soxl_soxs_14d5pct_v10/micro_manager.py": "f89abaf58cce20264832a54564ed148f40423eae25b24868694fc45445972212",
+    "research/soxl_soxs_14d5pct_v11/uncertainty.py": "223b4cb20e65189a705da8fa607ac67560f669dd34250eb6dac2c711d8c3cfe1"
+  }
+}

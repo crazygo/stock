@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新研究为 [v11 退出不确定性与回归前筛查](research/soxl_soxs_14d5pct_v11/README.md)：比较按入场日期分组的残差上界和相似状态局部估计，先将引擎行情限制到五月之前。主路线1–4月净收益均值 −14.34%、累计 −47.36%，前置检查失败，代码阻止启动新的5/7/9月回归。[持续目标保持进行中](research/soxl_soxs_14d5pct_v11/GOAL_PROGRESS.md)。[v10 盘中复评](research/soxl_soxs_14d5pct_v10/README.md)的最近指定月均值 −3.89%仍未通过；[v9 每日持仓学习](research/soxl_soxs_14d5pct_v9/README.md)、[v8 等待价值](research/soxl_soxs_14d5pct_v8/README.md)、[v7 行业广度](research/soxl_soxs_14d5pct_v7/README.md)、[v6 盘中路径](research/soxl_soxs_14d5pct_v6/README.md)、[v5 多模型](research/soxl_soxs_14d5pct_v5/README.md)及更早失败结果保留；[v4 每日训练及任意时点分析](research/soxl_soxs_14d5pct_v4/README.md)继续可用，当前不行动。
+最新研究为 [v12 每日扩大历史与入场收益分解](research/soxl_soxs_14d5pct_v12/README.md)：分开预测止盈概率和未止盈损失，与直接收益回归、历史均值、趋势、固定方向及最近252日窗口共用同一资金账本比较。主路线1–4月净收益均值 −3.57%、累计 −14.10%；概率误差比同股历史频率更大，尚未通过前置筛查，没有新5/7/9月回归结果。[持续目标保持进行中](research/soxl_soxs_14d5pct_v12/GOAL_PROGRESS.md)。[v11 退出不确定性](research/soxl_soxs_14d5pct_v11/README.md)及[v10 盘中复评](research/soxl_soxs_14d5pct_v10/README.md)保留，后者最近指定月均值 −3.89%仍未通过；[v9 每日持仓学习](research/soxl_soxs_14d5pct_v9/README.md)、[v8 等待价值](research/soxl_soxs_14d5pct_v8/README.md)、[v7 行业广度](research/soxl_soxs_14d5pct_v7/README.md)、[v6 盘中路径](research/soxl_soxs_14d5pct_v6/README.md)、[v5 多模型](research/soxl_soxs_14d5pct_v5/README.md)及更早失败结果保留；[v4 每日训练及任意时点分析](research/soxl_soxs_14d5pct_v4/README.md)继续可用，当前不行动。
 
 [v2 历史结果](research/soxl_soxs_14d5pct_v2/REPORT.md)的三个月算术均值 +11.69% 不再代表当前准入；旧数字与亏损保留。[v1 迁移记录](research/soxl_soxs_14d5pct_v1/ANALYSIS.md)保留原模型失败证据。原始行情不进 Git，真实交易仍由用户手动执行。
 
