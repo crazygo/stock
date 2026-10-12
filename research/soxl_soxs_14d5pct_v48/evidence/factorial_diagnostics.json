@@ -1,0 +1,241 @@
+{
+  "post_result_only": true,
+  "no_selection_or_rule_changes": true,
+  "dates": 82,
+  "block_sessions": 10,
+  "bootstrap_replicates": 5000,
+  "seed": 826,
+  "capital_log_contrasts": {
+    "option_input_effect_on_tree": {
+      "mean_daily_log": 0.0018595538479835075,
+      "block_interval95": [
+        -0.004097555883384999,
+        0.007404409707613059
+      ],
+      "sum_log": 0.15248341553464761
+    },
+    "option_input_effect_on_linear": {
+      "mean_daily_log": -0.003775875915889146,
+      "block_interval95": [
+        -0.006811367519445896,
+        -0.0009563039279182216
+      ],
+      "sum_log": -0.30962182510291
+    },
+    "algorithm_effect_with_options": {
+      "mean_daily_log": 7.402920664529355e-05,
+      "block_interval95": [
+        -0.0037251329881368652,
+        0.004001437132758435
+      ],
+      "sum_log": 0.00607039494491407
+    },
+    "algorithm_effect_without_options": {
+      "mean_daily_log": -0.00556140055722736,
+      "block_interval95": [
+        -0.011533512853500617,
+        0.0011929246691262977
+      ],
+      "sum_log": -0.4560348456926435
+    },
+    "difference_of_differences": {
+      "mean_daily_log": 0.0056354297638726535,
+      "block_interval95": [
+        0.0002698460807441526,
+        0.011199999373356084
+      ],
+      "sum_log": 0.4621052406375576
+    }
+  },
+  "date_equal_prediction_loss_differences": {
+    "options_on_tree": {
+      "raw_mse": 0.00011002782851407718,
+      "raw_D_mse": 0.00011002782851407588,
+      "weighted_brier": 0.008593202560466029,
+      "calibrated_mse": -5.63702955617253e-05
+    },
+    "options_on_linear": {
+      "raw_mse": 1.7055642377312996e-05,
+      "raw_D_mse": 1.70556423773169e-05,
+      "weighted_brier": 0.0004789964320804918,
+      "calibrated_mse": -5.142783955511265e-05
+    },
+    "tree_with_options": {
+      "raw_mse": 7.282231387216714e-05,
+      "raw_D_mse": 7.282231387216453e-05,
+      "weighted_brier": 0.006173002577078313,
+      "calibrated_mse": -4.6843116758194664e-05
+    },
+    "tree_without_options": {
+      "raw_mse": -2.0149872264597045e-05,
+      "raw_D_mse": -2.0149872264594443e-05,
+      "weighted_brier": -0.0019412035513072246,
+      "calibrated_mse": -4.190066075158202e-05
+    }
+  },
+  "actual_prediction_path_input_use": {
+    "tree": {
+      "queries": 328,
+      "evaluated_tree_paths": 26240,
+      "paths_using_options": 10438,
+      "paths_combining_option_and_original_inputs": 9247,
+      "feature_split_visits": {
+        "revenue_growth": 6204,
+        "option_lag2_iv_hv": 5076,
+        "sector_5": 4415,
+        "relative_volume_interaction": 3409,
+        "log_sector_volatility": 2985,
+        "margin_improvement": 1876,
+        "breadth_volume_interaction": 1686,
+        "intraday_sector_recent15": 1626,
+        "option_lag2_iv_change5": 1569,
+        "disclosure_freshness": 1535,
+        "breadth_premarket": 1512,
+        "strength_persistence_5": 1244,
+        "breadth_change_5": 1007,
+        "growth_acceleration": 1003,
+        "relative_20": 945,
+        "breadth_today": 909,
+        "option_lag2_sector_market_balance": 895,
+        "option_lag2_activity": 880,
+        "option_lag2_balance_change5": 860,
+        "intraday_sector_vwap": 853,
+        "option_lag2_sector_market_iv_hv": 847,
+        "option_lag2_active_fraction": 798,
+        "intraday_sector_low_distance": 757,
+        "intraday_breadth_vwap": 705,
+        "intraday_sector_high_distance": 668,
+        "option_lag2_balance": 621,
+        "relative_5": 614,
+        "breadth_5": 566,
+        "intraday_sector_previous15": 556,
+        "sector_1": 520,
+        "intraday_sector_efficiency": 460,
+        "sector_premarket": 433,
+        "breadth_20": 387,
+        "market_5": 384,
+        "sector_20": 355,
+        "intraday_market_session": 333,
+        "intraday_market_recent15": 324,
+        "volume_log_mean": 324,
+        "trend_volume_alignment": 246,
+        "intraday_breadth_recent_positive": 195,
+        "intraday_sector_session": 129,
+        "acceleration_breadth": 126,
+        "margin_breadth": 123,
+        "volume_direction_diffusion": 96,
+        "intraday_breadth_session": 28,
+        "growth_breadth": 21,
+        "recent_earnings_share": 19
+      },
+      "not_independent_samples_or_predictive_importance": true
+    },
+    "delayed": {
+      "queries": 328,
+      "evaluated_tree_paths": 26240,
+      "paths_using_options": 14124,
+      "paths_combining_option_and_original_inputs": 10964,
+      "feature_split_visits": {
+        "option_lag5_sector_market_iv_hv": 7179,
+        "revenue_growth": 4456,
+        "sector_5": 4007,
+        "option_lag5_activity": 3630,
+        "relative_volume_interaction": 2681,
+        "growth_acceleration": 2078,
+        "option_lag5_iv_change5": 1582,
+        "option_lag5_iv_hv": 1566,
+        "log_sector_volatility": 1565,
+        "margin_improvement": 1544,
+        "breadth_volume_interaction": 1427,
+        "disclosure_freshness": 1346,
+        "intraday_sector_recent15": 1309,
+        "relative_20": 1278,
+        "option_lag5_balance": 1251,
+        "breadth_premarket": 1175,
+        "strength_persistence_5": 1113,
+        "breadth_today": 888,
+        "breadth_change_5": 871,
+        "option_lag5_sector_market_balance": 869,
+        "intraday_breadth_vwap": 720,
+        "option_lag5_balance_change5": 705,
+        "sector_premarket": 674,
+        "sector_20": 641,
+        "intraday_sector_vwap": 632,
+        "intraday_sector_low_distance": 583,
+        "market_5": 544,
+        "volume_log_mean": 532,
+        "breadth_20": 502,
+        "breadth_5": 498,
+        "sector_1": 461,
+        "relative_5": 447,
+        "intraday_sector_previous15": 427,
+        "intraday_market_session": 385,
+        "intraday_sector_efficiency": 355,
+        "intraday_sector_high_distance": 274,
+        "intraday_market_recent15": 233,
+        "intraday_sector_session": 181,
+        "acceleration_breadth": 144,
+        "trend_volume_alignment": 125,
+        "volume_direction_diffusion": 99,
+        "intraday_breadth_recent_positive": 53,
+        "option_lag5_active_fraction": 26,
+        "margin_breadth": 23,
+        "intraday_breadth_session": 22,
+        "growth_breadth": 14,
+        "recent_earnings_share": 8
+      },
+      "not_independent_samples_or_predictive_importance": true
+    },
+    "old_tree": {
+      "queries": 328,
+      "evaluated_tree_paths": 26240,
+      "paths_using_options": 0,
+      "paths_combining_option_and_original_inputs": 0,
+      "feature_split_visits": {
+        "revenue_growth": 6934,
+        "sector_5": 4927,
+        "relative_volume_interaction": 3844,
+        "margin_improvement": 3083,
+        "breadth_volume_interaction": 2951,
+        "log_sector_volatility": 2799,
+        "growth_acceleration": 1935,
+        "relative_20": 1900,
+        "disclosure_freshness": 1864,
+        "breadth_change_5": 1776,
+        "intraday_sector_recent15": 1763,
+        "breadth_premarket": 1662,
+        "strength_persistence_5": 1617,
+        "breadth_today": 1327,
+        "intraday_sector_vwap": 1147,
+        "intraday_breadth_vwap": 866,
+        "intraday_sector_low_distance": 863,
+        "market_5": 839,
+        "intraday_sector_previous15": 812,
+        "breadth_5": 781,
+        "intraday_sector_high_distance": 771,
+        "sector_1": 760,
+        "sector_20": 661,
+        "intraday_market_session": 641,
+        "volume_log_mean": 602,
+        "relative_5": 561,
+        "breadth_20": 532,
+        "trend_volume_alignment": 504,
+        "sector_premarket": 479,
+        "intraday_market_recent15": 456,
+        "intraday_sector_efficiency": 378,
+        "intraday_breadth_recent_positive": 230,
+        "intraday_sector_session": 213,
+        "acceleration_breadth": 192,
+        "volume_direction_diffusion": 131,
+        "growth_breadth": 122,
+        "margin_breadth": 110,
+        "intraday_breadth_session": 67,
+        "recent_earnings_share": 10
+      },
+      "not_independent_samples_or_predictive_importance": true
+    }
+  },
+  "results_sha256": "55d60656278b317f05d1b77908efe62f7178b8c536fd43fb586a7e95ef142ccd",
+  "diagnostics_sha256": "7c79f7827c115872abca52ddd882f0f0d378c673bbc785757e6b04990111e036",
+  "interpretation": "Descriptive matched recipe contrasts in exposed development history. Different executable trades and overlapping labels remain dependent. Not an independent causal or future-profit guarantee."
+}
