@@ -1,0 +1,59 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_multiclock_reliability_v27",
+  "primary": "score_sequential",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "premarket_development_control": ".cache/soxl_soxs_14d5pct_v26/runs/reliability_20261012",
+  "hypothesis": "V26 primary context band had zero trades; its preregistered two-score band diagnostic had8completed trades, all Jan-Apr months nonnegative but mean7.17%,below growth and sample screen. Register a NEW four-clock opportunity-supply experiment using this lower-dimensional reliability formulation; do not relabel v26 as passed or lower its uncertainty threshold. V23 multi-clock raw/old-calibration and capital outcomes previously failed and remain recorded. Current test adds own-clock realized residual learning and paired bootstrap margins; neither earlier experiment proves effectiveness.",
+  "analysis_clocks_et": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "contract": "At each completed5mbar+30sec decision, enter next regular5mOpen strictlyafter another30sec:09:30/10:10/10:40/13:10ET. Keep attached centrounded+5% TP,fixed6%protective stop,stop-first ambiguity and actual gapfills. Max14inclusive calendar days,last officialclose on/before entry+13. Halfday clocks>=close absent. V4 arbitrary-time analysis remains available/unqualified. No new holding exits or orders.",
+  "inputs": "Same verified causal v23 features:19 price/industry factors premarket,31 afteropen including session/VWAP/recent15/high-low/diffusion context. Same-clock full volume prefixes for8leaders and20prior official sessions,missing/late prefix disablesfeatures. No future hot intervals/hit rates,month identities or historical PIT membership claim.",
+  "base_forecasts": "Use v23 context variant expanding daily00ET early-terminal raw paired predictor (Ridge100 commonC/magnitude absD,LogisticC.1 weighted signD,recency126,min120parents). PreMay as-issued records frozen by newly audited source manifest: member prefix and every raw model equation independently rechecked. Do not rebuild them with later models. AfterMay, only if this experiment primary dev passes, extend exactly that raw learner at each clock using then-known data; generate no old v23 capital policy. Source old predictions are historical development emissions, not live forecasts.",
+  "error_model": "At each clock separately, latest120/min60 own saved raw paired forecasts whose BOTH fixed-policy terminal receipts are known before current day00ET. Chronological complete source-parent prefix; never skip earlier pending;expired>=14calendar disables current clock. Regress actual paired net logreturns minus those raw forecasts on the2raw scores with multioutputRidge20,SVD,weighted population scaling,recency63sumN. No pooling clocks as independent parents,no intraday new labels.",
+  "uncertainty": "Exactly v26 score variant:199circular10-parent block replicates,pairedinputs/outcomes shared; multiply original recency weights by occurrence counts and renormalize sumN,recompute scaler/Ridge. Seed826+ETdate ordinal. Common two-action margin=max(0,90thpercentile_higher of maximum replicate-point upward deviation acrossETF). Lower=point-margin. This is estimator sensitivity,not provenconfidence or singletrade/monthloss bound. Four daily checks are dependent; no claim of familywise90%guarantee overclocks.",
+  "decision": "At each current clock choose ETF with greatest lower if>1e-12;tieSOXL;otherwiseCASH. No future-clock scores choose an earlier action. Ledger executes earliest eligible event only when no heldposition,no same-day entry/exitlock and enoughsettledcash. Maxoneentry/day. No hindsightbestclock or adding skipped counterfactual profits.",
+  "routes": {
+    "score_sequential": "PRIMARY:four-clock chronological band decisions",
+    "score_after_open": "three afteropen clocks, premarket recorded but not acted",
+    "premarket_only": "09:25only; exact v26score_band control",
+    "score_1005": "10:05only diagnostic",
+    "score_1035": "10:35only diagnostic",
+    "score_1305": "13:05only diagnostic",
+    "point_sequential": "same fourclocks point values without margin",
+    "cash": "alwayscash",
+    "double_cost": "primary frozenactions,doublecost ownfills/barriers"
+  },
+  "verification": "Before outcomes:6new tests covering clock/future isolation,dateparent denominator,routemasks,expired parent perclock,same-day postexit lock. Reuse immutable v26 formula tests. Recheck1459source rawforecasts with2853independent base model equations and freeze hashes. For every new error model independently solve all point/bootstrap Ridge heads via normal equations and explicit repeated rows; verify memberships,margin,allroutes. Nine independent sequentialcashbooks incl T+1,dividends,MTM,same-day exit lock. Premarket forecasts/estimates/trades/equity exactv26score_band. Cases only after verifiedprimarydevpass; rebuild official features/labels and rawmodels causally,verify inputs/rawexits,everypreMayrecord/actionexact. No post-resultprimary switch.",
+  "diagnostics": "Separate clockticks,uniquedates,candidates,actualtrades andunknown outcomes. Record entryclock supply and blocks,perclock margin readiness,continuous netmonths and paired10session5000bootstrapseed707descriptiveonly. Do not add clock-specificbookreturns or claim distinct marketevidence. No parametergrid or casespecificschedule.",
+  "method_reference": "Inherited v26 paired residual/block sensitivity definition and its documented limitations; https://stat.ethz.ch/R-manual/R-devel/library/boot/html/tsboot.html"
+}

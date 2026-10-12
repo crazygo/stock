@@ -1,0 +1,14 @@
+{
+  "recorded_at": "2026-10-12T16:02:22.043072+00:00",
+  "original_verifier_sha256": "2173ab2bc80e88e96f5350e526b31827130e637787b845451685ca92a6185bb1",
+  "corrected_verifier_sha256": "8139f456724803d7cd2e60461c5a7731423f14ad73fd2c4d6fdee4ccd21b9a0f",
+  "results_sha256_unchanged": "efa1eb909b3bd93c2f46bc43f60a682406101058eb37cb3e7a741b76c6694f77",
+  "predictions_sha256_unchanged": "72a7ea0507845454edafcc3e1ecfd6035adbc22d396ac6a54c0765f26e2175a7",
+  "reason": "Old v23 baseline and stress JSON each contain 8 NaN values in net_return and exit_fill_economic for four pending labels. V27 numeric serializer writes null. Original byte-value equality rejected this intended missing-value encoding conversion.",
+  "allowed_comparison": "Only old float NaN in those two fields on reason=pending,exit_at=null,complete_window=false may normalize to null. All other structure and values must match exactly. Unknown-to-zero or changes to known returns are rejected.",
+  "pending_labels_per_cost_scenario": 4,
+  "unknown_fields_per_cost_scenario": 8,
+  "added_record_tests_passed": 4,
+  "strategy_training_decisions_and_capital_changed": false,
+  "old_failure_preserved": true
+}
