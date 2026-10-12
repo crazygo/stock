@@ -1,0 +1,56 @@
+{
+  "pass": true,
+  "manifest_checked_files": 51,
+  "compared_artifacts": [
+    "all_policy_trials.json",
+    "always_SOXL_decisions.csv",
+    "always_SOXL_equity.csv",
+    "always_SOXL_trades.csv",
+    "always_SOXS_decisions.csv",
+    "always_SOXS_equity.csv",
+    "always_SOXS_trades.csv",
+    "calibration_SOXL.csv",
+    "calibration_SOXS.csv",
+    "cash_decisions.csv",
+    "cash_equity.csv",
+    "cash_trades.csv",
+    "data_audit.json",
+    "features.csv",
+    "hourly_coverage.csv",
+    "hourly_trade_audit.csv",
+    "labels_SOXL.csv",
+    "labels_SOXS.csv",
+    "model_decisions.csv",
+    "model_equity.csv",
+    "model_registration.json",
+    "model_trades.csv",
+    "model_trades_followup.csv",
+    "predictions.csv",
+    "results.json",
+    "trend20_decisions.csv",
+    "trend20_equity.csv",
+    "trend20_trades.csv"
+  ],
+  "numeric_relative_tolerance": 1e-11,
+  "numeric_absolute_tolerance": 1e-12,
+  "excluded_binary_artifacts": [
+    "frozen_models.pkl",
+    "equity.png"
+  ],
+  "binary_exclusion_reason": "No unpickling; model outputs compared numerically; rendering is platform-dependent",
+  "verification": {
+    "completed_trade_checks": 101,
+    "target_or_expiry_agreements": 101,
+    "model_trade_checks": 12,
+    "model_agreements": 12,
+    "all_checked_paths_have_full_hourly_sessions": true,
+    "disagreements": [],
+    "limitation": "OHLC target trade-through is not broker fill proof. First bar is 09:30-10:00, later bars hourly. Requested 5-minute bars are absent.",
+    "unit_tests": {
+      "run": 12,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "effectiveness_gate": "FAILED; successful reproduction does not change model acceptance"
+}

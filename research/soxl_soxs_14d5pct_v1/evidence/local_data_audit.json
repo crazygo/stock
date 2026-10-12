@@ -1,0 +1,115 @@
+{
+  "as_of": "2026-10-12",
+  "data_source": "existing local Futu files",
+  "scope": "timestamp/metadata coverage only; no OHLC, split or fill validation",
+  "raw_data_changed": false,
+  "network_requests": 0,
+  "symbols": [
+    {
+      "symbol": "SOXL",
+      "path": "market_data/us_5m/SOXL/2026.parquet",
+      "sha256": "6ec5ddc313e5e73f5d3e0ab96758fa216dbbc8d9b1df51b0597996a4387fc4d4",
+      "rows": 35473,
+      "first_time_key": "2026-01-02 04:05:00",
+      "last_time_key": "2026-09-25 20:00:00",
+      "last_valid_regular_end_et": "2026-09-25 16:00:00-04:00",
+      "missing_time_or_basis_or_session_metadata_rows": 0,
+      "duplicate_usable_end_timestamps": 0,
+      "months": [
+        {
+          "month": "2026-05",
+          "expected_sessions": 20,
+          "full_sessions": 20,
+          "missing_bars": 0,
+          "incomplete_sessions": []
+        },
+        {
+          "month": "2026-07",
+          "expected_sessions": 22,
+          "full_sessions": 22,
+          "missing_bars": 0,
+          "incomplete_sessions": []
+        },
+        {
+          "month": "2026-09",
+          "expected_sessions": 21,
+          "full_sessions": 18,
+          "missing_bars": 234,
+          "incomplete_sessions": [
+            {
+              "date": "2026-09-28",
+              "expected_bars": 78,
+              "present_bars": 0,
+              "missing_bars": 78
+            },
+            {
+              "date": "2026-09-29",
+              "expected_bars": 78,
+              "present_bars": 0,
+              "missing_bars": 78
+            },
+            {
+              "date": "2026-09-30",
+              "expected_bars": 78,
+              "present_bars": 0,
+              "missing_bars": 78
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "symbol": "SOXS",
+      "path": "market_data/us_5m/SOXS/2026.parquet",
+      "sha256": "7be85221fa8be3c76b584945127f5252606a9ff4a1f1cf1f277ca0dc9f5aacb2",
+      "rows": 35551,
+      "first_time_key": "2026-01-02 04:05:00",
+      "last_time_key": "2026-09-28 16:00:00",
+      "last_valid_regular_end_et": "2026-09-25 16:00:00-04:00",
+      "missing_time_or_basis_or_session_metadata_rows": 78,
+      "duplicate_usable_end_timestamps": 0,
+      "months": [
+        {
+          "month": "2026-05",
+          "expected_sessions": 20,
+          "full_sessions": 20,
+          "missing_bars": 0,
+          "incomplete_sessions": []
+        },
+        {
+          "month": "2026-07",
+          "expected_sessions": 22,
+          "full_sessions": 22,
+          "missing_bars": 0,
+          "incomplete_sessions": []
+        },
+        {
+          "month": "2026-09",
+          "expected_sessions": 21,
+          "full_sessions": 18,
+          "missing_bars": 234,
+          "incomplete_sessions": [
+            {
+              "date": "2026-09-28",
+              "expected_bars": 78,
+              "present_bars": 0,
+              "missing_bars": 78
+            },
+            {
+              "date": "2026-09-29",
+              "expected_bars": 78,
+              "present_bars": 0,
+              "missing_bars": 78
+            },
+            {
+              "date": "2026-09-30",
+              "expected_bars": 78,
+              "present_bars": 0,
+              "missing_bars": 78
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

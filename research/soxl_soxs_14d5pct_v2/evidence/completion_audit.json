@@ -1,0 +1,136 @@
+{
+  "completion_scope": "research analysis, paper stop/expiry workflow and user-confirmed historical numerical gate; actual broker orders remain manual",
+  "requirement_1": {
+    "pass": true,
+    "arbitrary_time_checks": [
+      {
+        "analysis_at_et": "2026-09-15 09:25:30-04:00",
+        "action": "BUY_SOXS",
+        "entry_not_before": "2026-09-15 13:30:00+00:00",
+        "registered_replay_clock_et": "09:25:30",
+        "matches_registered_replay_clock": true,
+        "other_timestamp_effectiveness_established": false
+      },
+      {
+        "analysis_at_et": "2026-09-15 08:57:20-04:00",
+        "action": "BUY_SOXS",
+        "entry_not_before": "2026-09-15 13:00:00+00:00",
+        "registered_replay_clock_et": "09:25:30",
+        "matches_registered_replay_clock": false,
+        "other_timestamp_effectiveness_established": false
+      },
+      {
+        "analysis_at_et": "2026-09-15 10:02:19-04:00",
+        "action": "BUY_SOXS",
+        "entry_not_before": "2026-09-15 14:05:00+00:00",
+        "registered_replay_clock_et": "09:25:30",
+        "matches_registered_replay_clock": false,
+        "other_timestamp_effectiveness_established": false
+      },
+      {
+        "analysis_at_et": "2026-09-15 14:11:42-04:00",
+        "action": "BUY_SOXS",
+        "entry_not_before": "2026-09-15 18:15:00+00:00",
+        "registered_replay_clock_et": "09:25:30",
+        "matches_registered_replay_clock": false,
+        "other_timestamp_effectiveness_established": false
+      }
+    ],
+    "premarket_replay_clock_et": "09:25:30",
+    "current_receipt_check": "analysis_current_retry.json"
+  },
+  "requirement_2": {
+    "pass": true,
+    "attached_limit_orders": 36,
+    "completed_target_exits": 31,
+    "completed_expiry_exits": 4,
+    "pending_at_evaluation_end": 1,
+    "position_due_exit_check": {
+      "source": "actual simulated trade and attached order from frozen ledger",
+      "symbol": "SOXS",
+      "entry_at": "2026-09-15 13:30:00+00:00",
+      "action": "NO_ACTION",
+      "exit_action": "FORCE_SELL_AT_EXPIRY",
+      "expiry_at": "2026-09-28 20:00:00+00:00",
+      "limit_matches_attached_order": true
+    }
+  },
+  "requirement_3": {
+    "pass": true,
+    "metric": "arithmetic mean of net monthly capital-ledger returns",
+    "months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ],
+    "threshold": 0.1,
+    "actual": 0.11692353204930021,
+    "all_months_and_losses_retained": true,
+    "independent_verifier_pass": true
+  },
+  "contract_tests": {
+    "run": 17,
+    "failures": 0,
+    "errors": 0
+  },
+  "historical_feature_regression": {
+    "rows": 956,
+    "exact": true
+  },
+  "historical_label_regression": {
+    "rows": 1912,
+    "exact": true
+  },
+  "browser_checks": {
+    "desktop_width": 1280,
+    "mobile_width": 390,
+    "body_overflow": false,
+    "arbitrary_premarket_analysis": true,
+    "held_no_new_buy": true,
+    "expiry_trade_path": true,
+    "event_jump": true,
+    "calendar_day_shortcuts": true,
+    "keyboard_mini_navigation": true,
+    "minute_granularity_switch": true,
+    "calendar_day_shortcut_30_inclusive": {
+      "start": "2026-09-01",
+      "end": "2026-09-30",
+      "pass": true
+    },
+    "trade_csv_export": {
+      "rows": 36,
+      "pass": true
+    }
+  },
+  "execution_and_effect_boundaries": {
+    "ML_route_remains_failed": true,
+    "other_clock_return_not_established": true,
+    "prospective_expectation_not_established": true,
+    "broker_fills_not_proven": true,
+    "no_broker_order_routed": true
+  },
+  "risk": {
+    "continuous_return": 0.007073144197872638,
+    "max_close_drawdown": -0.4908678832865606,
+    "double_cost_mean": 0.09859412955491871
+  },
+  "run": ".cache/soxl_soxs_14d5pct_v2/runs/phase3_clock_20261012",
+  "source_hashes": {
+    "baseline_clock_study.py": "8add0955948c4cc0c2e48ae7956a31889c9da72f0ddbd1b2c0d9c370267c7815",
+    "acquire.py": "edee5224c14be302d2922da9e724b66f3875dd15e4af39413d97bd2ffaebcb53",
+    "render_review.py": "2c739a2e1a0f7d249550e845558dfa36091d3cc8122d0b77d7772837748936e6",
+    "ledger.py": "4c515303094eb2fad2dc2270bab8912b41afc1c2cdf3d86e9d9aea914eaf53e4",
+    "protocol_clock_v1.json": "eb72b32dca547b1bc2d7cd18b375db12eab5d071f854e62a5f133aee68e31714",
+    "core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "model.py": "6acc4c2072e146cf07e5d84bd0155e43eef71c6555671e77407f1eb9d5a65afd",
+    "verify_run.py": "17b42fd9b6afd96286f8e05e525325e93116391c63977ba114cedb38a63ba527",
+    "review_template.html": "ccccea897c9fa0433c0237a02e7ac80bf185668313467f3d4b71279a50c7cc32",
+    "test_contract.py": "056a7a7ee85ea215bf0f898c3bc6992c1a1402a5ce2e649343d87ae46443415a",
+    "position.py": "46283c1b92f0660cdf03102fd1e482f6a906dcb942e24e16cc863b7e47dd1d8b",
+    "refresh.py": "b96db0e7186eaecdcbd4d8719000313de8b02ad990de38425497d1a7b4e539e9",
+    "protocol.json": "8e9cb8d61c105b945a55b0ae6034553c1d93d79e7165d5789b5c0feeaff86ee6",
+    "study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "analyze.py": "fdc8fb1ec654fc3acac3699f7b34958f937a01498c2805f8b53c8d50d2a918b5"
+  },
+  "final_check_at_utc": "2026-10-12T05:30:52.627921+00:00"
+}

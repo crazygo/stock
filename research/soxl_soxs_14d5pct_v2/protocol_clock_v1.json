@@ -1,0 +1,18 @@
+{
+  "version": "soxl_soxs_premarket_clock_v1",
+  "registered_at": "2026-10-12",
+  "prior_run": "phase2_20261012: adaptive -9.3946%, trend20 08:55 mean +5.9679%; both failed",
+  "hypothesis": "Analysis closer to the regular open can reduce the execution difference introduced by an early premarket fill, while remaining a genuinely premarket analysis.",
+  "primary_analysis_clock_et": "09:25:30",
+  "reference_analysis_clock_et": "08:55:30",
+  "primary_route": "fixed SOXX 20-completed-session return >0 selects SOXL, else SOXS; missing/stale data or existing position -> no new action",
+  "model_training": "No fitting, per-month hindsight switching or changed trend lookback",
+  "entry": "Same causal next-bar rule as v2: strictly after decision+30s. 09:25:30 maps to 09:30, never to the already-completed 09:25 bar.",
+  "take_profit_and_expiry": "Unchanged v2 attached +5% GTC RTH limit and inclusive 14-calendar-day expiry with forced sell; preserve all losses",
+  "capital_and_costs": "Unchanged v2 continuous one-position settled-cash ledger and fixed costs",
+  "primary_metric": "User-confirmed arithmetic mean of net capital-ledger returns in 2026-05, 2026-07 and 2026-09",
+  "primary_threshold": 0.10,
+  "cost_stress": "Repeat the fixed primary action policy with commissions and slippage doubled, without changing predictions or entry decisions",
+  "evaluation_status": "Historical development; months and prior baseline outcomes already exposed. A numerical gate pass is not independent prospective proof.",
+  "other_requirements": "Any timestamp analysis uses the same causal feature function; scheduled 09:25 replay is the registered effect evaluation frequency, not a restriction on launching analysis. No actual broker orders."
+}

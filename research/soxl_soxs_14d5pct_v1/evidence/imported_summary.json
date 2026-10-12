@@ -1,0 +1,246 @@
+{
+  "model": {
+    "return": -0.34727806143414774,
+    "max_drawdown_close": -0.6605488033740203,
+    "entries": 12,
+    "closed": 12,
+    "pending": 0,
+    "target_hit_rate": 0.75,
+    "mean_trade_return": -0.02313627332578087,
+    "worst_trade": -0.39481580342185263,
+    "mean_losing_trade": -0.23956741384445443,
+    "mean_holding_sessions": 4.5,
+    "monthly": [
+      {
+        "month": "2026-05",
+        "return": 0.06682857142780496,
+        "month_max_drawdown_close": -0.12345554358674515,
+        "entries": 4,
+        "closed": 3,
+        "target_exits": 3,
+        "expiry_losses": 0,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-06",
+        "return": 0.11218675999048267,
+        "month_max_drawdown_close": -0.2831731888153739,
+        "entries": 3,
+        "closed": 3,
+        "target_exits": 3,
+        "expiry_losses": 0,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-07",
+        "return": -0.5226124596666719,
+        "month_max_drawdown_close": -0.6171994435559375,
+        "entries": 5,
+        "closed": 5,
+        "target_exits": 3,
+        "expiry_losses": 2,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-08",
+        "return": 0.15235096829236427,
+        "month_max_drawdown_close": -0.05596854896354553,
+        "entries": 0,
+        "closed": 1,
+        "target_exits": 0,
+        "expiry_losses": 1,
+        "expiry_gains": 0,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-09",
+        "return": 0.0,
+        "month_max_drawdown_close": 0.0,
+        "entries": 0,
+        "closed": 0,
+        "target_exits": 0,
+        "expiry_losses": 0,
+        "expiry_gains": 0,
+        "end_position": "CASH"
+      }
+    ]
+  },
+  "trend20": {
+    "return": 0.007078238198505948,
+    "max_drawdown_close": -0.4908770059875469,
+    "entries": 36,
+    "closed": 35,
+    "pending": 1,
+    "target_hit_rate": 0.8857142857142857,
+    "mean_trade_return": 0.008725345096335815,
+    "worst_trade": -0.39481580342185263,
+    "mean_losing_trade": -0.3040485883266617,
+    "mean_holding_sessions": 2.942857142857143,
+    "monthly": [
+      {
+        "month": "2026-05",
+        "return": 0.354542605336887,
+        "month_max_drawdown_close": -0.18497234008271124,
+        "entries": 9,
+        "closed": 8,
+        "target_exits": 8,
+        "expiry_losses": 0,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-06",
+        "return": -0.14967660900368385,
+        "month_max_drawdown_close": -0.39451828507907716,
+        "entries": 3,
+        "closed": 3,
+        "target_exits": 2,
+        "expiry_losses": 1,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-07",
+        "return": 0.197970682969278,
+        "month_max_drawdown_close": -0.32027829714858835,
+        "entries": 15,
+        "closed": 15,
+        "target_exits": 14,
+        "expiry_losses": 1,
+        "expiry_gains": 0,
+        "end_position": "SOXS"
+      },
+      {
+        "month": "2026-08",
+        "return": -0.0842336188390661,
+        "month_max_drawdown_close": -0.2950922341937301,
+        "entries": 5,
+        "closed": 5,
+        "target_exits": 4,
+        "expiry_losses": 1,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-09",
+        "return": -0.203005123189116,
+        "month_max_drawdown_close": -0.35701741682974564,
+        "entries": 4,
+        "closed": 4,
+        "target_exits": 3,
+        "expiry_losses": 1,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      }
+    ]
+  },
+  "calibration": [
+    {
+      "symbol": "SOXL",
+      "candidate_days": 103,
+      "brier": 0.1682665370227215,
+      "baseline_brier": 0.12442936603420196,
+      "log_loss": 0.7378184756631797,
+      "realized_hit_rate": 0.8543689320388349,
+      "mean_predicted_hit_rate": 0.889310325857778,
+      "warning": "overlapping horizons, not independent trades; classifier probabilities not production-calibrated"
+    },
+    {
+      "symbol": "SOXS",
+      "candidate_days": 103,
+      "brier": 0.3077288731511715,
+      "baseline_brier": 0.16804114594038255,
+      "log_loss": 0.8504215359441031,
+      "realized_hit_rate": 0.7961165048543689,
+      "mean_predicted_hit_rate": 0.5729742758995097,
+      "warning": "overlapping horizons, not independent trades; classifier probabilities not production-calibrated"
+    }
+  ],
+  "acceptance": {
+    "numerical_each_month_pass": false,
+    "arithmetic_average": -0.15192796274628897,
+    "geometric_average": -0.20141360697249333,
+    "average_10pct_pass": false,
+    "full_requested_system_pass": false,
+    "full_gate_blockers": [
+      "5-minute/news data not fitted",
+      "historical development, not untouched prospective proof"
+    ],
+    "requested_months": [
+      {
+        "month": "2026-05",
+        "return": 0.06682857142780496,
+        "month_max_drawdown_close": -0.12345554358674515,
+        "entries": 4,
+        "closed": 3,
+        "target_exits": 3,
+        "expiry_losses": 0,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-07",
+        "return": -0.5226124596666719,
+        "month_max_drawdown_close": -0.6171994435559375,
+        "entries": 5,
+        "closed": 5,
+        "target_exits": 3,
+        "expiry_losses": 2,
+        "expiry_gains": 0,
+        "end_position": "SOXL"
+      },
+      {
+        "month": "2026-09",
+        "return": 0.0,
+        "month_max_drawdown_close": 0.0,
+        "entries": 0,
+        "closed": 0,
+        "target_exits": 0,
+        "expiry_losses": 0,
+        "expiry_gains": 0,
+        "end_position": "CASH"
+      }
+    ]
+  },
+  "all_policy_requested_months": {
+    "model": {
+      "arithmetic_average": -0.15192796274628897,
+      "geometric_average": -0.20141360697249333,
+      "arithmetic_10pct_pass": false,
+      "every_month_10pct_pass": false,
+      "is_expected_return_established": false
+    },
+    "cash": {
+      "arithmetic_average": 0.0,
+      "geometric_average": 0.0,
+      "arithmetic_10pct_pass": false,
+      "every_month_10pct_pass": false,
+      "is_expected_return_established": false
+    },
+    "always_SOXL": {
+      "arithmetic_average": -0.010175107230108985,
+      "geometric_average": -0.09729873231775499,
+      "arithmetic_10pct_pass": false,
+      "every_month_10pct_pass": false,
+      "is_expected_return_established": false
+    },
+    "always_SOXS": {
+      "arithmetic_average": -0.02442509744552653,
+      "geometric_average": -0.18795343660845165,
+      "arithmetic_10pct_pass": false,
+      "every_month_10pct_pass": false,
+      "is_expected_return_established": false
+    },
+    "trend20": {
+      "arithmetic_average": 0.11650272170568299,
+      "geometric_average": 0.08951060813005451,
+      "arithmetic_10pct_pass": true,
+      "every_month_10pct_pass": false,
+      "is_expected_return_established": false
+    }
+  },
+  "expected_monthly_return_status": "NOT_ESTABLISHED: three selected realized months do not establish a repeatable expectation"
+}
