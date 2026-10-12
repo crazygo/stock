@@ -1,0 +1,65 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+  "capital": "One settled-cash position at most;allocation only0/1,no leverage,same-day reentry forbidden. T+1,fees,slippage,gaps,dividends,full14calendar expiry and continuous cross-month MTM unchanged. Missing held outcome retains occupation. Entry trigger/exit rules remain exactsourcecontract.",
+  "terminal_receipt": "Each side must have finite fixedpolicy netreturn and actual known target/riskstop/expiry terminalbar. Check EVERY official regular5mbar fromdelayedentry throughterminal inclusive,exact orderedexpectedends,5minstarts,available_at>=barend and no missingavailabletimestamp. Release=max prefixbaravailable_at. Jointrelease=maxbothsides. No laterwindowbar isneeded. If eitherprefixunknown,entrymissing,oroutcomeunresolved,retainunknown. Corporateactionunit convention unchanged. Dividend-bearing outcomes conservatively retainoriginal full-windowrelease;no new announcement-time assumption.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_multiclock_paired_v23",
+  "primary": "context_sequential",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "premarket_control": {
+    "development": ".cache/soxl_soxs_14d5pct_v21/runs/early_20261012",
+    "cases": ".cache/soxl_soxs_14d5pct_v21/runs/cases_20261012"
+  },
+  "hypothesis": "Test incremental information available after the open, retaining the premarket decision. Previous v6/v8 intraday regressions failed with different models and exit contracts. No claim of prior effectiveness. Same fixed paired payoff architecture and risk recipe as v21, separately trained at each clock; causal intraday factors tested against clock-matched base inputs.",
+  "analysis_clocks_et": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "contract": "Buy SOXL/SOXS or wait. Each clock asof completed5mbar+30s; entry at first regular5mOpen STRICTLY AFTER decision+30s:09:30/10:10/10:40/13:10ET. +5% cent-rounded attached TP,fixed6% protective stop,14 inclusive calendar days; stop-first ambiguous bar,adverse gaps. No month-specific rule,no learned exit. Official half-days omit clocks>=close. Existing arbitrarytime v4 analysis remains available and unqualified.",
+  "features": "Reuse verified causal v7 features. Per-clock factor series,19v14 sector/relative/breadth/persistence/volume inputs. Legacy sector_premarket/breadth_premarket names mean current asof return at later clocks. Context variants add12 factors only after open: SOXX sessionreturn,VWAPdistance,recent15,previous15,highdistance,lowdistance divided by prior20dayvol; QQQsessionreturn,recent15 divided by priorQQQvol; leadermean sessionreturn,VWAPdistance divided by priorSOXXvol; 2*breadthrecent15positivefraction-1;SOXXefficiency. Clip all12[-5,5]. Premarket uses exactly19factors,no fake intraday observations.",
+  "volume": "For each clock and8fixed leaders, exact04:00 through completed5mendpoint inclusive, economicvolume with past splits. All expected5mbar starts/ends,nonnegative volume,positive sum,available_at>=end and <=clock. Compare current volume to mean20prior eligible official sessions at SAME clock. Halfdays exclude nonexistent13:05 from reference calendar;missing expected prefix staysNaN and disables features,not silently skipped. Currentmembers retrospective is not historicalPIT.",
+  "training": "Every clock separately has one paired outcome per date. Never pool fourticks as independent dates. Daily00ET labelcutoff; early expanding chronological joint-terminal prefix,min120; prior missing expired>=14calendar disables early forecast. Full-window model as comparator/risk anchor. Ridge100 for commonC andabsD,LogisticC.1 forsignD with regret weights;past StandardScaler;recency126;no grid search. Context31vsbase19 retain same paired outcome dates. No new labels learned intraday.",
+  "calibration": "Separate immutable own as-issued rawforecast histories per clock/variant/base. Latest120admissible priorforecastdates,min60;scalar standardized Ridge20forC,D,negative slopes allowed. Earlyusesearlyprefix,fullusesfullwindow. Rawcontrolkeepscalibration readiness. No current/future forecasts or labels recalibrate history.",
+  "risk": "Each clock/variant maintains its own full-window fitted/calibrated as-issued anchor coordinates(score,advantage,relative5,breadth5,volumediffusion,logvol). v18 entropy utility unchanged: prior120/min60fullwindowmature dates,recency63,Gaussian40thdistance,min20concentration;KLtilt selectedETF mean logpayoff to corresponding early/full/raw forecast;binarygamma5utility. No future anchor may replace a prior issued coordinate.09:25must reproducev21 exactly.",
+  "routes": {
+    "context_sequential": "PRIMARY:fourclock chronological first eligible action subject to continuous ledger",
+    "context_after_open": "recordpremarketforecast but no premarketaction;threeafteropenclocks",
+    "base_sequential": "same fourclocks19factors;independent ownbase/cal/risk",
+    "premarket_only": "09:25only;exactv21control",
+    "context_1005": "10:05only diagnostic",
+    "context_1035": "10:35only diagnostic",
+    "context_1305": "13:05only diagnostic",
+    "context_raw": "sameclockrawforecast/risk;calreadiness retained",
+    "context_no_risk": "positivecalforecastfullcash,withoutentropyutility",
+    "context_full_window": "samecontextclocksfullwindowmodelsandcal/risk",
+    "cash": "alwayscash",
+    "double_cost": "primaryfrozenactions,independentdoublecostfills/barriers"
+  },
+  "sequence": "Freeze all as-issued chronological forecasts before evaluating new capital routes. At a current clock only prior exits and current forecast can affect action. One actualentry/day;existingposition/same-dayexit/entry block anotherentry. Allcosts,T+1 and idlecash. No best-clock hindsight selector. Reportticks,unique dates,actualtrades separately.",
+  "verification": "Independentmatchedprefix andfactor arithmetic;clock-specificearly/fullmembership;weightedRidge normal equations andlogitgradients;ownclockcalibration;entropyroots;everyrawexit+terminalasof replay;independentmulti-clockcapital ledger includingearlyexitbeforelaterclock andsame-daylock,T+1,dividends,MTM. Exactv21premarketforecasts/books. Futuretruth/prefix tests,missing/latevolumeabstention,halfday andsame-dayidlecashreentrytests. Beforecaseuse,verifiedprimarydevelopmentgate;controls cannotrescuefailedprimary. CasesmustretainallpreMayevents.",
+  "diagnostics": "Report all12books,actualentry clock frequencies,4clock ready/eligible/unknown forecasts andmaturedirection/errors perclock (not independentdates);newcalculation afterresults descriptiveonly. Paired10session5000bootstrapseed707. Historicexposureexplicit,not independent futurevalidation. Goalnotcompleteuntiloriginalacceptanceachieved."
+}
