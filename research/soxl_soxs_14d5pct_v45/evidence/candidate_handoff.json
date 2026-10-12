@@ -1,0 +1,115 @@
+{
+  "created_at": "2026-10-12T22:13:17.990648+00:00",
+  "source_version": "v45",
+  "source_run": "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v45/runs/penalty_20261013",
+  "source_results_sha256": "827c8caeb970c94c671b0163c2fc196376e8e8df4b961e1e41e726a0daec5128",
+  "source_verification_sha256": "aebcc712da656dde6ead5fc8adb99eccc05a242e1703e5165a836528c65739d0",
+  "source_primary_failed": true,
+  "candidate": "strong_band",
+  "candidate_selected_after_development_results": true,
+  "number_of_registered_penalty_candidates": 4,
+  "fixed_raw_penalty": 20,
+  "fixed_macro_penalty": 2000,
+  "candidate_development_statistics": {
+    "primary_metric": "requested_arithmetic_mean_10pct_and_all_months_nonnegative",
+    "primary_average": 0.10684066953116073,
+    "primary_threshold": 0.1,
+    "requested_months_complete": true,
+    "geometric_average": 0.10541964206151677,
+    "continuous_return": 0.4931681201236038,
+    "close_max_drawdown": -0.11911053306791608,
+    "entries": 20,
+    "completed_trades": 20,
+    "pending_trades": 0,
+    "target_exits": 15,
+    "expiry_exits": 0,
+    "mean_losing_trade": -0.06148315890720424,
+    "monthly": [
+      {
+        "month": "2026-01",
+        "return": 0.19235117478783192,
+        "end_equity": 1.192351174787832,
+        "mark_complete": true,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-02",
+        "return": 0.033974545351880714,
+        "end_equity": 1.2328607638510294,
+        "mark_complete": true,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-03",
+        "return": 0.10056655123018787,
+        "end_equity": 1.3568453190185426,
+        "mark_complete": true,
+        "end_position": "CASH"
+      },
+      {
+        "month": "2026-04",
+        "return": 0.10047040675474239,
+        "end_equity": 1.4931681201236038,
+        "mark_complete": true,
+        "end_position": "CASH"
+      }
+    ],
+    "entry_month_attribution": [
+      {
+        "entry_month": "2026-01",
+        "entries": 6,
+        "completed": 6,
+        "pending": 0,
+        "sum_completed_trade_net_returns": 0.18372953898232258,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      },
+      {
+        "entry_month": "2026-02",
+        "entries": 10,
+        "completed": 10,
+        "pending": 0,
+        "sum_completed_trade_net_returns": 0.048273323466351714,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      },
+      {
+        "entry_month": "2026-03",
+        "entries": 2,
+        "completed": 2,
+        "pending": 0,
+        "sum_completed_trade_net_returns": 0.09815781469390217,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      },
+      {
+        "entry_month": "2026-04",
+        "entries": 2,
+        "completed": 2,
+        "pending": 0,
+        "sum_completed_trade_net_returns": 0.09806616584346695,
+        "warning": "Sum of individual trade percentages is attribution, not the capital-ledger monthly return"
+      }
+    ],
+    "prospective_expected_return_established": false,
+    "execution_evidence": "OHLC limit/expiry simulation, not broker fill confirmation",
+    "arithmetic_gate": true,
+    "negative_months": [],
+    "all_months_nonnegative": true,
+    "primary_pass": true,
+    "risk_stop_exits": 5,
+    "trailing_stop_exits": 0,
+    "trend_exits": 0,
+    "session_close_exits": 0
+  },
+  "candidate_development_screen_conditions_met": true,
+  "promotion_executed": false,
+  "new_case_replay_executed": false,
+  "buy_eligible": false,
+  "next_required_steps": [
+    "Register strong_band as a separate candidate with unchanged formulas, data, timing and penalties; retain v45 primary failure.",
+    "Reconstruct its Jan-Apr full ledger and daily predictions exactly and verify the new primary development screen.",
+    "Only then extend daily training/calibration from historical available inputs and mature labels through September using verified v39 base-source extension; preserve every pre-May output.",
+    "Evaluate all May-September monthly capital results and the original May/July/September arithmetic mean; keep costs, corporate actions, settlement and unknown held funds.",
+    "Report that this candidate was selected after four development candidates and that the exposed historical regression is not independent validation."
+  ],
+  "parameter_change_allowed_in_promotion": false,
+  "prior_v39_filtering_bound_not_automatically_applicable": "Need compute new candidate actual case proposals; cannot assume it adds opportunities or use prior three-proposal bound as its result."
+}

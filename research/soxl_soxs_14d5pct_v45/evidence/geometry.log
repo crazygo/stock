@@ -1,0 +1,578 @@
+{
+  "daily": {
+    "macro_context": {
+      "n_dates": {
+        "min": 96.0,
+        "mean": 117.6951219512195,
+        "max": 120.0
+      },
+      "weight_effective_dates": {
+        "min": 87.97069093213027,
+        "mean": 103.55368432265637,
+        "max": 105.15267195700976
+      },
+      "df": {
+        "min": 22.484695499300543,
+        "mean": 24.306559665646112,
+        "max": 25.086787421860127
+      },
+      "df_over_effective_dates": {
+        "min": 0.22561334400496244,
+        "mean": 0.2348848902812469,
+        "max": 0.2555930305997889
+      }
+    },
+    "macro_plain": {
+      "n_dates": {
+        "min": 96.0,
+        "mean": 117.6951219512195,
+        "max": 120.0
+      },
+      "weight_effective_dates": {
+        "min": 87.97069093213027,
+        "mean": 103.55368432265637,
+        "max": 105.15267195700976
+      },
+      "df": {
+        "min": 7.564324890419759,
+        "mean": 7.912760700251397,
+        "max": 8.060480659557134
+      },
+      "df_over_effective_dates": {
+        "min": 0.07520666069620592,
+        "mean": 0.07647362240404483,
+        "max": 0.08598687597276763
+      }
+    },
+    "base_context": {
+      "n_dates": {
+        "min": 96.0,
+        "mean": 117.6951219512195,
+        "max": 120.0
+      },
+      "weight_effective_dates": {
+        "min": 87.97069093213027,
+        "mean": 103.55368432265637,
+        "max": 105.15267195700976
+      },
+      "df": {
+        "min": 22.52327482688271,
+        "mean": 24.626334333221315,
+        "max": 25.24914819552251
+      },
+      "df_over_effective_dates": {
+        "min": 0.23027368692620392,
+        "mean": 0.2379479056309659,
+        "max": 0.2560315781111632
+      }
+    },
+    "base_plain": {
+      "n_dates": {
+        "min": 96.0,
+        "mean": 117.6951219512195,
+        "max": 120.0
+      },
+      "weight_effective_dates": {
+        "min": 87.97069093213027,
+        "mean": 103.55368432265637,
+        "max": 105.15267195700976
+      },
+      "df": {
+        "min": 7.519721130132105,
+        "mean": 7.9713305425838605,
+        "max": 8.218574736483045
+      },
+      "df_over_effective_dates": {
+        "min": 0.07507566877851717,
+        "mean": 0.07703010763648792,
+        "max": 0.0854798461902908
+      }
+    }
+  },
+  "summary": {
+    "macro_context": {
+      "all": {
+        "queries": 328,
+        "known": 326,
+        "dates": 82,
+        "unknown": [
+          "2026-04-30 13:25:30+00:00",
+          "2026-04-30 17:05:30+00:00"
+        ],
+        "date_equal_mean": {
+          "raw": -0.0005738423889649545,
+          "point": 0.011240256788999156,
+          "truth": -0.006477830028849571,
+          "overprediction": 0.017718086817848727,
+          "radius": 0.030633560383342015,
+          "intercept": 0.0021803288251225172,
+          "raw_shared": -0.0065966693938469155,
+          "raw_clock": 0.0004903929230939008,
+          "macro_shared": 0.015621793111441141,
+          "macro_clock": 0.000118253712153468,
+          "correction": 0.011814099177964114,
+          "df": 24.306559665646112,
+          "weight_effective_dates": 103.55368432265637,
+          "leverage": 0.28250493630037316,
+          "response_sensitivity": 0.19077390331256333,
+          "leverage_over_train_median": 1.4099059552451323,
+          "outside_training_leverage": 0.051829268292682924,
+          "context_minus_matched_plain": 0.014256830345451934
+        },
+        "daily_leverage_error_correlation": 0.0013521362241550258,
+        "median_leverage_ratio": 1.26285827392702,
+        "max_leverage_ratio": 4.05899675761113
+      },
+      "proposed": {
+        "queries": 48,
+        "known": 48,
+        "dates": 27,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": 0.006336119089606885,
+          "point": 0.03318943634380867,
+          "truth": 0.00159003397782711,
+          "overprediction": 0.03159940236598156,
+          "radius": 0.02631210743341192,
+          "intercept": 0.0025520052813083724,
+          "raw_shared": -0.010369712878397204,
+          "raw_clock": 0.0007755413038567792,
+          "macro_shared": 0.028998653324355785,
+          "macro_clock": 0.004896830223078047,
+          "correction": 0.026853317254201786,
+          "df": 24.361185029382252,
+          "weight_effective_dates": 103.71468794953286,
+          "leverage": 0.27113420773679653,
+          "response_sensitivity": 0.17521628253518037,
+          "leverage_over_train_median": 1.356546405656909,
+          "outside_training_leverage": 0.05555555555555555,
+          "context_minus_matched_plain": 0.03176177933044722
+        },
+        "daily_leverage_error_correlation": 0.3686545459994642,
+        "median_leverage_ratio": 1.216594448119454,
+        "max_leverage_ratio": 3.150178717438438
+      },
+      "actual": {
+        "queries": 16,
+        "known": 16,
+        "dates": 16,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": 0.004157515922518863,
+          "point": 0.029271430802657795,
+          "truth": -0.005560102482329908,
+          "overprediction": 0.034831533284987705,
+          "radius": 0.02469349696490148,
+          "intercept": 0.004057954885832568,
+          "raw_shared": -0.0077184670315124096,
+          "raw_clock": 0.0010514911322410186,
+          "macro_shared": 0.023955875216061132,
+          "macro_clock": 0.003767060677516624,
+          "correction": 0.02511391488013893,
+          "df": 24.55373693899893,
+          "weight_effective_dates": 104.15906457565177,
+          "leverage": 0.22888074907581774,
+          "response_sensitivity": 0.1520399867820955,
+          "leverage_over_train_median": 1.1314737351726742,
+          "outside_training_leverage": 0.0,
+          "context_minus_matched_plain": 0.0255302359026047
+        },
+        "daily_leverage_error_correlation": 0.42549774009336083,
+        "median_leverage_ratio": 1.1249618520678268,
+        "max_leverage_ratio": 1.9553527546575178
+      },
+      "unavailable_proposals": {
+        "queries": 32,
+        "known": 32,
+        "dates": 18,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": 0.007813450195920266,
+          "point": 0.03523476606553822,
+          "truth": -0.0024857523999107104,
+          "overprediction": 0.03772051846544893,
+          "radius": 0.027326573445479303,
+          "intercept": 0.002697457690913731,
+          "raw_shared": -0.01244612812484593,
+          "raw_clock": 0.0003790799104349595,
+          "macro_shared": 0.03235394157142194,
+          "macro_clock": 0.004436964821693251,
+          "correction": 0.027421315869617956,
+          "df": 24.285228143794725,
+          "weight_effective_dates": 103.61719737609661,
+          "leverage": 0.2914791266431637,
+          "response_sensitivity": 0.18297039694269376,
+          "leverage_over_train_median": 1.4646827634406614,
+          "outside_training_leverage": 0.08333333333333333,
+          "context_minus_matched_plain": 0.03495782135713274
+        },
+        "daily_leverage_error_correlation": 0.38952976122066835,
+        "median_leverage_ratio": 1.3461723553795775,
+        "max_leverage_ratio": 3.150178717438438
+      }
+    },
+    "macro_plain": {
+      "all": {
+        "queries": 328,
+        "known": 326,
+        "dates": 82,
+        "unknown": [
+          "2026-04-30 13:25:30+00:00",
+          "2026-04-30 17:05:30+00:00"
+        ],
+        "date_equal_mean": {
+          "raw": -0.005442780522567391,
+          "point": 0.002031635486466258,
+          "truth": -0.008679168145073959,
+          "overprediction": 0.010710803631540216,
+          "radius": 0.014932221781453144,
+          "intercept": 0.0010471101181766063,
+          "raw_shared": 0.0058992145848409385,
+          "raw_clock": 0.0005280913060161014,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.007474416009033648,
+          "df": 7.912760700251397,
+          "weight_effective_dates": 103.55368432265637,
+          "leverage": 0.07437147496944405,
+          "response_sensitivity": 0.06090328553315252,
+          "leverage_over_train_median": 1.292992569613446,
+          "outside_training_leverage": 0.006097560975609756,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": -0.1653473549650513,
+        "median_leverage_ratio": 1.0786715849219668,
+        "max_leverage_ratio": 5.20766742659909
+      },
+      "proposed": {
+        "queries": 26,
+        "known": 26,
+        "dates": 23,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.004006703339181992,
+          "point": 0.0165154108305362,
+          "truth": -0.01572542455248622,
+          "overprediction": 0.03224083538302242,
+          "radius": 0.011241858656983962,
+          "intercept": 0.004712016501701373,
+          "raw_shared": 0.014197095982499363,
+          "raw_clock": 0.0016130016855174574,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.02052211416971819,
+          "df": 7.858181790489554,
+          "weight_effective_dates": 102.0301957711477,
+          "leverage": 0.07121518235920792,
+          "response_sensitivity": 0.051436564509187425,
+          "leverage_over_train_median": 1.2085073113115616,
+          "outside_training_leverage": 0.043478260869565216,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": -0.07808511118835365,
+        "median_leverage_ratio": 0.9038545434753601,
+        "max_leverage_ratio": 3.7866843178490863
+      },
+      "actual": {
+        "queries": 17,
+        "known": 17,
+        "dates": 17,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.00638099207233964,
+          "point": 0.015760595855942174,
+          "truth": -0.007169202405197091,
+          "overprediction": 0.02292979826113926,
+          "radius": 0.01096637777467706,
+          "intercept": 0.004608429533664726,
+          "raw_shared": 0.015698068822096928,
+          "raw_clock": 0.0018350895725201533,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.02214158792828181,
+          "df": 7.862687985541692,
+          "weight_effective_dates": 102.23236362839755,
+          "leverage": 0.06546916031267748,
+          "response_sensitivity": 0.05000561312692714,
+          "leverage_over_train_median": 1.1108949268329518,
+          "outside_training_leverage": 0.058823529411764705,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": 0.11693287845307522,
+        "median_leverage_ratio": 0.8869915767923882,
+        "max_leverage_ratio": 3.7866843178490863
+      },
+      "unavailable_proposals": {
+        "queries": 9,
+        "known": 9,
+        "dates": 9,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": 0.0016496572651054755,
+          "point": 0.016892049987659103,
+          "truth": -0.02924729146604605,
+          "overprediction": 0.04613934145370516,
+          "radius": 0.011496013541724005,
+          "intercept": 0.0057915862622644745,
+          "raw_shared": 0.008676581281263494,
+          "raw_clock": 0.0007742251790256593,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.01524239272255363,
+          "df": 7.858786954869696,
+          "weight_effective_dates": 102.38965377018866,
+          "leverage": 0.07326458630654241,
+          "response_sensitivity": 0.04985606005977974,
+          "leverage_over_train_median": 1.2498607493437734,
+          "outside_training_leverage": 0.0,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": -0.43776247507088023,
+        "median_leverage_ratio": 0.933485343575304,
+        "max_leverage_ratio": 3.5206014922703646
+      }
+    },
+    "base_context": {
+      "all": {
+        "queries": 328,
+        "known": 326,
+        "dates": 82,
+        "unknown": [
+          "2026-04-30 13:25:30+00:00",
+          "2026-04-30 17:05:30+00:00"
+        ],
+        "date_equal_mean": {
+          "raw": -0.004585098771454628,
+          "point": 0.012116878374896504,
+          "truth": -0.0064366086013847735,
+          "overprediction": 0.018553486976281286,
+          "radius": 0.030257680672401872,
+          "intercept": 0.0015636373542529272,
+          "raw_shared": -0.000561559788757085,
+          "raw_clock": 0.0002736467096327686,
+          "macro_shared": 0.0150373241267168,
+          "macro_clock": 0.0003889287445057205,
+          "correction": 0.016701977146351132,
+          "df": 24.626334333221315,
+          "weight_effective_dates": 103.55368432265637,
+          "leverage": 0.28433983469051033,
+          "response_sensitivity": 0.19278956686027998,
+          "leverage_over_train_median": 1.4065339063356197,
+          "outside_training_leverage": 0.042682926829268296,
+          "context_minus_matched_plain": 0.014907116714282053
+        },
+        "daily_leverage_error_correlation": -0.03164014094345015,
+        "median_leverage_ratio": 1.2517693279190656,
+        "max_leverage_ratio": 3.8546438676090413
+      },
+      "proposed": {
+        "queries": 55,
+        "known": 55,
+        "dates": 30,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.0018349749212463356,
+          "point": 0.03343633189966414,
+          "truth": 0.0031506139787400903,
+          "overprediction": 0.030285717920924056,
+          "radius": 0.02637483677599913,
+          "intercept": 0.0033173042177542305,
+          "raw_shared": -0.00013495095191140728,
+          "raw_clock": 0.0006359196620563649,
+          "macro_shared": 0.027006869047516084,
+          "macro_clock": 0.004446164845495206,
+          "correction": 0.03527130682091048,
+          "df": 24.688656260062846,
+          "weight_effective_dates": 103.85848635028054,
+          "leverage": 0.2768516460162681,
+          "response_sensitivity": 0.18286260017944936,
+          "leverage_over_train_median": 1.3628819723282937,
+          "outside_training_leverage": 0.041666666666666664,
+          "context_minus_matched_plain": 0.031075370171994625
+        },
+        "daily_leverage_error_correlation": 0.22590514886985258,
+        "median_leverage_ratio": 1.2434816603977188,
+        "max_leverage_ratio": 3.0353273446706837
+      },
+      "actual": {
+        "queries": 16,
+        "known": 16,
+        "dates": 16,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.0030327825596789294,
+          "point": 0.03004068306029012,
+          "truth": 0.001398424404088017,
+          "overprediction": 0.028642258656202103,
+          "radius": 0.02565375781420258,
+          "intercept": 0.004561438384091069,
+          "raw_shared": 0.0012873228978648049,
+          "raw_clock": 0.0005246575820746322,
+          "macro_shared": 0.02386790595154463,
+          "macro_clock": 0.0028321408043939164,
+          "correction": 0.033073465619969045,
+          "df": 24.815392066310864,
+          "weight_effective_dates": 104.15906457565177,
+          "leverage": 0.24688197630743397,
+          "response_sensitivity": 0.1663949908460547,
+          "leverage_over_train_median": 1.2070930181254365,
+          "outside_training_leverage": 0.0,
+          "context_minus_matched_plain": 0.02646232571871007
+        },
+        "daily_leverage_error_correlation": 0.0358167650499107,
+        "median_leverage_ratio": 1.209282063144842,
+        "max_leverage_ratio": 2.0682682706848072
+      },
+      "unavailable_proposals": {
+        "queries": 39,
+        "known": 39,
+        "dates": 21,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.001276807363490895,
+          "point": 0.0354690512440867,
+          "truth": -0.006738660450491966,
+          "overprediction": 0.04220771169457866,
+          "radius": 0.026829647984685134,
+          "intercept": 0.0034038951801257894,
+          "raw_shared": -0.00032756462338237894,
+          "raw_clock": 0.0005310871300970493,
+          "macro_shared": 0.02899653071377097,
+          "macro_clock": 0.004141910206966167,
+          "correction": 0.0367458586075776,
+          "df": 24.681461872938627,
+          "weight_effective_dates": 103.96490579208277,
+          "leverage": 0.2933662511133366,
+          "response_sensitivity": 0.19134377138492908,
+          "leverage_over_train_median": 1.4457231586695798,
+          "outside_training_leverage": 0.06349206349206349,
+          "context_minus_matched_plain": 0.032841786248574194
+        },
+        "daily_leverage_error_correlation": 0.3262769569816726,
+        "median_leverage_ratio": 1.3688269774728872,
+        "max_leverage_ratio": 3.0353273446706837
+      }
+    },
+    "base_plain": {
+      "all": {
+        "queries": 328,
+        "known": 326,
+        "dates": 82,
+        "unknown": [
+          "2026-04-30 13:25:30+00:00",
+          "2026-04-30 17:05:30+00:00"
+        ],
+        "date_equal_mean": {
+          "raw": -0.009031096422874328,
+          "point": 0.0026573249214325912,
+          "truth": -0.011726072380795677,
+          "overprediction": 0.014383397302228268,
+          "radius": 0.014418414493293955,
+          "intercept": 0.0011394481415706083,
+          "raw_shared": 0.010325939241565876,
+          "raw_clock": 0.0002230339611704332,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.011688421344306917,
+          "df": 7.9713305425838605,
+          "weight_effective_dates": 103.55368432265637,
+          "leverage": 0.0732204188788971,
+          "response_sensitivity": 0.05918648543373016,
+          "leverage_over_train_median": 1.3459582648685207,
+          "outside_training_leverage": 0.0,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": -0.11666957216883263,
+        "median_leverage_ratio": 1.0061940770138078,
+        "max_leverage_ratio": 5.470879309384157
+      },
+      "proposed": {
+        "queries": 51,
+        "known": 51,
+        "dates": 34,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.008673924752884145,
+          "point": 0.015335170311721224,
+          "truth": 0.007815175231643308,
+          "overprediction": 0.007519995080077915,
+          "radius": 0.011516184303337751,
+          "intercept": 0.00410501564610271,
+          "raw_shared": 0.017285009643673476,
+          "raw_clock": 0.0026190697748291847,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.024009095064605367,
+          "df": 7.918430680536321,
+          "weight_effective_dates": 103.26755223958915,
+          "leverage": 0.07695137467605184,
+          "response_sensitivity": 0.058511995861158655,
+          "leverage_over_train_median": 1.402881721286177,
+          "outside_training_leverage": 0.0,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": 0.08420520357068641,
+        "median_leverage_ratio": 0.9787812362604236,
+        "max_leverage_ratio": 3.6624132733123638
+      },
+      "actual": {
+        "queries": 24,
+        "known": 24,
+        "dates": 24,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.010824833124629387,
+          "point": 0.015709157742388458,
+          "truth": 0.01540534498785591,
+          "overprediction": 0.0003038127545325475,
+          "radius": 0.011869872508708426,
+          "intercept": 0.004163433406652387,
+          "raw_shared": 0.019271647455316173,
+          "raw_clock": 0.0030989100050492816,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.026533990867017843,
+          "df": 7.898983317374842,
+          "weight_effective_dates": 102.67836453884253,
+          "leverage": 0.07524494008568612,
+          "response_sensitivity": 0.05961213320694436,
+          "leverage_over_train_median": 1.3654906472835533,
+          "outside_training_leverage": 0.0,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": 0.20864094228373756,
+        "median_leverage_ratio": 0.9697272918461113,
+        "max_leverage_ratio": 3.6624132733123638
+      },
+      "unavailable_proposals": {
+        "queries": 27,
+        "known": 27,
+        "dates": 21,
+        "unknown": [],
+        "date_equal_mean": {
+          "raw": -0.006827593239947852,
+          "point": 0.014876498973396905,
+          "truth": -0.0010761780659188356,
+          "overprediction": 0.015952677039315744,
+          "radius": 0.01109051015265938,
+          "intercept": 0.0050909712975720405,
+          "raw_shared": 0.015666182560884555,
+          "raw_clock": 0.0009469383548881619,
+          "macro_shared": 0.0,
+          "macro_clock": 0.0,
+          "correction": 0.021704092213344756,
+          "df": 7.907175462282059,
+          "weight_effective_dates": 103.41409861812441,
+          "leverage": 0.06888143976863373,
+          "response_sensitivity": 0.05199122252768135,
+          "leverage_over_train_median": 1.2531700615570813,
+          "outside_training_leverage": 0.0,
+          "context_minus_matched_plain": 0.0
+        },
+        "daily_leverage_error_correlation": -0.14979521229870735,
+        "median_leverage_ratio": 0.9980417197333517,
+        "max_leverage_ratio": 3.585527140203791
+      }
+    }
+  }
+}
