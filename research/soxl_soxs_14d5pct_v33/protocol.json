@@ -1,0 +1,58 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "base_models": "Same audited v23 context raw scores,19price/sector/volume inputs atpremarket and31afteropen. Expanding earlyterminal chronologicalprefix, daily00ET,labelpairs mature, Ridge100C/absD and lossweightedLogisticC.1,126datehalflife,min120dates. PreMay immutableas-issued source records andmodel auditmanifest checked. Only ifnewprimarypassesdev, extendthe identicaldailybaselearner with newthen-known history. All old scores preserved.",
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "decision": "Largestpositive lower (>1e-12),tieSOXL,otherwisecash; fullsettledcashandoriginaloneposition/dayledger. Pointdiagnostic omitsradius; featuremissing,insufficienthistory orpendingexpired abstains. No postresultprimaryswitch.",
+  "standardization": "At eachdailyfitandbootstrap, weightedcenter/standardize the2rawscores separatelywithin eachclock using only selectedhistoricalrows. std<1e-12=>1. Clockintercepts are unpenalized; training solves weightedclockmeanY and centered residual targets. Allclocks requirepositive trainingweight; official10dateblocks with atmostsparsehalfday omissions retainall4clocks. Do notcreatea model for anunsupportedclock. Clock-specific changesofpositive measurementunit/offset leavepredictions invariant.",
+  "version": "soxl_soxs_cost_scenario_learning_v33",
+  "primary": "worst_band",
+  "control_source": ".cache/soxl_soxs_14d5pct_v32/runs/hierarchical_20261013",
+  "hypothesis": "Test whether daily learning of worse realized cost-scenario payoffs can avoid execution-fragile entry opportunities. Prior read-only label summary before registration found9reason flips among2914known ETF/clock paths beforeMay;5inJan-Apr. Rarity may limit benefit. No date-specific exclusion, no cutoff tuning and no guarantee. Train on all historical actions, not only previous buys.",
+  "scenarios": "Exactly two preexisting execution scenarios: fee/slippage .0005per-side baseline and doubled .001. Each has own entry price, cent-rounded+5%TP,6%stop and adverse-gap path, dividends and expiry. Do not assume double cost always worsens net return: earlier stop may avoid a later larger loss. Neither scenario is an additional independent market sample. No scenario grid search.",
+  "targets": "At a past ETF/clock observation use y0=log1p(actual baseline net return),y2=log1p(actual double-cost net return). Primary target min(y0,y2); average diagnostic(y0+y2)/2; matched baseline diagnostic y0. Fit residual target minus originally issued baseline rawscore. Mean of log payoffs is not log of mean payoff. Worst is a historical two-scenario construction, not a bound for all future fills. Current or pending outcomes are never query inputs.",
+  "maturity": "Keep source base panel and its training maturity unchanged. New feedback bank checks every raw minute prefix separately for BOTH ETFs under BOTH cost scenarios. Four outcomes must be known; row release=max of four releases. Dividend cases retain conservative full-window wait. Eligible day must have all expected clock rows feature-ready and jointly known; max across clocks is day release. At00ET require release<cutoff and take chronological prefix until first unresolved date, never skip it for later wins; expired>=14calendar disables actions. Latest120/min60 dates with original finite raw pairs. Unknowns remain held/pending, never become0. Halfday3clock dates retain one total date weight.",
+  "objective": "Same v32 partial sharing only: perclock two standardized raw score inputs, independent unpenalized intercepts, four2x2slope matrices beta_c. Minimize weighted squared residual error +20||mean_c beta_c||^2 +20*sum||beta_c-mean||^2. Identical structure, input scales, admitted dates, weights, penalties and bootstrap across three target variants. No additional industry residual features; industry remains in original19/31factor raw scores.",
+  "solver": "Reuse frozen v32 augmented least squares partial penalty(20I4-3.75*11T)tensorI2. Independently audit with full joint intercept/slope normal equations, penalty from explicit mean/deviation outer products. Baseline on matched joint maturity isolates label effect; exactoldv32 separately measures effect of delayed joint feedback.",
+  "uncertainty": "Same199 circular10dateblocks seed826+ETdateordinal; sampleNdates, preserve allclock andbothETFrows. Normalize each replicate totalweight Ndates, restandardize within eachclock and refit. Shared90%higher quantile ofmaxETF upward deviation, commonnonnegative radius. Point minusradius >1e-12 highest action only; tieSOXL. This sensitivity interval is not guaranteedcoverage or a lossless-month bound.",
+  "daily_schedule": "Once perday fit3targets and199replicates. Query with current as-issued rawpair andclock only. PreMay raw forecasts and source_v32 actions are immutable; extend identical base andv32control causally only afterverifiedprimarydevpass. Save all model parameters,members,releases,weights andas-issued decisions before ledger.",
+  "routes": {
+    "worst_band": "PRIMARY worse-of-two-cost payoff plus uncertainty",
+    "worst_point": "same target pointonly diagnostic",
+    "average_band": "mean log cost-scenario target with same joint maturity",
+    "matched_baseline": "baseline payoff target with same joint maturity",
+    "source_v32": "exact old partial_band with original baseline-only maturity",
+    "premarket_only": "primary09:25only",
+    "cash": "alwayscash",
+    "double_cost": "primary frozen actions, own double-cost realized ledger"
+  },
+  "verification": "12 preoutcome tests: scenario min including improvedstress,meanlogs,matchedbaseline immunity,all199independent bootstrap equations,unknownonescenario andsourcepreservation,latestfourpathrelease,pendingprefix,exactcutoff,futurelabels,constantcostoffsetband,halfday/minimumdates,currentunknownquery. Independently verify all baseline/stress raw exits and releases,combined feedback bank,all dated fits,all actions,8full capital books,104statistics. Source_v32 ledger must be exact. Cases guarded beforeoutputcreation; ifallowed require preMayrecordidentity andindependent newfeatures/rawmodels.",
+  "diagnostics": "All candidate-path reason transitions and unknowns, payoff-disadvantage distribution, scenario release delays, datecluster ratherthan row independence; direct training target differences and action changes againstmatchedbaseline andsourcev32; proposal-versus-executed counts,allmonthlynetreturns,trade-specific gains/losses retained. No selecting a winning arm after results.",
+  "method_reference": "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html ; squaredloss andL2 concepts only;custommeanpenalty/targets andfinancialefficacy requirethisexperiment. Runtime remains installed1.8.0,not currentdocumentationrelease."
+}
