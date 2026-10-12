@@ -1,0 +1,62 @@
+{
+  "version": "soxl_soxs_paired_regime_v14",
+  "primary": "regret_regime",
+  "source_features": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012/features.parquet",
+  "analysis_clock_et": "09:25:30",
+  "hypothesis": "A sector episode may be sensed through causal relative strength, diffusion, persistence and matched-clock volume participation. Paired regret learning may improve direction selection and common-payoff abstention. Matched feature ablation tests added value; no future realized success rate defines regime.",
+  "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+  "training": "Daily00:00ET expanding prior dates with BOTH full14day labels mature strictly before cutoff and complete regime inputs;minimum120. All arms use the same dates. Recency weights2^(-eligible_rank_age/126),normalized sum=N. Historical as-issued forecasts immutable. Complete target windows required even for early winners.",
+  "models": [
+    "regret_regime",
+    "regret_base",
+    "sign_regime",
+    "ridge_regime",
+    "mean_pair"
+  ],
+  "controls": [
+    "regret_base",
+    "sign_regime",
+    "ridge_regime",
+    "mean_pair",
+    "same_primary_raw",
+    "same_primary_direction",
+    "always_SOXL",
+    "trend20",
+    "cash",
+    "double_cost"
+  ],
+  "stress": "Double fees/slippage with same primary entry actions,own stress fills and barriers;no stressed fitting.",
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+  "diagnostics": "Date-equal joint mature samples plus unknowns retained;D squared error,financial regret=max(L,S)-chosen return,chosen meanlogpayoff and positive-candidate payoff,negative maps/extrapolation. With/without regime compare paired daily logNAV by circular10session5000bootstrap seed707. Also compare paired mature opportunity chosen logpayoffs with10date5000bootstrap seed1414. Regime slices predeclared: support if relative5>0 and centeredbreadth5>0 and volume_direction_diffusion>0;weakness analogous all<0;otherwise mixed;descriptive only,never action gate or future regime label.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "paired_targets": "For same-date SOXL/SOXS net log contract returns L,S: C=(L+S)/2,D=(L-S)/2,M=abs(D). Learn common payoff and signed advantage separately. These joint candidate outcomes are not simultaneous holdings or independent trades.",
+  "base_features": "7: SOXX1/5/20 returns over SOXXvol20*sqrt(horizon),QQQ5 normalized similarly,SOXX and panel mean premarket return/SOXXvol20,logSOXXvol20. Six normalized returns clipped[-5,5],volfloor1e-4. No date/month identifiers.",
+  "regime_features": "12: SOXX-minus-QQQ5/20 returns normalized by SOXXvol20*sqrt(horizon),clipped[-5,5]; centered breadth2*fraction_positive-1 for panel5/20/current returns;mean sign of sector_relative5 in current and previous4 snapshots;current centered breadth5 minus previous5 snapshot mean;mean clipped[-3,3]log matched-volume-ratio;fraction(volume_ratio>1 AND currentreturn>0) minus analogous down fraction;mean sign(panelret5)*clippedlogvolumeratio;normalizedrelative5*meanlogvolume;centeredbreadth5*meanlogvolume. No realized future hit rate or hindsight regime labels.",
+  "volume": "Fixed panel8 NVDA,AMD,AVGO,MU,AMAT,LRCX,KLAC,INTC;research-selected universe not historical PIT constituent claim. For each symbol exact65 complete5minbars04:00-09:25ET,available<=09:25:30,current economic volume divided by prior20 official dates same-clock mean. Zero/missing denominator or incomplete prefix unknown,all routes abstain when common inputs unavailable. First5 feature snapshots unavailable for persistence. Prefix uses current data only through cutoff,not full-day volume. Price/volume participation proxy is not net capital flow.",
+  "estimator": "Primary regret_regime: training-only base-weight StandardScaler;C and nonnegative-predicted-M heads Ridge(alpha100,svd);sign(D) LogisticRegression(C.1,lbfgs,maxiter2000,tol1e-10),sample weights=recency*abs(D),normalized sum=N;no class weighting. If weighted labels one-class use weighted sign frequency;allzero margin fallbackq=.5. Dhat=max(0,Mhat)*(2q-1). q is regret-weighted sign score,NOT +5% hit probability. No hyperparameter search.",
+  "model_ablation": "regret_base same learner and dates using7base columns;sign_regime same19columns but classifier weights=recency(no regret weights);ridge_regime direct Ridge100 C,D;mean_pair recency-weighted C,D empirical means. These are registered comparisons,not eligible substitute winners.",
+  "paired_calibration": "For EACH model separately latest120prior as-issued paired forecasts with joint matured labels,min60. For C and D separately standardize scalar raw prediction using own pastmean/popstd(scale1if<1e-12),intercept=meanactual,coefficient=sum(z*(actual-meanactual))/(sum(z*z)+20). Unrestricted sign; reversal learned only from prior predictions. Rank AFTER maps:SOXLifD>=0elseSOXS. BuyonlyC+abs(D)>0. Calibrates conditional paired contract logpayoff,not probability or capital return. Report ranking and realized top scores after calibration.",
+  "action_controls": "Raw and direction-only controls share exact primary forecasts and calibration readiness. Raw uses C,D without correction and same positivevaluegate. Direction-only uses calibratedD always,without valuegate. FixedSOXL/trend20/cash on every evaluationdate. Stress uses sameprimary actions with own double-cost execution."
+}
