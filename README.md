@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新研究为 [v6 盘中入场与持仓路径](research/soxl_soxs_14d5pct_v6/README.md)：盘前等待、三个盘中时点、18 组入场/退出路线，以此前实际模拟资金表现每日选路。主策略 5、7、9 月净收益算术均值 +1.48%，仍有两个负月；最大回撤降至 11.37%，但双倍成本均值 −2.48%，仍不合格。[持续目标保持进行中](research/soxl_soxs_14d5pct_v6/GOAL_PROGRESS.md)。[v5 多模型实验](research/soxl_soxs_14d5pct_v5/README.md)及更早失败结果保留；[v4 每日训练及任意时点分析](research/soxl_soxs_14d5pct_v4/README.md)继续可用，当前不行动。
+最新研究为 [v7 行业广度与信号新鲜度](research/soxl_soxs_14d5pct_v7/README.md)：补齐八只半导体股票历史，在相同样本/算法/退出规则下逐日重训并做九组对照。固定主模型 5、7、9 月净收益算术均值 −3.33%，四个负月，五个月累计 −18.26%；新增特征未证实改善，仍不合格。[持续目标保持进行中](research/soxl_soxs_14d5pct_v7/GOAL_PROGRESS.md)。[v6 盘中入场与持仓路径](research/soxl_soxs_14d5pct_v6/README.md)、[v5 多模型实验](research/soxl_soxs_14d5pct_v5/README.md)及更早失败结果保留；[v4 每日训练及任意时点分析](research/soxl_soxs_14d5pct_v4/README.md)继续可用，当前不行动。
 
 [v2 历史结果](research/soxl_soxs_14d5pct_v2/REPORT.md)的三个月算术均值 +11.69% 不再代表当前准入；旧数字与亏损保留。[v1 迁移记录](research/soxl_soxs_14d5pct_v1/ANALYSIS.md)保留原模型失败证据。原始行情不进 Git，真实交易仍由用户手动执行。
 

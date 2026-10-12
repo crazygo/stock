@@ -1,0 +1,93 @@
+{
+  "started_at": "2026-10-12T08:55:25.480069+00:00",
+  "preregistration": {
+    "registered_at": "2026-10-12T08:37:56.241886+00:00",
+    "protocol_sha256": "f55b14e255756ebdce124344ef21589f9fb67032f5826ccf4d6e199c119ba971",
+    "protocol": {
+      "version": "soxl_soxs_breadth_v7",
+      "registered_on": "2026-10-12",
+      "status": "exposed_history_development_regression",
+      "hypothesis": "Contemporaneous semiconductor breadth and freshness of opening-range failures add information beyond ETF/index features. Compare matched algorithms and execution, not case-month-specific rules.",
+      "panel": [
+        "NVDA",
+        "AMD",
+        "AVGO",
+        "MU",
+        "AMAT",
+        "LRCX",
+        "KLAC",
+        "INTC"
+      ],
+      "panel_basis": "Fixed research panel spanning chip designers, memory, equipment and integrated manufacturers. Not a historical index constituent set; no claim of PIT membership or unbiased universe selection. Fixed before this experiment's outcomes.",
+      "feature_variants": [
+        "base",
+        "timing",
+        "breadth"
+      ],
+      "feature_definitions": {
+        "base": "Unchanged v6 causal four-ETF features and completed SOXX/QQQ regular context.",
+        "timing": "Base plus SOXX/QQQ minutes since latest completed close outside the first30m range, observed-ever flags, and fresh return-inside flags (outside close in preceding15m). No future extrema or session-final state.",
+        "breadth": "Timing plus eight individual previous-day ret1/5/20, volatility20, current return versus previous close, relative cumulative volume, regular open return, VWAP distance, recent15m, efficiency; equal-weight means, dispersion and positive fractions. Every panel member must have complete prior21 official sessions, current regular prefix and a fresh bar. Missing members cause abstention, never fabricated zeros. All three variants share this same eligible training/evaluation feature set."
+      },
+      "analysis_clocks_et": [
+        "09:25:30",
+        "10:05:30",
+        "10:35:30",
+        "13:05:30"
+      ],
+      "premarket": "Record an analysis at09:25 including prior/current panel context; WAIT_FOR_REGULAR_INFORMATION before the opening range exists. No premarket buy in this registered experiment. Arbitrary-time v4 entry remains available separately.",
+      "algorithms": [
+        "ridge_log",
+        "boosted_log",
+        "ensemble_log"
+      ],
+      "algorithm_definitions": "Reuse v6 StandardScaler + Ridge(alpha20), HGB squared loss80iterations/7leaves/minleaf20/lr.05/l2=5/noearlystop/random814, targets log(1+net trade return). Ensemble is equal-weight raw predictions of these two algorithms; calibrate its own saved as-of forecasts. No case-driven weights or selection.",
+      "primary": "breadth__ensemble_log",
+      "diagnostics": "Other eight feature/algorithm pairs are matched ablations or component diagnostics; none may replace the registered primary after viewing results.",
+      "training_window_dates": 252,
+      "minimum_training_dates": 120,
+      "training": "Daily00:00ET, only earlier full-session labels available strictly before cutoff; both ETFs and every retained clock of a date must be mature; latest252 eligible distinct dates, minimum120; each date total weight1. All variants use identical members. Save each day's membership and unchanged as-of predictions.",
+      "calibration_window_dates": 60,
+      "minimum_calibration_dates": 40,
+      "calibration": "At each clock and ETF, mean of actual log return minus historical as-of raw forecast over latest60 mature eligible dates; minimum40. Choose highest positive corrected score, else cash. Ties use SOXL first. Corrections never use the current date.",
+      "entry_and_exit": "Unchanged v6 flat_close: first RTH5m Open strictly after decision+30s within6min; +5% cent-rounded TP and1.5% protective stop attached; scheduled official same-day close otherwise, within14-calendar-day maximum. Stop-first ambiguous bars, gap at min(Open,stop) minus slippage. No use of future state to schedule close.",
+      "capital": "Unchanged continuous ledger: one position,100% settled cash,no same-day reentry,T+1 settlement,all losses/costs/cross-month marks retained. No actual broker order.",
+      "costs": "Retain5bp per side fee and5bp market slippage as research assumptions, not verified account charges. Double both and recompute price paths for a stress replay using the same primary saved actions. Official Moomoo fee schedules vary by residency and date; unknown account applicability must not justify reducing assumed costs.",
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ],
+      "acceptance": "Primary only: arithmetic mean of the three regression months>=10%, every May-September month>=0, complete daily/premarket feature coverage and ledger. Cash0 fails return target. Independently report all diagnostics, full cost stress and paired date-block feature improvement uncertainty. Exposed history is not independent forward validation and cannot establish a future nonnegative-month guarantee.",
+      "uncertainty": "Paired daily log-equity-return difference breadth ensemble minus base ensemble, 5000 circular block bootstraps with10-session blocks, random seed707; report95% interval for mean daily difference. Diagnostic only, never an optimizer or substitute for absolute gates.",
+      "no_automatic_R2_upload": true,
+      "no_broker_orders": true
+    },
+    "case_results_not_computed": true,
+    "previous_versions_same_history_exposed": true
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0"
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/verify_breadth.py": "b9d07e08ba054fdee261279c1100cdf333591f4c9acb9d4f9eea484e837f38f5",
+    "research/soxl_soxs_14d5pct_v7/test_breadth.py": "e287653a3f11b2f687d6b75f66d32c27a0cabf825adc9898c8b5701f871b368b",
+    "research/soxl_soxs_14d5pct_v7/verify_inputs.py": "cd27736b891706e05e50780bcf660bc9d6447ac562e93de384ba5a0ebe4e10d8",
+    "research/soxl_soxs_14d5pct_v7/protocol.json": "f55b14e255756ebdce124344ef21589f9fb67032f5826ccf4d6e199c119ba971",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/learning.py": "736662a57b83596b99d4ad99e10b1423b59ae1f028b3b1b0a8205bafe3cb4eb8",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1"
+  }
+}
