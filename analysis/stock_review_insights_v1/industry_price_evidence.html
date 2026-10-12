@@ -1,0 +1,124 @@
+<div id="industry-evidence-viz">
+  <h2>行业环境 · 价格证据</h2>
+  <p class="iev-note">__CUTOFF__ · 5 / 20 / 60 交易日价格变化</p>
+  __OVERLAY__
+  <div class="iev-legend">
+    <span><i class="iev-swatch iev-down"></i>下跌向左</span><span><i class="iev-swatch iev-up"></i>上涨向右</span>
+    <span>条越长、颜色越深，涨跌幅越大</span><span class="iev-domain"></span>
+  </div>
+  <p class="iev-note">日 K 均归一化显示。基金和成分股用真实 OHLC；多股组用期初等权篮子，虚线影线是日内范围边界。当前成员回看不代表历史 PIT，重叠分组不能代表全市场广度。</p>
+  <div class="iev-controls"><span>日 K 范围</span><button type="button" data-k-days="20" aria-pressed="true">近20交易日</button><button type="button" data-k-days="60" aria-pressed="false">近60交易日</button><span class="iev-note">点击行名展开成分股 · 日K红阳、绿阴</span></div>
+  <details class="iev-method"><summary>组 K 线、整体走向、R²、ER 怎么计算？</summary>
+    <p>组图先将各股在共同基期的收盘价设为100，再将每日 OHLC 等权平均；这相当于期初等资金、持股数固定的参考篮子。只纳入连续61个官方交易时点完整的成员，固定样本不随日变化；被排除的成员仍可展开查看。</p>
+    <p>组开盘与收盘可按同一时点合成。各股日高、日低未必同时发生，所以平均 High 是篮子最高点的上界，平均 Low 是最低点的下界，以虚线影线表示；不称为真实同步高低点。只有一个成员时保留真实影线。它不是可交易的基金净值。</p>
+    <p>整体走向取收盘路径对交易时点的线性拟合斜率方向。R² = 1−残差平方和/总离差平方和，表示接近直线的程度；不变价格的 R² 不可定义。ER = |期末−期初| / Σ|逐日变化|，越接近1越单向；不变路径按0处理。20/60交易日变化分别使用21/61个收盘点，缺点不评分。</p>
+    <p>组指标从合成路径计算，不平均各股的 R²/ER。涨跌幅仍引用原表，是各窗口个股收益的等权均值。组图固定在共同基期配置，之后权重随价格漂移，因此即使成员相同，曲线区间收益也不一定等于原百分比；各期限评分成员还可能不同。各图纵轴自适应，不能用影线像素高度比较不同组的波动幅度；广度和未知数保留原口径。</p>
+  </details>
+  <div class="iev-selection" aria-live="polite"></div>
+  <p class="iev-mobile-hint">横向查看日 K 和各时间列，名称固定在左侧。</p>
+  <div class="iev-table-wrap" tabindex="0" role="region" aria-label="行业、日K及三期价格对照；窄屏可横向滚动">
+    <table class="iev-table">
+      <caption class="iev-sr-only">名称、日K、5日、20日、60日共用表头，展开成分股使用相同列。</caption>
+      <thead><tr><th scope="col" class="iev-name-head">行业 / 基金 / 成分股</th><th scope="col" class="iev-k-head" data-k-header>日 K · 近20交易日</th><th scope="col" data-period="5">5 交易日</th><th scope="col" data-period="20">20 交易日</th><th scope="col" data-period="60">60 交易日</th></tr>
+      <tr class="iev-scale-head"><th>点击展开</th><th>归一基期=100 · 纵轴自适应</th><th data-scale="5"></th><th data-scale="20">整体走向 / R² / ER</th><th data-scale="60">整体走向 / R² / ER</th></tr></thead>
+    </table>
+  </div>
+  <p class="iev-note">分组价格为等权均值 · 上涨家数 / 可评分家数保留在单元格 · 行业 ETF 参考覆盖 __ETF_COVERAGE__</p>
+  <details class="iev-source"><summary>查看原始表格与解释</summary>__SOURCE_TABLES__</details>
+  <script type="application/json" id="industry-evidence-data">__DATA__</script>
+</div>
+<style>
+#industry-evidence-viz{--foreground:var(--fg,#222);--border:var(--line,#bbb);--iev-positive:#c84742;--iev-negative:#348858;color:var(--foreground)}
+#industry-evidence-viz .iev-note{font-size:13px;color:var(--secondary,#666)}
+#industry-evidence-viz .iev-legend,#industry-evidence-viz .iev-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:14px 0;font-size:13px}
+#industry-evidence-viz .iev-legend>span{display:inline-flex;align-items:center;gap:6px}
+#industry-evidence-viz .iev-swatch{display:inline-block;width:18px;height:9px}
+#industry-evidence-viz .iev-up{background:var(--iev-positive)}#industry-evidence-viz .iev-down{background:var(--iev-negative)}
+#industry-evidence-viz [data-k-days][aria-pressed="true"]{background:#eee;border-color:#444}
+#industry-evidence-viz .iev-mobile-hint{display:none;font-size:12px;color:var(--secondary,#666)}
+#industry-evidence-viz .iev-table-wrap{overflow:auto;max-width:100%;margin:16px 0;border:1px solid var(--border)}
+#industry-evidence-viz .iev-table{width:100%;min-width:1140px;table-layout:fixed;border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+#industry-evidence-viz.iev-sixty .iev-table{min-width:1280px}
+#industry-evidence-viz .iev-table th,#industry-evidence-viz .iev-table td{padding:7px 10px;border:0;border-bottom:1px solid #ddd;vertical-align:middle}
+#industry-evidence-viz .iev-table thead th{text-align:center;background:#f2f2f2;font-size:14px;font-weight:600}
+#industry-evidence-viz .iev-table thead th:first-child{position:sticky;left:0;z-index:2}
+#industry-evidence-viz .iev-table .iev-name-head{width:170px;text-align:left}
+#industry-evidence-viz .iev-table .iev-k-head{width:240px}
+#industry-evidence-viz.iev-sixty .iev-k-head{width:380px}
+#industry-evidence-viz .iev-table .iev-scale-head th{padding-top:0;padding-bottom:9px;font-size:11px;font-weight:400;color:var(--secondary,#666)}
+#industry-evidence-viz .iev-group-heading th{background:#e9e9e9;padding:10px;text-align:left;font-size:13px;font-weight:600}
+#industry-evidence-viz .iev-section-name{display:block;width:max-content;max-width:min(340px,calc(100vw - 60px));position:sticky;left:10px;white-space:normal}
+#industry-evidence-viz .iev-data-row>th{background:#fff;text-align:left;font-weight:400;position:sticky;left:0;z-index:1}
+#industry-evidence-viz .iev-child-row>th,#industry-evidence-viz .iev-child-row>td{background:#fafafa}
+#industry-evidence-viz .iev-child-row>th{padding-left:22px}
+#industry-evidence-viz .iev-selected td,#industry-evidence-viz .iev-selected>th{background:#f2f2f2}
+#industry-evidence-viz .iev-row-target{display:block;width:100%;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit;line-height:1.45}
+#industry-evidence-viz .iev-name{display:block;font-weight:500;overflow-wrap:anywhere}
+#industry-evidence-viz .iev-row-target small,#industry-evidence-viz .iev-k-note{display:block;color:var(--secondary,#666);font-size:11px;font-weight:400;line-height:1.4;margin-top:3px;overflow-wrap:anywhere}
+#industry-evidence-viz .iev-row-target:focus-visible,#industry-evidence-viz .iev-table-wrap:focus-visible{outline:2px solid var(--foreground);outline-offset:2px}
+#industry-evidence-viz .iev-price{min-width:0}
+#industry-evidence-viz .iev-svg{display:block;width:100%;height:34px;overflow:visible}
+#industry-evidence-viz .iev-svg text,#industry-evidence-viz .iev-k-svg text{fill:var(--foreground);font:12px system-ui,-apple-system,sans-serif;font-variant-numeric:tabular-nums}
+#industry-evidence-viz .iev-svg text[data-direction="up"]{fill:#b23531;font-weight:500}#industry-evidence-viz .iev-svg text[data-direction="down"]{fill:#267045;font-weight:500}
+#industry-evidence-viz .iev-breadth-label{display:block;text-align:center;font-size:11px;color:var(--secondary,#666);line-height:1.4;white-space:nowrap}
+#industry-evidence-viz .iev-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;text-align:center;margin-top:8px;font-size:12px;line-height:1.5}
+#industry-evidence-viz .iev-stats small{display:block;color:var(--secondary,#666);font-size:10px}
+#industry-evidence-viz .iev-k-svg{display:block;width:100%;height:82px}
+#industry-evidence-viz .iev-k-svg text{font-size:9px}
+#industry-evidence-viz .iev-selection{padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow-wrap:anywhere;font-size:13px;font-variant-numeric:tabular-nums}
+#industry-evidence-viz .iev-empty td{background:#fafafa;color:var(--secondary,#666);padding:16px}
+#industry-evidence-viz .iev-source{margin:20px 0}
+#industry-evidence-viz .iev-sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+@media(max-width:600px){#industry-evidence-viz .iev-table .iev-name-head{width:120px}#industry-evidence-viz .iev-mobile-hint{display:block}}
+@media print{#industry-evidence-viz .iev-table-wrap{overflow:visible;border:0}#industry-evidence-viz .iev-data-row>th{position:static}}
+</style>
+<script>
+(() => {
+  const root=document.getElementById('industry-evidence-viz'),DATA=JSON.parse(root.querySelector('#industry-evidence-data').textContent);
+  const days=['5','20','60'],parents=DATA.funds.concat(DATA.groups),securities=DATA.security_rows||{},plots=[],candles=[],rows=[];
+  const allValues=parents.concat(Object.values(securities));
+  const max=Math.max(0,...allValues.flatMap(r=>days.map(d=>r.values[d].value)).filter(v=>v!==null).map(Math.abs)),limit=max>0?Math.ceil(max/5)*5:5;
+  let selected=parents.find(r=>r.n>3)?.id||parents[0]?.id,kDays=20;
+  const NS='http://www.w3.org/2000/svg',dir={up:'↗ 上行',down:'↘ 下行',flat:'→ 横向'};
+  function add(parent,tag,attrs={},text){const node=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));if(text!==undefined)node.textContent=text;parent.append(node);return node;}
+  function description(row,day){const v=row.values[day];return day+'交易日价格变化'+v.display+(v.scored===undefined?'':'，'+v.up+'/'+v.scored+'上涨，未知'+v.unknown+(v.scored===0?'，广度不可评分':''));}
+  function choose(row,key){selected=key;root.querySelector('.iev-selection').textContent=row.market+' · '+(row.code?row.code+' ':'')+row.name+(row.n===null?'':' · '+row.n+'只')+' ｜ '+days.map(day=>{const v=row.values[day];return day+'日 '+v.display+(v.scored===undefined?'':' · '+v.up+'/'+v.scored+'上涨'+(v.scored===0?'（不可评分）':'')+(v.unknown?' · 未知'+v.unknown:''));}).join(' ｜ ')+(row.interpretation?' ｜ 原表解释：'+row.interpretation:'');rows.forEach(r=>{const active=r.key===selected;r.tr.classList.toggle('iev-selected',active);r.button.setAttribute('aria-pressed',active);});}
+  root.querySelector('.iev-domain').textContent='含成分股，同一刻度：−'+limit+'% ～ +'+limit+'%';
+  function createRow(row,key,parent=null){
+    const tr=document.createElement('tr');tr.className='iev-data-row '+(parent?'iev-child-row':'iev-parent-row');tr.dataset.row=key;tr.dataset.securityId=row.id;
+    const nameCell=document.createElement('th');nameCell.scope='row';const button=document.createElement('button');button.type='button';button.className='iev-row-target';button.dataset.securityGroup=row.id;button.setAttribute('aria-label',row.name+'；'+days.map(d=>description(row,d)).join('；')+(parent?'':'；展开成分股'));if(!parent)button.setAttribute('aria-expanded','false');
+    const name=document.createElement('span');name.className='iev-name';name.textContent=(parent?'':'+ ')+(row.code?row.code+' · ':'')+row.name;button.append(name);
+    const note=document.createElement('small');note.textContent=parent&&parent.n!==null?(parent.chart.used_ids.includes(row.id)?'纳入组图':'未纳入组图：连续60日缺失'):row.n!==null?row.n+'只证券':parent?'成分股':row.children.length?row.children.length+'个已知股票成分':'成分名单缺失';button.append(note);nameCell.append(button);tr.append(nameCell);
+    const kCell=document.createElement('td');kCell.dataset.candleCell='';const kChart=document.createElement('div'),kSvg=add(kChart,'svg',{class:'iev-k-svg',role:'img'}),kNote=document.createElement('small');kNote.className='iev-k-note';kCell.append(kChart,kNote);tr.append(kCell);candles.push({row,chart:kChart,svg:kSvg,note:kNote});
+    days.forEach(day=>{const v=row.values[day],cell=document.createElement('td');cell.dataset.row=key;cell.dataset.day=day;const chart=document.createElement('div');chart.className='iev-price';const svg=add(chart,'svg',{class:'iev-svg',role:'img','aria-label':description(row,day)});cell.append(chart);if(v.scored!==undefined){const breadth=document.createElement('small');breadth.className='iev-breadth-label';breadth.dataset.breadthLabel='';breadth.textContent=v.scored>0?v.up+'/'+v.scored+'上涨':'不可评分';if(v.unknown){const unknown=document.createElement('span');unknown.dataset.unknownLabel='';unknown.textContent=' · 未知'+v.unknown;breadth.append(unknown);}cell.append(breadth);}if(day!=='5'){const stat=row.chart.metrics[day],grid=document.createElement('div');grid.className='iev-stats';grid.dataset.statDay=day;const value=(n)=>n===null?'—':n.toFixed(2);[['direction','整体走向',dir[stat.direction]||'未评分'],['r2','R²',value(stat.r2)],['er','ER',value(stat.er)]].forEach(([key,label,text])=>{const item=document.createElement('span');item.dataset.metric=key;item.dataset.metricValue=stat[key]===null?'':String(stat[key]);const small=document.createElement('small');small.textContent=label;item.append(small,document.createTextNode(text));grid.append(item);});grid.title=day+'次交易日变化；'+stat.points+'个收盘点；'+(stat.r2===null&&stat.status==='complete'?'价格不变，R²不可定义':'OLS方向与拟合度、路径效率');cell.append(grid);}tr.append(cell);plots.push({row,day,chart,svg,key});});
+    const entry={row,key,tr,button,children:[],expanded:false,loaded:false};rows.push(entry);
+    tr.onclick=(event)=>{choose(row,key);if(!parent && !event.target.closest('td'))toggle(entry);};
+    return entry;
+  }
+  function toggle(entry){
+    if(!entry.loaded){let after=entry.tr;const row=entry.row;const membership=document.createElement('tr');membership.className='iev-empty';const text=document.createElement('td');text.colSpan=5;text.textContent=row.child_note+(row.child_source_date?' 成分快照：'+row.child_source_date+'。':'')+' '+(row.children.length?'已知股票成员 '+row.children.length+' 个；各股数据覆盖分别显示。':'未用近似名单填充。');membership.append(text);after.after(membership);after=membership;entry.children.push(membership);
+      row.children.forEach(code=>{const child=createRow(securities[code],entry.key+'::'+code,row);after.after(child.tr);after=child.tr;entry.children.push(child.tr);});entry.loaded=true;
+    }
+    entry.expanded=!entry.expanded;entry.children.forEach(tr=>tr.hidden=!entry.expanded);entry.button.setAttribute('aria-expanded',entry.expanded);entry.button.querySelector('.iev-name').textContent=(entry.expanded?'− ':'+ ')+entry.row.name;redraw();
+  }
+  DATA.sections.forEach(section=>{const tbody=document.createElement('tbody');tbody.dataset.section=section.id;const titleRow=document.createElement('tr'),title=document.createElement('th');titleRow.className='iev-group-heading';title.colSpan=5;title.scope='rowgroup';const label=document.createElement('span');label.className='iev-section-name';label.textContent=section.title;title.append(label);titleRow.append(title);tbody.append(titleRow);section.rows.forEach(row=>tbody.append(createRow(row,row.id).tr));root.querySelector('.iev-table').append(tbody);});
+  function drawPrice(plot){const {row,day,chart,svg}=plot,width=chart.clientWidth;if(!width)return;const v=row.values[day],zero=width/2,half=Math.max(1,zero-76),length=v.value===null?0:Math.abs(v.value)/limit*half;svg.setAttribute('viewBox','0 0 '+width+' 34');svg.replaceChildren();add(svg,'title',{},description(row,day));add(svg,'line',{'data-zero-line':'',x1:zero,x2:zero,y1:3,y2:31,stroke:'var(--border)','stroke-width':1});if(v.value!==null){const positive=v.value>0,negative=v.value<0,strength=Math.abs(v.value)/limit,fill=positive?'hsl(3 68% '+(69-34*Math.sqrt(strength))+'%)':negative?'hsl(145 48% '+(60-28*Math.sqrt(strength))+'%)':'#999';add(svg,'rect',{'data-value-mark':'','data-row':plot.key,'data-day':day,'data-value':v.value,'data-limit':limit,'data-direction':positive?'up':negative?'down':'flat',x:negative?zero-length:zero,y:11,width:length,height:12,fill});add(svg,'text',{'data-direct-label':'','data-direction':positive?'up':negative?'down':'flat',x:negative?zero-length-6:zero+length+6,y:21,'text-anchor':negative?'end':'start'},v.display);}else add(svg,'text',{'data-direct-label':'',x:zero,y:21,'text-anchor':'middle'},v.display);}
+  function drawCandles(plot){
+    const {row,chart,svg,note}=plot,width=chart.clientWidth;if(!width)return;svg.replaceChildren();svg.setAttribute('viewBox','0 0 '+width+' 82');
+    const path=row.chart,dates=path.dates.slice(-kDays),byDay=new Map(path.bars.map(b=>[b[0],b])),bars=dates.map(d=>byDay.get(d)).filter(Boolean),bounds=path.kind==='basket_bounds';
+    svg.setAttribute('aria-label',row.name+'，近'+kDays+'交易日日K，'+(bounds?'合成范围边界':'真实OHLC归一化'));
+    if(!bars.length){add(svg,'text',{x:width/2,y:42,'text-anchor':'middle'},'日线缺失');note.textContent='未补成K线';return;}
+    const low=Math.min(...bars.map(b=>b[3])),high=Math.max(...bars.map(b=>b[2])),pad=(high-low||high*.02)*.08,min=low-pad,max=high+pad,left=4,right=width-28,spacing=(right-left)/dates.length,y=v=>8+(max-v)/(max-min)*62;
+    svg.dataset.candleSpacing=spacing;svg.dataset.pathKind=path.kind;
+    [min,max].forEach(v=>add(svg,'text',{x:width-2,y:y(v)+3,'text-anchor':'end'},v.toFixed(0)));
+    if(100>=min&&100<=max)add(svg,'line',{x1:left,x2:right,y1:y(100),y2:y(100),stroke:'#aaa','stroke-dasharray':'2 2',opacity:.7});
+    dates.forEach((day,i)=>{const b=byDay.get(day),x=left+spacing*(i+.5);if(!b){add(svg,'text',{'data-candle-missing':day,x,y:76,'text-anchor':'middle'},'×');return;}const [,o,h,l,c]=b,up=c>=o,color=up?'var(--iev-positive)':'var(--iev-negative)',g=add(svg,'g',{'data-candle-date':day,'data-candle-row':row.id,'data-ohlc':JSON.stringify(b.slice(1))});add(g,'title',{},day+'；归一化 O '+o.toFixed(2)+' H '+h.toFixed(2)+' L '+l.toFixed(2)+' C '+c.toFixed(2)+(bounds?'；H/L为范围边界':path.baseline_close?'；原QFQ OHLC '+(path.currency||'')+' '+b.slice(1).map(v=>(v*path.baseline_close/100).toFixed(2)).join(' / '):''));const wick={'stroke':color,'stroke-width':1};if(bounds){wick['stroke-dasharray']='2 2';wick['data-wick-bound']='';}add(g,'line',{x1:x,x2:x,y1:y(h),y2:y(Math.max(o,c)),...wick});add(g,'line',{x1:x,x2:x,y1:y(Math.min(o,c)),y2:y(l),...wick});if(Math.abs(o-c)<1e-10)add(g,'line',{x1:x-2,x2:x+2,y1:y(c),y2:y(c),stroke:color});else add(g,'rect',{'data-candle-body':'',x:x-spacing*.28,y:y(Math.max(o,c)),width:spacing*.56,height:Math.abs(y(c)-y(o)),fill:color});});
+    const kind=bounds?'组指数 · 虚线为边界':path.kind==='single_member'?'单成分日K':'单股/基金日K';
+    note.textContent=kind+' · '+bars.length+'/'+dates.length+'日'+(row.n!==null?' · '+path.used+'/'+path.members+'只':'')+' · '+dates[0].slice(5)+'—'+dates.at(-1).slice(5);
+  }
+  function redraw(){plots.forEach(drawPrice);candles.forEach(drawCandles);}
+  root.querySelectorAll('[data-k-days]').forEach(b=>b.onclick=()=>{kDays=Number(b.dataset.kDays);root.classList.toggle('iev-sixty',kDays===60);root.querySelector('[data-k-header]').textContent='日 K · 近'+kDays+'交易日';root.querySelectorAll('[data-k-days]').forEach(x=>x.setAttribute('aria-pressed',x===b));redraw();});
+  if(parents.length)choose(parents.find(r=>r.id===selected),selected);redraw();
+  new ResizeObserver(redraw).observe(root.querySelector('.iev-table-wrap'));
+})();
+</script>

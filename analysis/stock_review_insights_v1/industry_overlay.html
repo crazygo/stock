@@ -1,0 +1,120 @@
+<section class="iev-overlay" aria-labelledby="iev-overlay-title">
+  <h3 id="iev-overlay-title">行业与个股 · 同屏走势</h3>
+  <div class="iev-overlay-toolbar">
+    <label>一级分组 <select data-overlay-category aria-label="同屏图一级分组"><option value="all">全部</option></select></label>
+    <div class="iev-overlay-periods" role="group" aria-label="同屏图交易日范围"><button type="button" data-overlay-days="20" aria-pressed="false">20交易日</button><button type="button" data-overlay-days="30" aria-pressed="false">30交易日</button><button type="button" data-overlay-days="60" aria-pressed="true">60交易日</button></div>
+    <label>居中口径 <select data-overlay-mode aria-label="同屏图居中口径"><option value="price">价格走势围绕均值</option><option value="daily">日涨跌幅围绕均值</option></select></label>
+    <button type="button" data-overlay-reset>恢复默认</button>
+  </div>
+  <p class="iev-note" data-overlay-basis></p>
+  <div class="iev-overlay-frame"><svg class="iev-overlay-svg" tabindex="0" role="group" aria-label="共用对数坐标的居中折线图；左右键看日期，上下键切换曲线"></svg></div>
+  <div class="iev-overlay-readout" data-overlay-readout aria-live="polite"></div>
+  <p class="iev-note" data-overlay-status aria-live="polite"></p>
+  <p class="iev-note iev-overlay-help">颜色区分对象，实线为行业/基金，虚线为个股。指向曲线或图例可强调；图内 ←/→ 看日期，↑/↓ 切换曲线。所选曲线共用刻度，中心不随显示范围改变。</p>
+  <div class="iev-overlay-legend" aria-label="已选曲线；点击移除"></div>
+  <details class="iev-overlay-picker">
+    <summary>选择行业、基金与成分股 <span data-overlay-picker-count></span></summary>
+    <div class="iev-overlay-toolbar"><label>查找 <input type="search" data-overlay-search placeholder="名称或股票代码" aria-label="查找同屏曲线"></label><label>列表 <select data-overlay-kind aria-label="同屏曲线列表类型"><option value="all">行业与成分股</option><option value="parent">行业/基金</option><option value="stock">成分股</option></select></label><button type="button" data-overlay-parents>仅选本分区行业/基金</button><button type="button" data-overlay-all>全选本分区</button><button type="button" data-overlay-clear>清空本分区</button></div>
+    <p class="iev-note">一级分组限制图与成员列表；查找只筛选列表。同一股票在重叠组中只画一条。列表中的中心窗口缺失项保留并标记。</p>
+    <div class="iev-overlay-options" data-overlay-options></div>
+  </details>
+  <details class="iev-overlay-method"><summary>0 线、对数坐标与成分口径</summary>
+    <p>价格模式：T 为本批次各市场行情截止。用 T−30 到 T 的31个官方交易日收盘价，计算几何均值 G=exp[Σln(C)/31]。曲线坐标为 ln(C/G)，0 对应各对象自己的 G；纵轴百分比标签为 C/G−1，按对数间距排列。因此相同倍数变化具有相同距离，低于中心的数值也能显示。</p>
+    <p>日涨跌幅模式：r=C/上一官方交易日收盘−1；中心 μ 为 T−30 到 T 的30次 r 的算术均值。坐标为 ln[(1+r)/(1+μ)]，0 对应各自 μ。纵轴百分比表示增长因子相对中心的变化，具体日涨跌幅和均值显示在读数中。</p>
+    <p>默认显示各市场最近60个交易日的收盘点，跨市场按实际日期对齐；仅其他市场交易的日期不补价格。中心窗口必须完整，较早的缺口断线。中心固定在本批截止，是对已发生路径的描述。</p>
+    <p>行业使用与下表日 K 相同的固定期初等权参考篮子，基金使用自身日线；组中心从篮子收盘路径计算。当前成员回看不是历史 PIT，缺失成员与小样本范围沿用下表口径。股票可从组成员列表加入，未知基金成分不补造。</p>
+  </details>
+</section>
+<style>
+#industry-evidence-viz .iev-overlay{margin:18px 0 28px;border-bottom:1px solid var(--border);padding-bottom:18px}
+#industry-evidence-viz .iev-overlay h3{margin:0 0 12px;font-size:17px}
+#industry-evidence-viz .iev-overlay-toolbar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:10px 0}
+#industry-evidence-viz .iev-overlay-toolbar label{display:flex;align-items:center;gap:7px;max-width:100%;font-size:13px;min-width:0}
+#industry-evidence-viz .iev-overlay-toolbar select{min-width:0;max-width:100%;font-size:13px}
+#industry-evidence-viz .iev-overlay-toolbar button{font-size:13px}
+#industry-evidence-viz .iev-overlay-periods{display:flex;gap:4px}
+#industry-evidence-viz [data-overlay-days][aria-pressed="true"]{background:#eee;border-color:#444}
+#industry-evidence-viz .iev-overlay-frame{width:100%;border:1px solid #bbb;background:#fff;touch-action:pan-y}
+#industry-evidence-viz .iev-overlay-svg{display:block;width:100%;height:390px;outline-offset:3px}
+#industry-evidence-viz .iev-overlay-svg text{fill:#444;font:11px system-ui,-apple-system,sans-serif;font-variant-numeric:tabular-nums}
+#industry-evidence-viz .iev-overlay-readout{min-height:44px;font-size:13px;padding:8px 0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#industry-evidence-viz .iev-overlay-help{font-size:12px;margin:8px 0}
+#industry-evidence-viz .iev-overlay-legend{display:flex;flex-wrap:wrap;gap:5px 10px;margin:12px 0}
+#industry-evidence-viz .iev-overlay-legend button{display:inline-flex;align-items:center;gap:7px;border:1px solid #ddd;padding:4px 7px;font-size:12px;max-width:100%;text-align:left;overflow-wrap:anywhere}
+#industry-evidence-viz .iev-overlay-line-key{display:inline-block;flex-shrink:0;width:20px;border-top:2px solid var(--series-color)}
+#industry-evidence-viz .iev-overlay-line-key[data-kind="stock"]{border-top-style:dashed}
+#industry-evidence-viz .iev-overlay-options{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:6px 16px;max-height:280px;overflow:auto;border:1px solid #ccc;padding:10px}
+#industry-evidence-viz .iev-overlay-options label{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+#industry-evidence-viz .iev-overlay-options input{flex-shrink:0;accent-color:#444;margin-top:3px}
+#industry-evidence-viz .iev-overlay-options small{display:block;font-size:11px}
+#industry-evidence-viz .iev-overlay-options [data-missing-center]{color:#777}
+@media(max-width:600px){#industry-evidence-viz .iev-overlay-svg{height:320px}#industry-evidence-viz .iev-overlay-toolbar label:has([data-overlay-category]){width:100%}#industry-evidence-viz [data-overlay-category]{flex:1;width:0}#industry-evidence-viz .iev-overlay-toolbar input{width:160px}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const root=document.getElementById('industry-evidence-viz'),panel=root.querySelector('.iev-overlay'),DATA=JSON.parse(root.querySelector('#industry-evidence-data').textContent);
+  const parents=DATA.funds.concat(DATA.groups),parentIds=new Set(parents.map(r=>r.id)),byId=new Map(parents.map(r=>[r.id,r]));
+  Object.values(DATA.security_rows||{}).forEach(r=>{if(!byId.has(r.id))byId.set(r.id,r);});
+  const allRows=[...byId.values()],indices=new Map(allRows.map((r,i)=>[r.id,i])),selected=new Set(parentIds);
+  const category=panel.querySelector('[data-overlay-category]'),mode=panel.querySelector('[data-overlay-mode]'),svg=panel.querySelector('svg'),NS='http://www.w3.org/2000/svg';
+  const colors=['#356b9d','#b94c43','#4b8051','#9566a4','#a16e23','#34818b','#7b6260','#737f25','#7d579c','#b36081'];
+  let sessions=60,active=[],dates=[],highlight=null,cursor=null,geometry=null;
+  const color=r=>colors[indices.get(r.id)%colors.length],kind=r=>parentIds.has(r.id)?'parent':'stock';
+  const label=r=>(r.code?r.code+' · ':r.market+' · ')+r.name;
+  const pct=v=>(v>=0?'+':'−')+Math.abs(v*100).toFixed(2)+'%';
+  function add(parent,tag,attrs={},text){const node=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));if(text!==undefined)node.textContent=text;parent.append(node);return node;}
+  function candidates(){const sections=DATA.sections.filter(s=>category.value==='all'||s.id===category.value),ids=new Set();sections.forEach(s=>s.rows.forEach(r=>{ids.add(r.id);r.children.forEach(id=>ids.add(id));}));return allRows.filter(r=>ids.has(r.id));}
+  DATA.sections.forEach(s=>{const option=document.createElement('option');option.value=s.id;option.textContent=s.title;category.append(option);});
+  function list(){
+    const query=panel.querySelector('[data-overlay-search]').value.trim().toLowerCase(),type=panel.querySelector('select[data-overlay-kind]').value,rows=candidates(),target=panel.querySelector('[data-overlay-options]');target.replaceChildren();
+    const shown=rows.filter(r=>(type==='all'||type===kind(r))&&label(r).toLowerCase().includes(query));
+    shown.forEach(r=>{const item=document.createElement('label'),input=document.createElement('input'),name=document.createElement('span'),note=document.createElement('small');input.type='checkbox';input.dataset.overlaySelect=r.id;input.checked=selected.has(r.id);input.disabled=r.chart.overlay.status!=='complete';input.setAttribute('aria-label','叠加 '+label(r));name.textContent=label(r);note.textContent=input.disabled?'中心窗口缺失，未画线':kind(r)==='parent'?(r.n===null?'基金自身日线':'参考篮子 '+r.chart.used+'/'+r.chart.members+'只'):'成分股 · '+r.chart.overlay.points.filter(p=>p[1]!==null).length+'/60日';name.append(note);if(input.disabled)item.dataset.missingCenter='';item.append(input,name);target.append(item);input.onchange=()=>{input.checked?selected.add(r.id):selected.delete(r.id);refresh(false);};});
+    if(!shown.length)target.textContent='没有匹配的对象。';
+    panel.querySelector('[data-overlay-picker-count]').textContent='（本分区 '+rows.filter(r=>kind(r)==='parent').length+' 个行业/基金，'+rows.filter(r=>kind(r)==='stock').length+' 只成分股）';
+  }
+  function emphasize(id){highlight=id;svg.querySelectorAll('[data-overlay-path],[data-overlay-end]').forEach(p=>{const on=!id||p.dataset.overlaySeries===id;p.style.opacity=on?'1':'.15';if(p.hasAttribute('data-overlay-path'))p.style.strokeWidth=id&&on?'2.8':kind(byId.get(p.dataset.overlaySeries))==='parent'?'1.6':'1.2';});readout();}
+  function legend(){const target=panel.querySelector('.iev-overlay-legend');target.replaceChildren();active.forEach(r=>{const button=document.createElement('button'),key=document.createElement('i');button.type='button';button.dataset.overlayLegend=r.id;button.title='点击移除 '+label(r);button.setAttribute('aria-label','移除 '+label(r));key.className='iev-overlay-line-key';key.style.setProperty('--series-color',color(r));key.dataset.kind=kind(r);button.append(key,document.createTextNode(label(r)+' ×'));target.append(button);button.onmouseenter=button.onfocus=()=>emphasize(r.id);button.onmouseleave=button.onblur=()=>emphasize(null);button.onclick=()=>{selected.delete(r.id);refresh();};});}
+  function readout(){
+    const target=panel.querySelector('[data-overlay-readout]');svg.querySelectorAll('[data-overlay-cursor]').forEach(n=>n.remove());
+    const row=active.find(r=>r.id===highlight)||active[0],date=dates[cursor??dates.length-1];
+    if(!row||!date){target.textContent='当前没有选中的可绘制曲线，请在成员列表中选择。';return;}
+    const point=row.chart.overlay.points.find(p=>p[0]===date),value=point?.[mode.value==='price'?2:4];
+    const center=row.chart.overlay,actual=v=>row.chart.baseline_close?(row.chart.currency||'')+' '+(v*row.chart.baseline_close/100).toFixed(2):'归一值 '+v.toFixed(2);
+    target.textContent=label(row)+' ｜ '+date+' ｜ '+(value===null||value===undefined?'当日缺失或本市场非交易日':mode.value==='price'?'距价格中心 '+pct(Math.expm1(value/100))+' · 收盘 '+actual(point[1])+' · 中心 '+actual(center.price_reference):'日涨跌幅 '+pct(point[3])+' · 30次均值 '+pct(center.daily_return_reference)+' · 偏离 '+((point[3]-center.daily_return_reference)*100).toFixed(2)+' 个百分点');
+    if(geometry){const x=geometry.x(dates.indexOf(date));add(svg,'line',{'data-overlay-cursor':'',x1:x,x2:x,y1:geometry.top,y2:geometry.bottom,stroke:'#999','stroke-dasharray':'3 3','pointer-events':'none'});if(value!==null&&value!==undefined)add(svg,'circle',{'data-overlay-cursor':'',cx:x,cy:geometry.y(value),r:4,fill:color(row),stroke:'#fff','stroke-width':1,'pointer-events':'none'});}
+  }
+  function draw(){
+    const width=svg.clientWidth,height=svg.clientHeight;if(!width)return;
+    svg.replaceChildren();svg.setAttribute('viewBox','0 0 '+width+' '+height);svg.dataset.overlaySessions=sessions;svg.dataset.overlayPlottedMode=mode.value;
+    const series=active.map(row=>({row,points:row.chart.overlay.points.slice(-sessions)}));
+    dates=[...new Set(series.flatMap(s=>s.points.map(p=>p[0])))].sort();
+    const values=series.flatMap(s=>s.points.map(p=>p[mode.value==='price'?2:4])).filter(v=>v!==null),extent=Math.max(1,...values.map(Math.abs))*1.1;
+    const step=10**Math.floor(Math.log10(extent/3)),tickStep=[1,2,5,10].map(v=>v*step).find(v=>v>=extent/3),limit=Math.ceil(extent/tickStep)*tickStep;
+    const left=64,right=width-16,top=32,bottom=height-42,x=i=>left+i/Math.max(1,dates.length-1)*(right-left),y=v=>top+(limit-v)/(2*limit)*(bottom-top);
+    geometry={x,y,top,bottom,left,right,limit};svg.dataset.overlayLimit=limit;svg.dataset.overlayDates=JSON.stringify(dates);
+    add(svg,'text',{x:12,y:18},'相对中心（对数刻度）');
+    for(let v=-limit;v<=limit+1e-8;v+=tickStep){const zero=Math.abs(v)<1e-8;add(svg,'line',{x1:left,x2:right,y1:y(v),y2:y(v),stroke:zero?'#666':'#e6e6e6','stroke-width':zero?1.3:1,...(zero?{'data-overlay-zero':''}:{})});add(svg,'text',{x:left-8,y:y(v)+4,'text-anchor':'end'},zero?'0':pct(Math.expm1(v/100)));}
+    if(dates.length){const n=width<500?3:6;[...new Set(Array.from({length:n},(_,i)=>Math.round(i*(dates.length-1)/(n-1))))].forEach(i=>{add(svg,'line',{x1:x(i),x2:x(i),y1:top,y2:bottom,stroke:'#eee'});add(svg,'text',{x:x(i),y:bottom+24,'text-anchor':i===0?'start':i===dates.length-1?'end':'middle'},dates[i].slice(5));});}
+    const seriesLayer=add(svg,'g',{'data-overlay-series-layer':''});
+    series.forEach(({row,points})=>{let path='',pen=false,last=null;const field=mode.value==='price'?2:4;
+      points.forEach(point=>{const value=point[field];if(value===null){pen=false;return;}path+=(pen?' L':' M')+x(dates.indexOf(point[0])).toFixed(3)+' '+y(value).toFixed(3);pen=true;last=point;});
+      if(path){const line=add(seriesLayer,'path',{'data-overlay-path':'','data-overlay-series':row.id,'data-overlay-line-kind':kind(row),'data-overlay-points':JSON.stringify(points.map(p=>[p[0],p[field]])),d:path,fill:'none',stroke:color(row),'stroke-width':kind(row)==='parent'?1.6:1.2,'stroke-dasharray':kind(row)==='stock'?'5 3':'', 'pointer-events':'none'});add(line,'title',{},label(row));add(seriesLayer,'circle',{'data-overlay-end':'','data-overlay-series':row.id,cx:x(dates.indexOf(last[0])),cy:y(last[field]),r:2,fill:color(row),'pointer-events':'none'});}
+    });
+    if(!active.length)add(svg,'text',{x:width/2,y:height/2,'text-anchor':'middle'},'选择行业、基金或成分股开始比较');
+    panel.querySelector('[data-overlay-basis]').textContent=mode.value==='price'?'0线 = 各自 T−30 至 T 的31个收盘价几何均值 · 价格路径共用对数轴':'0线 = 各自 T−30 至 T 的30次日涨跌幅均值 · 增长因子共用对数轴';
+    const eligible=candidates(),missing=eligible.filter(r=>r.chart.overlay.status!=='complete').length,markets=[...new Set(active.map(r=>r.market))];
+    panel.querySelector('[data-overlay-status]').textContent='显示 '+active.length+' 条（'+active.filter(r=>kind(r)==='parent').length+' 个行业/基金，'+active.filter(r=>kind(r)==='stock').length+' 只个股） · 中心窗口缺失 '+missing+' 项 · '+(dates.length?dates[0]+' — '+dates.at(-1)+' · 各市场最近'+sessions+'交易日 · ':'')+markets.map(m=>m+' 截至 '+DATA.market_cutoff[m]).join(' / ');
+    emphasize(active.some(r=>r.id===highlight)?highlight:null);
+  }
+  function refresh(relist=true){active=candidates().filter(r=>selected.has(r.id)&&r.chart.overlay.status==='complete');cursor=null;draw();legend();if(relist)list();}
+  category.onchange=()=>{highlight=null;refresh();};mode.onchange=()=>{highlight=null;refresh(false);};
+  panel.querySelectorAll('[data-overlay-days]').forEach(b=>b.onclick=()=>{sessions=Number(b.dataset.overlayDays);panel.querySelectorAll('[data-overlay-days]').forEach(t=>t.setAttribute('aria-pressed',t===b));refresh(false);});
+  panel.querySelector('[data-overlay-search]').oninput=list;panel.querySelector('[data-overlay-kind]').onchange=list;
+  ['parents','all','clear'].forEach(action=>panel.querySelector('[data-overlay-'+action+']').onclick=()=>{candidates().forEach(r=>{if(action==='all'&&r.chart.overlay.status==='complete'||action==='parents'&&kind(r)==='parent')selected.add(r.id);else selected.delete(r.id);});refresh();});
+  panel.querySelector('[data-overlay-reset]').onclick=()=>{category.value='all';mode.value=DATA.overlay_method.default_mode;sessions=60;selected.clear();parentIds.forEach(id=>selected.add(id));panel.querySelectorAll('[data-overlay-days]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.overlayDays==='60'));panel.querySelector('[data-overlay-search]').value='';panel.querySelector('[data-overlay-kind]').value='all';highlight=null;refresh();};
+  svg.addEventListener('pointermove',event=>{if(!geometry||!active.length)return;const rect=svg.getBoundingClientRect(),px=event.clientX-rect.left,py=event.clientY-rect.top;cursor=Math.min(dates.length-1,Math.max(0,Math.round((px-geometry.left)/(geometry.right-geometry.left)*(dates.length-1))));const nearest=active.map(r=>({r,p:r.chart.overlay.points.find(p=>p[0]===dates[cursor])})).filter(v=>v.p?.[mode.value==='price'?2:4]!=null).sort((a,b)=>Math.abs(geometry.y(a.p[mode.value==='price'?2:4])-py)-Math.abs(geometry.y(b.p[mode.value==='price'?2:4])-py))[0];emphasize(nearest?.r.id||null);});
+  svg.addEventListener('pointerleave',()=>{cursor=null;emphasize(null);});
+  svg.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)||!active.length)return;event.preventDefault();if(event.key==='ArrowUp'||event.key==='ArrowDown'){const i=Math.max(0,active.findIndex(r=>r.id===highlight));highlight=active[(i+(event.key==='ArrowDown'?1:active.length-1))%active.length].id;}else cursor=event.key==='Home'?0:event.key==='End'?dates.length-1:Math.min(dates.length-1,Math.max(0,(cursor??dates.length-1)+(event.key==='ArrowLeft'?-1:1)));emphasize(highlight);});
+  refresh();new ResizeObserver(draw).observe(panel.querySelector('.iev-overlay-frame'));
+});
+</script>
