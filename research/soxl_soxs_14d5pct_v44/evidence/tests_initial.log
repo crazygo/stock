@@ -1,0 +1,61 @@
+test_base_fits_exact_unchanged_and_reused (test_condition.Tests.test_base_fits_exact_unchanged_and_reused) ... ERROR
+test_base_future_labels_not_used (test_condition.Tests.test_base_future_labels_not_used) ... ERROR
+test_constant_macro_reduces_to_original_predictions (test_condition.Tests.test_constant_macro_reduces_to_original_predictions) ... ok
+test_current_future_inputs_labels_and_raws_immune (test_condition.Tests.test_current_future_inputs_labels_and_raws_immune) ... ok
+test_halfday_retains_one_date_weight (test_condition.Tests.test_halfday_retains_one_date_weight) ... ok
+test_independent_all_variants_bootstrap_equations (test_condition.Tests.test_independent_all_variants_bootstrap_equations) ... ok
+test_last_120_dates (test_condition.Tests.test_last_120_dates) ... ok
+test_macro_residual_dependency_recoverable (test_condition.Tests.test_macro_residual_dependency_recoverable) ... ok
+test_minimum_dates_not_clock_rows (test_condition.Tests.test_minimum_dates_not_clock_rows) ... ok
+test_missing_current_and_expired_abstain (test_condition.Tests.test_missing_current_and_expired_abstain) ... ok
+test_missing_or_fractional_clock_rejected (test_condition.Tests.test_missing_or_fractional_clock_rejected) ... ok
+test_missing_raw_not_zero (test_condition.Tests.test_missing_raw_not_zero) ... ok
+test_only_registered_inputs_and_dimensions (test_condition.Tests.test_only_registered_inputs_and_dimensions) ... ok
+test_parameter_tamper_detected (test_condition.Tests.test_parameter_tamper_detected) ... ok
+test_penalty_is_original_per_feature (test_condition.Tests.test_penalty_is_original_per_feature) ... ok
+test_pending_prefix_and_cutoff_equality (test_condition.Tests.test_pending_prefix_and_cutoff_equality) ... ok
+test_saved_predictions_independently_reconstructed (test_condition.Tests.test_saved_predictions_independently_reconstructed) ... ok
+test_tiny_nonzero_scales_handled_as_registered (test_condition.Tests.test_tiny_nonzero_scales_handled_as_registered) ... ok
+test_units_offsets_and_weight_units_invariance (test_condition.Tests.test_units_offsets_and_weight_units_invariance) ... ok
+test_zero_weight_rows_not_in_normalization (test_condition.Tests.test_zero_weight_rows_not_in_normalization) ... ok
+
+======================================================================
+ERROR: test_base_fits_exact_unchanged_and_reused (test_condition.Tests.test_base_fits_exact_unchanged_and_reused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v44/test_condition.py", line 93, in test_base_fits_exact_unchanged_and_reused
+    p=base_fixture();at=p.index[-1];a=fit_bases(p,at);b=original_bases(p,at)
+                                      ^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v44/conditional_calibration.py", line 16, in fit_bases
+    same=panel[panel.clock==panel.loc[at,'clock']];dates,fb=training_dates(same,day_cutoff(at));models={};fits={};raws={}
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v21/early_training.py", line 37, in training_dates
+    full = past[past.release.notna() & past.release.lt(cutoff)]
+                ^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/generic.py", line 6299, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'release'
+
+======================================================================
+ERROR: test_base_future_labels_not_used (test_condition.Tests.test_base_future_labels_not_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v44/test_condition.py", line 97, in test_base_future_labels_not_used
+    p=base_fixture();at=p.index[130];a=wire(fit_bases(p,at)[1]);p.loc[p.index>=at,['C','D']]=999;self.assertEqual(a,wire(fit_bases(p,at)[1]))
+                                            ^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v44/conditional_calibration.py", line 16, in fit_bases
+    same=panel[panel.clock==panel.loc[at,'clock']];dates,fb=training_dates(same,day_cutoff(at));models={};fits={};raws={}
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v21/early_training.py", line 37, in training_dates
+    full = past[past.release.notna() & past.release.lt(cutoff)]
+                ^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/generic.py", line 6299, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'release'
+
+----------------------------------------------------------------------
+Ran 20 tests in 1.514s
+
+FAILED (errors=2)
