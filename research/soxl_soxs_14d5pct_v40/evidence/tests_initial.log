@@ -1,0 +1,39 @@
+test_119_dates_not_ready (test_nonlinear.Tests.test_119_dates_not_ready) ... ok
+test_future_and_current_outcomes_cannot_change_past_fit (test_nonlinear.Tests.test_future_and_current_outcomes_cannot_change_past_fit) ... ERROR
+test_manual_tree_and_ridge_equations (test_nonlinear.Tests.test_manual_tree_and_ridge_equations) ... ok
+test_positive_direction_is_not_profitable_action (test_nonlinear.Tests.test_positive_direction_is_not_profitable_action) ... ok
+test_same_C_and_M_across_learners (test_nonlinear.Tests.test_same_C_and_M_across_learners) ... ok
+test_single_weighted_class_keeps_constant (test_nonlinear.Tests.test_single_weighted_class_keeps_constant) ... ok
+test_tree_leaf_tamper_detected (test_nonlinear.Tests.test_tree_leaf_tamper_detected) ... ok
+test_uniform_payoff_scaling_preserves_direction (test_nonlinear.Tests.test_uniform_payoff_scaling_preserves_direction) ... ok
+test_unready_current_features_do_not_emit_scores (test_nonlinear.Tests.test_unready_current_features_do_not_emit_scores) ... ok
+test_unresolved_earlier_date_cannot_be_skipped (test_nonlinear.Tests.test_unresolved_earlier_date_cannot_be_skipped) ... ok
+test_zero_magnitude_keeps_half (test_nonlinear.Tests.test_zero_magnitude_keeps_half) ... ok
+
+======================================================================
+ERROR: test_future_and_current_outcomes_cannot_change_past_fit (test_nonlinear.Tests.test_future_and_current_outcomes_cannot_change_past_fit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v40/test_nonlinear.py", line 36, in test_future_and_current_outcomes_cannot_change_past_fit
+    b=fit_bases(p,at);self.assertEqual(wire(a[1:]),wire(b[1:]))
+                                       ^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v40/test_nonlinear.py", line 20, in wire
+    def wire(x):return json.dumps(json_ready(x),sort_keys=True)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Timestamp is not JSON serializable
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.230s
+
+FAILED (errors=1)

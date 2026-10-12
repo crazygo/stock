@@ -1,0 +1,17 @@
+nonlinear verified through 2025-01-28 15:05:30+00:00
+nonlinear verified through 2025-04-09 14:05:30+00:00
+nonlinear verified through 2025-06-23 14:05:30+00:00
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v40/verify_nonlinear.py", line 101, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);verify(p.parse_args().run)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v40/verify_nonlinear.py", line 36, in verify
+    values,n=model_equations(same,ids,at,model,info,columns(row.clock),kind);checks+=n
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v40/audit_nonlinear_models.py", line 46, in model_equations
+    else:checks+=fit_check(heads['q'],Z,(D>0).astype(int),cw,2 if kind=='tree' else 1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v40/audit_trees.py", line 39, in fit_check
+    members=np.flatnonzero(ids==j);assert len(members)==int(node['count'])
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

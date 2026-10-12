@@ -1,0 +1,185 @@
+{
+  "post_result_only": true,
+  "rules_changed": false,
+  "phase": "development",
+  "paired_unknown_queries_retained": 2,
+  "evaluation_queries": 328,
+  "paired_maturity_cutoff": "2026-05-01 00:00:00-04:00",
+  "metrics": {
+    "tree": {
+      "scored_queries": 326,
+      "scored_dates": 82,
+      "date_equal_metrics": {
+        "magnitude": 0.057305579985106624,
+        "direction_label": 0.5457317073170732,
+        "q": 0.5399006422337158,
+        "raw_mse": 0.004370004975788416,
+        "raw_chosen_logreturn": -0.006883244421170823,
+        "raw_regret": 0.05546287037670612,
+        "raw_positive": 0.5640243902439024,
+        "calibrated_mse": 0.004370788638809769,
+        "calibrated_chosen_logreturn": -0.008849454438574314,
+        "calibrated_regret": 0.057429080394109586,
+        "calibrated_positive": 0.551829268292683,
+        "weighted_direction_brier_numerator": 0.014734897718863615,
+        "weighted_direction_brier": 0.25712849817928946
+      }
+    },
+    "stump": {
+      "scored_queries": 326,
+      "scored_dates": 82,
+      "date_equal_metrics": {
+        "magnitude": 0.057305579985106624,
+        "direction_label": 0.5457317073170732,
+        "q": 0.5473251478083727,
+        "raw_mse": 0.004296068011346062,
+        "raw_chosen_logreturn": -0.0035410990735331486,
+        "raw_regret": 0.05212072502906844,
+        "raw_positive": 0.5914634146341463,
+        "calibrated_mse": 0.00436093839201432,
+        "calibrated_chosen_logreturn": -0.00647334645904928,
+        "calibrated_regret": 0.05505297241458456,
+        "calibrated_positive": 0.5609756097560976,
+        "weighted_direction_brier_numerator": 0.014402449699672554,
+        "weighted_direction_brier": 0.2513271779714238
+      }
+    },
+    "linear": {
+      "scored_queries": 326,
+      "scored_dates": 82,
+      "date_equal_metrics": {
+        "magnitude": 0.057305579985106624,
+        "direction_label": 0.5457317073170732,
+        "q": 0.5667805829318928,
+        "raw_mse": 0.004390154848053013,
+        "raw_chosen_logreturn": -0.00693378570221362,
+        "raw_regret": 0.055513411657748916,
+        "raw_positive": 0.5670731707317073,
+        "calibrated_mse": 0.0044126892995613514,
+        "calibrated_chosen_logreturn": -0.01172607238079567,
+        "calibrated_regret": 0.06030569833633098,
+        "calibrated_positive": 0.5274390243902439,
+        "weighted_direction_brier_numerator": 0.014846139514240424,
+        "weighted_direction_brier": 0.2590697017305967
+      }
+    }
+  },
+  "candidate_counts": {
+    "tree_band": {
+      "CASH": 278,
+      "SOXL": 50
+    },
+    "tree_point": {
+      "SOXS": 14,
+      "SOXL": 174,
+      "CASH": 140
+    },
+    "stump_band": {
+      "CASH": 280,
+      "SOXL": 47,
+      "SOXS": 1
+    },
+    "linear_band": {
+      "SOXL": 51,
+      "CASH": 277
+    },
+    "source_v35": {
+      "SOXL": 51,
+      "CASH": 277
+    },
+    "premarket_only": {
+      "CASH": 305,
+      "SOXL": 23
+    },
+    "cash": {
+      "CASH": 328
+    },
+    "double_cost": {
+      "CASH": 278,
+      "SOXL": 50
+    }
+  },
+  "split_field_counts": {
+    "tree": {
+      "revenue_growth": 9197,
+      "sector_5": 5865,
+      "margin_improvement": 4907,
+      "relative_volume_interaction": 4658,
+      "log_sector_volatility": 4096,
+      "relative_20": 3513,
+      "breadth_volume_interaction": 3162,
+      "growth_acceleration": 3137,
+      "disclosure_freshness": 2862,
+      "breadth_premarket": 2486,
+      "breadth_change_5": 2472,
+      "intraday_sector_recent15": 2399,
+      "strength_persistence_5": 2083,
+      "breadth_today": 1869,
+      "market_5": 1803,
+      "intraday_sector_vwap": 1450,
+      "relative_5": 1403,
+      "intraday_sector_high_distance": 1403,
+      "sector_1": 1345,
+      "sector_20": 1338,
+      "intraday_sector_low_distance": 1243,
+      "intraday_breadth_vwap": 1118,
+      "intraday_sector_previous15": 1098,
+      "volume_log_mean": 1091,
+      "intraday_market_session": 1066,
+      "breadth_5": 971,
+      "sector_premarket": 816,
+      "trend_volume_alignment": 815,
+      "intraday_sector_efficiency": 654,
+      "intraday_market_recent15": 570,
+      "breadth_20": 560,
+      "acceleration_breadth": 424,
+      "volume_direction_diffusion": 391,
+      "intraday_breadth_recent_positive": 359,
+      "intraday_sector_session": 355,
+      "margin_breadth": 165,
+      "intraday_breadth_session": 164,
+      "growth_breadth": 134,
+      "recent_earnings_share": 43
+    },
+    "stump": {
+      "revenue_growth": 4601,
+      "sector_5": 3157,
+      "relative_volume_interaction": 2011,
+      "breadth_volume_interaction": 1819,
+      "margin_improvement": 1797,
+      "disclosure_freshness": 1257,
+      "relative_20": 1212,
+      "log_sector_volatility": 1044,
+      "growth_acceleration": 927,
+      "breadth_premarket": 884,
+      "intraday_sector_recent15": 864,
+      "breadth_change_5": 846,
+      "breadth_5": 713,
+      "breadth_today": 683,
+      "intraday_sector_low_distance": 502,
+      "strength_persistence_5": 478,
+      "sector_20": 360,
+      "intraday_sector_previous15": 358,
+      "intraday_sector_vwap": 346,
+      "market_5": 320,
+      "intraday_sector_efficiency": 305,
+      "volume_log_mean": 283,
+      "intraday_breadth_vwap": 283,
+      "breadth_20": 256,
+      "intraday_market_session": 218,
+      "intraday_market_recent15": 154,
+      "intraday_sector_high_distance": 135,
+      "sector_premarket": 124,
+      "relative_5": 109,
+      "sector_1": 98,
+      "intraday_breadth_recent_positive": 53,
+      "intraday_sector_session": 19,
+      "growth_breadth": 12,
+      "trend_volume_alignment": 9,
+      "recent_earnings_share": 3
+    }
+  },
+  "split_counts_are_not_importance_or_independent_evidence": true,
+  "overlapping_hypothetical_payoffs_are_not_capital_returns": true,
+  "results_sha256": "7811cc26c441e9fff2d50820cbcd8d880f0e28d23f49b60bc687ac79b09197b5"
+}
