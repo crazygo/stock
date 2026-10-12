@@ -1,0 +1,140 @@
+{
+  "phase": "cases",
+  "started_at": "2026-10-12T12:24:27.582667+00:00",
+  "protocol_sha256": "11ddbcd6b4de9e0e723e6c5eef0398e4e781ae0f371110e8a0121d9424ef51f0",
+  "preregistration": {
+    "registered_at": "2026-10-12T12:19:28.646140+00:00",
+    "protocol_sha256": "11ddbcd6b4de9e0e723e6c5eef0398e4e781ae0f371110e8a0121d9424ef51f0",
+    "protocol": {
+      "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+      "development": {
+        "evaluation_start": "2026-01-01",
+        "evaluation_end": "2026-04-30",
+        "months": [
+          "2026-01",
+          "2026-02",
+          "2026-03",
+          "2026-04"
+        ]
+      },
+      "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+      "cases": {
+        "evaluation_start": "2026-05-01",
+        "evaluation_end": "2026-09-30",
+        "regression_months": [
+          "2026-05",
+          "2026-07",
+          "2026-09"
+        ]
+      },
+      "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+      "no_broker_orders": true,
+      "no_automatic_R2_upload": true,
+      "no_case_specific_parameters": true,
+      "version": "soxl_soxs_development_selected_full_v17",
+      "primary": "anchor_local_full",
+      "source_run": ".cache/soxl_soxs_14d5pct_v17/runs/paired_cases_20261012",
+      "hypothesis": "v15 replaced the more useful v14 calibrated mean with a worse local empirical mean. Preserve the as-issued mean while adjusting only scenario probabilities,then test whether tail-aware allocation improves capital growth and nonnegative months. No month-based parameters or assumed improvement.",
+      "source": "Reuse v14 daily as-issued regret_regime paired forecasts,causal19factor panel,and unchanged6%stop/+5%TP/14calendar labels. Source hashes,engineering verification and immutable delivery checked. Preserve source top direction even if source positivevalue gate abstained. No refit or hindsight change to historical v14 forecasts.",
+      "decision_clock_et": "09:25:30",
+      "training": "At each00:00ET use latest120prior dates with source paired calibration ready and BOTH complete14day labels released strictly before cutoff;minimum60. Use one observed contract return per date for the currently selected ETF. Pool membership independent of actual historical buy/action or outcome sign. Recency half-life63eligible dates;keep all outcomes including adverse gaps. No current-day outcome or early-win label release.",
+      "conditioning_columns": [
+        "score",
+        "advantage",
+        "relative_5",
+        "breadth_5",
+        "volume_direction_diffusion",
+        "log_sector_volatility"
+      ],
+      "conditioning": "score=as-issued calibrated candidate logvalue;advantage=direction*as-issued calibratedD;relative5,breadth5,volume_direction_diffusion from v14 multiplied by ETF direction;logsectorvol unsigned. For candidate symbol query same-symbol historical rows,including dates when it was not top. Standardize with recency-weighted mean/std of only eligible120rows;std<1e-12->1. No month/year feature.",
+      "distribution": "Squared distance=mean squared standardized difference over6columns. Bandwidth squared=max(40th-smallest distance,1e-12). Kernel=exp(-distance/(2*bandwidth_squared));multiply recency,normalize to1. All rows retained,not hard nearest40 truncation. Require prior and posterior effective dates1/sum(w^2)>=20. Finalweights apply the registered mean constraint except the unanchoredcontrol. Use empirical actual net returns,not shifted residuals that could invent payoffs above the TP. Weighted lower5%tail includes fractional quantile mass;diagnostic only,not a guaranteed bound.",
+      "utility": "At fixed fractions[0,.25,.5,.75,1],scenario terminal wealth=1+f*historical_net_return. Primary gamma5 score=sum(w*((wealth^(1-gamma)-1)/(1-gamma))). Choose largest score;within1e-12ties take lower fraction,zero meanscash. Gamma1 logwealth control. This is one-contract empirical CRRA utility,not an analytical Merton optimum or a proven monthly-risk guarantee. No leverage,no risk-parameter search.",
+      "routes": {
+        "anchor_local_power": "Primary:6factorprior,meanconstraint,gamma5,fractions0/25/50/75/100%",
+        "anchor_global_power": "sameconstraint,no statedistance,gamma5",
+        "anchor_score_power": "sameconstraint,score/advantagedistanceonly,gamma5",
+        "anchor_local_log": "same localanchored distribution,gamma1logutility",
+        "anchor_local_full": "same localanchored distribution,gamma5,only0or100%",
+        "unanchored_local_power": "exactv15local_power recipewithoutmeanconstraint",
+        "anchor_source_gate": "sameprimaryplusrequirev14originalcalibratedtopvalue>0",
+        "source_full": "exactv14primaryactions100%cash",
+        "source_half": "exactv14primaryactions50%cash",
+        "source_direction": "v14topdirectiononallreadydates100%cash",
+        "cash": "alwayscash",
+        "double_cost": "sameprimaryactions/fractions,doublecostrawexecution"
+      },
+      "capital": "At actual accepted entry deploy frozenfraction*currentlysettledcash;remainingcash earns0,oneETFposition atmost. Fraction fixedthroughtrade,no pyramiding,no reuse of unusedcash whileholding,no samedayreentry,T+1actualsaleproceeds,dividends andcrossmonthMTM retained. Unknownholding staysoccupied. Study uses existing fractional simulatedeconomicunits. Admission and sizing both change versus v14;local_full isolates fractional sizing effect.",
+      "comparison": "All12routes preregistered;diagnostics cannotreplacefailedprimary. v14full/direction andv3halfledgers mustreproduce;unanchoredlocalmustreproducev15local_power. Samebudgetanddata readiness. Paired10session5000bootstrapseed707descriptiveexposedhistory. Only primaryfulloriginalgatecanpass.",
+      "diagnostics": "Mean preservation error and KL stationarity,prior/posterior effective dates,unsupported/abstention counts,allocationdistribution,expectedversusrealizedpayoff,completecapitalmonthlyreturns,drawdown,allfailedcontrols. Support-preservingreweighting doesnotprove calibratedtailprobabilities or nonnegativefuturemonths.",
+      "reference": "https://arxiv.org/abs/1012.2848",
+      "reference_scope": "Meucci Fully Flexible Views: entropy minimization with moment constraints and unchanged scenarios. Our sole moment is an as-issued model estimate,notknowntruth;no claim that paper validates this strategy.",
+      "mean_constraint": "For current v14 chosen ETF use its saved calibrated logpayoff g. Empirical scenario x_i=log(1+historical netreturn_i). Minimize KL(q||p)=sum q_i*log(q_i/p_i),subjectsumq=1,sumq*x=g,q>=0. Priorp is v15 local/global/score conditional recency weights. Analyticformq_i proportionalp_i*exp(lambda*x_i),lambda frommonotonebisection. No change to any historical return or forecast.",
+      "numerical": "Only positiveprior support;zeros remainzero. Nonconstant support requiresminx+1e-12<g<maxx-1e-12;otherwiseunavailable/CASH,notclipped. Constant supportacceptedonlymeanmatchwithin1e-12. Stablelogsumexp;startlambdabracket[-1,1],doubleeachsideupto64times;100bisections;meanerror<1e-10. Recordlambda,KL,meanerror,supportandprior/posteriorweights. Requirebothpriorandposteriorweightedeffectivedates>=20. This checksnumericalfeasibility,notfutureprobabilitycalibration.",
+      "selection_run": ".cache/soxl_soxs_14d5pct_v16/runs/anchored_20261012",
+      "selection": "V16 primary remainsfailed. BeforeANYnewv17May-Sepcasegeneration,select its preregistered anchor_local_full diagnostic solelyfromJan-Aprdevelopmentresults:all4months>=0,mean13.71448%,15completedtrades. This is developmentselection,not a v16primarypass or independentvalidation. Freeze entirev14dailyrecipe,v15priorandv16momentconstraint/gamma5/binaryallocation unchanged. Do not tune aftercases or substitute anotherroute.",
+      "source_generation": "Build v14 recipe daily forecasts throughSep30 exclusivelyunderthisv17selectionauthorization,notv14oldstrategyapproval. Samev14protocolhash/functions/initial data. Labelengine observesonlybeforeOct1;both14daywindows fullymaturebeforeeachdailytrainingcutoff. Mayusespriorhistory;latermodelsincorporateonlythenmaturednewlabels. NoOctoutcomeused. RequireallpreMayas-issuedpredictions identicalto originalv14run. Fullv14 engineering audit mustpassbeforeusingthecase source.",
+      "case_policy": "Only frozenanchor_local_full is judgedagainstoriginal5/7/9arithmeticmean>=10%andallMay-Sepnonnegative. Otherregisteredroutesremaincomparisonsandcannotrescuefailure. EvaluatestartsMay1withunitcapital,thencontinuousMay-Sepcrossmonthbook. No case-specific resetorparameter."
+    },
+    "new_v17_case_forecasts_or_outcomes_seen": false,
+    "older_versions_exposed_May_September": true,
+    "independent_future_validation_claimed": false,
+    "development_selection": {
+      "selected_route": "anchor_local_full",
+      "results_sha256": "196dd62245a05596f66650f6d309a232809b46ec3aa6cbc418de4fbd24d134de",
+      "verification_sha256": "756f3756f4c42dc2efebf879a1697ead460e1815d807ece782704be39a29feb1",
+      "policy_sha256": "bbdcddfc7fe7058deb339cd239f48da79a72adb56327a6ca12272d800139e58b",
+      "development_monthly_returns": [
+        0.13652762618580994,
+        0.10052125856535188,
+        0.0,
+        0.3115303062674897
+      ],
+      "completed_trades": 15
+    },
+    "code_sha256": {
+      "research/soxl_soxs_14d5pct_v17/verify_source.py": "700436d6374bdbdbfa79c635cf1ac4be9af092ac758840fae8afcb33dd9f345d",
+      "research/soxl_soxs_14d5pct_v17/test_selection.py": "c274c77b09730a316c16c8a9c501f64c464c06a4523ee3da83561ce5eac54f22",
+      "research/soxl_soxs_14d5pct_v17/build_forecasts.py": "95779f95067276c97131558a08b21856dbe86e8c48a2a1d4c56ea20b648f7fc0",
+      "research/soxl_soxs_14d5pct_v17/selection.py": "c9d15e9eaba6fc7ef753d12bd4f32344d6043dbbcaf48164eca1c42d2fa79633",
+      "research/soxl_soxs_14d5pct_v17/run_selected.py": "7b2aa4b32e89a774de7b257ea1e2e75314d52a08b707fbfe06702bbde4decee9"
+    }
+  },
+  "authorization": {
+    "version": "v17",
+    "selected_route": "anchor_local_full",
+    "selection_run": "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v16/runs/anchored_20261012",
+    "results_sha256": "196dd62245a05596f66650f6d309a232809b46ec3aa6cbc418de4fbd24d134de",
+    "gate": {
+      "passed": true,
+      "four_month_arithmetic_mean": 0.13714479775466287,
+      "all_months_nonnegative": true,
+      "complete_coverage": true,
+      "completed_actual_trades": 15,
+      "minimum_completed_trades": 10,
+      "not_original_case_acceptance": true
+    },
+    "selection_used_new_case_results": false,
+    "v16_primary_remains_failed": true
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v17/verify_source.py": "700436d6374bdbdbfa79c635cf1ac4be9af092ac758840fae8afcb33dd9f345d",
+    "research/soxl_soxs_14d5pct_v17/test_selection.py": "c274c77b09730a316c16c8a9c501f64c464c06a4523ee3da83561ce5eac54f22",
+    "research/soxl_soxs_14d5pct_v17/build_forecasts.py": "95779f95067276c97131558a08b21856dbe86e8c48a2a1d4c56ea20b648f7fc0",
+    "research/soxl_soxs_14d5pct_v17/selection.py": "c9d15e9eaba6fc7ef753d12bd4f32344d6043dbbcaf48164eca1c42d2fa79633",
+    "research/soxl_soxs_14d5pct_v17/run_selected.py": "7b2aa4b32e89a774de7b257ea1e2e75314d52a08b707fbfe06702bbde4decee9",
+    "research/soxl_soxs_14d5pct_v17/protocol.json": "11ddbcd6b4de9e0e723e6c5eef0398e4e781ae0f371110e8a0121d9424ef51f0",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v3/risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac",
+    "research/soxl_soxs_14d5pct_v11/uncertainty.py": "223b4cb20e65189a705da8fa607ac67560f669dd34250eb6dac2c711d8c3cfe1",
+    "research/soxl_soxs_14d5pct_v14/paired_entry.py": "0b94168b179a5c2d783d389ee75b64156d177a1573d421c28a566980f0b8aeef",
+    "research/soxl_soxs_14d5pct_v15/allocation.py": "89a161eb0a66758e5051b1d9431883d3db0bfbcba5ca34256ad9045c4abf7c71",
+    "research/soxl_soxs_14d5pct_v15/allocation_ledger.py": "f04b8d0e377c3b54aef7da7767f3e5e10100ec90b0fe9a2f45968511ee30fdf3",
+    "research/soxl_soxs_14d5pct_v15/verify_allocation.py": "c44fee51259499cca46232efe8fcaa1fd26fba3c0f2dd304af58affc654df177",
+    "research/soxl_soxs_14d5pct_v16/anchored_allocation.py": "bbdcddfc7fe7058deb339cd239f48da79a72adb56327a6ca12272d800139e58b"
+  }
+}
