@@ -1,0 +1,283 @@
+{
+  "captured_at": "2026-10-12T21:10:19.377497+00:00",
+  "purpose": "next-experiment feasibility inventory; not used by v41 training or selection",
+  "symbols": [
+    "SPY",
+    "IWM",
+    "TLT",
+    "HYG",
+    "LQD",
+    "SHY",
+    "UUP",
+    "XLY",
+    "XLP",
+    "VIX"
+  ],
+  "local_files": [
+    {
+      "symbol": "SPY",
+      "path": "market_data/corporate_actions/SPY.parquet",
+      "sha256": "31645982f5daa9f0cac2ab5e1e64fd1d63e2b7ce0d121eff2d6246341fa393ce",
+      "rows": 49,
+      "columns": [
+        "ex_div_date",
+        "split_base",
+        "split_ert",
+        "join_base",
+        "join_ert",
+        "split_ratio",
+        "per_cash_div",
+        "special_dividend",
+        "bonus_base",
+        "bonus_ert",
+        "per_share_div_ratio",
+        "transfer_base",
+        "transfer_ert",
+        "per_share_trans_ratio",
+        "allot_base",
+        "allot_ert",
+        "allotment_ratio",
+        "allotment_price",
+        "add_base",
+        "add_ert",
+        "stk_spo_ratio",
+        "stk_spo_price",
+        "spin_off_base",
+        "spin_off_ert",
+        "spin_off_ratio",
+        "forward_adj_factorA",
+        "forward_adj_factorB",
+        "backward_adj_factorA",
+        "backward_adj_factorB"
+      ],
+      "time_column": "ex_div_date",
+      "first": "2014-06-20",
+      "last": "2026-09-18"
+    },
+    {
+      "symbol": "SPY",
+      "path": "market_data/trend_quadrant_v1/daily/US.SPY.parquet",
+      "sha256": "0cf293845d6b2115c78753559c64a7e81b4ddfbe941cc0fa0200e93675210f7a",
+      "rows": 276,
+      "columns": [
+        "code",
+        "name",
+        "time_key",
+        "open",
+        "close",
+        "high",
+        "low",
+        "pe_ratio",
+        "turnover_rate",
+        "volume",
+        "turnover",
+        "change_rate",
+        "last_close",
+        "day"
+      ],
+      "time_column": "time_key",
+      "first": "2025-09-02 00:00:00",
+      "last": "2026-10-06 00:00:00"
+    },
+    {
+      "symbol": "SPY",
+      "path": "market_data/us_60m_raw/SPY/2026.parquet",
+      "sha256": "6dfe6eb3c43a502a31c5bf9fce20b68d85eb55f03b579e17c9bb0fc672d1270e",
+      "rows": 3141,
+      "columns": [
+        "symbol",
+        "time_key",
+        "start_at",
+        "end_at",
+        "available_at",
+        "start_at_et",
+        "end_at_et",
+        "session_date",
+        "session_type",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "turnover",
+        "pe_ratio",
+        "turnover_rate",
+        "change_rate",
+        "last_close",
+        "price_basis"
+      ],
+      "time_column": "time_key",
+      "first": "2026-01-02 05:00:00",
+      "last": "2026-09-25 20:00:00"
+    },
+    {
+      "symbol": "SPY",
+      "path": "market_data/us_5m/SPY/2026.parquet",
+      "sha256": "0433e74743eb2b5b676dee4a18b027f39328f8511fd7784451724f69ecf5c898",
+      "rows": 35788,
+      "columns": [
+        "symbol",
+        "time_key",
+        "start_at",
+        "end_at",
+        "available_at",
+        "start_at_et",
+        "end_at_et",
+        "session_date",
+        "session_type",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "turnover",
+        "pe_ratio",
+        "turnover_rate",
+        "change_rate",
+        "last_close",
+        "price_basis"
+      ],
+      "time_column": "time_key",
+      "first": "2026-01-02 04:05:00",
+      "last": "2026-09-29 14:15:00"
+    },
+    {
+      "symbol": "SPY",
+      "path": "market_data/us_60m/SPY/2026.parquet",
+      "sha256": "0315cbd5168e47fb5bf968291c0493f4bf8d0da8f6737a7f6abf2b92ac10c7a2",
+      "rows": 4600,
+      "columns": [
+        "code",
+        "name",
+        "time_key",
+        "open",
+        "close",
+        "high",
+        "low",
+        "pe_ratio",
+        "turnover_rate",
+        "volume",
+        "turnover",
+        "change_rate",
+        "last_close"
+      ],
+      "time_column": "time_key",
+      "first": "2026-01-01 21:00:00",
+      "last": "2026-09-25 20:00:00"
+    }
+  ],
+  "remote_prefixes": [
+    {
+      "prefix": "market_data/us_5m/IWM/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/IWM/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/TLT/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/TLT/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/HYG/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/HYG/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/LQD/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/LQD/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/SHY/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/SHY/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/UUP/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/UUP/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/XLY/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/XLY/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/XLP/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/XLP/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_5m/VIX/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/us_60m/VIX/",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.IWM.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.TLT.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.HYG.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.LQD.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.SHY.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.UUP.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.XLY.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.XLP.parquet",
+      "objects": []
+    },
+    {
+      "prefix": "market_data/trend_quadrant_v1/daily/US.VIX.parquet",
+      "objects": []
+    }
+  ],
+  "scope_limit": "R2 only conventional us5m/us60m/trendquadrant namespaces; empty matches do not prove no source elsewhere. File presence/range does not verify causal full coverage.",
+  "downloads": 0,
+  "opend_requests": 0,
+  "uploads": 0
+}

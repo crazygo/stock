@@ -1,0 +1,31 @@
+test_119_dates_not_ready (test_overlap.Tests.test_119_dates_not_ready) ... ok
+test_baseline_exact_and_factorial_raw_pairs (test_overlap.Tests.test_baseline_exact_and_factorial_raw_pairs) ... FAIL
+test_current_future_outcomes_and_intervals_cannot_change_fit (test_overlap.Tests.test_current_future_outcomes_and_intervals_cannot_change_fit) ... ok
+test_duplicates_are_fractional_not_independent (test_overlap.Tests.test_duplicates_are_fractional_not_independent) ... ok
+test_empty_and_invalid_intervals (test_overlap.Tests.test_empty_and_invalid_intervals) ... ok
+test_hand_computed_overlap (test_overlap.Tests.test_hand_computed_overlap) ... ok
+test_independent_model_equations (test_overlap.Tests.test_independent_model_equations) ... ok
+test_nonoverlap_gaps_and_one_bar (test_overlap.Tests.test_nonoverlap_gaps_and_one_bar) ... ok
+test_pair_interval_excludes_closed_time_and_earlier_leg_does_not_choose_span (test_overlap.Tests.test_pair_interval_excludes_closed_time_and_earlier_leg_does_not_choose_span) ... ok
+test_permutation_equivariance (test_overlap.Tests.test_permutation_equivariance) ... ok
+test_translation_invariance (test_overlap.Tests.test_translation_invariance) ... ok
+test_unknown_prefix_cannot_be_skipped (test_overlap.Tests.test_unknown_prefix_cannot_be_skipped) ... ok
+test_unsupported_current_features_abstain (test_overlap.Tests.test_unsupported_current_features_abstain) ... ok
+test_weight_tamper_detected (test_overlap.Tests.test_weight_tamper_detected) ... ok
+test_weights_keep_regularization_scale (test_overlap.Tests.test_weights_keep_regularization_scale) ... ok
+test_zero_direction_and_single_class (test_overlap.Tests.test_zero_direction_and_single_class) ... ok
+
+======================================================================
+FAIL: test_baseline_exact_and_factorial_raw_pairs (test_overlap.Tests.test_baseline_exact_and_factorial_raw_pairs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v41/test_overlap.py", line 54, in test_baseline_exact_and_factorial_raw_pairs
+    self.assertEqual(wire(f['baseline']['fit']),wire(info));self.assertEqual(wire(f['baseline']['raw']),wire(predict(old,p.loc[[at]])))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '{"ce[22 chars]055862, -0.05995504201521627, -0.0860204066086[17151 chars]4.0}' != '{"ce[22 chars]055861, -0.0599550420152163, -0.08602040660865[17143 chars]4.0}'
+Diff is 68821 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.258s
+
+FAILED (failures=1)
