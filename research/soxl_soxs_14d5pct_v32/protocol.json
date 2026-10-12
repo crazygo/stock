@@ -1,0 +1,57 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_clock_partial_pooling_v32",
+  "primary": "partial_band",
+  "control_source": ".cache/soxl_soxs_14d5pct_v27/runs/clock_reliability_20261012",
+  "hypothesis": "V31 pooled slopes failed, with12/82devdates showing opposite signed v27clock correction gains. Test partial ratherthan complete sharing. Keep actual14day+5% contract; shared andindependent controls use identicalnewdaypool,clockscales,clockintercepts,uncertainty andcapital. No hotperiod/month filter. This tests a structural hypothesis, notproof thatv31losses werecaused bysharing.",
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "base_models": "Same audited v23 context raw scores,19price/sector/volume inputs atpremarket and31afteropen. Expanding earlyterminal chronologicalprefix, daily00ET,labelpairs mature, Ridge100C/absD and lossweightedLogisticC.1,126datehalflife,min120dates. PreMay immutableas-issued source records andmodel auditmanifest checked. Only ifnewprimarypassesdev, extendthe identicaldailybaselearner with newthen-known history. All old scores preserved.",
+  "date_registry": "Officialdates with all expectedclocks present andfeature_ready formeligible source dates; halfdays mayhave3clocks. Missingfeature-date excluded by contemporaneous inputreadiness, notfutureoutcome. Eachday terminalrelease=max bothETF releases acrossallitsclocks; ifanyunknown,dayreleaseunknown. At00ET takecomplete chronologicalprefix untilfirstreleaseunknown or>=cutoff; do notskip to laterresolveddates. Expired firstpending>=14calendar disablesnewactions. Forcalibration use latest120/min60 prefixdates with originally issuedfinite pairedrawscores atalltheirclocks.",
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "daily_schedule": "One sharedcollection of3models and199replicatespervariantperday, trainedusingprior00ETmaturedates only. Eachcurrentclockqueriesthe matchingclockscale/intercept/slopes withitsownrawpair. Old scores notrewritten. Recordallweights,source dates,means,scales,intercepts,coefficients andqueryvalues.",
+  "uncertainty": "199 circular10dateblocks seed826+ETdateordinal, sampleNdateindices, preservepairedETF andallwithin-dateclockrows. Multiplyrowweights bydatecounts andnormalize backtoNdates. Refitbothscales/interactions/Ridge perreplicate. Point=raw+estimatedresidual;commonradius=max(0,higher90%quantile ofmax twoETF upwarddeviation). Lower=point-radius. Sensitivity only,notguaranteedcoverage,monthlylossbound orindependentmarketreplicates.",
+  "decision": "Largestpositive lower (>1e-12),tieSOXL,otherwisecash; fullsettledcashandoriginaloneposition/dayledger. Pointdiagnostic omitsradius; featuremissing,insufficienthistory orpendingexpired abstains. No postresultprimaryswitch.",
+  "routes": {
+    "partial_band": "PRIMARY mean-and-clock-deviation Ridge plusdayclusterband",
+    "partial_point": "samepartialfit pointonly diagnostic",
+    "independent_band": "matched-day/weightclock-independent Ridge,lambda5",
+    "shared_band": "matched-day/weightshared standardizedslopes,clockinterceptsremainseparate",
+    "premarket_only": "primary09:25only",
+    "source_v27": "exactoldperclockscoreband,causalextensiononlyifcasesallowed",
+    "cash": "alwayscash",
+    "double_cost": "frozenprimaryactions,own2xcostpaths"
+  },
+  "verification": "12 preoutcome tests: independentall199bootstrap normal equations,penaltydecomposition/commonmeanstrength,halfdaydateweights,pendingprefix,exactcutoff/futurelabelisolation,zero-weightimmunity,clockunit/offsetinvariance,balancedindependent equivalenceto4Ridge20fits,oppositeslopesretainedandshrunk,constantclockintercepts,minimumcountsbydate,commonmargin/abstention. Independentlyreconstructdatepooland allpoint/bootstrap fitsandqueries,terminalreceipts,8cashbooks,oldv27exactcontrol. Cases onlyafterverifiedprimarydevpass; preservepreMayrecordsandverifynewcausalinputs/rawmodels/exits.",
+  "diagnostics": "Quantify actualstandardizedslopecontrast andwithin-clock scales,unknowns,pointversusband opportunities,matchedindependent/shareddifferences,actualcash constraints,wholemonthreturns anddateequalcandidateMSE. Do notconfuse standardizedslopeequalitywithraw-unit slopeequality. Newsharedcontrol differsfromv31 inwithin-clockscalingandunpenalizedintercepts; donotattributeoldv31differences solelytocontrastpenalty. No afterresulttuning orprimaryswitch.",
+  "target": "Twooutput realizednetlogreturn minusoriginalas-issued rawscores. No additional industry residual inputs: knownindustry information remains in original19/31factor rawpredictor. For eachclock learnunpenalized residualintercept andtwo scoreslopes. Targetincludesfulloriginalcosts,dividends,gapfills andall terminaloutcomes.",
+  "standardization": "At eachdailyfitandbootstrap, weightedcenter/standardize the2rawscores separatelywithin eachclock using only selectedhistoricalrows. std<1e-12=>1. Clockintercepts are unpenalized; training solves weightedclockmeanY and centered residual targets. Allclocks requirepositive trainingweight; official10dateblocks with atmostsparsehalfday omissions retainall4clocks. Do notcreatea model for anunsupportedclock. Clock-specific changesofpositive measurementunit/offset leavepredictions invariant.",
+  "objective": "Let beta_c be2input x2output coefficientmatrix inwithin-clock standardizedcoordinates; mean_beta=(sum4 beta_c)/4. Minimize weighted sum squared residuals +20||mean_beta||_F^2 +lambda*sum_c||beta_c-mean_beta||_F^2, with4unpenalizedclockintercepts. PRIMARY lambda20. INDEPENDENT lambda5, algebraicallyequal5*sum_c||beta_c||^2, so no clockcoupling. Withbalanced4clockdata anddateweightdivide4 this equalsseparateclock Ridgealpha20. SHARED constrainsall beta_c equal withpenalty20||beta||^2. Commonmean penalty20 isidentical acrosscontrols; onlycontrastshrink changes. No searchoverlambda orpostresultselection.",
+  "solver": "Partial8slope penalty P=(20I4-3.75*11T) tensorI2, eigenvalues5oncommon and20oncontrast; independentP=5I8; sharedP=20I2. Production solvesaugmentedleast squares viaCholesky(P).T andnp.linalg.lstsq, afterweightedwithin-clock centering. Independent audit reconstructspenalty bysumofouterproducts ofmean/deviationvectors andjointlysolves4unpenalizedintercepts+slopes normal equations. BothpairedETF outputs shareinputweight/datecluster buthaveowncoefficients.",
+  "method_reference": "https://flora.insead.edu/fichiersti_wp/inseadwp2004/2004-11.pdf ; related-task regularization motivation only. This explicit dateweighted squaredloss,mean-constrained penalty andtradingtest arecustom; paperdoesnotvalidatefinancialreturns."
+}

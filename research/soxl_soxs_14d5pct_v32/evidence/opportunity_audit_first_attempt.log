@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v32/audit_opportunities.py", line 45, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);audit(p.parse_args().run)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v32/audit_opportunities.py", line 21, in audit
+    for month,frame in ds.groupby(ds.index.tz_convert(core.ET).to_period('M')):
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/indexes/extension.py", line 95, in method
+    result = attr(self._data, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/arrays/datetimes.py", line 1223, in to_period
+    warnings.warn(
+UserWarning: Converting to PeriodArray/Index representation will drop timezone information.
