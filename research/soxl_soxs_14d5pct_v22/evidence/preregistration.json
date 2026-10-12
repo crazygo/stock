@@ -1,0 +1,105 @@
+{
+  "registered_at": "2026-10-12T14:04:06.871842+00:00",
+  "protocol_sha256": "24717a88f5399cd24e049a5aaed5a5c87655889c54eac575e70b97f2a2e17e71",
+  "protocol": {
+    "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+    "development": {
+      "evaluation_start": "2026-01-01",
+      "evaluation_end": "2026-04-30",
+      "months": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04"
+      ]
+    },
+    "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+    "cases": {
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ]
+    },
+    "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+    "no_broker_orders": true,
+    "no_automatic_R2_upload": true,
+    "no_case_specific_parameters": true,
+    "source_runs": {
+      "development": ".cache/soxl_soxs_14d5pct_v14/runs/paired_20261012",
+      "cases": ".cache/soxl_soxs_14d5pct_v17/runs/paired_cases_20261012"
+    },
+    "capital": "One settled-cash position at most;allocation only0/1,no leverage,same-day reentry forbidden. T+1,fees,slippage,gaps,dividends,full14calendar expiry and continuous cross-month MTM unchanged. Missing held outcome retains occupation. Entry trigger/exit rules remain exactsourcecontract.",
+    "terminal_receipt": "Each side must have finite fixedpolicy netreturn and actual known target/riskstop/expiry terminalbar. Check EVERY official regular5mbar fromdelayedentry throughterminal inclusive,exact orderedexpectedends,5minstarts,available_at>=barend and no missingavailabletimestamp. Release=max prefixbaravailable_at. Jointrelease=maxbothsides. No laterwindowbar isneeded. If eitherprefixunknown,entrymissing,oroutcomeunresolved,retainunknown. Corporateactionunit convention unchanged. Dividend-bearing outcomes conservatively retainoriginal full-windowrelease;no new announcement-time assumption.",
+    "training": "Source universe is EVERY historical feature-ready premarket date, independent of forecasts/actions. At daily00ET consume chronological complete paired-terminal prefix before first unresolved date; full expanding prefix,min120. Never skip known-later dates. Expired unresolved prefix>=14calendar days forces early routes to abstain. Full-window comparator uses original joint full14day labels. Original features,C,D and label prices are unchanged;finite checks occur after label availability admission.",
+    "risk": "Exactv18 binarygamma5 entropy policy using ORIGINAL v14 saved calibrated score/advantage/state coordinates and original FULL14day joint matured120/min60 prior. Only selectedETF and entropy mean target come from new forecasts. No replacement of old risk coordinates;before original coordinate availability abstain. Min20weightconcentration,empiricalsupport and cost/ledgerunchanged. This isolates forecast change but risk tail estimation still has fullwindow delay.",
+    "scoring": "Originalmean579>=10% and allMay-Sep nonnegative,full continuouscapital. No case replay unless primaryJan-Apr development screen passed andindependent verifier passed. Controls cannot rescue failedprimary after results. Common fullwindow-mature opportunitydiagnostics retainunknown;earlytrainingadmission differsfrom diagnosticdenominator. Exposedhistoryonly.",
+    "version": "soxl_soxs_state_conditioned_training_v22",
+    "primary": "state_base_cal",
+    "hypothesis": "V21 current labels were only2days old but20recent marketdates hadabout11% base weight;state effects could be averaged acrossdifferent conditions. Test observable query-state conditional base fits and calibration. This is a separate hypothesis,not a claim that old-weight age caused losses. Same architecture,recency,terminalprefix and risklibrary retained;no window/threshold grid or month-specific rule.",
+    "availability": "Labels are admitted only if jointterminalrelease strictlybefore daily00ET. Historical featuresforquery are asof09:25:30 ET. State-conditioned fits andcalibration are constructed AT09:25:30,usingthatobservablequery,not falsely labelledas00ETmodels. Historicalavailable_at=barend+1s assumptionunchanged;notlive received_at proof. Existingarbitrarytimeanalysis remainsavailable/unqualified.",
+    "state_columns": [
+      "relative_5",
+      "relative_20",
+      "breadth_5",
+      "strength_persistence_5",
+      "volume_direction_diffusion",
+      "log_sector_volatility"
+    ],
+    "weights": "Forbase,past expanding jointterminalprefix min120;recency b proportional2^(-rank_age/126). Forcalibration,latest120own asissuedrawforecastdates inthatprefix,min60;uniform b. Sixstate center/std fromthesehistorical rowsweightedbyb only,std1if<1e-12. d=mean standardizedsquaredcurrent-state distance;h=max(40thsmallestd,1e-12). q proportionalb*exp(-d/(2h)),computedlogstably. Onlyobservable statesin distance,notoutcomesorforecasts. w=N*q,retainingglobal lossweight scale. Baseconcentration1/sumq2>=60;calibration>=20;otherwiseabstain. Concentration isnot independent samplecount. Currentfeaturemissing=>localfit/cal unavailable;do not fabricate.",
+    "model": "Regretarchitecturefromv14/v21 unchanged:19causal factors;weightedStandardScaler;Ridge100 C and|D|;LogisticRegressionC.1 signD with classificationweights w*|D| renormalizedsumN;D=max0M*(2q-1). Localweightsreplacebase recencyweights. Globalcomparison calls exactv21base fit. No neural/treeparametersearch. Missingoroldunresolvedprefixabstains.",
+    "calibration": "Each base has itsown saved rawforecast history;neverrefit old predictions usingcurrentmodel. LocalmapforC,D usesw=N*q above,weighted xmean/std(scale1if<1e-12),interceptweighted ymean,coefficient=sum(w*z*(y-ymean))/(sum(w*z*z)+20). Signedslopes permitted. Globalmapexactv21uniformRidge20. state_raw bypassesmappedvaluesbutkeeps localcalibration readiness. Mapsnot probabilities.",
+    "routes": {
+      "state_base_cal": "Primary:stateweighted base and stateweighted owncalibration",
+      "state_base_global_cal": "Stateweightedbase,originaluniformcalibration",
+      "global_base_state_cal": "Exactv21globalbase,stateweightedcalibration",
+      "global_base_cal": "Exactv21globalbaseandcalibration control",
+      "state_raw": "Stateweightedbase rawvalues,localcal readiness",
+      "state_no_risk": "Primarypositiveforecastfullcashwithoutentropyutility",
+      "source_full": "Originalv14calibratedfullcash",
+      "source_raw_full": "Originalv14rawfullcash",
+      "cash": "Alwayscash",
+      "double_cost": "Sameprimaryfrozenactions,own doublecostfills/barriers"
+    },
+    "verification": "Independentkernelweights atquery fromhistoricalstate-only distances;trainingandowncalibrationprefix membership;weightedRidge normal-equations andLogistic gradients;manualloadedmodelpredict;independentweightedcal maps andentropyroots;allcapitalledgers. Reproduceexactv21globalcontrol andv14sources. Everyknownjointterminalpairisreplayedwithasoftruncatedmarket. Unitfuturetruth/scoredsuffixinvariance,statedistanceoutcomeindependence,constantstateuniformcalidentity,concentration/missingabstention. CaseexpansionmustpreservepreMayissuedrecords.",
+    "diagnostics": "Comparebaseeffectiveconcentration,recent20marketdateweight,weightedcalendarage;readycoverage,unknowns,Dnegativecalibrationslopes,maturecandidatecorrectdirection,payoff/regret andcausalsupport/weakness/mixed states. Allcontrols retained,no substitutionforfailedprimary;commonfullwindowmaturediagnosticdenominator differsfromtrainingearlyfeedback. Paired10session5000bootstrapseed707 descriptiveonly."
+  },
+  "code_sha256": {
+    "research/soxl_soxs_14d5pct_v10/micro_manager.py": "f89abaf58cce20264832a54564ed148f40423eae25b24868694fc45445972212",
+    "research/soxl_soxs_14d5pct_v11/uncertainty.py": "223b4cb20e65189a705da8fa607ac67560f669dd34250eb6dac2c711d8c3cfe1",
+    "research/soxl_soxs_14d5pct_v12/entry_value.py": "78d392d7f746146935c1e2a5ef7d69a122fcb9751f3d17465a50966255a8360d",
+    "research/soxl_soxs_14d5pct_v13/linear_entry.py": "13d544777e9b6ba6918d538dde74a5c94201b11639586a660e594201730c73b4",
+    "research/soxl_soxs_14d5pct_v14/paired_entry.py": "0b94168b179a5c2d783d389ee75b64156d177a1573d421c28a566980f0b8aeef",
+    "research/soxl_soxs_14d5pct_v15/allocation.py": "89a161eb0a66758e5051b1d9431883d3db0bfbcba5ca34256ad9045c4abf7c71",
+    "research/soxl_soxs_14d5pct_v15/allocation_ledger.py": "f04b8d0e377c3b54aef7da7767f3e5e10100ec90b0fe9a2f45968511ee30fdf3",
+    "research/soxl_soxs_14d5pct_v15/verify_allocation.py": "c44fee51259499cca46232efe8fcaa1fd26fba3c0f2dd304af58affc654df177",
+    "research/soxl_soxs_14d5pct_v16/anchored_allocation.py": "bbdcddfc7fe7058deb339cd239f48da79a72adb56327a6ca12272d800139e58b",
+    "research/soxl_soxs_14d5pct_v18/adaptive_blend.py": "ea54c198dd8a85683b1526ebd90c746d0f0e7ee6f0c0c154db66688fed22ba8e",
+    "research/soxl_soxs_14d5pct_v2/core.py": "e0bbc7860602278f0f38ddb0b4a684bc354b81e270eb9250580801d966c01b43",
+    "research/soxl_soxs_14d5pct_v2/study.py": "0c08c0d68374f7a1e82b0829cca81b3590f52f6d679ff69071a84d95dc35f8e2",
+    "research/soxl_soxs_14d5pct_v20/resolved_feedback.py": "9f7ddb010efa0287607503e26086f1fc3ff5f7ed9affc152fb53889ff08b6ece",
+    "research/soxl_soxs_14d5pct_v20/verify_feedback_v2.py": "bc365ef150b747607b4104824d20a612c0b0a81e42099f9b67905bbf2cc2a435",
+    "research/soxl_soxs_14d5pct_v21/early_training.py": "c2bf9cbcbf8c9080081fa3342ebed2b47b68a569b0f4a75a829e598eda5fade2",
+    "research/soxl_soxs_14d5pct_v21/test_early.py": "96a951c37724590acda9a87f25152a8be6cb9d042278ead460e3a1bffacaba6f",
+    "research/soxl_soxs_14d5pct_v21/verify_early.py": "2db5d1c7a3d2e2c083b25da9c67748ccdde08c4e25566bd4457db47fe8b70f6e",
+    "research/soxl_soxs_14d5pct_v22/diagnose_local.py": "2fd0c7aae8471cac03a89a473e21d46d10650b3cd88a7cdc91bf353302d7b78e",
+    "research/soxl_soxs_14d5pct_v22/local_training.py": "459b6b9f677528ed4db676c4776b6fd5e1d2b4b3dc59d08a69220ced69caef12",
+    "research/soxl_soxs_14d5pct_v22/protocol.json": "24717a88f5399cd24e049a5aaed5a5c87655889c54eac575e70b97f2a2e17e71",
+    "research/soxl_soxs_14d5pct_v22/run_local.py": "2f1e39577d7d43d65b8e724a2119856c07532469e57680b8c73fe4ff642147fc",
+    "research/soxl_soxs_14d5pct_v22/test_local.py": "0b027a078df81265fc178d12edc358228aa1e5a9b4cc7b6fe57b8d19f79527e4",
+    "research/soxl_soxs_14d5pct_v22/verify_local.py": "883816edf2b38c1de9c4719affce432fa056fe4e671f759fe93e7ecf2f405394",
+    "research/soxl_soxs_14d5pct_v3/risk.py": "d9ef4ff0235baa76d1b1accbd096428950b758bc58ec489689f27102ac95c352",
+    "research/soxl_soxs_14d5pct_v3/risk_ledger.py": "d9d7af3036584865ea27546ad66618b8409949a3fd99e3555493e85670948b37",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v6/path_engine.py": "d3a451930c66fdfe713439f2db10354413ba97c52c4e0388ac8a3e0432da3bcd",
+    "research/soxl_soxs_14d5pct_v6/run_intraday.py": "0dfb372cad48f8bcf665f2624c7f981051e253cc66ef92f3b60be53801cf43b1",
+    "research/soxl_soxs_14d5pct_v7/breadth.py": "6f6e0e20e55a7297c0844ced1b490a0f60501aa3225cf4fb52e125aef0564136",
+    "research/soxl_soxs_14d5pct_v7/run_breadth.py": "bc620edd62478736df5296f08bb11bdcad7e8813e273fdc19356f0310b5dc7ac",
+    "research/soxl_soxs_14d5pct_v9/continuation.py": "5a36056f00423915280d0a4a691923e319925ff680cb1dd7b4f206fee315ea12",
+    "research/soxl_soxs_14d5pct_v9/verify_continuation.py": "81d97b29ef030ad76e085e0d6ee385d911cba9d98b68d4ffac2a2f6e05ef435b"
+  },
+  "no_v22_result_seen": true
+}
