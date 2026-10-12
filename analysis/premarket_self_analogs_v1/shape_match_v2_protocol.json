@@ -1,0 +1,21 @@
+{
+  "version": "whole_and_tail_shape_match_v2",
+  "created_at_utc": "2026-10-08T16:52:22.197126+00:00",
+  "status": "exploratory_revision_after_review_of_exposed_historical_case_not_independent_validation",
+  "source_results_sha256": "3df97eb05c2d3650aaacd0393fb9b0ef9e6a90bdb23fa436d1e300130babdbcd",
+  "reference_cutoff_et": "2026-10-08 09:00:00",
+  "selection": "v1 whole-curve r >= N and amplitude ratio in [0.5,2], plus tail r >= N and nonflat tail OLS slope signs agree",
+  "coefficient": "min(whole Pearson r, tail Pearson r); range [-1,1], not percent similarity or probability",
+  "tail": "price points at compressed session-hour x >= 29/2; actual observed points x=15..29, no interpolation",
+  "threshold_N": 0.9,
+  "flat_slope_epsilon_log_pp_per_session_hour": 1e-08,
+  "direction_agreement": "diagnostic only; up/down/flat sign agreement across all 30 consecutive price changes, epsilon 1e-8 log pp",
+  "hourly_change_correlation_and_rmse": "diagnostic only, no extra thresholds",
+  "plot": "all whole-curve candidates stay visible; v2 rejected candidates explicitly labeled and excluded from v2 forward aggregates",
+  "highlight": "latest accepted date, else latest whole-curve candidate marked rejected",
+  "cluster": "fixed N=.9 complete linkage; distance=1-min(full pairwise r, tail pairwise r), cut .10; future labels unused",
+  "unknowns": "undefined/flat tail is rejected explicitly; incomplete future remains unknown",
+  "original_results_preserved": true,
+  "future_labels_used_for_selection": false,
+  "source_reference": "https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html"
+}

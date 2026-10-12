@@ -1,0 +1,38 @@
+{
+  "version": "premarket_self_analogs_v1",
+  "created_before_outcome_calculation": "2026-10-08T13:13:30.845008+00:00",
+  "status": "exploratory_historical_analog_description_not_validated_prediction",
+  "account": "0086",
+  "reference_date_et": "2026-10-08",
+  "cutoff_et": "09:00:00",
+  "lookback_calendar_days": 360,
+  "start": "previous_exchange_trading_day_04:00_ET",
+  "sessions": [
+    "previous_premarket",
+    "previous_RTH",
+    "previous_postmarket",
+    "overnight_before_reference_day",
+    "reference_premarket_to_cutoff"
+  ],
+  "weekend_rule": "same_trading_session_order_no_weekend_padding; include_only_the_overnight_directly_before_reference_day; record_calendar_elapsed_hours_separately",
+  "bar_basis": "QFQ_single_full_series_per_security; ET_end_labels; 09:30_and_16:00_are_30min_bars",
+  "curve": "100*log(hour_point_close/start_open); start_open_is_first_premarket_bar_open",
+  "similarity": "Pearson_r_on_cumulative_log_price_curve",
+  "threshold_N": 0.9,
+  "amplitude_gate": "history_peak_to_trough_log_curve_range/current_range_between_0.5_and_2.0",
+  "missing_rule": "never_interpolate; strict_full_session_match_primary; missing_overnight_is_reported_and_partial_session_sensitivity_is_separate",
+  "cluster": "complete_linkage_on_1_minus_Pearson_r_of_input_curves; distance<=0.10; future_returns_not_used",
+  "one_sample": "one_reference_day_per_stock; overlapping_dates_not_independent",
+  "future_24h": "strict_24_elapsed_hours_after_09:00_ET; reference=09:00_close; terminal_close_and_intrabar_high_low; only_complete_expected_bar_grids; closed_weekend_time_not_replaced_by_future_trading_days",
+  "future_RTH": "reference_day_exchange_open_to_close; compare_RTH_close_and_high_low_to_09:00_close; additionally_RTH_close/open_return",
+  "future_baseline": "same_stock_same_clock_same_calendar_coverage_without_similarity_filter",
+  "unknowns": "matched_samples_with_incomplete_future_retained_and_counted_unknown",
+  "threshold_sensitivity": [
+    0.8,
+    0.85,
+    0.9,
+    0.95
+  ],
+  "selection_warning": "thresholds_are_exploratory_not_tuned_against_future_outcomes; no_buy_sell_signal_or_calibrated_probability",
+  "revision": "clock_refresh_0900_same_N_and_amplitude_gate"
+}

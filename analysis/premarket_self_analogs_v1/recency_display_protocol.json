@@ -1,0 +1,87 @@
+{
+  "version": "historical_recency_two_colors_v2",
+  "reference_cutoff_et": "2026-10-08 09:00:00",
+  "recent_rule": "matched date >= reference date minus 6 calendar months; boundary included, month-end clamped; fixed batch date",
+  "older_rule": "matched date < 2026-04-08",
+  "coverage": "every matching stock-day in the selected date range, with no maximum list length",
+  "color": {
+    "recent": "#3178b9",
+    "older": "#aeb4bc"
+  },
+  "selection": "latest accepted date; if none, latest whole-curve candidate explicitly labeled rejected",
+  "three_session_rule": "reference-day remainder counts as day 1; through day 3 postmarket close",
+  "outcome_denominator": "historical matched cutoff Close",
+  "high_low": "maximum High and minimum Low over all expected forward hourly OHLC slots",
+  "unknown": "incomplete three-session paths stay visible with observed-only outcomes; excluded from full three-session summaries",
+  "aggregation": "equal weight per matched date within each recency group; overlapping samples not independent",
+  "market_environment_controlled": false,
+  "recent_calendar_months": 6,
+  "recent_from_et": "2026-04-08",
+  "blue_line_styles": [
+    {
+      "name": "solid",
+      "dash": []
+    },
+    {
+      "name": "dashed",
+      "dash": [
+        9,
+        5
+      ]
+    },
+    {
+      "name": "dotted",
+      "dash": [
+        1,
+        5
+      ]
+    },
+    {
+      "name": "dash_dot",
+      "dash": [
+        9,
+        4,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "long_dash",
+      "dash": [
+        16,
+        5
+      ]
+    },
+    {
+      "name": "long_short_dash",
+      "dash": [
+        9,
+        4,
+        3,
+        4
+      ]
+    },
+    {
+      "name": "short_dash",
+      "dash": [
+        4,
+        3
+      ]
+    },
+    {
+      "name": "dash_two_dots",
+      "dash": [
+        9,
+        4,
+        1,
+        4,
+        1,
+        4
+      ]
+    }
+  ],
+  "line_style_assignment": "recent dates newest-first, repeating after eight; older lines solid; SVG legend uses same dash pattern",
+  "original_v1_matching_or_24h_results_changed": false,
+  "current_view_matching": "whole_and_tail_shape_match_v2",
+  "current_view_forward_aggregation": "accepted dates under active method only"
+}
