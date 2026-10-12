@@ -1,0 +1,62 @@
+{
+  "contract": "Unchanged v9 fixed6% protective stop,+5% cent-rounded TP,14 inclusive calendar days. Premarket09:25:30 decision; first RTH Open strictly after30-second latency (09:30). Adverse gaps,stop-first ambiguous bars,full costs,T+1,dividends,one settled-cash position and cross-month MTM. No new learned exit or month-dependent rule.",
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_conditional_allocation_v15",
+  "primary": "local_power",
+  "source_run": ".cache/soxl_soxs_14d5pct_v14/runs/paired_20261012",
+  "hypothesis": "The same matured sector-state information that improved direction selection may identify differences in payoff tails. Conditional empirical utility may size useful exposure while retaining cash, reducing negative months without reducing every trade uniformly. This is a new hypothesis,not a promised lossless policy.",
+  "source": "Reuse v14 daily as-issued regret_regime paired forecasts,causal19factor panel,and unchanged6%stop/+5%TP/14calendar labels. Source hashes,engineering verification and immutable delivery checked. Preserve source top direction even if source positivevalue gate abstained. No refit or hindsight change to historical v14 forecasts.",
+  "decision_clock_et": "09:25:30",
+  "training": "At each00:00ET use latest120prior dates with source paired calibration ready and BOTH complete14day labels released strictly before cutoff;minimum60. Use one observed contract return per date for the currently selected ETF. Pool membership independent of actual historical buy/action or outcome sign. Recency half-life63eligible dates;keep all outcomes including adverse gaps. No current-day outcome or early-win label release.",
+  "conditioning_columns": [
+    "score",
+    "advantage",
+    "relative_5",
+    "breadth_5",
+    "volume_direction_diffusion",
+    "log_sector_volatility"
+  ],
+  "conditioning": "score=as-issued calibrated candidate logvalue;advantage=direction*as-issued calibratedD;relative5,breadth5,volume_direction_diffusion from v14 multiplied by ETF direction;logsectorvol unsigned. For candidate symbol query same-symbol historical rows,including dates when it was not top. Standardize with recency-weighted mean/std of only eligible120rows;std<1e-12->1. No month/year feature.",
+  "distribution": "Squared distance=mean squared standardized difference over6columns. Bandwidth squared=max(40th-smallest distance,1e-12). Kernel=exp(-distance/(2*bandwidth_squared));multiply recency,normalize to1. All rows retained,not hard nearest40 truncation. Require effective dates1/sum(w^2)>=20. Use empirical actual net returns,not shifted residuals that could invent payoffs above the TP. Weighted lower5%tail includes fractional quantile mass;diagnostic only,not a guaranteed bound.",
+  "utility": "At fixed fractions[0,.25,.5,.75,1],scenario terminal wealth=1+f*historical_net_return. Primary gamma5 score=sum(w*((wealth^(1-gamma)-1)/(1-gamma))). Choose largest score;within1e-12ties take lower fraction,zero meanscash. Gamma1 logwealth control. This is one-contract empirical CRRA utility,not an analytical Merton optimum or a proven monthly-risk guarantee. No leverage,no risk-parameter search.",
+  "routes": {
+    "local_power": "6factor conditional distribution,gamma5,fractions0/25/50/75/100%",
+    "global_power": "same historical dates and recency,no state distances,gamma5",
+    "score_power": "same procedure,distances onlyscore andadvantage,gamma5",
+    "local_log": "same6factor distribution,logutilitygamma1",
+    "local_full": "same6factor distribution,gamma5,only0or100%",
+    "source_full": "exactv14primaryaction and100%cash",
+    "source_half": "exactv14primaryaction and50%cash",
+    "source_direction": "exactv14topdirection on everyreadydate,100%cash",
+    "cash": "alwayscash",
+    "double_cost": "sameprimaryaction andfraction,doublecostrawfills"
+  },
+  "capital": "At actual accepted entry deploy frozenfraction*currentlysettledcash;remainingcash earns0,oneETFposition atmost. Fraction fixedthroughtrade,no pyramiding,no reuse of unusedcash whileholding,no samedayreentry,T+1actualsaleproceeds,dividends andcrossmonthMTM retained. Unknownholding staysoccupied. Study uses existing fractional simulatedeconomicunits. Admission and sizing both change versus v14;local_full isolates fractional sizing effect.",
+  "comparison": "Report everyregistered route and allmonthlyreturns. Fixedsourcefull andsourcedirection must exactlyreproduce verifiedv14 ledgers. Sourcehalf must matchv3 constantallocation. Compare primaryversusallcontrols using paired10session5000bootstrapseed707,descriptive exposedhistory only. No substitution of successfuldiagnostic forfailedprimary.",
+  "diagnostics": "Trainingcounts andeffectiveweights,chosenfractions,weightedmean/tail,actualopportunities versusactualtrades,monthlycapital,drawdown,losses,sourceactionabstentionoverrides. Empiricalfrequency isnotcalibratedfutureprobability. Overlapping14daywindows andsameETFdates aredependent.",
+  "reference": "https://r.jordan.im/download/investing/merton1969.pdf",
+  "reference_scope": "CRRA/log utility forms only;we do not adopt continuous-time assumptions or claim the paper validates this empirical trading model."
+}
