@@ -1,0 +1,163 @@
+{
+  "post_result_only": true,
+  "rules_changed": false,
+  "phase": "cases",
+  "candidate_counts": {
+    "all_supported": {
+      "CASH": 417,
+      "SOXL": 3
+    },
+    "eligible_supported": {
+      "CASH": 417,
+      "SOXL": 3
+    },
+    "all_gate": {
+      "CASH": 418,
+      "SOXL": 2
+    },
+    "source_v35": {
+      "CASH": 417,
+      "SOXL": 3
+    },
+    "cash": {
+      "CASH": 420
+    },
+    "double_cost": {
+      "CASH": 417,
+      "SOXL": 3
+    }
+  },
+  "qualified_reason_counts": {
+    "positive_gain_loss_balance": 2,
+    "source_outside_support": 1
+  },
+  "qualified_queries": [
+    {
+      "at": "2026-05-29 14:35:30+00:00",
+      "date": "2026-05-29 00:00:00",
+      "source_symbol": "SOXL",
+      "new_action": "SOXL",
+      "reason": "positive_gain_loss_balance",
+      "quality": 0.5234668844188185,
+      "outside_columns": [],
+      "selected_net_log_return": -0.06340967089341086,
+      "terminal_release": "2026-06-01 14:05:01+00:00",
+      "source_fallback": false
+    },
+    {
+      "at": "2026-06-04 14:35:30+00:00",
+      "date": "2026-06-04 00:00:00",
+      "source_symbol": "SOXL",
+      "new_action": "SOXL",
+      "reason": "positive_gain_loss_balance",
+      "quality": 0.5033631648616534,
+      "outside_columns": [],
+      "selected_net_log_return": 0.04780672356883811,
+      "terminal_release": "2026-06-04 16:55:01+00:00",
+      "source_fallback": false
+    },
+    {
+      "at": "2026-06-09 14:35:30+00:00",
+      "date": "2026-06-09 00:00:00",
+      "source_symbol": "SOXL",
+      "new_action": "SOXL",
+      "reason": "source_outside_support",
+      "quality": 0.44088801768791785,
+      "outside_columns": [
+        "volatility"
+      ],
+      "selected_net_log_return": -0.06342387998394335,
+      "terminal_release": "2026-06-09 14:50:01+00:00",
+      "source_fallback": false
+    }
+  ],
+  "trade_changes": {
+    "all_supported": {
+      "added": [],
+      "removed": []
+    },
+    "eligible_supported": {
+      "added": [],
+      "removed": []
+    },
+    "all_gate": {
+      "added": [],
+      "removed": [
+        {
+          "decision_at": "2026-06-09 14:35:30+00:00",
+          "symbol": "SOXL",
+          "exit_at": "2026-06-09 14:50:00+00:00",
+          "reason": "risk_stop",
+          "net_return": -0.061454441315357,
+          "capital": 0.9845181480251848
+        }
+      ]
+    },
+    "source_v35": {
+      "added": [],
+      "removed": []
+    },
+    "cash": {
+      "added": [],
+      "removed": [
+        {
+          "decision_at": "2026-05-29 14:35:30+00:00",
+          "symbol": "SOXL",
+          "exit_at": "2026-06-01 14:05:00+00:00",
+          "reason": "risk_stop",
+          "net_return": -0.061441105341799,
+          "capital": 1.0
+        },
+        {
+          "decision_at": "2026-06-04 14:35:30+00:00",
+          "symbol": "SOXL",
+          "exit_at": "2026-06-04 15:10:00+00:00",
+          "reason": "target",
+          "net_return": 0.0489678949595606,
+          "capital": 0.9385588946582007
+        },
+        {
+          "decision_at": "2026-06-09 14:35:30+00:00",
+          "symbol": "SOXL",
+          "exit_at": "2026-06-09 14:50:00+00:00",
+          "reason": "risk_stop",
+          "net_return": -0.061454441315357,
+          "capital": 0.9845181480251848
+        }
+      ]
+    },
+    "double_cost": {
+      "added": [],
+      "removed": []
+    }
+  },
+  "monthly_comparison": [
+    {
+      "month": "2026-05",
+      "primary": 0.0014112070728331538,
+      "source": 0.0014112070728331538
+    },
+    {
+      "month": "2026-06",
+      "primary": -0.07728700383291898,
+      "source": -0.07728700383291898
+    },
+    {
+      "month": "2026-07",
+      "primary": 0.0,
+      "source": 0.0
+    },
+    {
+      "month": "2026-08",
+      "primary": 0.0,
+      "source": 0.0
+    },
+    {
+      "month": "2026-09",
+      "primary": 0.0,
+      "source": 0.0
+    }
+  ],
+  "results_sha256": "1a179ca568fab25d54e01be9ae800b2944715d06dde4816a04189dae7538f567",
+  "pending_retained": 0
+}
