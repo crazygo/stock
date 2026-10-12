@@ -1,0 +1,73 @@
+{
+  "verified_at": "2026-10-12T07:21:08.196934+00:00",
+  "run": ".cache/soxl_soxs_14d5pct_v4/runs/daily_20261012",
+  "training_recipe_count": 1,
+  "model_effectiveness_passed": false,
+  "tests": {
+    "suite": "test_walkforward.py",
+    "passed": 10,
+    "failed": 0
+  },
+  "independent_verification": {
+    "pass": true,
+    "daily_models_audited": 349,
+    "all_training_and_calibration_labels_available_before_daily_cutoff": true,
+    "all_calibration_forecasts_use_pre_outcome_model_cutoffs": true,
+    "historical_replay_not_real_time_logs": true,
+    "september_learns_matured_may_july_august_labels": true,
+    "frozen_control_uses_may_first_model_only": true,
+    "raw_bar_trade_checks": 87,
+    "adverse_gap_exits": 5,
+    "causal_feature_rows_recomputed": 105,
+    "ambiguous_stop_first_exits": 0,
+    "monthly_returns_and_terminal_equity_recomputed": true,
+    "reported_acceptance": false
+  },
+  "analysis_checks": {
+    "analysis_example": {
+      "analysis_at": "2026-09-15 13:25:30+00:00",
+      "action": "NO_ACTION",
+      "reason": "daily_strategy_failed_return_or_nonnegative_month_gate",
+      "matches_registered_premarket_clock": true,
+      "broker_order_submitted": false,
+      "daily_model_id": "caf136527b41a21719b84273"
+    },
+    "arbitrary_time_example": {
+      "analysis_at": "2026-09-15 12:57:20+00:00",
+      "action": "NO_ACTION",
+      "reason": "daily_strategy_failed_return_or_nonnegative_month_gate",
+      "matches_registered_premarket_clock": false,
+      "broker_order_submitted": false,
+      "daily_model_id": "caf136527b41a21719b84273"
+    },
+    "new_day_example": {
+      "analysis_at": "2026-10-12 12:57:20+00:00",
+      "action": "NO_ACTION",
+      "reason": "data_unavailable_or_stale",
+      "matches_registered_premarket_clock": false,
+      "broker_order_submitted": false,
+      "daily_model_id": "ccaa52b3cf16cdf7e3f7eda0"
+    }
+  },
+  "source_sha256": {
+    "research/soxl_soxs_14d5pct_v4/test_walkforward.py": "1de259af58137f6601697db49fed46bb42e21b5e81fb75b05de7bc3943009edf",
+    "research/soxl_soxs_14d5pct_v4/walkforward.py": "475ff0012061d25e60e8b2c3c23656ab6765ada25d757abc2e8a624a7c275f1f",
+    "research/soxl_soxs_14d5pct_v4/verify_daily.py": "d94303850f1429d61145079d586a5a2b36cef95e95c3674aaf77c5a9edbdf361",
+    "research/soxl_soxs_14d5pct_v4/daily_study.py": "a1365dc45664a734f0c53586941fac1a5cb4617c0c3bd2dd8d9f60318d0b7e94",
+    "research/soxl_soxs_14d5pct_v4/analyze_daily.py": "4b08399118068f0ff8fe505574a74a663092d99a3f1e88369a74d3bb289b9fd2",
+    "research/soxl_soxs_14d5pct_v4/protocol.json": "c4cf2e62a84570de9f7c3bdae75c359d659ff5cfdc52072720aadb238dd8492b",
+    "research/soxl_soxs_14d5pct_v4/README.md": "bf67829234f5426cb614b2718098489ea8697727be94c958173036728248524b"
+  },
+  "full_cache_artifacts_sha256": {
+    "daily_registry.json": "742317f154c61b69dffa1cab7d5b19f1fff12c779475bc3f52ac631ef5ecbf01",
+    "labels.json": "633f93d414acd40e26ddf0dbd6044dff178155f791ffcd1bf4fdb601ea3f8406",
+    "predictions.csv": "a95ce7f9defac78d44f19c9e68c10aebcaf64b7bd79747a7a82817f0803ef723",
+    "features.parquet": "004bb6833e28ccd2773714601f71bfdb0ea2f888b05aadcd011a371db75fe219",
+    "results.json": "fbf759f9f429a2e0e75e90c5a1d930bd82160f99d2757a9a708af77d67e8f7f6"
+  },
+  "data_feature_and_model_artifacts_stay_out_of_git": true,
+  "unrelated_dirty_files_preserved": 4,
+  "old_versions_and_predictions_preserved": true,
+  "no_automatic_schedule_created": true,
+  "broker_orders_submitted": false
+}
