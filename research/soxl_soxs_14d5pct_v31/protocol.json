@@ -1,0 +1,59 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_day_cluster_varying_error_v31",
+  "primary": "interaction_band",
+  "control_source": ".cache/soxl_soxs_14d5pct_v27/runs/clock_reliability_20261012",
+  "hypothesis": "V30 strict tail-profit buffer collapsed to flat exits. Preserve original14day contract; test causal state-dependent correction slopes while pooling four clocks. V22 state-distance reweighting reduced useful supply; v26 additive premarket context band abstained; v27 independent2score maps had7.66%devmean; v29 adaptive temporal memory worsened results. New interaction model shares information rather than selecting hot historical subsets. Group each date as one weighted cluster, not4independent samples.",
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "base_models": "Same audited v23 context raw scores,19price/sector/volume inputs atpremarket and31afteropen. Expanding earlyterminal chronologicalprefix, daily00ET,labelpairs mature, Ridge100C/absD and lossweightedLogisticC.1,126datehalflife,min120dates. PreMay immutableas-issued source records andmodel auditmanifest checked. Only ifnewprimarypassesdev, extendthe identicaldailybaselearner with newthen-known history. All old scores preserved.",
+  "state": "Six known current/parent fields: relative_5,relative_20,breadth_5,strength_persistence_5,volume_direction_diffusion,log_sector_volatility. Currentclock only; no laterday statistics,futurehit rates,month identity or hindsight hotintervals. No new panel membership claims.",
+  "date_registry": "Officialdates with all expectedclocks present andfeature_ready formeligible source dates; halfdays mayhave3clocks. Missingfeature-date excluded by contemporaneous inputreadiness, notfutureoutcome. Eachday terminalrelease=max bothETF releases acrossallitsclocks; ifanyunknown,dayreleaseunknown. At00ET takecomplete chronologicalprefix untilfirstreleaseunknown or>=cutoff; do notskip to laterresolveddates. Expired firstpending>=14calendar disablesnewactions. Forcalibration use latest120/min60 prefixdates with originally issuedfinite pairedrawscores atalltheirclocks.",
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "basis": "Input rawpair2 +6state +3clock indicators (premarket reference). Firstweightedpopulation standardization fits only selectedpastrows. Shared variant uses2standardizedrawscores +3standardizedclockindicators (5columns). Additive appends6standardizedstates (11columns). PRIMARY interaction appends12products standardizedraw_i*standardizedstate_j (23columns). No squaredterms,no arbitrarypolynomial grid. Weightedstandardize finalbasis again; std<1e-12=>1. Recompute bothstandardizations andallproducts inevery resample.",
+  "target": "Pairedactualnetlogreturnminusownas-issued rawscores under originalfixedexitcontract, including fees,slippage,dividends. Fit twooutput Ridge alpha20 solverSVD andunpenalizedintercept. Interaction means correction slope depends onstate: beta_i+sum gamma_ij state_j; not a calibratedTPprobability.",
+  "daily_schedule": "Fit one shared model collection perday before currentday labels/features are available, using priordates at00ET. Evaluateeachclock against itsowncurrentraw/state. Same prefitmodels atfourclocks, no laterclock orsame-daytruth in earlierdecision. Daily as-issued predictions andallfitmembers/scales/coefficients saved.",
+  "uncertainty": "199 circular10dateblocks seed826+ETdateordinal, sampleNdateindices, preservepairedETF andallwithin-dateclockrows. Multiplyrowweights bydatecounts andnormalize backtoNdates. Refitbothscales/interactions/Ridge perreplicate. Point=raw+estimatedresidual;commonradius=max(0,higher90%quantile ofmax twoETF upwarddeviation). Lower=point-radius. Sensitivity only,notguaranteedcoverage,monthlylossbound orindependentmarketreplicates.",
+  "decision": "Largestpositive lower (>1e-12),tieSOXL,otherwisecash; fullsettledcashandoriginaloneposition/dayledger. Pointdiagnostic omitsradius; featuremissing,insufficienthistory orpendingexpired abstains. No postresultprimaryswitch.",
+  "routes": {
+    "interaction_band": "PRIMARY varyingcoefficients plusdayclusterband",
+    "interaction_point": "samefit pointonly diagnostic",
+    "additive_band": "samemembers/dayweights withoutscore-stateproducts",
+    "shared_band": "samemembers/dayweights scoresandclockintercepts only",
+    "premarket_only": "primary09:25only",
+    "source_v27": "exactv27perclockscorebandcontrol,causalextensionifcasespermitted",
+    "cash": "alwayscash",
+    "double_cost": "frozenprimaryactions,own2xcostpaths"
+  },
+  "verification": "13 synthetic tests beforeoutcomes including halfdaydateweights,pendingclockblocksdate,exactcutoff,futurelabelisolation,missingforecastnotzero,120datesnotrows,zeroweightimmunity,constantcolumns,interactionchanging-sloperecovery,commonbandandabstention; independentall199datebootstrap fits onsyntheticdata. Independentlyrebuilddateprefix,rowweights,explicitrepeateddates andeachmodelvia normal equations withloop-expandedinteractions. Checkeveryqueryprediction/action,sourceforecasthashes,terminalpaths,eightcashbooks,exactv27control. Cases onlyafterverifiedprimarydevelopmentpass; newfeatures/models andallpreMayrecords mustremaincausal/exact.",
+  "diagnostics": "Reportactionchanges relativeadditive/shared,rawandadjustederror,uniqueparentdatesversusclockrows,fullcontinuousmonthlybooks andfrozendecisionattribution. Addedcolumns are a hypothesis,notclaimedalpha. Controls share pooled membership exceptoldv27; do notattributeallv27differences solelytopooling. Preserveallfailedattempts. No additionalfutureobservationgate.",
+  "method_references": [
+    "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html",
+    "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"
+  ]
+}

@@ -1,0 +1,127 @@
+"""Independent date-cluster fit, causal membership, all actions and capital books."""
+import argparse,gzip,pickle,json
+from threadpoolctl import threadpool_limits
+from shared_error import *
+from audit_shared import daily_check,input_rows,predict as reference_predict
+from verify_reliability import check_estimate,close
+from verify_clock_reliability_v2 import compare_reencoded_labels
+from verify_continuation import key,near
+from verify_feedback_v2 import terminal_audit
+from audit_models import model_equations
+from audit_books import book_check
+from audit_inputs import input_check
+from clock_reliability import load_panel,PANEL_ROOT
+
+
+def verify(run):
+    run=Path(run);reg=read(run/'registration.json');p=reg['preregistration']['protocol'];manifest=read(run/'input_manifest.json')
+    for f,h in reg['source_sha256'].items():assert sha(core.ROOT/f)==h
+    assert reg['protocol_sha256']==sha(Path(__file__).parent/'protocol.json')
+    source=Path(manifest['source_run'])
+    for f,h in manifest['source_files_sha256'].items():assert sha(source/f)==h
+    market=core.load_market();assert market.manifest==manifest['full_market'];cutoff=pd.Timestamp(manifest['observation_cutoff_exclusive'])
+    market=restrict_market(market,cutoff);features=pd.read_parquet(run/'features.parquet');panel=pd.read_parquet(run/'panel.parquet')
+    if reg['phase']=='development':
+        pd.testing.assert_frame_equal(features,pd.read_parquet(source/'features.parquet'));old=pd.read_parquet(source/'panel.parquet')
+        pd.testing.assert_frame_equal(panel[old.columns],old)
+        for f in ['baseline_labels.json','stress_labels.json']:compare_reencoded_labels(read(run/f),read(source/f))
+        input_audit={'exact_verified_v23_features_and_fixed_labels':True}
+    else:
+        fs=Path(manifest['new_inputs']['source']);assert sha(fs/'features.parquet')==manifest['new_inputs']['features_sha256']
+        old=pd.read_parquet(fs/'features.parquet');pd.testing.assert_frame_equal(features,old[old.index<cutoff])
+        leaders=load_panel(market.calendar,PANEL_ROOT);assert leaders[2]==manifest['new_inputs']['panel']
+        input_audit=input_check(run,market,leaders[0],features,panel,cutoff)
+    base=labels(run/'baseline_labels.json');stress=labels(run/'stress_labels.json');terminals={}
+    for at,row in panel[panel.feature_ready].iterrows():
+        values=[terminal_audit(market,base[key(at,s)]) for s in core.ETFS]
+        if all(t is not None for t in values):terminals[at]=max(values);assert row.terminal_release==terminals[at]
+        else:assert pd.isna(row.terminal_release)
+    history={};predictions=read(run/'predictions.json');oldroot=core.ROOT/p['control_source']
+    delivery=read(core.ROOT/'research/soxl_soxs_14d5pct_v27/evidence/delivery_manifest.json')
+    for f in ['predictions.json','score_sequential_equity.csv','score_sequential_trades.csv']:assert sha(oldroot/f)==delivery['cache_outputs_sha256'][f]
+    oldevents={pd.Timestamp(e['at']):e for e in read(oldroot/'predictions.json')['score_sequential']}
+    prev=None;models=None;daily=None;heads=baseheads=actions=daychecks=0
+    with threadpool_limits(limits=1):
+        for i,(at,row) in enumerate(features.iterrows()):
+            c=row.clock;rec=read(run/'training'/(tag(at)+'.json'));raw=rec['raw'];origin=rec['origin']
+            assert pd.Timestamp(rec['at'])==at and pd.Timestamp(rec['date'])==row.date and rec['clock']==c and pd.Timestamp(rec['cutoff'])==day_cutoff(at)
+            same=panel[panel.clock==c];prior=list(same[same.feature_ready&(same.date<row.date)].index);prefix=[]
+            for t in prior:
+                if t not in terminals or terminals[t]>=day_cutoff(at):break
+                prefix.append(t)
+            if at in oldevents:
+                file=source/'training'/(tag(at)+'.json');assert sha(file)==manifest['source_training_sha256'][file.name]==origin['sha256']
+                v=read(file)['variants']['context']['forecasts']['early']['event']['raw'];want=[v[s] for s in core.ETFS] if v else None
+                assert raw==want;old=oldevents[at];assert rec['old_decision'] is None
+            else:
+                info=origin['fit'];assert list(pd.to_datetime(info['members'],utc=True))==prefix
+                mp=run/'models'/(tag(at)+'.pkl.gz');model=pickle.load(gzip.open(mp,'rb')) if mp.exists() else None
+                v,n=model_equations(same,prefix,at,model,info,columns(c,'context'));baseheads+=n
+                if v:close(raw,[v[s] for s in core.ETFS])
+                else:assert raw is None
+                h={t:v for t,v in history.items() if t in same.index};ids=[t for t in h if t in set(prefix) and h[t] is not None][-120:]
+                dec=rec['old_decision'];heads+=check_estimate(same,h,ids,at,np.array(raw) if raw else None,'score',dec['estimate'])
+                expired=len(prefix)<len(prior) and same.loc[prior[len(prefix)],'date']+pd.Timedelta(days=14)<=row.date
+                assert dec['feedback']['expired_unresolved_prefix']==bool(expired)
+                old=check_action(dec['estimate'],bool(expired),True,dec['band'])
+            assert rec['old']==old
+            if row.date!=prev:
+                daily=read(run/'daily'/rec['daily_record']);models,n=daily_check(panel,market,history,at,daily);heads+=n;daychecks+=1;prev=row.date
+            assert rec['daily_record']==str(row.date.date())+'.json' and pd.Timestamp(daily['date'])==row.date
+            ready=raw is not None and row.feature_ready and daily['ready']
+            for kind in VARIANTS:
+                info=rec['estimates'][kind];assert info['ready']==bool(ready)
+                if ready:
+                    x=input_rows(panel,{at:raw},[at]);m=models[kind];point=np.array(raw)+reference_predict(m['point_model'],x)[0]
+                    samples=np.array([np.array(raw)+reference_predict(z,x)[0] for z in m['bootstrap_models']]);close(info['point'],point);close(info['bootstrap_predictions'],samples)
+                    radius=max(0.,sorted(np.max(samples-point,axis=1))[179]);near(info['radius'],radius);close(info['lower'],point-radius)
+                else:assert info['point'] is None and info['lower'] is None
+            expired=daily['feedback']['expired_unresolved_prefix']
+            for name,es in predictions.items():
+                e=es[i];assert e==rec['events'][name] and pd.Timestamp(e['at'])==at and pd.Timestamp(e['date'])==row.date
+                if name=='source_v27':
+                    for k,v in old.items():
+                        if k not in ['at','date']:assert e[k]==v
+                elif name=='cash' or name=='premarket_only' and c!=CLOCKS[0]:assert e['action']=='CASH' and e['allocation']==0
+                else:
+                    kind='additive' if name=='additive_band' else 'shared' if name=='shared_band' else 'interaction'
+                    check_action(rec['estimates'][kind],expired,name!='interaction_point',e)
+                actions+=1
+            history[at]=raw
+            if (i+1)%200==0:print('verified through',at,flush=True)
+    result=read(run/'results.json');frozen=read(run/'decisions_frozen.json');assert frozen['predictions_sha256']==sha(run/'predictions.json')
+    settings=p[reg['phase']];start,end=settings['evaluation_start'],settings['evaluation_end'];months=settings.get('months',settings.get('regression_months'))
+    expected=[pd.Timestamp(str(d.date())+' '+c,tz=core.ET).tz_convert('UTC') for d in market.sessions[(market.sessions>=start)&(market.sessions<=end)] for c in CLOCKS if pd.Timestamp(str(d.date())+' '+c,tz=core.ET)<pd.Timestamp(market.calendar[d]['close_at'])]
+    assert list(features[features.date.between(start,end)].index)==expected and result['coverage']['complete'];books=[]
+    for name,stats in result['routes'].items():
+        wanted=[e for e in predictions[name] if start<=e['date'][:10]<=end];assert frozen['routes'][name]==wanted
+        books.append(book_check(run,name,market,features,stress if name=='double_cost' else base,wanted,2 if name=='double_cost' else 1,stats,months))
+    if reg['phase']=='development':
+        for suffix in ['equity','trades']:
+            old=pd.read_csv(oldroot/('score_sequential_'+suffix+'.csv'));new=pd.read_csv(run/('source_v27_'+suffix+'.csv'))
+            pd.testing.assert_frame_equal(new[old.columns],old,atol=1e-12,rtol=1e-12)
+    else:
+        dev=Path(reg['authorization']['run']);old=read(dev/'predictions.json')
+        for name,events in old.items():assert predictions[name][:len(events)]==events
+        for folder in ['training','daily']:
+            for f in (dev/folder).glob('*.json'):assert read(f)==read(run/folder/f.name)
+    receipt={'passed':True,'phase':reg['phase'],'clock_ticks':len(features),'daily_fits':daychecks,
+        'independent_model_head_equations':heads,'new_base_model_equations':baseheads,'action_checks':actions,
+        'terminal_pairs_checked':len(terminals),'capital_books':books,'input_audit':input_audit,
+        'source_v27_development_exact':reg['phase']=='development','case_prefix_exact':reg['phase']=='cases',
+        'results_sha256':sha(run/'results.json'),'engineering_verification_is_not_return_acceptance':True}
+    dump(run/'verification.json',receipt);print(receipt,flush=True)
+
+
+def check_action(info,expired,band,e):
+    ready=info['ready'] and not expired;assert e['ready']==ready
+    if ready:
+        values=info['lower' if band else 'point'];j=0 if values[0]>=values[1] else 1;action=core.ETFS[j] if values[j]>1e-12 else 'CASH'
+        assert e['values']==values and e['top_symbol']==core.ETFS[j];near(e['buy_advantage'],values[j])
+    else:action='CASH';assert e['values'] is None
+    assert e['action']==action and e['allocation']==float(action!='CASH')
+    return e
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);verify(p.parse_args().run)
