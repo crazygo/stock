@@ -1,0 +1,964 @@
+{
+  "phase": "development",
+  "routes": {
+    "logit_factor_recent": {
+      "ready_mature_dates": 73,
+      "joint_immature_dates": [
+        "2026-04-20 00:00:00",
+        "2026-04-21 00:00:00",
+        "2026-04-22 00:00:00",
+        "2026-04-23 00:00:00",
+        "2026-04-24 00:00:00",
+        "2026-04-27 00:00:00",
+        "2026-04-28 00:00:00",
+        "2026-04-29 00:00:00",
+        "2026-04-30 00:00:00"
+      ],
+      "unready_mature_dates": [],
+      "probability_is_classifier_prediction": true,
+      "per_symbol": {
+        "SOXL": {
+          "dates": 73,
+          "hits": 45,
+          "mean_probability": 0.576594536544682,
+          "hit_fraction": 0.6164383561643836,
+          "brier": 0.2526099874522244,
+          "historical_frequency_brier": 0.23997623890289219,
+          "raw_log_value_mse": 0.0035734514858205236,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 1,
+              "predicted": 0.3800178579045134,
+              "observed": 1.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 47,
+              "predicted": 0.5511747691034333,
+              "observed": 0.7021276595744681
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 25,
+              "predicted": 0.6322467664798361,
+              "observed": 0.44
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        },
+        "SOXS": {
+          "dates": 73,
+          "hits": 35,
+          "mean_probability": 0.502376168100603,
+          "hit_fraction": 0.4794520547945205,
+          "brier": 0.2587745460757469,
+          "historical_frequency_brier": 0.25238062794868393,
+          "raw_log_value_mse": 0.005046898387774821,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 2,
+              "predicted": 0.3958508917158686,
+              "observed": 0.5
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 68,
+              "predicted": 0.49959545374498626,
+              "observed": 0.47058823529411764
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 3,
+              "predicted": 0.6364225444177375,
+              "observed": 0.6666666666666666
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        }
+      },
+      "date_equal_probability_gain": {
+        "dates": 73,
+        "mean": -0.00951383333819759,
+        "interval95": [
+          -0.022124365899621596,
+          0.0012108285626883644
+        ],
+        "block_sessions": 10,
+        "replicates": 5000,
+        "positive_supported": false,
+        "not_independent_forward_validation": true
+      },
+      "top": {
+        "raw_mean": 0.0010365686682440786,
+        "corrected_mean": -0.011533305642033536,
+        "actual_mean": -0.01518584560201621,
+        "raw_mse": 0.004324150436776428,
+        "corrected_mse": 0.004031906747968479,
+        "positive_candidate_dates": 0,
+        "positive_predicted_mean": null,
+        "positive_actual_mean": null,
+        "positive_hit_count": 0,
+        "negative_unconstrained_calibration_slope_dates": 17,
+        "outside_calibration_support_dates": 0,
+        "positive_outside_support_dates": 0
+      },
+      "counterfactual_dates_are_not_independent_actual_trades": true
+    },
+    "logit_factor_uniform": {
+      "ready_mature_dates": 73,
+      "joint_immature_dates": [
+        "2026-04-20 00:00:00",
+        "2026-04-21 00:00:00",
+        "2026-04-22 00:00:00",
+        "2026-04-23 00:00:00",
+        "2026-04-24 00:00:00",
+        "2026-04-27 00:00:00",
+        "2026-04-28 00:00:00",
+        "2026-04-29 00:00:00",
+        "2026-04-30 00:00:00"
+      ],
+      "unready_mature_dates": [],
+      "probability_is_classifier_prediction": true,
+      "per_symbol": {
+        "SOXL": {
+          "dates": 73,
+          "hits": 45,
+          "mean_probability": 0.5699346113198006,
+          "hit_fraction": 0.6164383561643836,
+          "brier": 0.24772427284210438,
+          "historical_frequency_brier": 0.2393110964416138,
+          "raw_log_value_mse": 0.003497983215325118,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 53,
+              "predicted": 0.5485831133357683,
+              "observed": 0.6037735849056604
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 20,
+              "predicted": 0.6265160809774865,
+              "observed": 0.65
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        },
+        "SOXS": {
+          "dates": 73,
+          "hits": 35,
+          "mean_probability": 0.5008134012614811,
+          "hit_fraction": 0.4794520547945205,
+          "brier": 0.2527017598285247,
+          "historical_frequency_brier": 0.2510257881916086,
+          "raw_log_value_mse": 0.004959999298235552,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 1,
+              "predicted": 0.39640279425606995,
+              "observed": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 68,
+              "predicted": 0.4949949770837988,
+              "observed": 0.4852941176470588
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 4,
+              "predicted": 0.6258292640334334,
+              "observed": 0.5
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        }
+      },
+      "date_equal_probability_gain": {
+        "dates": 73,
+        "mean": -0.005044574018703309,
+        "interval95": [
+          -0.01963529294637061,
+          0.007746731634680794
+        ],
+        "block_sessions": 10,
+        "replicates": 5000,
+        "positive_supported": false,
+        "not_independent_forward_validation": true
+      },
+      "top": {
+        "raw_mean": 7.663048819130298e-05,
+        "corrected_mean": -0.00727835851688018,
+        "actual_mean": -0.012202139001830052,
+        "raw_mse": 0.004230044577856812,
+        "corrected_mse": 0.004160913384823471,
+        "positive_candidate_dates": 0,
+        "positive_predicted_mean": null,
+        "positive_actual_mean": null,
+        "positive_hit_count": 0,
+        "negative_unconstrained_calibration_slope_dates": 69,
+        "outside_calibration_support_dates": 0,
+        "positive_outside_support_dates": 0
+      },
+      "counterfactual_dates_are_not_independent_actual_trades": true
+    },
+    "logit_full_recent": {
+      "ready_mature_dates": 73,
+      "joint_immature_dates": [
+        "2026-04-20 00:00:00",
+        "2026-04-21 00:00:00",
+        "2026-04-22 00:00:00",
+        "2026-04-23 00:00:00",
+        "2026-04-24 00:00:00",
+        "2026-04-27 00:00:00",
+        "2026-04-28 00:00:00",
+        "2026-04-29 00:00:00",
+        "2026-04-30 00:00:00"
+      ],
+      "unready_mature_dates": [],
+      "probability_is_classifier_prediction": true,
+      "per_symbol": {
+        "SOXL": {
+          "dates": 73,
+          "hits": 45,
+          "mean_probability": 0.5617555989290619,
+          "hit_fraction": 0.6164383561643836,
+          "brier": 0.2653868794919681,
+          "historical_frequency_brier": 0.23997623890289219,
+          "raw_log_value_mse": 0.0037678696178453128,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 1,
+              "predicted": 0.25302237848116893,
+              "observed": 1.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 50,
+              "predicted": 0.5270366389030454,
+              "observed": 0.68
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 22,
+              "predicted": 0.6546956544630945,
+              "observed": 0.45454545454545453
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        },
+        "SOXS": {
+          "dates": 73,
+          "hits": 35,
+          "mean_probability": 0.5089992978697669,
+          "hit_fraction": 0.4794520547945205,
+          "brier": 0.24686407667021473,
+          "historical_frequency_brier": 0.25238062794868393,
+          "raw_log_value_mse": 0.004892332828634882,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 2,
+              "predicted": 0.3504620499078148,
+              "observed": 0.5
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 66,
+              "predicted": 0.4989870655054161,
+              "observed": 0.48484848484848486
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 4,
+              "predicted": 0.6308612300291271,
+              "observed": 0.25
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 1,
+              "predicted": 0.9994334012033866,
+              "observed": 1.0
+            }
+          ]
+        }
+      },
+      "date_equal_probability_gain": {
+        "dates": 73,
+        "mean": -0.00994704465530337,
+        "interval95": [
+          -0.02544607733305019,
+          0.003934054231075888
+        ],
+        "block_sessions": 10,
+        "replicates": 5000,
+        "positive_supported": false,
+        "not_independent_forward_validation": true
+      },
+      "top": {
+        "raw_mean": 0.0007079086160442389,
+        "corrected_mean": -0.007656974227768638,
+        "actual_mean": -0.016004935790523908,
+        "raw_mse": 0.005026666052139628,
+        "corrected_mse": 0.004853717555067502,
+        "positive_candidate_dates": 0,
+        "positive_predicted_mean": null,
+        "positive_actual_mean": null,
+        "positive_hit_count": 0,
+        "negative_unconstrained_calibration_slope_dates": 63,
+        "outside_calibration_support_dates": 3,
+        "positive_outside_support_dates": 0
+      },
+      "counterfactual_dates_are_not_independent_actual_trades": true
+    },
+    "ridge_factor_recent": {
+      "ready_mature_dates": 73,
+      "joint_immature_dates": [
+        "2026-04-20 00:00:00",
+        "2026-04-21 00:00:00",
+        "2026-04-22 00:00:00",
+        "2026-04-23 00:00:00",
+        "2026-04-24 00:00:00",
+        "2026-04-27 00:00:00",
+        "2026-04-28 00:00:00",
+        "2026-04-29 00:00:00",
+        "2026-04-30 00:00:00"
+      ],
+      "unready_mature_dates": [],
+      "probability_is_classifier_prediction": false,
+      "per_symbol": {
+        "SOXL": {
+          "dates": 73,
+          "hits": 45,
+          "mean_probability": 0.5875608657479855,
+          "hit_fraction": 0.6164383561643836,
+          "brier": 0.23997623890289219,
+          "historical_frequency_brier": 0.23997623890289219,
+          "raw_log_value_mse": 0.003531177524962892,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 69,
+              "predicted": 0.5867163052319486,
+              "observed": 0.6086956521739131
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 4,
+              "predicted": 0.6021295346496212,
+              "observed": 0.75
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        },
+        "SOXS": {
+          "dates": 73,
+          "hits": 35,
+          "mean_probability": 0.4878082367269037,
+          "hit_fraction": 0.4794520547945205,
+          "brier": 0.25238062794868393,
+          "historical_frequency_brier": 0.25238062794868393,
+          "raw_log_value_mse": 0.0049959484960197705,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 73,
+              "predicted": 0.4878082367269037,
+              "observed": 0.4794520547945205
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        }
+      },
+      "date_equal_probability_gain": {
+        "dates": 73,
+        "mean": 0.0,
+        "interval95": [
+          0.0,
+          0.0
+        ],
+        "block_sessions": 10,
+        "replicates": 5000,
+        "positive_supported": false,
+        "not_independent_forward_validation": true
+      },
+      "top": {
+        "raw_mean": -0.00036003090433821207,
+        "corrected_mean": -0.012525369660008159,
+        "actual_mean": -0.01923354261816885,
+        "raw_mse": 0.0049795374104228,
+        "corrected_mse": 0.004655989826977227,
+        "positive_candidate_dates": 0,
+        "positive_predicted_mean": null,
+        "positive_actual_mean": null,
+        "positive_hit_count": 0,
+        "negative_unconstrained_calibration_slope_dates": 1,
+        "outside_calibration_support_dates": 0,
+        "positive_outside_support_dates": 0
+      },
+      "counterfactual_dates_are_not_independent_actual_trades": true
+    },
+    "mean_recent": {
+      "ready_mature_dates": 73,
+      "joint_immature_dates": [
+        "2026-04-20 00:00:00",
+        "2026-04-21 00:00:00",
+        "2026-04-22 00:00:00",
+        "2026-04-23 00:00:00",
+        "2026-04-24 00:00:00",
+        "2026-04-27 00:00:00",
+        "2026-04-28 00:00:00",
+        "2026-04-29 00:00:00",
+        "2026-04-30 00:00:00"
+      ],
+      "unready_mature_dates": [],
+      "probability_is_classifier_prediction": false,
+      "per_symbol": {
+        "SOXL": {
+          "dates": 73,
+          "hits": 45,
+          "mean_probability": 0.5875608657479855,
+          "hit_fraction": 0.6164383561643836,
+          "brier": 0.23997623890289219,
+          "historical_frequency_brier": 0.23997623890289219,
+          "raw_log_value_mse": 0.0033996377371942727,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 69,
+              "predicted": 0.5867163052319486,
+              "observed": 0.6086956521739131
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 4,
+              "predicted": 0.6021295346496212,
+              "observed": 0.75
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        },
+        "SOXS": {
+          "dates": 73,
+          "hits": 35,
+          "mean_probability": 0.4878082367269037,
+          "hit_fraction": 0.4794520547945205,
+          "brier": 0.25238062794868393,
+          "historical_frequency_brier": 0.25238062794868393,
+          "raw_log_value_mse": 0.0049099666576850635,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 73,
+              "predicted": 0.4878082367269037,
+              "observed": 0.4794520547945205
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        }
+      },
+      "date_equal_probability_gain": {
+        "dates": 73,
+        "mean": 0.0,
+        "interval95": [
+          0.0,
+          0.0
+        ],
+        "block_sessions": 10,
+        "replicates": 5000,
+        "positive_supported": false,
+        "not_independent_forward_validation": true
+      },
+      "top": {
+        "raw_mean": 0.00031528648653615074,
+        "corrected_mean": 0.002125253827842591,
+        "actual_mean": 0.0027906512220102347,
+        "raw_mse": 0.0033996377371942727,
+        "corrected_mse": 0.0034671477647206803,
+        "positive_candidate_dates": 56,
+        "positive_predicted_mean": 0.003900922795936345,
+        "positive_actual_mean": -0.0029368409866822494,
+        "positive_hit_count": 32,
+        "negative_unconstrained_calibration_slope_dates": 73,
+        "outside_calibration_support_dates": 0,
+        "positive_outside_support_dates": 0
+      },
+      "counterfactual_dates_are_not_independent_actual_trades": true
+    },
+    "same_primary_offset": {
+      "ready_mature_dates": 73,
+      "joint_immature_dates": [
+        "2026-04-20 00:00:00",
+        "2026-04-21 00:00:00",
+        "2026-04-22 00:00:00",
+        "2026-04-23 00:00:00",
+        "2026-04-24 00:00:00",
+        "2026-04-27 00:00:00",
+        "2026-04-28 00:00:00",
+        "2026-04-29 00:00:00",
+        "2026-04-30 00:00:00"
+      ],
+      "unready_mature_dates": [],
+      "probability_is_classifier_prediction": true,
+      "per_symbol": {
+        "SOXL": {
+          "dates": 73,
+          "hits": 45,
+          "mean_probability": 0.576594536544682,
+          "hit_fraction": 0.6164383561643836,
+          "brier": 0.2526099874522244,
+          "historical_frequency_brier": 0.23997623890289219,
+          "raw_log_value_mse": 0.0035734514858205236,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 1,
+              "predicted": 0.3800178579045134,
+              "observed": 1.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 47,
+              "predicted": 0.5511747691034333,
+              "observed": 0.7021276595744681
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 25,
+              "predicted": 0.6322467664798361,
+              "observed": 0.44
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        },
+        "SOXS": {
+          "dates": 73,
+          "hits": 35,
+          "mean_probability": 0.502376168100603,
+          "hit_fraction": 0.4794520547945205,
+          "brier": 0.2587745460757469,
+          "historical_frequency_brier": 0.25238062794868393,
+          "raw_log_value_mse": 0.005046898387774821,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 2,
+              "predicted": 0.3958508917158686,
+              "observed": 0.5
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 68,
+              "predicted": 0.49959545374498626,
+              "observed": 0.47058823529411764
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 3,
+              "predicted": 0.6364225444177375,
+              "observed": 0.6666666666666666
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        }
+      },
+      "date_equal_probability_gain": {
+        "dates": 73,
+        "mean": -0.00951383333819759,
+        "interval95": [
+          -0.022124365899621596,
+          0.0012108285626883644
+        ],
+        "block_sessions": 10,
+        "replicates": 5000,
+        "positive_supported": false,
+        "not_independent_forward_validation": true
+      },
+      "top": {
+        "raw_mean": 0.0010365686682440786,
+        "corrected_mean": -0.011760947996943478,
+        "actual_mean": -0.01518584560201621,
+        "raw_mse": 0.004324150436776428,
+        "corrected_mse": 0.004009937947809877,
+        "positive_candidate_dates": 0,
+        "positive_predicted_mean": null,
+        "positive_actual_mean": null,
+        "positive_hit_count": 0,
+        "negative_unconstrained_calibration_slope_dates": 17,
+        "outside_calibration_support_dates": 0,
+        "positive_outside_support_dates": 0
+      },
+      "counterfactual_dates_are_not_independent_actual_trades": true
+    },
+    "same_primary_raw": {
+      "ready_mature_dates": 73,
+      "joint_immature_dates": [
+        "2026-04-20 00:00:00",
+        "2026-04-21 00:00:00",
+        "2026-04-22 00:00:00",
+        "2026-04-23 00:00:00",
+        "2026-04-24 00:00:00",
+        "2026-04-27 00:00:00",
+        "2026-04-28 00:00:00",
+        "2026-04-29 00:00:00",
+        "2026-04-30 00:00:00"
+      ],
+      "unready_mature_dates": [],
+      "probability_is_classifier_prediction": true,
+      "per_symbol": {
+        "SOXL": {
+          "dates": 73,
+          "hits": 45,
+          "mean_probability": 0.576594536544682,
+          "hit_fraction": 0.6164383561643836,
+          "brier": 0.2526099874522244,
+          "historical_frequency_brier": 0.23997623890289219,
+          "raw_log_value_mse": 0.0035734514858205236,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 1,
+              "predicted": 0.3800178579045134,
+              "observed": 1.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 47,
+              "predicted": 0.5511747691034333,
+              "observed": 0.7021276595744681
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 25,
+              "predicted": 0.6322467664798361,
+              "observed": 0.44
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        },
+        "SOXS": {
+          "dates": 73,
+          "hits": 35,
+          "mean_probability": 0.502376168100603,
+          "hit_fraction": 0.4794520547945205,
+          "brier": 0.2587745460757469,
+          "historical_frequency_brier": 0.25238062794868393,
+          "raw_log_value_mse": 0.005046898387774821,
+          "reliability": [
+            {
+              "lo": 0.0,
+              "hi": 0.2,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.4,
+              "n": 2,
+              "predicted": 0.3958508917158686,
+              "observed": 0.5
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.6,
+              "n": 68,
+              "predicted": 0.49959545374498626,
+              "observed": 0.47058823529411764
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.8,
+              "n": 3,
+              "predicted": 0.6364225444177375,
+              "observed": 0.6666666666666666
+            },
+            {
+              "lo": 0.8,
+              "hi": 1.0,
+              "n": 0,
+              "predicted": null,
+              "observed": null
+            }
+          ]
+        }
+      },
+      "date_equal_probability_gain": {
+        "dates": 73,
+        "mean": -0.00951383333819759,
+        "interval95": [
+          -0.022124365899621596,
+          0.0012108285626883644
+        ],
+        "block_sessions": 10,
+        "replicates": 5000,
+        "positive_supported": false,
+        "not_independent_forward_validation": true
+      },
+      "top": {
+        "raw_mean": 0.0010365686682440786,
+        "corrected_mean": 0.0010365686682440786,
+        "actual_mean": -0.01518584560201621,
+        "raw_mse": 0.004324150436776428,
+        "corrected_mse": 0.004324150436776428,
+        "positive_candidate_dates": 41,
+        "positive_predicted_mean": 0.0040506456816345755,
+        "positive_actual_mean": -0.007143528230364354,
+        "positive_hit_count": 22,
+        "negative_unconstrained_calibration_slope_dates": 17,
+        "outside_calibration_support_dates": 0,
+        "positive_outside_support_dates": 0
+      },
+      "counterfactual_dates_are_not_independent_actual_trades": true
+    }
+  }
+}

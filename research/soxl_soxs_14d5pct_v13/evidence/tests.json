@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "tests_run": 6,
+  "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .cache/soxl_soxs_14d5pct_v2/venv/bin/python -m unittest discover -s research/soxl_soxs_14d5pct_v13 -p test_*.py -v",
+  "execution": "Successful test run observed before preregistered fitting; tested model and test source unchanged",
+  "test_source_sha256": "c3f68dbdda7624130f9c1d7dbbe403bfc95a24624d9843974b987ee0a36d9edf",
+  "covered": [
+    "signed volatility factors and clipping",
+    "parent weight half-life and normalization",
+    "future outcomes excluded from calibration",
+    "negative fitted relation retained without rank reversal",
+    "constant score and common warmup",
+    "training-only scaling and one-class fallback"
+  ]
+}
