@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-10-12T17:23:44.766134+00:00",
+  "scope": "verification-only repair; no strategy, inputs, outcomes or preregistered sources changed",
+  "failed_verifier": "verify_overnight.py",
+  "corrected_verifier": "verify_overnight_v2.py",
+  "cause": "JSON dump encodes pandas timestamps via default=str; comparison left expected timestamps as objects. Normalize both to same JSON wire representation, retaining numerical tolerance and strict structure.",
+  "preregistered_sources_unchanged": true,
+  "results_sha256": "7d8425304317c317b448c93c009990d7e69e73c2070c184818484e2ee0a0707d",
+  "predictions_sha256": "fd16141c844fb7ed379f43fb37dfb81f6c9cbddc8d2a518517c1201ade1e99f6",
+  "corrected_verifier_sha256": "8ce6310bff65e642c5172b7f27092cb3152709927d8221613c74e249e8d75b79",
+  "regression_tests_sha256": "f0b4cc2ccd39cf24063ca39ffb063dbdf1878ea2c2618d2c8437d95108f98ee9"
+}

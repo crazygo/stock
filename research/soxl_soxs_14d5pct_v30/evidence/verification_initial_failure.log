@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v30/verify_overnight.py", line 139, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);verify(p.parse_args().run)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v30/verify_overnight.py", line 45, in verify
+    gaprows,gaps,anchors=reference_forecasts(market,features);compare_records(read(run/'gap_records.json'),gaprows)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v30/audit_paths.py", line 112, in compare_records
+    for k in b:compare_records(a[k],b[k])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v30/audit_paths.py", line 115, in compare_records
+    for x,y in zip(a,b):compare_records(x,y)
+                        ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v30/audit_paths.py", line 112, in compare_records
+    for k in b:compare_records(a[k],b[k])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v30/audit_paths.py", line 117, in compare_records
+    else:assert a==b,(a,b)
+                ^^^^
+AssertionError: ('2024-10-14 00:00:00', Timestamp('2024-10-14 00:00:00'))

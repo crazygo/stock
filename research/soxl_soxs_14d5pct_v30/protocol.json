@@ -1,0 +1,61 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_preclose_profit_buffer_v30",
+  "primary": "buffer_band",
+  "development_raw_source": ".cache/soxl_soxs_14d5pct_v23/runs/clocks_20261012",
+  "feature_source": ".cache/soxl_soxs_14d5pct_v7/runs/breadth_20261012",
+  "hypothesis": "V29 identified a -13.29% gap loss despite a nominal6% stop. Prior v10 exits cut12 later winners while saving5 losses, and v6/v8 flat policies failed. Test a causal empirical overnight-tail profit buffer, jointly retraining entry outcomes for this changed exit policy. No date-specific exclusion, parameter grid or hindsight hot-period labels.",
+  "analysis_clocks_et": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "contract": "Original four clocks, delayed next regular5mOpen entry; attached centrounded+5% TP and fixed6% protective stop remain active. Max14inclusive calendar days, last officialclose on/before entry+13. At every held session close-15minutes+30seconds, decide HOLD or EXIT. An exit executes next regular5mOpen strictly after intent+30seconds, within6minutes. Existing stop/TP may fill during latency; at executionOpen, open<=stop takes gapstop, open>=target takes target, otherwise discretionary exit atOpen lessslip. Do not use later executionbar extrema to undo an opening exit. Halfdays use officialclose. V4 arbitrarytime analysis remains unqualified.",
+  "inputs": "Same verified causal v23 features:19 price/industry factors premarket,31 afteropen including session/VWAP/recent15/high-low/diffusion context. Same-clock full volume prefixes for8leaders and20prior official sessions,missing/late prefix disablesfeatures. No future hot intervals/hit rates,month identities or historical PIT membership claim.",
+  "base_forecasts": "Retrain eachclock daily using new buffer-exit terminal outcomes. Same v23 context19/31 causal features and expanding early-terminal chronological prefix, bothETF labels available before00ET; Ridge100 commonC/magnitudeabsD and weighted LogisticC.1 signD, recency126,min120 source dates. Old as-issued scores are immutable within this new run. Early label release includes actual executionbar completion/availability; dividend-bearing parents conservatively retain complete14day release. Original full-window release is unchanged. Raw v23 forecasts are used only in the old v29 control.",
+  "control_source": ".cache/soxl_soxs_14d5pct_v29/runs/regime_20261013",
+  "error_model": "Same-clock latest120/min60 as-issued new raw forecasts with bothnew managed outcomes mature before00ET, full chronological prefix. Expired unresolvedprefix disables clock. Ridge20 on two rawscores predicts paired netlogreturn residuals;63source-date half-life, weights normalized sumN, weightedpopulation scaling. No v29 detected-regime weighting in newprimary.",
+  "uncertainty": "199 circular10source-date blocks, seed826+ETdateordinal, sharedETF counts, refit scaling/Ridge. Commonmargin=max(0,90% higherquantile of maximumETF upward bootstrap-point deviation). Conditional estimator sensitivity only; not all model uncertainty or monthly guarantee.",
+  "decision": "Choose largerpositive band-adjusted return estimate, tieSOXL, otherwise CASH. Same original settledcash one-position/day ledger. Do not replace failedprimary with a diagnostic.",
+  "routes": {
+    "buffer_band": "PRIMARY jointly retrained entry plus profitbuffer exit",
+    "buffer_point": "same training, point without uncertainty margin",
+    "same_entry_fixed": "same primary candidateactions, original14day exits; actual later entries may differ due occupancy",
+    "same_entry_flat": "same primary candidateactions, always exit at scheduledpreclose",
+    "source_v29": "exact old primary actions and originalexits; causal extension only afterpassingdev",
+    "source_v29_buffer": "old v29 candidateactions plus newbuffer exit",
+    "cash": "alwayscash",
+    "double_cost": "frozenprimaryactions, own doubledcost buffer paths"
+  },
+  "verification": "15 preregistered synthetic tests including delay/protective-order competition, executionbar release, halfdays, missingprefix, dividendrelease, futureappend isolation and independent vector barrier/reference exits. Independently reconstruct every riskanchor/tail, managedlabel/review, daily rawmodel equation, residual bootstrap, action and eightcashbooks. Exactv29control. Case replay prohibited unless primarydev verifiedpasses; ifpermitted, independently verify newinputs/models/exits and unchanged preMayforecasts.",
+  "diagnostics": "Report risk-tail range and hold/exit reasons, changed realised trade paths, loss avoided and later winners cut using same-entry counterfactuals without summing them into fictitious capital. All routes/months retained. No after-result threshold tuning or primaryswitch.",
+  "risk_observation": "For eachETF every consecutive official-session pair: prior close-15minute5mClose to next regularOpen, using split-consistent economicprices. This includes final15minutes and overnight. Release=max availability of markbar and next first5mbar; only releases strictly before review enter. Last126 officialpairs, min60, latestpair ends today; any missing/late pair disables forecast instead of silently dropping it.",
+  "risk_estimate": "Adverse loss=max(0,1-nextOpen/priorReviewMark). Tail estimate=mean of worst ceil(10%*N) observed losses. This empirical tail mean is neither a loss bound nor a guaranteed confidence interval. No future observations or outcome-conditioned hot-period selection.",
+  "holding_decision": "HOLD only if current economicmark*(1-tail)*(1-slip)*(1-fee)/(economicentry*(1+fee))-1 >=0. Otherwise EXIT; unavailable risk or review mark also EXIT. Dividends are conservatively excluded from this buffer calculation but included in labels and cash ledger. Missing execution/path prefix remains unknown with capital occupied. Fees/slip .0005 per side baseline, doubled stress.",
+  "execution_reference": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order"
+}
