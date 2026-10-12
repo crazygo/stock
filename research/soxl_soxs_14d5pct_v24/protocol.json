@@ -1,0 +1,59 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "development_screen": "As in v11/v12,do not launch a new case replay unless primary complete-coverage development ledger has all4months>=0,arithmeticmean>=10%,and>=10completed actual trades. This research screen does not replace the original5/7/9 acceptance;diagnostic controls cannot rescue a failed primary after results.",
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "acceptance": "Original5/7/9 net capital month arithmetic mean>=10%;allMay-Sep months nonnegative;complete coverage. Exposed development data are not independent future evidence. Historical pass would not guarantee future lossless months.",
+  "capital": "One settled-cash position at most;allocation only0/1,no leverage,same-day reentry forbidden. T+1,fees,slippage,gaps,dividends,full14calendar expiry and continuous cross-month MTM unchanged. Missing held outcome retains occupation. Entry trigger/exit rules remain exactsourcecontract.",
+  "terminal_receipt": "Each side must have finite fixedpolicy netreturn and actual known target/riskstop/expiry terminalbar. Check EVERY official regular5mbar fromdelayedentry throughterminal inclusive,exact orderedexpectedends,5minstarts,available_at>=barend and no missingavailabletimestamp. Release=max prefixbaravailable_at. Jointrelease=maxbothsides. No laterwindowbar isneeded. If eitherprefixunknown,entrymissing,oroutcomeunresolved,retainunknown. Corporateactionunit convention unchanged. Dividend-bearing outcomes conservatively retainoriginal full-windowrelease;no new announcement-time assumption.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "version": "soxl_soxs_joint_profit_loss_v24",
+  "primary": "joint_hgb",
+  "analysis_clock_et": "09:25:30",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v21/runs/early_20261012",
+    "cases": ".cache/soxl_soxs_14d5pct_v21/runs/cases_20261012"
+  },
+  "hypothesis": "V23loss audit found all11losing executed entries had a profitable otherETF at the same decision;2gaplosses and0ambiguousbarlosses. Calibrationflipsalso improved18of30flippedtrades,so simplyremovingcalibration isnot justified. Test coupled profit/loss class forecasting and joint scenario utility instead of independently calibrated common/difference pointmeans. This differsfromv12 two-part singleETF HGB:pairedclasses,19industryfactors,earlyjointterminalfeedback,ownprequentialmulticlasscalibration,andonejointscenario distribution. No result guarantee.",
+  "contract": "Unchangedv21 singlepremarket09:25:30ET decision,first RTHOpen strictlyafter30s latency09:30,+5% attachedcentroundedTP,fixed6% protection,14inclusivecalendar max. Allfees/slippage,stop-firstsamebar,gaps,splits,dividends,T+1,cross-monthMTM,unknownfundoccupation. Returning topremarket isolates the forecast formulation;v23intradayfailed remainsretained andv4arbitrarytimeanalysisremainsavailable/unqualified.",
+  "inputs": "Exactly19v14causalindustry/relative/breadth/persistence/sameclockvolume factors from verifiedv21 panel,one paired date asone trainingparent. No clock expansion,no monthfeatures,no currentmembers historicalPITclaim.",
+  "targets": "For net fixed-contract pairedreturns(rL,rS),Y=2*I(rL>0)+I(rS>0):0bothnonpositive,1SOXSonlypositive,2SOXLonlypositive,3bothpositive. Undefined pairedreturn=>class-1,neverfakea negativeclass. Preserve bothactualreturnscenarios,includinggapcostlosses. Labelsavailableonlyafter BOTH terminalprefixesknown;dividend-bearinglabelsretainoldwindowwait.",
+  "training": "Daily00ET expanding chronologicalcompletejointterminalprefix fromv21,min120parents;never skipa pendingearlierdate. Unresolvedexpired>=14calendar disablesforecast. Baseweights proportional2^(-rankage/126),normalizedsumN. SameprefixforHGBandlogit. Newqueryfeaturesasof09:25:30,notfuturebars.",
+  "algorithms": "PrimaryHistGradientBoostingClassifier:80iterations,7leaves,minleaf20,lr.05,L2=5,noearlystopping,seed814. DiagnosticmultinomialLogisticRegressionC.1,maxiter2000,tol1e-10. Logitusesweightedpopulationmean/stdwithscale1ifstd<1e-12;computedexplicitlytoavoidnegativeconstantvariance roundoff. Missingtrainingclassreceiveszero rawprobability;singleclassusesweightedempiricalprior. No hyperparametergrid.",
+  "calibration": "Eachlearnersownasissuedraw4classprobabilities,latest120oldforecastdates ineligiblejointterminalprefix,min60. Inputlog(max(p,1e-6));weightedpopulationstandardization;multinomialLogisticC.1 (binarywhen2observedclasses),weightsrecency63normalizedsumN. Mapsproduce4classprobabilitieswithzeroformissingcalibrationclasses. Nomodificationofoldrawforecasts,nonewlabelintraday. Rawcontrolkeepssamereadiness. Probabilityscoresarenottradeguarantees.",
+  "scenario_prior": "Latest120admittedearlypaired dates,min60. Jointactualreturnvector perdate. Priorrecency63;primarygaussiankernelonrelative5,relative20,breadth5,strengthpersistence5,volumedirectiondiffusion,logsectorvol. Historicalweightedmean/std;h40thsmallestmeanstandardizedsquareddistance,min1e-12;w proportionalb exp(-d/(2h)),logstabilized. Priorconcentration1/sumw2>=20. Globaldiagnosticusesrecencyonly. Theseareweightconcentrations,notindependentobservations.",
+  "scenario_posterior": "Letpi_c=sum(w_i forY_i=c),forecastp_c. q_i=w_i*p_Yi/pi_Yi. Thispreservesobservedconditionalpairedpayoffdistributionandforcesjointclassmarginalstoequalforecastp. Anypositiveforecastclasswithzeroobservedsupport=>CASH,noinventedpayoffs. Posteriorconcentration>=20. BothETFutilitiesuseSAMEqunlikeindependentmeanforcing. prior_onlysetsptopi.",
+  "decision": "Maximize expectedpowerutility gamma5 overCASHorONEETFandfractions0,.25,.5,.75,1ofsettledcash. Utility((1+f*r)^(-4)-1)/(-4). Choicesstable:CASHthenascendingpositivefraction,SOXLthenSOXS;within1e-12ofbestpreferfirst/smallerexposure. No twoETFhedge,leverage,monthresets orlossclipping. Same-dayreentryforbidden. full_sizeusesonly0/1; risk_neutralmaximizesexpectedwealthminus1with0/1. No cashandfraction performancepromotedposthoc.",
+  "routes": {
+    "joint_hgb": "PRIMARY:HGBjointclasscalibration,localconditionalpayoffs,utilitysizing",
+    "joint_logit": "Logitjointclass owncalibration,samerisk/sizing",
+    "joint_raw": "Primaryrawjointprobabilities,calreadinessretained",
+    "joint_global": "Primarycalprobabilities,recencyonlyconditionalpayoffs",
+    "prior_only": "Localhistoricaljointdistribution,primaryreadiness",
+    "full_size": "Primarycaldistribution,onlycashorfullsize",
+    "risk_neutral": "Primarycaldistribution,maximumexpectedreturn,cash/fullsize",
+    "source_early": "Exactv21premarketforecastandcapitalcontrol",
+    "cash": "alwayscash",
+    "double_cost": "Primaryfrozenactions,owndoublecostfills/barriers"
+  },
+  "verification": "Independentpairedclass arithmeticandterminalavailability,chronologicalmembership,pastasissuedcalibration;manualHGBnode traversal+binarysigmoid/multiclasssoftmax;weightedlogitfirst-ordergradients;freshanchorrefits2025-09-02,2026-01-05,2026-04-01andcase2026-06-01,2026-09-01. Independentreconstructclassmassconditionalq,concentration,utilitiesandfractionchoice;10continuousbooks+sourcev21exactcontrol. Futuretruth/futureforecastinvariance,unknownclassretention,missingclasssupportabstention,cashdominance/ties. Casesafterverifiedprimarydevelopmentonly;allpreMayforecastsmustremainexact.",
+  "diagnostics": "Allroutesretained. Proper4classBrier/logloss,perETFprofitBrier/reliability,selected-candidateprofitcalibration andunknowncounts,actualtradecomposition,size andnegative-months;classification/issuedchoice/capitaldenominatorsseparate. Paired10session5000bootstrapseed707 descriptiveonly. Lossauditusesalreadyexposedv23dev,no v24outcomesseenbefore registration. Diagnostic source afteroutcome maynot change frozenforecasts,parameters or primary."
+}

@@ -1,0 +1,11 @@
+{
+  "recorded_at": "2026-10-12T14:55:34.249013+00:00",
+  "after_original_and_repaired_results": true,
+  "original_check_source_sha256": "8be12d288c041dd8e0659cdc40dcb32658b42139235a2f47e115420452ecb7d2",
+  "corrected_check_source_sha256": "67d4178c0c4eb303c36ff7599e99253cba7a13b2fc86cd5415cebcee06564df1",
+  "finding": "Original and repaired models have numerical equality. Pickle differences are positive/negative zero encodings in HGB training bin thresholds and learned num_threshold fields propagated from those bins. Tree leaf values and all other fields remain byte-identical.",
+  "bounded_equivalence_rule": "Require all outputs/actions/results byte-identical. For differing model pickles, allow only exact old/new byte payloads of HGB bin-threshold arrays or node arrays whose sole difference is the signbit of a zero num_threshold. Validate each affected numerical array and every other node field. Compare EVERY original pickle opcode, offset and argument; no other difference is permitted. Counts must match. Original files are never changed.",
+  "why_equivalent": "For real finite inputs,x<=-0.0 equals x<=+0.0. Every allowed difference is only the sign of a zero comparison threshold; leaf values and branch topology remain identical.",
+  "no_policy_parameter_or_result_change": true,
+  "discarded_check": "Re-pickling loaded objects is not used as a byte identity proof because reserialization can change pickle reference layout; compare original pickle opcodes and payloads directly."
+}
