@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v47/verify_options.py", line 108, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run',type=Path,required=True);verify(p.parse_args().run)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v47/verify_options.py", line 21, in verify
+    features=pd.read_parquet(root/'features.parquet');panel=pd.read_parquet(run/'option_panel.parquet');audit_option_features(run);old=read(root/'predictions.json')['full_band']
+                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v47/audit_option_features.py", line 61, in audit_option_features
+    close(panel.loc[at,option_columns(lag)],x)
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v26/verify_reliability.py", line 14, in close
+    def close(a,b):np.testing.assert_allclose(a,b,atol=1e-10,rtol=1e-8,equal_nan=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1711, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 850, in assert_array_compare
+    val = comparison(x, y)
+          ^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1706, in compare
+    return np._core.numeric.isclose(x, y, rtol=rtol, atol=atol,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/_core/numeric.py", line 2500, in isclose
+    result |= isnan(x) & isnan(y)
+              ^^^^^^^^
+TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
