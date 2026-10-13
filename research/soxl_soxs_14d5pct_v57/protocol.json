@@ -1,0 +1,114 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "weights": "Same as v54: date totalweight sumN,63datehalflife,splitactual5/8rows. Penalty uses full protocol k8 including halfdays; do not use daily observed clock count. Base126datehalflife unchanged.",
+  "version": "soxl_soxs_next_session_feedback_v57",
+  "primary": "fast_band",
+  "panel": [
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "MU",
+    "AMAT",
+    "LRCX",
+    "KLAC",
+    "INTC"
+  ],
+  "decision": "Point=owncurrentraw+predictedresidual. Commonradius=max(0,higher90%quantile maxETF upwardbootstrapdeviation). Selectgreatestpositive(point-radius)>1e-12, tieSOXL;elsecash. Missinginput/minsamples/expiredunresolvedprefix>=14calendar=>cash. No day/monthspecific filter. Bandissensitivity,notguaranteedmonthlylossbound. 0/1originalsettledcash only.",
+  "hypothesis": "Test short-feedback surrogate learning: predict paired barrier payoffs through next official session close, then calibrate immutable issued predictions to original 14-calendar-day actual payoffs. Full v56 features unchanged. A delayed-short control uses identical short targets but waits for BOTH short horizon and old paired terminal feedback. No capital results used to choose horizon or parameters.",
+  "universe": "Existing fixed8reference issuers; current mapping confirmed against cached SEC CIK/ticker payload, not historical PIT full sector. Same panel, not selected by results. Broadcom company-wide revenue includes software; no claim of semiconductor-segment demand isolation.",
+  "source_manifest": "../soxl_soxs_14d5pct_v35/evidence/financial_input_manifest.json",
+  "source_reuse": "Hashverify full v56 delivered run/source and inputs. Keep full feature panel and actual14day baseline/stress labels byte identical. Derive one next-session surrogate label per ETF/query from local raw bars and corporate actions. No downloads/uploads/orders.",
+  "availability": "Facts must match catalog accession,form and filed date. Available_date=calendar day after max(filingDate,acceptanceDateTime literal YYYY-MM-DD),at00ET. Daily inputs include only available_date<=query ET date and periodend<querydate. This deliberately waits past both listed dates and may add delay when UTCdate differs. Historical firstpublic time and delivery latency not established. Unknownaccession,metadata mismatch orcurrency mismatch excluded,notfilled. Filing acceptance is not firstpublic timestamp. Never backfill old facts using later restatements.",
+  "period_normalization": "Only USD standardus-gaap,10K/10Qandamendments. Revenue tagpriority existing4standard names; net income NetIncomeLoss thenProfitLoss. Exact(start,end) latestknownfiled revision,tagpriority tie;samepriority/dateconflictingvalues fail. Direct60-120dayquarter outranks inferredquarter. For121-400day cumulativevalues inferquarter by subtracting latest earlier same-start/same-tag cumulative ending60-120days earlier. Keepbothrawfacts andlatestavailability;never annual/4. Priorquarter ends1-7daysbefore currentstart. Prioryearend350-380days earlier,durationswithin10days. Requirepositive revenue,currentquarter<=183daysold;match net-income start/end exactly. Cumulative difference assumes comparable accounting basis; raw lineage retained; no proof every postacceptance correction was observable at original filing.",
+  "features": {
+    "revenue_growth": "mean of8issuers clip(log(latestquarterRevenue/prioryearquarterRevenue),-2,2)",
+    "growth_breadth": "fractionof8positive revenue loggrowth",
+    "growth_acceleration": "mean clip(currentquarter logYoY minuspreviousquarter logYoY,-2,2)",
+    "acceleration_breadth": "fractionof8positive growthacceleration",
+    "margin_improvement": "mean clip(currentquarter netincome/revenue minusprioryearmatchedquarter netincome/revenue,-1,1)",
+    "margin_breadth": "fractionof8positive netmarginchange",
+    "recent_earnings_share": "fractionof8with8K/8K-Aitem2.02assumedavailable inlast5officialsessionsincludingquerysession. Weekendavailable datesmaptofirstfollowingofficialsession;no upcomingevent knowledge,no sentiment label.",
+    "disclosure_freshness": "mean exp(-calendar_days_since_latest_available_date_among6metric_sourcequarters/63). Restated comparison counts onlywhenitbecameavailable."
+  },
+  "raw_training": "Two own per-clock daily00ET models: fast and lagged. Same v56 full33/45 columns, weighted scaler/Ridge100 C,M/amountweightedLogisticC0.1 q; expanding min120 eligible dates,126datehalflife. Fast release short paired release; lagged release max(short paired release, original paired terminal release), requiring both. Each uses chronological complete prefix, all members explicit. Original14day C,D/release retained separately for calibration, never overwritten. Expired missing short labels block action. No intraday retraining or rewriting issued predictions.",
+  "calibration": "Same v56/v55 normalized8clock calibration and199dateblock draws, but each short model uses its own as-issued short predictions to estimate ORIGINAL14day paired returns. Original14day terminal releases and60/120whole-date gate remain. Short raw payoffs not called 14day forecasts before calibration. Raw uncertainty still conditional on fitted base; no monthly safety guarantee.",
+  "method_reference": [
+    "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+    "https://www.sec.gov/files/about/webmaster-faq.htm",
+    "https://proceedings.mlr.press/v28/joulani13.html"
+  ],
+  "pre_registration_source_findings": "v56 failed dev mean5.0423%,March-22.744%. Seven losses:3rawwrong/4calibrationflips;14flips10helped4hurt. Short-feedback hypothesis not an assumed cure. No new surrogate capital outcomes seen.",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+    "cases": ".cache/soxl_soxs_14d5pct_v39/runs/financial_extension_20261013"
+  },
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "old_clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "routes": {
+    "fast_band": "PRIMARY fast short base + original14day calibration and common margin",
+    "fast_point": "fast short with point only",
+    "lagged_band": "identical target deliberately delayed feedback control",
+    "source_v56": "exact full six-feature terminal-target v56",
+    "source_v55": "exact no-activity v55 control",
+    "premarket_only": "primary at09:25only",
+    "cash": "cash",
+    "double_cost": "primary actions with own2xcost actual14day barriers"
+  },
+  "verification": "Independent raw-array nextsession label reconstruction incl full grid, availability, split/cent/gap/samebar/dividend/nextclose; future beyond proxy horizon immune. Rebuild fast/lagged members and all weighted base equations, whole-date original14day calibration/bootstrap, actions and8actual14day capital books. v56/v55 byte-exact. Cases only after verified primary. Pre-May records immutable.",
+  "common_readiness": "v56 full33/45 input readiness identical. Unknown short label training rows remain pending, not retroactively deleted. Baselinecontrols retain their own old readiness. Short feedback gap after nominal close blocks new route actions; original calibration late-feedback gate remains.",
+  "diagnostics": "Date-equal short-target errors and actual14day calibration errors reported separately; fast-vs-lagged admitted date count/feedback age, raw direction changes, actual added/removed trades, paired capital intervals, all unknown and negative months. No hindsight classifier/gate.",
+  "historical_exposure": "Previously exposed development history, not independent forward validation. Primary fixed before any new capital results.",
+  "activity_definition": "For each SOXL/SOXS/SOXX/QQQ and official eligibleclock, A=sum((High+Low+Close)/3*Volume) over04:00ET through completed decisionbar. All expected5m bars required, available_at<=decision, nonnegative volume, positive aggregate. Individualzero-volume retained. A is approximate traded-dollar activity,not actualturnover or signedbuy/sellflow,netcreation/redemption. UsesrawNONEprice*rawvolume, splitinvariant with economicprice*economicvolume. Logrelative a_s=clip(log(A_today/mean(A onprevious20eligibleofficialsameclockdates)),-3,3). Any missing required prefix leavesunknown;never skipmissing dates. Knownhistoricalavailable_at=barend+1s assumption, not historicalreceived proof.",
+  "activity_features": {
+    "pair_activity": "P=(a_SOXL+a_SOXS)/2",
+    "pair_imbalance": "I=(a_SOXL-a_SOXS)/2",
+    "sector_relative_activity": "R=(a_SOXX-a_QQQ)/2",
+    "pair_activity_price": "P*s",
+    "pair_imbalance_price": "I*s",
+    "sector_activity_price": "R*s; s=existing sector_premarket scaledcurrentsectorpricechange, clipped[-5,5]. No new clipping of products. Same formula atall8clocks."
+  },
+  "variants": {
+    "fast": "short feedback as soon as complete next-session pair is available",
+    "lagged": "same short target; require original14day paired terminal too"
+  },
+  "short_target": "Next official session close after entry date, including current remainder and overnight. Same nextregularbar entry/fees/+5%cent TP/6%stop/adverse gap/stopfirst. If neither barrier occurs, mark at short close with exit costs; this is only a training proxy, never an actual strategy liquidation rule. Require complete entry-day and next-session regular grids even if barrier was hit earlier. Joint release=max(close+1s, all required bars available_at); no partial/early-winner label admission. Ex-date dividends only between entry and short exit, split units maintained. Missing remains unknown and prevents advancing source-date prefix."
+}
