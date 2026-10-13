@@ -1,0 +1,91 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "version": "soxl_soxs_representation_normalization_v73",
+  "primary": "normalized_partial_band",
+  "pairs": {
+    "semiconductor": [
+      "SOXL",
+      "SOXS",
+      "SOXX"
+    ],
+    "nasdaq": [
+      "TQQQ",
+      "SQQQ",
+      "QQQ"
+    ],
+    "sp500": [
+      "UPRO",
+      "SPXU",
+      "SPY"
+    ]
+  },
+  "hypothesis": "Isolate representation-size penalty normalization. v72 increased189mappedfields from18referencefields without scaling100/300 penalties, increasing semiconductor mean inverse-penalty quadratic form10.5x. Normalize both penalties by189/18 before new capital results; no alpha grid, chosen-month repair, new input, label, timing, or exit policy.",
+  "features": "18 fields registered in FIELDS and feature_row. Daily returns use 21 previous official complete split-economic regular closes available before day00ET. Sample sigma20 floor1e-4; trend1/sigma, trend5/(sigma sqrt5), trend20/(sigma sqrt20), log sigma20, sigma5/sigma20, benchmark minus SPY 5day return/(sigma sqrt5), current completed benchmark quote/prior close scaled sigma, current quote/15minutes-earlier quote scaled sigma, SPY current scaled SPY sigma, SPY trend5 scaled,20-change directional efficiency, mean long/short activity, half long-minus-short activity, half benchmark-minus-SPY activity, direction/current interaction, relative/current interaction, trend5/current interaction, summed pair current return/(sigmaLong+sigmaShort). z-scores and interactions clipped[-8,8], volatility ratio capped8. No target-month or identity one-hot features.",
+  "activity": "Raw typical-price times raw volume summed over complete04:00ET-to-clock 5m prefix; activity=clip(log(current/meanprevious20sameclock official eligible dates),-3,3). All prior20 required; no skip missing. Exact quote atdecision-30s and quote15min earlier. Historical bar available=end+1s assumption, not actual receipt. Volume describes activity, not signed net fund flow.",
+  "labels": "Own real ETF fixed6%stop/+5%TP/14inclusive-calendar contract, original costs/splits/dividends. C=(log1p(netLong)+log1p(netShort))/2,D=half difference. Entire14day official window must be complete before training/calibration; release=max last window bar available for both sides, no early-positive labels. Historical corporate action metadata retrospectively verified, historical announcement receipt unproven.",
+  "training": "Every ETday00:00 rebuild each clock from expanding complete whole-date chronological prefix matched across all3pairs/all eligible clocks. Stop at first unmatured date, never skip unknown labels. At least120 real dates perclock. Date weights half-life126, normalized sum N then divided equally by3pairs; duplicated rows do not increase real N. Own pair weighted centers/scales/intercepts. Query current state never enters training. Base model output C±D is expected log net return, not success probability.",
+  "pooling": "Exact unchanged v72 block Cholesky and polynomial map with common1050/deviation3150. Same normalized N-date loss mass, same equal3pair weight, own intercepts. Partial, independent and pooled each use the same width multiplier. No new parameter search. Counts include all registered fields, including structural constants in some domains, to retain common representation across pairs.",
+  "calibration": "Same v71/v72/v55 own asissued8clock residual calibration:latest120/min60fullmaturedates,63datehalflife,199ten-datejointbootstrap,20mean+80/kdeviation penalty. Only base penalty changes. No change to calibration penalty, readiness, lower-bound threshold, or selected action identity rule.",
+  "routes": [
+    "normalized_partial_band",
+    "normalized_partial_point",
+    "normalized_independent_band",
+    "normalized_independent_point",
+    "normalized_pooled_band",
+    "normalized_pooled_point",
+    "old_quadratic_band",
+    "old_quadratic_point",
+    "linear_band",
+    "linear_point",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "decision": "PRIMARY normalized_partial_band; all point and other sharing variants diagnostics. Exact v72 partial band/point plus exact v71 linear band/point controls. Premarket-only anddoublecost useprimary. Missing/insufficient/expiredunknown=>CASH; originalallocation0/1 andall ledger rules. No diagnosticrescue and no monthfilters.",
+  "observation_cutoff_exclusive": "2026-05-01T00:00:00-04:00",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "verification": "Whole-constructed-basis replication invariance for3sharingmodes, unnormalized negative control, degree1 nesting, penaltyformula, full normal-equation realdatafixtures. Everydailybasefit/cutoff/query andcalibration reconstructed;13ledger/statistic audits and4oldcontrolbooks byteidentical. Originalv72inputs andfixedlabels preserved. No cases until verifiedPRIMARYdevelopmentpass.",
+  "transform": "At each day00ET, for each pair/clock use only same matched mature-prefix rows to compute original18 weighted means/population SD (SD<1e-12=>1). Transform z=(x-mean)/SD, then concatenate18z and all171 products zi*zj with i<=j in lexicographic order:189total. No degree/interaction selection or clipping learned z. Center/scale all189 mappedcolumns within eachpair using training weights;189slopes perpair with unpenalized ownintercepts. Apply exactly those saved transformations to query, never fit using query or later data. Structuralconstant inputs remain constant. Protocoloriginal feature clipping unchanged.",
+  "method_reference": [
+    "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html",
+    "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html"
+  ],
+  "normalization": "For one fixed fully constructed standardized feature block of M columns and reference width D=18, lambda_common=100*M/D, lambda_deviation=300*M/D. Current M=189 gives1050/3150. Reference width is fixed, not multiplied when the constructed block is replicated. Replicating the whole standardized block r times with penalties multiplied r leaves fitted predictions invariant. This does not claim invariance to duplicating individual raw inputs before polynomial expansion, arbitrary feature additions, or identical effective degrees of freedom.",
+  "next_candidate_not_executed": "No further candidate or parameter selection registered in this version."
+}

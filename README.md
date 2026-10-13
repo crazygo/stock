@@ -4,9 +4,9 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新实验为 [v72 每日二次特征跨 ETF 学习](research/soxl_soxs_14d5pct_v72/README.md)：开发月均 **+5.49%**、连续资金 **+21.39%**，但一月 **−6.15%**，仍未达标。5,670 个基础模型、每日校准和十一账本独立核验通过，旧线性对照精确复现；未新跑 5／7／9 月案例。[目标继续](research/soxl_soxs_14d5pct_v72/GOAL_PROGRESS.md)。
+最新实验为 [v73 二次表示惩罚归一化](research/soxl_soxs_14d5pct_v73/README.md)：基础预测误差降低约 12.38%，但开发月均仅 **+0.0754%**，三月 **−7.8750%**，仍未达标。5,670 个基础模型、每日校准及 13 份账本独立核验通过，四个旧对照精确复现；未新跑 5／7／9 月案例。[目标继续](research/soxl_soxs_14d5pct_v73/GOAL_PROGRESS.md)。
 
-数据底座 [v70 跨 ETF 学习准备](research/soxl_soxs_14d5pct_v70/README.md) 已接入 v71／v72。[v71 线性部分共享](research/soxl_soxs_14d5pct_v71/README.md) 开发月均 −5.66%；[v69 随价格更新行业状态](research/soxl_soxs_14d5pct_v69/README.md) 月均 +7.87% 但三月亏损，旧失败记录保留。
+此前 [v72 二次特征部分共享](research/soxl_soxs_14d5pct_v72/README.md) 开发月均 +5.49%，一月 −6.15%；[v71 线性部分共享](research/soxl_soxs_14d5pct_v71/README.md) 月均 −5.66%。数据底座为 [v70 跨 ETF 学习准备](research/soxl_soxs_14d5pct_v70/README.md)，旧失败记录保留。
 
 此前 [v59 行业状态一日预测偏离](research/soxl_soxs_14d5pct_v59/README.md)：用过去拟合的状态预测构造创新值，与简单差分、相同样本原输入对照。状态预测误差下降，但主路线开发月均 −0.78%、三月 −22.74%，仍未达标；方向误差没有改善。19 项测试、状态／收益模型及九账本核验通过，未执行新指定月份回归。[持续目标进行中](research/soxl_soxs_14d5pct_v59/GOAL_PROGRESS.md)。
 

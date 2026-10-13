@@ -1,0 +1,316 @@
+{
+  "stage": "post_run_descriptive_only",
+  "errors": {
+    "partial": {
+      "raw": {
+        "date_equal_mse": 0.00449238878521132,
+        "date_equal_top_regret": 0.0670118306452036,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      },
+      "cal": {
+        "date_equal_mse": 0.004430403409825302,
+        "date_equal_top_regret": 0.05702048750154344,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      }
+    },
+    "independent": {
+      "raw": {
+        "date_equal_mse": 0.004551727694056728,
+        "date_equal_top_regret": 0.06879960468431666,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      },
+      "cal": {
+        "date_equal_mse": 0.004412433136182623,
+        "date_equal_top_regret": 0.05337924286457422,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      }
+    },
+    "pooled": {
+      "raw": {
+        "date_equal_mse": 0.004461713383651759,
+        "date_equal_top_regret": 0.06381487013874008,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      },
+      "cal": {
+        "date_equal_mse": 0.004497168511555426,
+        "date_equal_top_regret": 0.06468854435940122,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      }
+    },
+    "old_quadratic": {
+      "raw": {
+        "date_equal_mse": 0.00512724773378215,
+        "date_equal_top_regret": 0.06835117561394267,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      },
+      "cal": {
+        "date_equal_mse": 0.0044692517086880445,
+        "date_equal_top_regret": 0.05845150885285011,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      }
+    },
+    "linear": {
+      "raw": {
+        "date_equal_mse": 0.004602357339770303,
+        "date_equal_top_regret": 0.06264333481841639,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      },
+      "cal": {
+        "date_equal_mse": 0.004505907003967447,
+        "date_equal_top_regret": 0.05847848628876629,
+        "dates": 73,
+        "ticks": 584,
+        "available_ticks": 656
+      }
+    }
+  },
+  "primary_minus_controls": {
+    "old_quadratic": {
+      "raw": {
+        "matched_dates": 73,
+        "mean_mse_difference": -0.0006348589485708298,
+        "dates_partial_better": 52
+      },
+      "cal": {
+        "matched_dates": 73,
+        "mean_mse_difference": -3.88482988627449e-05,
+        "dates_partial_better": 46
+      },
+      "band_different_proposal_ticks": 23,
+      "point_different_proposal_ticks": 130
+    },
+    "linear": {
+      "raw": {
+        "matched_dates": 73,
+        "mean_mse_difference": -0.00010996855455898311,
+        "dates_partial_better": 39
+      },
+      "cal": {
+        "matched_dates": 73,
+        "mean_mse_difference": -7.550359414214656e-05,
+        "dates_partial_better": 38
+      },
+      "band_different_proposal_ticks": 30,
+      "point_different_proposal_ticks": 152
+    },
+    "independent": {
+      "raw": {
+        "matched_dates": 73,
+        "mean_mse_difference": -5.9338908845407725e-05,
+        "dates_partial_better": 46
+      },
+      "cal": {
+        "matched_dates": 73,
+        "mean_mse_difference": 1.797027364267776e-05,
+        "dates_partial_better": 31
+      },
+      "band_different_proposal_ticks": 12,
+      "point_different_proposal_ticks": 77
+    },
+    "pooled": {
+      "raw": {
+        "matched_dates": 73,
+        "mean_mse_difference": 3.067540155956058e-05,
+        "dates_partial_better": 33
+      },
+      "cal": {
+        "matched_dates": 73,
+        "mean_mse_difference": -6.676510173012503e-05,
+        "dates_partial_better": 46
+      },
+      "band_different_proposal_ticks": 14,
+      "point_different_proposal_ticks": 76
+    }
+  },
+  "entries": {
+    "normalized_partial_band": {
+      "actual_entries": 7,
+      "by_clock": {
+        "12:05:30": 1,
+        "13:05:30": 4,
+        "14:05:30": 2
+      },
+      "by_symbol": {
+        "SOXL": 7
+      }
+    },
+    "normalized_partial_point": {
+      "actual_entries": 45,
+      "by_clock": {
+        "09:25:30": 37,
+        "10:05:30": 2,
+        "10:35:30": 1,
+        "12:05:30": 1,
+        "14:05:30": 4
+      },
+      "by_symbol": {
+        "SOXL": 42,
+        "SOXS": 3
+      }
+    },
+    "normalized_independent_band": {
+      "actual_entries": 10,
+      "by_clock": {
+        "10:35:30": 1,
+        "11:05:30": 3,
+        "13:05:30": 4,
+        "14:05:30": 2
+      },
+      "by_symbol": {
+        "SOXL": 9,
+        "SOXS": 1
+      }
+    },
+    "normalized_independent_point": {
+      "actual_entries": 46,
+      "by_clock": {
+        "09:25:30": 36,
+        "10:05:30": 3,
+        "10:35:30": 2,
+        "11:05:30": 2,
+        "12:05:30": 2,
+        "14:05:30": 1
+      },
+      "by_symbol": {
+        "SOXL": 39,
+        "SOXS": 7
+      }
+    },
+    "normalized_pooled_band": {
+      "actual_entries": 6,
+      "by_clock": {
+        "10:35:30": 3,
+        "13:05:30": 1,
+        "14:05:30": 2
+      },
+      "by_symbol": {
+        "SOXL": 6
+      }
+    },
+    "normalized_pooled_point": {
+      "actual_entries": 43,
+      "by_clock": {
+        "09:25:30": 33,
+        "10:05:30": 1,
+        "10:35:30": 1,
+        "12:05:30": 1,
+        "13:05:30": 2,
+        "14:05:30": 5
+      },
+      "by_symbol": {
+        "SOXL": 39,
+        "SOXS": 4
+      }
+    },
+    "old_quadratic_band": {
+      "actual_entries": 18,
+      "by_clock": {
+        "09:25:30": 1,
+        "10:35:30": 4,
+        "11:05:30": 4,
+        "13:05:30": 4,
+        "14:05:30": 5
+      },
+      "by_symbol": {
+        "SOXL": 15,
+        "SOXS": 3
+      }
+    },
+    "old_quadratic_point": {
+      "actual_entries": 45,
+      "by_clock": {
+        "09:25:30": 34,
+        "10:05:30": 2,
+        "10:35:30": 5,
+        "11:05:30": 1,
+        "12:05:30": 1,
+        "13:05:30": 1,
+        "14:05:30": 1
+      },
+      "by_symbol": {
+        "SOXL": 40,
+        "SOXS": 5
+      }
+    },
+    "linear_band": {
+      "actual_entries": 12,
+      "by_clock": {
+        "09:25:30": 2,
+        "10:35:30": 2,
+        "11:05:30": 1,
+        "14:05:30": 7
+      },
+      "by_symbol": {
+        "SOXL": 12
+      }
+    },
+    "linear_point": {
+      "actual_entries": 44,
+      "by_clock": {
+        "09:25:30": 35,
+        "10:05:30": 1,
+        "10:35:30": 5,
+        "14:05:30": 3
+      },
+      "by_symbol": {
+        "SOXL": 39,
+        "SOXS": 5
+      }
+    },
+    "premarket_only": {
+      "actual_entries": 0,
+      "by_clock": {},
+      "by_symbol": {}
+    },
+    "cash": {
+      "actual_entries": 0,
+      "by_clock": {},
+      "by_symbol": {}
+    },
+    "double_cost": {
+      "actual_entries": 7,
+      "by_clock": {
+        "12:05:30": 1,
+        "13:05:30": 4,
+        "14:05:30": 2
+      },
+      "by_symbol": {
+        "SOXL": 7
+      }
+    }
+  },
+  "primary_actual_entry_forecasts": {
+    "entries": 7,
+    "completed": 7,
+    "mean": {
+      "raw_selected": 0.0016212954630969846,
+      "point_selected": 0.01800516869426008,
+      "lower_selected": 0.0021870429002105816,
+      "actual_log": -0.0002778809228549494
+    },
+    "raw_selected_positive": 5
+  },
+  "raw_top_regret_definition": "best of the two matured hypothetical log returns minus model-ranked side log return, before cash filter; date equal, not additional capital returns",
+  "results_sha256": "ad7b4b1db1c2f181a6ee5346e1a067aee27634c5f1f8108fb7a949f610380933",
+  "source_sha256": "12eb435358c5207c816c743d889a1a13c061ea9d700c0400efbfb44bcb862a35",
+  "changes_primary_or_gate": false,
+  "goal_complete": false
+}
