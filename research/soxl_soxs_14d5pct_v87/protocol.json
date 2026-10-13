@@ -1,0 +1,92 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "classes": [
+    "target",
+    "ordinary_stop",
+    "gap_stop",
+    "expiry"
+  ],
+  "history": "Every00ET take original whole-date complete14day paired ETF maturity prefix, stop first unknown/not-yet-mature. Select source-ready whole dates, last120/min60. At least30 sourceeligible dates inside this same pool; no compressed time for sparse eligibility. Unknown past labels cannot be bypassed. All new comparisons share population/readiness and unsupported-label gates; before readiness CASH.",
+  "weights": "For each population eligible/top, raw date weight2^((common_position-N+1)/63). Divide date mass among retained clocks, then normalize total to that population dateESS=(sumdateweight)^2/sumsquared. ESS measures concentration, not independent overlapping markets. Two ETFs/8clocks are not independent dates.",
+  "version": "soxl_soxs_known_quarterly_activity_v87",
+  "primary": "eligible_event",
+  "hypothesis": "Previously announced semiconductor quarterly activity density and proximity may improve target/ordinary/gap/expiry class probabilities conditional on then-observed price state. No ex-post hot-market label, assumed earnings direction, or automatic event avoidance.",
+  "source": "Frozen v80 as-issued top, eligibility and probabilities; v78 class payoff means; v86 body-reviewed publication-versioned quarterly schedules for fixed NVDA AMD AVGO MU AMAT LRCX KLAC INTC. No results contents, surprise, analyst forecast or revised realized labels.",
+  "features": [
+    "aligned_trend5",
+    "aligned_current",
+    "aligned_relative5",
+    "log_vol20",
+    "trend5_current_product",
+    "planned_activity_days_before_expiry",
+    "next_activity_day_proximity",
+    "planned_activity_days_previous14",
+    "previous_activity_day_proximity"
+  ],
+  "event_features": "Latest visible earnings_call/release versions only, deduplicate by issuer and planned ET date; market_summary excluded. At ET date d and original official expiry date D: future dates d<=s<=D, count and max(1-(s-d)/14); recent dates 1<=d-s<=14, count and max(1-(d-s)/15). Empty sets yield0 only with complete reviewed catalogue. Event date is retained at all clocks including expiry date; day resolution does not assert occurrence before expiry close or actual release. Do not use actual early exit to choose window. Fixed four fields, no interactions/search.",
+  "event_availability": "v86: exact publication timestamp -> next ET calendar midnight; source date without verified timezone -> date+2 ET midnight. Historical simulation convention, not measured receipt. Latest version per stable activity/kind, no future revisions. Catalogue cutoffs2023-01-01..2026-04-30. Current observed_at remains distinct. Missing issuer/expired coverage is unknown and aborts preparation / blocks action. Scope excludes other issuers, unscheduled activities and unarchived revisions. Extend and audit before case evaluation.",
+  "populations": "Same eligible/top populations and common readiness as v83; no lowering30eligible/60common dates after known missed trades. Primary and matched state/event-only use historical issued eligible TOP only. Top_event uses all ready TOP choices. Models see no future source probabilities or labels.",
+  "design": "Global1,SOXSindicator,7clockdummies + weighted standardized chosen coordinates. eligible_event/top_event use all9 (18design dimensions); eligible_state first5 (14dims), exact v83 ledger; eligible_calendar final4 (13dims). Scales<1e-12->1; original dateweights and lambda10 every coefficient. No feature/threshold/window search. Calendar coordinates are not direction-flipped; marginal ranges diagnostic only.",
+  "model": "q=softmax(log(p_as_issued)+Z B). Fixed lambda10 every coefficient/intercept; negative weighted loglikelihood+5sumB^2. Preserve zero probabilities; unsupported trueclass rejects entire fit. Exact Hessian Newton gradient<=1e-7, independent scalar L-BFGS anchors and allfit gradients.",
+  "decision": "Same original source top and eligibility; buy only if corrected expected netlog sum(q*m_as_issued)>1e-12. No CASH promotion, opposite replacement or new waiting layer. Primary uses four fixed quarterly calendar fields; identity same readiness; original controls unchanged.",
+  "routes": [
+    "eligible_event",
+    "eligible_state",
+    "eligible_calendar",
+    "top_event",
+    "identity_matched",
+    "source_recent",
+    "source_uniform",
+    "source_blend",
+    "source_wait",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "comparison": "Primary vs matched noevent eligible_state isolates added quarterly timing. Noevent full ledger must be byte-identical v83. Calendar-only omits5price states; top_event checks sample selection. Four oldsource books exact. Control success cannot rescue primary.",
+  "verification": "Revalidate v86 source/body hashes and census; independent raw announcement availability/latest version/day deduplication/four features for all6152ticks. Missing/expiry/revision/DST boundaries and future-append invariance. Independent data/design/optimizer/gradients, allforecasts/actions/12capitalbooks/statistics,5controlbooks exact. Unknown outcomes retained.",
+  "method_reference": [
+    "../soxl_soxs_14d5pct_v83/METHOD.md",
+    "../soxl_soxs_14d5pct_v86/README.md",
+    "calendar.json",
+    "evidence/source_audit.json"
+  ],
+  "limitations": "Exposed historical development regression. Fixed eight-company quarterly plans are not a complete semiconductor news or historical index-constituent universe. No result content or event-occurrence claim. Retrospective archive evidence is not actual historical receipt or proof of all revisions. No future growth/nonnegative guarantee; user acceptance unchanged."
+}
