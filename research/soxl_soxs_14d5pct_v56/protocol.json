@@ -1,0 +1,114 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "weights": "Same as v54: date totalweight sumN,63datehalflife,splitactual5/8rows. Penalty uses full protocol k8 including halfdays; do not use daily observed clock count. Base126datehalflife unchanged.",
+  "version": "soxl_soxs_own_etf_activity_v56",
+  "primary": "activity_band",
+  "panel": [
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "MU",
+    "AMAT",
+    "LRCX",
+    "KLAC",
+    "INTC"
+  ],
+  "decision": "Point=owncurrentraw+predictedresidual. Commonradius=max(0,higher90%quantile maxETF upwardbootstrapdeviation). Selectgreatestpositive(point-radius)>1e-12, tieSOXL;elsecash. Missinginput/minsamples/expiredunresolvedprefix>=14calendar=>cash. No day/monthspecific filter. Bandissensitivity,notguaranteedmonthlylossbound. 0/1originalsettledcash only.",
+  "hypothesis": "Test causal own-leveraged-ETF activity and semiconductor-relative-to-market ETF activity, beyond the existing leader-share-volume inputs. v55 leaves raw direction Brier0.26932 and negativeFeb/March. Fixed6features and paired ablations, no signs imposed, no labels used to pick features or hyperparameters. Keep v55 eight clocks and normalized calibration.",
+  "universe": "Existing fixed8reference issuers; current mapping confirmed against cached SEC CIK/ticker payload, not historical PIT full sector. Same panel, not selected by results. Broadcom company-wide revenue includes software; no claim of semiconductor-segment demand isolation.",
+  "source_manifest": "../soxl_soxs_14d5pct_v35/evidence/financial_input_manifest.json",
+  "source_reuse": "Hashverifiedv55 full source and underlyingv54 prepared inputs. Derive new6 activity fields locally. Originalfinancialpricefactorcolumns andlabels retained. No acquisition,R2upload,brokerorders.",
+  "availability": "Facts must match catalog accession,form and filed date. Available_date=calendar day after max(filingDate,acceptanceDateTime literal YYYY-MM-DD),at00ET. Daily inputs include only available_date<=query ET date and periodend<querydate. This deliberately waits past both listed dates and may add delay when UTCdate differs. Historical firstpublic time and delivery latency not established. Unknownaccession,metadata mismatch orcurrency mismatch excluded,notfilled. Filing acceptance is not firstpublic timestamp. Never backfill old facts using later restatements.",
+  "period_normalization": "Only USD standardus-gaap,10K/10Qandamendments. Revenue tagpriority existing4standard names; net income NetIncomeLoss thenProfitLoss. Exact(start,end) latestknownfiled revision,tagpriority tie;samepriority/dateconflictingvalues fail. Direct60-120dayquarter outranks inferredquarter. For121-400day cumulativevalues inferquarter by subtracting latest earlier same-start/same-tag cumulative ending60-120days earlier. Keepbothrawfacts andlatestavailability;never annual/4. Priorquarter ends1-7daysbefore currentstart. Prioryearend350-380days earlier,durationswithin10days. Requirepositive revenue,currentquarter<=183daysold;match net-income start/end exactly. Cumulative difference assumes comparable accounting basis; raw lineage retained; no proof every postacceptance correction was observable at original filing.",
+  "features": {
+    "revenue_growth": "mean of8issuers clip(log(latestquarterRevenue/prioryearquarterRevenue),-2,2)",
+    "growth_breadth": "fractionof8positive revenue loggrowth",
+    "growth_acceleration": "mean clip(currentquarter logYoY minuspreviousquarter logYoY,-2,2)",
+    "acceleration_breadth": "fractionof8positive growthacceleration",
+    "margin_improvement": "mean clip(currentquarter netincome/revenue minusprioryearmatchedquarter netincome/revenue,-1,1)",
+    "margin_breadth": "fractionof8positive netmarginchange",
+    "recent_earnings_share": "fractionof8with8K/8K-Aitem2.02assumedavailable inlast5officialsessionsincludingquerysession. Weekendavailable datesmaptofirstfollowingofficialsession;no upcomingevent knowledge,no sentiment label.",
+    "disclosure_freshness": "mean exp(-calendar_days_since_latest_available_date_among6metric_sourcequarters/63). Restated comparison counts onlywhenitbecameavailable."
+  },
+  "raw_training": "Same perclock daily00ET expandingfullymaturepairedterminalprefix,min120date,126datehalfweight sumN. WeightedStandardScaler,Ridgealpha100C/M,amountweightedLogisticC.1q. Retrain3variants all8clocks withregisteredfixedcolumns;each ownimmutablehistory. Baselinev55 rawrecords sourceverified;preflightrefitexact. Casesextendbaseline sameformula afterprimaryauthorization.",
+  "calibration": "Normalize v54 partial sharing for fixed k8, own immutable raw history; allclock/ETF pairs ofday movejointly. Last120/min60 whole-datefullymatureprefix,63datehalflife sumNdateweights dividedactual5/8clocks. Freeperclockintercepts; penalty20||mean(beta)||²+(80/k)sum||beta_clock-mean||²; matrix(80/k)(I-J/k)+20J/k² tensor I2. The dimension normalization follows exact clone-invariance, not fitted performance. 199circular10datebootstrapseed826+ETordinal. Allkclocks must have positive-weight support;otherwise fail,no fabricated late-halfday rows. Base-model uncertainty not included.",
+  "method_reference": [
+    "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+    "https://www.sec.gov/files/about/webmaster-faq.htm"
+  ],
+  "pre_registration_source_findings": "v55failed monthlymean3.779%,Feb-5.196%,March-20.188. Rawforecastsunchanged andcandidateerroralmostunchanged. Post-resultinputauditfound all4ETF2913queries and20sameclockhistorycomplete,12324splitinvariantprefixes. No v56capitaloutcomes seen.",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+    "cases": ".cache/soxl_soxs_14d5pct_v39/runs/financial_extension_20261013"
+  },
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "old_clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "routes": {
+    "activity_band": "PRIMARYfull6features normalizedcalibration+band",
+    "activity_point": "full6 point estimate no uncertainty margin",
+    "pair_band": "ownpair4features owncalibration+band",
+    "sector_band": "sectorrelative2features owncalibration+band",
+    "source_v55": "exactbaselinev55 normalized8clockcontrol",
+    "four_only": "full6 model allowedonlyoriginal4clocks",
+    "premarket_only": "full6 at09:25only",
+    "cash": "cash",
+    "double_cost": "primarysameactions own2xcostbarriersandfills"
+  },
+  "verification": "Independentrawprefixsum via numpysearchsorted, exactofficialcalendar/availability/20pastmembers,splitinvariance,formula andcausalperturbation tests. ExistinginputauditSHA andalloldcolumns exact. ArbitrarycolumnRidge equations andlogitgradients each3head/all3variants;manualnormalizedcalibrationjointintercept equations+explicitdatebootstrap;allactions/rawterminalprefixes/9books/statistics. Exactv55control. Casesonlyafterverifiedprimary,preMaypredictionsunchanged.",
+  "common_readiness": "All3newvariants use original feature_ready AND all4ETFcurrent+20historicalactivityprefixes complete. Baseline retains original availability andisnot silentlyfiltered. Developmentinput audit alreadyfound2913/2913allfourcomplete;verify before any new capital outcomes. Missing future case features abstain, noimputation.",
+  "diagnostics": "All3rawandcalibrateddateequalpaired/C/Derrors,magnitudeweightedBrier,unknownqueries,actualvshypotheticalproposals,clockcounts,pairedcapitalintervals,andactualadded/removedtradesvsbaseline. Allnegative/zero months retained; no diagnostic replacesprimary.",
+  "historical_exposure": "All historical data previously exposed; historicaldevelopmentregression only. New activity-derived capital outcomes unseen beforefreeze.",
+  "activity_definition": "For each SOXL/SOXS/SOXX/QQQ and official eligibleclock, A=sum((High+Low+Close)/3*Volume) over04:00ET through completed decisionbar. All expected5m bars required, available_at<=decision, nonnegative volume, positive aggregate. Individualzero-volume retained. A is approximate traded-dollar activity,not actualturnover or signedbuy/sellflow,netcreation/redemption. UsesrawNONEprice*rawvolume, splitinvariant with economicprice*economicvolume. Logrelative a_s=clip(log(A_today/mean(A onprevious20eligibleofficialsameclockdates)),-3,3). Any missing required prefix leavesunknown;never skipmissing dates. Knownhistoricalavailable_at=barend+1s assumption, not historicalreceived proof.",
+  "activity_features": {
+    "pair_activity": "P=(a_SOXL+a_SOXS)/2",
+    "pair_imbalance": "I=(a_SOXL-a_SOXS)/2",
+    "sector_relative_activity": "R=(a_SOXX-a_QQQ)/2",
+    "pair_activity_price": "P*s",
+    "pair_imbalance_price": "I*s",
+    "sector_activity_price": "R*s; s=existing sector_premarket scaledcurrentsectorpricechange, clipped[-5,5]. No new clipping of products. Same formula atall8clocks."
+  },
+  "variants": {
+    "full": "all6 activity features appended to existing27premarket/39intraday",
+    "pair": "P,I,P*s,I*s only",
+    "sector": "R,R*s only"
+  }
+}

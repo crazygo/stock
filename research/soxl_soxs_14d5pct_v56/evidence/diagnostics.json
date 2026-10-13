@@ -1,0 +1,1294 @@
+{
+  "post_result_only": true,
+  "rules_changed": false,
+  "metrics": {
+    "baseline": {
+      "queries": 650,
+      "dates": 82,
+      "date_equal": {
+        "raw_pair_mse": 0.004537171884472838,
+        "calibrated_pair_mse": 0.004404544893507085,
+        "C_mse": 0.0005398894384867026,
+        "D_mse": 0.003997282445986134,
+        "magnitude": 0.05752798607665329,
+        "brier_numerator": 0.015493259979599928,
+        "magnitude_weighted_brier": 0.26931691922877143
+      }
+    },
+    "full": {
+      "queries": 650,
+      "dates": 82,
+      "date_equal": {
+        "raw_pair_mse": 0.004646217080227093,
+        "calibrated_pair_mse": 0.00440013233382914,
+        "C_mse": 0.000543998113480663,
+        "D_mse": 0.004102218966746427,
+        "magnitude": 0.05752798607665329,
+        "brier_numerator": 0.015921915299829306,
+        "magnitude_weighted_brier": 0.2767681677334247
+      }
+    },
+    "pair": {
+      "queries": 650,
+      "dates": 82,
+      "date_equal": {
+        "raw_pair_mse": 0.004618394888360151,
+        "calibrated_pair_mse": 0.004390861027673927,
+        "C_mse": 0.0005415984205912811,
+        "D_mse": 0.0040767964677688685,
+        "magnitude": 0.05752798607665329,
+        "brier_numerator": 0.015781399388780124,
+        "magnitude_weighted_brier": 0.27432560159071384
+      }
+    },
+    "sector": {
+      "queries": 650,
+      "dates": 82,
+      "date_equal": {
+        "raw_pair_mse": 0.004563137594567341,
+        "calibrated_pair_mse": 0.004419648807181337,
+        "C_mse": 0.0005416421766902076,
+        "D_mse": 0.004021495417877134,
+        "magnitude": 0.05752798607665329,
+        "brier_numerator": 0.01561407395836189,
+        "magnitude_weighted_brier": 0.27141700975863975
+      }
+    }
+  },
+  "unknown_queries_retained": [
+    "2026-04-30 13:25:30+00:00",
+    "2026-04-30 15:05:30+00:00",
+    "2026-04-30 16:05:30+00:00",
+    "2026-04-30 17:05:30+00:00",
+    "2026-04-30 18:05:30+00:00",
+    "2026-04-30 19:05:30+00:00"
+  ],
+  "feature_participation": {
+    "full": {
+      "raw_queries_changed": 656,
+      "calibrated_queries_changed": 656,
+      "q_max_abs_change": 0.34458656982209124,
+      "new_q_coefficient_max_abs": 0.46807398161170205
+    },
+    "pair": {
+      "raw_queries_changed": 656,
+      "calibrated_queries_changed": 656,
+      "q_max_abs_change": 0.3873500780909668,
+      "new_q_coefficient_max_abs": 0.48344194732997875
+    },
+    "sector": {
+      "raw_queries_changed": 656,
+      "calibrated_queries_changed": 656,
+      "q_max_abs_change": 0.2392478844670175,
+      "new_q_coefficient_max_abs": 0.30587729850028117
+    }
+  },
+  "routes": {
+    "activity_band": {
+      "proposals": 85,
+      "proposal_dates": 36,
+      "actual_trades": 20,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 12,
+          "actual_trades": 7,
+          "target_exits": 5,
+          "stop_exits": 2,
+          "blocked": {
+            "position_held": 5
+          }
+        },
+        "10:05:30": {
+          "proposals": 4,
+          "actual_trades": 2,
+          "target_exits": 2,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 1,
+            "position_held": 1
+          }
+        },
+        "10:35:30": {
+          "proposals": 8,
+          "actual_trades": 4,
+          "target_exits": 2,
+          "stop_exits": 2,
+          "blocked": {
+            "daily_entry_limit": 2,
+            "position_held": 2
+          }
+        },
+        "11:05:30": {
+          "proposals": 8,
+          "actual_trades": 1,
+          "target_exits": 1,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 5,
+            "daily_entry_limit": 2
+          }
+        },
+        "12:05:30": {
+          "proposals": 9,
+          "actual_trades": 1,
+          "target_exits": 0,
+          "stop_exits": 1,
+          "blocked": {
+            "daily_entry_limit": 5,
+            "position_held": 3
+          }
+        },
+        "13:05:30": {
+          "proposals": 12,
+          "actual_trades": 2,
+          "target_exits": 2,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 5,
+            "position_held": 5
+          }
+        },
+        "14:05:30": {
+          "proposals": 20,
+          "actual_trades": 3,
+          "target_exits": 1,
+          "stop_exits": 2,
+          "blocked": {
+            "position_held": 12,
+            "daily_entry_limit": 5
+          }
+        },
+        "15:05:30": {
+          "proposals": 12,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 8,
+            "daily_entry_limit": 4
+          }
+        }
+      }
+    },
+    "activity_point": {
+      "proposals": 426,
+      "proposal_dates": 79,
+      "actual_trades": 44,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 52,
+          "actual_trades": 30,
+          "target_exits": 19,
+          "stop_exits": 11,
+          "blocked": {
+            "position_held": 22
+          }
+        },
+        "10:05:30": {
+          "proposals": 52,
+          "actual_trades": 8,
+          "target_exits": 4,
+          "stop_exits": 4,
+          "blocked": {
+            "position_held": 26,
+            "daily_entry_limit": 18
+          }
+        },
+        "10:35:30": {
+          "proposals": 60,
+          "actual_trades": 3,
+          "target_exits": 2,
+          "stop_exits": 1,
+          "blocked": {
+            "position_held": 34,
+            "daily_entry_limit": 23
+          }
+        },
+        "11:05:30": {
+          "proposals": 43,
+          "actual_trades": 1,
+          "target_exits": 1,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 23,
+            "daily_entry_limit": 19
+          }
+        },
+        "12:05:30": {
+          "proposals": 48,
+          "actual_trades": 2,
+          "target_exits": 0,
+          "stop_exits": 2,
+          "blocked": {
+            "daily_entry_limit": 26,
+            "position_held": 20
+          }
+        },
+        "13:05:30": {
+          "proposals": 48,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 25,
+            "daily_entry_limit": 23
+          }
+        },
+        "14:05:30": {
+          "proposals": 68,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 35,
+            "daily_entry_limit": 33
+          }
+        },
+        "15:05:30": {
+          "proposals": 55,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 28,
+            "position_held": 27
+          }
+        }
+      }
+    },
+    "pair_band": {
+      "proposals": 85,
+      "proposal_dates": 37,
+      "actual_trades": 22,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 12,
+          "actual_trades": 7,
+          "target_exits": 4,
+          "stop_exits": 3,
+          "blocked": {
+            "position_held": 5
+          }
+        },
+        "10:05:30": {
+          "proposals": 6,
+          "actual_trades": 5,
+          "target_exits": 4,
+          "stop_exits": 1,
+          "blocked": {
+            "position_held": 1
+          }
+        },
+        "10:35:30": {
+          "proposals": 8,
+          "actual_trades": 4,
+          "target_exits": 1,
+          "stop_exits": 3,
+          "blocked": {
+            "daily_entry_limit": 3,
+            "position_held": 1
+          }
+        },
+        "11:05:30": {
+          "proposals": 8,
+          "actual_trades": 1,
+          "target_exits": 1,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 4,
+            "position_held": 3
+          }
+        },
+        "12:05:30": {
+          "proposals": 6,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 4,
+            "position_held": 2
+          }
+        },
+        "13:05:30": {
+          "proposals": 11,
+          "actual_trades": 1,
+          "target_exits": 1,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 6,
+            "daily_entry_limit": 4
+          }
+        },
+        "14:05:30": {
+          "proposals": 25,
+          "actual_trades": 4,
+          "target_exits": 1,
+          "stop_exits": 3,
+          "blocked": {
+            "position_held": 11,
+            "daily_entry_limit": 10
+          }
+        },
+        "15:05:30": {
+          "proposals": 9,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 8,
+            "daily_entry_limit": 1
+          }
+        }
+      }
+    },
+    "sector_band": {
+      "proposals": 82,
+      "proposal_dates": 43,
+      "actual_trades": 26,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 21,
+          "actual_trades": 15,
+          "target_exits": 10,
+          "stop_exits": 5,
+          "blocked": {
+            "position_held": 6
+          }
+        },
+        "10:05:30": {
+          "proposals": 3,
+          "actual_trades": 2,
+          "target_exits": 2,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 1
+          }
+        },
+        "10:35:30": {
+          "proposals": 9,
+          "actual_trades": 3,
+          "target_exits": 1,
+          "stop_exits": 2,
+          "blocked": {
+            "daily_entry_limit": 4,
+            "position_held": 2
+          }
+        },
+        "11:05:30": {
+          "proposals": 9,
+          "actual_trades": 2,
+          "target_exits": 1,
+          "stop_exits": 1,
+          "blocked": {
+            "position_held": 4,
+            "daily_entry_limit": 3
+          }
+        },
+        "12:05:30": {
+          "proposals": 6,
+          "actual_trades": 1,
+          "target_exits": 0,
+          "stop_exits": 1,
+          "blocked": {
+            "daily_entry_limit": 3,
+            "position_held": 2
+          }
+        },
+        "13:05:30": {
+          "proposals": 9,
+          "actual_trades": 1,
+          "target_exits": 1,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 5,
+            "daily_entry_limit": 3
+          }
+        },
+        "14:05:30": {
+          "proposals": 16,
+          "actual_trades": 2,
+          "target_exits": 0,
+          "stop_exits": 2,
+          "blocked": {
+            "position_held": 10,
+            "daily_entry_limit": 4
+          }
+        },
+        "15:05:30": {
+          "proposals": 9,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 7,
+            "daily_entry_limit": 2
+          }
+        }
+      }
+    },
+    "source_v55": {
+      "proposals": 88,
+      "proposal_dates": 41,
+      "actual_trades": 26,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 24,
+          "actual_trades": 16,
+          "target_exits": 12,
+          "stop_exits": 4,
+          "blocked": {
+            "position_held": 8
+          }
+        },
+        "10:05:30": {
+          "proposals": 4,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 2,
+            "daily_entry_limit": 2
+          }
+        },
+        "10:35:30": {
+          "proposals": 10,
+          "actual_trades": 4,
+          "target_exits": 2,
+          "stop_exits": 2,
+          "blocked": {
+            "daily_entry_limit": 4,
+            "position_held": 2
+          }
+        },
+        "11:05:30": {
+          "proposals": 8,
+          "actual_trades": 1,
+          "target_exits": 1,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 4,
+            "daily_entry_limit": 3
+          }
+        },
+        "12:05:30": {
+          "proposals": 5,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 3,
+            "position_held": 2
+          }
+        },
+        "13:05:30": {
+          "proposals": 10,
+          "actual_trades": 2,
+          "target_exits": 1,
+          "stop_exits": 1,
+          "blocked": {
+            "daily_entry_limit": 4,
+            "position_held": 4
+          }
+        },
+        "14:05:30": {
+          "proposals": 19,
+          "actual_trades": 3,
+          "target_exits": 0,
+          "stop_exits": 3,
+          "blocked": {
+            "position_held": 9,
+            "daily_entry_limit": 7
+          }
+        },
+        "15:05:30": {
+          "proposals": 8,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 4,
+            "position_held": 4
+          }
+        }
+      }
+    },
+    "four_only": {
+      "proposals": 36,
+      "proposal_dates": 24,
+      "actual_trades": 17,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 12,
+          "actual_trades": 7,
+          "target_exits": 5,
+          "stop_exits": 2,
+          "blocked": {
+            "position_held": 5
+          }
+        },
+        "10:05:30": {
+          "proposals": 4,
+          "actual_trades": 4,
+          "target_exits": 3,
+          "stop_exits": 1,
+          "blocked": {}
+        },
+        "10:35:30": {
+          "proposals": 8,
+          "actual_trades": 4,
+          "target_exits": 2,
+          "stop_exits": 2,
+          "blocked": {
+            "daily_entry_limit": 2,
+            "position_held": 2
+          }
+        },
+        "11:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "12:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "13:05:30": {
+          "proposals": 12,
+          "actual_trades": 2,
+          "target_exits": 2,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 5,
+            "position_held": 5
+          }
+        },
+        "14:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "15:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        }
+      }
+    },
+    "premarket_only": {
+      "proposals": 12,
+      "proposal_dates": 12,
+      "actual_trades": 9,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 12,
+          "actual_trades": 9,
+          "target_exits": 6,
+          "stop_exits": 3,
+          "blocked": {
+            "position_held": 3
+          }
+        },
+        "10:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "10:35:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "11:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "12:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "13:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "14:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "15:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        }
+      }
+    },
+    "cash": {
+      "proposals": 0,
+      "proposal_dates": 0,
+      "actual_trades": 0,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "10:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "10:35:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "11:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "12:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "13:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "14:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        },
+        "15:05:30": {
+          "proposals": 0,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {}
+        }
+      }
+    },
+    "double_cost": {
+      "proposals": 85,
+      "proposal_dates": 36,
+      "actual_trades": 20,
+      "clocks": {
+        "09:25:30": {
+          "proposals": 12,
+          "actual_trades": 7,
+          "target_exits": 5,
+          "stop_exits": 2,
+          "blocked": {
+            "position_held": 5
+          }
+        },
+        "10:05:30": {
+          "proposals": 4,
+          "actual_trades": 2,
+          "target_exits": 2,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 1,
+            "position_held": 1
+          }
+        },
+        "10:35:30": {
+          "proposals": 8,
+          "actual_trades": 4,
+          "target_exits": 2,
+          "stop_exits": 2,
+          "blocked": {
+            "daily_entry_limit": 2,
+            "position_held": 2
+          }
+        },
+        "11:05:30": {
+          "proposals": 8,
+          "actual_trades": 1,
+          "target_exits": 1,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 5,
+            "daily_entry_limit": 2
+          }
+        },
+        "12:05:30": {
+          "proposals": 9,
+          "actual_trades": 1,
+          "target_exits": 0,
+          "stop_exits": 1,
+          "blocked": {
+            "daily_entry_limit": 5,
+            "position_held": 3
+          }
+        },
+        "13:05:30": {
+          "proposals": 12,
+          "actual_trades": 2,
+          "target_exits": 2,
+          "stop_exits": 0,
+          "blocked": {
+            "daily_entry_limit": 5,
+            "position_held": 5
+          }
+        },
+        "14:05:30": {
+          "proposals": 20,
+          "actual_trades": 3,
+          "target_exits": 1,
+          "stop_exits": 2,
+          "blocked": {
+            "position_held": 12,
+            "daily_entry_limit": 5
+          }
+        },
+        "15:05:30": {
+          "proposals": 12,
+          "actual_trades": 0,
+          "target_exits": 0,
+          "stop_exits": 0,
+          "blocked": {
+            "position_held": 8,
+            "daily_entry_limit": 4
+          }
+        }
+      }
+    }
+  },
+  "increments": {
+    "source_v55": {
+      "added_actual_buys": [
+        {
+          "at": "2026-01-05 18:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.049080086128268
+        },
+        {
+          "at": "2026-01-08 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491117697532748
+        },
+        {
+          "at": "2026-01-16 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490414388914914
+        },
+        {
+          "at": "2026-01-26 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489687966200547
+        },
+        {
+          "at": "2026-02-05 15:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490509755009276
+        },
+        {
+          "at": "2026-02-06 15:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490539212872491
+        },
+        {
+          "at": "2026-02-10 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490445680126996
+        },
+        {
+          "at": "2026-02-12 17:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615225203871312
+        },
+        {
+          "at": "2026-03-04 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615642394366942
+        }
+      ],
+      "removed_actual_buys": [
+        {
+          "at": "2026-01-05 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490993149820677
+        },
+        {
+          "at": "2026-01-08 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489511948555976
+        },
+        {
+          "at": "2026-01-20 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489604892048294
+        },
+        {
+          "at": "2026-01-26 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489604892048294
+        },
+        {
+          "at": "2026-02-04 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614348634554865
+        },
+        {
+          "at": "2026-02-05 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490053080180841
+        },
+        {
+          "at": "2026-02-06 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489574292675454
+        },
+        {
+          "at": "2026-02-11 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614257608527853
+        },
+        {
+          "at": "2026-02-13 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615580738381683
+        },
+        {
+          "at": "2026-03-04 18:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614467236026443
+        },
+        {
+          "at": "2026-03-13 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.049027818358422
+        },
+        {
+          "at": "2026-03-23 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491299963354801
+        },
+        {
+          "at": "2026-03-30 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614277068004599
+        },
+        {
+          "at": "2026-04-01 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.048985025310368
+        },
+        {
+          "at": "2026-04-02 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490116249497603
+        }
+      ],
+      "common_actual_buys": 11,
+      "primary_minus_control_monthly_mean": 0.012630895667288422,
+      "paired_capital_interval": {
+        "method": "paired circular block bootstrap of daily log capital returns",
+        "dates": 82,
+        "block_sessions": 10,
+        "replicates": 5000,
+        "seed": 707,
+        "mean_daily_log_difference": 0.0005712561805241532,
+        "interval95": [
+          -0.003537517045770067,
+          0.005013100256740931
+        ],
+        "positive_increment_supported": false,
+        "not_independent_forward_validation": true
+      }
+    },
+    "pair_band": {
+      "added_actual_buys": [
+        {
+          "at": "2026-01-05 18:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.049080086128268
+        },
+        {
+          "at": "2026-01-08 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491117697532748
+        },
+        {
+          "at": "2026-01-16 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490414388914914
+        },
+        {
+          "at": "2026-02-02 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.049047646028824
+        },
+        {
+          "at": "2026-02-03 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614508970840024
+        },
+        {
+          "at": "2026-02-12 17:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615225203871312
+        },
+        {
+          "at": "2026-02-27 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.1011540134425592
+        }
+      ],
+      "removed_actual_buys": [
+        {
+          "at": "2026-01-05 15:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489709849686619
+        },
+        {
+          "at": "2026-01-07 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615184983746261
+        },
+        {
+          "at": "2026-01-09 15:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491075502508344
+        },
+        {
+          "at": "2026-01-20 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489604892048294
+        },
+        {
+          "at": "2026-02-02 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614244841370146
+        },
+        {
+          "at": "2026-02-04 15:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614657661356486
+        },
+        {
+          "at": "2026-02-12 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614455154042559
+        },
+        {
+          "at": "2026-02-13 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615580738381683
+        },
+        {
+          "at": "2026-03-02 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.1098669749913812
+        }
+      ],
+      "common_actual_buys": 13,
+      "primary_minus_control_monthly_mean": 0.06741358435257333,
+      "paired_capital_interval": {
+        "method": "paired circular block bootstrap of daily log capital returns",
+        "dates": 82,
+        "block_sessions": 10,
+        "replicates": 5000,
+        "seed": 707,
+        "mean_daily_log_difference": 0.0030263526811654664,
+        "interval95": [
+          0.00023852121265094704,
+          0.0063296592870240075
+        ],
+        "positive_increment_supported": true,
+        "not_independent_forward_validation": true
+      }
+    },
+    "sector_band": {
+      "added_actual_buys": [
+        {
+          "at": "2026-01-05 18:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.049080086128268
+        },
+        {
+          "at": "2026-01-08 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491117697532748
+        },
+        {
+          "at": "2026-01-12 18:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489984925777919
+        },
+        {
+          "at": "2026-01-16 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490414388914914
+        },
+        {
+          "at": "2026-01-26 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489687966200547
+        },
+        {
+          "at": "2026-02-09 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491004122751157
+        },
+        {
+          "at": "2026-02-10 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490445680126996
+        }
+      ],
+      "removed_actual_buys": [
+        {
+          "at": "2026-01-05 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489882274666095
+        },
+        {
+          "at": "2026-01-08 15:35:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489511948555976
+        },
+        {
+          "at": "2026-01-16 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.061514138422914
+        },
+        {
+          "at": "2026-01-21 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490561762476233
+        },
+        {
+          "at": "2026-01-26 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489604892048294
+        },
+        {
+          "at": "2026-02-04 14:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614348634554865
+        },
+        {
+          "at": "2026-02-09 18:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490072859316028
+        },
+        {
+          "at": "2026-03-09 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0489638479607368
+        },
+        {
+          "at": "2026-03-16 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0856263598639565
+        },
+        {
+          "at": "2026-03-23 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491299963354801
+        },
+        {
+          "at": "2026-03-27 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615228422548109
+        },
+        {
+          "at": "2026-04-01 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.048985025310368
+        },
+        {
+          "at": "2026-04-02 13:25:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490116249497603
+        }
+      ],
+      "common_actual_buys": 13,
+      "primary_minus_control_monthly_mean": 0.047177955844269676,
+      "paired_capital_interval": {
+        "method": "paired circular block bootstrap of daily log capital returns",
+        "dates": 82,
+        "block_sessions": 10,
+        "replicates": 5000,
+        "seed": 707,
+        "mean_daily_log_difference": 0.0022500813821686376,
+        "interval95": [
+          -0.0017990125001823272,
+          0.006386269271503665
+        ],
+        "positive_increment_supported": false,
+        "not_independent_forward_validation": true
+      }
+    },
+    "four_only": {
+      "added_actual_buys": [
+        {
+          "at": "2026-01-08 16:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491117697532748
+        },
+        {
+          "at": "2026-02-10 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0490445680126996
+        },
+        {
+          "at": "2026-02-12 17:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0615225203871312
+        },
+        {
+          "at": "2026-02-27 19:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.1011540134425592
+        },
+        {
+          "at": "2026-03-11 18:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614780315210198
+        }
+      ],
+      "removed_actual_buys": [
+        {
+          "at": "2026-01-09 15:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "target",
+          "net_return": 0.0491075502508344
+        },
+        {
+          "at": "2026-02-13 15:05:30+00:00",
+          "symbol": "SOXL",
+          "reason": "risk_stop",
+          "net_return": -0.0614927924521102
+        }
+      ],
+      "common_actual_buys": 15,
+      "primary_minus_control_monthly_mean": -0.02178866463497267,
+      "paired_capital_interval": {
+        "method": "paired circular block bootstrap of daily log capital returns",
+        "dates": 82,
+        "block_sessions": 10,
+        "replicates": 5000,
+        "seed": 707,
+        "mean_daily_log_difference": -0.0014907369551512275,
+        "interval95": [
+          -0.005409619230270683,
+          0.0014637317249085768
+        ],
+        "positive_increment_supported": false,
+        "not_independent_forward_validation": true
+      }
+    }
+  },
+  "results_sha256": "e520ad9a000844af8d820b2c6a15fad964ee81fdfdae7dad5e1448e44ab89fe3"
+}
