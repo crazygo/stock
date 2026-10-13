@@ -1,0 +1,20 @@
+Verified waiting 800 / 6152 2023-08-25 14:35:30+00:00
+Verified waiting 1600 / 6152 2024-01-19 18:05:30+00:00
+Verified waiting 2400 / 6152 2024-06-12 17:05:30+00:00
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v81/verify_wait.py", line 96, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--run',required=True,type=Path);verify(p.parse_args().run)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v81/verify_wait.py", line 35, in verify
+    for key in ['center','scale','design_center','intercept','coefficients','penalty','weights']:np.testing.assert_allclose(m[key],expected[key],atol=1e-11,rtol=1e-10)
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1711, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 806, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError:
+Not equal to tolerance rtol=1e-10, atol=1e-11
+
+(shapes (0,), (0, 2) mismatch)
+ ACTUAL: array([], dtype=float64)
+ DESIRED: array([], shape=(0, 2), dtype=float64)

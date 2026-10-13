@@ -1,0 +1,69 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "version": "soxl_soxs_paired_next_session_wait_v81",
+  "primary": "paired_state",
+  "hypothesis": "Can a directly learned immediate-minus-next-session policy payoff distinguish buy-now from waiting? v8 KNN intraday continuation and v25 multi-step fittedQ failed; use fixed next official premarket as comparator and paired ridge targets, no future maximum or Bellman recursion.",
+  "inputs": "Exact v80 recent_ratio as-issued source top/values/action/readiness plus original13 signed price fields, SOXS indicator, top and other netlog estimates=16features. No future source action/feature is current input. Inherit source95registered files, no newmarket data.",
+  "routes": [
+    "paired_state",
+    "paired_score",
+    "paired_mean",
+    "absolute_pair",
+    "absolute_now",
+    "source_matched",
+    "source_recent",
+    "source_lagged",
+    "source_uniform",
+    "source_blend",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "decision": "PRIMARY buys unchanged source top only if v80recent_ratio sourceeligible and predicted paired advantage>1e-12; otherwiseCASH/reassess next scheduled clock. No enforced wait till nextday; benchmark future policy is training target, not actual commitment/global optimum. absolute_pair also requires predictedN>0; absolute_now only predictedN>0. paired_score/mean same advantage gate; matched source has same new readiness. Four exact source controls; no promotion of CASH/reranking.",
+  "verification": "Independent official successor day/clock, all14day pair releases, chronologicalprefix, signed fields, N/W targets including negative andCASH, dateweights, all ridge equations, current actions,13capitalbooks/221stats and4parentCSVbyteidentity. Synthetic future mutations and9real anchors before sourcefreeze. Diagnose dateequal squared errors and paired advantage separately fromactualcapital.",
+  "method_reference": [
+    "https://scikit-learn.org/stable/modules/linear_model.html#ridge-regression-and-classification",
+    "https://escholarship.org/uc/item/43n1k4jb"
+  ],
+  "pair_target": "For every source-ready complete official date and clock, N=actual netlog return of source then-top even if sourceCASH; W=next official trading day09:25:30 as-issued v80 recent_ratio action payoff, or0 if CASH. Preserve future losses, never maximize future clocks/ETF. Nextday missing/unready is unknown, not0. Both full days labels wait original14day release including CASH waits. Source-ready dates form chronological pairprefix; first unknown blocks later pairs; expired pair after nextdate+14 blocks action. latest120/min60 fullymature dates at daily00ET.",
+  "weights": "63date half-life, eachday divided across clocks, totalmass dateESS=(sum b)^2/sum b^2; no expanded independent sample claim. No future-date eligibility based on future outcome; source readiness is known before its day has passed.",
+  "model": "Weighted two-output ridge on [N,W], same design for both; advantage prediction Nhat-What exactly equals direct ridge on paired difference. state uses16 standardized fields+8 clock dummies; score uses indices13,14,15+8clock; mean only global means. Weighted scaling and centered design/targets. Unpenalized global intercept, clockcoeff lambda10, state/scorecoeff lambda100, minimumscale1e-12->1. SVD augmented leastsquares production; independent normal equations and direct-difference check.",
+  "limitations": "Comparing one immediate contract with one next-session policy contract ignores later reinvestment and different release durations. No discount, risk-neutral option pricing, optimal stopping or global optimality claim. Source model bias may persist; pair superiority can coexist withnegative expectedabsolute returns. Diagnostic absolute filters retained, cannot replace failedprimary. Repeated development remains exposed."
+}
