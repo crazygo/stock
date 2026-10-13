@@ -1,0 +1,23 @@
+{
+  "stage": "data_feasibility_before_new_training",
+  "symbols": ["TQQQ", "SQQQ", "UPRO", "SPXU", "SPY"],
+  "auxiliary_pairs": [["TQQQ", "SQQQ"], ["UPRO", "SPXU"]],
+  "start": "2024-10-14",
+  "end": "2026-04-30",
+  "basis": "NONE",
+  "bar_size": "K_5M",
+  "session": "ALL",
+  "hierarchy": ["Local", "R2", "OpenD"],
+  "source_acquisition": "research/soxl_soxs_14d5pct_v2/acquire.py",
+  "raw_destination": ".cache/soxl_soxs_14d5pct_v70/data",
+  "first_page_delay_seconds": 1.2,
+  "pagination_delay_seconds": 0.6,
+  "no_shared_overwrite": true,
+  "no_R2_upload": true,
+  "no_broker_orders": true,
+  "IBKR": "Exact US primary listing lookup; include corporate actions in TWO_YEARS ONE_DAY query; discard all OHLCV arrays without inspection and retain only date-range corporate actions. No prospective metadata availability claim.",
+  "coverage": "Original official calendar; complete 5m regular prefix and each requested premarket/clock reference; unknown stays unknown. Compare raw Futu splits and cash distributions to IBKR actions and payment dates before labeling.",
+  "training_authorized_by_this_stage": false,
+  "capital_replay_authorized_by_this_stage": false,
+  "known_prior_results": "v69 development mean +7.870299194118785%, March -1.5824389709768738%; no new cases run"
+}

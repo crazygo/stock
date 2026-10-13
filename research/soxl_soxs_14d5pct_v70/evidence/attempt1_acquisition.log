@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v2/acquire.py", line 218, in <module>
+    result = acquire(args.output, args.symbols, args.start, args.end, args.host, args.port, args.offline)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v2/acquire.py", line 149, in acquire
+    quote = ft.OpenQuoteContext(host=host, port=port)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/futu/quote/open_quote_context.py", line 97, in __init__
+    super(OpenQuoteContext, self).__init__(
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/futu/common/open_context_base.py", line 65, in __init__
+    self._net_mgr = NetManager.default()
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/futu/common/network_manager.py", line 166, in default
+    cls._default_inst = NetManager()
+                        ^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/futu/common/network_manager.py", line 185, in __init__
+    self._thread.setDaemon(True)
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1279, in setDaemon
+    warnings.warn('setDaemon() is deprecated, set the daemon attribute instead',
+DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
