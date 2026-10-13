@@ -1,0 +1,66 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "version": "soxl_soxs_unlabeled_state_ratio_v80",
+  "primary": "recent_ratio",
+  "hypothesis": "Does covariate-shift reweighting of mature top-candidate calibration using recent unlabeled observable contexts improve causal forecasting and capital outcomes? v22 nearest-state kernel and v29 changepoint weighting already failed; this tests balanced source/target density odds, not the first state-aware model.",
+  "inputs": "Exact v79 top calibration parents/weights; v78 as-issued gap_blend probabilities, top direction, class payoffs and 18-field readiness. Sign-align13 price fields with original top and add SOXS indicator. No added market data. Source top calibration labels remain fully mature14day chronological prefix.",
+  "routes": [
+    "recent_ratio",
+    "lagged_ratio",
+    "uniform_top",
+    "source_top",
+    "source_eligible",
+    "source_both",
+    "source_blend",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "targets": "Daily00ET. recent=last20 consecutive prior official sessions; lagged=prior20 (-40:-20). All required clocks must have full original feature readiness and source as-issued gap_blend ready. Missing any date makes variant unready; no backwards gap fill. Target contexts contain dates/features/as-issued top only, never outcome/release fields. Each target date weight1/20 divided among clocks. Source/target overlaps recorded, not independent samples.",
+  "domain_model": "Standardize14 contexts with source normalized weights only; sd<1e-12 becomes1. Balanced logistic classifier old0,target1, each domain total20. Penalize all15 intercept/slopes lambda10. Minimize weighted logloss+5||beta||^2. ExactHessian dampedNewton80,gradient target1e-9,required1e-7,Armijo50 with64eps rounding tolerance only if gradient halves. Ratio exp(logit) clipped[0.2,5]. No fitted feature map, no outcome-based domain fitting.",
+  "calibration": "Reuse original v79 top120/min60 parents and source eligibility30date readiness. Original63date half-life and dateESS mass. Multiply each row weight by density ratio and normalize back to original totalmass, preserving regularization strength. Require weighted dateESS>=20; this is dependence-uncorrected effective date concentration, not independent sample count. Refit same four-class lambda10 bias; zero-support row makes model unready.",
+  "decision": "Preserve v78 original top and require original source-eligible plus new expected netlog>1e-12; never rerank or promote source CASH. Original payoffs and capital contract unchanged. uniform_top copies v79 top_tilt when recent context ready, otherwise abstains. source_top/source_eligible/source_both/source_blend copy v79 exact. Controls cannot rescue failed primary.",
+  "verification": "Independent official date windows, source-selected mature members, sign coordinates, weighted domain standardization, convex gradients, clipped ratios, totalmass/dateESS, class gradients, action direction and ten capitalbooks/170 statistics; four parent books byte-identical. Independent L-BFGS anchors and causal/unit tests before source freeze.",
+  "limitations": "Density ratio relies on approximate overlap and stable conditional outcomes; neither is proved in markets. Clipping/penalty bias ratios.20recentdates and overlapping source are small, dependent observations. No guarantee of future nonnegative months; not a money-flow observation.",
+  "method_reference": [
+    "https://proceedings.mlr.press/v108/park20b.html",
+    "https://proceedings.mlr.press/v108/li20b.html"
+  ]
+}

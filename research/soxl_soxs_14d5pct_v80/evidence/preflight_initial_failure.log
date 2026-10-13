@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v80/preflight_shift.py", line 33, in <module>
+    if __name__=='__main__':preflight()
+                            ^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v80/preflight_shift.py", line 24, in preflight
+    np.testing.assert_allclose(cal.solve(P,y,adjusted),got['model']['beta'],atol=1e-7,rtol=1e-6)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v79/reference_tilt.py", line 39, in solve
+    assert max(abs(objective(result.x,P,y,w)[1]))<1e-6
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
