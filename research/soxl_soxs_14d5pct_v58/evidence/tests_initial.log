@@ -1,0 +1,25 @@
+.........F........F..
+======================================================================
+FAIL: test_future_targets_do_not_change_today_fit (__main__.SharedTests.test_future_targets_do_not_change_today_fit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v58/test_shared.py", line 104, in test_future_targets_do_not_change_today_fit
+    b=fit_base_day(changed,reg,at);self.assertEqual(json_ready(a),json_ready(b))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'dat[151390 chars]35766, 0.05700554848189678, 0.1172106154692003[131706 chars]3}}}} != {'dat[151390 chars]357665, 0.05700554848189678, 0.117210615469200[131677 chars]3}}}}
+Diff is 1178384 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_today_later_inputs_not_used_at_midnight (__main__.SharedTests.test_today_later_inputs_not_used_at_midnight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v58/test_shared.py", line 108, in test_today_later_inputs_not_used_at_midnight
+    b=fit_base_day(changed,reg,at);self.assertEqual(json_ready(a),json_ready(b));self.assertEqual(predict_base(p,at,a,'partial')[0],predict_base(changed,at,b,'partial')[0])
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'dat[151390 chars]35766, 0.05700554848189678, 0.1172106154692003[131706 chars]3}}}} != {'dat[151390 chars]357665, 0.05700554848189678, 0.117210615469200[131677 chars]3}}}}
+Diff is 1178384 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 21 tests in 1.030s
+
+FAILED (failures=2)
