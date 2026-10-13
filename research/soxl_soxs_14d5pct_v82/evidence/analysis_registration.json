@@ -1,0 +1,62 @@
+{
+  "created_at": "2026-10-13T21:19:22.002692+00:00",
+  "head": "29234a1d1b073b4b11b44292b9fdb03370761d2b",
+  "kind": "post_outcome_diagnostic_analysis_plan",
+  "outcomes_already_exposed": true,
+  "new_strategy_preregistration": false,
+  "code_sha256": {
+    "research/soxl_soxs_14d5pct_v82/protocol.json": "29b1b4b877fdcd06a92b293ae6dc98242a841c1f1d59a5380d05a1ed6afb0716",
+    "research/soxl_soxs_14d5pct_v82/error_audit.py": "b98a81b630696b931aa23eff45e32f0365aecb556a0aeeb267cef18598b8a985",
+    "research/soxl_soxs_14d5pct_v82/test_error_audit.py": "518d171e4c22573d0de97f3b4d67f913170dbdb2e63cc39b285734ad48af4a2e",
+    "research/soxl_soxs_14d5pct_v82/verify_error_audit.py": "32870f3b66381cb4f2210a98034b91eff7368c1f850b7a04a381e93ec5425a10"
+  },
+  "protocol": {
+    "version": "soxl_soxs_return_error_audit_v82",
+    "purpose": "Post-outcome diagnostic of immutable v78-v81 issued forecasts. No new model, trading rule, capital replay, case evaluation or deployment qualification.",
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "label_cutoff_exclusive_et": "2026-05-01 00:00:00",
+    "classes": [
+      "target",
+      "ordinary_stop",
+      "gap_stop",
+      "expiry"
+    ],
+    "prediction_sources": {
+      "v78_prior": "78:gap_prior",
+      "v78_raw": "78:gap_raw",
+      "v78_blend": "78:gap_blend",
+      "v79_top": "79:top_tilt",
+      "v80_recent": "80:recent_ratio"
+    },
+    "main_selection": "Immutable v80 recent_ratio top ETF; v81 paired_state accepts a subset. Each comparison evaluates that SAME symbol, never reselects using outcomes or another model.",
+    "identity": "N-r = (N-g) + (g-m_y) + (m_y-r). N is v81 current-return regression; g=sum(q*m) is v80 class forecast; m_y is the as-issued v78 mean for realized class y. For executed entries, add label_r-actual_log_return, never silently replace label return.",
+    "category_attribution": "With target as reference, g-m_y=sum(k=1..3)[(q_k-I[y=k])*(m_k-m_0)]. This is a samplewise algebraic decomposition, not causal attribution or a probability calibration theorem. Conditional payoff amplitude residual m_y-r also contains sampling noise.",
+    "maturity": "Only full original current-contract paired ETF terminal_release strictly before May1 00ET may supply labels, even when an early exit is already visible. Report v81 next-session paired maturity separately. Retain unknown rows and do not score them. This absolute-return audit may have more scoreable dates than v81's waiting comparison.",
+    "cohorts": [
+      "all_top",
+      "source_eligible",
+      "source_rejected",
+      "paired_accepted",
+      "paired_rejected",
+      "absolute_pair_accepted",
+      "absolute_now_accepted"
+    ],
+    "weighting": "Within each cohort, known rows share one unit per ET date; average date means. Predicted means for ALL rows separately reported. Actual trades are entry-weighted, one entry per date under original ledger. Cohorts and overlapping contracts are not independent evidence.",
+    "visible_states": "Descriptive only. Fixed signs of direction-aligned trend5/current give four quadrants; raw industry trend5>0 and relative5>0 define visible positive relative leadership. These pre-outcome features are not proof of money flow, a retrospective hot-market label or a new trading gate. Report all groups, including sparse/empty and unknown groups; do not optimize boundaries.",
+    "comparisons": "All five probability sources use the same v80 top symbol and shared v78 class payoff means. Report Brier, log loss with numerical floor1e-8, squared contract-return error, probabilities/frequencies and the exact return decomposition. Scores measure more than calibration alone.",
+    "uncertainty": "For candidate mean error terms, 5000 circular10-session block draws seed707 over the full Jan-Apr decision-date grid. Empty cohort dates carry zero numerator and denominator, not fabricated zero returns. Ratio of summed daily numerators to nonempty-date mass; zero-denominator draws remain unknown and are counted. 95% percentile intervals are descriptive for exposed, overlapping and repeatedly studied history.",
+    "executed_routes": [
+      "paired_state",
+      "absolute_pair",
+      "absolute_now",
+      "source_recent"
+    ],
+    "provenance": "Verify every used source byte against its committed delivery manifest; verify inter-version parent hashes and stored g=sum(q*m). Preserve all old sources/results and unrelated WIP. Raw prices and fitted models remain outside Git.",
+    "acceptance": "Original May/July/September arithmetic mean net capital month return>=10%, every May-September month>=0 and complete coverage. This audit cannot authorize case evaluation or mark the goal complete.",
+    "no_strategy_changes": true,
+    "no_case_evaluation": true,
+    "goal_complete": false
+  },
+  "tests_sha256": "66e8872f361661033aab4416e9893763d8b3dd36c5eca6e212ad08b70d18e971"
+}
