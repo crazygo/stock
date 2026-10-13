@@ -1,0 +1,183 @@
+{
+  "stage": "post_run_descriptive_only",
+  "actual_entry_count": 33,
+  "class_order": [
+    "target",
+    "ordinary_stop",
+    "gap_stop",
+    "expiry"
+  ],
+  "actual_class_counts": [
+    18,
+    13,
+    2,
+    0
+  ],
+  "actual_class_frequencies": [
+    0.5454545454545454,
+    0.3939393939393939,
+    0.06060606060606061,
+    0.0
+  ],
+  "actual_log_payoff_contributions": [
+    0.026106974827781976,
+    -0.02502754997599677,
+    -0.006143390571117851,
+    0.0
+  ],
+  "matched_same_primary_entry_forecasts": {
+    "gap_blend": {
+      "mean_probabilities": [
+        0.599574413528143,
+        0.3190670691811012,
+        0.06628134101657646,
+        0.015077176274179533
+      ],
+      "mean_log_payoff_contributions": [
+        0.028820005533468886,
+        -0.02028452990562287,
+        -0.005978224467109658,
+        -7.750234592586294e-05
+      ],
+      "mean_expected_log_return": 0.0024797488148104946,
+      "mean_log_loss": 0.9029793471907798,
+      "mean_brier": 0.5567246322848733
+    },
+    "gap_raw": {
+      "mean_probabilities": [
+        0.6344452791209121,
+        0.26728202005384577,
+        0.06510182797709145,
+        0.03317087284815064
+      ],
+      "mean_log_payoff_contributions": [
+        0.03050199534943604,
+        -0.016989492669728504,
+        -0.005879716521058584,
+        -0.000170172824552116
+      ],
+      "mean_expected_log_return": 0.007462613334096835,
+      "mean_log_loss": 0.9335690639532652,
+      "mean_brier": 0.5705121792742146
+    },
+    "gap_prior": {
+      "mean_probabilities": [
+        0.5795224631367611,
+        0.3465847267339002,
+        0.06745627165700495,
+        0.006436538472333968
+      ],
+      "mean_log_payoff_contributions": [
+        0.027851901995729653,
+        -0.022036275535897216,
+        -0.006080323174742027,
+        -3.293258582251231e-05
+      ],
+      "mean_expected_log_return": -0.0002976293007321022,
+      "mean_log_loss": 0.8951846759222941,
+      "mean_brier": 0.5537770254254589
+    }
+  },
+  "trade_payoff_balance": {
+    "winning_entries": 18,
+    "mean_net_win": 0.04902670670983481,
+    "losing_entries": 15,
+    "mean_net_loss": -0.06619792205552831,
+    "observed_mix_arithmetic_break_even_win_share": 0.574511914378392,
+    "observed_mix_is_ex_post_not_a_trading_threshold": true
+  },
+  "gap_vs_merged": {
+    "query_action_differences": [
+      {
+        "at": "2026-01-05 20:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-01-14 15:35:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-02-04 16:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-02-20 16:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-02-23 16:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-02-26 16:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-02-27 16:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-02-27 19:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-03-02 20:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-03-26 18:05:30+00:00",
+        "gap": "CASH",
+        "merged": "SOXL"
+      },
+      {
+        "at": "2026-03-27 14:05:30+00:00",
+        "gap": "SOXL",
+        "merged": "CASH"
+      },
+      {
+        "at": "2026-03-27 16:05:30+00:00",
+        "gap": "SOXL",
+        "merged": "CASH"
+      }
+    ],
+    "same_actual_entry_keys": false,
+    "primary_entry_keys_only": [
+      [
+        "2026-01-06 14:25:30+00:00",
+        "SOXL"
+      ]
+    ],
+    "merged_entry_keys_only": [
+      [
+        "2026-01-05 20:05:30+00:00",
+        "SOXL"
+      ]
+    ]
+  },
+  "primary_requested_action_counts": {
+    "CASH": 452,
+    "SOXL": 190,
+    "SOXS": 14
+  },
+  "primary_actual_decision_counts": {
+    "no_action": 229,
+    "position_held": 198,
+    "daily_entry_limit": 196,
+    "buy_SOXL": 30,
+    "buy_SOXS": 3
+  },
+  "executed_subset_selected_by_primary_not_independent_validation": true,
+  "early_actual_exits_not_released_for_model_training": true,
+  "changes_policy_or_gate": false,
+  "results_sha256": "f5358e12841ae30b59758388cc640c351550690a3749b4bcfea763c55f21eab1",
+  "source_sha256": "f20157bc1db5df507fcca2855d05b2fe98646c815d2198df8ccbea7360de4339"
+}

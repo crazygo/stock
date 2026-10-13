@@ -1,0 +1,87 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "version": "soxl_soxs_exit_class_expert_mixture_v78",
+  "primary": "gap_blend",
+  "hypothesis": "Four actual exit classes separating gap stops; signed cross-ETF shared multinomial probabilities and prequential log-score mixture with empirical class frequencies. Prior v12/v24 probability decompositions already failed; this is a new gap-class/shared-transfer/long-history/score-mixture hypothesis, not an untried generic probability idea.",
+  "inputs": "Exact v77 long three-pair panels and six own-ETF raw labels (earlier labels plus exact frozen v75 all_labels). Price-only13 coordinates, same original18 full readiness. No new data, feature selection, price corrections or target-month access.",
+  "classes": {
+    "gap": [
+      "target",
+      "non_gap_stop",
+      "gap_stop",
+      "expiry"
+    ],
+    "merged": [
+      "target",
+      "risk_stop",
+      "expiry"
+    ]
+  },
+  "target_maturity": "Unknown/incomplete full14day paired windows remain class-1. Train only matched three-pair chronological complete prefix available strictly before daily00ET; earlier positives are not released first. Actual same-bar stop-first and gaps retained. Gap class is risk_stop AND raw Open below contemporaneous cent-rounded protective stop.",
+  "directional_features": "Original coordinate indices0,1,2,5,6,7,8,9,10 multiply by+1 long/-1 inverse side; price slots3,4,16,17 unchanged. Zero activity slots11..15 are omitted. The symmetry is a modeling assumption; ETF-specific offsets remain and all labels are actual own ETF returns.",
+  "base_model": "Per clock, daily,>=120matched real dates. Six ETFs share13 standardized signed slopes, plus six ETF one-hot offsets; multinomial logits=log pooled class prior + design@theta. L2 objective penalty0.5*10*sum(theta^2), including offsets; no unpenalized intercept. Only globally observed classes active; absent class probability0, never fake a loss. Fully penalized convex adjustment around empirical prior.",
+  "weights": "Date recency half-life126; normalize date weights to date ESS=(sum unnormalized)^2/sum squared. Divide each date weight equally among six ETF rows. Save real dates and ESS separately; clocks fitted separately, no claim of independent dates.",
+  "payoff_distribution": "For each ETF, empirical joint class/payoff distribution gets20 effective-date units of pooled-six-ETF prior. Class prior=(own class mass+20*pooled class mass)/(ESS+20). Class log-payoff mean=(own class weighted logpayoff sum+20*pooled class payoff sum)/(own class mass+20*pooled class mass). Empty global classes get probability0 and placeholder mean0 that never carries mass. Conditional means are within observed class support; no additive residual return correction.",
+  "solver": "Scipy L-BFGS-B analytic weighted softmax gradient,lambda10,zero start,maxiter2000,gtol1e-9,ftol1e-15,maxls50. Require finite converged gradient infinity <=1e-6; otherwise fail run, no silently selective dropout. Independent scalar-gradient/KKT and damped Newton anchor checks. Class ordering fixed.",
+  "mixture": "Separate gap/merged histories. Daily latest120/min60 fully mature semiconductor dates with complete own as-issued raw and prior probabilities. Day score difference=mean across eligible clocks and both ETFs of log(max(raw trueclass probability,1e-8))-log(max(prior trueclass probability,1e-8)). Recency63 normalizedsumN. logodds=0.1*sum(date_weight*score_difference),alpha=sigmoid(logodds). p=alpha*raw+(1-alpha)*prior. Equal prior expert weights;0.1 is fixed tempering for dependent overlapping windows,not a proven effective sample correction. No retrospective model predictions used. None of these mixture weights guarantees probability calibration.",
+  "decision": "PRIMARY gap_blend chooses ETF with greatest expected contract net log return sum(probability*class payoff mean)>1e-12,tieSOXL; otherwiseCASH. No additive residual correction or bootstrap radius. All new score controls retain same>=60feedback readiness and unresolved-expired prefix gates; controls cannot rescue primary. No threshold grid or month identifiers.",
+  "routes": [
+    "gap_blend",
+    "gap_raw",
+    "gap_prior",
+    "gap_equal",
+    "merged_blend",
+    "merged_raw",
+    "merged_prior",
+    "merged_equal",
+    "source_long_price",
+    "source_short_price",
+    "source_long_full",
+    "source_long_mean",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "verification": "Independent raw gap/non-gap assignment and old logpayoff/maturity equality; synthetic gradient/convex support/directional transform/weight/missingclass/asissued maturity tests; fixed real Newton preflight before capital outcomes; every daily model independent objective gradient,all expert histories and convex mixtures,15fullcapitalbooks,proper scoring and old control bytes. Do not modify pretrained source.",
+  "method_reference": [
+    "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
+    "https://arxiv.org/abs/1005.1918"
+  ]
+}

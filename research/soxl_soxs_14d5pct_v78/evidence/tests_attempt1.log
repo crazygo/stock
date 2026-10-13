@@ -1,0 +1,24 @@
+.......F.
+======================================================================
+FAIL: test_missing_and_single_class (__main__.ClassTests.test_missing_and_single_class)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/test_classes.py", line 42, in test_missing_and_single_class
+    np.testing.assert_array_equal(m['prior'][:,0],1)
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1054, in assert_array_equal
+    assert_array_compare(operator.__eq__, actual, desired, err_msg=err_msg,
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 919, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Arrays are not equal
+
+Mismatched elements: 6 / 6 (100%)
+Max absolute difference among violations: 4.4408921e-16
+Max relative difference among violations: 4.4408921e-16
+ ACTUAL: array([1., 1., 1., 1., 1., 1.])
+ DESIRED: array(1)
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.018s
+
+FAILED (failures=1)

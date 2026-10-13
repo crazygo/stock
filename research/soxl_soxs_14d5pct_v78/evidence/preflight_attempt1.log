@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/preflight_classes.py", line 34, in <module>
+    a=p.parse_args();preflight(a.inputs,a.output)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/preflight_classes.py", line 22, in preflight
+    B,iterations=newton(ref);np.testing.assert_allclose(model['coefficients'],B,atol=1e-7,rtol=1e-6)
+                 ^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/reference_class.py", line 68, in newton
+    raise ValueError('Independent Newton did not converge')
+ValueError: Independent Newton did not converge

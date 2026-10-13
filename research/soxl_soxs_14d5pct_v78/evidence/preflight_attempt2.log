@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/preflight_classes.py", line 34, in <module>
+    a=p.parse_args();preflight(a.inputs,a.output)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/preflight_classes.py", line 17, in preflight
+    models,ids=fit_clock(panels,parents,c)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/class_learning.py", line 87, in fit_clock
+    models={m:fit_distribution(np.concatenate(X),np.concatenate(ys[m]),np.concatenate(returns),np.repeat(np.arange(6),n),dw,CLASSES[m]) for m in MODES}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v78/class_learning.py", line 62, in fit_distribution
+    raise ValueError(f'Multinomial optimizer did not converge: {result.message}; gradient={np.max(np.abs(gradient))}')
+ValueError: Multinomial optimizer did not converge: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; gradient=2.0400376827822697e-06
