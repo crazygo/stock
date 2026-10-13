@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新实验为 [v66 正的预期净收益决策](research/soxl_soxs_14d5pct_v66/README.md)：开发主路线精确复现旧点估计对照，月均 +10.31%、各月非负，独立核验后执行原回归。五／七／九月均值 -4.46%，五月至九月存在亏损月份，原目标未通过。[进展](research/soxl_soxs_14d5pct_v66/GOAL_PROGRESS.md)。
+最新实验为 [v67 最新已完整行情的条件路径](research/soxl_soxs_14d5pct_v67/README.md)：样本时效提高，旧模型对照精确复现；开发月均 +10.14%，但三月 -11.60%，主路线未通过各月非负门槛。未运行新案例，v66 原目标失败结果保留。[进展](research/soxl_soxs_14d5pct_v67/GOAL_PROGRESS.md)。
 
 此前 [v59 行业状态一日预测偏离](research/soxl_soxs_14d5pct_v59/README.md)：用过去拟合的状态预测构造创新值，与简单差分、相同样本原输入对照。状态预测误差下降，但主路线开发月均 −0.78%、三月 −22.74%，仍未达标；方向误差没有改善。19 项测试、状态／收益模型及九账本核验通过，未执行新指定月份回归。[持续目标进行中](research/soxl_soxs_14d5pct_v59/GOAL_PROGRESS.md)。
 
