@@ -1,0 +1,19 @@
+{
+  "stage": "before_new_capital_outcomes",
+  "strategy_parameters_changed": false,
+  "repairs": [
+    {
+      "issue": "Initial anchor assumed every selected date ready",
+      "evidence": "2026-01-02 had26 eligible dates vs fixed30; keep4unready checks and add2025-07-01 fit anchor",
+      "log_sha256": "4069f8f1e143e5ce766247fbf671d514e3b6beafc44e15e7975982ce1a47f2a5"
+    },
+    {
+      "issue": "Missing evidence output directory after all model comparisons passed",
+      "repair": "Create evidence directory in preflight; no model changes",
+      "log_sha256": "3b0f530c6cf32f488141a3ed22f06fac8283e8e3bd16abf0d92243916f6ce8e5"
+    }
+  ],
+  "final_model_checks": 12,
+  "unready_checks": 4,
+  "tests": 12
+}

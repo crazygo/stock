@@ -1,0 +1,85 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "version": "soxl_soxs_selected_state_probability_v83",
+  "primary": "eligible_state",
+  "hypothesis": "State-dependent category calibration may correct conditional first-name ordinary/gap stop probability errors that constant bias and unlabelled domain weighting did not resolve. This follows exposed v82 diagnostics; it is not independent discovery or a claim that all strong-industry candidates should be excluded.",
+  "source": "Immutable v80 recent_ratio as-issued probabilities, top, readiness and original sourceeligibility, plus original v78 class-payoff means. Four exact controls from v80/v81. No sourceforecast refit using later data, no new prices. Current economic base models remain daily retrained in their immutable historical source records.",
+  "classes": [
+    "target",
+    "ordinary_stop",
+    "gap_stop",
+    "expiry"
+  ],
+  "history": "Every00ET take original whole-date complete14day paired ETF maturity prefix, stop first unknown/not-yet-mature. Select source-ready whole dates, last120/min60. At least30 sourceeligible dates inside this same pool; no compressed time for sparse eligibility. Unknown past labels cannot be bypassed. All new comparisons share population/readiness and unsupported-label gates; before readiness CASH.",
+  "weights": "For each population eligible/top, raw date weight2^((common_position-N+1)/63). Divide date mass among retained clocks, then normalize total to that population dateESS=(sumdateweight)^2/sumsquared. ESS measures concentration, not independent overlapping markets. Two ETFs/8clocks are not independent dates.",
+  "populations": "PRIMARY and clock/bias controls use only past v80 sourceeligible TOP at its issued time. Top_state uses all ready TOP choices, including rejected source. Neither population conditions on profits or actual account occupancy. Same current source top and original buyeligibility always preserved.",
+  "features": [
+    "direction-aligned trend5",
+    "direction-aligned current",
+    "direction-aligned relative5",
+    "log_vol20",
+    "trend5*current"
+  ],
+  "design": "State: global1, SOXS0/1,7clockdummies with09:25reference,5weighted-standardized statefields=14coordinates. Clock: samefirst9 only. Bias: global1 only. Standardization uses own population date weights; scales<1e-12->1. Interaction rawtrend5*rawcurrent invariant to direction. No future hot-regime label, monthindicator, feature/threshold search or clipping. Marginal historical ranges reported, not a trading gate.",
+  "model": "q=softmax(log(p_as_issued)+Z B). All4classes jointly; zero sourceprobability remains zero. If any selected training trueclass had sourcep0, entire fit unready; do not delete that row. Minimize sumw negative logqtrue +5*sum(B^2), fixedlambda10 for EVERY coefficient including intercept. Strict convex regularized multinomial loss. ZeroB reproduces source. Damped Newton with exact Hessian, gradientinf<=1e-7; independent L-BFGS anchors and all-fit gradient checks.",
+  "decision": "Expected currentcontract netlog=sum(q*m_as_issued). Buy unchanged source top only if source alreadyeligible and correctedvalue>1e-12; elseCASH. No new v81 waiting layer, no oppositeETF replacement, no sourceCASH promotion. Identity uses untouchedprobabilities with same readiness. Coefficients trained from historical outcomes only, currentday newfeatures may condition frozen daily parameters.",
+  "routes": [
+    "eligible_state",
+    "eligible_clock",
+    "eligible_bias",
+    "top_state",
+    "identity_matched",
+    "source_recent",
+    "source_uniform",
+    "source_blend",
+    "source_wait",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "comparison": "eligible_clock isolates state contribution with identical population; eligible_bias isolates total clock/state contribution; top_state isolates historical selection population with same structure. source_recent/v80recent_ratio,source_uniform/v80uniform_top,source_blend/v80source_blend,source_wait/v81paired_state retain exact source ledgers. Controls cannot rescue failedprimary.",
+  "verification": "Synthetic gradients/Hessian/convexity, signedfeatures, zero support, future data isolation, date mass and eligibility;12realanchors beforefreeze. Independent whole-dateprefix/populations/scaling/convex gradients, all issued actions/probabilities/values,12books/statistics,4source ledger byteidentity. Diagnose class frequencies, probabilityscores, absolutevalue error and selected actual entries; keep pending.",
+  "method_reference": [
+    "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
+    "../soxl_soxs_14d5pct_v79/METHOD.md",
+    "../soxl_soxs_14d5pct_v82/README.md"
+  ],
+  "limitations": "State features were already available to base model; this tests conditional correction after source selection, not new leading information. Correction can fail or amplify noise. The same exposed development period has many prior experiments. Numeric optimum and legal probabilities do not imply calibrated predictions, positive netcapital or nonnegative future months."
+}
