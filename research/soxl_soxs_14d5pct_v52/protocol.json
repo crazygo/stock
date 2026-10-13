@@ -1,0 +1,125 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "universe": "Existing fixed8reference issuers; current mapping confirmed against cached SEC CIK/ticker payload, not historical PIT full sector. Same panel, not selected by results. Broadcom company-wide revenue includes software; no claim of semiconductor-segment demand isolation.",
+  "availability": "Facts must match catalog accession,form and filed date. Available_date=calendar day after max(filingDate,acceptanceDateTime literal YYYY-MM-DD),at00ET. Daily inputs include only available_date<=query ET date and periodend<querydate. This deliberately waits past both listed dates and may add delay when UTCdate differs. Historical firstpublic time and delivery latency not established. Unknownaccession,metadata mismatch orcurrency mismatch excluded,notfilled. Filing acceptance is not firstpublic timestamp. Never backfill old facts using later restatements.",
+  "version": "soxl_soxs_sector_conditioned_reliability_v52",
+  "primary": "state_band",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+    "cases": ".cache/soxl_soxs_14d5pct_v39/runs/financial_extension_20261013"
+  },
+  "option_range": [
+    "2024-10-04",
+    "2026-09-30"
+  ],
+  "hypothesis": "V51 pooled signed direction fits reduce in-sample loss but later direction errors remain worse than neutral. Test whether directly visible sector state changes the reliability slope of as-issued q, rather than treating slope constant. Distinct from v22 state-neighbor sample weights, v29 changepoint memory, v43 base macro interactions, v49 additive option bias and v50 constant slope; do not claim state conditioning is wholly new.",
+  "option_panel": [
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "MU",
+    "AMAT",
+    "LRCX",
+    "KLAC",
+    "INTC"
+  ],
+  "option_benchmarks": [
+    "SOXX",
+    "QQQ"
+  ],
+  "option_inputs": {
+    "balance": "equal8 mean (call_volume-put_volume)/(call_volume+put_volume)",
+    "balance_change5": "equal8 mean current balance minus 5 official sessions earlier",
+    "activity": "equal8 mean log(total option volume / mean of 20 preceding sessions volumes); excludes current volume from denominator",
+    "active_fraction": "fraction of 8 activity >0, all8 finite required",
+    "iv_hv": "equal8 mean log(iv/hv)",
+    "iv_change5": "equal8 mean log(iv/iv5sessionsago)",
+    "sector_market_balance": "SOXX balance minus QQQ balance",
+    "sector_market_iv_hv": "SOXX log(iv/hv) minus QQQ log(iv/hv)"
+  },
+  "option_availability": "No option columns in v52 fits; preserve v51 input/readiness and raw audit exactly, all originally eligible rows retained. No acquisition/upload.",
+  "excluded": "No strike/expiry/contract surface hence no historicalskew. OI history audited but excluded from inputs. No trade aggressor or buy/sell side, so callvolume not netbullishflow. No IVcrush from postearnings paths. No current consensus/rating/news backfill.",
+  "training": "Retain v35/v39 daily as-issued C/M/q. At00ET last120/min60 full-mature dateprefix,63datehalflife, splitdateweight amongactual3/4clocks. Three learned corrections retainoriginalq before60dates; neutralfixedfromfirstvalidsource. Never rewrite oldraws or use current/futurelabels.",
+  "calibration": "Five immutable rawhistories. Same partial-shared Ridge20 pair+clock payoff map and199circular10datejointbootstrap seed826+ETordinal. Refit state/additive/global withsamecounts andchange queryinputs jointly. FixedbaseC/M/q and fixedstateindex; not fullbaseorstateestimationuncertainty.",
+  "decision": "Same highest positive point minus common higher90% maxETF upward perturbation radius. Ten routes, no learned-sign action shortcut. All original capital/maturity guards retained.",
+  "routes": {
+    "state_band": "PRIMARY state-conditioned reliability +ownpayoffmap",
+    "state_point": "primarywithout radius",
+    "additive_band": "samevisible state as additive direction control",
+    "global_band": "exactfrozenv51 signed global slope",
+    "neutral_band": "exactv51 neutral",
+    "baseline_band": "exactv35/v51 original",
+    "direction_only_band": "primaryraw withdirectionuncertainty withoutpayoffmap",
+    "premarket_only": "primary09:25only",
+    "cash": "cash",
+    "double_cost": "primarysameactionsown2xcostbook"
+  },
+  "verification": "Independent rawstatecomponents and matchedvolumehashes, boxKKT/objectivecertificates, explicitrepeatdatebootstrap, independentcalibrationequations, allquery/actions/books. Threev51 controls exactraw/fits/models/estimates/actions/CSVbooks. Verifiedfailedprimaryblocksnewcases; ownpreMayprefixexactifcasesauthorized.",
+  "historical_exposure": "All history exposed by prior projects including R06 options. Newalgorithmcapitaloutcomes not seen before registration; development is not independentvalidation. No extra futureobservation gate.",
+  "references": [
+    "https://scikit-learn.org/stable/modules/calibration.html",
+    "https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html"
+  ],
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "prior_input_audit": {
+    "files": 20,
+    "rows_each": 498,
+    "range": [
+      "2024-10-04",
+      "2026-09-30"
+    ],
+    "matched_original_eligible_queries": 1228,
+    "eligible_removed": 0,
+    "raw_missing_OI_KLAC_date": "2026-06-11",
+    "OI_used": false,
+    "initial_tests_passed": 14
+  },
+  "pre_registration_repairs": "23 tests passed on first run. Realstateaudit1439rows/4317components and3realdatepreflights passed1800KKT/6000payoffequations. State/additive payoff histories use declaredbaselineplaceholders only in preflight. No new capital outcomes seen.",
+  "bounded_model": {
+    "state": "q_new=sigmoid(logit(clip(q,1e-6,1-1e-6))*((1-u)*s_cold+u*s_hot)), eachanchorin[-1,1]. Two parameters; canreverse orshrink butnotamplify rawlogodds. No extra intercept.",
+    "additive_control": "q_new=sigmoid(s*logit(clip(q))+b*(2u-1)),s,b in[-1,1]. Same2parametercapacity, separates additive state direction from conditional q reliability.",
+    "primary_penalty": ".25*((s_cold-1)^2+(s_hot-1)^2)=.5*(mean_slope-1)^2+.5*(half_difference)^2; equal anchors reduces exactly to v51 scalar objective.",
+    "additive_penalty": ".5*(s-1)^2+.5*b^2",
+    "objective": "Weighted binarylogloss(I(D>0)); weights=timeweight*abs(D),normalizeNdates. Strictly convex because all parameter penalties positive. Zero magnitude mass preserves q exactly.",
+    "solver": "Primary/additive exact2D box Newton quadratic step enumerates all9faces; Armijo line search50max; max100steps; solve tolerance1e-10*Ndates and finalprojectedgradient<=1e-8*Ndates. Global control delegates exactfrozenv51 scalar bisection."
+  },
+  "matched_control_source": ".cache/soxl_soxs_14d5pct_v51/runs/development_20261013",
+  "state_definition": {
+    "inputs": [
+      "relative_5",
+      "breadth_5",
+      "volume_direction_diffusion"
+    ],
+    "formula": "u=(1+(tanh(relative_5)+breadth_5+volume_direction_diffusion)/3)/2, bounded[0,1]. Fixed equal component weights; no fitted thresholds or standardization.",
+    "relative_5": "clip((SOXX prior5day return-QQQ prior5day return)/(max(SOXXprior20dayvol,1e-4)*sqrt5),-5,5)",
+    "breadth_5": "2*fraction8leaders prior5day return positive-1",
+    "volume_direction_diffusion": "fraction8 with current04:00-to-cutoff volume above previous20same-clock mean AND currentreturn>0, minus corresponding negative-return fraction; currentbarprefixonly",
+    "availability": "u recomputed at each registered query using only then-known bars, not complete-day totals. Historical u remains immutable. Predictor state is available at query; coefficients trained at00ET. Inputs already in source v35; this is a new role, not new data.",
+    "meaning": "Visible participation and relative strength index, not calibrated probability of a hot regime or future TP."
+  }
+}
