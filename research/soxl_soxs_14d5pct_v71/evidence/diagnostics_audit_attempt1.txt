@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v71/audit_diagnostics.py", line 48, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--run',required=True,type=Path);a=p.parse_args();audit(a.run)
+                                                                                                 ^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v71/audit_diagnostics.py", line 17, in audit
+    assert list(pd.to_datetime(table.at,utc=True))==list(wanted.index)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/tools/datetimes.py", line 1101, in to_datetime
+    result = convert_listlike(np.array([arg]), format)[0]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/tools/datetimes.py", line 435, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/core/arrays/datetimes.py", line 2398, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "tslib.pyx", line 414, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 588, in pandas._libs.tslib.array_to_datetime
+TypeError: <class 'pandas.core.indexing._AtIndexer'> is not convertible to datetime, at position 0

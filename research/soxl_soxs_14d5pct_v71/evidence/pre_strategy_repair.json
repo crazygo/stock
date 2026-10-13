@@ -1,0 +1,14 @@
+{
+  "reason": "Missing-day regression with warnings-as-errors exposed pandas implicit object downcast warning. Boolean equality now rejects missing complete/prefix flags without implicit cast. Complete observed feature values and labels unchanged. Before capital evaluation.",
+  "old_source_sha256": "cfdb7cccfde71a6cfa1428a6bebc4dac82d90eba82ba59a04d5cabbe46fe943e",
+  "new_source_sha256": "1412607e46b44dbeafd9a97fceb7193e52d2603f483722c268c698be9e36b9a1",
+  "original_input_registration_sha256": "c1c678d7e3d4e5d3ad1cff45c8508fbd5b02397d2f6172e64153469c5e0e51cb",
+  "failed_test_preserved": "evidence/tests_attempt1.txt",
+  "passed_tests": 5,
+  "diagnostic_audit_repair": {
+    "reason": "pandas table.at is an indexer; explicit table[at] column access required",
+    "old_source_sha256": "7bd91e988cfe27a4651d4eb6c94b97470248d562831b86dc35b38305f4744230",
+    "new_source_sha256": "0c7442662671da25b2e5440b5f2263502a881987928d369ccfef0ca747ab9ed7",
+    "model_or_results_changed": false
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "stage": "post_run_descriptive_only",
+  "scope": "Jan-Apr development, complete14day labels only for prediction errors; all ticks retained in capital.",
+  "errors": {
+    "partial": {
+      "raw": {
+        "date_equal_mse": 0.004602357339770303,
+        "dates": 73,
+        "ticks": 584
+      },
+      "cal": {
+        "date_equal_mse": 0.004505907003967447,
+        "dates": 73,
+        "ticks": 584
+      },
+      "raw_available": 656,
+      "cal_available": 656
+    },
+    "independent": {
+      "raw": {
+        "date_equal_mse": 0.0047170465396397555,
+        "dates": 73,
+        "ticks": 584
+      },
+      "cal": {
+        "date_equal_mse": 0.004495657121993568,
+        "dates": 73,
+        "ticks": 584
+      },
+      "raw_available": 656,
+      "cal_available": 656
+    },
+    "pooled": {
+      "raw": {
+        "date_equal_mse": 0.004491399448222195,
+        "dates": 73,
+        "ticks": 584
+      },
+      "cal": {
+        "date_equal_mse": 0.004595248110971769,
+        "dates": 73,
+        "ticks": 584
+      },
+      "raw_available": 656,
+      "cal_available": 656
+    }
+  },
+  "sharing_increment": {
+    "raw": {
+      "matched_dates": 73,
+      "partial_minus_independent_mse": -0.00011468919986945282,
+      "dates_partial_lower_error": 44
+    },
+    "cal": {
+      "matched_dates": 73,
+      "partial_minus_independent_mse": 1.0249881973878958e-05,
+      "dates_partial_lower_error": 31
+    },
+    "band_different_proposal_ticks": 12,
+    "point_different_proposal_ticks": 32
+  },
+  "entries": {
+    "partial_band": {
+      "actual_entries": 12,
+      "by_clock": {
+        "09:25:30": 2,
+        "10:35:30": 2,
+        "11:05:30": 1,
+        "14:05:30": 7
+      },
+      "by_symbol": {
+        "SOXL": 12
+      }
+    },
+    "partial_point": {
+      "actual_entries": 44,
+      "by_clock": {
+        "09:25:30": 35,
+        "10:05:30": 1,
+        "10:35:30": 5,
+        "14:05:30": 3
+      },
+      "by_symbol": {
+        "SOXL": 39,
+        "SOXS": 5
+      }
+    },
+    "independent_band": {
+      "actual_entries": 15,
+      "by_clock": {
+        "09:25:30": 2,
+        "10:35:30": 4,
+        "11:05:30": 3,
+        "14:05:30": 6
+      },
+      "by_symbol": {
+        "SOXL": 15
+      }
+    },
+    "independent_point": {
+      "actual_entries": 42,
+      "by_clock": {
+        "09:25:30": 31,
+        "10:05:30": 2,
+        "10:35:30": 6,
+        "13:05:30": 1,
+        "14:05:30": 2
+      },
+      "by_symbol": {
+        "SOXL": 38,
+        "SOXS": 4
+      }
+    },
+    "pooled_band": {
+      "actual_entries": 11,
+      "by_clock": {
+        "09:25:30": 3,
+        "10:35:30": 3,
+        "14:05:30": 5
+      },
+      "by_symbol": {
+        "SOXL": 11
+      }
+    },
+    "pooled_point": {
+      "actual_entries": 44,
+      "by_clock": {
+        "09:25:30": 38,
+        "10:05:30": 3,
+        "10:35:30": 1,
+        "12:05:30": 1,
+        "14:05:30": 1
+      },
+      "by_symbol": {
+        "SOXL": 38,
+        "SOXS": 6
+      }
+    },
+    "premarket_only": {
+      "actual_entries": 2,
+      "by_clock": {
+        "09:25:30": 2
+      },
+      "by_symbol": {
+        "SOXL": 2
+      }
+    },
+    "cash": {
+      "actual_entries": 0,
+      "by_clock": {},
+      "by_symbol": {}
+    },
+    "double_cost": {
+      "actual_entries": 12,
+      "by_clock": {
+        "09:25:30": 2,
+        "10:35:30": 2,
+        "11:05:30": 1,
+        "14:05:30": 7
+      },
+      "by_symbol": {
+        "SOXL": 12
+      }
+    }
+  },
+  "primary_actual_entry_forecasts": {
+    "entries": 12,
+    "mean": {
+      "raw_selected": 0.004054032474435286,
+      "point_selected": 0.013980067714604505,
+      "lower_selected": 0.0017969127460007218,
+      "actual_log": -0.020496324736796318
+    },
+    "raw_selected_positive": 7,
+    "not_an_independent_calibration_test": true
+  },
+  "results_sha256": "9fc90dcb52330e72363f6e4f313d004dc9a848dea05e0875e207a9fc2ccc8d56",
+  "source_sha256": "805ce9e4ff8b882014d000554fffbb64486eac60b99103e5e2742616b19df904",
+  "changes_primary_or_gate": false,
+  "goal_complete": false
+}

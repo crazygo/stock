@@ -4,9 +4,9 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新实验为 [v69 随生成价格更新行业状态](research/soxl_soxs_14d5pct_v69/README.md)：开发月均 +7.87%，未通过开发筛选，未运行新案例。原固定模型精确对照、每日校准和完整账本独立核验通过，工程检查与收益验收分别记录。[进展](research/soxl_soxs_14d5pct_v69/GOAL_PROGRESS.md)。
+最新实验为 [v71 每日跨 ETF 部分共享学习](research/soxl_soxs_14d5pct_v71/README.md)：完整开发回放月均 **−5.66%**，2／3 月亏损，未达标；5,670 个基础模型、每日校准与九账本独立核验通过。基础误差下降未形成可靠选择收益，未运行本版 5／7／9 月案例。[目标继续](research/soxl_soxs_14d5pct_v71/GOAL_PROGRESS.md)。
 
-进行中的 [v70 跨 ETF 学习准备](research/soxl_soxs_14d5pct_v70/README.md)：新增五只基金 547,850 根分钟行情、387 日期及公司行动核验完成，244 个固定合同复算、10 项数值测试通过；尚无新策略收益结果。
+数据底座 [v70 跨 ETF 学习准备](research/soxl_soxs_14d5pct_v70/README.md)：五只基金 547,850 根分钟行情、387 日期及公司行动核验完成，现已接入 v71。此前 [v69 随价格更新行业状态](research/soxl_soxs_14d5pct_v69/README.md) 开发月均 +7.87% 但三月为负，失败记录保留。
 
 此前 [v59 行业状态一日预测偏离](research/soxl_soxs_14d5pct_v59/README.md)：用过去拟合的状态预测构造创新值，与简单差分、相同样本原输入对照。状态预测误差下降，但主路线开发月均 −0.78%、三月 −22.74%，仍未达标；方向误差没有改善。19 项测试、状态／收益模型及九账本核验通过，未执行新指定月份回归。[持续目标进行中](research/soxl_soxs_14d5pct_v59/GOAL_PROGRESS.md)。
 
