@@ -4,7 +4,9 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新策略为 [v87 已公告季度活动与风险判断](research/soxl_soxs_14d5pct_v87/README.md)：将 [v86 八家公司日历](research/soxl_soxs_14d5pct_v86/README.md) 接入每日训练，6,152 个时点、模型方程及十二份账本独立核验通过。主方案一至四月月均 **−2.59%**、三月 **−16.95%**，共同候选概率误差变差，未避开无活动对照的原有亏损；没有新增指定月份回归。21 项测试通过，[目标继续](research/soxl_soxs_14d5pct_v87/GOAL_PROGRESS.md)。原 [v85 时间证据](research/soxl_soxs_14d5pct_v85/README.md) 与 [行业感知思路](research/soxl_soxs_14d5pct_v85/RESEARCH_DIRECTION.md) 保留。
+最新策略为 [v88 计划活动后的已观察量价](research/soxl_soxs_14d5pct_v88/README.md)：在当时可见日程上加入已经完成的发行人、其他公司及成交量反应，每日训练与十二份账本独立复算通过。主方案一至四月月均 **−2.60%**、三月 **−16.95%**，纯日程对照的六笔亏损全部保留，概率误差扩大；没有新增指定月份回归。34 项测试、6,152 个时点和六份旧对照精确复现通过，[目标继续](research/soxl_soxs_14d5pct_v88/GOAL_PROGRESS.md)。下一步核对实际业绩相对此前公司指引的正文与时点证据。
+
+此前 [v87 已公告季度活动与风险判断](research/soxl_soxs_14d5pct_v87/README.md)：将 [v86 八家公司日历](research/soxl_soxs_14d5pct_v86/README.md) 接入每日训练，6,152 个时点、模型方程及十二份账本独立核验通过。主方案一至四月月均 **−2.59%**、三月 **−16.95%**，共同候选概率误差变差，未避开无活动对照的原有亏损；没有新增指定月份回归。21 项测试通过，[目标继续](research/soxl_soxs_14d5pct_v87/GOAL_PROGRESS.md)。原 [v85 时间证据](research/soxl_soxs_14d5pct_v85/README.md) 与 [行业感知思路](research/soxl_soxs_14d5pct_v85/RESEARCH_DIRECTION.md) 保留。
 
 此前策略结果为 [v84 提前公开的政策会议日程](research/soxl_soxs_14d5pct_v84/README.md)：日程版本与 6,152 个历史时点核验通过，完成每日训练和十二份资金账本复算。新增日程主方案一至四月净资金月均 **−5.02%**，弱于匹配无日程的 **−2.94%**；概率更乐观但误差更大，未形成风险回避效果。未新跑指定月份回归。
 
