@@ -1,0 +1,18 @@
+...........E...........
+======================================================================
+ERROR: test_json_unknown_payoff_remains_unknown (test_dense.Tests.test_json_unknown_payoff_remains_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v55/test_dense.py", line 28, in test_json_unknown_payoff_remains_unknown
+    spec=importlib.util.spec_from_file_location('v54_input_audit',core.ROOT/'research/soxl_soxs_14d5pct_v54/preflight_inputs.py');mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod);pair_targets=mod.pair_targets
+                                                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v54/preflight_inputs.py", line 4, in <module>
+    from audit_dense_inputs import input_check,raw_price_check
+ModuleNotFoundError: No module named 'audit_dense_inputs'
+
+----------------------------------------------------------------------
+Ran 23 tests in 1.434s
+
+FAILED (errors=1)

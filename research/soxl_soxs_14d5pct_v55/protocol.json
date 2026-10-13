@@ -1,0 +1,100 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "weights": "Same as v54: date totalweight sumN,63datehalflife,splitactual5/8rows. Penalty uses full protocol k8 including halfdays; do not use daily observed clock count. Base126datehalflife unchanged.",
+  "version": "soxl_soxs_clock_count_normalization_v55",
+  "primary": "dense_band",
+  "panel": [
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "MU",
+    "AMAT",
+    "LRCX",
+    "KLAC",
+    "INTC"
+  ],
+  "decision": "Point=owncurrentraw+predictedresidual. Commonradius=max(0,higher90%quantile maxETF upwardbootstrapdeviation). Selectgreatestpositive(point-radius)>1e-12, tieSOXL;elsecash. Missinginput/minsamples/expiredunresolvedprefix>=14calendar=>cash. No day/monthspecific filter. Bandissensitivity,notguaranteedmonthlylossbound. 0/1originalsettledcash only.",
+  "hypothesis": "Only normalize partial-sharing deviation penalty by clock count: 20||mean||²+(80/k)sum||deviation||². At k4 equals original exactly; at k8 coefficient10. Fixed algebraic clone-invariance rule, no return-selected hyperparameters. Preserve v54 eight clocks, all inputs, raw daily learning, mature-date membership, weights, bootstrap seeds and capital contract. Matched frozen v54 and originalfour controls retained.",
+  "universe": "Existing fixed8reference issuers; current mapping confirmed against cached SEC CIK/ticker payload, not historical PIT full sector. Same panel, not selected by results. Broadcom company-wide revenue includes software; no claim of semiconductor-segment demand isolation.",
+  "source_manifest": "../soxl_soxs_14d5pct_v35/evidence/financial_input_manifest.json",
+  "source_reuse": "Reuse hash-verified v54 prepared development inputs and all raw data; no new acquisition. Input protocol hash is v54 frozen protocol, distinct from v55 algorithm protocol. Full v54 source records serve matched control only, no hindsight optimization.",
+  "availability": "Facts must match catalog accession,form and filed date. Available_date=calendar day after max(filingDate,acceptanceDateTime literal YYYY-MM-DD),at00ET. Daily inputs include only available_date<=query ET date and periodend<querydate. This deliberately waits past both listed dates and may add delay when UTCdate differs. Historical firstpublic time and delivery latency not established. Unknownaccession,metadata mismatch orcurrency mismatch excluded,notfilled. Filing acceptance is not firstpublic timestamp. Never backfill old facts using later restatements.",
+  "period_normalization": "Only USD standardus-gaap,10K/10Qandamendments. Revenue tagpriority existing4standard names; net income NetIncomeLoss thenProfitLoss. Exact(start,end) latestknownfiled revision,tagpriority tie;samepriority/dateconflictingvalues fail. Direct60-120dayquarter outranks inferredquarter. For121-400day cumulativevalues inferquarter by subtracting latest earlier same-start/same-tag cumulative ending60-120days earlier. Keepbothrawfacts andlatestavailability;never annual/4. Priorquarter ends1-7daysbefore currentstart. Prioryearend350-380days earlier,durationswithin10days. Requirepositive revenue,currentquarter<=183daysold;match net-income start/end exactly. Cumulative difference assumes comparable accounting basis; raw lineage retained; no proof every postacceptance correction was observable at original filing.",
+  "features": {
+    "revenue_growth": "mean of8issuers clip(log(latestquarterRevenue/prioryearquarterRevenue),-2,2)",
+    "growth_breadth": "fractionof8positive revenue loggrowth",
+    "growth_acceleration": "mean clip(currentquarter logYoY minuspreviousquarter logYoY,-2,2)",
+    "acceleration_breadth": "fractionof8positive growthacceleration",
+    "margin_improvement": "mean clip(currentquarter netincome/revenue minusprioryearmatchedquarter netincome/revenue,-1,1)",
+    "margin_breadth": "fractionof8positive netmarginchange",
+    "recent_earnings_share": "fractionof8with8K/8K-Aitem2.02assumedavailable inlast5officialsessionsincludingquerysession. Weekendavailable datesmaptofirstfollowingofficialsession;no upcomingevent knowledge,no sentiment label.",
+    "disclosure_freshness": "mean exp(-calendar_days_since_latest_available_date_among6metric_sourcequarters/63). Restated comparison counts onlywhenitbecameavailable."
+  },
+  "raw_training": "Identical v54 daily same-clock base formulas and features. Full development refits of new4 must match every v54 as-issued raw and fit record. Old4 exact v35/v39 reuse. Cases if authorized extend the same immutable development prefix; do not rewrite earlier forecasts.",
+  "calibration": "Normalize v54 partial sharing for fixed k8, own immutable raw history; allclock/ETF pairs ofday movejointly. Last120/min60 whole-datefullymatureprefix,63datehalflife sumNdateweights dividedactual5/8clocks. Freeperclockintercepts; penalty20||mean(beta)||²+(80/k)sum||beta_clock-mean||²; matrix(80/k)(I-J/k)+20J/k² tensor I2. The dimension normalization follows exact clone-invariance, not fitted performance. 199circular10datebootstrapseed826+ETordinal. Allkclocks must have positive-weight support;otherwise fail,no fabricated late-halfday rows. Base-model uncertainty not included.",
+  "method_reference": [
+    "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+    "https://www.sec.gov/files/about/webmaster-faq.htm"
+  ],
+  "pre_registration_source_findings": "v54 failed: development mean1.615%,February/Marchnegative. Its post-result synthetic audit proves clock cloning changes relative deviation penalty. Formula80/k preserves k4 and exact clones. These exposed findings motivate v55; no v55 capital outcome before registration.",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+    "cases": ".cache/soxl_soxs_14d5pct_v39/runs/financial_extension_20261013"
+  },
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "old_clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "13:05:30"
+  ],
+  "routes": {
+    "dense_band": "PRIMARY eight-clock base andpartialsharedcalibration+band",
+    "dense_point": "dense withoutband",
+    "old_four_band": "exactv35fullcontrol, actiononlyold4",
+    "dense_four_only": "dense model/callayer onlyallowedatold4; isolates schedule",
+    "added_only": "dense model onlynew4",
+    "premarket_only": "dense09:25only",
+    "cash": "cash",
+    "double_cost": "dense sameactions own2xcostpaths",
+    "source_dense": "Exact v54 fixed-deviation eight-clock band, fullledger matched diagnostic. Case extension uses same v54 formula only after v55 primary qualifies."
+  },
+  "verification": "v54 input audit exact SHA plus rawsource hashes. Independent normalizedjointintercept equations, clock cloning, exact k4, daily whole-date membership and bootstraps; old source equations already verified and controls exact. Refit all new4 rawheads and verify equations, allactions/rawexits/books/statistics. Case prefix equals v55 development if eligible.",
+  "common_readiness": "No extra feature types: original causal price/breadth and8financialinputs. Newperclock ready checks sameformula asold4; current missing staysmissing. Whole-datecal requiresactualofficialschedule andallmembersready/mature; no dropping a missing lateclock.",
+  "diagnostics": "Keepperclockcounts, allqueries vsactualbuys, addedclockopportunities andblockedcounts, date-equal errors, exactoldcontrol anddense_four_onlydifferences. Reportanyno-growth/negative month, no postresultprimaryreplacement.",
+  "historical_exposure": "All historicalmarketdata exposed; historicaldevelopmentregression only. No new independent/futuregate. Newclockcapitaloutcomes unseen beforefreeze."
+}
