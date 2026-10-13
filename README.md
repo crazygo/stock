@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新实验为 [v61 重复扰动 Sobol 积分](research/soxl_soxs_14d5pct_v61/README.md)：固定数值试验的条件模型方差下降约 59%，完整开发月均 +6.90%，开发门槛未通过；未运行新的指定月份回归。原 v60 五／七／九月回归均值 +0.58%、五月负收益保留，目标未完成。[进展与边界](research/soxl_soxs_14d5pct_v61/GOAL_PROGRESS.md)。
+最新实验为 [v62 行业状态转移路径](research/soxl_soxs_14d5pct_v62/README.md)：让未来片段随模拟行业状态变化，与同池固定状态对照比较。开发月均 -2.20%，开发门槛未通过；未运行新的指定月份回归。原 v60 五／七／九月均值 +0.58%、五月负收益保留，目标未完成。[进展与边界](research/soxl_soxs_14d5pct_v62/GOAL_PROGRESS.md)。
 
 此前 [v59 行业状态一日预测偏离](research/soxl_soxs_14d5pct_v59/README.md)：用过去拟合的状态预测构造创新值，与简单差分、相同样本原输入对照。状态预测误差下降，但主路线开发月均 −0.78%、三月 −22.74%，仍未达标；方向误差没有改善。19 项测试、状态／收益模型及九账本核验通过，未执行新指定月份回归。[持续目标进行中](research/soxl_soxs_14d5pct_v59/GOAL_PROGRESS.md)。
 
