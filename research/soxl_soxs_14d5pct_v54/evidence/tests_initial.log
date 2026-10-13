@@ -1,0 +1,37 @@
+..............E..E.
+======================================================================
+ERROR: test_primary_failure_not_rescued_by_control (__main__.Tests.test_primary_failure_not_rescued_by_control)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v54/test_dense.py", line 81, in test_primary_failure_not_rescued_by_control
+    p=read(SOURCE/'protocol.json');s={'primary_average':.2,'all_months_nonnegative':False,'completed_trades':30};self.assertFalse(development_gate(s,True,p)['passed'])
+                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v11/uncertainty.py", line 95, in development_gate
+    wanted = protocol['development']['months'];months = stats['monthly']
+                                                        ~~~~~^^^^^^^^^^^
+KeyError: 'monthly'
+
+======================================================================
+ERROR: test_whole_dates_weights_and_199_bootstraps (__main__.Tests.test_whole_dates_weights_and_199_bootstraps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v54/test_dense.py", line 53, in test_whole_dates_weights_and_199_bootstraps
+    p,m,h=fixture();at=p[p.date==p.date.max()].index[0];a=fit_day(p,h,registry(p,m),at);saved=json.loads(json.dumps(json_ready(a)));_,n=daily_check(p,m,h,at,saved)
+                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Timestamp is not JSON serializable
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.963s
+
+FAILED (errors=2)

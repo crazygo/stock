@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "post_result_only": true,
+  "synthetic_only": true,
+  "market_data_read": false,
+  "capital_replayed": false,
+  "primary_rules_changed": false,
+  "seed": 20261013,
+  "dates": 60,
+  "results": [
+    {
+      "copies": 2,
+      "clocks": 8,
+      "frozen_prediction_max_abs_shift": 0.7318622687250537,
+      "normalized_prediction_max_abs_shift": 3.552713678800501e-15,
+      "frozen_extra_penalty": 188.8082538377329,
+      "extra_penalty_formula_verified": true,
+      "normalized_objective_invariant": true
+    },
+    {
+      "copies": 3,
+      "clocks": 12,
+      "frozen_prediction_max_abs_shift": 1.0918196453241036,
+      "normalized_prediction_max_abs_shift": 2.6645352591003757e-15,
+      "frozen_extra_penalty": 377.61650767546575,
+      "extra_penalty_formula_verified": true,
+      "normalized_objective_invariant": true
+    }
+  ],
+  "scope": "Clock cloning changes v54 deviation penalty relative to unchanged weighted data loss. No attribution of observed losses or evidence of better investment performance.",
+  "candidate_formula": "20||mean(beta)||^2 + (80/k)sum||beta_clock-mean||^2; future experiment only",
+  "source_sha256": "07a0a42e8601b3cc6a39f085bf31cdfe04f2eb5d5ff8df1a2e6ba5614a2e40fa"
+}

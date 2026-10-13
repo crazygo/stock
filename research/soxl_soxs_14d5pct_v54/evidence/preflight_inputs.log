@@ -1,0 +1,14 @@
+new clock price inputs {'new_clock_queries': 1454, 'raw_fields': 197744, 'future_bars_excluded': True}
+factor/prefix check {'matched_volume_prefixes': 24648, 'factor_rows': 2913, 'half_days_follow_official_close': True}
+AttributeError: 'NoneType' object has no attribute 'log1p'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v54/preflight_inputs.py", line 46, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--inputs',type=Path,required=True);audit(p.parse_args().inputs)
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v54/preflight_inputs.py", line 35, in audit
+    l,s=np.log1p([x.get('net_return',np.nan) for x in pair]);np.testing.assert_allclose(panel.loc[at,['C','D','M']].to_numpy(float),[(l+s)/2,(l-s)/2,abs(l-s)/2],equal_nan=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: loop of ufunc does not support argument 0 of type NoneType which has no callable log1p method

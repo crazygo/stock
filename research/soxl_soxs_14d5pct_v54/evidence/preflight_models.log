@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v54/preflight_models.py", line 41, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--inputs',type=Path,required=True);preflight(p.parse_args().inputs)
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v54/preflight_models.py", line 25, in preflight
+    model,fit,recomputed=fit_base(panel,at);assert json_ready(fit)==old['fits']['full'];close(recomputed,raw);rows[-1]['old_base_refits_exact']+=1
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
