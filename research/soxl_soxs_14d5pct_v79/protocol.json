@@ -1,0 +1,68 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "version": "soxl_soxs_asissued_class_bias_calibration_v79",
+  "primary": "eligible_tilt",
+  "hypothesis": "Does a low-dimensional identity-centered class bias, learned on past as-issued source-eligible top candidates, repair ordinary-stop underestimation while preserving source direction and payoff support? v12/v24 probability calibration and v37-v40 candidate filtering already failed; this is a bounded class-bias/selection-population experiment, not first calibration.",
+  "inputs": "Exact v78 semiconductor panel, gap_blend as-issued probabilities/events/class-payoff means, unchanged old capital labels and fees; no new market data or base-model retraining.",
+  "calibration_population": "Daily00ET own semiconductor continuous fully mature14day prefix. Keep latest120/min60 parent dates whose every clock has as-issued ready gap_blend. Need at least30 dates with source-eligible candidates. eligible: only source then-eligible top; top: all source tops; both: both ETFs. Source eligibility determined before account occupation. No actual-fill or future-outcome selection. All new routes share population readiness and support gates.",
+  "weights": "Use half-life63 positions in the latest120 full parent dates; do not compress ages after eligible selection. Each included date has total raw weight b; divide across included rows. Normalize to ESS=(sum b)^2/sum b^2 separately per population; real counts and ESS retained. Multiple clocks/ETFs do not increase date count.",
+  "model": "Four shared class-bias parameters beta. q_j=p_j*exp(beta_j)/sum(p*exp(beta)); fixed identity log-prob slopes, zero probabilities stay zero. Minimize weighted multinomial log loss plus5*||beta||^2; lambda10 all coefficients. Initial beta0 is identity. No extra context, class-payoff regression, reranking, monetary weighting, or additive return residual.",
+  "missing_support": "Any training row with issued true-class probability0 makes that population unready; never drop that row or smooth zero to fake support. Shared new-route gate requires every population fit-ready. Incomplete labels excluded only by original chronological maturity prefix.",
+  "solver": "Exact4x4Hessian damped Newton,max80,gradient1e-9 target and1e-7 required. Armijo backtracking up to50; allow64eps objective roundoff only when gradient halves. Strictlyconvex lambda10. Independent gradient/Hessian and scipy L-BFGS real anchors.",
+  "decision": "Keep source top unchanged and never promote a source CASH. PRIMARY eligible_tilt accepts source-eligible top only if tilted expected netlog return>1e-12. Tie sourceSOXL. identity and top_tilt/both_tilt controls have matched readiness; original source_blend/source_prior/source_raw/source_merged exact controls. Probabilities do not authorize buying the other ETF. Fixed0/1 settledcash.",
+  "routes": [
+    "eligible_tilt",
+    "top_tilt",
+    "both_tilt",
+    "identity",
+    "source_blend",
+    "source_prior",
+    "source_raw",
+    "source_merged",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "verification": "Independent chronological prefix and every historical candidate member/weight, convex gradient and probabilities, action direction/abstention,11capitalbooks,monthly statistics; four old controls byte-identical. Proper scores for all/top/eligible/actual populations remain separate. Preflight and source hashes frozen before new capital.",
+  "method_reference": [
+    "https://scikit-learn.org/stable/modules/calibration.html",
+    "https://papers.neurips.cc/paper_files/paper/2019/hash/8ca01ea920679a0fe3728441494041b9-Abstract.html"
+  ]
+}
