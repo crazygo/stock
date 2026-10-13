@@ -1,0 +1,90 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "version": "soxl_soxs_history_price_factorial_v77",
+  "primary": "long_price_band",
+  "pairs": {
+    "semiconductor": [
+      "SOXL",
+      "SOXS",
+      "SOXX"
+    ],
+    "nasdaq": [
+      "TQQQ",
+      "SQQQ",
+      "QQQ"
+    ],
+    "sp500": [
+      "UPRO",
+      "SPXU",
+      "SPY"
+    ]
+  },
+  "activity": "Raw typical-price times raw volume summed over complete04:00ET-to-clock 5m prefix; activity=clip(log(current/meanprevious20sameclock official eligible dates),-3,3). All prior20 required; no skip missing. Exact quote atdecision-30s and quote15min earlier. Historical bar available=end+1s assumption, not actual receipt. Volume describes activity, not signed net fund flow.",
+  "labels": "Own real ETF fixed6%stop/+5%TP/14inclusive-calendar contract, original costs/splits/dividends. C=(log1p(netLong)+log1p(netShort))/2,D=half difference. Entire14day official window must be complete before training/calibration; release=max last window bar available for both sides, no early-positive labels. Historical corporate action metadata retrospectively verified, historical announcement receipt unproven.",
+  "calibration": "Same v55 own as-issued residual calibration over latest120/min60fullmaturedates,63datehalflife,199ten-datejointbootstrap,20mean+80/kdeviation. Calibrator inputs only causal rawL/rawS and clock. State-model raw forecasts respond to current causal price/features; only long_mean is constant within ownclock/day. Each variant has separate immutable as-issued residual histories. Band/point routes share calibrated readiness and stale-prefix gates; no raw-only capital route.",
+  "observation_cutoff_exclusive": "2026-05-01T00:00:00-04:00",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "hypothesis": "Daily prediction with wider 2023-start environments and removal of five activity fields. Fixed factorial long/short history x price/full features, old causal mean and new long mean controls. No new month identities, cutoff filtering or payoff selection.",
+  "features": "Retain original 18-slot linear standardized coordinates. Price-only zeros slots11..15 (pair_activity,direction_activity,relative_activity,direction_confirmation,relative_confirmation) BEFORE fit and query. Retain 13 price-only slots including trend_confirmation and pair_current_decay. Same current/trailing full18 readiness for ALL new variants; unknown SOXX prefixes propagate. Do not repair SPY low using future daily data. No direct-turnover replacement.",
+  "history": "Long starts 2023-04-03 with original 21 prior-day and20 prior-clock warmup; short starts frozen original panel 2024-11-12. New earlier inputs through before first frozen old panel row, then exact old panels retained. Recompute overlapping features only for compatibility proof. All three pairs matched full-day maturity. No training on current date or incomplete14day labels.",
+  "normalization": "126-observation recency half-life per clock on eligible real dates. For comparable state fits: reference_mass=max(120,short_history_eligible_clock_dates). Fit with actual n weights and penalties common100*n/reference_mass,deviation300*n/reference_mass; equivalent to weights summing to reference_mass and penalties100/300. Long_native control uses native weightsum n and original penalties. Record actual dates and ESS separately, no invented sample count. Zeroing five coordinates does not rescale penalties.",
+  "training": "Daily ET00 fitting at all eight clocks; >=120matched fullymaturedates and>=120clockdates. All state models use original three-pair partial pooling (no polynomial terms). Own-pair mean uses long same membership. As-issued forecasts stored immutably; residual calibrators separately learned using original v55 120/60 mature dates,63halflife,199bootstrap and20/80k penalties.",
+  "routes": [
+    "short_price_band",
+    "short_price_point",
+    "long_full_band",
+    "long_full_point",
+    "long_price_band",
+    "long_price_point",
+    "long_native_band",
+    "long_native_point",
+    "long_mean_band",
+    "long_mean_point",
+    "short_full_band",
+    "short_full_point",
+    "short_mean_band",
+    "short_mean_point",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "controls": "short_full andshort_mean are exact frozen v71/v75 as-issued controls fromv75. At dates beforeoldpanel starts they remainCASH, not fabricated forecasts. Capital replay for EVERY route uses unchanged original market/features/labels and rawparentprices Jan-Apr, so earlier economic-unit scaling cannot affect money.",
+  "decision": "Main long_price_band ranks largest calibrated lower score strictlypositive>1e-12, tieSOXL. Point controls remove uncertainty radius; long_native isolates weight-total effect. CASH if notready or unresolved prefixexpired. Original single position, settledcash0/1, T+1, costs andstopcontract retained. Controls cannot rescue failedprimary.",
+  "verification": "Independently reconstruct earlier prefixes, features, six own-price raw contracts and complete-window maturity. Exact old panel/ledger preservation. Full normal-equation fit with reference-mass weights (not implementation penalty-rescale), separate as-issued calibration/decisions/capital/statistical checks. Preflight before new capital outcomes. Source anomaly sensitivity retainsrawdata and does not alter primary."
+}
