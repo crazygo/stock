@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新进展为 [v85 半导体财报预告时间证据](research/soxl_soxs_14d5pct_v85/README.md)：核实八家公司九份公告、十六条事件版本，完成按当时公开版本查询及二十项测试。保留真实改期、同稿多活动及未知时区；完整目录与全部正文尚未核齐，当前来源门禁未通过。**本轮没有新训练或资金回测**，[目标继续](research/soxl_soxs_14d5pct_v85/GOAL_PROGRESS.md)，[行业感知思路](research/soxl_soxs_14d5pct_v85/RESEARCH_DIRECTION.md) 区分可见价格状态、提前公告与事后结果。
+最新进展为 [v86 半导体季度活动日历](research/soxl_soxs_14d5pct_v86/README.md)：完成八家公司 119 份正文公告、193 条事件版本和 115 条已到期结果目录的对账，补齐综合公告内嵌日期及一份官网错配正文。按当时可见版本查询，保留修订、未知时区、缺失与覆盖边界；18 项测试通过。**本轮没有新模型或资金回测**，[目标继续](research/soxl_soxs_14d5pct_v86/GOAL_PROGRESS.md)。原 [v85 时间证据](research/soxl_soxs_14d5pct_v85/README.md) 与 [行业感知思路](research/soxl_soxs_14d5pct_v85/RESEARCH_DIRECTION.md) 保留。
 
 最近完成的策略结果为 [v84 提前公开的政策会议日程](research/soxl_soxs_14d5pct_v84/README.md)：日程版本与 6,152 个历史时点核验通过，完成每日训练和十二份资金账本复算。新增日程主方案一至四月净资金月均 **−5.02%**，弱于匹配无日程的 **−2.94%**；概率更乐观但误差更大，未形成风险回避效果。未新跑指定月份回归。
 
