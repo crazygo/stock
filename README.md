@@ -4,9 +4,9 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新实验为 [v74 原字段与二次项分块惩罚](research/soxl_soxs_14d5pct_v74/README.md)：开发月均 **−1.37%**，一月 **−6.15%**、三月 **−9.29%**，仍未达标。全部每日模型和 15 份账本独立核验通过，六个旧对照精确复现；方向误差尚未胜过因果历史均值基准，未新跑指定月份回归。[目标继续](research/soxl_soxs_14d5pct_v74/GOAL_PROGRESS.md)。
+最新实验为 [v75 因果历史均值完整资金对照](research/soxl_soxs_14d5pct_v75/README.md)：预测误差低于现有状态模型，但开发月均 **−0.82%**、三月 **−6.55%**，仍未达标。每日校准和 14 份账本核验通过，八份旧对照精确复现；未新跑指定月份回归。另已验证 SOXL 2023 年三天五分钟小样本可取，完整历史尚未验收。[目标继续](research/soxl_soxs_14d5pct_v75/GOAL_PROGRESS.md)。
 
-此前 [v73 统一惩罚归一化](research/soxl_soxs_14d5pct_v73/README.md) 月均 +0.0754%、三月 −7.8750%；[v72 二次特征部分共享](research/soxl_soxs_14d5pct_v72/README.md) 月均 +5.49%、一月 −6.15%。[v71 线性部分共享](research/soxl_soxs_14d5pct_v71/README.md) 和 [v70 数据底座](research/soxl_soxs_14d5pct_v70/README.md) 及全部旧失败记录保留。
+此前 [v74 分块惩罚](research/soxl_soxs_14d5pct_v74/README.md) 月均 −1.37%；[v73 统一归一化](research/soxl_soxs_14d5pct_v73/README.md) 月均 +0.0754%；[v72 二次特征部分共享](research/soxl_soxs_14d5pct_v72/README.md) 月均 +5.49%，三者均有亏损月。原 [v71 线性模型](research/soxl_soxs_14d5pct_v71/README.md)、[v70 数据底座](research/soxl_soxs_14d5pct_v70/README.md) 和全部失败记录保留。
 
 此前 [v59 行业状态一日预测偏离](research/soxl_soxs_14d5pct_v59/README.md)：用过去拟合的状态预测构造创新值，与简单差分、相同样本原输入对照。状态预测误差下降，但主路线开发月均 −0.78%、三月 −22.74%，仍未达标；方向误差没有改善。19 项测试、状态／收益模型及九账本核验通过，未执行新指定月份回归。[持续目标进行中](research/soxl_soxs_14d5pct_v59/GOAL_PROGRESS.md)。
 

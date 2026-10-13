@@ -1,0 +1,106 @@
+{
+  "created_at": "2026-10-13T17:51:05.767916+00:00",
+  "protocol": {
+    "development": {
+      "evaluation_start": "2026-01-01",
+      "evaluation_end": "2026-04-30",
+      "months": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04"
+      ]
+    },
+    "cases": {
+      "evaluation_start": "2026-05-01",
+      "evaluation_end": "2026-09-30",
+      "regression_months": [
+        "2026-05",
+        "2026-07",
+        "2026-09"
+      ]
+    },
+    "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+    "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+    "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+    "no_broker_orders": true,
+    "no_automatic_R2_upload": true,
+    "no_case_specific_parameters": true,
+    "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+    "clocks": [
+      "09:25:30",
+      "10:05:30",
+      "10:35:30",
+      "11:05:30",
+      "12:05:30",
+      "13:05:30",
+      "14:05:30",
+      "15:05:30"
+    ],
+    "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+    "version": "soxl_soxs_causal_mean_baseline_v75",
+    "primary": "mean_band",
+    "pairs": {
+      "semiconductor": [
+        "SOXL",
+        "SOXS",
+        "SOXX"
+      ],
+      "nasdaq": [
+        "TQQQ",
+        "SQQQ",
+        "QQQ"
+      ],
+      "sp500": [
+        "UPRO",
+        "SPXU",
+        "SPY"
+      ]
+    },
+    "hypothesis": "Complete the missing causal-intercept capital control after v74 state-model C/D errors failed to improve on its own past-only intercept. Full daily as-issued forecasting and residual calibration; test actual capital, not assume lower MSE means profitable. No new state features, monthfilters, alpha selection, simpler acceptance or claim of new algorithm.",
+    "features": "Current18state fields are deliberately excluded from raw prediction. The same frozen input manifests, feature-ready gates, matched full-date three-pair maturity prefix, minimum120dates and eligible clocks are preserved to isolate prediction rather than data availability. Only semiconductor ownC/D labels are averaged; auxiliary returns do not enter mean. C/D are true ownETF stopped netlog returns, not index times3.",
+    "activity": "Raw typical-price times raw volume summed over complete04:00ET-to-clock 5m prefix; activity=clip(log(current/meanprevious20sameclock official eligible dates),-3,3). All prior20 required; no skip missing. Exact quote atdecision-30s and quote15min earlier. Historical bar available=end+1s assumption, not actual receipt. Volume describes activity, not signed net fund flow.",
+    "labels": "Own real ETF fixed6%stop/+5%TP/14inclusive-calendar contract, original costs/splits/dividends. C=(log1p(netLong)+log1p(netShort))/2,D=half difference. Entire14day official window must be complete before training/calibration; release=max last window bar available for both sides, no early-positive labels. Historical corporate action metadata retrospectively verified, historical announcement receipt unproven.",
+    "training": "At each ETday00 and clock, use same chronological matched mature parents asv74. Own semiconductor C/D labels on eligible dates i=0..n-1 get weight2^((i-n+1)/126), normalizedsum n. C_hat,D_hat are weighted means; rawL=C_hat+D_hat,rawS=C_hat-D_hat. Atleast120parentdates and120ownclockrows; whole14day maturity and unresolvedprefix guard unchanged. No current query values, future labels or crosspair return averaging.",
+    "pooling": "No slope fit or crosspair label pooling. Ownclock weighted mean must equal frozenv74 ownsemiconductor intercept each eligible day/clock. Auxiliary panels retained solely for matched readiness/maturity controls.",
+    "calibration": "Same v55 own as-issued residual calibration over latest120/min60fullmaturedates,63datehalflife,199ten-datejointbootstrap,20mean+80/kdeviation. Inputs only causal rawL/rawS and clock; no currentprice/volume state. Current raw mean is constant within ownclock/day. All new primary/point/raw routes share calibrated readiness and stale-prefix gates so the raw control changes score only.",
+    "routes": [
+      "mean_band",
+      "mean_point",
+      "mean_raw",
+      "block_band",
+      "block_point",
+      "uniform_band",
+      "uniform_point",
+      "old_quadratic_band",
+      "old_quadratic_point",
+      "linear_band",
+      "linear_point",
+      "premarket_only",
+      "cash",
+      "double_cost"
+    ],
+    "decision": "PRIMARY mean_band uses calibrated lowerbound; mean_point removes confidence radius, mean_raw uses original mean scores but same calibrated readiness. Largest strictlypositive score>1e-12 picksL/S,tieL,otherwiseCASH. Eight exact oldstate controls fromv71-v74. Premarket anddoublecost useprimary. Controls cannot rescuePRIMARY; unchangedcapital0/1 andexecutioncontract.",
+    "observation_cutoff_exclusive": "2026-05-01T00:00:00-04:00",
+    "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+    "verification": "Seven tests for recency weightedmean/reconstruction, prior-onlymembership, query-state invariance,120realdate/minclock guard, auxiliarylabel exclusion, rawaction readiness andexpiry gate, invalidlabels.32fixedrealpreflights matcholdintercepts. Everydaily membership/mean/intercept, currentquery,calibration,14fullledgers/statistics andeightoldcontrolbooks independently checked.",
+    "transform": "None in the mean predictor. No learned feature center/scale or polynomial map. Historical residual calibrator retains its existing own fitted transformations based on past as-issued predictions.",
+    "method_reference": [],
+    "normalization": "Real-date recency weights sum to n. Same parent date membership asv74, one ownC/D label perclock perdate. No duplicated clocks or ETFs counted as extra independent dates.",
+    "next_candidate_not_executed": "No future candidate or optimization registered. Mean is a falsifiable capital control, not a redefinition of the goal."
+  },
+  "protocol_sha256": "7a6e81f7e11c4929b9719942f7b2615b0be688bba6c040f4159c479dfbb4590c",
+  "code_sha256": {
+    "research/soxl_soxs_14d5pct_v75/audit_diagnostics.py": "5d73419e88ac92e3478cb9cc807a56799c0c989df2b68c8b1da07c3f9f1e7c5f",
+    "research/soxl_soxs_14d5pct_v75/case_guard.py": "1dae88869d1c1096fbbe0b576bac600d64828035b5a81f70e079decf89f0b321",
+    "research/soxl_soxs_14d5pct_v75/diagnostics.py": "216b8f24f35d1b60687e27b7107c0ade7fc5bff990e4a42c05ce10e9c95c4ade",
+    "research/soxl_soxs_14d5pct_v75/mean_learning.py": "6c5f12ece0bded12409e515988ae80e31a46698743d069569b3f06844e127a62",
+    "research/soxl_soxs_14d5pct_v75/preflight_models.py": "57d9f5ac6112773297783c63e157b69773434903f7a20fdfe7f448006f7fbb8b",
+    "research/soxl_soxs_14d5pct_v75/run_mean.py": "2a9482d0d15640e6cfb3d4528df9d61f775afe84fe398404e769575c41238938",
+    "research/soxl_soxs_14d5pct_v75/test_mean.py": "0cd15c1857f8bf96faff1f706cf6d4e9fe5cb0e46789ad69d5af2d65c4440771",
+    "research/soxl_soxs_14d5pct_v75/verify_mean.py": "e543abf58463825ace131f626572b6bdc3c6dfe0bc8aaedb49f56c7b8ae871ca"
+  },
+  "parent_delivery_sha256": "b96e5c0278ffe68fb77356697360c4da8464b100bef04e4d221e8535f8e531d6",
+  "model_preflight_sha256": "d88ab0520d8bda8e279c7f8915bdcd856d8d702cf642a112f4cec75b5291ee20",
+  "new_capital_outcomes_seen": false
+}
