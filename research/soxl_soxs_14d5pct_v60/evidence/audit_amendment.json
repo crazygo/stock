@@ -1,0 +1,23 @@
+{
+  "registered_at": "2026-10-13T05:07:15.488099+00:00",
+  "reason": "Independent reference divided source OHLC before multiplying the current price, moving exact26.33 to26.329999999999995. Sixty-digit decimal calculation and old scalar risk engine confirm target26.33; reference now preserves canonical float64 price construction and independently reconstructs all barrier/cash/expiry outputs. Strategy, outcomes and tolerances unchanged. Also correct anticipated case-prefix audit to allow newly matured targets only after development cutoff, while preserving all known values, causal features and asissued forecasts. Compare timestamp values in the original precision; no outcomes changed.",
+  "development_results_sha256": "4caa4afc952a90040bed46e219d674da347030268e4f58ea05605f00f9113d87",
+  "original_preregistration_sha256": "cc2f33ee6dcb61dce2c96c98abcba804704fc6d5f42296abd2901f5547a76255",
+  "original_frozen_sources_unchanged": true,
+  "new_case_outcomes_seen": false,
+  "tests_passed": 5,
+  "audit_source_sha256": {
+    "audit_paths_canonical.py": "1904846afa0463b761df5c930550afe7bce9f2ff2e918b2fe0ef7c9a62891e86",
+    "verify_paths_canonical.py": "aa14b3483a3ef07c521aa9cd0ff4cee0b423c2a893fa34ed39c6586a530be8c8",
+    "audit_case_prefix.py": "80ef696aa6749758c2a383f8d9c2f38147eb43a444533ef6a647ecfd58bc332a",
+    "test_audit_amendment.py": "7ace8646b8c5abfef43a87f71d3d6e66cb5e1c1e28cd81bb50d6784c5b1c0a7e"
+  },
+  "evidence_sha256": {
+    "first_mismatch.json": "89a0f861e3cbc691afb1a7027b912a62a66e2c3aa2b15117a223f53e7a432ecc",
+    "boundary_detail.json": "f2b893256981f5274ff66c6318b32fb85d51228c1230fba4a5e9056db4e12ba7",
+    "audit_amendment_tests.log": "3872f5a85da677f909ec5c55a5821758c34e2394460567a29f8043b480cc1105",
+    "development_verify_initial_failure.log": "ebf33cf530559a04f8fccb176382c8a07084ce4993166143d91d8eed0a3e35d3",
+    "audit_amendment_tests_initial_failure.log": "35da9f5ee5e44c9294b44a1fa6c46950cf71423785851d9ebd00c3612d4e1522",
+    "canonical_without_registration_rejected.log": "8e304a4201c89809ee932a9c9f0964e9d89c2cfc7c10d76c453f8dad7c60dbd1"
+  }
+}

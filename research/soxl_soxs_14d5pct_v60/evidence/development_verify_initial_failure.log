@@ -1,0 +1,29 @@
+paired paths independently verified through 2025-01-28 18:05:30+00:00
+paired paths independently verified through 2025-04-09 17:05:30+00:00
+paired paths independently verified through 2025-06-23 17:05:30+00:00
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/verify_paths.py", line 146, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);verify(p.parse_args().run)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/verify_paths.py", line 86, in verify
+    raw,n=check_forecast(bank,market,panel,at,k,rec['fits'][k],model);base_checks+=n;members.append(rec['fits'][k]['members'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/audit_paths.py", line 81, in check_forecast
+    else:np.testing.assert_allclose(model['result'][f],v,rtol=1e-10,atol=1e-11)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1711, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 919, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-10, atol=1e-11
+
+Mismatched elements: 1 / 4096 (0.0244%)
+Max absolute difference among violations: 0.11083105
+Max relative difference among violations: 1.79346537
+ ACTUAL: array([[ 0.049065, -0.062362],
+       [ 0.048961, -0.061799],
+       [ 0.049175, -0.062383],...
+ DESIRED: array([[ 0.049065, -0.062362],
+       [ 0.048961, -0.061799],
+       [ 0.049175, -0.062383],...

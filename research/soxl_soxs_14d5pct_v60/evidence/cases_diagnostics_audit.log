@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/audit_diagnostics.py", line 50, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);audit(p.parse_args().run)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/audit_diagnostics.py", line 44, in audit
+    close(a['net_return'],b['net_return'])
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v26/verify_reliability.py", line 14, in close
+    def close(a,b):np.testing.assert_allclose(a,b,atol=1e-10,rtol=1e-8,equal_nan=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1711, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 850, in assert_array_compare
+    val = comparison(x, y)
+          ^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1706, in compare
+    return np._core.numeric.isclose(x, y, rtol=rtol, atol=atol,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/numpy/_core/numeric.py", line 2496, in isclose
+    result = (less_equal(abs(x - y), atol + rtol * abs(y))
+                             ~~^~~
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'

@@ -1,0 +1,27 @@
+...F.
+======================================================================
+FAIL: test_later_maturation_allowed (__main__.AuditFixTests.test_later_maturation_allowed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/test_audit_amendment.py", line 18, in test_later_maturation_allowed
+    a,b,c=self.fixture();self.assertEqual(compare_panel(a,b,c),1)
+                                          ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/audit_case_prefix.py", line 9, in compare_panel
+    known=old[f].notna();pd.testing.assert_series_equal(old.loc[known,f],new.loc[old.index[known],f])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/_testing/asserters.py", line 975, in assert_series_equal
+    assert_attr_equal("dtype", left, right, obj=f"Attributes of {obj}")
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/_testing/asserters.py", line 421, in assert_attr_equal
+    raise_assert_detail(obj, msg, left_attr, right_attr)
+  File "/Users/admin/Code/stock/.cache/soxl_soxs_14d5pct_v2/venv/lib/python3.12/site-packages/pandas/_testing/asserters.py", line 614, in raise_assert_detail
+    raise AssertionError(msg)
+AssertionError: Attributes of Series are different
+
+Attribute "dtype" are different
+[left]:  datetime64[ns, UTC]
+[right]: datetime64[s, UTC]
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.009s
+
+FAILED (failures=1)

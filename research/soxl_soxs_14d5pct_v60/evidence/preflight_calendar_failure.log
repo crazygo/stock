@@ -1,0 +1,13 @@
+paired path preflight history through 2025-04-09 17:05:30+00:00
+paired path preflight history through 2025-09-04 13:25:30+00:00
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/preflight_models.py", line 46, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--inputs',type=Path,required=True);preflight(p.parse_args().inputs)
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/preflight_models.py", line 28, in preflight
+    raw,n=check_forecast(bank,market,panel,at,k,canonical(fits[k]),models[k]);rows[-1]['simulated_contracts']+=n
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v60/audit_paths.py", line 55, in check_forecast
+    plan={'dates':dates,'bar_counts':[int((market.calendar[d]['close_at']-market.calendar[d]['open_at']).total_seconds()/300) for d in dates],'first_offset':list(allstarts).index(nextstarts[0]),'entry_at':nextstarts[0],'expiry_at':market.calendar[dates[-1]]['close_at']}
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
