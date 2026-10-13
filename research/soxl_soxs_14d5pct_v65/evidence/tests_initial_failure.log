@@ -1,0 +1,17 @@
+.........................................E....
+======================================================================
+ERROR: test_future_successor_excluded_even_when_prices_known (test_transitions.TransitionTests.test_future_successor_excluded_even_when_prices_known)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v65/test_transitions.py", line 23, in test_future_successor_excluded_even_when_prices_known
+    self.assertEqual(len(source_pool(bank,at,CLOCKS[0])),0)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v65/path_learning.py", line 101, in source_pool
+    good&=np.isfinite(bank['absolute_states'][first,c])&np.isfinite(bank['activity_states'][first,c])
+                                                                    ~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'activity_states'
+
+----------------------------------------------------------------------
+Ran 46 tests in 0.531s
+
+FAILED (errors=1)
