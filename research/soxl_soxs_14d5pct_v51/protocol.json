@@ -1,0 +1,117 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "weights": "Date j has exponential63datehalf-life,normalize dateweights sumNdates. Divideitsweight equally amongthatdate actual3or4clocks. Totalfitweight Ndates, notNrows, so extra clocks do notsilently weaken Ridge penalty. Every clock/ETF fromsame date moves together in bootstrap; datawithinaday are dependent.",
+  "universe": "Existing fixed8reference issuers; current mapping confirmed against cached SEC CIK/ticker payload, not historical PIT full sector. Same panel, not selected by results. Broadcom company-wide revenue includes software; no claim of semiconductor-segment demand isolation.",
+  "availability": "Facts must match catalog accession,form and filed date. Available_date=calendar day after max(filingDate,acceptanceDateTime literal YYYY-MM-DD),at00ET. Daily inputs include only available_date<=query ET date and periodend<querydate. This deliberately waits past both listed dates and may add delay when UTCdate differs. Historical firstpublic time and delivery latency not established. Unknownaccession,metadata mismatch orcurrency mismatch excluded,notfilled. Filing acceptance is not firstpublic timestamp. Never backfill old facts using later restatements.",
+  "version": "soxl_soxs_signed_direction_reliability_v51",
+  "primary": "signed_band",
+  "source_runs": {
+    "development": ".cache/soxl_soxs_14d5pct_v35/runs/financial_20261013",
+    "cases": ".cache/soxl_soxs_14d5pct_v39/runs/financial_extension_20261013"
+  },
+  "option_range": [
+    "2024-10-04",
+    "2026-09-30"
+  ],
+  "hypothesis": "V50 hit slope0 on76/82developmentdates, with a negative-slope descent direction from strictly earlier mature feedback. Test direct signed q calibration, not hindsight reversed trades. Existing net-payoff Ridge has long allowed signed slopes; isolate a different weighted binary objective with one parameter.",
+  "option_panel": [
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "MU",
+    "AMAT",
+    "LRCX",
+    "KLAC",
+    "INTC"
+  ],
+  "option_benchmarks": [
+    "SOXX",
+    "QQQ"
+  ],
+  "option_inputs": {
+    "balance": "equal8 mean (call_volume-put_volume)/(call_volume+put_volume)",
+    "balance_change5": "equal8 mean current balance minus 5 official sessions earlier",
+    "activity": "equal8 mean log(total option volume / mean of 20 preceding sessions volumes); excludes current volume from denominator",
+    "active_fraction": "fraction of 8 activity >0, all8 finite required",
+    "iv_hv": "equal8 mean log(iv/hv)",
+    "iv_change5": "equal8 mean log(iv/iv5sessionsago)",
+    "sector_market_balance": "SOXX balance minus QQQ balance",
+    "sector_market_iv_hv": "SOXX log(iv/hv) minus QQQ log(iv/hv)"
+  },
+  "option_availability": "No option feature is used in any v51 direction fit. Existing option panel and raw-file audit retained for exact v50 input/readiness comparison; all original eligible queries must remain eligible. No data acquisition/upload.",
+  "excluded": "No strike/expiry/contract surface hence no historicalskew. OI history audited but excluded from inputs. No trade aggressor or buy/sell side, so callvolume not netbullishflow. No IVcrush from postearnings paths. No current consensus/rating/news backfill.",
+  "training": "Retain source v35/v39 daily as-issued C,M,q. Eachday00ET last120/min60 complete mature dateprefix,63datehalflife with dateweights splitamongactual3/4clocks. All labels strictly before cutoff; no skips or historicalrewrite. Beforemin60 learned variants useoriginalq; inverse/neutral fixedfromfirstvalidsource. Base/calibration readiness forbids premature actions.",
+  "calibration": "Five separate immutable issued raw histories. Same partial-shared pair+clock Ridge20 and shared199circular10date bootstrap seed826+ETordinal. Refit signed/nonnegative slope and payoff map using same date multiplicities, varying current raw and map query jointly. Original C/M/q fixed; no claim allbaseuncertaintyincluded.",
+  "decision": "Same highest positive point minus common higher90% maxETF upward perturbation radius. Ten routes, no learned-sign action shortcut. All original capital/maturity guards retained.",
+  "routes": {
+    "signed_band": "PRIMARY learned slope[-1,1] plus own as-issued payoff calibration",
+    "signed_point": "sameprimarywithout radius",
+    "nonnegative_band": "exact v50 temperature[0,1] learned control",
+    "inverse_band": "q=1-q_source from first valid raw, own payoff calibration",
+    "neutral_band": "exact v50 q=.5 control",
+    "baseline_band": "exact v35 and v50 original raw/calibration/book",
+    "direction_only_band": "signed raw with direction uncertainty, no payoff calibration",
+    "premarket_only": "primary09:25only",
+    "cash": "cash",
+    "double_cost": "primarysameactionsdoublecost"
+  },
+  "verification": "Independent endpoint gradients and KKT, objectives, query arithmetic, date membership/bootstrap multiplicity, allcalibration equations/actions/books. Reproduce all v50 nonnegative/neutral/baseline raw estimates models and developmentbooks; verify rawsource v35 unchanged. Case gate requires verified primary pass; preMay prefix retained.",
+  "historical_exposure": "All history exposed by prior projects including R06 options. Newalgorithmcapitaloutcomes not seen before registration; development is not independentvalidation. No extra futureobservation gate.",
+  "references": [
+    "https://scikit-learn.org/stable/modules/calibration.html",
+    "https://proceedings.mlr.press/v70/guo17a.html"
+  ],
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "contract": "Four sequential clocks09:25:30/10:05:30/10:35:30/13:05:30ET, same completeddata and30sextra delay to nextregular5mOpen, within6minutes. Attached centrounded+5%TP,fixed6%stop,stopfirstsamebar,actualadversegapfill. Max14inclusivecalendar days,lastofficialclose on/before entry+13. No v30preclose exits. Halfday clocks>=close absent. V4 arbitrarytime interface retained/unqualified.",
+  "prior_input_audit": {
+    "files": 20,
+    "rows_each": 498,
+    "range": [
+      "2024-10-04",
+      "2026-09-30"
+    ],
+    "matched_original_eligible_queries": 1228,
+    "eligible_removed": 0,
+    "raw_missing_OI_KLAC_date": "2026-06-11",
+    "OI_used": false,
+    "initial_tests_passed": 14
+  },
+  "pre_registration_repairs": "19 tests passed first run; three real-date preflights certified1200 scalar KKT and6000 payoff equations. Signed payoff histories use declared baseline placeholders only in preflight; full run builds own immutable history. No new capital outcomes seen.",
+  "bounded_model": {
+    "formula": "q_new=sigmoid(s*logit(clip(q_source,1e-6,1-1e-6)))",
+    "primary_bounds": [
+      -1,
+      1
+    ],
+    "nonnegative_control_bounds": [
+      0,
+      1
+    ],
+    "objective": "sum weights binarylogloss(I(D>0),q_new)+.5*(s-1)^2; weights timeweight*abs(D),normalizedsumNdates. Prior slope1 and penalty1 unchanged. One global slope; no intercept/newfeatures. Negative slope is learned only from matured prior issued forecasts.",
+    "solver": "Primary strictly increasing derivative, endpointKKT or80stepmaximum bisection until interval<=1e-14, projectedgradient<=1e-8*Ndates. Nonnegative control directly reuses frozen v50 L-BFGS-B+Newton refinement to retain exact outputs. Zero mass preserves originalq exactly."
+  },
+  "matched_control_source": ".cache/soxl_soxs_14d5pct_v50/runs/development_v2_20261013"
+}
