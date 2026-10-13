@@ -1,0 +1,92 @@
+{
+  "passed": true,
+  "semantics": "ET five-minute bar END",
+  "rows": [
+    {
+      "date": "2023-04-03",
+      "regular_bars": 78,
+      "end_grid_ohlc": [
+        17.92,
+        18.16,
+        17.13,
+        17.81
+      ],
+      "incorrect_start_grid_ohlc": [
+        17.91,
+        18.16,
+        17.13,
+        17.67
+      ],
+      "independent_ibkr_ohlc": [
+        17.92,
+        18.16,
+        17.13,
+        17.81
+      ],
+      "volume_regular": 52799710.0,
+      "volume_daily": 57147253.0,
+      "volume_ibkr": 50729059.0
+    },
+    {
+      "date": "2023-04-04",
+      "regular_bars": 78,
+      "end_grid_ohlc": [
+        17.87,
+        17.9004,
+        16.51,
+        16.79
+      ],
+      "incorrect_start_grid_ohlc": [
+        17.86,
+        17.9004,
+        16.51,
+        16.7021
+      ],
+      "independent_ibkr_ohlc": [
+        17.87,
+        17.91,
+        16.51,
+        16.79
+      ],
+      "volume_regular": 59348059.0,
+      "volume_daily": 64093381.0,
+      "volume_ibkr": 56708912.0
+    },
+    {
+      "date": "2023-04-05",
+      "regular_bars": 78,
+      "end_grid_ohlc": [
+        16.25,
+        16.31,
+        15.38,
+        15.92
+      ],
+      "incorrect_start_grid_ohlc": [
+        16.29,
+        16.31,
+        15.38,
+        15.8604
+      ],
+      "independent_ibkr_ohlc": [
+        16.25,
+        16.31,
+        15.38,
+        15.92
+      ],
+      "volume_regular": 81153730.0,
+      "volume_daily": 86953337.0,
+      "volume_ibkr": 77477134.0
+    }
+  ],
+  "raw_lineage_values": 1170,
+  "independent_price_tolerance": 0.011,
+  "prior_v75_start_grid_claim": "FALSIFIED: 09:30..15:55 also counts 78 but includes premarket and excludes final regular bar.",
+  "old_v2_end_conversion": "Confirmed for sampled SOXL dates; not a universal cross-provider inference.",
+  "volume_status": "Different coverage across endpoints/providers; no equality claim or correction.",
+  "source_sha256": {
+    ".cache/soxl_soxs_14d5pct_v75/older_probe/SOXL_20230403_20230405_0.parquet": "bdc6383b670c2a808b2844683063478845bce50c94e4518fb7483d67b3b8c9df",
+    ".cache/soxl_soxs_14d5pct_v76/time_probe/regular.parquet": "57e877c0a4ae7963bad505552f3e4f1ea5ec92fd0cc44eb2cde589e1f2e4d236",
+    ".cache/soxl_soxs_14d5pct_v76/time_probe/daily.parquet": "385c4d11a9725d6c3078049a5a231fd4968bcd3af1be514d5d0840360f62e501",
+    ".cache/soxl_soxs_14d5pct_v76/ibkr/SOXL.json": "e40f9a7beaa02dfa6eaa32234be321bb7b9d72442403e61d29f258ee3fa71b6f"
+  }
+}

@@ -4,7 +4,9 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新实验为 [v75 因果历史均值完整资金对照](research/soxl_soxs_14d5pct_v75/README.md)：预测误差低于现有状态模型，但开发月均 **−0.82%**、三月 **−6.55%**，仍未达标。每日校准和 14 份账本核验通过，八份旧对照精确复现；未新跑指定月份回归。另已验证 SOXL 2023 年三天五分钟小样本可取，完整历史尚未验收。[目标继续](research/soxl_soxs_14d5pct_v75/GOAL_PROGRESS.md)。
+最新进展为 [v76 更早市场环境的数据准备](research/soxl_soxs_14d5pct_v76/README.md)：九个标的补齐 **1,009,009 根**五分钟记录，新增 385 个交易日；58 个公司行动、318 个固定合同及 192 个旧合同核验通过。SOXX 盘前缺失与 SPY 分钟低点来源分歧保留，v75 的常规盘时间戳描述已更正。尚未训练新模型，收益目标未达成；下一版比较短／长历史及价格／量价特征。[目标继续](research/soxl_soxs_14d5pct_v76/GOAL_PROGRESS.md)。
+
+此前 [v75 因果历史均值完整资金对照](research/soxl_soxs_14d5pct_v75/README.md) 预测误差低于现有状态模型，但开发月均 **−0.82%**、三月 **−6.55%**，仍未达标。每日校准和 14 份账本核验通过，八份旧对照精确复现；未新跑指定月份回归。
 
 此前 [v74 分块惩罚](research/soxl_soxs_14d5pct_v74/README.md) 月均 −1.37%；[v73 统一归一化](research/soxl_soxs_14d5pct_v73/README.md) 月均 +0.0754%；[v72 二次特征部分共享](research/soxl_soxs_14d5pct_v72/README.md) 月均 +5.49%，三者均有亏损月。原 [v71 线性模型](research/soxl_soxs_14d5pct_v71/README.md)、[v70 数据底座](research/soxl_soxs_14d5pct_v70/README.md) 和全部失败记录保留。
 

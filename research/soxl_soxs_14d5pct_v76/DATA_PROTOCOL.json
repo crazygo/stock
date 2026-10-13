@@ -1,0 +1,17 @@
+{
+  "version": "v76_earlier_market_coverage",
+  "stage": "data preparation only; no new model, no strategy evaluation",
+  "symbols": ["SOXL", "SOXS", "SOXX", "QQQ", "TQQQ", "SQQQ", "UPRO", "SPXU", "SPY"],
+  "extension_start": "2023-04-03",
+  "extension_end": "2024-10-11",
+  "overlap_end": "2024-10-18",
+  "purpose": "Expand training environments before daily predictions. Test causal regime learning later with matched weight/penalty controls, never fit May/July/September month identities.",
+  "source_order": "Existing raw local captures and QQQ monthly parts, R2 known namespaces, bounded OpenD fallback. No R2 uploads or shared archive writes.",
+  "timestamp_gate": "Before bulk ingestion, compare SOXL 2023-04-03..05 regular-session five-minute data to ALL data and same-provider daily OHLC. Determine start versus end labels from returned regular grid and OHLC, not equal bar counts. Preserve a contradictory v75 start-grid description as historical evidence and append correction if falsified.",
+  "raw_contract": "Futu K_5M AuType.NONE Session.ALL. Prices are each ETF's own path. Historical end+1s is an availability assumption, not historical receipt proof.",
+  "quality": ["Capture and hash original pages and observed receipt times", "Official 2023/2024 calendar and half days", "Exact RTH grids, duplicate conflicts, finite positive OHLC, nonnegative volume", "Prior-close and eight as-of feature prefixes; no filling missing data", "Compare existing five-day overlap without overwriting old captures", "Corporate actions from Futu and independent IBKR with dates/payment dates", "Independent daily price comparison with explicit split adjustment", "Retain unexplained extended-hour history; do not certify old overnight tradability from returned bars alone"],
+  "ibkr_scope": "FIVE_YEARS ONE_DAY API has no end date. Discard price rows after 2024-10-18 before saving. Retain only in-range price comparisons and action metadata needed to understand retrospective split adjustment. Not training inputs.",
+  "acquisition_budget": "Sequential Futu requests, first-page pause >=1.2s, next-page >=0.6s; each symbol child bounded at 300s; completed original pages survive timeout; no blind retries.",
+  "acceptance_unchanged": "May/July/September 2026 full-account net monthly arithmetic mean >=10%; all May-September months nonnegative. Daily training uses only fully matured labels. No model acceptance claimed in this data stage.",
+  "before_training": "Independent data audit and a new model preregistration required. Isolate history length from normalized-weight total and regularization strength; show effective sample size. Old results remain unchanged."
+}

@@ -1,0 +1,126 @@
+{
+  "reviewed_at": "2026-10-13T18:37:13.590478+00:00",
+  "rows": [
+    {
+      "symbol": "SOXL",
+      "values": 1560,
+      "close_max_absolute": 0.0,
+      "max_relative": 0.002061147372037179,
+      "beyond_0011_by_field": {
+        "open": 42,
+        "high": 0,
+        "low": 0,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "SOXS",
+      "values": 1560,
+      "close_max_absolute": 7.105427357601002e-15,
+      "max_relative": 0.004223369310183006,
+      "beyond_0011_by_field": {
+        "open": 12,
+        "high": 0,
+        "low": 1,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "SOXX",
+      "values": 1560,
+      "close_max_absolute": 5.684341886080802e-14,
+      "max_relative": 0.0011823592007251132,
+      "beyond_0011_by_field": {
+        "open": 82,
+        "high": 6,
+        "low": 3,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "QQQ",
+      "values": 1560,
+      "close_max_absolute": 0.0,
+      "max_relative": 0.00016009880383320717,
+      "beyond_0011_by_field": {
+        "open": 37,
+        "high": 2,
+        "low": 1,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "TQQQ",
+      "values": 1560,
+      "close_max_absolute": 0.005000000000002558,
+      "max_relative": 0.0007670182166826299,
+      "beyond_0011_by_field": {
+        "open": 3,
+        "high": 0,
+        "low": 0,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "SQQQ",
+      "values": 1560,
+      "close_max_absolute": 0.004999999999999005,
+      "max_relative": 0.0009606147934677989,
+      "beyond_0011_by_field": {
+        "open": 0,
+        "high": 0,
+        "low": 0,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "UPRO",
+      "values": 1560,
+      "close_max_absolute": 0.0,
+      "max_relative": 0.0004884402474764106,
+      "beyond_0011_by_field": {
+        "open": 8,
+        "high": 0,
+        "low": 1,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "SPXU",
+      "values": 1560,
+      "close_max_absolute": 1.7763568394002505e-15,
+      "max_relative": 0.0015503875968991916,
+      "beyond_0011_by_field": {
+        "open": 1,
+        "high": 1,
+        "low": 0,
+        "close": 0
+      }
+    },
+    {
+      "symbol": "SPY",
+      "values": 1560,
+      "close_max_absolute": 0.0,
+      "max_relative": 0.008094690763248641,
+      "beyond_0011_by_field": {
+        "open": 32,
+        "high": 4,
+        "low": 4,
+        "close": 0
+      }
+    }
+  ],
+  "finding": "Fixed SOXL/SOXS open and SOXX high differences also occur between Futu daily and IBKR daily; Futu minute aggregation reproduces Futu daily in the inspected cases. These discrepancies are not caused by this adapter or the split conversion. Exact venue/print selection cause is not established. Keep Futu original paths; do not claim exact cross-provider OHLC or actual fills.",
+  "scope": "Daily price sanity and split-scale validation, not complete minute-level independent validation.",
+  "input_sha256": {
+    ".cache/soxl_soxs_14d5pct_v76/TQQQ_price_comparison.csv": "283513268221db4f4b187552b64fe21a3950d3769bbd78c9aef29ff8d8fa4c2e",
+    ".cache/soxl_soxs_14d5pct_v76/SPY_price_comparison.csv": "5e7be0febec0dde1cf22f9cca7ecce8faa0ddb7b27adeccff0f37d9ee110cb4f",
+    ".cache/soxl_soxs_14d5pct_v76/SQQQ_price_comparison.csv": "7d3f0c650ba2452d7c2c842904cf2b32699df7ef97fb90580d041e0635f4487f",
+    ".cache/soxl_soxs_14d5pct_v76/QQQ_price_comparison.csv": "bde6169607d7db78676f6f5ab0a4a35caa78cf789cd78b83d2a024bfe1ebee13",
+    ".cache/soxl_soxs_14d5pct_v76/UPRO_price_comparison.csv": "631525a7f87a50c7ddc45e1b4db8f825b28cb1284ece99b7739ecee099fae141",
+    ".cache/soxl_soxs_14d5pct_v76/SOXX_price_comparison.csv": "db8c6716083fc62061757298586adcc5297e0c6938a5271b32b8f724119bc633",
+    ".cache/soxl_soxs_14d5pct_v76/SOXL_price_comparison.csv": "c71647002e4697467720e2314cd70df18ab978c2c34f10c749f18ce590332897",
+    ".cache/soxl_soxs_14d5pct_v76/SOXS_price_comparison.csv": "d336b391e19aef60a11fe7fa7d5e17416cc26521ed04d2179ea5a2f489c8af30",
+    ".cache/soxl_soxs_14d5pct_v76/SPXU_price_comparison.csv": "0b14a079f77c9fef246cf8bc7288e8dadb238338914904009ba5513fcfad3248"
+  }
+}
