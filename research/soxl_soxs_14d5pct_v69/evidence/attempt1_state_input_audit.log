@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v69/audit_state_inputs.py", line 69, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--inputs',type=Path,required=True);audit(p.parse_args().inputs)
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Code/stock/research/soxl_soxs_14d5pct_v69/audit_state_inputs.py", line 39, in audit
+    day=pd.Timestamp(ns);j=positions[day];prev=sessions[j-1] if j else None;cal=market.calendar[day];length=int((cal['close_at']-cal['open_at']).total_seconds()/300)
+                                                                                                                 ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'str' and 'str'

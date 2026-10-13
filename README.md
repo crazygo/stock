@@ -4,7 +4,7 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新实验为 [v68 当时波动下的历史价格路径](research/soxl_soxs_14d5pct_v68/README.md)：开发月均 +12.36%，通过开发筛选；原目标回归均值 -8.27%，未通过。旧模型对照精确复现，收益验收与工程检查分别记录。[进展](research/soxl_soxs_14d5pct_v68/GOAL_PROGRESS.md)。
+最新实验为 [v69 随生成价格更新行业状态](research/soxl_soxs_14d5pct_v69/README.md)：开发月均 +7.87%，未通过开发筛选，未运行新案例。原固定模型精确对照、每日校准和完整账本独立核验通过，工程检查与收益验收分别记录。[进展](research/soxl_soxs_14d5pct_v69/GOAL_PROGRESS.md)。
 
 此前 [v59 行业状态一日预测偏离](research/soxl_soxs_14d5pct_v59/README.md)：用过去拟合的状态预测构造创新值，与简单差分、相同样本原输入对照。状态预测误差下降，但主路线开发月均 −0.78%、三月 −22.74%，仍未达标；方向误差没有改善。19 项测试、状态／收益模型及九账本核验通过，未执行新指定月份回归。[持续目标进行中](research/soxl_soxs_14d5pct_v59/GOAL_PROGRESS.md)。
 
