@@ -4,9 +4,9 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-已完成的 [v90 公司收入兑现输入](research/soxl_soxs_14d5pct_v90/README.md) 已作为 v91／v92 的每日训练输入：122 份季度数值与 128 项正文日期完成核验，107 个季度可匹配此前定期指引，11 个无参照、四个范围问题保持未知。原 [v89 来源准备](research/soxl_soxs_14d5pct_v89/README.md) 保留；当前存档不证明完整修订史或历史真实接收。
+已完成的 [v90 公司收入兑现输入](research/soxl_soxs_14d5pct_v90/README.md) 已作为 v91–v93 的每日训练输入：122 份季度数值与 128 项正文日期完成核验，107 个季度可匹配此前定期指引，11 个无参照、四个范围问题保持未知。原 [v89 来源准备](research/soxl_soxs_14d5pct_v89/README.md) 保留；当前存档不证明完整修订史或历史真实接收。
 
-最新策略为 [v92 限制概率外推](research/soxl_soxs_14d5pct_v92/README.md)：加入零点锚定凸包约束，主方案一至四月月均从 [v91](research/soxl_soxs_14d5pct_v91/README.md) 的 **−5.34%** 改善至 **−4.11%**，Brier 从 0.890 降至 0.772；七笔亏损全部保留，增益仅来自一笔 SOXS 止盈，仍未达标。13 项测试、7,380 项投影证书、十八份账本和十三份旧对照精确复现通过，没有新增指定月份回归。[目标继续](research/soxl_soxs_14d5pct_v92/GOAL_PROGRESS.md)，下一步审查双侧成熟样本与动作选择。
+最新研究为 [v93 双侧样本与每日选择](research/soxl_soxs_14d5pct_v93/README.md)：同时学习 SOXL／SOXS 并重新决定是否出手后，主方案一至四月月均 **−9.78%**、四月 **−24.86%**，弱于 [v92](research/soxl_soxs_14d5pct_v92/README.md) 的 −4.11%。全部双侧候选平均止盈预测接近实际，但放行候选预测 67.16%、实际仅 38.98%，选择仍不可靠。11 项测试、618 个日模型、26 份账本核验通过，18 份旧账本精确保持；收益门禁失败，没有新指定月份回归。[目标继续](research/soxl_soxs_14d5pct_v93/GOAL_PROGRESS.md) · [后续研究](research/soxl_soxs_14d5pct_v93/NEXT_RESEARCH.md)。
 
 此前 [v87 已公告季度活动与风险判断](research/soxl_soxs_14d5pct_v87/README.md)：将 [v86 八家公司日历](research/soxl_soxs_14d5pct_v86/README.md) 接入每日训练，6,152 个时点、模型方程及十二份账本独立核验通过。主方案一至四月月均 **−2.59%**、三月 **−16.95%**，共同候选概率误差变差，未避开无活动对照的原有亏损；没有新增指定月份回归。21 项测试通过，[目标继续](research/soxl_soxs_14d5pct_v87/GOAL_PROGRESS.md)。原 [v85 时间证据](research/soxl_soxs_14d5pct_v85/README.md) 与 [行业感知思路](research/soxl_soxs_14d5pct_v85/RESEARCH_DIRECTION.md) 保留。
 
