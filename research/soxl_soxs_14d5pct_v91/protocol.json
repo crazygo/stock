@@ -1,0 +1,106 @@
+{
+  "development": {
+    "evaluation_start": "2026-01-01",
+    "evaluation_end": "2026-04-30",
+    "months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ]
+  },
+  "cases": {
+    "evaluation_start": "2026-05-01",
+    "evaluation_end": "2026-09-30",
+    "regression_months": [
+      "2026-05",
+      "2026-07",
+      "2026-09"
+    ]
+  },
+  "development_screen": "Verified primary full-coverage Jan-Apr ledger: all months nonnegative, arithmetic mean at least10%, at least10completed actual trades. Diagnostic routes cannot rescue a failed primary. This screen does not replace original case acceptance.",
+  "acceptance": "May/July/September full net capital month arithmetic mean at least10%; all May-September months nonnegative and full coverage. No month-specific fitting or extra future observation period gate. Exposed historical data remain development regression.",
+  "capital": "Original settled-cash rule, allocation0/1 only; at most one ETF, no leverage, same-day reentry forbidden, T+1 and available dividend cash handled normally. V25 full-cash/dividend wait rule is not applied. All fees/slippage, dividends/splits, cross-month MTM and unknown-held occupation retained. Cash0 does not meet growth objective.",
+  "no_broker_orders": true,
+  "no_automatic_R2_upload": true,
+  "no_case_specific_parameters": true,
+  "contract": "Eight sequential clocks withsame30second completedbar delay, nextregular5mOpen within6min. Attached+5%centroundedTP,fixed6%stop,stopfirstsamebar,adversegap. Max14inclusivecalendar days,entry+13deadline,officiallastclose. Halfday>=close absent; newclocks have full30minregularcontext. Originalsingleposition,settledcash,0/1allocation,T+1,nosamedayreentry unchanged. V4arbitrarytime remainsunqualified.",
+  "clocks": [
+    "09:25:30",
+    "10:05:30",
+    "10:35:30",
+    "11:05:30",
+    "12:05:30",
+    "13:05:30",
+    "14:05:30",
+    "15:05:30"
+  ],
+  "historical_exposure": "Historicaldevelopmentregression onpreviouslyexposeddata only; no independentvalidation claim ornewfutureperiodgate.",
+  "case_rule": "No new May-Sep model/capital evaluation unless independently verified PRIMARY development passes. Data extension and exact development-prefix check required before cases. Existing history remains exposed development regression.",
+  "classes": [
+    "target",
+    "ordinary_stop",
+    "gap_stop",
+    "expiry"
+  ],
+  "history": "Every00ET take original whole-date complete14day paired ETF maturity prefix, stop first unknown/not-yet-mature. Select source-ready whole dates, last120/min60. At least30 sourceeligible dates inside this same pool; no compressed time for sparse eligibility. Unknown past labels cannot be bypassed. All new comparisons share population/readiness and unsupported-label gates; before readiness CASH.",
+  "weights": "For each population eligible/top, raw date weight2^((common_position-N+1)/63). Divide date mass among retained clocks, then normalize total to that population dateESS=(sumdateweight)^2/sumsquared. ESS measures concentration, not independent overlapping markets. Two ETFs/8clocks are not independent dates.",
+  "version": "soxl_soxs_issuer_revenue_state_v91",
+  "primary": "eligible_fundamental",
+  "hypothesis": "Reported revenue realization versus earlier same-quarter regular issuer outlook and next-quarter outlook growth may complement price/calendar/reaction inputs when deciding whether to abstain. Treat as observed proxies, not retrospective popularity or analyst surprise.",
+  "source": "Frozen v88 price, publication-versioned calendars and completed issuer reactions; v90 body-reviewed 122 regular quarterly releases and 6 special-event markers for the same fixed eight issuers. Quarterly reported company revenue, not organic growth or pure semiconductor demand. Earlier regular same-quarter company guidance, not consensus or latest revision.",
+  "features": [
+    "aligned_trend5",
+    "aligned_current",
+    "aligned_relative5",
+    "log_vol20",
+    "trend5_current_product",
+    "planned_activity_days_before_expiry",
+    "next_activity_day_proximity",
+    "planned_activity_days_previous14",
+    "previous_activity_day_proximity",
+    "observed_activity_days",
+    "aligned_issuer_excess_reaction",
+    "aligned_peer_excess_reaction",
+    "issuer_log_volume_reaction",
+    "known_realization_issuers",
+    "aligned_mean_realization_log",
+    "aligned_above_range_breadth",
+    "known_outlook_issuers",
+    "aligned_mean_outlook_log_growth",
+    "mean_result_age_days"
+  ],
+  "event_features": "Latest visible earnings_call/release versions only, deduplicate by issuer and planned ET date; market_summary excluded. At ET date d and original official expiry date D: future dates d<=s<=D, count and max(1-(s-d)/14); recent dates 1<=d-s<=14, count and max(1-(d-s)/15). Empty sets yield0 only with complete reviewed catalogue. Event date is retained at all clocks including expiry date; day resolution does not assert occurrence before expiry close or actual release. Do not use actual early exit to choose window. Fixed four fields, no interactions/search.",
+  "event_availability": "v86: exact publication timestamp -> next ET calendar midnight; source date without verified timezone -> date+2 ET midnight. Historical simulation convention, not measured receipt. Latest version per stable activity/kind, no future revisions. Catalogue cutoffs2023-01-01..2026-04-30. Current observed_at remains distinct. Missing issuer/expired coverage is unknown and aborts preparation / blocks action. Scope excludes other issuers, unscheduled activities and unarchived revisions. Extend and audit before case evaluation.",
+  "populations": "Same eligible/top populations and common readiness as v83; no lowering30eligible/60common dates after known missed trades. Primary and matched state/event-only use historical issued eligible TOP only. Top_fundamental uses all ready TOP choices. Models see no future source probabilities or labels.",
+  "design": "Global1,SOXSindicator,7clockdummies plus weighted standardized selected coordinates: fundamental19->28dims,reaction13->22dims,event9->18dims,state5->14dims. No additional interactions, threshold/window/symbol search. Same date weighting, lambda10, original eligible TOP and maturation gates.",
+  "model": "q=softmax(log(p_as_issued)+Z B). Fixed lambda10 every coefficient/intercept; negative weighted loglikelihood+5sumB^2. Preserve zero probabilities; unsupported trueclass rejects entire fit. Exact Hessian Newton gradient<=1e-7, independent scalar L-BFGS anchors and allfit gradients.",
+  "decision": "Same source TOP and eligibility; positive corrected expected netlog only. New19-coordinate primary, no source CASH promotion or opposite replacement. Original capital contract unchanged.",
+  "routes": [
+    "eligible_fundamental",
+    "eligible_reaction",
+    "eligible_event",
+    "eligible_state",
+    "top_fundamental",
+    "identity_matched",
+    "source_recent",
+    "source_uniform",
+    "source_blend",
+    "source_wait",
+    "premarket_only",
+    "cash",
+    "double_cost"
+  ],
+  "comparison": "Primary vs matched v88 reaction control; retain v87 calendar and v83 price controls and four old source routes. Seven baseline capital books must remain byte-identical. Controls cannot rescue failed primary.",
+  "verification": "Independent date-only d-2 feature reconstruction for all6152queries/772dates, boundary and future mutation tests; source v90 hashes. Independent scalar model construction and L-BFGS anchors; all fitted gradients and full action audit;13capital books/7exactbaselines and probability/bootstrap diagnostics. Freeze source before new capital.",
+  "method_reference": [
+    "../soxl_soxs_14d5pct_v88/METHOD.md",
+    "../soxl_soxs_14d5pct_v90/PROTOCOL.md",
+    "../soxl_soxs_14d5pct_v90/evidence/reviewed_records.json",
+    "METHOD.md"
+  ],
+  "limitations": "Exposed historical development regression. Fixed8issuers selected before new evaluation, not historical index membership or complete news. Current archived results and earlier regular guidance are not consensus, earliest receipt or complete revision history. Reported revenue includes changing business mix;4scope cases remain unknown. Uniform2day delay. No guarantee of positive future months. Priors/readiness may still dominate information in six slow-moving issuer fields.",
+  "reaction_features": "Use asof latest visible planned issuer/dates within previous1..14calendar days. For each day e, r=first official session strictly after e, b=immediately preceding session. Use only after midnightET following r. Count ready distinct issuer/dates, arithmetic mean issuer excess log economic return vsSPY from b close to r close, mean other7issuer excess returns same interval, mean issuer log(economic daily volume at r /mean previous20officialsessions). Forward share factor incorporates effective splits only; one-day economic return=(close_r/futu_split_ratio+cash_ex_dividend_r)/close_b (no simultaneous split/cash supported). Empty observed set values0 with count0 and pending_count explicit; missing needed mature bars/actions blocks query/preparation. Current/future unresolved response is pending, not neutral realized return. No returns after r are used. Inputs uniform all8clocks in a day; no future actions scaling old rows.",
+  "fundamental_features": "N matched latest issuers; mean(log(actual/prior_regular_same_quarter_mid)) over N; 2*mean(actual>prior_upper)-1 over N; K latest issuers with resolved reported-proxy scope and quarterly next guidance; mean(log(next_guidance_mid/latest_actual)) over K; mean calendar days since availability over N. Empty means zero only with explicit zero count. Exclude unresolved issuer comparisons and retain IDs/status. No stale fallback. Flip three directional log/breadth fields for SOXS, keep counts/age unchanged.",
+  "fundamental_availability": "Publication date+2 calendar days midnight ET. Current archive historical simulation, not measured receipt, earliest publication or complete revision history. No future release, annual-to-quarter conversion, special-event replacement, or current unknown scope backfill. Reviewed query range Jan2023-Apr2026 only."
+}

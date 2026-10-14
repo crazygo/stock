@@ -4,9 +4,9 @@
 
 ## SOXL / SOXS：14 自然日 +5% 研究
 
-最新输入为 [v90 公司收入兑现状态](research/soxl_soxs_14d5pct_v90/README.md)：完成 122 份季度数值和 128 项正文日期核验，107 个季度可匹配此前定期指引，11 个无参照、四个业务范围问题保持未知。12 项测试与 6,152 个历史时点、49,216 个公司状态独立核验通过，接口可供下一轮滚动训练；没有新收益或买入资格。[目标继续](research/soxl_soxs_14d5pct_v90/GOAL_PROGRESS.md)。原 [v89 来源准备](research/soxl_soxs_14d5pct_v89/README.md) 保留，完整修订史和真实历史接收未获认证，本版明确使用定期公告参照。
+已完成的 [v90 公司收入兑现输入](research/soxl_soxs_14d5pct_v90/README.md) 现已接入 v91 每日训练：122 份季度数值与 128 项正文日期完成核验，107 个季度可匹配此前定期指引，11 个无参照、四个范围问题保持未知。原 [v89 来源准备](research/soxl_soxs_14d5pct_v89/README.md) 保留；当前存档不证明完整修订史或历史真实接收。
 
-最新策略仍为 [v88 计划活动后的已观察量价](research/soxl_soxs_14d5pct_v88/README.md)：在当时可见日程上加入已经完成的发行人、其他公司及成交量反应，每日训练与十二份账本独立复算通过。主方案一至四月月均 **−2.60%**、三月 **−16.95%**，纯日程对照的六笔亏损全部保留，概率误差扩大；没有新增指定月份回归。34 项测试、6,152 个时点和六份旧对照精确复现通过，[目标继续](research/soxl_soxs_14d5pct_v88/GOAL_PROGRESS.md)。下一步核对实际业绩相对此前公司指引的正文与时点证据。
+最新策略为 [v91 财务兑现状态滚动训练](research/soxl_soxs_14d5pct_v91/README.md)：固定六个新坐标后完成训练与独立复算，主方案一至四月月均 **−5.34%**、三月 **−18.23%**，弱于 [v88](research/soxl_soxs_14d5pct_v88/README.md) 的 −2.60%；旧六笔亏损全部保留，概率误差扩大。23 项测试、6,152 时点、十三份账本和七份旧对照精确复现通过，没有新增指定月份回归。[目标继续](research/soxl_soxs_14d5pct_v91/GOAL_PROGRESS.md)，下一步核查训练支持不足时的大幅概率外推。
 
 此前 [v87 已公告季度活动与风险判断](research/soxl_soxs_14d5pct_v87/README.md)：将 [v86 八家公司日历](research/soxl_soxs_14d5pct_v86/README.md) 接入每日训练，6,152 个时点、模型方程及十二份账本独立核验通过。主方案一至四月月均 **−2.59%**、三月 **−16.95%**，共同候选概率误差变差，未避开无活动对照的原有亏损；没有新增指定月份回归。21 项测试通过，[目标继续](research/soxl_soxs_14d5pct_v87/GOAL_PROGRESS.md)。原 [v85 时间证据](research/soxl_soxs_14d5pct_v85/README.md) 与 [行业感知思路](research/soxl_soxs_14d5pct_v85/RESEARCH_DIRECTION.md) 保留。
 
