@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-20T05:39:30.867574+00:00",
-  "as_of": "2026-10-19",
+  "generated_at_utc": "2026-10-21T05:39:05.466874+00:00",
+  "as_of": "2026-10-20",
   "execution": {
     "github_repository": "crazygo/stock",
-    "github_run_id": "39376035108",
+    "github_run_id": "39550725001",
     "github_run_attempt": "1"
   },
   "purpose": "candidate_generation_not_investment_advice",
@@ -38,7 +38,7 @@
   },
   "counts": {
     "universe": 5320,
-    "complete_bar_history": 4904,
+    "complete_bar_history": 4895,
     "matched": 0
   },
   "diagnostics": {
@@ -51,20 +51,20 @@
     "funnel": [
       {
         "step": "price_50_200",
-        "passed": 947,
-        "rejected_at_step": 3957,
-        "survival_from_previous_pct": 19.3
+        "passed": 955,
+        "rejected_at_step": 3940,
+        "survival_from_previous_pct": 19.5
       },
       {
         "step": "drop_18_45_pct",
-        "passed": 3,
-        "rejected_at_step": 944,
-        "survival_from_previous_pct": 0.3
+        "passed": 1,
+        "rejected_at_step": 954,
+        "survival_from_previous_pct": 0.1
       },
       {
         "step": "flat_range_le_7_pct",
         "passed": 0,
-        "rejected_at_step": 3,
+        "rejected_at_step": 1,
         "survival_from_previous_pct": 0.0
       },
       {
@@ -94,100 +94,71 @@
     ],
     "distributions": {
       "price_pool_drop_pct": {
-        "count": 947,
-        "p10": -5.06,
-        "p25": -2.31,
-        "p50": 0.31,
-        "p75": 2.94,
-        "p90": 6.9
+        "count": 955,
+        "p10": -3.73,
+        "p25": -0.98,
+        "p50": 0.91,
+        "p75": 4.19,
+        "p90": 7.32
       },
       "drop_pool_flat_range_pct": {
-        "count": 3,
-        "p10": 13.11,
-        "p25": 13.36,
-        "p50": 13.76,
-        "p75": 21.52,
-        "p90": 26.17
+        "count": 1,
+        "p10": 15.95,
+        "p25": 15.95,
+        "p50": 15.95,
+        "p75": 15.95,
+        "p90": 15.95
       },
       "drop_pool_abs_flat_slope_pct": {
-        "count": 3,
-        "p10": 3.94,
-        "p25": 4.83,
-        "p50": 6.31,
-        "p75": 9.71,
-        "p90": 11.75
+        "count": 1,
+        "p10": 3.63,
+        "p25": 3.63,
+        "p50": 3.63,
+        "p75": 3.63,
+        "p90": 3.63
       },
       "drop_pool_flat_realized_vol_pct": {
-        "count": 3,
-        "p10": 3.04,
-        "p25": 3.3,
-        "p50": 3.73,
-        "p75": 4.16,
-        "p90": 4.41
+        "count": 1,
+        "p10": 4.52,
+        "p25": 4.52,
+        "p50": 4.52,
+        "p75": 4.52,
+        "p90": 4.52
       },
       "drop_pool_max_abs_daily_return_pct": {
-        "count": 3,
-        "p10": 4.94,
-        "p25": 5.0,
-        "p50": 5.12,
-        "p75": 6.62,
-        "p90": 7.53
+        "count": 1,
+        "p10": 9.67,
+        "p25": 9.67,
+        "p50": 9.67,
+        "p75": 9.67,
+        "p90": 9.67
       },
       "drop_pool_avg_dollar_volume_m": {
-        "count": 3,
-        "p10": 56.77,
-        "p25": 70.76,
-        "p50": 94.09,
-        "p75": 234.54,
-        "p90": 318.8
+        "count": 1,
+        "p10": 106.98,
+        "p25": 106.98,
+        "p50": 106.98,
+        "p75": 106.98,
+        "p90": 106.98
       }
     },
     "independent_passes_after_price_and_drop": {
-      "drop_pool": 3,
+      "drop_pool": 1,
       "flat_range": 0,
-      "flat_slope": 1,
+      "flat_slope": 0,
       "flat_vol": 0,
       "max_daily_move": 0,
-      "liquidity": 3
+      "liquidity": 1
     },
     "drop_pool_details": [
       {
-        "ticker": "BLLN",
-        "drop_pct": -19.27,
-        "flat_range_pct": 13.76,
-        "abs_flat_slope_pct": 6.31,
-        "flat_realized_vol_pct": 3.73,
-        "max_abs_flat_daily_return_pct": 5.12,
-        "avg_dollar_volume_m": 47.44,
-        "failed_conditions": [
-          "flat_range",
-          "flat_slope",
-          "flat_vol",
-          "max_daily_move"
-        ]
-      },
-      {
         "ticker": "SPHR",
-        "drop_pct": -18.65,
-        "flat_range_pct": 12.95,
-        "abs_flat_slope_pct": 3.35,
-        "flat_realized_vol_pct": 2.87,
-        "max_abs_flat_daily_return_pct": 4.89,
-        "avg_dollar_volume_m": 94.09,
-        "failed_conditions": [
-          "flat_range",
-          "flat_vol",
-          "max_daily_move"
-        ]
-      },
-      {
-        "ticker": "TWST",
-        "drop_pct": -18.31,
-        "flat_range_pct": 29.27,
-        "abs_flat_slope_pct": 13.11,
-        "flat_realized_vol_pct": 4.58,
-        "max_abs_flat_daily_return_pct": 8.13,
-        "avg_dollar_volume_m": 374.98,
+        "drop_pct": -20.85,
+        "flat_range_pct": 15.95,
+        "abs_flat_slope_pct": 3.63,
+        "flat_realized_vol_pct": 4.52,
+        "max_abs_flat_daily_return_pct": 9.67,
+        "avg_dollar_volume_m": 106.98,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
@@ -274,11 +245,9 @@
       },
       {
         "scenario": "broad_recall",
-        "matched": 1,
-        "delta_vs_current": 1,
-        "top_tickers": [
-          "INSM"
-        ],
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
         "overrides": {
           "min_drop_pct": 0.12,
           "max_flat_range_pct": 0.12,
