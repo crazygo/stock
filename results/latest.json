@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-22T05:40:29.975701+00:00",
-  "as_of": "2026-10-21",
+  "generated_at_utc": "2026-10-23T05:39:16.494625+00:00",
+  "as_of": "2026-10-22",
   "execution": {
     "github_repository": "crazygo/stock",
-    "github_run_id": "39729217826",
+    "github_run_id": "39906922622",
     "github_run_attempt": "1"
   },
   "purpose": "candidate_generation_not_investment_advice",
@@ -38,7 +38,7 @@
   },
   "counts": {
     "universe": 5322,
-    "complete_bar_history": 4897,
+    "complete_bar_history": 4895,
     "matched": 0
   },
   "diagnostics": {
@@ -51,20 +51,20 @@
     "funnel": [
       {
         "step": "price_50_200",
-        "passed": 953,
-        "rejected_at_step": 3944,
-        "survival_from_previous_pct": 19.5
+        "passed": 960,
+        "rejected_at_step": 3935,
+        "survival_from_previous_pct": 19.6
       },
       {
         "step": "drop_18_45_pct",
-        "passed": 7,
-        "rejected_at_step": 946,
-        "survival_from_previous_pct": 0.7
+        "passed": 6,
+        "rejected_at_step": 954,
+        "survival_from_previous_pct": 0.6
       },
       {
         "step": "flat_range_le_7_pct",
         "passed": 0,
-        "rejected_at_step": 7,
+        "rejected_at_step": 6,
         "survival_from_previous_pct": 0.0
       },
       {
@@ -94,86 +94,71 @@
     ],
     "distributions": {
       "price_pool_drop_pct": {
-        "count": 953,
-        "p10": -5.59,
-        "p25": -1.59,
-        "p50": 0.86,
-        "p75": 3.72,
-        "p90": 6.43
+        "count": 960,
+        "p10": -6.8,
+        "p25": -2.79,
+        "p50": 0.16,
+        "p75": 3.43,
+        "p90": 6.84
       },
       "drop_pool_flat_range_pct": {
-        "count": 7,
-        "p10": 18.06,
-        "p25": 19.29,
-        "p50": 27.21,
-        "p75": 28.91,
-        "p90": 31.23
+        "count": 6,
+        "p10": 17.26,
+        "p25": 19.24,
+        "p50": 24.3,
+        "p75": 32.88,
+        "p90": 38.03
       },
       "drop_pool_abs_flat_slope_pct": {
-        "count": 7,
-        "p10": 7.15,
-        "p25": 8.64,
-        "p50": 10.22,
-        "p75": 19.57,
-        "p90": 21.04
+        "count": 6,
+        "p10": 3.24,
+        "p25": 6.96,
+        "p50": 11.75,
+        "p75": 17.61,
+        "p90": 21.12
       },
       "drop_pool_flat_realized_vol_pct": {
-        "count": 7,
-        "p10": 3.81,
-        "p25": 4.12,
-        "p50": 4.3,
-        "p75": 4.9,
-        "p90": 5.99
+        "count": 6,
+        "p10": 4.2,
+        "p25": 4.37,
+        "p50": 4.87,
+        "p75": 6.15,
+        "p90": 7.06
       },
       "drop_pool_max_abs_daily_return_pct": {
-        "count": 7,
-        "p10": 7.97,
-        "p25": 8.36,
-        "p50": 8.65,
-        "p75": 10.39,
-        "p90": 11.65
+        "count": 6,
+        "p10": 8.45,
+        "p25": 9.29,
+        "p50": 10.12,
+        "p75": 12.3,
+        "p90": 12.95
       },
       "drop_pool_avg_dollar_volume_m": {
-        "count": 7,
-        "p10": 49.27,
-        "p25": 73.59,
-        "p50": 111.48,
-        "p75": 265.22,
-        "p90": 449.78
+        "count": 6,
+        "p10": 152.85,
+        "p25": 208.62,
+        "p50": 275.96,
+        "p75": 339.82,
+        "p90": 476.06
       }
     },
     "independent_passes_after_price_and_drop": {
-      "drop_pool": 7,
+      "drop_pool": 6,
       "flat_range": 0,
-      "flat_slope": 0,
+      "flat_slope": 1,
       "flat_vol": 0,
       "max_daily_move": 0,
-      "liquidity": 7
+      "liquidity": 6
     },
     "drop_pool_details": [
       {
-        "ticker": "AXTI",
-        "drop_pct": -24.24,
-        "flat_range_pct": 29.23,
-        "abs_flat_slope_pct": 10.22,
-        "flat_realized_vol_pct": 6.77,
-        "max_abs_flat_daily_return_pct": 11.12,
-        "avg_dollar_volume_m": 623.51,
-        "failed_conditions": [
-          "flat_range",
-          "flat_slope",
-          "flat_vol",
-          "max_daily_move"
-        ]
-      },
-      {
         "ticker": "AEHR",
-        "drop_pct": -23.05,
-        "flat_range_pct": 34.22,
-        "abs_flat_slope_pct": 22.3,
-        "flat_realized_vol_pct": 5.47,
-        "max_abs_flat_daily_return_pct": 12.44,
-        "avg_dollar_volume_m": 196.49,
+        "drop_pct": -27.7,
+        "flat_range_pct": 41.96,
+        "abs_flat_slope_pct": 23.21,
+        "flat_realized_vol_pct": 6.43,
+        "max_abs_flat_daily_return_pct": 12.88,
+        "avg_dollar_volume_m": 194.29,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
@@ -182,13 +167,42 @@
         ]
       },
       {
-        "ticker": "AMBQ",
-        "drop_pct": -19.81,
-        "flat_range_pct": 16.37,
-        "abs_flat_slope_pct": 8.24,
-        "flat_realized_vol_pct": 3.56,
-        "max_abs_flat_daily_return_pct": 7.72,
-        "avg_dollar_volume_m": 23.29,
+        "ticker": "AXTI",
+        "drop_pct": -24.74,
+        "flat_range_pct": 29.23,
+        "abs_flat_slope_pct": 13.33,
+        "flat_realized_vol_pct": 7.7,
+        "max_abs_flat_daily_return_pct": 13.02,
+        "avg_dollar_volume_m": 599.14,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "TXG",
+        "drop_pct": -23.22,
+        "flat_range_pct": 15.32,
+        "abs_flat_slope_pct": 0.6,
+        "flat_realized_vol_pct": 4.03,
+        "max_abs_flat_daily_return_pct": 7.73,
+        "avg_dollar_volume_m": 251.6,
+        "failed_conditions": [
+          "flat_range",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "SPHR",
+        "drop_pct": -20.11,
+        "flat_range_pct": 19.19,
+        "abs_flat_slope_pct": 10.18,
+        "flat_realized_vol_pct": 4.4,
+        "max_abs_flat_daily_return_pct": 9.67,
+        "avg_dollar_volume_m": 111.4,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
@@ -198,12 +212,12 @@
       },
       {
         "ticker": "TWST",
-        "drop_pct": -19.24,
+        "drop_pct": -19.79,
         "flat_range_pct": 19.38,
-        "abs_flat_slope_pct": 5.51,
-        "flat_realized_vol_pct": 4.3,
-        "max_abs_flat_daily_return_pct": 8.13,
-        "avg_dollar_volume_m": 333.96,
+        "abs_flat_slope_pct": 5.89,
+        "flat_realized_vol_pct": 5.33,
+        "max_abs_flat_daily_return_pct": 9.16,
+        "avg_dollar_volume_m": 352.98,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
@@ -212,43 +226,13 @@
         ]
       },
       {
-        "ticker": "UCTT",
-        "drop_pct": -19.24,
-        "flat_range_pct": 27.21,
-        "abs_flat_slope_pct": 18.94,
-        "flat_realized_vol_pct": 3.97,
-        "max_abs_flat_daily_return_pct": 8.65,
-        "avg_dollar_volume_m": 80.59,
-        "failed_conditions": [
-          "flat_range",
-          "flat_slope",
-          "flat_vol",
-          "max_daily_move"
-        ]
-      },
-      {
-        "ticker": "SPHR",
-        "drop_pct": -19.0,
-        "flat_range_pct": 19.19,
-        "abs_flat_slope_pct": 9.04,
-        "flat_realized_vol_pct": 4.34,
-        "max_abs_flat_daily_return_pct": 9.67,
-        "avg_dollar_volume_m": 111.48,
-        "failed_conditions": [
-          "flat_range",
-          "flat_slope",
-          "flat_vol",
-          "max_daily_move"
-        ]
-      },
-      {
-        "ticker": "ACMR",
-        "drop_pct": -18.52,
-        "flat_range_pct": 28.6,
-        "abs_flat_slope_pct": 20.2,
-        "flat_realized_vol_pct": 4.27,
-        "max_abs_flat_daily_return_pct": 8.59,
-        "avg_dollar_volume_m": 66.6,
+        "ticker": "ONTO",
+        "drop_pct": -19.59,
+        "flat_range_pct": 34.09,
+        "abs_flat_slope_pct": 19.03,
+        "flat_realized_vol_pct": 4.36,
+        "max_abs_flat_daily_return_pct": 10.57,
+        "avg_dollar_volume_m": 300.32,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
@@ -335,9 +319,13 @@
       },
       {
         "scenario": "broad_recall",
-        "matched": 0,
-        "delta_vs_current": 0,
-        "top_tickers": [],
+        "matched": 3,
+        "delta_vs_current": 3,
+        "top_tickers": [
+          "CHRW",
+          "INSM",
+          "AXSM"
+        ],
         "overrides": {
           "min_drop_pct": 0.12,
           "max_flat_range_pct": 0.12,
