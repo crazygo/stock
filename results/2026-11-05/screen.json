@@ -1,0 +1,359 @@
+{
+  "generated_at_utc": "2026-11-06T05:33:19.520416+00:00",
+  "as_of": "2026-11-05",
+  "execution": {
+    "github_repository": "crazygo/stock",
+    "github_run_id": "42169070260",
+    "github_run_attempt": "1"
+  },
+  "purpose": "candidate_generation_not_investment_advice",
+  "score_note": "shape_score is a deterministic ranking, not a rebound probability",
+  "research_contract": {
+    "required_checks": [
+      "data_freshness_and_coverage",
+      "selloff_primary_source_cause",
+      "long_term_thesis_damage",
+      "quantified_business_exposure",
+      "30_and_60_day_catalysts",
+      "entry_trigger_invalidation_and_counterevidence"
+    ],
+    "max_recommendations": 5,
+    "allow_no_qualified_candidate": true
+  },
+  "config": {
+    "min_price": 50.0,
+    "max_price": 200.0,
+    "drop_sessions": 7,
+    "flat_sessions": 7,
+    "min_drop_pct": 0.18,
+    "max_drop_pct": 0.45,
+    "max_flat_range_pct": 0.07,
+    "max_flat_slope_pct": 0.035,
+    "max_flat_realized_vol_pct": 0.022,
+    "max_abs_flat_daily_return_pct": 0.035,
+    "min_avg_dollar_volume": 20000000.0,
+    "accepted_ticker_types": [
+      "CS"
+    ]
+  },
+  "counts": {
+    "universe": 5320,
+    "complete_bar_history": 4902,
+    "matched": 1
+  },
+  "diagnostics": {
+    "window_validation": {
+      "required_bars": 15,
+      "drop_close_to_close_intervals": 7,
+      "flat_close_to_close_intervals": 7,
+      "shared_anchor_close": true
+    },
+    "funnel": [
+      {
+        "step": "price_50_200",
+        "passed": 958,
+        "rejected_at_step": 3944,
+        "survival_from_previous_pct": 19.5
+      },
+      {
+        "step": "drop_18_45_pct",
+        "passed": 5,
+        "rejected_at_step": 953,
+        "survival_from_previous_pct": 0.5
+      },
+      {
+        "step": "flat_range_le_7_pct",
+        "passed": 1,
+        "rejected_at_step": 4,
+        "survival_from_previous_pct": 20.0
+      },
+      {
+        "step": "abs_flat_slope_le_3_5_pct",
+        "passed": 1,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": 100.0
+      },
+      {
+        "step": "flat_vol_le_2_2_pct",
+        "passed": 1,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": 100.0
+      },
+      {
+        "step": "max_daily_move_le_3_5_pct",
+        "passed": 1,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": 100.0
+      },
+      {
+        "step": "avg_dollar_volume_ge_20m",
+        "passed": 1,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": 100.0
+      }
+    ],
+    "distributions": {
+      "price_pool_drop_pct": {
+        "count": 958,
+        "p10": -3.97,
+        "p25": -0.78,
+        "p50": 2.05,
+        "p75": 5.16,
+        "p90": 8.98
+      },
+      "drop_pool_flat_range_pct": {
+        "count": 5,
+        "p10": 10.47,
+        "p25": 16.37,
+        "p50": 18.47,
+        "p75": 20.11,
+        "p90": 22.61
+      },
+      "drop_pool_abs_flat_slope_pct": {
+        "count": 5,
+        "p10": 3.88,
+        "p25": 4.74,
+        "p50": 9.62,
+        "p75": 10.21,
+        "p90": 13.24
+      },
+      "drop_pool_flat_realized_vol_pct": {
+        "count": 5,
+        "p10": 2.49,
+        "p25": 3.53,
+        "p50": 3.62,
+        "p75": 3.93,
+        "p90": 4.18
+      },
+      "drop_pool_max_abs_daily_return_pct": {
+        "count": 5,
+        "p10": 4.15,
+        "p25": 6.5,
+        "p50": 9.58,
+        "p75": 9.6,
+        "p90": 9.69
+      },
+      "drop_pool_avg_dollar_volume_m": {
+        "count": 5,
+        "p10": 7.62,
+        "p25": 10.04,
+        "p50": 56.03,
+        "p75": 120.47,
+        "p90": 132.68
+      }
+    },
+    "independent_passes_after_price_and_drop": {
+      "drop_pool": 5,
+      "flat_range": 1,
+      "flat_slope": 1,
+      "flat_vol": 1,
+      "max_daily_move": 1,
+      "liquidity": 3
+    },
+    "drop_pool_details": [
+      {
+        "ticker": "KALU",
+        "drop_pct": -21.05,
+        "flat_range_pct": 20.11,
+        "abs_flat_slope_pct": 10.21,
+        "flat_realized_vol_pct": 3.62,
+        "max_abs_flat_daily_return_pct": 6.5,
+        "avg_dollar_volume_m": 56.03,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "CORT",
+        "drop_pct": -20.49,
+        "flat_range_pct": 24.27,
+        "abs_flat_slope_pct": 15.26,
+        "flat_realized_vol_pct": 3.53,
+        "max_abs_flat_daily_return_pct": 9.58,
+        "avg_dollar_volume_m": 120.47,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "FLXS",
+        "drop_pct": -19.78,
+        "flat_range_pct": 16.37,
+        "abs_flat_slope_pct": 4.74,
+        "flat_realized_vol_pct": 3.93,
+        "max_abs_flat_daily_return_pct": 9.75,
+        "avg_dollar_volume_m": 6.01,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move",
+          "liquidity"
+        ]
+      },
+      {
+        "ticker": "GGG",
+        "drop_pct": -18.94,
+        "flat_range_pct": 6.54,
+        "abs_flat_slope_pct": 3.3,
+        "flat_realized_vol_pct": 1.79,
+        "max_abs_flat_daily_return_pct": 2.59,
+        "avg_dollar_volume_m": 140.83,
+        "failed_conditions": []
+      },
+      {
+        "ticker": "NVEC",
+        "drop_pct": -18.06,
+        "flat_range_pct": 18.47,
+        "abs_flat_slope_pct": 9.62,
+        "flat_realized_vol_pct": 4.35,
+        "max_abs_flat_daily_return_pct": 9.6,
+        "avg_dollar_volume_m": 10.04,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move",
+          "liquidity"
+        ]
+      }
+    ],
+    "sensitivity": [
+      {
+        "scenario": "current",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {}
+      },
+      {
+        "scenario": "drop_min_15_pct",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {
+          "min_drop_pct": 0.15
+        }
+      },
+      {
+        "scenario": "flat_range_9_pct",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {
+          "max_flat_range_pct": 0.09
+        }
+      },
+      {
+        "scenario": "flat_slope_5_pct",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {
+          "max_flat_slope_pct": 0.05
+        }
+      },
+      {
+        "scenario": "flat_vol_3_pct",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {
+          "max_flat_realized_vol_pct": 0.03
+        }
+      },
+      {
+        "scenario": "max_daily_move_5_pct",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {
+          "max_abs_flat_daily_return_pct": 0.05
+        }
+      },
+      {
+        "scenario": "liquidity_10m",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {
+          "min_avg_dollar_volume": 10000000.0
+        }
+      },
+      {
+        "scenario": "balanced",
+        "matched": 1,
+        "delta_vs_current": 0,
+        "top_tickers": [
+          "GGG"
+        ],
+        "overrides": {
+          "min_drop_pct": 0.15,
+          "max_flat_range_pct": 0.09,
+          "max_flat_slope_pct": 0.05,
+          "max_flat_realized_vol_pct": 0.03,
+          "max_abs_flat_daily_return_pct": 0.05,
+          "min_avg_dollar_volume": 10000000.0
+        }
+      },
+      {
+        "scenario": "broad_recall",
+        "matched": 3,
+        "delta_vs_current": 2,
+        "top_tickers": [
+          "GGG",
+          "HXL",
+          "FCFS"
+        ],
+        "overrides": {
+          "min_drop_pct": 0.12,
+          "max_flat_range_pct": 0.12,
+          "max_flat_slope_pct": 0.07,
+          "max_flat_realized_vol_pct": 0.04,
+          "max_abs_flat_daily_return_pct": 0.07,
+          "min_avg_dollar_volume": 5000000.0
+        }
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "ticker": "GGG",
+      "name": "Graco Inc",
+      "as_of": "2026-11-05",
+      "latest_price": 67.97,
+      "drop_pct": -18.94,
+      "flat_range_pct": 6.54,
+      "flat_slope_pct": 3.3,
+      "flat_realized_vol_pct": 1.79,
+      "max_abs_flat_daily_return_pct": 2.59,
+      "volatility_contraction_ratio": 0.34,
+      "volume_contraction_ratio": 0.95,
+      "avg_dollar_volume": 140830446.0,
+      "latest_close_position": 0.36,
+      "shape_score": 25.42,
+      "bear_flag_risk": "medium",
+      "flags": "close_below_range_mid"
+    }
+  ]
+}
