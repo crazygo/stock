@@ -1,0 +1,1215 @@
+{
+  "dates": [
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06",
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-16",
+    "2026-11-17",
+    "2026-11-18",
+    "2026-11-19"
+  ],
+  "inputs": {
+    "SOXL": {
+      "path": "market_data/us_5m/SOXL/2026.parquet",
+      "rows": 4032,
+      "used_rows_sha256": "17cbc2e365f330ed9c940718356e97d07165f0312c49f965f5d39c0e0fa112a0"
+    },
+    "SOXS": {
+      "path": "market_data/us_5m/SOXS/2026.parquet",
+      "rows": 4032,
+      "used_rows_sha256": "5ec7aab8b6c190e90d88ba48687b14aac6678644b2a67b52859ce7142e2f2748"
+    }
+  },
+  "cases": {
+    "main": {
+      "3": {
+        "buys": 200,
+        "target": 16,
+        "stop": 183,
+        "net_wins": 72,
+        "gross_wins": 74,
+        "closed": 199,
+        "open": 1,
+        "checks": {
+          "warmup": 9,
+          "buy": 200,
+          "holding": 3625,
+          "filter_blocked": 195,
+          "no_fill_slot": 3
+        },
+        "gate": {
+          "pass": 3688,
+          "no_rise": 51,
+          "drawdown": 281
+        },
+        "flat_reasons": {
+          "drawdown": 194,
+          "no_rise": 1
+        },
+        "gross_return": -0.028925760637760756,
+        "net_return": -0.3484179759333852,
+        "cost_5bp_return": -0.2045539469365838,
+        "drawdown_at_5m_closes": 0.5310084232542512,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 95,
+            "target": 7,
+            "stop": 88,
+            "net_wins": 33,
+            "gross_wins": 34
+          },
+          "SOXS": {
+            "buys": 105,
+            "target": 9,
+            "stop": 95,
+            "net_wins": 39,
+            "gross_wins": 40
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 1.005122595251657,
+            "day_return": 0.005122595251656925,
+            "entries": 9,
+            "exits": 8
+          },
+          "2026-11-03": {
+            "end_equity": 1.024538357626986,
+            "day_return": 0.01931681017524811,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-04": {
+            "end_equity": 0.9355997442725388,
+            "day_return": -0.08680847592709451,
+            "entries": 19,
+            "exits": 19
+          },
+          "2026-11-05": {
+            "end_equity": 0.9487348308882867,
+            "day_return": 0.014039215696837193,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-06": {
+            "end_equity": 0.8465713784414438,
+            "day_return": -0.10768388502316151,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-09": {
+            "end_equity": 1.0073814977231017,
+            "day_return": 0.1899545902174402,
+            "entries": 12,
+            "exits": 13
+          },
+          "2026-11-10": {
+            "end_equity": 1.0952730487855444,
+            "day_return": 0.08724753359188786,
+            "entries": 13,
+            "exits": 12
+          },
+          "2026-11-11": {
+            "end_equity": 1.322530470972614,
+            "day_return": 0.20748928537870626,
+            "entries": 6,
+            "exits": 6
+          },
+          "2026-11-12": {
+            "end_equity": 1.165062840890463,
+            "day_return": -0.11906540797229892,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-13": {
+            "end_equity": 0.9756810494809743,
+            "day_return": -0.1625507095091483,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-16": {
+            "end_equity": 0.9269510727636753,
+            "day_return": -0.049944576399451046,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 1.1040252989369659,
+            "day_return": 0.19102866524049578,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-18": {
+            "end_equity": 0.9259506218350149,
+            "day_return": -0.1612958301529992,
+            "entries": 21,
+            "exits": 21
+          },
+          "2026-11-19": {
+            "end_equity": 0.6515820240666148,
+            "day_return": -0.29631018252859587,
+            "entries": 23,
+            "exits": 23
+          }
+        }
+      },
+      "5": {
+        "buys": 179,
+        "target": 17,
+        "stop": 161,
+        "net_wins": 67,
+        "gross_wins": 71,
+        "closed": 178,
+        "open": 1,
+        "checks": {
+          "warmup": 15,
+          "buy": 179,
+          "holding": 3515,
+          "filter_blocked": 320,
+          "no_fill_slot": 3
+        },
+        "gate": {
+          "pass": 3526,
+          "no_rise": 55,
+          "drawdown": 433
+        },
+        "flat_reasons": {
+          "drawdown": 314,
+          "no_rise": 6
+        },
+        "gross_return": 0.19448174422837772,
+        "net_return": -0.1641342078779413,
+        "cost_5bp_return": -0.0007871754137543929,
+        "drawdown_at_5m_closes": 0.3831123597616053,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 84,
+            "target": 8,
+            "stop": 76,
+            "net_wins": 30,
+            "gross_wins": 32
+          },
+          "SOXS": {
+            "buys": 95,
+            "target": 9,
+            "stop": 85,
+            "net_wins": 37,
+            "gross_wins": 39
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 1.0004991467552984,
+            "day_return": 0.0004991467552983853,
+            "entries": 9,
+            "exits": 8
+          },
+          "2026-11-03": {
+            "end_equity": 0.9514600350104783,
+            "day_return": -0.049014646243185744,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-04": {
+            "end_equity": 0.9154461186612072,
+            "day_return": -0.037851212898158626,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-05": {
+            "end_equity": 1.0512502224037095,
+            "day_return": 0.14834745702030916,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-06": {
+            "end_equity": 0.9303181076001702,
+            "day_return": -0.11503647012509066,
+            "entries": 13,
+            "exits": 13
+          },
+          "2026-11-09": {
+            "end_equity": 1.094725404724089,
+            "day_return": 0.17672159208856053,
+            "entries": 13,
+            "exits": 14
+          },
+          "2026-11-10": {
+            "end_equity": 1.0672580164877046,
+            "day_return": -0.025090664853354094,
+            "entries": 13,
+            "exits": 12
+          },
+          "2026-11-11": {
+            "end_equity": 1.305416000579128,
+            "day_return": 0.2231493981888184,
+            "entries": 6,
+            "exits": 6
+          },
+          "2026-11-12": {
+            "end_equity": 1.2260922508098457,
+            "day_return": -0.06076511222023595,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-13": {
+            "end_equity": 1.1289714249475733,
+            "day_return": -0.07921167905442938,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-16": {
+            "end_equity": 0.9748068821362688,
+            "day_return": -0.13655309550324857,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 1.189959603711227,
+            "day_return": 0.22071317459664996,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-18": {
+            "end_equity": 1.043112658867292,
+            "day_return": -0.12340498314896653,
+            "entries": 18,
+            "exits": 18
+          },
+          "2026-11-19": {
+            "end_equity": 0.8358657921220587,
+            "day_return": -0.19868119227915526,
+            "entries": 17,
+            "exits": 17
+          }
+        }
+      },
+      "10": {
+        "buys": 146,
+        "target": 12,
+        "stop": 133,
+        "net_wins": 51,
+        "gross_wins": 55,
+        "closed": 145,
+        "open": 1,
+        "checks": {
+          "warmup": 30,
+          "buy": 146,
+          "holding": 3160,
+          "filter_blocked": 693,
+          "no_fill_slot": 3
+        },
+        "gate": {
+          "pass": 3115,
+          "no_rise": 34,
+          "drawdown": 850
+        },
+        "flat_reasons": {
+          "drawdown": 687,
+          "no_rise": 6
+        },
+        "gross_return": -0.0005895113969023313,
+        "net_return": -0.25292468992201866,
+        "cost_5bp_return": -0.13591969798680725,
+        "drawdown_at_5m_closes": 0.4076249375585932,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 72,
+            "target": 5,
+            "stop": 67,
+            "net_wins": 24,
+            "gross_wins": 27
+          },
+          "SOXS": {
+            "buys": 74,
+            "target": 7,
+            "stop": 66,
+            "net_wins": 27,
+            "gross_wins": 28
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 1.0454428057873641,
+            "day_return": 0.04544280578736415,
+            "entries": 7,
+            "exits": 6
+          },
+          "2026-11-03": {
+            "end_equity": 0.9873344003001595,
+            "day_return": -0.05558257722519877,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-04": {
+            "end_equity": 1.0965884287224774,
+            "day_return": 0.11065554728884508,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-05": {
+            "end_equity": 1.1226268089600406,
+            "day_return": 0.02374489786281786,
+            "entries": 9,
+            "exits": 10
+          },
+          "2026-11-06": {
+            "end_equity": 0.9964531181244394,
+            "day_return": -0.11239148203888327,
+            "entries": 13,
+            "exits": 12
+          },
+          "2026-11-09": {
+            "end_equity": 1.0683993467830397,
+            "day_return": 0.07220232176504227,
+            "entries": 9,
+            "exits": 10
+          },
+          "2026-11-10": {
+            "end_equity": 1.007355990816413,
+            "day_return": -0.05713533628640721,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-11": {
+            "end_equity": 1.211944043499242,
+            "day_return": 0.2030940943896311,
+            "entries": 6,
+            "exits": 5
+          },
+          "2026-11-12": {
+            "end_equity": 1.0750920719769592,
+            "day_return": -0.11291938126710077,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-13": {
+            "end_equity": 0.9947700034720552,
+            "day_return": -0.07471180431756119,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-16": {
+            "end_equity": 0.8579124498734446,
+            "day_return": -0.13757708125590373,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 0.9961648895281713,
+            "day_return": 0.1611498232425943,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-18": {
+            "end_equity": 0.9093067131029015,
+            "day_return": -0.08719256956186217,
+            "entries": 13,
+            "exits": 13
+          },
+          "2026-11-19": {
+            "end_equity": 0.7470753100779813,
+            "day_return": -0.17841219105413253,
+            "entries": 12,
+            "exits": 12
+          }
+        }
+      }
+    },
+    "high_first": {
+      "3": {
+        "buys": 208,
+        "target": 13,
+        "stop": 194,
+        "net_wins": 72,
+        "gross_wins": 74,
+        "closed": 207,
+        "open": 1,
+        "checks": {
+          "warmup": 9,
+          "buy": 208,
+          "holding": 3569,
+          "filter_blocked": 243,
+          "no_fill_slot": 3
+        },
+        "gate": {
+          "pass": 3688,
+          "no_rise": 51,
+          "drawdown": 281
+        },
+        "flat_reasons": {
+          "drawdown": 241,
+          "no_rise": 2
+        },
+        "gross_return": -0.33101185194260463,
+        "net_return": -0.5582400187535579,
+        "cost_5bp_return": -0.45637131374594275,
+        "drawdown_at_5m_closes": 0.6117915035801436,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 99,
+            "target": 6,
+            "stop": 93,
+            "net_wins": 34,
+            "gross_wins": 35
+          },
+          "SOXS": {
+            "buys": 109,
+            "target": 7,
+            "stop": 101,
+            "net_wins": 38,
+            "gross_wins": 39
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 0.9722786601829917,
+            "day_return": -0.027721339817008306,
+            "entries": 10,
+            "exits": 9
+          },
+          "2026-11-03": {
+            "end_equity": 0.9479971039575644,
+            "day_return": -0.02497386523001266,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-04": {
+            "end_equity": 0.8685010043792778,
+            "day_return": -0.08385690129897816,
+            "entries": 19,
+            "exits": 19
+          },
+          "2026-11-05": {
+            "end_equity": 0.8438708109288992,
+            "day_return": -0.02835943001353458,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-06": {
+            "end_equity": 0.7696148451574334,
+            "day_return": -0.08799447120315462,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-09": {
+            "end_equity": 0.8546182770752119,
+            "day_return": 0.11044931429355431,
+            "entries": 14,
+            "exits": 15
+          },
+          "2026-11-10": {
+            "end_equity": 0.8970975778610295,
+            "day_return": 0.04970558426528848,
+            "entries": 14,
+            "exits": 13
+          },
+          "2026-11-11": {
+            "end_equity": 1.083235713206383,
+            "day_return": 0.20748928537870648,
+            "entries": 6,
+            "exits": 6
+          },
+          "2026-11-12": {
+            "end_equity": 0.8857674174427663,
+            "day_return": -0.18229485360957087,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-13": {
+            "end_equity": 0.7102332231555113,
+            "day_return": -0.19817187992083385,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-16": {
+            "end_equity": 0.6893795129242597,
+            "day_return": -0.02936177800666684,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 0.7320203755763589,
+            "day_return": 0.06185397426625294,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-18": {
+            "end_equity": 0.6249781621523663,
+            "day_return": -0.14622846165957126,
+            "entries": 21,
+            "exits": 21
+          },
+          "2026-11-19": {
+            "end_equity": 0.4417599812464421,
+            "day_return": -0.2931593325996191,
+            "entries": 23,
+            "exits": 23
+          }
+        }
+      },
+      "5": {
+        "buys": 185,
+        "target": 12,
+        "stop": 172,
+        "net_wins": 65,
+        "gross_wins": 69,
+        "closed": 184,
+        "open": 1,
+        "checks": {
+          "warmup": 15,
+          "buy": 185,
+          "holding": 3450,
+          "filter_blocked": 379,
+          "no_fill_slot": 3
+        },
+        "gate": {
+          "pass": 3526,
+          "no_rise": 55,
+          "drawdown": 433
+        },
+        "flat_reasons": {
+          "drawdown": 373,
+          "no_rise": 6
+        },
+        "gross_return": -0.2518860306934151,
+        "net_return": -0.48273479669953767,
+        "cost_5bp_return": -0.37792824900965094,
+        "drawdown_at_5m_closes": 0.532862592452311,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 87,
+            "target": 6,
+            "stop": 81,
+            "net_wins": 29,
+            "gross_wins": 31
+          },
+          "SOXS": {
+            "buys": 98,
+            "target": 6,
+            "stop": 91,
+            "net_wins": 36,
+            "gross_wins": 38
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 0.9600154391495054,
+            "day_return": -0.03998456085049462,
+            "entries": 10,
+            "exits": 9
+          },
+          "2026-11-03": {
+            "end_equity": 0.8728199871477675,
+            "day_return": -0.0908271351125205,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-04": {
+            "end_equity": 0.840724176182981,
+            "day_return": -0.036772543522600065,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-05": {
+            "end_equity": 0.9360487942090594,
+            "day_return": 0.11338393818870185,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-06": {
+            "end_equity": 0.8342879800520144,
+            "day_return": -0.10871315126582759,
+            "entries": 13,
+            "exits": 13
+          },
+          "2026-11-09": {
+            "end_equity": 0.9121384694092461,
+            "day_return": 0.09331368929992023,
+            "entries": 15,
+            "exits": 16
+          },
+          "2026-11-10": {
+            "end_equity": 0.872182885523711,
+            "day_return": -0.043804296415008825,
+            "entries": 14,
+            "exits": 13
+          },
+          "2026-11-11": {
+            "end_equity": 1.0668099715389145,
+            "day_return": 0.22314939818881885,
+            "entries": 6,
+            "exits": 6
+          },
+          "2026-11-12": {
+            "end_equity": 0.9540796202935844,
+            "day_return": -0.10567050763756203,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-13": {
+            "end_equity": 0.825309018241531,
+            "day_return": -0.13496840233567586,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-16": {
+            "end_equity": 0.7171971023601443,
+            "day_return": -0.13099567979002402,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 0.7346137140497205,
+            "day_return": 0.024284275037171454,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-18": {
+            "end_equity": 0.6439587210464152,
+            "day_return": -0.12340498314896642,
+            "entries": 18,
+            "exits": 18
+          },
+          "2026-11-19": {
+            "end_equity": 0.5172652033004623,
+            "day_return": -0.19674167552243005,
+            "entries": 17,
+            "exits": 17
+          }
+        }
+      },
+      "10": {
+        "buys": 151,
+        "target": 9,
+        "stop": 141,
+        "net_wins": 48,
+        "gross_wins": 52,
+        "closed": 150,
+        "open": 1,
+        "checks": {
+          "warmup": 30,
+          "buy": 151,
+          "holding": 3080,
+          "filter_blocked": 768,
+          "no_fill_slot": 3
+        },
+        "gate": {
+          "pass": 3115,
+          "no_rise": 34,
+          "drawdown": 850
+        },
+        "flat_reasons": {
+          "drawdown": 762,
+          "no_rise": 6
+        },
+        "gross_return": -0.2787204034432844,
+        "net_return": -0.46619678930924346,
+        "cost_5bp_return": -0.3794991561930203,
+        "drawdown_at_5m_closes": 0.5305180586193377,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 75,
+            "target": 4,
+            "stop": 71,
+            "net_wins": 22,
+            "gross_wins": 25
+          },
+          "SOXS": {
+            "buys": 76,
+            "target": 5,
+            "stop": 70,
+            "net_wins": 26,
+            "gross_wins": 27
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 1.0454428057873641,
+            "day_return": 0.04544280578736415,
+            "entries": 7,
+            "exits": 6
+          },
+          "2026-11-03": {
+            "end_equity": 0.9552221017096418,
+            "day_return": -0.08629903384315085,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-04": {
+            "end_equity": 1.0586902825823787,
+            "day_return": 0.10831845356964753,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-05": {
+            "end_equity": 1.0385121133503106,
+            "day_return": -0.0190595583656904,
+            "entries": 9,
+            "exits": 10
+          },
+          "2026-11-06": {
+            "end_equity": 0.9217921978155365,
+            "day_return": -0.11239148203888327,
+            "entries": 13,
+            "exits": 12
+          },
+          "2026-11-09": {
+            "end_equity": 0.9149277121764928,
+            "day_return": -0.007446890584788091,
+            "entries": 11,
+            "exits": 12
+          },
+          "2026-11-10": {
+            "end_equity": 0.868629481617114,
+            "day_return": -0.0506031568868337,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-11": {
+            "end_equity": 1.0450429995462764,
+            "day_return": 0.2030940943896311,
+            "entries": 6,
+            "exits": 5
+          },
+          "2026-11-12": {
+            "end_equity": 0.9270373906399961,
+            "day_return": -0.11291938126710044,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-13": {
+            "end_equity": 0.7935587850801159,
+            "day_return": -0.14398405814864812,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-16": {
+            "end_equity": 0.6843832836238126,
+            "day_return": -0.13757708125590362,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 0.7060418180366059,
+            "day_return": 0.03164679052081931,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-18": {
+            "end_equity": 0.6444802177038657,
+            "day_return": -0.08719256956186194,
+            "entries": 13,
+            "exits": 13
+          },
+          "2026-11-19": {
+            "end_equity": 0.5338032106907565,
+            "day_return": -0.17173065048827374,
+            "entries": 12,
+            "exits": 12
+          }
+        }
+      }
+    },
+    "instant_reference": {
+      "3": {
+        "buys": 211,
+        "target": 21,
+        "stop": 189,
+        "net_wins": 74,
+        "gross_wins": 82,
+        "closed": 210,
+        "open": 1,
+        "checks": {
+          "warmup": 9,
+          "buy": 211,
+          "holding": 3610,
+          "filter_blocked": 202
+        },
+        "gate": {
+          "pass": 3691,
+          "no_rise": 51,
+          "drawdown": 281
+        },
+        "flat_reasons": {
+          "drawdown": 201,
+          "no_rise": 1
+        },
+        "gross_return": 0.17490957892088943,
+        "net_return": -0.22880070497073557,
+        "cost_5bp_return": -0.048112765171011485,
+        "drawdown_at_5m_closes": 0.49350351819341876,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 100,
+            "target": 10,
+            "stop": 90,
+            "net_wins": 30,
+            "gross_wins": 33
+          },
+          "SOXS": {
+            "buys": 111,
+            "target": 11,
+            "stop": 99,
+            "net_wins": 44,
+            "gross_wins": 49
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 1.0358993528058102,
+            "day_return": 0.03589935280581025,
+            "entries": 9,
+            "exits": 8
+          },
+          "2026-11-03": {
+            "end_equity": 1.0414722698276686,
+            "day_return": 0.005379786179770862,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-04": {
+            "end_equity": 1.0118974953025506,
+            "day_return": -0.02839708303516497,
+            "entries": 19,
+            "exits": 19
+          },
+          "2026-11-05": {
+            "end_equity": 0.9938548050373681,
+            "day_return": -0.0178305513640864,
+            "entries": 18,
+            "exits": 18
+          },
+          "2026-11-06": {
+            "end_equity": 0.8931668468380565,
+            "day_return": -0.10131053116508892,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-09": {
+            "end_equity": 1.0921070441081047,
+            "day_return": 0.222735760932379,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-10": {
+            "end_equity": 1.170973674902952,
+            "day_return": 0.07221511043292983,
+            "entries": 11,
+            "exits": 12
+          },
+          "2026-11-11": {
+            "end_equity": 1.4436220657608017,
+            "day_return": 0.23283904386701626,
+            "entries": 7,
+            "exits": 6
+          },
+          "2026-11-12": {
+            "end_equity": 1.2914815667774429,
+            "day_return": -0.10538803928795548,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-13": {
+            "end_equity": 1.0686978805599827,
+            "day_return": -0.17250241269285715,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-16": {
+            "end_equity": 1.0803762844523461,
+            "day_return": 0.010927694444611502,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 1.2932001023144255,
+            "day_return": 0.1969904568665739,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-18": {
+            "end_equity": 1.0390293730955926,
+            "day_return": -0.1965440064255689,
+            "entries": 21,
+            "exits": 21
+          },
+          "2026-11-19": {
+            "end_equity": 0.7711992950292644,
+            "day_return": -0.25776949622548095,
+            "entries": 24,
+            "exits": 24
+          }
+        }
+      },
+      "5": {
+        "buys": 187,
+        "target": 18,
+        "stop": 168,
+        "net_wins": 73,
+        "gross_wins": 78,
+        "closed": 186,
+        "open": 1,
+        "checks": {
+          "warmup": 15,
+          "buy": 187,
+          "holding": 3511,
+          "filter_blocked": 319
+        },
+        "gate": {
+          "pass": 3529,
+          "no_rise": 55,
+          "drawdown": 433
+        },
+        "flat_reasons": {
+          "drawdown": 314,
+          "no_rise": 5
+        },
+        "gross_return": 0.3039121785061665,
+        "net_return": -0.10204067864748656,
+        "cost_5bp_return": 0.0820628038067952,
+        "drawdown_at_5m_closes": 0.3777178096897522,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 88,
+            "target": 9,
+            "stop": 79,
+            "net_wins": 32,
+            "gross_wins": 33
+          },
+          "SOXS": {
+            "buys": 99,
+            "target": 9,
+            "stop": 89,
+            "net_wins": 41,
+            "gross_wins": 45
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 1.02561271608677,
+            "day_return": 0.02561271608677007,
+            "entries": 9,
+            "exits": 8
+          },
+          "2026-11-03": {
+            "end_equity": 1.0051170320692635,
+            "day_return": -0.019983843507428323,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-04": {
+            "end_equity": 0.973209048971296,
+            "day_return": -0.031745540150958984,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-05": {
+            "end_equity": 1.0118354657854194,
+            "day_return": 0.03968974276898929,
+            "entries": 15,
+            "exits": 15
+          },
+          "2026-11-06": {
+            "end_equity": 0.9035991987353166,
+            "day_return": -0.10697022461659444,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-09": {
+            "end_equity": 1.083477534382311,
+            "day_return": 0.19906871973630946,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-10": {
+            "end_equity": 1.1097245396093935,
+            "day_return": 0.02422478029694064,
+            "entries": 11,
+            "exits": 12
+          },
+          "2026-11-11": {
+            "end_equity": 1.356610493366003,
+            "day_return": 0.22247498811147293,
+            "entries": 7,
+            "exits": 6
+          },
+          "2026-11-12": {
+            "end_equity": 1.2961665752607023,
+            "day_return": -0.04455510140963759,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-13": {
+            "end_equity": 1.183662086203815,
+            "day_return": -0.0867978631791666,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-16": {
+            "end_equity": 1.0402078698590935,
+            "day_return": -0.12119524483951416,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 1.303164727857938,
+            "day_return": 0.2527926058033616,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-18": {
+            "end_equity": 1.130351006095617,
+            "day_return": -0.13261080358304467,
+            "entries": 18,
+            "exits": 18
+          },
+          "2026-11-19": {
+            "end_equity": 0.8979593213525134,
+            "day_return": -0.20559249603874408,
+            "entries": 18,
+            "exits": 18
+          }
+        }
+      },
+      "10": {
+        "buys": 157,
+        "target": 13,
+        "stop": 143,
+        "net_wins": 58,
+        "gross_wins": 63,
+        "closed": 156,
+        "open": 1,
+        "checks": {
+          "warmup": 30,
+          "buy": 157,
+          "holding": 3128,
+          "filter_blocked": 717
+        },
+        "gate": {
+          "pass": 3118,
+          "no_rise": 34,
+          "drawdown": 850
+        },
+        "flat_reasons": {
+          "drawdown": 711,
+          "no_rise": 6
+        },
+        "gross_return": -0.10133579182438657,
+        "net_return": -0.34285161633100536,
+        "cost_5bp_return": -0.23152382572017338,
+        "drawdown_at_5m_closes": 0.4611805831282664,
+        "by_symbol": {
+          "SOXL": {
+            "buys": 78,
+            "target": 6,
+            "stop": 72,
+            "net_wins": 29,
+            "gross_wins": 29
+          },
+          "SOXS": {
+            "buys": 79,
+            "target": 7,
+            "stop": 71,
+            "net_wins": 29,
+            "gross_wins": 34
+          }
+        },
+        "daily": {
+          "2026-11-02": {
+            "end_equity": 0.9836841698331983,
+            "day_return": -0.016315830166801715,
+            "entries": 9,
+            "exits": 8
+          },
+          "2026-11-03": {
+            "end_equity": 0.933192567693922,
+            "day_return": -0.05132907866946568,
+            "entries": 11,
+            "exits": 11
+          },
+          "2026-11-04": {
+            "end_equity": 1.0702461425576693,
+            "day_return": 0.14686526619305385,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-05": {
+            "end_equity": 0.9851122377600604,
+            "day_return": -0.07954609824068715,
+            "entries": 11,
+            "exits": 12
+          },
+          "2026-11-06": {
+            "end_equity": 0.8825201991671697,
+            "day_return": -0.10414248718111918,
+            "entries": 13,
+            "exits": 12
+          },
+          "2026-11-09": {
+            "end_equity": 0.973109145408428,
+            "day_return": 0.10264801454600891,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-10": {
+            "end_equity": 0.9600301617497524,
+            "day_return": -0.013440407708002922,
+            "entries": 10,
+            "exits": 10
+          },
+          "2026-11-11": {
+            "end_equity": 1.178778712121978,
+            "day_return": 0.2278559144157868,
+            "entries": 5,
+            "exits": 5
+          },
+          "2026-11-12": {
+            "end_equity": 1.0561603670300832,
+            "day_return": -0.10402151297011752,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-13": {
+            "end_equity": 0.949717531279212,
+            "day_return": -0.10078283476039518,
+            "entries": 14,
+            "exits": 14
+          },
+          "2026-11-16": {
+            "end_equity": 0.8026913836250216,
+            "day_return": -0.15481039657776463,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-17": {
+            "end_equity": 0.8773992714919702,
+            "day_return": 0.09307174512022476,
+            "entries": 12,
+            "exits": 12
+          },
+          "2026-11-18": {
+            "end_equity": 0.7913011904545304,
+            "day_return": -0.0981287354969359,
+            "entries": 16,
+            "exits": 16
+          },
+          "2026-11-19": {
+            "end_equity": 0.6571483836689946,
+            "day_return": -0.1695344432737138,
+            "entries": 12,
+            "exits": 12
+          }
+        }
+      }
+    }
+  },
+  "fee_per_side": 0.001
+}

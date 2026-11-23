@@ -1,0 +1,466 @@
+{
+  "block": "november",
+  "policy": "Independent per-lot brackets, OLHC, fixed fee per fill.",
+  "paired": "Hold actually filled cycle starts fixed. Same-total-at-seed uses final deployed dollars, which were unknown when the first order was decided. The $600 attribution ignores cash; a separate $600 series skips unfunded orders.",
+  "matched": "Random entry slots use the same symbol, exchange trading date, session and lot dollars. Draws without replacement within each group. Each lot is scored as a separate path; aggregate dollar P&L is not a single-capital simulation.",
+  "runs": {
+    "primary_best3_OLHC": {
+      "config": {
+        "label": "q90_100-150-350_1-1_hold",
+        "amounts": [
+          100,
+          150,
+          350
+        ],
+        "wait": [
+          1,
+          1
+        ],
+        "seed": "q90",
+        "mode": "hold"
+      },
+      "fee_each_side": 2.5,
+      "attribution": {
+        "actual": {
+          "buys": 59,
+          "closed": 57,
+          "open": 2,
+          "wins": 9,
+          "losses": 48,
+          "capital_deployed": 8500.0,
+          "gross_pnl": 37.38814011146759,
+          "fees": 290.0,
+          "net_pnl": -252.6118598885324
+        },
+        "fixed_600_on_same_cycle_starts": {
+          "buys": 35,
+          "closed": 34,
+          "open": 1,
+          "wins": 10,
+          "losses": 24,
+          "capital_deployed": 21000,
+          "gross_pnl": 135.39237156859892,
+          "fees": 172.5,
+          "net_pnl": -37.10762843140109
+        },
+        "same_total_at_seed": {
+          "buys": 35,
+          "closed": 34,
+          "open": 1,
+          "wins": 6,
+          "losses": 28,
+          "capital_deployed": 8500.0,
+          "gross_pnl": 117.99496384263549,
+          "fees": 172.5,
+          "net_pnl": -54.505036157364515
+        },
+        "same_starts_600_with_cash_limit": {
+          "buys": 35,
+          "closed": 34,
+          "open": 1,
+          "wins": 10,
+          "losses": 24,
+          "capital_deployed": 21000,
+          "gross_pnl": 135.39237156859892,
+          "fees": 172.5,
+          "net_pnl": -37.10762843140109
+        },
+        "capital_blocked_600": 0,
+        "rounds": {
+          "actual": {
+            "buys": 35,
+            "closed": 34,
+            "open": 1,
+            "wins": 3,
+            "losses": 31,
+            "capital_deployed": 8500.0,
+            "gross_pnl": 37.38814011146759,
+            "fees": 290.0,
+            "net_pnl": -252.61185988853242,
+            "mean_deployed_per_entered_cycle": 242.85714285714286
+          },
+          "same_deployment": {
+            "buys": 35,
+            "closed": 34,
+            "open": 1,
+            "wins": 6,
+            "losses": 28,
+            "capital_deployed": 8500.0,
+            "gross_pnl": 117.99496384263549,
+            "fees": 172.5,
+            "net_pnl": -54.505036157364515,
+            "mean_deployed_per_entered_cycle": 242.85714285714286
+          },
+          "full": {
+            "buys": 35,
+            "closed": 34,
+            "open": 1,
+            "wins": 10,
+            "losses": 24,
+            "capital_deployed": 21000,
+            "gross_pnl": 135.39237156859892,
+            "fees": 172.5,
+            "net_pnl": -37.10762843140109,
+            "mean_deployed_per_entered_cycle": 600.0
+          }
+        },
+        "extra_fees_vs_same_total": 117.5,
+        "gross_entry_timing_effect": -80.60682373116789,
+        "exposure_difference_at_seed": -17.397407725963433,
+        "delta_net_vs_same_total": -198.10682373116788
+      },
+      "actual_stage": {
+        "1": {
+          "buys": 35,
+          "closed": 34,
+          "open": 1,
+          "net_wins": 4,
+          "gross_wins": 16,
+          "target": 4,
+          "target_rate": 0.11764705882352941,
+          "net_win_rate": 0.11764705882352941,
+          "gross_win_rate": 0.47058823529411764,
+          "common_200_net_wins": 8,
+          "common_200_net_win_rate": 0.23529411764705882,
+          "mean_closed_gross_pct": 0.6533713262396591,
+          "gross_pnl": 22.56539526143315,
+          "net_pnl": -149.93460473856686
+        },
+        "2": {
+          "buys": 17,
+          "closed": 16,
+          "open": 1,
+          "net_wins": 3,
+          "gross_wins": 11,
+          "target": 0,
+          "target_rate": 0.0,
+          "net_win_rate": 0.1875,
+          "gross_win_rate": 0.6875,
+          "common_200_net_wins": 3,
+          "common_200_net_win_rate": 0.1875,
+          "mean_closed_gross_pct": 0.8129569829785018,
+          "gross_pnl": 18.19338826783088,
+          "net_pnl": -64.30661173216912
+        },
+        "3": {
+          "buys": 7,
+          "closed": 7,
+          "open": 0,
+          "net_wins": 2,
+          "gross_wins": 3,
+          "target": 0,
+          "target_rate": 0.0,
+          "net_win_rate": 0.2857142857142857,
+          "gross_win_rate": 0.42857142857142855,
+          "common_200_net_wins": 1,
+          "common_200_net_win_rate": 0.14285714285714285,
+          "mean_closed_gross_pct": -0.13757728235903818,
+          "gross_pnl": -3.3706434177964355,
+          "net_pnl": -38.37064341779644
+        }
+      },
+      "seed_vs_add_within_same_reached_cycles": {
+        "2": {
+          "reached": 17,
+          "both_closed": 16,
+          "seed_wins_at_200": 4,
+          "add_wins_at_200": 3,
+          "both_won_at_200": 2,
+          "seed_only_won_at_200": 2,
+          "add_only_won_at_200": 1,
+          "neither_won_at_200": 11
+        },
+        "3": {
+          "reached": 7,
+          "both_closed": 7,
+          "seed_wins_at_200": 3,
+          "add_wins_at_200": 1,
+          "both_won_at_200": 1,
+          "seed_only_won_at_200": 2,
+          "add_only_won_at_200": 0,
+          "neither_won_at_200": 4
+        }
+      },
+      "random": {
+        "exact": {
+          "all": {
+            "buys": 59.0,
+            "expected_closed": 57.99999999999999,
+            "expected_net_wins": 10.315195221445219,
+            "expected_target": 7.915938228438224,
+            "expected_net_pnl": -214.7843702848958,
+            "expected_net_win_ratio": 0.17784819347319344,
+            "expected_target_ratio": 0.1364816935937625
+          },
+          "1": {
+            "buys": 35.0,
+            "expected_closed": 34.33333333333333,
+            "expected_net_wins": 3.90909090909091,
+            "expected_target": 3.90909090909091,
+            "expected_net_pnl": -155.61112984262917,
+            "expected_net_win_ratio": 0.11385701676963818,
+            "expected_target_ratio": 0.11385701676963818
+          },
+          "2": {
+            "buys": 17.0,
+            "expected_closed": 16.666666666666664,
+            "expected_net_wins": 3.701121794871795,
+            "expected_target": 2.494026806526807,
+            "expected_net_pnl": -61.564945655310254,
+            "expected_net_win_ratio": 0.22206730769230773,
+            "expected_target_ratio": 0.14964160839160845
+          },
+          "3": {
+            "buys": 7.0,
+            "expected_closed": 7.0,
+            "expected_net_wins": 2.7049825174825175,
+            "expected_target": 1.5128205128205128,
+            "expected_net_pnl": 2.391705213043615,
+            "expected_net_win_ratio": 0.3864260739260739,
+            "expected_target_ratio": 0.2161172161172161
+          }
+        },
+        "random_sum_of_lot_pnl": {
+          "mean": -215.05087376682008,
+          "p05": -277.3000080817046,
+          "median": -215.8211448040388,
+          "p95": -150.23437044860714
+        },
+        "actual_sum_of_lot_pnl": -252.6118598885324,
+        "actual_percentile": 17.22,
+        "draws": 5000,
+        "groups": 31,
+        "seed": 20261120
+      }
+    },
+    "primary_example_OLHC": {
+      "config": {
+        "label": "q50_100-200-300_1-1_hold",
+        "amounts": [
+          100,
+          200,
+          300
+        ],
+        "wait": [
+          1,
+          1
+        ],
+        "seed": "q50",
+        "mode": "hold"
+      },
+      "fee_each_side": 2.5,
+      "attribution": {
+        "actual": {
+          "buys": 165,
+          "closed": 163,
+          "open": 2,
+          "wins": 30,
+          "losses": 133,
+          "capital_deployed": 26500.0,
+          "gross_pnl": 184.5867433385847,
+          "fees": 820.0,
+          "net_pnl": -635.4132566614153
+        },
+        "fixed_600_on_same_cycle_starts": {
+          "buys": 88,
+          "closed": 87,
+          "open": 1,
+          "wins": 29,
+          "losses": 58,
+          "capital_deployed": 52800,
+          "gross_pnl": 357.4115176049252,
+          "fees": 437.5,
+          "net_pnl": -80.0884823950748
+        },
+        "same_total_at_seed": {
+          "buys": 88,
+          "closed": 87,
+          "open": 1,
+          "wins": 22,
+          "losses": 65,
+          "capital_deployed": 26500.0,
+          "gross_pnl": 336.1643527348083,
+          "fees": 437.5,
+          "net_pnl": -101.33564726519172
+        },
+        "same_starts_600_with_cash_limit": {
+          "buys": 88,
+          "closed": 87,
+          "open": 1,
+          "wins": 29,
+          "losses": 58,
+          "capital_deployed": 52800,
+          "gross_pnl": 357.4115176049252,
+          "fees": 437.5,
+          "net_pnl": -80.0884823950748
+        },
+        "capital_blocked_600": 0,
+        "rounds": {
+          "actual": {
+            "buys": 88,
+            "closed": 87,
+            "open": 1,
+            "wins": 14,
+            "losses": 73,
+            "capital_deployed": 26500.0,
+            "gross_pnl": 184.5867433385847,
+            "fees": 820.0,
+            "net_pnl": -635.4132566614153,
+            "mean_deployed_per_entered_cycle": 301.1363636363636
+          },
+          "same_deployment": {
+            "buys": 88,
+            "closed": 87,
+            "open": 1,
+            "wins": 22,
+            "losses": 65,
+            "capital_deployed": 26500.0,
+            "gross_pnl": 336.1643527348083,
+            "fees": 437.5,
+            "net_pnl": -101.33564726519172,
+            "mean_deployed_per_entered_cycle": 301.1363636363636
+          },
+          "full": {
+            "buys": 88,
+            "closed": 87,
+            "open": 1,
+            "wins": 29,
+            "losses": 58,
+            "capital_deployed": 52800,
+            "gross_pnl": 357.4115176049252,
+            "fees": 437.5,
+            "net_pnl": -80.0884823950748,
+            "mean_deployed_per_entered_cycle": 600.0
+          }
+        },
+        "extra_fees_vs_same_total": 382.5,
+        "gross_entry_timing_effect": -151.57760939622358,
+        "exposure_difference_at_seed": -21.247164870116933,
+        "delta_net_vs_same_total": -534.0776093962236
+      },
+      "actual_stage": {
+        "1": {
+          "buys": 88,
+          "closed": 87,
+          "open": 1,
+          "net_wins": 12,
+          "gross_wins": 40,
+          "target": 12,
+          "target_rate": 0.13793103448275862,
+          "net_win_rate": 0.13793103448275862,
+          "gross_win_rate": 0.45977011494252873,
+          "common_200_net_wins": 21,
+          "common_200_net_win_rate": 0.2413793103448276,
+          "mean_closed_gross_pct": 0.6806645528529056,
+          "gross_pnl": 59.56858626748753,
+          "net_pnl": -377.93141373251245
+        },
+        "2": {
+          "buys": 54,
+          "closed": 53,
+          "open": 1,
+          "net_wins": 12,
+          "gross_wins": 27,
+          "target": 6,
+          "target_rate": 0.11320754716981132,
+          "net_win_rate": 0.22641509433962265,
+          "gross_win_rate": 0.5094339622641509,
+          "common_200_net_wins": 12,
+          "common_200_net_win_rate": 0.22641509433962265,
+          "mean_closed_gross_pct": 0.6640770298325654,
+          "gross_pnl": 69.09365995313216,
+          "net_pnl": -198.40634004686785
+        },
+        "3": {
+          "buys": 23,
+          "closed": 23,
+          "open": 0,
+          "net_wins": 6,
+          "gross_wins": 9,
+          "target": 4,
+          "target_rate": 0.17391304347826086,
+          "net_win_rate": 0.2608695652173913,
+          "gross_win_rate": 0.391304347826087,
+          "common_200_net_wins": 6,
+          "common_200_net_win_rate": 0.2608695652173913,
+          "mean_closed_gross_pct": 0.8104999582313768,
+          "gross_pnl": 55.924497117965004,
+          "net_pnl": -59.07550288203499
+        }
+      },
+      "seed_vs_add_within_same_reached_cycles": {
+        "2": {
+          "reached": 54,
+          "both_closed": 53,
+          "seed_wins_at_200": 13,
+          "add_wins_at_200": 12,
+          "both_won_at_200": 11,
+          "seed_only_won_at_200": 2,
+          "add_only_won_at_200": 1,
+          "neither_won_at_200": 39
+        },
+        "3": {
+          "reached": 23,
+          "both_closed": 23,
+          "seed_wins_at_200": 9,
+          "add_wins_at_200": 6,
+          "both_won_at_200": 6,
+          "seed_only_won_at_200": 3,
+          "add_only_won_at_200": 0,
+          "neither_won_at_200": 14
+        }
+      },
+      "random": {
+        "exact": {
+          "all": {
+            "buys": 165.0,
+            "expected_closed": 163.4583333333333,
+            "expected_net_wins": 27.796762223720062,
+            "expected_target": 18.942072485747193,
+            "expected_net_pnl": -667.2959434025469,
+            "expected_net_win_ratio": 0.17005411505717097,
+            "expected_target_ratio": 0.11588318624979169
+          },
+          "1": {
+            "buys": 88.0,
+            "expected_closed": 87.12500000000001,
+            "expected_net_wins": 9.632108855000418,
+            "expected_target": 9.632108855000418,
+            "expected_net_pnl": -402.247864449286,
+            "expected_net_win_ratio": 0.1105550514203778,
+            "expected_target_ratio": 0.1105550514203778
+          },
+          "2": {
+            "buys": 54.0,
+            "expected_closed": 53.33333333333333,
+            "expected_net_wins": 10.857574528884768,
+            "expected_target": 6.135313983205547,
+            "expected_net_pnl": -208.7233155353231,
+            "expected_net_win_ratio": 0.20357952241658941,
+            "expected_target_ratio": 0.11503713718510403
+          },
+          "3": {
+            "buys": 23.0,
+            "expected_closed": 23.0,
+            "expected_net_wins": 7.307078839834864,
+            "expected_target": 3.1746496475412136,
+            "expected_net_pnl": -56.32476341793779,
+            "expected_net_win_ratio": 0.31769907999282015,
+            "expected_target_ratio": 0.13802824554527016
+          }
+        },
+        "random_sum_of_lot_pnl": {
+          "mean": -667.9669128853241,
+          "p05": -775.2048642376884,
+          "median": -667.524871017215,
+          "p95": -558.6536785260246
+        },
+        "actual_sum_of_lot_pnl": -635.4132566614153,
+        "actual_percentile": 69.24,
+        "draws": 5000,
+        "groups": 65,
+        "seed": 20261120
+      }
+    }
+  }
+}

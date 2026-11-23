@@ -1,0 +1,1013 @@
+{
+  "ranges": {
+    "development": [
+      "2026-08-31",
+      "2026-10-09"
+    ],
+    "evaluation": [
+      "2026-10-12",
+      "2026-10-30"
+    ],
+    "november": [
+      "2026-11-02",
+      "2026-11-19"
+    ]
+  },
+  "calendar": "market_data/calendars/nasdaq_sessions_2026_v2.json",
+  "sources": {
+    "SOXL": {
+      "bars": "market_data/us_5m/SOXL/2026.parquet",
+      "actions": "market_data/corporate_actions/SOXL.parquet"
+    },
+    "SOXS": {
+      "bars": "market_data/us_5m/SOXS/2026.parquet",
+      "actions": "market_data/corporate_actions/SOXS.parquet"
+    }
+  },
+  "blocks": {
+    "development": [
+      {
+        "name": "development_2026-08-31",
+        "start": "2026-08-31",
+        "end": "2026-09-01",
+        "dates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "days": 2
+      },
+      {
+        "name": "development_2026-09-03",
+        "start": "2026-09-03",
+        "end": "2026-09-04",
+        "dates": [
+          "2026-09-03",
+          "2026-09-04"
+        ],
+        "days": 2
+      },
+      {
+        "name": "development_2026-09-08",
+        "start": "2026-09-08",
+        "end": "2026-09-09",
+        "dates": [
+          "2026-09-08",
+          "2026-09-09"
+        ],
+        "days": 2
+      },
+      {
+        "name": "development_2026-09-14",
+        "start": "2026-09-14",
+        "end": "2026-09-18",
+        "dates": [
+          "2026-09-14",
+          "2026-09-15",
+          "2026-09-16",
+          "2026-09-17",
+          "2026-09-18"
+        ],
+        "days": 5
+      },
+      {
+        "name": "development_2026-09-23",
+        "start": "2026-09-23",
+        "end": "2026-09-25",
+        "dates": [
+          "2026-09-23",
+          "2026-09-24",
+          "2026-09-25"
+        ],
+        "days": 3
+      },
+      {
+        "name": "development_2026-09-28",
+        "start": "2026-09-28",
+        "end": "2026-10-02",
+        "dates": [
+          "2026-09-28",
+          "2026-09-29",
+          "2026-09-30",
+          "2026-10-01",
+          "2026-10-02"
+        ],
+        "days": 5
+      },
+      {
+        "name": "development_2026-10-05",
+        "start": "2026-10-05",
+        "end": "2026-10-09",
+        "dates": [
+          "2026-10-05",
+          "2026-10-06",
+          "2026-10-07",
+          "2026-10-08",
+          "2026-10-09"
+        ],
+        "days": 5
+      }
+    ],
+    "evaluation": [
+      {
+        "name": "evaluation_2026-10-12",
+        "start": "2026-10-12",
+        "end": "2026-10-16",
+        "dates": [
+          "2026-10-12",
+          "2026-10-13",
+          "2026-10-14",
+          "2026-10-15",
+          "2026-10-16"
+        ],
+        "days": 5
+      },
+      {
+        "name": "evaluation_2026-10-19",
+        "start": "2026-10-19",
+        "end": "2026-10-20",
+        "dates": [
+          "2026-10-19",
+          "2026-10-20"
+        ],
+        "days": 2
+      },
+      {
+        "name": "evaluation_2026-10-22",
+        "start": "2026-10-22",
+        "end": "2026-10-23",
+        "dates": [
+          "2026-10-22",
+          "2026-10-23"
+        ],
+        "days": 2
+      },
+      {
+        "name": "evaluation_2026-10-26",
+        "start": "2026-10-26",
+        "end": "2026-10-30",
+        "dates": [
+          "2026-10-26",
+          "2026-10-27",
+          "2026-10-28",
+          "2026-10-29",
+          "2026-10-30"
+        ],
+        "days": 5
+      }
+    ],
+    "november": [
+      {
+        "name": "november",
+        "start": "2026-11-02",
+        "end": "2026-11-19",
+        "dates": [
+          "2026-11-02",
+          "2026-11-03",
+          "2026-11-04",
+          "2026-11-05",
+          "2026-11-06",
+          "2026-11-09",
+          "2026-11-10",
+          "2026-11-11",
+          "2026-11-12",
+          "2026-11-13",
+          "2026-11-16",
+          "2026-11-17",
+          "2026-11-18",
+          "2026-11-19"
+        ],
+        "days": 14
+      }
+    ]
+  },
+  "excluded": {
+    "development": {
+      "data_or_action": {
+        "2026-09-02": {
+          "SOXL": {
+            "issues": {
+              "bad_volume": [
+                "2026-09-02T03:55:00-04:00"
+              ]
+            },
+            "corporate_actions": []
+          }
+        },
+        "2026-09-10": {
+          "SOXL": {
+            "issues": {
+              "bad_volume": [
+                "2026-09-10T03:55:00-04:00"
+              ]
+            },
+            "corporate_actions": []
+          }
+        },
+        "2026-09-22": {
+          "SOXL": {
+            "issues": {},
+            "corporate_actions": [
+              {
+                "ex_div_date": "2026-09-22",
+                "per_cash_div": 0.0929,
+                "forward_adj_factorA": 0.99934,
+                "forward_adj_factorB": 0.0,
+                "backward_adj_factorA": 1.0,
+                "backward_adj_factorB": 0.0929
+              }
+            ]
+          },
+          "SOXS": {
+            "issues": {},
+            "corporate_actions": [
+              {
+                "ex_div_date": "2026-09-22",
+                "per_cash_div": 0.43641,
+                "forward_adj_factorA": 0.98764,
+                "forward_adj_factorB": 0.0,
+                "backward_adj_factorA": 1.0,
+                "backward_adj_factorB": 0.43641
+              }
+            ]
+          }
+        }
+      },
+      "valid_singletons": [
+        "2026-09-11",
+        "2026-09-21"
+      ]
+    },
+    "evaluation": {
+      "data_or_action": {
+        "2026-10-21": {
+          "SOXL": {
+            "issues": {
+              "bad_volume": [
+                "2026-10-21T00:10:00-04:00"
+              ]
+            },
+            "corporate_actions": []
+          }
+        }
+      },
+      "valid_singletons": []
+    },
+    "november": {
+      "data_or_action": {},
+      "valid_singletons": []
+    }
+  },
+  "totals": {
+    "development": {
+      "calendar_days": 29,
+      "used_days": 24,
+      "rejected_data_or_action": 3,
+      "dropped_singletons": 2
+    },
+    "evaluation": {
+      "calendar_days": 15,
+      "used_days": 14,
+      "rejected_data_or_action": 1,
+      "dropped_singletons": 0
+    },
+    "november": {
+      "calendar_days": 14,
+      "used_days": 14,
+      "rejected_data_or_action": 0,
+      "dropped_singletons": 0
+    }
+  },
+  "daily": {
+    "SOXL": {
+      "2026-08-31": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "bd3bcdc52634741ee39a1514e6b265645bdac815b55952fc0a003630355b627f"
+      },
+      "2026-09-01": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "3b88dd5e4885d49945b8e581a2e06b4c014dd0838839487874fcaa1fd1b7efdb"
+      },
+      "2026-09-02": {
+        "bars": 288,
+        "issues": {
+          "bad_volume": [
+            "2026-09-02T03:55:00-04:00"
+          ]
+        },
+        "corporate_actions": [],
+        "sha256": "5291b9357cc2bdf104ce2281c7addeced7a2cacf907f1ff822b0f8fd7f0c99a3"
+      },
+      "2026-09-03": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "cc8e7b24950e589b902c5b4ff4adc0142d45fa0d269cce0bbbc70e1f9577b208"
+      },
+      "2026-09-04": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "fc8fa05e2d75d9e98cf8abaf2adc8ca19794aeb7c25ca8ed2f354fe730c9db1b"
+      },
+      "2026-09-08": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "f3c29c85a3918cb21a9c5a5a902f3d34da7ba5e095f6df72b063ecb0bec9a12e"
+      },
+      "2026-09-09": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "33184f13fb16542a975faa20ea6f14034d4d7c9ab56f18e37609494e7279b248"
+      },
+      "2026-09-10": {
+        "bars": 288,
+        "issues": {
+          "bad_volume": [
+            "2026-09-10T03:55:00-04:00"
+          ]
+        },
+        "corporate_actions": [],
+        "sha256": "2cb891a8591d5f039eb28d0dc38e8e57e24fcb7116a7a04a3b275ca7c9508b1e"
+      },
+      "2026-09-11": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "ee1e63fd1fb57ada3f222474eac2f9be399f3c7740346aad5f8327313de72190"
+      },
+      "2026-09-14": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "daba7cdb9fae16675dd49b761b52001dfe04058e9f5389cd707a541889068e23"
+      },
+      "2026-09-15": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "cb819c569f5096d2094f809341e76d06a4808eb87179ca4a81acbe5ee46d74ad"
+      },
+      "2026-09-16": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "b622e83d540fd817048049960863d37853cae04bfb64a44189712fc03c091baa"
+      },
+      "2026-09-17": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "12eec314f932ce54e102c18fe24dbcc4739cf5138287ca093dd52af793b5f029"
+      },
+      "2026-09-18": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "66f92324a0bbe93e40abe79cdd3cce60652861877be6c5a2cd440d667f5f4b63"
+      },
+      "2026-09-21": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "b72a7d4efd4d6b612292162bf481bdfbbf744f0738b83227ffd05a69475be5aa"
+      },
+      "2026-09-22": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [
+          {
+            "ex_div_date": "2026-09-22",
+            "per_cash_div": 0.0929,
+            "forward_adj_factorA": 0.99934,
+            "forward_adj_factorB": 0.0,
+            "backward_adj_factorA": 1.0,
+            "backward_adj_factorB": 0.0929
+          }
+        ],
+        "sha256": "7abd3b4c3b7c432ebf97469af0e9db3d13e71f622d7aac2f2c8313e6cb2016d2"
+      },
+      "2026-09-23": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "19ed41b4d08482dd084d1cf47c90d5efc426b9f78ffd197abc7422282ec28a51"
+      },
+      "2026-09-24": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "4ca397db9eb4ac6680e4820c544c672ccb701c9c57c24087c820a04129d985a9"
+      },
+      "2026-09-25": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "399398d595186ec9cd9efce1fc1aa2b05de6b3cfa04e0d40b7de3ff545aec0f0"
+      },
+      "2026-09-28": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "8facecd07dae54cf31fd38a29937d9ebd19b72b52a9d595a46f5d52bba835b7a"
+      },
+      "2026-09-29": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "ae9aeca77498de66c54daeb537bb42327f6488cd044e1e686a27d177cc446d7a"
+      },
+      "2026-09-30": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "b9e1032ff43edfa29cca4439af2700a461c93eaf0819fb43410888d834d9e993"
+      },
+      "2026-10-01": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "6986fb1681f71b6caa76d990be03c367d184ee95fdc134c497fc13254f1812f4"
+      },
+      "2026-10-02": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "79a9bab3e09a8a6eee0dd5d13f2b0902eba563387902b797319bf24cf5c8015c"
+      },
+      "2026-10-05": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "da31dcc6c43d38b393132deff506957d2e4175434883d21eaa8f3996727ee2a4"
+      },
+      "2026-10-06": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "0c03f0fe2c1ac23d1ae878be9424d49bf46faf2ce70ecbbe366bf66631213ee2"
+      },
+      "2026-10-07": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "595511515f23b9c72f38f65694b413c102561ec913b6ba73b127748dbde8b71e"
+      },
+      "2026-10-08": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "f9407d8133f2cb0b713c4d9a8fa88aa9d959968947e787274332a674809a8319"
+      },
+      "2026-10-09": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "57135f2811da79ed94379e6592fcd38d34f0548d65e2e9e6561f2122c0f8fa27"
+      },
+      "2026-10-12": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "c57b4e733d284a01a6f0de8bc07427c29cba03c259fa3eaacbf42fb94cdd5b59"
+      },
+      "2026-10-13": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "3bf67b2ea11a737f6843d83192d8a1f19814b6d4a2ee91f8c925eb82e2ba55c2"
+      },
+      "2026-10-14": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "cb02e6097dcdce1152751ae2e5660ce27fe2a9fa750cc395f9c85ff716e9b322"
+      },
+      "2026-10-15": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "e884f79039a2bff0320c63afef4cab30989dfee709d8c0453a78590ac97a9277"
+      },
+      "2026-10-16": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "55e1c82f8f354c894cf2861f039fd9824e982ea10eec1fbb375db2464f5c203b"
+      },
+      "2026-10-19": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "f63ea09bba9a2aff18432810ace6244187df4c8a7ae0ea4d1749733edebc8eac"
+      },
+      "2026-10-20": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "94691ec04a8d8e112b6dc5b600f2f618b8ef66735b061688b110a225d2798739"
+      },
+      "2026-10-21": {
+        "bars": 288,
+        "issues": {
+          "bad_volume": [
+            "2026-10-21T00:10:00-04:00"
+          ]
+        },
+        "corporate_actions": [],
+        "sha256": "1a31542b741170cb251cd3afb5ef6a7249717b9ea2322a938be7497c456f9128"
+      },
+      "2026-10-22": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "94a1d5edb783b234579bd2e801c1d984abc6c0f83878306ebf1880c3f172cbbb"
+      },
+      "2026-10-23": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "5434f5048b23c9225bba5cbd0e01e616305cd700682c1727714867c7f27f7ebd"
+      },
+      "2026-10-26": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "64a54b45e9d6c4ab7c51905f62cf4dcb383869448b05185c92f5b009501f8b48"
+      },
+      "2026-10-27": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "b7ff2be0734474858449d6ec7e5bf40becc0ef4c13c1d6506efde39d9a933128"
+      },
+      "2026-10-28": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "e477134704b6e6ac6fa34f94f3965c1a8dcc083e776e40165c74088aadc81122"
+      },
+      "2026-10-29": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "d8b7127d5adba6e6adb045b01c36feeccf76c1ea9c77b6fed946001359841329"
+      },
+      "2026-10-30": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "9705f5a49d4cd08277178ca137fd1c3c59d94a0a9d1bb84dbd90fe5053088ede"
+      },
+      "2026-11-02": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "b039870bc841e9d9b0cbd50b84eece788c80962ec88cfa14d970902b48c19e2e"
+      },
+      "2026-11-03": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "2603b0624d9e021aaeac23cdd27fe3d12ca035ac77ed30b04c54f9213cb58c10"
+      },
+      "2026-11-04": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "90e5928d93bef8553748331ceec01d8a038a895c216261125b2a1998216ee398"
+      },
+      "2026-11-05": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "707a6e8a1ea175556bc9875d5716df7b50d59a2f767b55009fb4d82b2473244f"
+      },
+      "2026-11-06": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "b4658c1616ffb8f3d8e1e70f0fada323f7a7796e27e5a7d65c6ef79852fbbe2b"
+      },
+      "2026-11-09": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "4732fc015feae97132fb0da978e2b6978dffacdad47ce02d7f5fb52e1d84e73a"
+      },
+      "2026-11-10": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "5afd6bdd2c717647cfa7568bcf0b476baa2118c0c432db575dc1a5dd0e0eae27"
+      },
+      "2026-11-11": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "6dadeb42ee4d9bfc80fbcfa2e814212d95f83a533e499ce24ada9d2eb81dea79"
+      },
+      "2026-11-12": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "450930934bab8838e4e759ad3a5a7baccbe5d0640122124e087b02371e882e9c"
+      },
+      "2026-11-13": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "5792cfb368cf57eee7cbc9cac0bbeea953564193b1dd62b6fdc6390fef85a4e9"
+      },
+      "2026-11-16": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "92caa99ddc545bd5aeaa5d58b30d3545e2f206bd90c1c57c7c2340acd6a35a5d"
+      },
+      "2026-11-17": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "01018fc993cd6dec9a9c02c060fc8286db8c7f0723f8ef8773929a2b4e9a3ae4"
+      },
+      "2026-11-18": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "8e98f4d1f91accb17839d497fc4b4c2c0c500b8eb1c51778bc8c9e64f8f5cc47"
+      },
+      "2026-11-19": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "6c4f42bd11603569e122bb8c51cc0afbd233ea5c385a6eb3bea7df34045321c7"
+      }
+    },
+    "SOXS": {
+      "2026-08-31": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "d4eb796186b7e631fa0a39b63445d97e89d42ade88bd57122857475121215556"
+      },
+      "2026-09-01": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "f42f9cf0f39f90103f21bb37d814e546187f257aad483cf5bb0864574897b96c"
+      },
+      "2026-09-02": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "43b1d19511baddba932d0c39d0c41f92ad61488d3877867070d9f24e890f4618"
+      },
+      "2026-09-03": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "5a67763f5976f8a086381e7fb4f0882bdfa49368b5f691475156e081cb44dc9f"
+      },
+      "2026-09-04": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "bce083f66953444180bf4ffef07d5ecab1b3d66e153bd4173d71aea1c38e5475"
+      },
+      "2026-09-08": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "b196285d92ec5e0c451fc9b77fbb6f666698fbfc0fb8bc6339e956a5a6b40373"
+      },
+      "2026-09-09": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "1f4c8d40f19263ca7d12baaba44768b2319074432b87fd58d096844efb1dd5a0"
+      },
+      "2026-09-10": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "e8b60d61d9ac71fa5dbab88f27435447aaddd45c36aaf33ad272c2c3b0e56b37"
+      },
+      "2026-09-11": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "97315b7cd8d940c697069585e28737349c153ead6fb7ef5e2632e2cba144a6b5"
+      },
+      "2026-09-14": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "1fb831c3015887710dd4f5821b228918a7871aa3a7cdca88582a7566a533a14f"
+      },
+      "2026-09-15": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "3e65d894383c4f42a34623327f0f30d2b1bc36adf09722c96adff4b2aa0fb791"
+      },
+      "2026-09-16": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "c40adc0c16e34cda126cbf71de875ce7fe84223dcb972d5fdbb67a0d455222fc"
+      },
+      "2026-09-17": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "c39968acc34cba0c9818da9fc0ba66b522f9814b89919ee14905019bb3525581"
+      },
+      "2026-09-18": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "34aee022ba07197ff439cb264b245856009bd736f43300df56ae8b5081e83bcb"
+      },
+      "2026-09-21": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "fa7e7a25349f28d88d878bc00e135c4e27989d1946b3ef9a8e9146b625002906"
+      },
+      "2026-09-22": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [
+          {
+            "ex_div_date": "2026-09-22",
+            "per_cash_div": 0.43641,
+            "forward_adj_factorA": 0.98764,
+            "forward_adj_factorB": 0.0,
+            "backward_adj_factorA": 1.0,
+            "backward_adj_factorB": 0.43641
+          }
+        ],
+        "sha256": "f9e1e957f538e3910cf07536233d299eede898edc058aeda9c9e0319b258d1fc"
+      },
+      "2026-09-23": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "7e65a608bdb55cac8c09146434937f381d0694548cbd09d5ddede8684a294f28"
+      },
+      "2026-09-24": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "112cad61a30c79db2b85eb5069cd5ac2049ef3cc2ed07c25f85119a3a3417665"
+      },
+      "2026-09-25": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "477be240c6ad9c3da9a7a4df88b1acc7ad8c7d3ea303b6dd84984b88b9e2e441"
+      },
+      "2026-09-28": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "9f8352d6b365fdbf4e2fdca1eb140e7fc4a715a0db0779e2fa2db10126ef04f9"
+      },
+      "2026-09-29": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "a2291678a95e8f1c5417da804b1504e815266fd91ada5ea0f1fbd9eef2fd5ea2"
+      },
+      "2026-09-30": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "e5fa18f25018fb4b1bcbfc8935ef91aec6dd6ac52abc271fef441d3758026e1c"
+      },
+      "2026-10-01": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "9a0e82b162df8a02442a664319a6fba9a932e64a83fbe62a6d981ef5caf2265b"
+      },
+      "2026-10-02": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "9c97c66ebb2435747a5b3ce41d41bebdbf2084acd5be19af95126661bea8068a"
+      },
+      "2026-10-05": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "94be152ca7df61852a0f92a1f32d74d4baf7c347ba0ff20da2e9910ffbf01e02"
+      },
+      "2026-10-06": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "3adb17cab7234df01a3fdf10b0e959ed9a9eedfe528bff4cd271bf53cf30758d"
+      },
+      "2026-10-07": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "553cc64751aee20e10ff32573a06b5c8de25f80bfe5c9023c0f4d2994e2cccb3"
+      },
+      "2026-10-08": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "4b1a84af25518d4793df36a3b928c4d106b10b260881c1b4969ea09374a31ded"
+      },
+      "2026-10-09": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "7cd232ab3c520a9191054ddc030ae6adc22c2dd4bd24ac72bbd3a01c7819966b"
+      },
+      "2026-10-12": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "59f1480225821849a91b4f8e98dc07acac05b405006c46ba50c8074d37127786"
+      },
+      "2026-10-13": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "71ddbdf4c395079e884f8dcd29fbd215fb53275c6407aa98d981d27129782370"
+      },
+      "2026-10-14": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "3f5ee8f6dc1875c2bc9ed9a33854bf4badf1c26a98359b9274eb469374e12821"
+      },
+      "2026-10-15": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "d68603d0dfd42badb0ac477129b94f268dde5c7a78ffd728560097b1b7407a22"
+      },
+      "2026-10-16": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "60e3bfc202b8b91554d706766531b7de2cec5c4685e2b00d7ffae0af12c7e7db"
+      },
+      "2026-10-19": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "bb58e88925c84a14b98510179e3afee86e2ff46297e21f1f624d788b53d7c674"
+      },
+      "2026-10-20": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "475ecbeb0e9fef0f5e8f5de12e04d2b9f7b3ead4c89c4fc4485237c395f45d40"
+      },
+      "2026-10-21": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "05021d2ba4dc0af9d2252c878624e3af3fcbc0509fa26e14424ae6429dc03fcd"
+      },
+      "2026-10-22": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "d491c3c9722fa0e238b8161c16fdd43dc370dd12e8f594ff76b6e581b1e2ee2b"
+      },
+      "2026-10-23": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "33b4822e9c71851114737117c0ab5f9251eee53cf42b597ef8ecf83829c6197c"
+      },
+      "2026-10-26": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "a6c280cbb9810d265b65d718f56e68b6b9421103374c3023a66cc8ee51aed2af"
+      },
+      "2026-10-27": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "d923bfdc811f9373843a7e8dcf6ad3accd60d86093c8837e2f568199ba7c05ff"
+      },
+      "2026-10-28": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "9ce46bdd9bd80b9df95c2f1093b4020f67edc7079b31764eb3777fe913f560c8"
+      },
+      "2026-10-29": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "5eeed26cf32db91658493553754b0eebba2393b6476286d8dd2dd91842abc60b"
+      },
+      "2026-10-30": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "178ae6af0cf158b25550ec70273f33d9039cc4bbeda0962a9ebb73aa7aae9f5d"
+      },
+      "2026-11-02": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "7ef4afc86093c14d65efc11c90973eca0140e06efd148958809a122ed027a7ad"
+      },
+      "2026-11-03": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "cee817886c27b85b8889176ca2d79826b1d24d4e93dbac1926d48d6d08b5bfd7"
+      },
+      "2026-11-04": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "d7cce9733f0fd06b501bee90dc7e46f156d3ca3056762fe1d5e17267e5a1f357"
+      },
+      "2026-11-05": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "2b739745c411799a59174865f8504e294744966061fe5f4b7ed200fc98135dbc"
+      },
+      "2026-11-06": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "350a83887e47c585eb19eeccdf7a7f1b2bd1a9004c7fa91f413b177ef1077943"
+      },
+      "2026-11-09": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "4ca24d36be866756f6aeb743b08c69ee56a22ff49ec0728676c903ab477bcb25"
+      },
+      "2026-11-10": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "964f6dbdf54251994289e842d84092cdc8240358e21f98bc0b53782edb07f45a"
+      },
+      "2026-11-11": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "c01bb1d6d4eca01f155381105cf58c1f269cac4aafb11496b4c8bc22d50f8d92"
+      },
+      "2026-11-12": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "a9b295fd065cbc69085aedb44a33c180293f4c18e0487926f6b89af9dfeaaf7e"
+      },
+      "2026-11-13": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "5736de039933590c7380b6a3291b74485c9c6df2bbd8a5f3f40214a9e3d4186a"
+      },
+      "2026-11-16": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "09c60dd56c0cf3d2b5fee6cad90b808bb095cd9b487af4011cc47beb95573df1"
+      },
+      "2026-11-17": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "59a4f2286d39cbf30c66208ef93aae337299d032e73a62ef11ec2178e035b7e2"
+      },
+      "2026-11-18": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "8233d5e9593d6dbda19e03f59d8dac368d1a33136413c50e86015dce53f3b9b7"
+      },
+      "2026-11-19": {
+        "bars": 288,
+        "issues": {},
+        "corporate_actions": [],
+        "sha256": "74bdfa42a3cca7d7eee94916059ad97fdd7e84910a15072038cd30abb0190401"
+      }
+    }
+  },
+  "rule": "Each eligible official full session needs both full 288-slot tapes (preceding calendar day 20:00 ET to current 20:00 ET), finite positive traded OHLC and volume, NONE basis, ordered in-slot prices, end=start+5m, available=end+1s and zero corporate actions. Invalid dates split runs. Development and evaluation also split at ISO week boundaries; runs under two official sessions are excluded. November replay is a single 14-session block."
+}

@@ -1,0 +1,405 @@
+{
+  "periods": {
+    "train": [
+      "2026-07-27",
+      "2026-08-14"
+    ],
+    "calibration": [
+      "2026-08-17",
+      "2026-08-28"
+    ],
+    "september_check": [
+      "2026-09-14",
+      "2026-09-18"
+    ],
+    "november": [
+      "2026-11-02",
+      "2026-11-19"
+    ]
+  },
+  "features": [
+    "return5",
+    "return12",
+    "drawdown5",
+    "drawdown12",
+    "close_efficiency12",
+    "close_location12",
+    "inverse_return5"
+  ],
+  "sklearn": "1.9.1",
+  "C": 0.3,
+  "model": {
+    "mean": [
+      0.019022821372074714,
+      0.013765026521156905,
+      0.016743070383677974,
+      0.03139001989178687,
+      0.34875049792236523,
+      0.8142262575884199,
+      -0.018806029844609575
+    ],
+    "scale": [
+      0.012033790653352904,
+      0.025951345120973184,
+      0.007003323320394936,
+      0.02041320709960977,
+      0.2103821986818273,
+      0.18574594508836859,
+      0.012341986080727613
+    ],
+    "weights": [
+      0.052780217859599465,
+      -0.019030693892349862,
+      -0.002906409540096203,
+      -0.22822017272007514,
+      -0.08317849319819563,
+      -0.1768961497886482,
+      -0.41749963778653243
+    ],
+    "intercept": -0.7210864738816449
+  },
+  "fit_path": "OLHC",
+  "train_rows": 133,
+  "train_wins": 44,
+  "train_buys": 137,
+  "calibration_buys": 49,
+  "calibration_scored": 48,
+  "quantiles": {
+    "q50": 0.5,
+    "q75": 0.75,
+    "q90": 0.9
+  },
+  "thresholds": {
+    "q50": 0.2937563838851365,
+    "q75": 0.3457443924756659,
+    "q90": 0.37297994736375345
+  },
+  "selection": {
+    "q50": {
+      "buys": 24,
+      "closed": 23,
+      "wins": 7,
+      "losses": 16,
+      "open": 1,
+      "targets": 0,
+      "loss_rate": 0.6956521739130435,
+      "gross": -0.1748038623779855,
+      "net": -0.2126903832341963,
+      "max_dd": 0.2761895641861627,
+      "coverage": 10,
+      "daily": {
+        "2026-08-17": {
+          "end_equity": 0.9987883618155595,
+          "day_return": -0.0012116381844404778,
+          "entries": 1,
+          "exits": 0
+        },
+        "2026-08-18": {
+          "end_equity": 0.9742721220055706,
+          "day_return": -0.02454598065742808,
+          "entries": 2,
+          "exits": 3
+        },
+        "2026-08-19": {
+          "end_equity": 0.9860258800697476,
+          "day_return": 0.012064142859780747,
+          "entries": 4,
+          "exits": 4
+        },
+        "2026-08-20": {
+          "end_equity": 0.9826749460967132,
+          "day_return": -0.0033984239569830876,
+          "entries": 2,
+          "exits": 1
+        },
+        "2026-08-21": {
+          "end_equity": 0.9907657035194178,
+          "day_return": 0.00823340154833696,
+          "entries": 2,
+          "exits": 2
+        },
+        "2026-08-24": {
+          "end_equity": 0.8616936369156005,
+          "day_return": -0.130275065179714,
+          "entries": 6,
+          "exits": 6
+        },
+        "2026-08-25": {
+          "end_equity": 0.8885148229726979,
+          "day_return": 0.031126127556311944,
+          "entries": 1,
+          "exits": 2
+        },
+        "2026-08-26": {
+          "end_equity": 0.8437289079247604,
+          "day_return": -0.05040536622461467,
+          "entries": 2,
+          "exits": 2
+        },
+        "2026-08-27": {
+          "end_equity": 0.7985107324451046,
+          "day_return": -0.053593251404499886,
+          "entries": 2,
+          "exits": 1
+        },
+        "2026-08-28": {
+          "end_equity": 0.7873096167658037,
+          "day_return": -0.014027507989782695,
+          "entries": 2,
+          "exits": 2
+        }
+      },
+      "by_symbol": {
+        "SOXL": {
+          "buys": 10,
+          "target": 0,
+          "stop": 10,
+          "net_wins": 3,
+          "gross_wins": 3
+        },
+        "SOXS": {
+          "buys": 14,
+          "target": 0,
+          "stop": 13,
+          "net_wins": 4,
+          "gross_wins": 5
+        }
+      },
+      "flat_blocked": 1635,
+      "directly_vetoed": {
+        "loss": 16,
+        "win": 9,
+        "flat": 0,
+        "open": 0
+      },
+      "new_entries": 0,
+      "unscored": 1
+    },
+    "q75": {
+      "buys": 12,
+      "closed": 12,
+      "wins": 3,
+      "losses": 9,
+      "open": 0,
+      "targets": 0,
+      "loss_rate": 0.75,
+      "gross": -0.14991797721563638,
+      "net": -0.17007707567291408,
+      "max_dd": 0.2175610799775861,
+      "coverage": 7,
+      "daily": {
+        "2026-08-17": {
+          "end_equity": 1.0,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-18": {
+          "end_equity": 1.0003810201001109,
+          "day_return": 0.00038102010011087373,
+          "entries": 1,
+          "exits": 1
+        },
+        "2026-08-19": {
+          "end_equity": 1.0301819176356766,
+          "day_return": 0.02978954711934012,
+          "entries": 2,
+          "exits": 2
+        },
+        "2026-08-20": {
+          "end_equity": 1.0192581164886951,
+          "day_return": -0.010603759355485631,
+          "entries": 1,
+          "exits": 0
+        },
+        "2026-08-21": {
+          "end_equity": 1.0080865063329794,
+          "day_return": -0.010960530973451066,
+          "entries": 0,
+          "exits": 1
+        },
+        "2026-08-24": {
+          "end_equity": 0.939839683231791,
+          "day_return": -0.06769937170317197,
+          "entries": 4,
+          "exits": 3
+        },
+        "2026-08-25": {
+          "end_equity": 0.9306113341180703,
+          "day_return": -0.009819067313680097,
+          "entries": 0,
+          "exits": 1
+        },
+        "2026-08-26": {
+          "end_equity": 0.8837035290090718,
+          "day_return": -0.050405366224614556,
+          "entries": 2,
+          "exits": 2
+        },
+        "2026-08-27": {
+          "end_equity": 0.8560329821034964,
+          "day_return": -0.03131202490116036,
+          "entries": 1,
+          "exits": 1
+        },
+        "2026-08-28": {
+          "end_equity": 0.8299229243270859,
+          "day_return": -0.03050122871697225,
+          "entries": 1,
+          "exits": 1
+        }
+      },
+      "by_symbol": {
+        "SOXL": {
+          "buys": 5,
+          "target": 0,
+          "stop": 5,
+          "net_wins": 1,
+          "gross_wins": 1
+        },
+        "SOXS": {
+          "buys": 7,
+          "target": 0,
+          "stop": 7,
+          "net_wins": 2,
+          "gross_wins": 2
+        }
+      },
+      "flat_blocked": 2464,
+      "directly_vetoed": {
+        "loss": 23,
+        "win": 13,
+        "flat": 0,
+        "open": 1
+      },
+      "new_entries": 0,
+      "unscored": 1
+    },
+    "q90": {
+      "buys": 5,
+      "closed": 5,
+      "wins": 0,
+      "losses": 5,
+      "open": 0,
+      "targets": 0,
+      "loss_rate": 1.0,
+      "gross": -0.10945987020434644,
+      "net": -0.11832089548778268,
+      "max_dd": 0.11832089548778268,
+      "coverage": 3,
+      "daily": {
+        "2026-08-17": {
+          "end_equity": 1.0,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-18": {
+          "end_equity": 1.0,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-19": {
+          "end_equity": 1.0,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-20": {
+          "end_equity": 1.0,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-21": {
+          "end_equity": 1.0,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-24": {
+          "end_equity": 0.9576901784595263,
+          "day_return": -0.04230982154047369,
+          "entries": 2,
+          "exits": 2
+        },
+        "2026-08-25": {
+          "end_equity": 0.9576901784595263,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-26": {
+          "end_equity": 0.9094174542845573,
+          "day_return": -0.05040536622461467,
+          "entries": 2,
+          "exits": 2
+        },
+        "2026-08-27": {
+          "end_equity": 0.9094174542845573,
+          "day_return": 0.0,
+          "entries": 0,
+          "exits": 0
+        },
+        "2026-08-28": {
+          "end_equity": 0.8816791045122173,
+          "day_return": -0.03050122871697236,
+          "entries": 1,
+          "exits": 1
+        }
+      },
+      "by_symbol": {
+        "SOXL": {
+          "buys": 3,
+          "target": 0,
+          "stop": 3,
+          "net_wins": 0,
+          "gross_wins": 0
+        },
+        "SOXS": {
+          "buys": 2,
+          "target": 0,
+          "stop": 2,
+          "net_wins": 0,
+          "gross_wins": 0
+        }
+      },
+      "flat_blocked": 2729,
+      "directly_vetoed": {
+        "loss": 27,
+        "win": 16,
+        "flat": 0,
+        "open": 1
+      },
+      "new_entries": 0,
+      "unscored": 1
+    }
+  },
+  "selected": "q50",
+  "selection_fallback": false,
+  "train_sources": {
+    "SOXL": {
+      "path": "market_data/us_5m/SOXL/2026.parquet",
+      "rows": 4320,
+      "used_rows_sha256": "d9faf345327761499ab7dd9228fbccc1ea0eb63286369563a33e8331b56bb3dd"
+    },
+    "SOXS": {
+      "path": "market_data/us_5m/SOXS/2026.parquet",
+      "rows": 4320,
+      "used_rows_sha256": "aaa5ff23a80636f94ce136f33f0645dd9b7db015d6fea964154748d2d30b7188"
+    }
+  },
+  "calibration_sources": {
+    "SOXL": {
+      "path": "market_data/us_5m/SOXL/2026.parquet",
+      "rows": 2880,
+      "used_rows_sha256": "20a449c2afde1f9ea75962bba449d0fb374f91e92bd07150c77948cd1a2a54ad"
+    },
+    "SOXS": {
+      "path": "market_data/us_5m/SOXS/2026.parquet",
+      "rows": 2880,
+      "used_rows_sha256": "71ad7a01f0432b735b5e4910d226d50f2a3e3a3d76765acae6b9600f59b2f91b"
+    }
+  }
+}
