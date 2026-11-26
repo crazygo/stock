@@ -1,0 +1,363 @@
+{
+  "generated_at_utc": "2026-11-26T05:33:25.345051+00:00",
+  "as_of": "2026-11-25",
+  "execution": {
+    "github_repository": "crazygo/stock",
+    "github_run_id": "45762343569",
+    "github_run_attempt": "1"
+  },
+  "purpose": "candidate_generation_not_investment_advice",
+  "score_note": "shape_score is a deterministic ranking, not a rebound probability",
+  "research_contract": {
+    "required_checks": [
+      "data_freshness_and_coverage",
+      "selloff_primary_source_cause",
+      "long_term_thesis_damage",
+      "quantified_business_exposure",
+      "30_and_60_day_catalysts",
+      "entry_trigger_invalidation_and_counterevidence"
+    ],
+    "max_recommendations": 5,
+    "allow_no_qualified_candidate": true
+  },
+  "config": {
+    "min_price": 50.0,
+    "max_price": 200.0,
+    "drop_sessions": 7,
+    "flat_sessions": 7,
+    "min_drop_pct": 0.18,
+    "max_drop_pct": 0.45,
+    "max_flat_range_pct": 0.07,
+    "max_flat_slope_pct": 0.035,
+    "max_flat_realized_vol_pct": 0.022,
+    "max_abs_flat_daily_return_pct": 0.035,
+    "min_avg_dollar_volume": 20000000.0,
+    "accepted_ticker_types": [
+      "CS"
+    ]
+  },
+  "counts": {
+    "universe": 5303,
+    "complete_bar_history": 4885,
+    "matched": 0
+  },
+  "diagnostics": {
+    "window_validation": {
+      "required_bars": 15,
+      "drop_close_to_close_intervals": 7,
+      "flat_close_to_close_intervals": 7,
+      "shared_anchor_close": true
+    },
+    "funnel": [
+      {
+        "step": "price_50_200",
+        "passed": 936,
+        "rejected_at_step": 3949,
+        "survival_from_previous_pct": 19.2
+      },
+      {
+        "step": "drop_18_45_pct",
+        "passed": 7,
+        "rejected_at_step": 929,
+        "survival_from_previous_pct": 0.7
+      },
+      {
+        "step": "flat_range_le_7_pct",
+        "passed": 0,
+        "rejected_at_step": 7,
+        "survival_from_previous_pct": 0.0
+      },
+      {
+        "step": "abs_flat_slope_le_3_5_pct",
+        "passed": 0,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": null
+      },
+      {
+        "step": "flat_vol_le_2_2_pct",
+        "passed": 0,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": null
+      },
+      {
+        "step": "max_daily_move_le_3_5_pct",
+        "passed": 0,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": null
+      },
+      {
+        "step": "avg_dollar_volume_ge_20m",
+        "passed": 0,
+        "rejected_at_step": 0,
+        "survival_from_previous_pct": null
+      }
+    ],
+    "distributions": {
+      "price_pool_drop_pct": {
+        "count": 936,
+        "p10": -6.12,
+        "p25": -2.29,
+        "p50": 0.54,
+        "p75": 3.44,
+        "p90": 8.55
+      },
+      "drop_pool_flat_range_pct": {
+        "count": 7,
+        "p10": 9.05,
+        "p25": 10.87,
+        "p50": 12.89,
+        "p75": 22.12,
+        "p90": 36.87
+      },
+      "drop_pool_abs_flat_slope_pct": {
+        "count": 7,
+        "p10": 1.64,
+        "p25": 2.62,
+        "p50": 10.41,
+        "p75": 14.29,
+        "p90": 20.03
+      },
+      "drop_pool_flat_realized_vol_pct": {
+        "count": 7,
+        "p10": 2.03,
+        "p25": 2.24,
+        "p50": 2.39,
+        "p75": 4.72,
+        "p90": 6.94
+      },
+      "drop_pool_max_abs_daily_return_pct": {
+        "count": 7,
+        "p10": 3.12,
+        "p25": 3.73,
+        "p50": 5.8,
+        "p75": 7.83,
+        "p90": 13.49
+      },
+      "drop_pool_avg_dollar_volume_m": {
+        "count": 7,
+        "p10": 5.1,
+        "p25": 22.21,
+        "p50": 83.71,
+        "p75": 320.89,
+        "p90": 1193.02
+      }
+    },
+    "independent_passes_after_price_and_drop": {
+      "drop_pool": 7,
+      "flat_range": 0,
+      "flat_slope": 3,
+      "flat_vol": 1,
+      "max_daily_move": 2,
+      "liquidity": 5
+    },
+    "drop_pool_details": [
+      {
+        "ticker": "GIBO",
+        "drop_pct": -36.66,
+        "flat_range_pct": 29.82,
+        "abs_flat_slope_pct": 17.9,
+        "flat_realized_vol_pct": 8.13,
+        "max_abs_flat_daily_return_pct": 19.23,
+        "avg_dollar_volume_m": 0.5,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move",
+          "liquidity"
+        ]
+      },
+      {
+        "ticker": "IRTC",
+        "drop_pct": -30.23,
+        "flat_range_pct": 11.92,
+        "abs_flat_slope_pct": 10.41,
+        "flat_realized_vol_pct": 2.39,
+        "max_abs_flat_daily_return_pct": 5.8,
+        "avg_dollar_volume_m": 83.71,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "BGSI",
+        "drop_pct": -23.0,
+        "flat_range_pct": 12.89,
+        "abs_flat_slope_pct": 10.67,
+        "flat_realized_vol_pct": 2.21,
+        "max_abs_flat_daily_return_pct": 4.25,
+        "avg_dollar_volume_m": 8.16,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move",
+          "liquidity"
+        ]
+      },
+      {
+        "ticker": "HALO",
+        "drop_pct": -21.52,
+        "flat_range_pct": 7.9,
+        "abs_flat_slope_pct": 1.86,
+        "flat_realized_vol_pct": 1.75,
+        "max_abs_flat_daily_return_pct": 2.98,
+        "avg_dollar_volume_m": 179.31,
+        "failed_conditions": [
+          "flat_range"
+        ]
+      },
+      {
+        "ticker": "MSTR",
+        "drop_pct": -20.32,
+        "flat_range_pct": 47.45,
+        "abs_flat_slope_pct": 23.23,
+        "flat_realized_vol_pct": 6.14,
+        "max_abs_flat_daily_return_pct": 9.67,
+        "avg_dollar_volume_m": 2288.85,
+        "failed_conditions": [
+          "flat_range",
+          "flat_slope",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "WK",
+        "drop_pct": -20.25,
+        "flat_range_pct": 9.81,
+        "abs_flat_slope_pct": 3.38,
+        "flat_realized_vol_pct": 2.27,
+        "max_abs_flat_daily_return_pct": 3.21,
+        "avg_dollar_volume_m": 36.25,
+        "failed_conditions": [
+          "flat_range",
+          "flat_vol"
+        ]
+      },
+      {
+        "ticker": "TEAM",
+        "drop_pct": -18.2,
+        "flat_range_pct": 14.42,
+        "abs_flat_slope_pct": 1.31,
+        "flat_realized_vol_pct": 3.3,
+        "max_abs_flat_daily_return_pct": 5.98,
+        "avg_dollar_volume_m": 462.48,
+        "failed_conditions": [
+          "flat_range",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      }
+    ],
+    "sensitivity": [
+      {
+        "scenario": "current",
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
+        "overrides": {}
+      },
+      {
+        "scenario": "drop_min_15_pct",
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
+        "overrides": {
+          "min_drop_pct": 0.15
+        }
+      },
+      {
+        "scenario": "flat_range_9_pct",
+        "matched": 1,
+        "delta_vs_current": 1,
+        "top_tickers": [
+          "HALO"
+        ],
+        "overrides": {
+          "max_flat_range_pct": 0.09
+        }
+      },
+      {
+        "scenario": "flat_slope_5_pct",
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
+        "overrides": {
+          "max_flat_slope_pct": 0.05
+        }
+      },
+      {
+        "scenario": "flat_vol_3_pct",
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
+        "overrides": {
+          "max_flat_realized_vol_pct": 0.03
+        }
+      },
+      {
+        "scenario": "max_daily_move_5_pct",
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
+        "overrides": {
+          "max_abs_flat_daily_return_pct": 0.05
+        }
+      },
+      {
+        "scenario": "liquidity_10m",
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
+        "overrides": {
+          "min_avg_dollar_volume": 10000000.0
+        }
+      },
+      {
+        "scenario": "balanced",
+        "matched": 2,
+        "delta_vs_current": 2,
+        "top_tickers": [
+          "HALO",
+          "NHI"
+        ],
+        "overrides": {
+          "min_drop_pct": 0.15,
+          "max_flat_range_pct": 0.09,
+          "max_flat_slope_pct": 0.05,
+          "max_flat_realized_vol_pct": 0.03,
+          "max_abs_flat_daily_return_pct": 0.05,
+          "min_avg_dollar_volume": 10000000.0
+        }
+      },
+      {
+        "scenario": "broad_recall",
+        "matched": 8,
+        "delta_vs_current": 8,
+        "top_tickers": [
+          "HALO",
+          "AGM",
+          "GMED",
+          "WK",
+          "ICFI",
+          "ECPG",
+          "ATLC",
+          "NHI"
+        ],
+        "overrides": {
+          "min_drop_pct": 0.12,
+          "max_flat_range_pct": 0.12,
+          "max_flat_slope_pct": 0.07,
+          "max_flat_realized_vol_pct": 0.04,
+          "max_abs_flat_daily_return_pct": 0.07,
+          "min_avg_dollar_volume": 5000000.0
+        }
+      }
+    ]
+  },
+  "candidates": []
+}
