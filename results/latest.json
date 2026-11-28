@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-27T05:33:35.859836+00:00",
-  "as_of": "2026-11-25",
+  "generated_at_utc": "2026-11-28T05:33:13.183347+00:00",
+  "as_of": "2026-11-27",
   "execution": {
     "github_repository": "crazygo/stock",
-    "github_run_id": "45946496129",
+    "github_run_id": "46112608697",
     "github_run_attempt": "1"
   },
   "purpose": "candidate_generation_not_investment_advice",
@@ -38,7 +38,7 @@
   },
   "counts": {
     "universe": 5303,
-    "complete_bar_history": 4885,
+    "complete_bar_history": 4871,
     "matched": 0
   },
   "diagnostics": {
@@ -51,14 +51,14 @@
     "funnel": [
       {
         "step": "price_50_200",
-        "passed": 936,
-        "rejected_at_step": 3949,
+        "passed": 937,
+        "rejected_at_step": 3934,
         "survival_from_previous_pct": 19.2
       },
       {
         "step": "drop_18_45_pct",
         "passed": 7,
-        "rejected_at_step": 929,
+        "rejected_at_step": 930,
         "survival_from_previous_pct": 0.7
       },
       {
@@ -94,130 +94,144 @@
     ],
     "distributions": {
       "price_pool_drop_pct": {
-        "count": 936,
-        "p10": -6.12,
-        "p25": -2.29,
-        "p50": 0.54,
-        "p75": 3.44,
-        "p90": 8.55
+        "count": 937,
+        "p10": -6.87,
+        "p25": -3.27,
+        "p50": -0.67,
+        "p75": 2.15,
+        "p90": 4.74
       },
       "drop_pool_flat_range_pct": {
         "count": 7,
-        "p10": 9.05,
-        "p25": 10.87,
-        "p50": 12.89,
-        "p75": 22.12,
-        "p90": 36.87
+        "p10": 15.52,
+        "p25": 16.36,
+        "p50": 29.32,
+        "p75": 35.02,
+        "p90": 43.22
       },
       "drop_pool_abs_flat_slope_pct": {
         "count": 7,
-        "p10": 1.64,
-        "p25": 2.62,
-        "p50": 10.41,
-        "p75": 14.29,
-        "p90": 20.03
+        "p10": 1.95,
+        "p25": 6.67,
+        "p50": 13.8,
+        "p75": 17.02,
+        "p90": 19.01
       },
       "drop_pool_flat_realized_vol_pct": {
         "count": 7,
-        "p10": 2.03,
-        "p25": 2.24,
-        "p50": 2.39,
-        "p75": 4.72,
-        "p90": 6.94
+        "p10": 2.4,
+        "p25": 3.22,
+        "p50": 4.41,
+        "p75": 6.38,
+        "p90": 8.4
       },
       "drop_pool_max_abs_daily_return_pct": {
         "count": 7,
-        "p10": 3.12,
-        "p25": 3.73,
-        "p50": 5.8,
-        "p75": 7.83,
-        "p90": 13.49
+        "p10": 5.09,
+        "p25": 5.72,
+        "p50": 9.45,
+        "p75": 10.64,
+        "p90": 15.08
       },
       "drop_pool_avg_dollar_volume_m": {
         "count": 7,
-        "p10": 5.1,
-        "p25": 22.21,
-        "p50": 83.71,
-        "p75": 320.89,
-        "p90": 1193.02
+        "p10": 19.59,
+        "p25": 29.19,
+        "p50": 268.23,
+        "p75": 1280.14,
+        "p90": 2633.47
       }
     },
     "independent_passes_after_price_and_drop": {
       "drop_pool": 7,
       "flat_range": 0,
-      "flat_slope": 3,
+      "flat_slope": 2,
       "flat_vol": 1,
-      "max_daily_move": 2,
-      "liquidity": 5
+      "max_daily_move": 0,
+      "liquidity": 6
     },
     "drop_pool_details": [
       {
-        "ticker": "GIBO",
-        "drop_pct": -36.66,
-        "flat_range_pct": 29.82,
-        "abs_flat_slope_pct": 17.9,
-        "flat_realized_vol_pct": 8.13,
-        "max_abs_flat_daily_return_pct": 19.23,
-        "avg_dollar_volume_m": 0.5,
+        "ticker": "NXT",
+        "drop_pct": -25.19,
+        "flat_range_pct": 29.32,
+        "abs_flat_slope_pct": 11.13,
+        "flat_realized_vol_pct": 6.5,
+        "max_abs_flat_daily_return_pct": 11.61,
+        "avg_dollar_volume_m": 268.23,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
           "flat_vol",
-          "max_daily_move",
-          "liquidity"
+          "max_daily_move"
         ]
       },
       {
-        "ticker": "IRTC",
-        "drop_pct": -30.23,
-        "flat_range_pct": 11.92,
-        "abs_flat_slope_pct": 10.41,
-        "flat_realized_vol_pct": 2.39,
-        "max_abs_flat_daily_return_pct": 5.8,
-        "avg_dollar_volume_m": 83.71,
+        "ticker": "MSTR",
+        "drop_pct": -25.15,
+        "flat_range_pct": 37.13,
+        "abs_flat_slope_pct": 15.46,
+        "flat_realized_vol_pct": 6.27,
+        "max_abs_flat_daily_return_pct": 9.67,
+        "avg_dollar_volume_m": 2153.29,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "TPB",
+        "drop_pct": -24.85,
+        "flat_range_pct": 14.39,
+        "abs_flat_slope_pct": 1.57,
+        "flat_realized_vol_pct": 3.58,
+        "max_abs_flat_daily_return_pct": 5.65,
+        "avg_dollar_volume_m": 28.15,
+        "failed_conditions": [
+          "flat_range",
+          "flat_vol",
+          "max_daily_move"
+        ]
+      },
+      {
+        "ticker": "FSLR",
+        "drop_pct": -23.95,
+        "flat_range_pct": 16.28,
+        "abs_flat_slope_pct": 2.21,
+        "flat_realized_vol_pct": 4.41,
+        "max_abs_flat_daily_return_pct": 9.45,
+        "avg_dollar_volume_m": 406.99,
+        "failed_conditions": [
+          "flat_range",
           "flat_vol",
           "max_daily_move"
         ]
       },
       {
         "ticker": "BGSI",
-        "drop_pct": -23.0,
-        "flat_range_pct": 12.89,
-        "abs_flat_slope_pct": 10.67,
-        "flat_realized_vol_pct": 2.21,
+        "drop_pct": -23.56,
+        "flat_range_pct": 16.44,
+        "abs_flat_slope_pct": 13.8,
+        "flat_realized_vol_pct": 1.72,
         "max_abs_flat_daily_return_pct": 4.25,
-        "avg_dollar_volume_m": 8.16,
+        "avg_dollar_volume_m": 6.76,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
-          "flat_vol",
           "max_daily_move",
           "liquidity"
         ]
       },
       {
-        "ticker": "HALO",
-        "drop_pct": -21.52,
-        "flat_range_pct": 7.9,
-        "abs_flat_slope_pct": 1.86,
-        "flat_realized_vol_pct": 1.75,
-        "max_abs_flat_daily_return_pct": 2.98,
-        "avg_dollar_volume_m": 179.31,
-        "failed_conditions": [
-          "flat_range"
-        ]
-      },
-      {
-        "ticker": "MSTR",
-        "drop_pct": -20.32,
-        "flat_range_pct": 47.45,
-        "abs_flat_slope_pct": 23.23,
-        "flat_realized_vol_pct": 6.14,
-        "max_abs_flat_daily_return_pct": 9.67,
-        "avg_dollar_volume_m": 2288.85,
+        "ticker": "FRHC",
+        "drop_pct": -18.47,
+        "flat_range_pct": 32.91,
+        "abs_flat_slope_pct": 19.65,
+        "flat_realized_vol_pct": 2.86,
+        "max_abs_flat_daily_return_pct": 5.79,
+        "avg_dollar_volume_m": 30.24,
         "failed_conditions": [
           "flat_range",
           "flat_slope",
@@ -226,28 +240,16 @@
         ]
       },
       {
-        "ticker": "WK",
-        "drop_pct": -20.25,
-        "flat_range_pct": 9.81,
-        "abs_flat_slope_pct": 3.38,
-        "flat_realized_vol_pct": 2.27,
-        "max_abs_flat_daily_return_pct": 3.21,
-        "avg_dollar_volume_m": 36.25,
+        "ticker": "NBIS",
+        "drop_pct": -18.11,
+        "flat_range_pct": 52.35,
+        "abs_flat_slope_pct": 18.59,
+        "flat_realized_vol_pct": 11.26,
+        "max_abs_flat_daily_return_pct": 20.28,
+        "avg_dollar_volume_m": 3353.75,
         "failed_conditions": [
           "flat_range",
-          "flat_vol"
-        ]
-      },
-      {
-        "ticker": "TEAM",
-        "drop_pct": -18.2,
-        "flat_range_pct": 14.42,
-        "abs_flat_slope_pct": 1.31,
-        "flat_realized_vol_pct": 3.3,
-        "max_abs_flat_daily_return_pct": 5.98,
-        "avg_dollar_volume_m": 462.48,
-        "failed_conditions": [
-          "flat_range",
+          "flat_slope",
           "flat_vol",
           "max_daily_move"
         ]
@@ -272,11 +274,9 @@
       },
       {
         "scenario": "flat_range_9_pct",
-        "matched": 1,
-        "delta_vs_current": 1,
-        "top_tickers": [
-          "HALO"
-        ],
+        "matched": 0,
+        "delta_vs_current": 0,
+        "top_tickers": [],
         "overrides": {
           "max_flat_range_pct": 0.09
         }
@@ -319,10 +319,9 @@
       },
       {
         "scenario": "balanced",
-        "matched": 2,
-        "delta_vs_current": 2,
+        "matched": 1,
+        "delta_vs_current": 1,
         "top_tickers": [
-          "HALO",
           "NHI"
         ],
         "overrides": {
@@ -336,16 +335,9 @@
       },
       {
         "scenario": "broad_recall",
-        "matched": 8,
-        "delta_vs_current": 8,
+        "matched": 1,
+        "delta_vs_current": 1,
         "top_tickers": [
-          "HALO",
-          "AGM",
-          "GMED",
-          "WK",
-          "ICFI",
-          "ECPG",
-          "ATLC",
           "NHI"
         ],
         "overrides": {
